@@ -1,6 +1,6 @@
 import { validGitSourcePath } from './source-path.mjs';
 import { isDeepStrictEqual } from 'node:util';
-import { parseJsonSource, readJsonSelector } from './source-selector.mjs';
+import { parseJsonSource, readJsonSelector, parseMarkdownSource, readMarkdownSelector } from './source-selector.mjs';
 
 const shaPattern = /^[a-f0-9]{64}$/;
 const commitPattern = /^[a-f0-9]{40}$/;
@@ -106,6 +106,7 @@ export async function validateRecordPublication({
   if (!(sourceBytes instanceof Map)) throw new Error('source bytes map is required');
   const checkedSources = new Map();
   const parsedJson = new Map();
+  const parsedMarkdown = new Map();
   const usedRights = new Set();
 
   async function checkSource(sourceId) {
@@ -140,6 +141,11 @@ export async function validateRecordPublication({
       if (!isDeepStrictEqual(selected, pointerValue(record, fieldPath))) {
         throw new Error(`source value differs for ${fieldPath}`);
       }
+    } else if (lock.kind === 'git_file' && selector.startsWith('md:')) {
+      if (!lock.path.toLowerCase().endsWith('.md')) throw new Error(`Markdown selector needs a Markdown source: ${selector}`);
+      if (!parsedMarkdown.has(sourceId)) parsedMarkdown.set(sourceId, parseMarkdownSource(checkedSources.get(sourceId), sourceId));
+      const selected = readMarkdownSelector(parsedMarkdown.get(sourceId), selector);
+      if (selected !== pointerValue(record, fieldPath)) throw new Error(`source value differs for ${fieldPath}`);
     }
     const right = rights.get(rightId);
     if (!right || right.schema_version !== 1 || right.subject?.kind !== 'source_field' ||

@@ -198,3 +198,131 @@ test('UnitT130_rejects_missing_or_untyped_json_selector', async () => {
   untyped.rightsLedger[1].subject.selector = 'effect';
   await assert.rejects(() => validateRecordPublication(untyped), /json selector/i);
 });
+
+function markdownCandidate() {
+  const input = candidate();
+  input.record.name_zh_tw = '演示防護';
+  input.record.effect_zh_tw = '效果：這是一段虛構技能效果，僅用於版面測試。';
+  const markdown = [
+    '# 虛構職業', '', '<a id="practice-guard"></a>', '',
+    '### 演示防護(Practice Guard)', '',
+    '<img src="https://example.test/fictional.webp" alt="虛構圖示">', '',
+    '- **效果**：這是一段虛構技能效果，僅用於版面測試。', '',
+    '[詳細資料](practice-guard.md) · [返回目錄](#talent-index)', '', '---', ''
+  ].join('\n');
+  const rawMarkdown = new TextEncoder().encode(markdown);
+  input.sourceLocks[0].path = 'Game Info/skills/README.md';
+  input.sourceLocks[0].sha256 = sha(rawMarkdown);
+  input.sourceLocks[0].selectors = [
+    'md:anchor:practice-guard:title-zh', 'md:anchor:practice-guard:body-text'
+  ];
+  input.sourceBytes.set('fictional-source', rawMarkdown);
+  for (let index = 0; index < 2; index++) {
+    input.record.evidence[index].source_selector = input.sourceLocks[0].selectors[index];
+    input.rightsLedger[index].subject.selector = input.sourceLocks[0].selectors[index];
+  }
+  return input;
+}
+
+// Scenario: A synthetic Markdown page has an exact skill anchor, title, and bullet effect.
+// Purpose: Match candidate skill text to a deterministic section of the hashed source.
+test('UnitT140_accepts_values_selected_from_markdown_skill_section', async () => {
+  await assert.doesNotReject(() => validateRecordPublication(markdownCandidate()));
+});
+
+// Scenario: A skill effect differs while its Markdown source and rights remain fixed.
+// Purpose: Reject a field whose cited Markdown section does not support its value.
+test('UnitT150_rejects_effect_different_from_markdown_section', async () => {
+  const input = markdownCandidate();
+  input.record.effect_zh_tw = '來源沒有的效果';
+  await assert.rejects(() => validateRecordPublication(input), /source value.*effect_zh_tw/i);
+});
+
+// Scenario: The fixed Markdown source repeats the same skill anchor.
+// Purpose: Fail on ambiguous section identity instead of choosing the first match.
+test('UnitT160_rejects_ambiguous_markdown_anchor', async () => {
+  const input = markdownCandidate();
+  const rawMarkdown = input.sourceBytes.get('fictional-source');
+  const duplicate = new TextEncoder().encode(`${new TextDecoder().decode(rawMarkdown)}\n<a id="practice-guard"></a>`);
+  input.sourceBytes.set('fictional-source', duplicate);
+  input.sourceLocks[0].sha256 = sha(duplicate);
+  await assert.rejects(() => validateRecordPublication(input), /markdown anchor.*ambiguous/i);
+});
+
+// Scenario: A skill section adds a clearly labeled translation erratum after its effect bullets.
+// Purpose: Keep the published effect scoped to the primary bullets without silently mixing in editorial notes.
+test('UnitT170_excludes_labeled_erratum_from_markdown_effect', async () => {
+  const input = markdownCandidate();
+  const text = new TextDecoder().decode(input.sourceBytes.get('fictional-source'));
+  const changed = text.replace('[詳細資料](practice-guard.md)',
+    '#### 繁中原文勘誤\n\n- 此行是勘誤註記。\n\n[詳細資料](practice-guard.md)');
+  const bytes = new TextEncoder().encode(changed);
+  input.sourceBytes.set('fictional-source', bytes);
+  input.sourceLocks[0].sha256 = sha(bytes);
+  await assert.doesNotReject(() => validateRecordPublication(input));
+});
+
+// Scenario: A skill's worked example follows the primary effect under a level-four heading.
+// Purpose: Keep the effect selector focused on the preceding bullets across section variants.
+test('UnitT180_stops_markdown_effect_before_secondary_subsection', async () => {
+  const input = markdownCandidate();
+  const text = new TextDecoder().decode(input.sourceBytes.get('fictional-source'));
+  const changed = text.replace('[詳細資料](practice-guard.md)',
+    '#### 算例條件\n\n- 此行是範例，不是主要效果。\n\n[詳細資料](practice-guard.md)');
+  const bytes = new TextEncoder().encode(changed);
+  input.sourceBytes.set('fictional-source', bytes);
+  input.sourceLocks[0].sha256 = sha(bytes);
+  await assert.doesNotReject(() => validateRecordPublication(input));
+});
+
+function baseEffectCandidate() {
+  const input = markdownCandidate();
+  const markdown = [
+    '# 虛構基礎效果', '', '## 演示防護(Practice Guard)：基礎效果', '',
+    '- **效果**：這是一段虛構技能效果，僅用於版面測試。', '',
+    '[原始碼依據與算例條件](practice-guard.md)', '', '---', ''
+  ].join('\n');
+  const bytes = new TextEncoder().encode(markdown);
+  input.sourceLocks[0].path = 'Game Info/skills/BASE_EFFECTS.md';
+  input.sourceLocks[0].sha256 = sha(bytes);
+  input.sourceLocks[0].selectors = [
+    'md:detail:practice-guard:title-zh', 'md:detail:practice-guard:body-text'
+  ];
+  input.sourceBytes.set('fictional-source', bytes);
+  for (let index = 0; index < 2; index++) {
+    input.record.evidence[index].source_selector = input.sourceLocks[0].selectors[index];
+    input.rightsLedger[index].subject.selector = input.sourceLocks[0].selectors[index];
+  }
+  return input;
+}
+
+// Scenario: A base-effect section has no HTML anchor but links to one fixed detail file.
+// Purpose: Select its heading and primary bullets using a unique, source-local detail link.
+test('UnitT190_accepts_base_effect_section_selected_by_detail_link', async () => {
+  await assert.doesNotReject(() => validateRecordPublication(baseEffectCandidate()));
+});
+
+// Scenario: Two base-effect sections cite the same detail file.
+// Purpose: Reject ambiguous detail selectors instead of attributing the wrong source section.
+test('UnitT200_rejects_ambiguous_base_effect_detail_link', async () => {
+  const input = baseEffectCandidate();
+  const text = new TextDecoder().decode(input.sourceBytes.get('fictional-source'));
+  const bytes = new TextEncoder().encode(`${text}\n## 第二個效果\n\n[原始碼依據與算例條件](practice-guard.md)\n`);
+  input.sourceBytes.set('fictional-source', bytes);
+  input.sourceLocks[0].sha256 = sha(bytes);
+  await assert.rejects(() => validateRecordPublication(input), /Markdown detail.*ambiguous/i);
+});
+
+// Scenario: A base effect bullet links to a nearby recipe section.
+// Purpose: Preserve the visible link label in plain effect text without copying the link target into the field.
+test('UnitT210_resolves_safe_local_link_label_in_markdown_bullet', async () => {
+  const input = baseEffectCandidate();
+  const text = new TextDecoder().decode(input.sourceBytes.get('fictional-source'));
+  const changed = text.replace('這是一段虛構技能效果，僅用於版面測試。',
+    '可查看[虛構配方](README.md#practice-recipe)。');
+  const bytes = new TextEncoder().encode(changed);
+  input.sourceBytes.set('fictional-source', bytes);
+  input.sourceLocks[0].sha256 = sha(bytes);
+  input.record.effect_zh_tw = '效果：可查看虛構配方。';
+  await assert.doesNotReject(() => validateRecordPublication(input));
+});
