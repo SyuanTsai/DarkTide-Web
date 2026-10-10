@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { fixture } from '../fixtures/site.mjs';
 import { canonicalize } from '../src/release/manifest.mjs';
+import { createValidatedReleaseDraft } from '../src/release/build.mjs';
 import { renderReleaseSite, renderSite } from '../src/site/render.mjs';
 
 const raw = new TextEncoder().encode('entirely fictional source bytes');
@@ -179,4 +180,29 @@ test('UnitT90_rejects_duplicate_asset_delivery_paths', async () => {
     subject: { kind: 'asset', source_id: 'icon-source', selector: null, asset_id: second.asset_id },
     local: approved('/asset_ids', second.routes), git: pending(), publish: approved('/asset_ids', second.routes) });
   await assert.rejects(() => renderReleaseSite(data, context), /duplicate.*asset.*path/i);
+});
+
+// Scenario: An approved synthetic candidate is rendered with its icon into an output draft.
+// Purpose: Bind the manifest to validated page bytes and only the evidence those pages use.
+test('UnitT100_builds_draft_from_validated_release_pages', async () => {
+  const { data, context, bytes } = candidateWithIcon();
+  context.sourceLocks.push({ ...context.sourceLocks[0], source_id: 'unused-source' });
+  const { files, manifest } = await createValidatedReleaseDraft(data, context, {
+    workerBytes: new TextEncoder().encode('export default {};'), toolCommitSha: 'd'.repeat(40)
+  });
+  assert.deepEqual(files.get('assets/sample.webp'), bytes);
+  assert.deepEqual(manifest.source_lock_ids, ['fictional-source', 'icon-source']);
+  assert.equal(manifest.files.find(file => file.path === 'assets/sample.webp').sha256, sha(bytes));
+  assert.equal(manifest.validation.complete, false);
+});
+
+// Scenario: An unapproved blessing field reaches the output draft entrypoint.
+// Purpose: Refuse to generate even a draft from content that failed page publication checks.
+test('UnitT110_rejects_unapproved_content_before_draft_creation', async () => {
+  const { data, context } = candidate();
+  const rightId = data.blessings[0].evidence.find(row => row.field_path === '/effect_zh_tw').rights_id;
+  context.rightsLedger.find(row => row.rights_id === rightId).publish = pending();
+  await assert.rejects(() => createValidatedReleaseDraft(data, context, {
+    workerBytes: new TextEncoder().encode('export default {};'), toolCommitSha: 'd'.repeat(40)
+  }), /publish.*approval/i);
 });
