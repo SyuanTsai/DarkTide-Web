@@ -13,6 +13,71 @@ const minimumFields = {
   binding: ['/blessing_id', '/weapon_id', '/mark_id', '/variant_id']
 };
 
+const decimalPattern = /^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/;
+const supportedSourceKinds = new Set(['git_json', 'git_markdown', 'git_tsv']);
+const numericUnits = new Set(['percent', 'seconds', 'meters', 'count', 'multiplier', 'game_unit']);
+
+function compareDecimals(left, right) {
+  const places = Math.max((left.split('.')[1] ?? '').length, (right.split('.')[1] ?? '').length);
+  const scaled = value => {
+    const negative = value.startsWith('-');
+    const [whole, fraction = ''] = (negative ? value.slice(1) : value).split('.');
+    const magnitude = BigInt(`${whole}${fraction.padEnd(places, '0')}`);
+    return negative ? -magnitude : magnitude;
+  };
+  const a = scaled(left);
+  const b = scaled(right);
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+function numericRequirements(kind, record, taxonomy, fieldRequirements) {
+  const paths = [];
+  const kindsByPath = {};
+  const claimRows = kind === 'variant' ? record.tier_claims.flatMap((tierRow, tierIndex) => {
+    const tierPath = `/tier_claims/${tierIndex}/tier`;
+    paths.push(tierPath);
+    return tierRow.claims.map((claim, claimIndex) => ({ claim,
+      prefix: `/tier_claims/${tierIndex}/claims/${claimIndex}` }));
+  }) : (record.claims ?? []).map((claim, claimIndex) => ({ claim, prefix: `/claims/${claimIndex}` }));
+  if (claimRows.length === 0 && paths.length === 0) return { paths, kindsByPath };
+  const policy = fieldRequirements.numeric_claims;
+  if (!policy || typeof policy !== 'object' || Array.isArray(policy)) {
+    throw new Error('numeric claims are unsupported without versioned policy');
+  }
+  for (const { claim, prefix } of claimRows) {
+    const rule = taxonomy.numeric_claims?.[kind]?.[claim.claim_id];
+    if (!rule || rule.scope !== kind || rule.variability !== 'fixed' ||
+        !numericUnits.has(rule.unit) || (claim.state === 'known' && rule.unit !== claim.unit) ||
+        typeof rule.min !== 'string' || !decimalPattern.test(rule.min) || rule.min.length > 64 ||
+        typeof rule.max !== 'string' || !decimalPattern.test(rule.max) || rule.max.length > 64 ||
+        compareDecimals(rule.min, rule.max) > 0) {
+      throw new Error(`numeric claim lacks a fixed domain rule: ${claim.claim_id}`);
+    }
+    if (claim.state === 'known' &&
+        (compareDecimals(claim.value, rule.min) < 0 || compareDecimals(claim.value, rule.max) > 0)) {
+      throw new Error(`numeric claim is outside its domain range: ${claim.claim_id}`);
+    }
+    if (claim.state === 'known' && !record.evidence.some(evidence =>
+      evidence.field_path === `${prefix}/value` && evidence.source_id === claim.source_ref)) {
+      throw new Error(`numeric claim source_ref has no value evidence: ${claim.claim_id}`);
+    }
+    for (const field of ['claim_id', 'state', ...(claim.state === 'known' ?
+      ['value', 'unit', ...(claim.unit === 'game_unit' ? ['unit_note'] : [])] : [])]) {
+      paths.push(`${prefix}/${field}`);
+    }
+  }
+  for (const path of paths) {
+    const field = path.endsWith('/tier') ? 'tier' : path.slice(path.lastIndexOf('/') + 1);
+    const required = policy[field];
+    if (!Array.isArray(required) || required.length === 0 || new Set(required).size !== required.length ||
+        required.some(value => !supportedSourceKinds.has(value))) {
+      throw new Error(`numeric source kind requirement is missing or invalid: ${field}`);
+    }
+    kindsByPath[path] = required;
+  }
+  return { paths, kindsByPath };
+}
+
 async function digest(value) {
   const bytes = new TextEncoder().encode(canonicalize(value));
   const hash = await crypto.subtle.digest('SHA-256', bytes);
@@ -38,7 +103,7 @@ export async function validateReleaseCandidate(data, context) {
           const requiredKinds = sourceKinds[path];
           return !Array.isArray(requiredKinds) || requiredKinds.length === 0 ||
             new Set(requiredKinds).size !== requiredKinds.length ||
-            requiredKinds.some(value => !['git_json', 'git_markdown', 'git_tsv'].includes(value));
+            requiredKinds.some(value => !supportedSourceKinds.has(value));
         })) {
       throw new Error(`source kind requirements are missing or invalid for ${kind}`);
     }
@@ -62,9 +127,10 @@ export async function validateReleaseCandidate(data, context) {
       throw new Error('release record has missing schema, evidence, or assets');
     }
   }
-  if (data.skills.some(row => row.claims?.length) || data.weapons.some(row => row.claims?.length) ||
-      data.marks.some(row => row.claims?.length) || data.variants.some(row => row.tier_claims?.length)) {
-    throw new Error('numeric claims are unsupported by this release renderer');
+  const numericByRecord = new WeakMap();
+  for (const [kind, rows] of [['skill', data.skills], ['weapon', data.weapons],
+    ['mark', data.marks], ['variant', data.variants]]) {
+    for (const row of rows) numericByRecord.set(row, numericRequirements(kind, row, taxonomy, fieldRequirements));
   }
   if (data.marks.some(row => row.asset_ids.length) || data.bindings.some(row => row.asset_ids.length)) {
     throw new Error('mark or binding assets are not rendered');
@@ -78,11 +144,13 @@ export async function validateReleaseCandidate(data, context) {
   const shared = { sourceLocks, rightsLedger, sourceBytes, assets: data.assets, requireGitApproval };
   const usedSources = new Set();
   const usedRights = new Set();
-  async function check(kind, record, usingRoute, fields = fieldRequirements.fields[kind], includeAssets = true) {
+  async function check(kind, record, usingRoute, fields = null, includeAssets = true) {
+    const numeric = fields === null ? numericByRecord.get(record) : null;
+    const requiredFields = fields ?? [...fieldRequirements.fields[kind], ...(numeric?.paths ?? [])];
     const result = await validateRecordPublication({
-      ...shared, route: usingRoute, record, requiredFieldPaths: fields,
-      requiredSourceKindsByField: Object.fromEntries(fields.map(path =>
-        [path, fieldRequirements.source_kinds[kind][path]])), includeAssets
+      ...shared, route: usingRoute, record, requiredFieldPaths: requiredFields,
+      requiredSourceKindsByField: Object.fromEntries(requiredFields.map(path =>
+        [path, fieldRequirements.source_kinds[kind][path] ?? numeric?.kindsByPath[path]])), includeAssets
     });
     result.source_lock_ids.forEach(id => usedSources.add(id));
     result.rights_ids.forEach(id => usedRights.add(id));
