@@ -19,7 +19,7 @@ export default {
       return new Response('Method Not Allowed', { status: 405, headers: { allow: 'GET, HEAD', 'cache-control': 'no-store' } });
     }
     const releaseId = env?.ACTIVE_RELEASE;
-    if (!/^[a-z0-9][a-z0-9-]{0,63}$/.test(releaseId ?? '') || !env?.CONTENT_BUCKET?.get) {
+    if (!/^sha256:[a-f0-9]{64}$/.test(releaseId ?? '') || !env?.CONTENT_BUCKET?.get) {
       return response(503, 'Release unavailable');
     }
     const name = fileName(new URL(request.url).pathname);
@@ -29,15 +29,12 @@ export default {
       const manifestObject = await env.CONTENT_BUCKET.get(`${prefix}build-manifest.json`);
       if (!manifestObject) return response(503, 'Release unavailable');
       const manifest = JSON.parse(await manifestObject.text());
-      validateReleaseManifest(manifest, releaseId);
-      const entry = Object.hasOwn(manifest.files, name) ? manifest.files[name] : null;
+      await validateReleaseManifest(manifest, releaseId);
+      const entry = manifest.files.find(file => file.path === name);
       if (!entry) return response(404, 'Not found');
-      if (!/^[a-f0-9]{64}$/.test(entry.sha256) || !Number.isSafeInteger(entry.bytes) || entry.bytes < 0) {
-        return response(503, 'Release unavailable');
-      }
       const etag = `"${entry.sha256}"`;
       const headers = new Headers({
-        'content-type': name.endsWith('.html') ? 'text/html; charset=utf-8' : name.endsWith('.css') ? 'text/css; charset=utf-8' : name.endsWith('.js') ? 'text/javascript; charset=utf-8' : name.endsWith('.svg') ? 'image/svg+xml' : name.endsWith('.png') ? 'image/png' : 'image/webp',
+        'content-type': entry.content_type,
         'cache-control': 'public, max-age=60',
         etag
       });
@@ -45,7 +42,12 @@ export default {
       if (request.method === 'HEAD') return new Response(null, { status: 200, headers });
       const object = await env.CONTENT_BUCKET.get(`${prefix}${name}`);
       if (!object) return response(503, 'Release incomplete');
-      return new Response(object.body, { status: 200, headers });
+      const bytes = await object.arrayBuffer();
+      if (bytes.byteLength !== entry.raw_bytes) return response(503, 'Release object mismatch');
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      const actualSha = [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, '0')).join('');
+      if (actualSha !== entry.sha256) return response(503, 'Release object mismatch');
+      return new Response(bytes, { status: 200, headers });
     } catch {
       return response(503, 'Release unavailable');
     }
