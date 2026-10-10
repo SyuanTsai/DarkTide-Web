@@ -135,17 +135,22 @@ export async function validateRecordPublication({
     if (!requiredFieldPaths.includes(fieldPath)) continue;
     const lock = await checkSource(sourceId);
     if (!lock.selectors.includes(selector)) throw new Error(`source selector is not locked: ${selector}`);
-    if (lock.kind === 'git_file' && lock.path.toLowerCase().endsWith('.json')) {
-      if (!parsedJson.has(sourceId)) parsedJson.set(sourceId, parseJsonSource(checkedSources.get(sourceId), sourceId));
-      const selected = readJsonSelector(parsedJson.get(sourceId), selector);
-      if (!isDeepStrictEqual(selected, pointerValue(record, fieldPath))) {
-        throw new Error(`source value differs for ${fieldPath}`);
+    if (lock.kind !== 'git_file') throw new Error(`unsupported field source kind: ${lock.kind}`);
+    if (lock.kind === 'git_file') {
+      if (lock.path.toLowerCase().endsWith('.json')) {
+        if (!parsedJson.has(sourceId)) parsedJson.set(sourceId, parseJsonSource(checkedSources.get(sourceId), sourceId));
+        const selected = readJsonSelector(parsedJson.get(sourceId), selector);
+        if (!isDeepStrictEqual(selected, pointerValue(record, fieldPath))) {
+          throw new Error(`source value differs for ${fieldPath}`);
+        }
+      } else if (lock.path.toLowerCase().endsWith('.md')) {
+        if (!selector.startsWith('md:')) throw new Error(`unsupported Markdown selector: ${selector}`);
+        if (!parsedMarkdown.has(sourceId)) parsedMarkdown.set(sourceId, parseMarkdownSource(checkedSources.get(sourceId), sourceId));
+        const selected = readMarkdownSelector(parsedMarkdown.get(sourceId), selector);
+        if (selected !== pointerValue(record, fieldPath)) throw new Error(`source value differs for ${fieldPath}`);
+      } else {
+        throw new Error(`unsupported Git source selector: ${selector}`);
       }
-    } else if (lock.kind === 'git_file' && selector.startsWith('md:')) {
-      if (!lock.path.toLowerCase().endsWith('.md')) throw new Error(`Markdown selector needs a Markdown source: ${selector}`);
-      if (!parsedMarkdown.has(sourceId)) parsedMarkdown.set(sourceId, parseMarkdownSource(checkedSources.get(sourceId), sourceId));
-      const selected = readMarkdownSelector(parsedMarkdown.get(sourceId), selector);
-      if (selected !== pointerValue(record, fieldPath)) throw new Error(`source value differs for ${fieldPath}`);
     }
     const right = rights.get(rightId);
     if (!right || right.schema_version !== 1 || right.subject?.kind !== 'source_field' ||

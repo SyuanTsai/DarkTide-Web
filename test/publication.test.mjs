@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { validateRecordPublication } from '../src/content/publication.mjs';
 
 const route = '/skills/veteran/practice-guard/';
-const raw = new TextEncoder().encode('fictional source bytes');
+const raw = new TextEncoder().encode(JSON.stringify({ name_zh_tw: '虛構防護', effect_zh_tw: '虛構效果。' }));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const approval = (fieldPath, allowedRoute = route) => ({
   status: 'approved', evidence_ref: 'sample-evidence-index', rights_holder: 'Fictional Author',
@@ -22,8 +22,8 @@ function candidate() {
     record: {
       name_zh_tw: '虛構防護', effect_zh_tw: '虛構效果。',
       evidence: [
-        { field_path: '/name_zh_tw', source_id: 'fictional-source', source_selector: 'name', rights_id: 'right-name' },
-        { field_path: '/effect_zh_tw', source_id: 'fictional-source', source_selector: 'effect', rights_id: 'right-effect' }
+        { field_path: '/name_zh_tw', source_id: 'fictional-source', source_selector: 'json:/name_zh_tw', rights_id: 'right-name' },
+        { field_path: '/effect_zh_tw', source_id: 'fictional-source', source_selector: 'json:/effect_zh_tw', rights_id: 'right-effect' }
       ],
       asset_ids: []
     },
@@ -32,12 +32,12 @@ function candidate() {
       schema_version: 1, source_id: 'fictional-source', kind: 'git_file',
       repository_url: 'https://example.test/fictional.git', commit_sha: 'a'.repeat(40),
       release: null, steam_build_id: null, build_association: 'unknown', build_evidence_id: null,
-      tool_commit_sha: null, path: 'docs/sample.md', source_url: null,
-      sha256: sha(raw), selectors: ['name', 'effect'], batch_id: 'fixture-batch'
+      tool_commit_sha: null, path: 'docs/sample.json', source_url: null,
+      sha256: sha(raw), selectors: ['json:/name_zh_tw', 'json:/effect_zh_tw'], batch_id: 'fixture-batch'
     }],
     rightsLedger: [
-      { schema_version: 1, rights_id: 'right-name', subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'name', asset_id: null }, local: approval('/name_zh_tw'), git: pending(), publish: approval('/name_zh_tw') },
-      { schema_version: 1, rights_id: 'right-effect', subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'effect', asset_id: null }, local: approval('/effect_zh_tw'), git: pending(), publish: approval('/effect_zh_tw') }
+      { schema_version: 1, rights_id: 'right-name', subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'json:/name_zh_tw', asset_id: null }, local: approval('/name_zh_tw'), git: pending(), publish: approval('/name_zh_tw') },
+      { schema_version: 1, rights_id: 'right-effect', subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'json:/effect_zh_tw', asset_id: null }, local: approval('/effect_zh_tw'), git: pending(), publish: approval('/effect_zh_tw') }
     ],
     sourceBytes: new Map([['fictional-source', raw]]),
     assets: [],
@@ -80,7 +80,7 @@ test('UnitT10_accepts_fully_matched_field_provenance', async () => {
 // Purpose: Allow a safe Git path without weakening source byte or rights checks.
 test('UnitT15_accepts_git_source_path_with_internal_spaces', async () => {
   const input = candidate();
-  input.sourceLocks[0].path = 'Game Info/docs/sample.md';
+  input.sourceLocks[0].path = 'Game Info/docs/sample.json';
   await assert.doesNotReject(() => validateRecordPublication(input));
 });
 
@@ -112,7 +112,7 @@ test('UnitT40_rejects_rights_for_another_route', async () => {
 // Purpose: Reject an approval attached to the wrong source field.
 test('UnitT50_rejects_subject_selector_mismatch', async () => {
   const input = candidate();
-  input.rightsLedger[1].subject.selector = 'name';
+  input.rightsLedger[1].subject.selector = 'json:/name_zh_tw';
   await assert.rejects(() => validateRecordPublication(input), /selector/i);
 });
 
@@ -326,4 +326,23 @@ test('UnitT210_resolves_safe_local_link_label_in_markdown_bullet', async () => {
   input.sourceLocks[0].sha256 = sha(bytes);
   input.record.effect_zh_tw = '效果：可查看虛構配方。';
   await assert.doesNotReject(() => validateRecordPublication(input));
+});
+
+// Scenario: A locked Markdown source lists an arbitrary selector with approved rights.
+// Purpose: Require a supported selector that proves the public field equals source text.
+test('UnitT220_rejects_unverified_markdown_selector_even_with_approval', async () => {
+  const input = markdownCandidate();
+  input.sourceLocks[0].selectors[1] = 'untyped-effect';
+  input.record.evidence[1].source_selector = 'untyped-effect';
+  input.rightsLedger[1].subject.selector = 'untyped-effect';
+  await assert.rejects(() => validateRecordPublication(input), /unsupported.*selector/i);
+});
+
+// Scenario: A text field cites a byte-exact external asset as its supposed source.
+// Purpose: Keep image rights and byte hashes from substituting for text field provenance.
+test('UnitT230_rejects_external_asset_as_field_source', async () => {
+  const input = candidate();
+  Object.assign(input.sourceLocks[0], { kind: 'external_asset', path: null,
+    repository_url: null, commit_sha: null, source_url: 'https://example.test/fictional.webp' });
+  await assert.rejects(() => validateRecordPublication(input), /unsupported.*field source/i);
 });

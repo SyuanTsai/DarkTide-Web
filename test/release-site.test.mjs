@@ -9,7 +9,6 @@ import { canonicalize } from '../src/release/manifest.mjs';
 import { createGitVerifiedReleaseDraft, createValidatedReleaseDraft } from '../src/release/build.mjs';
 import { renderReleaseSite, renderSite } from '../src/site/render.mjs';
 
-const raw = new TextEncoder().encode('entirely fictional source bytes');
 const sha = value => createHash('sha256').update(value).digest('hex');
 const required = {
   skill: ['/archetype', '/skill_id', '/kind', '/category', '/name_zh_tw', '/effect_zh_tw'],
@@ -44,16 +43,16 @@ function candidate() {
   const rightsLedger = [];
   const selectors = [];
   let number = 0;
-  for (const [kind, rows] of [
-    ['skill', data.skills], ['weapon', data.weapons], ['mark', data.marks],
-    ['blessing', data.blessings], ['variant', data.variants], ['binding', data.bindings]
+  for (const [kind, collection, rows] of [
+    ['skill', 'skills', data.skills], ['weapon', 'weapons', data.weapons], ['mark', 'marks', data.marks],
+    ['blessing', 'blessings', data.blessings], ['variant', 'variants', data.variants], ['binding', 'bindings', data.bindings]
   ]) {
-    for (const row of rows) {
+    for (const [rowIndex, row] of rows.entries()) {
       row.schema_version ??= 1;
       row.evidence = [];
       row.asset_ids ??= [];
       for (const field of required[kind]) {
-        const selector = `synthetic-${number}`;
+        const selector = `json:/${collection}/${rowIndex}${field}`;
         const rightId = `right-${number++}`;
         selectors.push(selector);
         row.evidence.push({ field_path: field, source_id: 'fictional-source', source_selector: selector, rights_id: rightId });
@@ -63,10 +62,12 @@ function candidate() {
       }
     }
   }
+  const raw = new TextEncoder().encode(JSON.stringify(Object.fromEntries(
+    ['skills', 'weapons', 'marks', 'blessings', 'variants', 'bindings'].map(name => [name, data[name]]))));
   const sourceLocks = [{ schema_version: 1, source_id: 'fictional-source', kind: 'git_file',
     repository_url: 'https://example.test/fictional.git', commit_sha: 'a'.repeat(40),
     release: null, steam_build_id: null, build_association: 'unknown', build_evidence_id: null,
-    tool_commit_sha: null, path: 'docs/fictional.md', source_url: null, sha256: sha(raw),
+    tool_commit_sha: null, path: 'docs/fictional.json', source_url: null, sha256: sha(raw),
     selectors, batch_id: 'fixture-batch' }];
   return { data, context: { taxonomy, fieldRequirements, sourceLocks, rightsLedger,
     sourceBytes: new Map([['fictional-source', raw]]), requireGitApproval: false } };
@@ -219,10 +220,11 @@ test('InterT120_builds_candidate_using_verified_git_blob_bytes', async () => {
   const remote = origin.startsWith('git@github.com:')
     ? `https://github.com/${origin.slice('git@github.com:'.length)}` : origin;
   const commit = git('rev-parse', 'HEAD');
-  const blob = execFileSync('git', ['-C', checkout, 'cat-file', 'blob', `${commit}:README.md`]);
+  const path = 'test/fixtures/release-source.json';
+  const blob = execFileSync('git', ['-C', checkout, 'cat-file', 'blob', `${commit}:${path}`]);
   const { data, context } = candidate();
   Object.assign(context.sourceLocks[0], { repository_url: remote, commit_sha: commit,
-    path: 'README.md', sha256: sha(blob) });
+    path, sha256: sha(blob) });
   context.sourceBytes.set('fictional-source', new Uint8Array([9, 9, 9]));
   const { manifest } = await createGitVerifiedReleaseDraft(data, context, {
     gitCheckouts: new Map([[remote, checkout]]),
