@@ -35,7 +35,7 @@ function indexedClassification(lines, skillId) {
 }
 
 // Produces a review candidate only. Rights and game-mechanics claims are separate gates.
-export async function importSkillCandidate({ row, playerSource, indexSource, sourceBytes } = {}) {
+export async function importSkillCandidate({ row, playerSource, indexSource, mechanicsSource = null, sourceBytes } = {}) {
   const { archetype, id: skillId } = row ?? {};
   if (!archetypes.has(archetype) || !identityPattern.test(skillId ?? '') ||
       typeof row.kind !== 'string' || typeof row.category !== 'string' || typeof row.zh !== 'string') {
@@ -49,6 +49,13 @@ export async function importSkillCandidate({ row, playerSource, indexSource, sou
     throw new Error(`skill player source path mismatch: ${skillId}`);
   }
   const base = path.endsWith('/BASE_EFFECTS.md');
+  if (mechanicsSource !== null) {
+    const expected = `${path.slice(0, path.lastIndexOf('/') + 1)}${skillId}.md`;
+    if (mechanicsSource?.path !== expected) {
+      throw new Error(`skill mechanics source path mismatch: ${skillId}`);
+    }
+    await lockedLines(mechanicsSource, sourceBytes);
+  }
   const mode = base ? 'detail' : 'anchor';
   const lines = await lockedLines(playerSource, sourceBytes);
   const nameSelector = `md:${mode}:${skillId}:title-zh`;
@@ -80,7 +87,14 @@ export async function importSkillCandidate({ row, playerSource, indexSource, sou
     name_zh_tw: name,
     effect_zh_tw: effect,
     canonical_route: `/skills/${archetype}/${skillId}/`,
-    source_lock_ids: [...new Set([playerSource.source_id, indexSource?.source_id].filter(Boolean))].sort(),
+    mechanics_route_candidate: `/skills/${archetype}/${skillId}/mechanics/`,
+    mechanics_source: mechanicsSource === null ? null : {
+      source_id: mechanicsSource.source_id,
+      path: mechanicsSource.path,
+      sha256: mechanicsSource.sha256
+    },
+    source_lock_ids: [...new Set([playerSource.source_id, indexSource?.source_id,
+      mechanicsSource?.source_id].filter(Boolean))].sort(),
     identity_source: { source_id: playerSource.source_id, section_id: skillId },
     classification_source: { source_id: base ? playerSource.source_id : indexSource.source_id, row_id: skillId },
     source_fields: {

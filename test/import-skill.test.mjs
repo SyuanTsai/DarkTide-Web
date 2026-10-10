@@ -22,6 +22,18 @@ function indexedInput() {
   };
 }
 
+function withMechanicsSource() {
+  const input = indexedInput();
+  const mechanics = bytes('# 演示防護：原始碼依據\n\n這段尚未審核的機制正文不應出現在匯入候選。');
+  input.mechanicsSource = {
+    source_id: 'mechanics-source', kind: 'git_file',
+    path: input.playerSource.path.replace('README.md', 'practice-guard.md'),
+    sha256: sha(mechanics)
+  };
+  input.sourceBytes.set('mechanics-source', mechanics);
+  return input;
+}
+
 // Scenario: A fixed index and player section agree with a TSV identity and classification.
 // Purpose: Produce an in-memory, explicitly pending skill candidate from verified source fields.
 test('UnitT10_imports_indexed_skill_as_pending_candidate', async () => {
@@ -38,6 +50,21 @@ test('UnitT10_imports_indexed_skill_as_pending_candidate', async () => {
     { source_id: 'player-source', section_id: 'practice-guard' });
   assert.deepEqual(candidate.classification_source,
     { source_id: 'index-source', row_id: 'practice-guard' });
+});
+
+// Scenario: A fixed mechanics Markdown blob belongs to the indexed skill.
+// Purpose: Carry only its verified source coordinate and candidate route into review.
+test('UnitT15_imports_locked_mechanics_coordinate_without_body_text', async () => {
+  const candidate = await importSkillCandidate(withMechanicsSource());
+  assert.equal(candidate.mechanics_route_candidate, '/skills/veteran/practice-guard/mechanics/');
+  assert.deepEqual(candidate.mechanics_source, {
+    source_id: 'mechanics-source',
+    path: 'Game Info/releases/test/skills/talents/Veteran/practice-guard.md',
+    sha256: candidate.mechanics_source.sha256
+  });
+  assert.ok(candidate.source_lock_ids.includes('mechanics-source'));
+  assert.doesNotMatch(JSON.stringify(candidate), /尚未審核的機制正文/);
+  assert.equal(candidate.review_status, 'pending');
 });
 
 // Scenario: A base effect uses its detail link and has no SOURCE_INDEX row.
@@ -106,6 +133,20 @@ test('UnitT40_rejects_source_hash_drift_before_import', async () => {
   const input = indexedInput();
   input.sourceBytes.set('player-source', bytes('changed'));
   await assert.rejects(() => importSkillCandidate(input), /source.*hash/i);
+});
+
+// Scenario: The mechanics lock points to another skill, has a stale hash, or lacks bytes.
+// Purpose: Refuse to attach a plausible but unverified mechanics file to a skill.
+test('UnitT45_rejects_wrong_or_unverified_mechanics_source', async () => {
+  const wrongPath = withMechanicsSource();
+  wrongPath.mechanicsSource.path = wrongPath.mechanicsSource.path.replace('practice-guard.md', 'other-skill.md');
+  await assert.rejects(() => importSkillCandidate(wrongPath), /mechanics.*path/i);
+  const wrongHash = withMechanicsSource();
+  wrongHash.mechanicsSource.sha256 = '0'.repeat(64);
+  await assert.rejects(() => importSkillCandidate(wrongHash), /source.*hash/i);
+  const missingBytes = withMechanicsSource();
+  missingBytes.sourceBytes.delete('mechanics-source');
+  await assert.rejects(() => importSkillCandidate(missingBytes), /missing.*source/i);
 });
 
 // Scenario: An index lock points to another class or a base effect claims an index.
