@@ -62,7 +62,7 @@ export function readMarkdownSelector(lines, selector) {
   if (headingIndex < 0) throw new Error(`Markdown section has no heading: ${sectionId}`);
   const title = lines[headingIndex].replace(/^#{2,4}\s+/, '').trim();
   if (field === 'title-zh') {
-    const name = title.replace(/(?:\([^()]*\)|（[^（）]*）)(?:：[^：]*)?$/, '').trim();
+    const name = title.replace(/(?:\([^()]*\)|（[^（）]*）)(?=：|$)/, '').trim();
     if (!name) throw new Error(`Markdown title is empty: ${sectionId}`);
     return name;
   }

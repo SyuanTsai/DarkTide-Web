@@ -277,6 +277,7 @@ test('UnitT180_stops_markdown_effect_before_secondary_subsection', async () => {
 
 function baseEffectCandidate() {
   const input = markdownCandidate();
+  input.record.name_zh_tw = '演示防護：基礎效果';
   const markdown = [
     '# 虛構基礎效果', '', '## 演示防護(Practice Guard)：基礎效果', '',
     '- **效果**：這是一段虛構技能效果，僅用於版面測試。', '',
