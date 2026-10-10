@@ -76,6 +76,14 @@ test('UnitT10_accepts_fully_matched_field_provenance', async () => {
   await assert.doesNotReject(() => validateRecordPublication(candidate()));
 });
 
+// Scenario: A fixed source path contains the space used by the real Game Info tree.
+// Purpose: Allow a safe Git path without weakening source byte or rights checks.
+test('UnitT15_accepts_git_source_path_with_internal_spaces', async () => {
+  const input = candidate();
+  input.sourceLocks[0].path = 'Game Info/docs/sample.md';
+  await assert.doesNotReject(() => validateRecordPublication(input));
+});
+
 // Scenario: A displayed effect is missing its own evidence row.
 // Purpose: Prevent another field's approval from covering unreviewed text.
 test('UnitT20_rejects_missing_field_evidence', async () => {

@@ -1,7 +1,8 @@
+import { validGitSourcePath } from './source-path.mjs';
+
 const shaPattern = /^[a-f0-9]{64}$/;
 const commitPattern = /^[a-f0-9]{40}$/;
 const idPattern = /^[a-z][a-z0-9._-]{0,127}$/;
-const relativePathPattern = /^(?:[a-zA-Z0-9._-]+\/)*[a-zA-Z0-9._-]+$/;
 
 function uniqueIndex(rows, field, label) {
   if (!Array.isArray(rows)) throw new Error(`${label} must be an array`);
@@ -61,7 +62,7 @@ function validateLock(lock) {
   if (lock.kind === 'git_file') {
     if (typeof lock.repository_url !== 'string' || !lock.repository_url.startsWith('https://') ||
         !commitPattern.test(lock.commit_sha ?? '') || typeof lock.path !== 'string' ||
-        !relativePathPattern.test(lock.path) || lock.path.split('/').includes('..') || lock.source_url !== null) {
+        !validGitSourcePath(lock.path) || lock.source_url !== null) {
       throw new Error(`invalid git source lock: ${lock.source_id}`);
     }
   } else if (lock.kind === 'external_asset') {

@@ -1,5 +1,6 @@
 import { canonicalize, computeReleaseId } from './manifest.mjs';
 import { validateReleaseCandidate } from '../content/release-candidate.mjs';
+import { loadGitSourceBytes } from '../content/git-source.mjs';
 import { renderReleaseSite } from '../site/render.mjs';
 
 const outputPath = /^(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.(?:html|css|js|svg|png|webp)$/;
@@ -97,4 +98,14 @@ export async function createValidatedReleaseDraft(data, context, { workerBytes, 
     toolCommitSha
   });
   return { files, manifest };
+}
+
+export async function createGitVerifiedReleaseDraft(data, context,
+  { gitCheckouts, workerBytes, toolCommitSha } = {}) {
+  const stableData = structuredClone(data);
+  const stableContext = structuredClone(context);
+  const gitBytes = await loadGitSourceBytes(stableContext.sourceLocks, gitCheckouts);
+  if (!(stableContext.sourceBytes instanceof Map)) stableContext.sourceBytes = new Map();
+  for (const [sourceId, bytes] of gitBytes) stableContext.sourceBytes.set(sourceId, bytes);
+  return createValidatedReleaseDraft(stableData, stableContext, { workerBytes, toolCommitSha });
 }
