@@ -32,6 +32,8 @@ Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原�
 
 `importBlessingMapCandidates({ sourceLock, sourceBytes })` 從已鎖定 hash 的祝福 map 位元組，產生祝福、關聯武器、mark、variant 與 binding 的記憶體待審候選；驗重複 ID、來源欄位座標、tier 範圍與關係引用。已用固定 Mods Git blob 實跑 167／67／131／605／1,185 筆；數值僅列待審欄名，不建立已驗 claim，`available_tiers` 未證者維持 `null`。此 map 的 67 個武器只是祝福關聯集合，不能當完整玩家武器清單；文字、效果、數值與發布權仍待逐項審核。
 
+`importWeaponReviewCandidates({ queueBytes, queueSha256, sourceCommit, blessingMap })` 將受控本機產生的 UI 武器技術清冊與上述祝福 map 候選在記憶體中對帳。它驗清冊 byte hash、來源 commit、武器與 mark 歸屬、模板路徑及摘要計數；map 以外的名稱維持 `null`，所有輸出固定為待審且 `publication_ready=false`。固定清冊實跑得到 70 個武器 family／135 個 mark，其中 67 個 family 與 map 對應、3 個只見於 UI。清冊、真實文字與數值未寫入 Repo 或正式內容包；UI 出現仍不證明目前玩家可取得或可公開發布。
+
 `snapshotReviewCandidates` 與 `diffReviewSnapshots` 可將待審技能及祝福 map 候選轉為依複合 ID 排序的逐欄 hash 快照，再列新增、移除及變更的 ID／欄位／hash。祝福 map 數值只在記憶體候選保留各待審欄的 hash，不輸出未審數值；差異結果也不含名稱或效果原文。這是來源更新的審核隊列，不會自動批准或發布變更。
 
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。
