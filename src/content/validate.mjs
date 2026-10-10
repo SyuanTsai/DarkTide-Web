@@ -120,6 +120,7 @@ export function validatePackage(data, { allowRelease = false } = {}) {
   const knownContent = new Set([
     ...[...skills.keys()].map(id => key('skill', id)),
     ...[...weapons.keys()].map(id => key('weapon', id)),
+    ...[...marks.keys()].map(id => key('mark', id)),
     ...[...blessings.keys()].map(id => key('blessing', id)),
     ...[...variants.keys()].map(id => key('variant', id))
   ]);
@@ -135,6 +136,7 @@ export function validatePackage(data, { allowRelease = false } = {}) {
     const expected = {
       skill: `/skills/${route.content_key}/`,
       weapon: `/weapons/${route.content_key}/`,
+      mark: `/weapons/${marks.get(route.content_key)?.weapon_id}/marks/${route.content_key}/`,
       blessing: `/blessings/${route.content_key}/`,
       variant: `/blessings/${variants.get(route.content_key)?.blessing_id}/variants/${route.content_key}/`
     }[route.content_kind];

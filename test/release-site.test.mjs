@@ -128,6 +128,7 @@ test('UnitT10_renders_approved_release_without_fixture_labels', async () => {
   const files = await renderReleaseSite(data, context);
   assert.ok(files.has('skills/veteran/practice-guard/index.html'));
   assert.ok(files.has('weapons/practice-rifle/index.html'));
+  assert.ok(files.has('weapons/practice-rifle/marks/practice-rifle-m1/index.html'));
   assert.ok(files.has('blessings/steady-example/index.html'));
   assert.doesNotMatch(files.get('index.html'), /虛構示範|真實遊戲資料尚未發布|name="robots" content="noindex"/);
   assert.match(files.get('weapons/practice-rifle/index.html'), /href="\/blessings\/steady-example\/"/);
@@ -246,12 +247,26 @@ test('UnitT40_rejects_unapproved_binding_before_render', async () => {
   await assert.rejects(() => renderReleaseSite(data, context), /publish.*approval/i);
 });
 
+// Scenario: A mark name is approved on the weapon page but excluded from the mark page.
+// Purpose: Require a route-specific publish decision before showing the mark's own detail page.
+test('UnitT42_rejects_mark_name_without_mark_page_approval', async () => {
+  const { data, context } = candidate();
+  const rightId = data.marks[0].evidence.find(row => row.field_path === '/name_zh_tw').rights_id;
+  const decision = context.rightsLedger.find(row => row.rights_id === rightId).publish;
+  decision.allowed_routes = decision.allowed_routes.filter(route =>
+    route !== '/weapons/practice-rifle/marks/practice-rifle-m1/');
+  await assert.rejects(() => renderReleaseSite(data, context), /approval excludes route/i);
+});
+
 // Scenario: A mark has its own fixed claim and the taxonomy declares that mark scope.
 // Purpose: Keep a mark number under its mark rather than silently promoting it to weapon scope.
 test('UnitT44_renders_mark_claim_only_with_mark_scope', async () => {
   const valid = candidateWithNumericClaim('mark');
-  const page = (await renderReleaseSite(valid.data, valid.context)).get('weapons/practice-rifle/index.html');
+  const files = await renderReleaseSite(valid.data, valid.context);
+  const page = files.get('weapons/practice-rifle/index.html');
   assert.match(page, /演示型[\s\S]*capacity[\s\S]*30個/);
+  assert.match(files.get('weapons/practice-rifle/marks/practice-rifle-m1/index.html'),
+    /演示型[\s\S]*capacity[\s\S]*30個/);
 
   const wrongScope = candidateWithNumericClaim('mark');
   wrongScope.context.taxonomy.numeric_claims.mark.capacity.scope = 'weapon';

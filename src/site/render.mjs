@@ -110,13 +110,27 @@ function renderValidatedSite(data, indexes) {
     const { images, notices } = assetMarkup(weapon, indexes.assets);
     const marks = weapon.mark_ids.map(id => indexes.marks.get(id));
     const related = data.bindings.filter(binding => binding.weapon_id === weapon.weapon_id).map(binding => indexes.blessings.get(binding.blessing_id));
-    const markList = list(marks.map(mark => `<li>${escapeHtml(mark.name_zh_tw)}${claimMarkup(mark.claims)}</li>`));
+    const markList = list(marks.map(mark => `<li><a href="${escapeHtml(routeFor(indexes, 'mark', mark.mark_id))}">${escapeHtml(mark.name_zh_tw)}</a>${claimMarkup(mark.claims)}</li>`));
     const uniqueBlessings = [...new Map(related.map(b => [b.blessing_id, b])).values()];
     const relatedLinks = list(uniqueBlessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
     const content = intro('武器', weapon.name_zh_tw, detailDescription) +
       (weapon.claims.length ? card('武器數值', claimMarkup(weapon.claims)) : '') +
       card('型號', images + markList) + card('可用祝福', relatedLinks);
     files.set(fileFor(routeFor(indexes, 'weapon', weapon.weapon_id)), page(weapon.name_zh_tw, 'weapons', content, notices));
+  }
+  for (const mark of indexes.marks.values()) {
+    const weapon = indexes.weapons.get(mark.weapon_id);
+    const related = data.bindings.filter(binding => binding.mark_id === mark.mark_id)
+      .map(binding => indexes.blessings.get(binding.blessing_id));
+    const uniqueBlessings = [...new Map(related.map(blessing => [blessing.blessing_id, blessing])).values()];
+    const weaponLink = list([item(routeFor(indexes, 'weapon', weapon.weapon_id), weapon.name_zh_tw)]);
+    const blessingLinks = list(uniqueBlessings.map(blessing =>
+      item(routeFor(indexes, 'blessing', blessing.blessing_id), blessing.name_zh_tw)));
+    const content = intro('武器型號', mark.name_zh_tw, detailDescription) +
+      card('所屬武器', weaponLink) +
+      (mark.claims.length ? card('型號數值', claimMarkup(mark.claims)) : '') +
+      card('可用祝福', blessingLinks);
+    files.set(fileFor(routeFor(indexes, 'mark', mark.mark_id)), page(mark.name_zh_tw, 'weapons', content));
   }
   for (const blessing of blessings) {
     const { images, notices } = assetMarkup(blessing, indexes.assets);

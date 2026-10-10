@@ -175,6 +175,15 @@ export async function validateReleaseCandidate(data, context) {
   }
   for (const mark of data.marks) {
     await check('mark', mark, route('weapon', mark.weapon_id));
+    const detail = route('mark', mark.mark_id);
+    await check('mark', mark, detail);
+    const weapon = indexes.weapons.get(mark.weapon_id);
+    await check('weapon', weapon, detail, ['/name_zh_tw'], false);
+    for (const binding of data.bindings.filter(row => row.mark_id === mark.mark_id)) {
+      const blessing = indexes.blessings.get(binding.blessing_id);
+      await check('blessing', blessing, detail, ['/name_zh_tw'], false);
+      await check('binding', binding, detail);
+    }
   }
   for (const blessing of data.blessings) {
     const detail = route('blessing', blessing.blessing_id);

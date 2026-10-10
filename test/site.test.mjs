@@ -36,6 +36,19 @@ test('UnitT30_renders_deterministic_file_bytes', () => {
   assert.deepEqual(first, second);
 });
 
+// Scenario: A fictional mark has its own canonical route under the owning weapon.
+// Purpose: Expose mark-specific claims and applicable blessings through a resolvable page.
+test('UnitT35_renders_mark_detail_with_weapon_and_blessing_links', () => {
+  const data = structuredClone(fixture);
+  const files = renderSite(data);
+  const weapon = files.get('weapons/practice-rifle/index.html');
+  const mark = files.get('weapons/practice-rifle/marks/practice-rifle-m1/index.html');
+  assert.match(weapon, /href="\/weapons\/practice-rifle\/marks\/practice-rifle-m1\/"/);
+  assert.match(mark, /演示型/);
+  assert.match(mark, /href="\/weapons\/practice-rifle\/"/);
+  assert.match(mark, /href="\/blessings\/steady-example\/"/);
+});
+
 // Scenario: Every locally generated page is checked after rendering the fixture.
 // Purpose: Catch navigation paths that do not resolve to another generated file.
 test('UnitT40_renders_only_resolvable_internal_links', () => {
@@ -59,6 +72,9 @@ test('UnitT50_renders_numeric_claims_at_their_record_level', () => {
   data.marks.push({ ...structuredClone(data.marks[0]), mark_id: 'practice-rifle-m2', name_zh_tw: '演示二型', claims: [
     { claim_id: 'stability', state: 'unknown', value: null, unit: null, unit_note: null, source_ref: null }
   ] });
+  data.routes.push({ route_kind: 'canonical', content_kind: 'mark',
+    content_key: 'practice-rifle-m2', source_route: null,
+    target_route: '/weapons/practice-rifle/marks/practice-rifle-m2/', decision: 'keep' });
   const page = renderSite(data).get('weapons/practice-rifle/index.html');
   assert.match(page, /容量|capacity/);
   assert.match(page, /30.*個/);

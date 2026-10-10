@@ -35,6 +35,30 @@ test('UnitT35_accepts_underscores_in_canonical_source_id_route', () => {
   assert.doesNotThrow(() => validatePackage(data));
 });
 
+// Scenario: A mark declares a canonical page nested under its owning weapon.
+// Purpose: Give each mark a unique validated destination for its own claims and relations.
+test('UnitT37_accepts_owned_mark_canonical_route', () => {
+  const data = structuredClone(fixture);
+  assert.doesNotThrow(() => validatePackage(data));
+});
+
+// Scenario: A mark route is placed under a different weapon ID.
+// Purpose: Reject a URL that misstates which weapon owns the mark.
+test('UnitT38_rejects_mark_route_with_wrong_weapon', () => {
+  const data = structuredClone(fixture);
+  data.routes.find(route => route.content_kind === 'mark').target_route =
+    '/weapons/another-weapon/marks/practice-rifle-m1/';
+  assert.throws(() => validatePackage(data), /route.*mark|mark.*route/i);
+});
+
+// Scenario: A mark record has no route despite appearing under a weapon.
+// Purpose: Ensure every published mark can be opened at its own canonical URL.
+test('UnitT39_rejects_mark_without_canonical_route', () => {
+  const data = structuredClone(fixture);
+  data.routes = data.routes.filter(route => route.content_kind !== 'mark');
+  assert.throws(() => validatePackage(data), /missing canonical route for mark/i);
+});
+
 // Scenario: The fictional package is mislabeled as a release.
 // Purpose: Keep demonstration text out of a deployable release.
 test('UnitT40_rejects_fixture_as_release', () => {

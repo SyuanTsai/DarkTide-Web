@@ -60,6 +60,7 @@ export const fixture = {
   routes: [
     { route_kind: 'canonical', content_kind: 'skill', content_key: 'veteran/practice-guard', source_route: null, target_route: '/skills/veteran/practice-guard/', decision: 'keep' },
     { route_kind: 'canonical', content_kind: 'weapon', content_key: 'practice-rifle', source_route: null, target_route: '/weapons/practice-rifle/', decision: 'keep' },
+    { route_kind: 'canonical', content_kind: 'mark', content_key: 'practice-rifle-m1', source_route: null, target_route: '/weapons/practice-rifle/marks/practice-rifle-m1/', decision: 'keep' },
     { route_kind: 'canonical', content_kind: 'blessing', content_key: 'steady-example', source_route: null, target_route: '/blessings/steady-example/', decision: 'keep' },
     { route_kind: 'canonical', content_kind: 'variant', content_key: 'steady-example-rifle', source_route: null, target_route: '/blessings/steady-example/variants/steady-example-rifle/', decision: 'keep' }
   ],
