@@ -12,6 +12,8 @@ python -m http.server 8000 -d dist
 
 開啟 `http://localhost:8000/` 預覽。建置結果位於本機 `dist/`，其中 `build-manifest.json` 明確標示 `release_ready: false`。沒有套件安裝步驟或遠端抓取。
 
+一般 PR（包含 fork）與 `main` push 會執行 `Fixture CI`：使用 Node.js 24 跑測試與虛構資料建置，並確認輸出仍是不可部署的 fixture manifest。此 workflow 只給 GitHub token 讀取權限、不保留 checkout 憑證，也不取用部署密鑰、上傳產物或執行正式資料匯入；正式來源驗收與部署須另走受控流程。
+
 內容由 `fixtures/site.mjs` 輸入，`src/content/validate.mjs` 檢查 ID、武器／型號／祝福關係、數值宣稱格式與 canonical route，`src/site/render.mjs` 產生繁體中文靜態頁面。每個型號使用 `/weapons/{weapon_id}/marks/{mark_id}/` 獨立路由，可從武器頁進入並返回所屬武器、查看關聯祝福；正式候選需核對型號頁上使用的各欄來源與發布決策。虛構頁面可將技能、武器、型號與祝福階級的固定數值分層顯示；未知值顯示「尚未確認」。若日後在某頁使用 Games Lantern 授權的祝福或天賦圖示，該圖示記錄需帶來源連結資訊，產生器會在使用頁放上可見的直接連結。本站不複製或翻譯 Games Lantern 的原創文字，也不以程式爬取其圖示。
 
 `src/content/publication.mjs` 提供逐 record 的發布候選檢查：核對公開欄位的來源 selector、原始 byte hash、三種獨立權利決策與使用頁路由；使用圖示時另核對重新託管、素材路徑與必要署名。測試涵蓋符合條件的 Games Lantern 圖示可通過。這是候選 record 的驗證元件，尚未組成完整 release 匯入與發布流程；真實來源 byte 與權利證據不存於此 Repo。

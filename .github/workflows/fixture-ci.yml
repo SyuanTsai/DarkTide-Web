@@ -1,0 +1,42 @@
+name: Fixture CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Test
+        run: npm test
+
+      - name: Build fictional fixture
+        run: npm run build
+
+      - name: Assert output cannot be deployed
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const manifest = JSON.parse(await readFile('dist/build-manifest.json', 'utf8'));
+          if (manifest.package_kind !== 'fixture' || manifest.release_ready !== false ||
+              manifest.release_id !== null || manifest.source_lock_ids?.length !== 0) {
+            throw new Error('CI build is not a nondeployable fixture');
+          }
+          NODE
