@@ -30,24 +30,27 @@ export default {
       if (!manifestObject) return response(503, 'Release unavailable');
       const manifest = JSON.parse(await manifestObject.text());
       await validateReleaseManifest(manifest, releaseId);
-      const entry = manifest.files.find(file => file.path === name);
+      const requestedEntry = manifest.files.find(file => file.path === name);
+      const notFound = !requestedEntry;
+      const entry = requestedEntry ?? (name.startsWith('assets/') ? null :
+        manifest.files.find(file => file.path === '404.html'));
       if (!entry) return response(404, 'Not found');
       const etag = `"${entry.sha256}"`;
       const headers = new Headers({
         'content-type': entry.content_type,
-        'cache-control': 'public, max-age=60',
+        'cache-control': notFound ? 'no-store' : 'public, max-age=60',
         etag
       });
-      if (request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers });
-      if (request.method === 'HEAD') return new Response(null, { status: 200, headers });
-      const object = await env.CONTENT_BUCKET.get(`${prefix}${name}`);
+      if (!notFound && request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers });
+      if (request.method === 'HEAD') return new Response(null, { status: notFound ? 404 : 200, headers });
+      const object = await env.CONTENT_BUCKET.get(`${prefix}${entry.path}`);
       if (!object) return response(503, 'Release incomplete');
       const bytes = await object.arrayBuffer();
       if (bytes.byteLength !== entry.raw_bytes) return response(503, 'Release object mismatch');
       const digest = await crypto.subtle.digest('SHA-256', bytes);
       const actualSha = [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, '0')).join('');
       if (actualSha !== entry.sha256) return response(503, 'Release object mismatch');
-      return new Response(bytes, { status: 200, headers });
+      return new Response(bytes, { status: notFound ? 404 : 200, headers });
     } catch {
       return response(503, 'Release unavailable');
     }

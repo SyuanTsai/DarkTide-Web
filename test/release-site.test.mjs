@@ -134,6 +134,18 @@ test('UnitT10_renders_approved_release_without_fixture_labels', async () => {
   assert.match(files.get('weapons/practice-rifle/index.html'), /href="\/blessings\/steady-example\/"/);
 });
 
+// Scenario: A synthetic approved release produces its generic missing-page response.
+// Purpose: Keep the public 404 page navigable and excluded from search indexing.
+test('UnitT15_renders_approved_release_not_found_page_with_noindex', async () => {
+  const { data, context } = candidate();
+  const files = await renderReleaseSite(data, context);
+  const page = files.get('404.html');
+  assert.match(page, /找不到頁面/);
+  assert.match(page, /<meta name="robots" content="noindex">/);
+  assert.match(page, /href="\/skills\/"/);
+  assert.doesNotMatch(files.get('index.html'), /name="robots" content="noindex"/);
+});
+
 // Scenario: A blessing effect lacks the required source evidence.
 // Purpose: Block page generation before any unreviewed public text is rendered.
 test('UnitT20_rejects_missing_field_evidence_before_render', async () => {

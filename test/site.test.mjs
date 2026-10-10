@@ -15,6 +15,18 @@ test('UnitT10_renders_three_categories_and_two_way_links', () => {
   assert.match(files.get('blessings/steady-example/index.html'), /href="\/weapons\/practice-rifle\/"/);
 });
 
+// Scenario: A valid fictional package is rendered for an unknown route.
+// Purpose: Give visitors a navigable Traditional Chinese error page without indexing it.
+test('UnitT15_renders_navigable_noindex_not_found_page', () => {
+  const page = renderSite(structuredClone(fixture)).get('404.html');
+  assert.match(page, /<html lang="zh-Hant-TW">/);
+  assert.match(page, /<meta name="robots" content="noindex">/);
+  assert.match(page, /找不到頁面/);
+  for (const route of ['/', '/skills/', '/weapons/', '/blessings/']) {
+    assert.ok(page.includes(`href="${route}"`));
+  }
+});
+
 // Scenario: An icon with a required attribution is used on one page.
 // Purpose: Keep its visible direct follow link on that page's initial HTML.
 test('UnitT20_renders_attribution_on_each_using_page', () => {

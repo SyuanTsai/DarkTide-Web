@@ -5,6 +5,7 @@ import { computeReleaseId } from '../src/release/manifest.mjs';
 import worker from '../worker/index.mjs';
 
 const html = '<!doctype html><html lang="zh-Hant-TW"><title>示範</title></html>';
+const notFoundHtml = '<!doctype html><html lang="zh-Hant-TW"><title>找不到頁面</title></html>';
 const css = 'body{}';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const manifest = {
@@ -17,12 +18,13 @@ const manifest = {
   field_requirement_sha256: 'd'.repeat(64),
   tool_commit_sha: 'e'.repeat(40),
   files: [
+    { path: '404.html', raw_bytes: Buffer.byteLength(notFoundHtml), sha256: hash(notFoundHtml), content_type: 'text/html; charset=utf-8' },
     { path: 'assets/site.css', raw_bytes: Buffer.byteLength(css), sha256: hash(css), content_type: 'text/css; charset=utf-8' },
     { path: 'index.html', raw_bytes: Buffer.byteLength(html), sha256: hash(html), content_type: 'text/html; charset=utf-8' },
     { path: 'skills/index.html', raw_bytes: Buffer.byteLength(html), sha256: hash(html), content_type: 'text/html; charset=utf-8' }
   ],
   worker: { path: 'worker/index.mjs', raw_bytes: 42, sha256: 'f'.repeat(64) },
-  totals: { file_count: 3, raw_bytes: Buffer.byteLength(css) + Buffer.byteLength(html) * 2 },
+  totals: { file_count: 4, raw_bytes: Buffer.byteLength(notFoundHtml) + Buffer.byteLength(css) + Buffer.byteLength(html) * 2 },
   validation: { complete: true, checks: ['assets-v1', 'content-v1', 'rights-v1', 'routes-v1'] }
 };
 manifest.release_id = await computeReleaseId(manifest);
@@ -32,6 +34,7 @@ function environment(options = {}) {
   const calls = [];
   const objects = {
     [`releases/${releaseId}/build-manifest.json`]: JSON.stringify(options.manifest ?? manifest),
+    [`releases/${releaseId}/404.html`]: options.notFoundBody ?? notFoundHtml,
     [`releases/${releaseId}/index.html`]: options.homeBody ?? html,
     [`releases/${releaseId}/skills/index.html`]: html,
     [`releases/${releaseId}/assets/site.css`]: css
@@ -74,6 +77,29 @@ test('UnitT20_rejects_unlisted_or_encoded_paths', async () => {
   assert.equal((await worker.fetch(new Request('https://example.test/%2e%2e/secrets'), env)).status, 404);
   assert.ok(calls.every(key => key.startsWith(`releases/${releaseId}/`)));
   assert.ok(!calls.some(key => key.includes('secrets')));
+});
+
+// Scenario: A valid route is absent from the active release and its fallback page is intact.
+// Purpose: Return a useful 404 page without treating an unknown route as a server failure.
+test('UnitT25_serves_verified_not_found_page_for_unknown_route', async () => {
+  const { env } = environment();
+  const page = await worker.fetch(new Request('https://example.test/missing/'), env);
+  const head = await worker.fetch(new Request('https://example.test/missing/', { method: 'HEAD' }), env);
+  assert.equal(page.status, 404);
+  assert.equal(page.headers.get('content-type'), 'text/html; charset=utf-8');
+  assert.equal(page.headers.get('cache-control'), 'no-store');
+  assert.match(await page.text(), /找不到頁面/);
+  assert.equal(head.status, 404);
+  assert.equal(await head.text(), '');
+});
+
+// Scenario: The fallback page bytes differ from their manifest entry.
+// Purpose: Keep the release integrity boundary on error pages too.
+test('UnitT27_rejects_corrupt_not_found_page', async () => {
+  const { env } = environment({ notFoundBody: `${notFoundHtml}changed` });
+  const page = await worker.fetch(new Request('https://example.test/missing/'), env);
+  assert.equal(page.status, 503);
+  assert.equal(page.headers.get('cache-control'), 'no-store');
 });
 
 // Scenario: The active manifest is fictional, has a different ID, or was changed after ID calculation.

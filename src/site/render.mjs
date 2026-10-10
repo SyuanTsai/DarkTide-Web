@@ -22,13 +22,13 @@ function assetMarkup(record, assets) {
   };
 }
 
-function documentPage(title, section, content, credits = '', fixtureMode = true) {
+function documentPage(title, section, content, credits = '', fixtureMode = true, noindex = false) {
   return `<!doctype html>
 <html lang="zh-Hant-TW">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  ${fixtureMode ? '<meta name="robots" content="noindex">' : ''}
+  ${fixtureMode || noindex ? '<meta name="robots" content="noindex">' : ''}
   <title>${escapeHtml(title)}｜暗潮繁體資料庫${fixtureMode ? '示範' : ''}</title>
   <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -86,7 +86,8 @@ export async function renderReleaseSite(data, context) {
 
 function renderValidatedSite(data, indexes) {
   const fixtureMode = data.package_kind === 'fixture';
-  const page = (title, section, content, credits = '') => documentPage(title, section, content, credits, fixtureMode);
+  const page = (title, section, content, credits = '', noindex = false) =>
+    documentPage(title, section, content, credits, fixtureMode, noindex);
   const detailDescription = fixtureMode ? '虛構示範資料' : '繁體中文資料';
   const files = new Map();
   const skills = [...indexes.skills.values()];
@@ -97,6 +98,11 @@ function renderValidatedSite(data, indexes) {
   const blessingLinks = list(blessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
   const home = `<div class="hero"><p class="eyebrow">社群資料庫 · 繁體中文</p><h1>在技能、武器與祝福之間，找到清楚的路徑。</h1><p>${fixtureMode ? '這個版本使用虛構內容展示查閱方式；真實遊戲資料尚未發布。' : '依類別查閱技能、武器與祝福，並追蹤它們之間的關聯。'}</p><div class="hero-links"><a href="/skills/">探索技能 ↗</a><a href="/weapons/">瀏覽武器 ↗</a><a href="/blessings/">查詢祝福 ↗</a></div></div>`;
   files.set('index.html', page('首頁', '', `${home}<div class="section-grid">${card('技能', skillLinks)}${card('武器', weaponLinks)}${card('祝福', blessingLinks)}</div>`));
+  files.set('404.html', page('找不到頁面', '', intro('404', '找不到頁面', '這個網址沒有對應的資料。請從目錄重新查找。') +
+    card('繼續瀏覽', list([
+      item('/', '返回首頁'), item('/skills/', '技能目錄'),
+      item('/weapons/', '武器目錄'), item('/blessings/', '祝福目錄')
+    ])), '', true));
   files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('技能列表', skillLinks)));
   files.set('weapons/index.html', page('武器', 'weapons', intro('武器目錄', '武器', `從武器追溯型號與祝福。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('武器列表', weaponLinks)));
   files.set('blessings/index.html', page('祝福', 'blessings', intro('祝福目錄', '祝福', `從祝福反查適用武器。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('祝福列表', blessingLinks)));
