@@ -88,7 +88,7 @@ export function validatePackage(data, { allowRelease = false } = {}) {
     if (route.route_kind !== 'canonical' || !knownContent.has(key(route.content_kind, route.content_key))) {
       throw new Error('route has unsupported kind or unknown content');
     }
-    if (typeof route.target_route !== 'string' || !/^\/[a-z0-9/-]+\/$/.test(route.target_route) || route.target_route.includes('//')) {
+    if (typeof route.target_route !== 'string' || !/^\/[a-z0-9/_-]+\/$/.test(route.target_route) || route.target_route.includes('//')) {
       throw new Error('route has invalid target_route');
     }
     if (routes.has(route.target_route)) throw new Error(`duplicate canonical route: ${route.target_route}`);

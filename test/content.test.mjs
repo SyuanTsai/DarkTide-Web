@@ -25,6 +25,16 @@ test('UnitT30_rejects_duplicate_canonical_route', () => {
   assert.throws(() => validatePackage(data), /duplicate.*route/i);
 });
 
+// Scenario: A real source ID contains underscores and is used in its canonical skill URL.
+// Purpose: Accept the source ID alphabet while preserving the exact route-to-record join.
+test('UnitT35_accepts_underscores_in_canonical_source_id_route', () => {
+  const data = structuredClone(fixture);
+  data.skills[0].skill_id = 'practice_guard';
+  data.routes[0].content_key = 'veteran/practice_guard';
+  data.routes[0].target_route = '/skills/veteran/practice_guard/';
+  assert.doesNotThrow(() => validatePackage(data));
+});
+
 // Scenario: The fictional package is mislabeled as a release.
 // Purpose: Keep demonstration text out of a deployable release.
 test('UnitT40_rejects_fixture_as_release', () => {
