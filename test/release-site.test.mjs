@@ -143,6 +143,15 @@ test('UnitT30_rejects_taxonomy_hash_drift', async () => {
   await assert.rejects(() => renderReleaseSite(data, context), /taxonomy.*hash/i);
 });
 
+// Scenario: A structurally valid numeric claim is added to an otherwise approved synthetic release.
+// Purpose: Keep claim publication closed until per-claim source and page rights are wired into the release gate.
+test('UnitT35_rejects_numeric_claims_without_release_evidence_flow', async () => {
+  const { data, context } = candidate();
+  data.weapons[0].claims = [{ claim_id: 'capacity', state: 'known', value: '30',
+    unit: 'count', unit_note: null, source_ref: 'fictional-source' }];
+  await assert.rejects(() => renderReleaseSite(data, context), /numeric claims are unsupported/i);
+});
+
 // Scenario: A binding is used to join weapon and blessing pages but its right is pending.
 // Purpose: Keep relationship-derived links under the same publication gate as content text.
 test('UnitT40_rejects_unapproved_binding_before_render', async () => {

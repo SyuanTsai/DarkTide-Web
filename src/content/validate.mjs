@@ -16,6 +16,34 @@ function uniqueIndex(rows, field, name) {
   return index;
 }
 
+const decimalPattern = /^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/;
+const sourceIdPattern = /^[a-z][a-z0-9._-]{0,127}$/;
+const claimUnits = new Set(['percent', 'seconds', 'meters', 'count', 'multiplier', 'game_unit']);
+
+function validateClaims(claims, label) {
+  const seen = new Set();
+  for (const claim of requireArray(claims, `${label} numeric claims`)) {
+    if (!claim || typeof claim.claim_id !== 'string' || !sourceIdPattern.test(claim.claim_id)) {
+      throw new Error(`${label} has invalid numeric claim ID`);
+    }
+    if (seen.has(claim.claim_id)) throw new Error(`duplicate numeric claim: ${claim.claim_id}`);
+    seen.add(claim.claim_id);
+    if (claim.state === 'unknown') {
+      if (claim.value !== null || claim.unit !== null || claim.unit_note !== null || claim.source_ref !== null) {
+        throw new Error(`${label} unknown numeric claim has a value or source`);
+      }
+    } else if (claim.state === 'known') {
+      if (typeof claim.value !== 'string' || claim.value.length > 64 || !decimalPattern.test(claim.value) ||
+          !claimUnits.has(claim.unit) || !sourceIdPattern.test(claim.source_ref ?? '') ||
+          (claim.unit === 'game_unit' ? typeof claim.unit_note !== 'string' || !claim.unit_note.trim() : claim.unit_note !== null)) {
+        throw new Error(`${label} known numeric claim is invalid`);
+      }
+    } else {
+      throw new Error(`${label} numeric claim has invalid state`);
+    }
+  }
+}
+
 export function validatePackage(data, { allowRelease = false } = {}) {
   if (!data || typeof data !== 'object' || data.schema_version !== 1) {
     throw new Error('unsupported content schema_version');
@@ -37,6 +65,10 @@ export function validatePackage(data, { allowRelease = false } = {}) {
   const variants = uniqueIndex(data.variants, 'variant_id', 'variants');
   const assets = uniqueIndex(data.assets, 'asset_id', 'assets');
 
+  for (const [kind, rows] of [['skill', skills.values()], ['weapon', weapons.values()], ['mark', marks.values()]]) {
+    for (const row of rows) validateClaims(row.claims, kind);
+  }
+
   for (const mark of marks.values()) {
     const weapon = weapons.get(mark.weapon_id);
     if (!weapon) throw new Error(`mark ${mark.mark_id} references missing weapon`);
@@ -52,6 +84,14 @@ export function validatePackage(data, { allowRelease = false } = {}) {
     if (!blessing || !weapons.has(variant.weapon_id)) throw new Error(`variant ${variant.variant_id} has missing blessing or weapon`);
     if (!blessing.variant_ids?.includes(variant.variant_id)) throw new Error(`variant ${variant.variant_id} missing from blessing variant_ids`);
     const tiers = requireArray(variant.defined_tiers, 'defined_tiers');
+    const claimTiers = new Set();
+    for (const tierClaim of requireArray(variant.tier_claims, 'tier claims')) {
+      if (!Number.isInteger(tierClaim?.tier) || !tiers.includes(tierClaim.tier) || claimTiers.has(tierClaim.tier)) {
+        throw new Error(`variant ${variant.variant_id} has invalid or duplicate tier claim`);
+      }
+      claimTiers.add(tierClaim.tier);
+      validateClaims(tierClaim.claims, `tier ${tierClaim.tier}`);
+    }
     if (variant.available_tiers !== null && variant.available_tiers !== undefined) {
       for (const tier of requireArray(variant.available_tiers, 'available_tiers')) {
         if (!tiers.includes(tier)) throw new Error(`variant ${variant.variant_id} has undefined available tier`);

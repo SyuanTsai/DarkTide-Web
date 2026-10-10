@@ -50,6 +50,17 @@ function card(title, body) {
   return `<section class="card"><h2>${escapeHtml(title)}</h2>${body}</section>`;
 }
 
+const claimUnits = { percent: '%', seconds: '秒', meters: '公尺', count: '個', multiplier: '倍', game_unit: '' };
+
+function claimMarkup(claims) {
+  if (!claims.length) return '';
+  return `<dl class="claim-list">${claims.map(claim => {
+    const value = claim.state === 'unknown' ? '尚未確認' :
+      `${claim.value}${claimUnits[claim.unit]}${claim.unit === 'game_unit' ? ` ${claim.unit_note}` : ''}`;
+    return `<div><dt>${escapeHtml(claim.claim_id)}</dt><dd>${escapeHtml(value)}</dd></div>`;
+  }).join('')}</dl>`;
+}
+
 function routeFor(indexes, kind, id) {
   const route = [...indexes.routes.values()].find(row => row.content_kind === kind && row.content_key === id);
   return route.target_route;
@@ -93,16 +104,18 @@ function renderValidatedSite(data, indexes) {
   for (const skill of skills) {
     const { images, notices } = assetMarkup(skill, indexes.assets);
     const path = fileFor(routeFor(indexes, 'skill', `${skill.archetype}/${skill.skill_id}`));
-    files.set(path, page(skill.name_zh_tw, 'skills', `${intro(`技能 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}${card('技能效果', `${images}<p>${escapeHtml(skill.effect_zh_tw)}</p><p class="muted">分類：${escapeHtml(skill.category)}</p>`)}`, notices));
+    files.set(path, page(skill.name_zh_tw, 'skills', `${intro(`技能 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}${card('技能效果', `${images}<p>${escapeHtml(skill.effect_zh_tw)}</p><p class="muted">分類：${escapeHtml(skill.category)}</p>`)}${skill.claims.length ? card('技能數值', claimMarkup(skill.claims)) : ''}`, notices));
   }
   for (const weapon of weapons) {
     const { images, notices } = assetMarkup(weapon, indexes.assets);
     const marks = weapon.mark_ids.map(id => indexes.marks.get(id));
     const related = data.bindings.filter(binding => binding.weapon_id === weapon.weapon_id).map(binding => indexes.blessings.get(binding.blessing_id));
-    const markList = list(marks.map(mark => `<li>${escapeHtml(mark.name_zh_tw)}</li>`));
+    const markList = list(marks.map(mark => `<li>${escapeHtml(mark.name_zh_tw)}${claimMarkup(mark.claims)}</li>`));
     const uniqueBlessings = [...new Map(related.map(b => [b.blessing_id, b])).values()];
     const relatedLinks = list(uniqueBlessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
-    const content = intro('武器', weapon.name_zh_tw, detailDescription) + card('型號', images + markList) + card('可用祝福', relatedLinks);
+    const content = intro('武器', weapon.name_zh_tw, detailDescription) +
+      (weapon.claims.length ? card('武器數值', claimMarkup(weapon.claims)) : '') +
+      card('型號', images + markList) + card('可用祝福', relatedLinks);
     files.set(fileFor(routeFor(indexes, 'weapon', weapon.weapon_id)), page(weapon.name_zh_tw, 'weapons', content, notices));
   }
   for (const blessing of blessings) {
@@ -121,11 +134,12 @@ function renderValidatedSite(data, indexes) {
     const blessing = indexes.blessings.get(variant.blessing_id);
     const weapon = indexes.weapons.get(variant.weapon_id);
     const { images, notices } = assetMarkup(variant, indexes.assets);
-    const tiers = `${images}<p>定義階級：${escapeHtml(variant.defined_tiers.join('、'))}</p><p class="muted">可用階級：${variant.available_tiers == null ? '尚未確認' : escapeHtml(variant.available_tiers.join('、'))}</p>`;
+    const tiers = `${images}<p>定義階級：${escapeHtml(variant.defined_tiers.join('、'))}</p><p class="muted">可用階級：${variant.available_tiers == null ? '尚未確認' : escapeHtml(variant.available_tiers.join('、'))}</p>` +
+      variant.tier_claims.map(row => `<h3>第 ${row.tier} 階</h3>${claimMarkup(row.claims)}`).join('');
     const links = list([item(routeFor(indexes, 'blessing', blessing.blessing_id), blessing.name_zh_tw), item(routeFor(indexes, 'weapon', weapon.weapon_id), weapon.name_zh_tw)]);
     const content = intro('祝福變體', `${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, detailDescription) + card('階級資訊', tiers) + card('關聯資料', links);
     files.set(fileFor(routeFor(indexes, 'variant', variant.variant_id)), page(`${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, 'blessings', content, notices));
   }
-  files.set('assets/site.css', `:root{color-scheme:dark;font-family:system-ui,"Noto Sans TC",sans-serif;background:#101719;color:#e4e8df}*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:#a9d8ba}a:hover{color:#e3f6cc}.shell{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:2}.site-header{border-bottom:1px solid #3d4d48;background:#15211f}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0}.brand{font-size:1.18rem;text-decoration:none;font-weight:800;color:#f0f0d9}.brand span{font-weight:400;color:#abc1ae;margin-left:.4rem}nav{display:flex;gap:1.3rem}nav a{text-decoration:none}nav a[aria-current]{color:#f7e5a1}.hero{padding:82px 0 62px;max-width:800px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#dfc987;font-size:.78rem;font-weight:800}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.18;margin:.3em 0}.hero p,.intro p{color:#b9c8c1}.hero-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}.hero-links a{background:#a9d8ba;color:#12201a;padding:.75rem 1rem;border-radius:4px;text-decoration:none;font-weight:800}.hero-links a:hover{background:#e3f6cc}.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:80px}.card{background:#1b2926;border:1px solid #40564d;border-radius:6px;padding:24px;margin:18px 0}.card h2{margin-top:0;color:#f5e7b9}.card p{color:#c3d1c9}.intro{padding:54px 0 16px;max-width:750px}.intro h1{font-size:clamp(2rem,4vw,3.4rem);margin:0}.link-list{padding-left:1.2rem}.link-list li{margin:.6rem 0}.link-list span{color:#9fb4a9;margin-left:1rem}.muted{font-size:.9rem;color:#9fb4a9}.icon-row{display:flex;gap:1rem}.content-icon{width:72px;height:72px;object-fit:contain}.site-footer{border-top:1px solid #3d4d48;padding:25px 0 40px;color:#a6bbb0}.asset-credit a{color:#a9d8ba}@media(max-width:700px){.header-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.section-grid{grid-template-columns:1fr}.hero{padding-top:48px}}\n`);
+  files.set('assets/site.css', `:root{color-scheme:dark;font-family:system-ui,"Noto Sans TC",sans-serif;background:#101719;color:#e4e8df}*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:#a9d8ba}a:hover{color:#e3f6cc}.shell{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:2}.site-header{border-bottom:1px solid #3d4d48;background:#15211f}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0}.brand{font-size:1.18rem;text-decoration:none;font-weight:800;color:#f0f0d9}.brand span{font-weight:400;color:#abc1ae;margin-left:.4rem}nav{display:flex;gap:1.3rem}nav a{text-decoration:none}nav a[aria-current]{color:#f7e5a1}.hero{padding:82px 0 62px;max-width:800px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#dfc987;font-size:.78rem;font-weight:800}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.18;margin:.3em 0}.hero p,.intro p{color:#b9c8c1}.hero-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}.hero-links a{background:#a9d8ba;color:#12201a;padding:.75rem 1rem;border-radius:4px;text-decoration:none;font-weight:800}.hero-links a:hover{background:#e3f6cc}.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:80px}.card{background:#1b2926;border:1px solid #40564d;border-radius:6px;padding:24px;margin:18px 0}.card h2{margin-top:0;color:#f5e7b9}.card p{color:#c3d1c9}.intro{padding:54px 0 16px;max-width:750px}.intro h1{font-size:clamp(2rem,4vw,3.4rem);margin:0}.link-list{padding-left:1.2rem}.link-list li{margin:.6rem 0}.link-list span{color:#9fb4a9;margin-left:1rem}.muted{font-size:.9rem;color:#9fb4a9}.claim-list{margin:.7rem 0}.claim-list div{display:flex;gap:1rem;border-top:1px solid #40564d;padding:.35rem 0}.claim-list dt{min-width:8rem;color:#b9c8c1}.claim-list dd{margin:0;font-variant-numeric:tabular-nums}.icon-row{display:flex;gap:1rem}.content-icon{width:72px;height:72px;object-fit:contain}.site-footer{border-top:1px solid #3d4d48;padding:25px 0 40px;color:#a6bbb0}.asset-credit a{color:#a9d8ba}@media(max-width:700px){.header-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.section-grid{grid-template-columns:1fr}.hero{padding-top:48px}}\n`);
   return files;
 }
