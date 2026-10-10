@@ -113,6 +113,28 @@ test('UnitT27_rejects_missing_source_kind_rule_for_required_field', async () => 
   await assert.rejects(() => renderReleaseSite(data, context), /source kind.*requirement/i);
 });
 
+// Scenario: A skill name requires matching JSON and TSV evidence, with rights for both sources.
+// Purpose: Admit a field only when every declared source kind independently supports its value.
+test('UnitT28_accepts_matching_json_and_tsv_evidence_for_one_field', async () => {
+  const { data, context } = candidate();
+  const tsv = new TextEncoder().encode('id\tzh\npractice-guard\t演示防護\n');
+  const source = { ...context.sourceLocks[0], source_id: 'skill-tsv',
+    path: 'docs/darktide-skills/veteran.tsv', sha256: sha(tsv),
+    selectors: ['tsv:row:practice-guard:zh'] };
+  context.sourceLocks.push(source);
+  context.sourceBytes.set('skill-tsv', tsv);
+  const originalEvidence = data.skills[0].evidence.find(row => row.field_path === '/name_zh_tw');
+  const originalRight = context.rightsLedger.find(row => row.rights_id === originalEvidence.rights_id);
+  context.rightsLedger.push({ ...structuredClone(originalRight), rights_id: 'right-skill-name-tsv',
+    subject: { kind: 'source_field', source_id: 'skill-tsv',
+      selector: 'tsv:row:practice-guard:zh', asset_id: null } });
+  data.skills[0].evidence.push({ field_path: '/name_zh_tw', source_id: 'skill-tsv',
+    source_selector: 'tsv:row:practice-guard:zh', rights_id: 'right-skill-name-tsv' });
+  context.fieldRequirements.source_kinds.skill['/name_zh_tw'] = ['git_json', 'git_tsv'];
+  data.field_requirement_sha256 = sha(canonicalize(context.fieldRequirements));
+  await assert.doesNotReject(() => renderReleaseSite(data, context));
+});
+
 // Scenario: The release package names a taxonomy hash different from the supplied version.
 // Purpose: Stop a changed classification or requirement file from silently changing output.
 test('UnitT30_rejects_taxonomy_hash_drift', async () => {

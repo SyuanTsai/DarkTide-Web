@@ -26,6 +26,78 @@ export function readJsonSelector(document, selector) {
   return value;
 }
 
+export function parseTsvSource(bytes, sourceId) {
+  let text;
+  try { text = new TextDecoder('utf-8', { fatal: true }).decode(bytes).replace(/^\uFEFF/, ''); }
+  catch { throw new Error(`invalid TSV source bytes: ${sourceId}`); }
+  const records = [];
+  let row = [];
+  let field = '';
+  let quoted = false;
+  let closed = false;
+  function finishField() {
+    row.push(field);
+    field = '';
+    closed = false;
+  }
+  function finishRow() {
+    finishField();
+    records.push(row);
+    row = [];
+  }
+  for (let index = 0; index < text.length; index++) {
+    const char = text[index];
+    if (quoted) {
+      if (char === '"') {
+        if (text[index + 1] === '"') { field += '"'; index++; }
+        else { quoted = false; closed = true; }
+      } else field += char;
+    } else if (char === '\t') {
+      finishField();
+    } else if (char === '\n' || char === '\r') {
+      if (char === '\r') {
+        if (text[index + 1] !== '\n') throw new Error(`invalid TSV line ending: ${sourceId}`);
+        index++;
+      }
+      finishRow();
+    } else if (char === '"' && !closed && field === '') {
+      quoted = true;
+    } else if (closed || char === '"') {
+      throw new Error(`invalid TSV quoting: ${sourceId}`);
+    } else field += char;
+  }
+  if (quoted) throw new Error(`invalid TSV quoting: ${sourceId}`);
+  if (row.length || field || closed) finishRow();
+  const [header, ...values] = records;
+  if (!header || header.length < 2 || header.some(name => !/^[a-z][a-z0-9_]*$/.test(name)) ||
+      new Set(header).size !== header.length || !header.includes('id')) {
+    throw new Error(`invalid TSV header: ${sourceId}`);
+  }
+  const idIndex = header.indexOf('id');
+  const rows = new Map();
+  for (const value of values) {
+    if (value.length !== header.length) throw new Error(`invalid TSV column count: ${sourceId}`);
+    const id = value[idIndex];
+    if (!/^[a-z][a-z0-9._-]{0,127}$/.test(id)) throw new Error(`invalid TSV id: ${sourceId}`);
+    if (rows.has(id)) throw new Error(`duplicate TSV id: ${id}`);
+    rows.set(id, Object.fromEntries(header.map((name, index) => [name, value[index]])));
+  }
+  return { header, rows };
+}
+
+export function readTsvSelector(document, selector, sourcePath) {
+  const matchPath = /^docs\/darktide-skills\/(arbites|ogryn|psyker|scum|skitarii|veteran|zealot)\.tsv$/.exec(sourcePath ?? '');
+  if (!matchPath) throw new Error(`invalid TSV source path: ${sourcePath}`);
+  if (selector === 'tsv:archetype') return matchPath[1];
+  const match = /^tsv:row:([a-z][a-z0-9._-]{0,127}):([a-z][a-z0-9_]*)$/.exec(selector ?? '');
+  if (!match) throw new Error(`invalid TSV selector: ${selector}`);
+  const [, id, field] = match;
+  const row = document?.rows?.get(id);
+  if (!row) throw new Error(`missing TSV row: ${id}`);
+  if (!document.header.includes(field)) throw new Error(`missing TSV field: ${field}`);
+  return row[field];
+}
+
 export function parseMarkdownSource(bytes, sourceId) {
   try {
     return new TextDecoder('utf-8', { fatal: true }).decode(bytes).split(/\r?\n/);

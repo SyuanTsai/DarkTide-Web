@@ -1,6 +1,7 @@
 import { validGitSourcePath } from './source-path.mjs';
 import { isDeepStrictEqual } from 'node:util';
-import { parseJsonSource, readJsonSelector, parseMarkdownSource, readMarkdownSelector } from './source-selector.mjs';
+import { parseJsonSource, readJsonSelector, parseTsvSource, readTsvSelector,
+  parseMarkdownSource, readMarkdownSelector } from './source-selector.mjs';
 
 const shaPattern = /^[a-f0-9]{64}$/;
 const commitPattern = /^[a-f0-9]{40}$/;
@@ -106,6 +107,7 @@ export async function validateRecordPublication({
   if (!(sourceBytes instanceof Map)) throw new Error('source bytes map is required');
   const checkedSources = new Map();
   const parsedJson = new Map();
+  const parsedTsv = new Map();
   const parsedMarkdown = new Map();
   const usedRights = new Set();
 
@@ -151,6 +153,11 @@ export async function validateRecordPublication({
         if (!selector.startsWith('md:')) throw new Error(`unsupported Markdown selector: ${selector}`);
         if (!parsedMarkdown.has(sourceId)) parsedMarkdown.set(sourceId, parseMarkdownSource(checkedSources.get(sourceId), sourceId));
         const selected = readMarkdownSelector(parsedMarkdown.get(sourceId), selector);
+        if (selected !== pointerValue(record, fieldPath)) throw new Error(`source value differs for ${fieldPath}`);
+      } else if (lock.path.toLowerCase().endsWith('.tsv')) {
+        sourceKind = 'git_tsv';
+        if (!parsedTsv.has(sourceId)) parsedTsv.set(sourceId, parseTsvSource(checkedSources.get(sourceId), sourceId));
+        const selected = readTsvSelector(parsedTsv.get(sourceId), selector, lock.path);
         if (selected !== pointerValue(record, fieldPath)) throw new Error(`source value differs for ${fieldPath}`);
       } else {
         throw new Error(`unsupported Git source selector: ${selector}`);

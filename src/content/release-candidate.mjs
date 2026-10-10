@@ -38,7 +38,7 @@ export async function validateReleaseCandidate(data, context) {
           const requiredKinds = sourceKinds[path];
           return !Array.isArray(requiredKinds) || requiredKinds.length === 0 ||
             new Set(requiredKinds).size !== requiredKinds.length ||
-            requiredKinds.some(value => !['git_json', 'git_markdown'].includes(value));
+            requiredKinds.some(value => !['git_json', 'git_markdown', 'git_tsv'].includes(value));
         })) {
       throw new Error(`source kind requirements are missing or invalid for ${kind}`);
     }

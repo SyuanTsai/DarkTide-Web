@@ -16,9 +16,9 @@ python -m http.server 8000 -d dist
 
 `src/content/publication.mjs` 提供逐 record 的發布候選檢查：核對公開欄位的來源 selector、原始 byte hash、三種獨立權利決策與使用頁路由；使用圖示時另核對重新託管、素材路徑與必要署名。測試涵蓋符合條件的 Games Lantern 圖示可通過。這是候選 record 的驗證元件，尚未組成完整 release 匯入與發布流程；真實來源 byte 與權利證據不存於此 Repo。
 
-公開欄位的 Git 來源必須使用能逐值核對的 `json:/...` 或受支援的 `md:` selector；任意字串 selector、無解析器的 Git 檔案及外部圖示素材均不能替文字欄位背書。整合測試以已提交的完全虛構 JSON Git blob 核對來源 byte 與欄位值。
+公開欄位的 Git 來源必須使用能逐值核對的 `json:/...`、受支援的 `md:`，或固定 `docs/darktide-skills/<職業>.tsv` 的 `tsv:archetype`／`tsv:row:<id>:<欄>` selector。TSV 解析會處理引用欄位並拒絕重複 ID；已用固定歷史 Git blob 核對七職業 646 筆 selector 與既有技能匯入名稱 hash。任意字串 selector、無解析器的 Git 檔案及外部圖示素材均不能替文字欄位背書。整合測試以已提交的完全虛構 JSON Git blob 核對來源 byte 與欄位值。
 
-正式候選的版本化 `fieldRequirements.source_kinds` 另為每個必備欄位列出非空來源類型集合（目前支援 `git_json`、`git_markdown`）；每種指定類型都須有逐值相等且權利通過的證據。規則缺漏或只由其他類型來源支持時拒絕產生正式頁面。
+正式候選的版本化 `fieldRequirements.source_kinds` 另為每個必備欄位列出非空來源類型集合（目前支援 `git_json`、`git_markdown`、`git_tsv`）；每種指定類型都須有逐值相等且權利通過的證據。規則缺漏或只由其他類型來源支持時拒絕產生正式頁面。
 
 Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原始來源位元組逐欄比較候選值。技能 Markdown 可用 `md:anchor:<id>:title-zh|body-text` 或 `md:detail:<id>:title-zh|body-text` 從唯一的 HTML anchor 或詳細資料連結選取繁中標題與主要條列文字；次級小節、圖片及導覽連結不會混入效果欄位。固定 Mods 來源中的 618 個 README 區塊與 28 個 BASE_EFFECTS 區塊均已完成 selector 語法覆蓋檢查。這只證明能從已核對的檔案定位與轉換文字；分類、機制主張、翻譯品質與發布權仍須分別驗證。
 

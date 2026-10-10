@@ -346,3 +346,41 @@ test('UnitT230_rejects_external_asset_as_field_source', async () => {
     repository_url: null, commit_sha: null, source_url: 'https://example.test/fictional.webp' });
   await assert.rejects(() => validateRecordPublication(input), /unsupported.*field source/i);
 });
+
+function tsvCandidate() {
+  const input = candidate();
+  const rawTsv = new TextEncoder().encode('id\tzh\npractice_guard\t虛構防護\n');
+  input.record.archetype = 'veteran';
+  input.requiredFieldPaths = ['/archetype', '/name_zh_tw'];
+  input.sourceLocks[0].path = 'docs/darktide-skills/veteran.tsv';
+  input.sourceLocks[0].sha256 = sha(rawTsv);
+  input.sourceLocks[0].selectors = ['tsv:archetype', 'tsv:row:practice_guard:zh'];
+  input.sourceBytes.set('fictional-source', rawTsv);
+  input.record.evidence = [
+    { field_path: '/archetype', source_id: 'fictional-source', source_selector: 'tsv:archetype', rights_id: 'right-archetype' },
+    { field_path: '/name_zh_tw', source_id: 'fictional-source', source_selector: 'tsv:row:practice_guard:zh', rights_id: 'right-name' }
+  ];
+  input.rightsLedger = [
+    { schema_version: 1, rights_id: 'right-archetype',
+      subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'tsv:archetype', asset_id: null },
+      local: approval('/archetype'), git: pending(), publish: approval('/archetype') },
+    { schema_version: 1, rights_id: 'right-name',
+      subject: { kind: 'source_field', source_id: 'fictional-source', selector: 'tsv:row:practice_guard:zh', asset_id: null },
+      local: approval('/name_zh_tw'), git: pending(), publish: approval('/name_zh_tw') }
+  ];
+  return input;
+}
+
+// Scenario: A skill's archetype and name cite a fixed historical TSV path and row.
+// Purpose: Admit exact TSV evidence without treating the filename as a TSV column.
+test('UnitT240_accepts_fixed_tsv_skill_field_evidence', async () => {
+  await assert.doesNotReject(() => validateRecordPublication(tsvCandidate()));
+});
+
+// Scenario: The displayed skill name differs from its selected TSV row.
+// Purpose: Refuse approved rights when the field value is unsupported by fixed bytes.
+test('UnitT250_rejects_value_different_from_tsv_row', async () => {
+  const input = tsvCandidate();
+  input.record.name_zh_tw = '不是來源中的名稱';
+  await assert.rejects(() => validateRecordPublication(input), /source value.*name_zh_tw/i);
+});
