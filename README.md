@@ -16,4 +16,6 @@ python -m http.server 8000 -d dist
 
 `src/content/publication.mjs` 提供逐 record 的發布候選檢查：核對公開欄位的來源 selector、原始 byte hash、三種獨立權利決策與使用頁路由；使用圖示時另核對重新託管、素材路徑與必要署名。測試涵蓋符合條件的 Games Lantern 圖示可通過。這是候選 record 的驗證元件，尚未組成完整 release 匯入與發布流程；真實來源 byte 與權利證據不存於此 Repo。
 
+`renderReleaseSite(data, context)` 會在產生正式頁面前，核對三類內容的關係、taxonomy／欄位規則 hash、每個實際使用頁面的來源與權利，並把已驗證的圖示 byte 放入輸出。`renderSite(data)` 仍只接受虛構 fixture。正式匯入器、來源 Git blob 定位驗證、數值 claim、完整 release manifest 產生與部署尚未接上，因此沒有可發布的真實內容包。
+
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。

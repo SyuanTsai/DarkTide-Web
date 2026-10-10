@@ -16,7 +16,7 @@ function uniqueIndex(rows, field, label) {
 }
 
 function routeIsValid(route) {
-  return typeof route === 'string' && /^\/[a-z0-9/_-]+\/$/.test(route) && !route.includes('//') && !route.includes('..');
+  return route === '/' || (typeof route === 'string' && /^\/[a-z0-9/_-]+\/$/.test(route) && !route.includes('//') && !route.includes('..'));
 }
 
 function pointerValue(record, path) {
@@ -87,7 +87,7 @@ async function hashBytes(bytes) {
 
 export async function validateRecordPublication({
   route, record, requiredFieldPaths, sourceLocks, rightsLedger, sourceBytes,
-  assets = [], requireGitApproval = false
+  assets = [], requireGitApproval = false, includeAssets = true
 }) {
   if (!routeIsValid(route)) throw new Error('invalid publication route');
   if (!record || typeof record !== 'object' || !Array.isArray(record.evidence) || !Array.isArray(record.asset_ids)) {
@@ -126,6 +126,7 @@ export async function validateRecordPublication({
     if (evidenceKeys.has(key)) throw new Error(`duplicate field evidence: ${fieldPath}`);
     evidenceKeys.add(key);
     if (pointerValue(record, fieldPath) === undefined) throw new Error(`evidence references missing field: ${fieldPath}`);
+    if (!requiredFieldPaths.includes(fieldPath)) continue;
     const lock = await checkSource(sourceId);
     if (!lock.selectors.includes(selector)) throw new Error(`source selector is not locked: ${selector}`);
     const right = rights.get(rightId);
@@ -149,7 +150,7 @@ export async function validateRecordPublication({
   }
 
   if (new Set(record.asset_ids).size !== record.asset_ids.length) throw new Error('duplicate asset use');
-  for (const assetId of record.asset_ids) {
+  for (const assetId of includeAssets ? record.asset_ids : []) {
     const asset = assetIndex.get(assetId);
     if (!asset) throw new Error(`missing asset: ${assetId}`);
     if (asset.schema_version !== 1 || typeof asset.delivery_path !== 'string' ||

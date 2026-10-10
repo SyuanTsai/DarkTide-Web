@@ -16,11 +16,13 @@ function uniqueIndex(rows, field, name) {
   return index;
 }
 
-export function validatePackage(data) {
+export function validatePackage(data, { allowRelease = false } = {}) {
   if (!data || typeof data !== 'object' || data.schema_version !== 1) {
     throw new Error('unsupported content schema_version');
   }
-  if (data.package_kind !== 'fixture') throw new Error('release packages are unsupported');
+  if (data.package_kind !== 'fixture' && !(allowRelease && data.package_kind === 'release')) {
+    throw new Error('release packages are unsupported');
+  }
 
   const skills = new Map();
   for (const skill of requireArray(data.skills, 'skills')) {
@@ -110,7 +112,8 @@ export function validatePackage(data) {
     }
   }
   for (const asset of assets.values()) {
-    if (typeof asset.path !== 'string' || !/^\/assets\/[a-zA-Z0-9/_-]+\.(?:svg|png|webp)$/.test(asset.path)) {
+    const path = data.package_kind === 'release' ? `/${asset.delivery_path}` : asset.path;
+    if (typeof path !== 'string' || !/^\/assets\/[a-zA-Z0-9/_-]+\.(?:svg|png|webp)$/.test(path)) {
       throw new Error(`invalid asset path: ${asset.asset_id}`);
     }
     if (asset.attribution?.follow_required && (!asset.attribution.href || !asset.attribution.text)) {
