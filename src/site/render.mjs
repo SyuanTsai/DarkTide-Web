@@ -50,6 +50,25 @@ function card(title, body) {
   return `<section class="card"><h2>${escapeHtml(title)}</h2>${body}</section>`;
 }
 
+function groupedCatalog(rows, keyOf, titleOf, idOf, hrefOf, noteOf, navLabel, prefix) {
+  const grouped = new Map();
+  for (const row of rows) {
+    const key = keyOf(row);
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(row);
+  }
+  const groups = [...grouped].sort(([left], [right]) => left < right ? -1 : left > right ? 1 : 0);
+  if (!groups.length) return card('目前沒有資料', '<p>請稍後再查看。</p>');
+  const jump = `<nav class="catalog-jump" aria-label="${escapeHtml(navLabel)}">${groups.map(([key], index) =>
+    `<a href="#${prefix}-group-${index + 1}">${escapeHtml(titleOf(key))}</a>`).join('')}</nav>`;
+  const sections = groups.map(([key, members], index) => {
+    const links = list(members.sort((left, right) => idOf(left) < idOf(right) ? -1 : idOf(left) > idOf(right) ? 1 : 0)
+      .map(row => item(hrefOf(row), row.name_zh_tw, noteOf(row))));
+    return `<section class="card" id="${prefix}-group-${index + 1}"><h2>${escapeHtml(titleOf(key))}</h2>${links}</section>`;
+  });
+  return jump + sections.join('');
+}
+
 const claimUnits = { percent: '%', seconds: '秒', meters: '公尺', count: '個', multiplier: '倍', game_unit: '' };
 
 function claimMarkup(claims) {
@@ -93,18 +112,23 @@ function renderValidatedSite(data, indexes) {
   const skills = [...indexes.skills.values()];
   const weapons = [...indexes.weapons.values()];
   const blessings = [...indexes.blessings.values()];
-  const skillLinks = list(skills.map(s => item(routeFor(indexes, 'skill', `${s.archetype}/${s.skill_id}`), s.name_zh_tw, s.category)));
-  const weaponLinks = list(weapons.map(w => item(routeFor(indexes, 'weapon', w.weapon_id), w.name_zh_tw, w.kind)));
   const blessingLinks = list(blessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
+  const skillCatalog = groupedCatalog(skills, s => s.archetype, key => `職業：${key}`,
+    s => s.skill_id, s => routeFor(indexes, 'skill', `${s.archetype}/${s.skill_id}`),
+    s => s.category, '職業跳轉', 'skill');
+  const weaponCatalog = groupedCatalog(weapons, w => w.kind,
+    key => ({ melee: '近戰武器', ranged: '遠程武器' })[key] ?? `武器類型：${key}`,
+    w => w.weapon_id, w => routeFor(indexes, 'weapon', w.weapon_id),
+    () => '', '武器類型跳轉', 'weapon');
   const home = `<div class="hero"><p class="eyebrow">社群資料庫 · 繁體中文</p><h1>在技能、武器與祝福之間，找到清楚的路徑。</h1><p>${fixtureMode ? '這個版本使用虛構內容展示查閱方式；真實遊戲資料尚未發布。' : '依類別查閱技能、武器與祝福，並追蹤它們之間的關聯。'}</p><div class="hero-links"><a href="/skills/">探索技能 ↗</a><a href="/weapons/">瀏覽武器 ↗</a><a href="/blessings/">查詢祝福 ↗</a></div></div>`;
-  files.set('index.html', page('首頁', '', `${home}<div class="section-grid">${card('技能', skillLinks)}${card('武器', weaponLinks)}${card('祝福', blessingLinks)}</div>`));
+  files.set('index.html', page('首頁', '', `${home}<div class="section-grid">${card('技能', '<p>依職業查閱技能。</p><p><a href="/skills/">前往技能目錄</a></p>')}${card('武器', '<p>從武器追溯型號與祝福。</p><p><a href="/weapons/">前往武器目錄</a></p>')}${card('祝福', '<p>從祝福反查適用武器。</p><p><a href="/blessings/">前往祝福目錄</a></p>')}</div>`));
   files.set('404.html', page('找不到頁面', '', intro('404', '找不到頁面', '這個網址沒有對應的資料。請從目錄重新查找。') +
     card('繼續瀏覽', list([
       item('/', '返回首頁'), item('/skills/', '技能目錄'),
       item('/weapons/', '武器目錄'), item('/blessings/', '祝福目錄')
     ])), '', true));
-  files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('技能列表', skillLinks)));
-  files.set('weapons/index.html', page('武器', 'weapons', intro('武器目錄', '武器', `從武器追溯型號與祝福。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('武器列表', weaponLinks)));
+  files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + skillCatalog));
+  files.set('weapons/index.html', page('武器', 'weapons', intro('武器目錄', '武器', `從武器追溯型號與祝福。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + weaponCatalog));
   files.set('blessings/index.html', page('祝福', 'blessings', intro('祝福目錄', '祝福', `從祝福反查適用武器。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('祝福列表', blessingLinks)));
 
   for (const skill of skills) {
@@ -160,6 +184,6 @@ function renderValidatedSite(data, indexes) {
     const content = intro('祝福變體', `${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, detailDescription) + card('階級資訊', tiers) + card('關聯資料', links);
     files.set(fileFor(routeFor(indexes, 'variant', variant.variant_id)), page(`${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, 'blessings', content, notices));
   }
-  files.set('assets/site.css', `:root{color-scheme:dark;font-family:system-ui,"Noto Sans TC",sans-serif;background:#101719;color:#e4e8df}*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:#a9d8ba}a:hover{color:#e3f6cc}.shell{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:2}.site-header{border-bottom:1px solid #3d4d48;background:#15211f}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0}.brand{font-size:1.18rem;text-decoration:none;font-weight:800;color:#f0f0d9}.brand span{font-weight:400;color:#abc1ae;margin-left:.4rem}nav{display:flex;gap:1.3rem}nav a{text-decoration:none}nav a[aria-current]{color:#f7e5a1}.hero{padding:82px 0 62px;max-width:800px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#dfc987;font-size:.78rem;font-weight:800}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.18;margin:.3em 0}.hero p,.intro p{color:#b9c8c1}.hero-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}.hero-links a{background:#a9d8ba;color:#12201a;padding:.75rem 1rem;border-radius:4px;text-decoration:none;font-weight:800}.hero-links a:hover{background:#e3f6cc}.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:80px}.card{background:#1b2926;border:1px solid #40564d;border-radius:6px;padding:24px;margin:18px 0}.card h2{margin-top:0;color:#f5e7b9}.card p{color:#c3d1c9}.intro{padding:54px 0 16px;max-width:750px}.intro h1{font-size:clamp(2rem,4vw,3.4rem);margin:0}.link-list{padding-left:1.2rem}.link-list li{margin:.6rem 0}.link-list span{color:#9fb4a9;margin-left:1rem}.muted{font-size:.9rem;color:#9fb4a9}.claim-list{margin:.7rem 0}.claim-list div{display:flex;gap:1rem;border-top:1px solid #40564d;padding:.35rem 0}.claim-list dt{min-width:8rem;color:#b9c8c1}.claim-list dd{margin:0;font-variant-numeric:tabular-nums}.icon-row{display:flex;gap:1rem}.content-icon{width:72px;height:72px;object-fit:contain}.site-footer{border-top:1px solid #3d4d48;padding:25px 0 40px;color:#a6bbb0}.asset-credit a{color:#a9d8ba}@media(max-width:700px){.header-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.section-grid{grid-template-columns:1fr}.hero{padding-top:48px}}\n`);
+  files.set('assets/site.css', `:root{color-scheme:dark;font-family:system-ui,"Noto Sans TC",sans-serif;background:#101719;color:#e4e8df}*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:#a9d8ba}a:hover{color:#e3f6cc}.shell{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:2}.site-header{border-bottom:1px solid #3d4d48;background:#15211f}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0}.brand{font-size:1.18rem;text-decoration:none;font-weight:800;color:#f0f0d9}.brand span{font-weight:400;color:#abc1ae;margin-left:.4rem}nav{display:flex;gap:1.3rem}nav a{text-decoration:none}nav a[aria-current]{color:#f7e5a1}.catalog-jump{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 2rem}.catalog-jump a{border:1px solid #40564d;border-radius:4px;padding:.4rem .7rem;text-decoration:none}.catalog-jump a:focus-visible{outline:2px solid #f7e5a1;outline-offset:2px}.hero{padding:82px 0 62px;max-width:800px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#dfc987;font-size:.78rem;font-weight:800}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.18;margin:.3em 0}.hero p,.intro p{color:#b9c8c1}.hero-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}.hero-links a{background:#a9d8ba;color:#12201a;padding:.75rem 1rem;border-radius:4px;text-decoration:none;font-weight:800}.hero-links a:hover{background:#e3f6cc}.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:80px}.card{background:#1b2926;border:1px solid #40564d;border-radius:6px;padding:24px;margin:18px 0}.card h2{margin-top:0;color:#f5e7b9}.card p{color:#c3d1c9}.intro{padding:54px 0 16px;max-width:750px}.intro h1{font-size:clamp(2rem,4vw,3.4rem);margin:0}.link-list{padding-left:1.2rem}.link-list li{margin:.6rem 0}.link-list span{color:#9fb4a9;margin-left:1rem}.muted{font-size:.9rem;color:#9fb4a9}.claim-list{margin:.7rem 0}.claim-list div{display:flex;gap:1rem;border-top:1px solid #40564d;padding:.35rem 0}.claim-list dt{min-width:8rem;color:#b9c8c1}.claim-list dd{margin:0;font-variant-numeric:tabular-nums}.icon-row{display:flex;gap:1rem}.content-icon{width:72px;height:72px;object-fit:contain}.site-footer{border-top:1px solid #3d4d48;padding:25px 0 40px;color:#a6bbb0}.asset-credit a{color:#a9d8ba}@media(max-width:700px){.header-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.section-grid{grid-template-columns:1fr}.hero{padding-top:48px}}\n`);
   return files;
 }

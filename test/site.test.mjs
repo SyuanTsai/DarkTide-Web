@@ -15,6 +15,52 @@ test('UnitT10_renders_three_categories_and_two_way_links', () => {
   assert.match(files.get('blessings/steady-example/index.html'), /href="\/weapons\/practice-rifle\/"/);
 });
 
+// Scenario: The homepage is rendered from a package with detail records.
+// Purpose: Keep the entry page focused on category navigation at catalog scale.
+test('UnitT11_home_links_to_catalogs_without_listing_every_record', () => {
+  const home = renderSite(structuredClone(fixture)).get('index.html');
+  for (const route of ['/skills/', '/weapons/', '/blessings/']) assert.ok(home.includes(`href="${route}"`));
+  assert.doesNotMatch(home, /href="\/(?:skills|weapons|blessings)\/[^\"]+\/"/);
+  assert.doesNotMatch(home, /演示防護|演示步槍|演示穩定/);
+});
+
+// Scenario: Skills from two archetypes arrive in reverse archetype order.
+// Purpose: Provide stable, keyboard-usable class sections without client-side code.
+test('UnitT12_groups_skill_catalog_by_archetype_with_jump_links', () => {
+  const data = structuredClone(fixture);
+  data.skills.push({ ...data.skills[0], archetype: 'arbites', name_zh_tw: '演示執法' });
+  data.routes.push({ ...data.routes[0], content_key: 'arbites/practice-guard',
+    target_route: '/skills/arbites/practice-guard/' });
+  const catalog = renderSite(data).get('skills/index.html');
+  assert.match(catalog, /aria-label="職業跳轉"/);
+  assert.ok(catalog.indexOf('職業：arbites') < catalog.indexOf('職業：veteran'));
+  assert.match(catalog, /href="#skill-group-1"/);
+  assert.match(catalog, /id="skill-group-1"/);
+  assert.match(catalog, /href="\/skills\/arbites\/practice-guard\/"/);
+  assert.match(catalog, /href="\/skills\/veteran\/practice-guard\/"/);
+});
+
+// Scenario: A ranged weapon is followed by a melee weapon in the source package.
+// Purpose: Group the weapon catalog by type while retaining both detail routes.
+test('UnitT13_groups_weapon_catalog_by_kind_with_jump_links', () => {
+  const data = structuredClone(fixture);
+  data.weapons.push({ ...data.weapons[0], weapon_id: 'practice-blade', kind: 'melee',
+    name_zh_tw: '演示刀', mark_ids: ['practice-blade-m1'] });
+  data.marks.push({ ...data.marks[0], mark_id: 'practice-blade-m1', weapon_id: 'practice-blade' });
+  data.routes.push({ ...data.routes.find(row => row.content_kind === 'weapon'),
+    content_key: 'practice-blade', target_route: '/weapons/practice-blade/' });
+  data.routes.push({ ...data.routes.find(row => row.content_kind === 'mark'),
+    content_key: 'practice-blade-m1', target_route: '/weapons/practice-blade/marks/practice-blade-m1/' });
+  const catalog = renderSite(data).get('weapons/index.html');
+  assert.match(catalog, /aria-label="武器類型跳轉"/);
+  assert.ok(catalog.indexOf('近戰武器') < catalog.indexOf('遠程武器'));
+  assert.match(catalog, /href="#weapon-group-1"/);
+  assert.match(catalog, /id="weapon-group-1"/);
+  assert.match(catalog, /href="\/weapons\/practice-blade\/"/);
+  assert.match(catalog, /href="\/weapons\/practice-rifle\/"/);
+  assert.doesNotMatch(catalog, />ranged<|>melee</);
+});
+
 // Scenario: A valid fictional package is rendered for an unknown route.
 // Purpose: Give visitors a navigable Traditional Chinese error page without indexing it.
 test('UnitT15_renders_navigable_noindex_not_found_page', () => {

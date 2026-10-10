@@ -159,14 +159,11 @@ export async function validateReleaseCandidate(data, context) {
   for (const skill of data.skills) {
     const detail = route('skill', `${skill.archetype}/${skill.skill_id}`);
     await check('skill', skill, detail);
-    for (const usingRoute of ['/', '/skills/']) {
-      await check('skill', skill, usingRoute, ['/name_zh_tw', '/category'], false);
-    }
+    await check('skill', skill, '/skills/', ['/archetype', '/name_zh_tw', '/category'], false);
   }
   for (const weapon of data.weapons) {
     const detail = route('weapon', weapon.weapon_id);
     await check('weapon', weapon, detail);
-    await check('weapon', weapon, '/', ['/name_zh_tw'], false);
     await check('weapon', weapon, '/weapons/', ['/name_zh_tw', '/kind'], false);
     for (const binding of data.bindings.filter(row => row.weapon_id === weapon.weapon_id)) {
       await check('weapon', weapon, route('blessing', binding.blessing_id), ['/name_zh_tw'], false);
@@ -188,7 +185,6 @@ export async function validateReleaseCandidate(data, context) {
   for (const blessing of data.blessings) {
     const detail = route('blessing', blessing.blessing_id);
     await check('blessing', blessing, detail);
-    await check('blessing', blessing, '/', ['/name_zh_tw'], false);
     await check('blessing', blessing, '/blessings/', ['/name_zh_tw'], false);
     for (const binding of data.bindings.filter(row => row.blessing_id === blessing.blessing_id)) {
       await check('blessing', blessing, route('weapon', binding.weapon_id), ['/name_zh_tw'], false);

@@ -369,13 +369,43 @@ test('UnitT60_renders_approved_icon_and_copies_its_exact_bytes', async () => {
   assert.doesNotMatch(page, /nofollow|sponsored|ugc/);
 });
 
-// Scenario: Skill name approval omits the homepage where that name is listed.
-// Purpose: Enforce each actual use page, including navigation and index pages.
-test('UnitT70_rejects_name_not_approved_for_homepage', async () => {
+// Scenario: Detail and catalog routes are approved, but the homepage is excluded for record names.
+// Purpose: Require rights only for pages where those names are rendered.
+test('UnitT65_allows_homepage_without_record_name_approval', async () => {
+  const { data, context } = candidate();
+  for (const [records, fields] of [
+    [data.skills, ['/name_zh_tw', '/category']],
+    [data.weapons, ['/name_zh_tw']],
+    [data.blessings, ['/name_zh_tw']]
+  ]) {
+    for (const record of records) {
+      for (const field of fields) {
+        const evidence = record.evidence.find(row => row.field_path === field);
+        const right = context.rightsLedger.find(row => row.rights_id === evidence.rights_id);
+        right.publish.allowed_routes = right.publish.allowed_routes.filter(route => route !== '/');
+      }
+    }
+  }
+  await assert.doesNotReject(() => renderReleaseSite(data, context));
+});
+
+// Scenario: The archetype ID is displayed as a skill catalog section heading without route approval.
+// Purpose: Check rights for classification text where it appears in the catalog.
+test('UnitT67_rejects_archetype_not_approved_for_skill_catalog', async () => {
+  const { data, context } = candidate();
+  const archetypeEvidence = data.skills[0].evidence.find(row => row.field_path === '/archetype');
+  const right = context.rightsLedger.find(row => row.rights_id === archetypeEvidence.rights_id);
+  right.publish.allowed_routes = right.publish.allowed_routes.filter(route => route !== '/skills/');
+  await assert.rejects(() => renderReleaseSite(data, context), /route/i);
+});
+
+// Scenario: Skill name approval omits the skill catalog where the name is listed.
+// Purpose: Enforce rights for the actual category index use page.
+test('UnitT70_rejects_name_not_approved_for_skill_catalog', async () => {
   const { data, context } = candidate();
   const nameEvidence = data.skills[0].evidence.find(row => row.field_path === '/name_zh_tw');
   const right = context.rightsLedger.find(row => row.rights_id === nameEvidence.rights_id);
-  right.publish.allowed_routes = right.publish.allowed_routes.filter(item => item !== '/');
+  right.publish.allowed_routes = right.publish.allowed_routes.filter(item => item !== '/skills/');
   await assert.rejects(() => renderReleaseSite(data, context), /route/i);
 });
 
