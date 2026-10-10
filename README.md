@@ -39,3 +39,5 @@ Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原�
 `snapshotReviewCandidates` 與 `diffReviewSnapshots` 可將待審技能、祝福 map 與 UI 武器候選轉為依複合 ID 排序的逐欄 hash 快照，再列新增、移除及變更的 ID／欄位／hash。提供 UI 武器候選時，武器／mark 以已對帳的完整 UI 候選取代 map 中重疊的候選，並拒絕漏掉 map 既有 ID 的清冊；祝福、變體與 binding 仍取自 map。祝福 map 數值只在記憶體候選保留各待審欄的 hash，不輸出未審數值；差異結果也不含名稱或效果原文。這是來源更新的審核隊列，不會自動批准或發布變更。
 
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。
+
+`verifyReleaseArtifactBytes({ manifestBytes, files, workerBytes, expectedReleaseId })` 可在未來受控上傳前，核對完整 release manifest 與全部靜態檔、Worker bundle 的實際位元組；缺檔、額外檔或 hash／長度不符會拒收。輸入須先取得已完成的內容驗收 manifest；此函式只核對 artifact 完整性，不授予來源或權利核准，也不會設定 `validation.complete`、上傳或切換正式版本。
