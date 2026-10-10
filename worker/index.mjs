@@ -41,8 +41,6 @@ export default {
         'cache-control': notFound ? 'no-store' : 'public, max-age=60',
         etag
       });
-      if (!notFound && request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers });
-      if (request.method === 'HEAD') return new Response(null, { status: notFound ? 404 : 200, headers });
       const object = await env.CONTENT_BUCKET.get(`${prefix}${entry.path}`);
       if (!object) return response(503, 'Release incomplete');
       const bytes = await object.arrayBuffer();
@@ -50,6 +48,8 @@ export default {
       const digest = await crypto.subtle.digest('SHA-256', bytes);
       const actualSha = [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, '0')).join('');
       if (actualSha !== entry.sha256) return response(503, 'Release object mismatch');
+      if (!notFound && request.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers });
+      if (request.method === 'HEAD') return new Response(null, { status: notFound ? 404 : 200, headers });
       return new Response(bytes, { status: notFound ? 404 : 200, headers });
     } catch {
       return response(503, 'Release unavailable');

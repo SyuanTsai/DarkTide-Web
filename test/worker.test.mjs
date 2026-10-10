@@ -142,3 +142,17 @@ test('UnitT60_rejects_corrupt_r2_object_bytes', async () => {
   assert.equal(result.status, 503);
   assert.equal(result.headers.get('cache-control'), 'no-store');
 });
+
+// Scenario: The homepage object is corrupt while a client sends HEAD or a matching If-None-Match header.
+// Purpose: Never confirm an unavailable release object through a bodyless success response.
+test('UnitT65_rejects_corrupt_object_for_head_and_etag_revalidation', async () => {
+  const { env } = environment({ homeBody: `${html}changed` });
+  const head = await worker.fetch(new Request('https://example.test/', { method: 'HEAD' }), env);
+  const revalidated = await worker.fetch(new Request('https://example.test/', {
+    headers: { 'if-none-match': `"${hash(html)}"` }
+  }), env);
+  assert.equal(head.status, 503);
+  assert.equal(revalidated.status, 503);
+  assert.equal(head.headers.get('cache-control'), 'no-store');
+  assert.equal(revalidated.headers.get('cache-control'), 'no-store');
+});
