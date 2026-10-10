@@ -41,3 +41,5 @@ Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原�
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。
 
 `verifyReleaseArtifactBytes({ manifestBytes, files, workerBytes, expectedReleaseId })` 可在未來受控上傳前，核對完整 release manifest 與全部靜態檔、Worker bundle 的實際位元組；缺檔、額外檔或 hash／長度不符會拒收。輸入須先取得已完成的內容驗收 manifest；此函式只核對 artifact 完整性，不授予來源或權利核准，也不會設定 `validation.complete`、上傳或切換正式版本。
+
+`uploadVerifiedRelease({ manifestBytes, files, workerBytes, expectedReleaseId, bucket })` 接受受控環境提供的 R2 Workers API 相容 bucket：本機核對完整產物後，以僅限不存在物件的條件寫入 `releases/<release_id>/` 靜態檔，讀回全部檔案驗證，再最後寫入並讀回 `build-manifest.json`。同版本重試會核對既有位元組，遇到同名不同內容即拒絕覆寫；靜態檔上傳或讀回失敗時不寫完成 manifest。此模組沒有對外上傳端點，也不變更 `ACTIVE_RELEASE`。目前尚無正式 R2 資源、受控上傳入口或 staging／production 部署。
