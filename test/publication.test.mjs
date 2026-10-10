@@ -153,3 +153,48 @@ test('UnitT100_rejects_unsafe_asset_delivery_path', async () => {
   input.assets[0].delivery_path = '../secret.webp';
   await assert.rejects(() => validateRecordPublication(input), /asset.*path/i);
 });
+
+function jsonCandidate() {
+  const input = candidate();
+  const rawJson = new TextEncoder().encode(JSON.stringify({ blessings: [
+    { name_zh_tw: input.record.name_zh_tw, effect: input.record.effect_zh_tw }
+  ] }));
+  input.sourceLocks[0].path = 'Game Info/data/blessings.json';
+  input.sourceLocks[0].sha256 = sha(rawJson);
+  input.sourceLocks[0].selectors = ['json:/blessings/0/name_zh_tw', 'json:/blessings/0/effect'];
+  input.sourceBytes.set('fictional-source', rawJson);
+  input.record.evidence[0].source_selector = input.sourceLocks[0].selectors[0];
+  input.record.evidence[1].source_selector = input.sourceLocks[0].selectors[1];
+  input.rightsLedger[0].subject.selector = input.sourceLocks[0].selectors[0];
+  input.rightsLedger[1].subject.selector = input.sourceLocks[0].selectors[1];
+  return input;
+}
+
+// Scenario: A field cites an exact JSON Pointer inside a fixed source blob.
+// Purpose: Prove the rendered text value equals the selected source value.
+test('UnitT110_accepts_field_values_matching_json_selectors', async () => {
+  await assert.doesNotReject(() => validateRecordPublication(jsonCandidate()));
+});
+
+// Scenario: A record changes its effect while the JSON source and approvals remain fixed.
+// Purpose: Reject semantically unsupported text even when the source byte hash still matches.
+test('UnitT120_rejects_record_value_different_from_json_source', async () => {
+  const input = jsonCandidate();
+  input.record.effect_zh_tw = '來源沒有的效果';
+  await assert.rejects(() => validateRecordPublication(input), /source value.*effect_zh_tw/i);
+});
+
+// Scenario: A JSON source uses a selector that does not resolve to an exact field.
+// Purpose: Block ambiguous or missing JSON claims from receiving source credit.
+test('UnitT130_rejects_missing_or_untyped_json_selector', async () => {
+  const missing = jsonCandidate();
+  missing.sourceLocks[0].selectors[1] = 'json:/blessings/1/effect';
+  missing.record.evidence[1].source_selector = missing.sourceLocks[0].selectors[1];
+  missing.rightsLedger[1].subject.selector = missing.sourceLocks[0].selectors[1];
+  await assert.rejects(() => validateRecordPublication(missing), /json selector/i);
+  const untyped = jsonCandidate();
+  untyped.sourceLocks[0].selectors[1] = 'effect';
+  untyped.record.evidence[1].source_selector = 'effect';
+  untyped.rightsLedger[1].subject.selector = 'effect';
+  await assert.rejects(() => validateRecordPublication(untyped), /json selector/i);
+});

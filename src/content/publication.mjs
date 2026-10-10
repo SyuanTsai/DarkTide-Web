@@ -1,4 +1,6 @@
 import { validGitSourcePath } from './source-path.mjs';
+import { isDeepStrictEqual } from 'node:util';
+import { parseJsonSource, readJsonSelector } from './source-selector.mjs';
 
 const shaPattern = /^[a-f0-9]{64}$/;
 const commitPattern = /^[a-f0-9]{40}$/;
@@ -102,7 +104,8 @@ export async function validateRecordPublication({
   const rights = uniqueIndex(rightsLedger, 'rights_id', 'rights ledger');
   const assetIndex = uniqueIndex(assets, 'asset_id', 'assets');
   if (!(sourceBytes instanceof Map)) throw new Error('source bytes map is required');
-  const checkedSources = new Set();
+  const checkedSources = new Map();
+  const parsedJson = new Map();
   const usedRights = new Set();
 
   async function checkSource(sourceId) {
@@ -111,10 +114,11 @@ export async function validateRecordPublication({
     if (!checkedSources.has(sourceId)) {
       validateLock(lock);
       if (!sourceBytes.has(sourceId)) throw new Error(`missing source bytes: ${sourceId}`);
-      if (await hashBytes(bytesOf(sourceBytes.get(sourceId))) !== lock.sha256) {
+      const stableBytes = new Uint8Array(bytesOf(sourceBytes.get(sourceId)));
+      if (await hashBytes(stableBytes) !== lock.sha256) {
         throw new Error(`source hash drift: ${sourceId}`);
       }
-      checkedSources.add(sourceId);
+      checkedSources.set(sourceId, stableBytes);
     }
     return lock;
   }
@@ -130,6 +134,13 @@ export async function validateRecordPublication({
     if (!requiredFieldPaths.includes(fieldPath)) continue;
     const lock = await checkSource(sourceId);
     if (!lock.selectors.includes(selector)) throw new Error(`source selector is not locked: ${selector}`);
+    if (lock.kind === 'git_file' && lock.path.toLowerCase().endsWith('.json')) {
+      if (!parsedJson.has(sourceId)) parsedJson.set(sourceId, parseJsonSource(checkedSources.get(sourceId), sourceId));
+      const selected = readJsonSelector(parsedJson.get(sourceId), selector);
+      if (!isDeepStrictEqual(selected, pointerValue(record, fieldPath))) {
+        throw new Error(`source value differs for ${fieldPath}`);
+      }
+    }
     const right = rights.get(rightId);
     if (!right || right.schema_version !== 1 || right.subject?.kind !== 'source_field' ||
         right.subject.source_id !== sourceId || right.subject.selector !== selector || right.subject.asset_id !== null) {
@@ -181,5 +192,5 @@ export async function validateRecordPublication({
       }
     }
   }
-  return { source_lock_ids: [...checkedSources].sort(), rights_ids: [...usedRights].sort() };
+  return { source_lock_ids: [...checkedSources.keys()].sort(), rights_ids: [...usedRights].sort() };
 }
