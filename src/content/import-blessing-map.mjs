@@ -1,9 +1,11 @@
+import { createHash } from 'node:crypto';
 import { validGitSourcePath } from './source-path.mjs';
 import { parseJsonSource } from './source-selector.mjs';
 
 const idPattern = /^[a-z][a-z0-9_-]{0,127}$/;
 const shaPattern = /^[a-f0-9]{64}$/;
 const ordered = rows => rows.sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0);
+const reviewHash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
 function requireId(value, label) {
   if (!idPattern.test(value ?? '')) throw new Error(`invalid ${label} ID`);
@@ -150,6 +152,8 @@ export async function importBlessingMapCandidates({ sourceLock, sourceBytes } = 
     id, variant_id: id, blessing_id: row.blessing_id, weapon_id: row.weapon_id,
     defined_tiers: [...row.defined_tiers], available_tiers: row.available_tiers === null ? null : [...row.available_tiers],
     numeric_review_fields: Object.keys(row.values).sort(), tier_claims: [],
+    numeric_review_hashes: Object.fromEntries(Object.entries(row.values).sort(([left], [right]) =>
+      left < right ? -1 : left > right ? 1 : 0).map(([field, value]) => [field, reviewHash(value)])),
     canonical_route: `/blessings/${row.blessing_id}/variants/${id}/`,
     source_fields: { defined_tiers: evidence(sourceLock.source_id, `json:/variants/${index}/defined_tiers`),
       available_tiers: evidence(sourceLock.source_id, `json:/variants/${index}/available_tiers`) },

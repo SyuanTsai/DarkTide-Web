@@ -42,6 +42,7 @@ test('UnitT10_imports_complete_map_as_pending_relationship_candidates', async ()
   assert.equal(result.weapons[0].canonical_route, '/weapons/practice_rifle/');
   assert.equal(result.variants[0].available_tiers, null);
   assert.deepEqual(result.variants[0].numeric_review_fields, ['per_stack_percent']);
+  assert.match(result.variants[0].numeric_review_hashes.per_stack_percent, /^[a-f0-9]{64}$/);
   assert.equal(result.variants[0].tier_claims.length, 0);
   assert.equal(result.bindings[0].trait_item, 'traits/example');
   assert.deepEqual(result.bindings[0].source_fields.trait_item,
@@ -99,4 +100,20 @@ test('UnitT60_rejects_unsafe_trait_item_path', async () => {
   data.sourceLock.sha256 = sha(raw);
   data.sourceBytes.set('blessing-map', raw);
   await assert.rejects(() => importBlessingMapCandidates(data), /trait item path/i);
+});
+
+// Scenario: A fixed map changes one numeric value without changing field names or relationships.
+// Purpose: Expose a reviewable digest change while keeping unapproved values out of candidates.
+test('UnitT70_numeric_value_change_updates_review_hash_only', async () => {
+  const original = await importBlessingMapCandidates(input());
+  const data = input();
+  data.map.variants[0].values.per_stack_percent = [1, 3];
+  const raw = bytes(data.map);
+  data.sourceLock.sha256 = sha(raw);
+  data.sourceBytes.set('blessing-map', raw);
+  const changed = await importBlessingMapCandidates(data);
+  assert.notEqual(changed.variants[0].numeric_review_hashes.per_stack_percent,
+    original.variants[0].numeric_review_hashes.per_stack_percent);
+  assert.equal(changed.variants[0].tier_claims.length, 0);
+  assert.equal(JSON.stringify(changed).includes('"per_stack_percent":[1,3]'), false);
 });
