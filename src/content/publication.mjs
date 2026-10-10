@@ -90,7 +90,7 @@ async function hashBytes(bytes) {
 
 export async function validateRecordPublication({
   route, record, requiredFieldPaths, sourceLocks, rightsLedger, sourceBytes,
-  assets = [], requireGitApproval = false, includeAssets = true
+  requiredSourceKindsByField = null, assets = [], requireGitApproval = false, includeAssets = true
 }) {
   if (!routeIsValid(route)) throw new Error('invalid publication route');
   if (!record || typeof record !== 'object' || !Array.isArray(record.evidence) || !Array.isArray(record.asset_ids)) {
@@ -125,6 +125,7 @@ export async function validateRecordPublication({
   }
 
   const evidenceByPath = new Map();
+  const sourceKindsByPath = new Map();
   const evidenceKeys = new Set();
   for (const evidence of record.evidence) {
     const { field_path: fieldPath, source_id: sourceId, source_selector: selector, rights_id: rightId } = evidence ?? {};
@@ -136,14 +137,17 @@ export async function validateRecordPublication({
     const lock = await checkSource(sourceId);
     if (!lock.selectors.includes(selector)) throw new Error(`source selector is not locked: ${selector}`);
     if (lock.kind !== 'git_file') throw new Error(`unsupported field source kind: ${lock.kind}`);
+    let sourceKind;
     if (lock.kind === 'git_file') {
       if (lock.path.toLowerCase().endsWith('.json')) {
+        sourceKind = 'git_json';
         if (!parsedJson.has(sourceId)) parsedJson.set(sourceId, parseJsonSource(checkedSources.get(sourceId), sourceId));
         const selected = readJsonSelector(parsedJson.get(sourceId), selector);
         if (!isDeepStrictEqual(selected, pointerValue(record, fieldPath))) {
           throw new Error(`source value differs for ${fieldPath}`);
         }
       } else if (lock.path.toLowerCase().endsWith('.md')) {
+        sourceKind = 'git_markdown';
         if (!selector.startsWith('md:')) throw new Error(`unsupported Markdown selector: ${selector}`);
         if (!parsedMarkdown.has(sourceId)) parsedMarkdown.set(sourceId, parseMarkdownSource(checkedSources.get(sourceId), sourceId));
         const selected = readMarkdownSelector(parsedMarkdown.get(sourceId), selector);
@@ -163,6 +167,8 @@ export async function validateRecordPublication({
     usedRights.add(rightId);
     if (!evidenceByPath.has(fieldPath)) evidenceByPath.set(fieldPath, []);
     evidenceByPath.get(fieldPath).push(evidence);
+    if (!sourceKindsByPath.has(fieldPath)) sourceKindsByPath.set(fieldPath, new Set());
+    sourceKindsByPath.get(fieldPath).add(sourceKind);
   }
   for (const path of requiredFieldPaths) {
     const value = pointerValue(record, path);
@@ -170,6 +176,9 @@ export async function validateRecordPublication({
       throw new Error(`required field is empty: ${path}`);
     }
     if (!evidenceByPath.has(path)) throw new Error(`evidence missing for ${path}`);
+    if (requiredSourceKindsByField?.[path]?.some(kind => !sourceKindsByPath.get(path).has(kind))) {
+      throw new Error(`source kind requirement is unmet for ${path}`);
+    }
   }
 
   if (new Set(record.asset_ids).size !== record.asset_ids.length) throw new Error('duplicate asset use');

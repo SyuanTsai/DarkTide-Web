@@ -35,7 +35,9 @@ function candidate() {
   data.taxonomy_version = 'test-v1';
   data.field_requirement_version = 'test-v1';
   const taxonomy = { version: 'test-v1', skill_kinds: ['current-talent'], skill_categories: ['示範分類'], weapon_kinds: ['ranged'] };
-  const fieldRequirements = { version: 'test-v1', fields: required };
+  const fieldRequirements = { version: 'test-v1', fields: required,
+    source_kinds: Object.fromEntries(Object.entries(required).map(([kind, fields]) =>
+      [kind, Object.fromEntries(fields.map(field => [field, ['git_json']]))])) };
   data.taxonomy_sha256 = sha(canonicalize(taxonomy));
   data.field_requirement_sha256 = sha(canonicalize(fieldRequirements));
 
@@ -91,6 +93,24 @@ test('UnitT20_rejects_missing_field_evidence_before_render', async () => {
   const { data, context } = candidate();
   data.blessings[0].evidence = data.blessings[0].evidence.filter(row => row.field_path !== '/effect_zh_tw');
   await assert.rejects(() => renderReleaseSite(data, context), /evidence.*effect_zh_tw/i);
+});
+
+// Scenario: The versioned rule requires Markdown for one displayed effect, but only JSON supports it.
+// Purpose: Reject an approved field whose source kind cannot satisfy its declared requirement.
+test('UnitT25_rejects_field_with_wrong_required_source_kind', async () => {
+  const { data, context } = candidate();
+  context.fieldRequirements.source_kinds.blessing['/effect_zh_tw'] = ['git_markdown'];
+  data.field_requirement_sha256 = sha(canonicalize(context.fieldRequirements));
+  await assert.rejects(() => renderReleaseSite(data, context), /source kind.*effect_zh_tw/i);
+});
+
+// Scenario: A versioned rule lists the effect field but omits its required source-kind set.
+// Purpose: Keep an incomplete field policy from weakening release validation.
+test('UnitT27_rejects_missing_source_kind_rule_for_required_field', async () => {
+  const { data, context } = candidate();
+  delete context.fieldRequirements.source_kinds.blessing['/effect_zh_tw'];
+  data.field_requirement_sha256 = sha(canonicalize(context.fieldRequirements));
+  await assert.rejects(() => renderReleaseSite(data, context), /source kind.*requirement/i);
 });
 
 // Scenario: The release package names a taxonomy hash different from the supplied version.

@@ -32,6 +32,16 @@ export async function validateReleaseCandidate(data, context) {
     if (!Array.isArray(fields) || new Set(fields).size !== fields.length || minimum.some(path => !fields.includes(path))) {
       throw new Error(`field requirements omit rendered ${kind} fields`);
     }
+    const sourceKinds = fieldRequirements.source_kinds?.[kind];
+    if (!sourceKinds || typeof sourceKinds !== 'object' || Array.isArray(sourceKinds) ||
+        Object.keys(sourceKinds).some(path => !fields.includes(path)) || fields.some(path => {
+          const requiredKinds = sourceKinds[path];
+          return !Array.isArray(requiredKinds) || requiredKinds.length === 0 ||
+            new Set(requiredKinds).size !== requiredKinds.length ||
+            requiredKinds.some(value => !['git_json', 'git_markdown'].includes(value));
+        })) {
+      throw new Error(`source kind requirements are missing or invalid for ${kind}`);
+    }
   }
   if (!Array.isArray(taxonomy.skill_kinds) || !Array.isArray(taxonomy.skill_categories) ||
       !Array.isArray(taxonomy.weapon_kinds) ||
@@ -70,7 +80,9 @@ export async function validateReleaseCandidate(data, context) {
   const usedRights = new Set();
   async function check(kind, record, usingRoute, fields = fieldRequirements.fields[kind], includeAssets = true) {
     const result = await validateRecordPublication({
-      ...shared, route: usingRoute, record, requiredFieldPaths: fields, includeAssets
+      ...shared, route: usingRoute, record, requiredFieldPaths: fields,
+      requiredSourceKindsByField: Object.fromEntries(fields.map(path =>
+        [path, fieldRequirements.source_kinds[kind][path]])), includeAssets
     });
     result.source_lock_ids.forEach(id => usedSources.add(id));
     result.rights_ids.forEach(id => usedRights.add(id));

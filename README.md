@@ -18,6 +18,8 @@ python -m http.server 8000 -d dist
 
 公開欄位的 Git 來源必須使用能逐值核對的 `json:/...` 或受支援的 `md:` selector；任意字串 selector、無解析器的 Git 檔案及外部圖示素材均不能替文字欄位背書。整合測試以已提交的完全虛構 JSON Git blob 核對來源 byte 與欄位值。
 
+正式候選的版本化 `fieldRequirements.source_kinds` 另為每個必備欄位列出非空來源類型集合（目前支援 `git_json`、`git_markdown`）；每種指定類型都須有逐值相等且權利通過的證據。規則缺漏或只由其他類型來源支持時拒絕產生正式頁面。
+
 Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原始來源位元組逐欄比較候選值。技能 Markdown 可用 `md:anchor:<id>:title-zh|body-text` 或 `md:detail:<id>:title-zh|body-text` 從唯一的 HTML anchor 或詳細資料連結選取繁中標題與主要條列文字；次級小節、圖片及導覽連結不會混入效果欄位。固定 Mods 來源中的 618 個 README 區塊與 28 個 BASE_EFFECTS 區塊均已完成 selector 語法覆蓋檢查。這只證明能從已核對的檔案定位與轉換文字；分類、機制主張、翻譯品質與發布權仍須分別驗證。
 
 `renderReleaseSite(data, context)` 會在產生正式頁面前，核對三類內容的關係、taxonomy／欄位規則 hash、每個實際使用頁面的來源與權利，並把已驗證的圖示 byte 放入輸出。`renderSite(data)` 仍只接受虛構 fixture。`createGitVerifiedReleaseDraft(data, context, { gitCheckouts, workerBytes, toolCommitSha })` 先從本機 checkout 讀取指定 commit／path 的 Git blob，核對遠端身分、物件型別與原始位元組 SHA-256，再把已驗候選頁面、使用到的來源與權利快照、Worker 位元組組成固定草稿清單。圖示仍由受控呼叫端提供原始位元組並核對 hash；此流程不下載或爬取素材。草稿的 `validation.complete` 固定為 `false`，Worker 會拒絕部署。正式匯入器、來源 selector 的正文語義驗證、數值 claim、完整發布驗證與部署尚未接上，因此沒有可發布的真實內容包。
