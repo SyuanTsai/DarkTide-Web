@@ -58,3 +58,64 @@ test('UnitT30_reports_added_and_removed_candidate_ids', () => {
 test('UnitT40_rejects_duplicate_review_candidate_key', () => {
   assert.throws(() => snapshotReviewCandidates({ skills: [skill(), skill()] }), /duplicate.*candidate/i);
 });
+
+const mapWithWeapon = () => ({ candidate_kind: 'blessing-map-import', review_status: 'pending',
+  blessings: [], variants: [], bindings: [],
+  weapons: [{ weapon_id: 'practice_rifle', mark_ids: ['practice_rifle_m1'], review_status: 'pending' }],
+  marks: [{ mark_id: 'practice_rifle_m1', weapon_id: 'practice_rifle', review_status: 'pending' }] });
+const uiWeaponReview = () => ({ candidate_kind: 'weapon-review-import', review_status: 'pending',
+  publication_ready: false,
+  weapons: [
+    { weapon_id: 'practice_rifle', mark_ids: ['practice_rifle_m1'], name_zh_tw: '虛構步槍', review_status: 'pending', publish_decision: 'pending' },
+    { weapon_id: 'practice_knife', mark_ids: ['practice_knife_m1'], name_zh_tw: null, review_status: 'pending', publish_decision: 'pending' }
+  ],
+  marks: [
+    { mark_id: 'practice_rifle_m1', weapon_id: 'practice_rifle', review_status: 'pending', publish_decision: 'pending' },
+    { mark_id: 'practice_knife_m1', weapon_id: 'practice_knife', review_status: 'pending', publish_decision: 'pending' }
+  ] });
+
+// Scenario: A UI catalog adds a weapon and mark beyond the blessing map.
+// Purpose: Track their identities without duplicating map weapon and mark keys or exposing names.
+test('UnitT50_snapshots_enriched_weapon_review_once_per_identity', () => {
+  const before = snapshotReviewCandidates({ blessingMap: mapWithWeapon() });
+  const after = snapshotReviewCandidates({ blessingMap: mapWithWeapon(), weaponReview: uiWeaponReview() });
+  assert.deepEqual(after.entries.map(row => row.key), [
+    'mark:practice_knife_m1', 'mark:practice_rifle_m1',
+    'weapon:practice_knife', 'weapon:practice_rifle'
+  ]);
+  const diff = diffReviewSnapshots(before, after);
+  assert.deepEqual(diff.added, ['mark:practice_knife_m1', 'weapon:practice_knife']);
+  assert.deepEqual(diff.changed.map(row => row.key), ['mark:practice_rifle_m1', 'weapon:practice_rifle']);
+  assert.equal(JSON.stringify(after).includes('虛構步槍'), false);
+});
+
+// Scenario: A supplied UI catalog omits a weapon or mark already present in the map.
+// Purpose: Refuse a partial catalog before it can hide known review identities.
+test('UnitT60_rejects_weapon_review_missing_map_identity', () => {
+  const missingWeapon = uiWeaponReview();
+  missingWeapon.weapons = missingWeapon.weapons.filter(row => row.weapon_id !== 'practice_rifle');
+  missingWeapon.marks = missingWeapon.marks.filter(row => row.weapon_id !== 'practice_rifle');
+  assert.throws(() => snapshotReviewCandidates({ blessingMap: mapWithWeapon(), weaponReview: missingWeapon }),
+    /weapon.*review|review.*weapon/i);
+  const missingMark = uiWeaponReview();
+  missingMark.marks = missingMark.marks.filter(row => row.mark_id !== 'practice_rifle_m1');
+  missingMark.weapons[0].mark_ids = [];
+  assert.throws(() => snapshotReviewCandidates({ blessingMap: mapWithWeapon(), weaponReview: missingMark }),
+    /(?:weapon|mark).*review/i);
+});
+
+// Scenario: A weapon review snapshot is incorrectly marked publishable.
+// Purpose: Prevent approval state from being laundered through the digest queue.
+test('UnitT70_rejects_publishable_weapon_review_snapshot', () => {
+  const review = uiWeaponReview();
+  review.publication_ready = true;
+  assert.throws(() => snapshotReviewCandidates({ weaponReview: review }), /weapon review candidates are invalid/i);
+});
+
+// Scenario: An individual mark is relabeled approved inside an otherwise pending catalog.
+// Purpose: Keep a field-digest snapshot from silently accepting a publication decision.
+test('UnitT75_rejects_approved_mark_inside_pending_review', () => {
+  const review = uiWeaponReview();
+  review.marks[0].publish_decision = 'approved';
+  assert.throws(() => snapshotReviewCandidates({ weaponReview: review }), /mark review relation/i);
+});

@@ -22,13 +22,51 @@ function recordKey(kind, row) {
 }
 
 // Stores only review identities and field digests; source text remains in memory.
-export function snapshotReviewCandidates({ skills = [], blessingMap = null } = {}) {
+export function snapshotReviewCandidates({ skills = [], blessingMap = null, weaponReview = null } = {}) {
   if (!Array.isArray(skills) || skills.some(row => row?.candidate_kind !== 'skill-import' || row.review_status !== 'pending')) {
     throw new Error('skill review candidates are invalid');
   }
   if (blessingMap !== null && (blessingMap?.candidate_kind !== 'blessing-map-import' ||
       blessingMap.review_status !== 'pending')) {
     throw new Error('blessing map review candidates are invalid');
+  }
+  if (weaponReview !== null) {
+    if (weaponReview?.candidate_kind !== 'weapon-review-import' ||
+        weaponReview.review_status !== 'pending' || weaponReview.publication_ready !== false ||
+        !Array.isArray(weaponReview.weapons) || !Array.isArray(weaponReview.marks)) {
+      throw new Error('weapon review candidates are invalid');
+    }
+    const reviewWeapons = new Map(weaponReview.weapons.map(row => [row.weapon_id, row]));
+    const reviewMarks = new Map(weaponReview.marks.map(row => [row.mark_id, row]));
+    if (reviewWeapons.size !== weaponReview.weapons.length || reviewMarks.size !== weaponReview.marks.length) {
+      throw new Error('duplicate weapon review identity');
+    }
+    for (const weapon of weaponReview.weapons) {
+      if (weapon.review_status !== 'pending' || weapon.publish_decision !== 'pending' ||
+          !Array.isArray(weapon.mark_ids) ||
+          weapon.mark_ids.some(id => reviewMarks.get(id)?.weapon_id !== weapon.weapon_id)) {
+        throw new Error(`invalid weapon review relation: ${weapon.weapon_id}`);
+      }
+    }
+    for (const mark of weaponReview.marks) {
+      if (mark.review_status !== 'pending' || mark.publish_decision !== 'pending' ||
+          !reviewWeapons.get(mark.weapon_id)?.mark_ids.includes(mark.mark_id)) {
+        throw new Error(`invalid mark review relation: ${mark.mark_id}`);
+      }
+    }
+    if (blessingMap !== null) {
+      for (const weapon of blessingMap.weapons ?? []) {
+        const reviewed = reviewWeapons.get(weapon.weapon_id);
+        if (!reviewed || weapon.mark_ids?.some(id => !reviewed.mark_ids.includes(id))) {
+          throw new Error(`map weapon missing from weapon review: ${weapon.weapon_id}`);
+        }
+      }
+      for (const mark of blessingMap.marks ?? []) {
+        if (reviewMarks.get(mark.mark_id)?.weapon_id !== mark.weapon_id) {
+          throw new Error(`map mark missing from weapon review: ${mark.mark_id}`);
+        }
+      }
+    }
   }
   const entries = [];
   const seen = new Set();
@@ -52,8 +90,14 @@ export function snapshotReviewCandidates({ skills = [], blessingMap = null } = {
       ['variants', 'variant'], ['bindings', 'binding']
     ]) {
       if (!Array.isArray(blessingMap[collection])) throw new Error(`missing ${collection} review candidates`);
-      blessingMap[collection].forEach(row => add(kind, row));
+      if (weaponReview === null || (kind !== 'weapon' && kind !== 'mark')) {
+        blessingMap[collection].forEach(row => add(kind, row));
+      }
     }
+  }
+  if (weaponReview !== null) {
+    weaponReview.weapons.forEach(row => add('weapon', row));
+    weaponReview.marks.forEach(row => add('mark', row));
   }
   entries.sort((a, b) => compare(a.key, b.key));
   return { schema_version: 1, snapshot_kind: 'review-candidate-digests', entries };
