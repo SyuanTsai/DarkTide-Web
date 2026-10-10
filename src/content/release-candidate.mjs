@@ -159,7 +159,9 @@ export async function validateReleaseCandidate(data, context) {
   for (const skill of data.skills) {
     const detail = route('skill', `${skill.archetype}/${skill.skill_id}`);
     await check('skill', skill, detail);
-    await check('skill', skill, '/skills/', ['/archetype', '/name_zh_tw', '/category'], false);
+    await check('skill', skill, '/skills/', ['/archetype'], false);
+    await check('skill', skill, `/skills/${skill.archetype}/`,
+      ['/archetype', '/name_zh_tw', '/category'], false);
   }
   for (const weapon of data.weapons) {
     const detail = route('weapon', weapon.weapon_id);

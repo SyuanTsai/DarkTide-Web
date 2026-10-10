@@ -41,7 +41,7 @@ function candidate() {
   data.taxonomy_sha256 = sha(canonicalize(taxonomy));
   data.field_requirement_sha256 = sha(canonicalize(fieldRequirements));
 
-  const routes = ['/', '/skills/', '/weapons/', '/blessings/', ...data.routes.map(row => row.target_route)];
+  const routes = ['/', '/skills/', '/skills/veteran/', '/weapons/', '/blessings/', ...data.routes.map(row => row.target_route)];
   const rightsLedger = [];
   const selectors = [];
   let number = 0;
@@ -127,6 +127,7 @@ test('UnitT10_renders_approved_release_without_fixture_labels', async () => {
   const { data, context } = candidate();
   const files = await renderReleaseSite(data, context);
   assert.ok(files.has('skills/veteran/practice-guard/index.html'));
+  assert.ok(files.has('skills/veteran/index.html'));
   assert.ok(files.has('weapons/practice-rifle/index.html'));
   assert.ok(files.has('weapons/practice-rifle/marks/practice-rifle-m1/index.html'));
   assert.ok(files.has('blessings/steady-example/index.html'));
@@ -389,8 +390,8 @@ test('UnitT65_allows_homepage_without_record_name_approval', async () => {
   await assert.doesNotReject(() => renderReleaseSite(data, context));
 });
 
-// Scenario: The archetype ID is displayed as a skill catalog section heading without route approval.
-// Purpose: Check rights for classification text where it appears in the catalog.
+// Scenario: The archetype ID is displayed as a skill catalog link without route approval.
+// Purpose: Check rights for classification text where it appears in the root catalog.
 test('UnitT67_rejects_archetype_not_approved_for_skill_catalog', async () => {
   const { data, context } = candidate();
   const archetypeEvidence = data.skills[0].evidence.find(row => row.field_path === '/archetype');
@@ -399,14 +400,24 @@ test('UnitT67_rejects_archetype_not_approved_for_skill_catalog', async () => {
   await assert.rejects(() => renderReleaseSite(data, context), /route/i);
 });
 
-// Scenario: Skill name approval omits the skill catalog where the name is listed.
-// Purpose: Enforce rights for the actual category index use page.
-test('UnitT70_rejects_name_not_approved_for_skill_catalog', async () => {
+// Scenario: Skill name approval omits the class page where the name is listed.
+// Purpose: Enforce rights for the actual class index use page.
+test('UnitT70_rejects_name_not_approved_for_archetype_page', async () => {
+  const { data, context } = candidate();
+  const nameEvidence = data.skills[0].evidence.find(row => row.field_path === '/name_zh_tw');
+  const right = context.rightsLedger.find(row => row.rights_id === nameEvidence.rights_id);
+  right.publish.allowed_routes = right.publish.allowed_routes.filter(item => item !== '/skills/veteran/');
+  await assert.rejects(() => renderReleaseSite(data, context), /route/i);
+});
+
+// Scenario: A skill name is approved on its class page and detail, but not on the root catalog.
+// Purpose: Match rights checks to pages that actually display the skill name.
+test('UnitT72_allows_skill_name_without_root_catalog_approval', async () => {
   const { data, context } = candidate();
   const nameEvidence = data.skills[0].evidence.find(row => row.field_path === '/name_zh_tw');
   const right = context.rightsLedger.find(row => row.rights_id === nameEvidence.rights_id);
   right.publish.allowed_routes = right.publish.allowed_routes.filter(item => item !== '/skills/');
-  await assert.rejects(() => renderReleaseSite(data, context), /route/i);
+  await assert.doesNotReject(() => renderReleaseSite(data, context));
 });
 
 // Scenario: The caller edits the content object while asynchronous source checks run.

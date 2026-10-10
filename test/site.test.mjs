@@ -25,19 +25,20 @@ test('UnitT11_home_links_to_catalogs_without_listing_every_record', () => {
 });
 
 // Scenario: Skills from two archetypes arrive in reverse archetype order.
-// Purpose: Provide stable, keyboard-usable class sections without client-side code.
-test('UnitT12_groups_skill_catalog_by_archetype_with_jump_links', () => {
+// Purpose: Keep the root skill catalog short and link to each class page.
+test('UnitT12_links_skill_catalog_to_each_archetype_page', () => {
   const data = structuredClone(fixture);
   data.skills.push({ ...data.skills[0], archetype: 'arbites', name_zh_tw: '演示執法' });
   data.routes.push({ ...data.routes[0], content_key: 'arbites/practice-guard',
     target_route: '/skills/arbites/practice-guard/' });
-  const catalog = renderSite(data).get('skills/index.html');
-  assert.match(catalog, /aria-label="職業跳轉"/);
+  const files = renderSite(data);
+  const catalog = files.get('skills/index.html');
   assert.ok(catalog.indexOf('職業：arbites') < catalog.indexOf('職業：veteran'));
-  assert.match(catalog, /href="#skill-group-1"/);
-  assert.match(catalog, /id="skill-group-1"/);
-  assert.match(catalog, /href="\/skills\/arbites\/practice-guard\/"/);
-  assert.match(catalog, /href="\/skills\/veteran\/practice-guard\/"/);
+  assert.match(catalog, /href="\/skills\/arbites\/"/);
+  assert.match(catalog, /href="\/skills\/veteran\/"/);
+  assert.doesNotMatch(catalog, /演示執法|演示防護/);
+  assert.ok(files.has('skills/arbites/index.html'));
+  assert.ok(files.has('skills/veteran/index.html'));
 });
 
 // Scenario: A ranged weapon is followed by a melee weapon in the source package.
@@ -59,6 +60,24 @@ test('UnitT13_groups_weapon_catalog_by_kind_with_jump_links', () => {
   assert.match(catalog, /href="\/weapons\/practice-blade\/"/);
   assert.match(catalog, /href="\/weapons\/practice-rifle\/"/);
   assert.doesNotMatch(catalog, />ranged<|>melee</);
+});
+
+// Scenario: A class has skills in two categories and one skill detail page.
+// Purpose: Keep category navigation and the route back to the class usable without JavaScript.
+test('UnitT14_renders_archetype_page_with_category_sections_and_detail_backlink', () => {
+  const data = structuredClone(fixture);
+  data.skills.push({ ...data.skills[0], skill_id: 'practice-attack',
+    category: '攻擊', name_zh_tw: '演示攻擊' });
+  data.routes.push({ ...data.routes[0], content_key: 'veteran/practice-attack',
+    target_route: '/skills/veteran/practice-attack/' });
+  const files = renderSite(data);
+  const catalog = files.get('skills/veteran/index.html');
+  assert.match(catalog, /aria-label="技能分類跳轉"/);
+  assert.match(catalog, /href="#skill-category-group-1"/);
+  assert.match(catalog, /id="skill-category-group-1"/);
+  assert.match(catalog, /href="\/skills\/veteran\/practice-attack\/"/);
+  assert.match(catalog, /href="\/skills\/veteran\/practice-guard\/"/);
+  assert.match(files.get('skills/veteran/practice-guard/index.html'), /href="\/skills\/veteran\/"/);
 });
 
 // Scenario: A valid fictional package is rendered for an unknown route.

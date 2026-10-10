@@ -55,6 +55,9 @@ export function validatePackage(data, { allowRelease = false } = {}) {
   const skills = new Map();
   for (const skill of requireArray(data.skills, 'skills')) {
     if (!skill?.archetype || !skill?.skill_id) throw new Error('skill identity is missing');
+    if (!/^[a-z0-9_-]+$/.test(skill.archetype) || !/^[a-z0-9_-]+$/.test(skill.skill_id)) {
+      throw new Error('invalid skill archetype or ID segment');
+    }
     const id = `${skill.archetype}/${skill.skill_id}`;
     if (skills.has(id)) throw new Error(`duplicate skill: ${id}`);
     skills.set(id, skill);

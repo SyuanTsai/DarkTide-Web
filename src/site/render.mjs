@@ -112,10 +112,10 @@ function renderValidatedSite(data, indexes) {
   const skills = [...indexes.skills.values()];
   const weapons = [...indexes.weapons.values()];
   const blessings = [...indexes.blessings.values()];
+  const archetypes = [...new Set(skills.map(skill => skill.archetype))].sort();
+  const archetypeLinks = list(archetypes.map(archetype =>
+    item(`/skills/${archetype}/`, `職業：${archetype}`)));
   const blessingLinks = list(blessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
-  const skillCatalog = groupedCatalog(skills, s => s.archetype, key => `職業：${key}`,
-    s => s.skill_id, s => routeFor(indexes, 'skill', `${s.archetype}/${s.skill_id}`),
-    s => s.category, '職業跳轉', 'skill');
   const weaponCatalog = groupedCatalog(weapons, w => w.kind,
     key => ({ melee: '近戰武器', ranged: '遠程武器' })[key] ?? `武器類型：${key}`,
     w => w.weapon_id, w => routeFor(indexes, 'weapon', w.weapon_id),
@@ -127,14 +127,23 @@ function renderValidatedSite(data, indexes) {
       item('/', '返回首頁'), item('/skills/', '技能目錄'),
       item('/weapons/', '武器目錄'), item('/blessings/', '祝福目錄')
     ])), '', true));
-  files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + skillCatalog));
+  files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('職業列表', archetypeLinks)));
+  for (const archetype of archetypes) {
+    const members = skills.filter(skill => skill.archetype === archetype);
+    const catalog = groupedCatalog(members, skill => skill.category, category => category,
+      skill => skill.skill_id,
+      skill => routeFor(indexes, 'skill', `${skill.archetype}/${skill.skill_id}`),
+      () => '', '技能分類跳轉', 'skill-category');
+    files.set(`skills/${archetype}/index.html`, page(`職業：${archetype}`, 'skills',
+      intro('技能目錄', `職業：${archetype}`, '依分類查閱這個職業的技能。') + catalog));
+  }
   files.set('weapons/index.html', page('武器', 'weapons', intro('武器目錄', '武器', `從武器追溯型號與祝福。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + weaponCatalog));
   files.set('blessings/index.html', page('祝福', 'blessings', intro('祝福目錄', '祝福', `從祝福反查適用武器。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('祝福列表', blessingLinks)));
 
   for (const skill of skills) {
     const { images, notices } = assetMarkup(skill, indexes.assets);
     const path = fileFor(routeFor(indexes, 'skill', `${skill.archetype}/${skill.skill_id}`));
-    files.set(path, page(skill.name_zh_tw, 'skills', `${intro(`技能 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}${card('技能效果', `${images}<p>${escapeHtml(skill.effect_zh_tw)}</p><p class="muted">分類：${escapeHtml(skill.category)}</p>`)}${skill.claims.length ? card('技能數值', claimMarkup(skill.claims)) : ''}`, notices));
+    files.set(path, page(skill.name_zh_tw, 'skills', `${intro(`技能 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}<p><a href="/skills/${escapeHtml(skill.archetype)}/">返回職業技能目錄</a></p>${card('技能效果', `${images}<p>${escapeHtml(skill.effect_zh_tw)}</p><p class="muted">分類：${escapeHtml(skill.category)}</p>`)}${skill.claims.length ? card('技能數值', claimMarkup(skill.claims)) : ''}`, notices));
   }
   for (const weapon of weapons) {
     const { images, notices } = assetMarkup(weapon, indexes.assets);

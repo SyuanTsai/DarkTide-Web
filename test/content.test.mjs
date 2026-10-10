@@ -25,6 +25,16 @@ test('UnitT30_rejects_duplicate_canonical_route', () => {
   assert.throws(() => validatePackage(data), /duplicate.*route/i);
 });
 
+// Scenario: A skill archetype contains a nested path separator.
+// Purpose: Reserve one route segment for each generated archetype index page.
+test('UnitT32_rejects_nested_archetype_that_collides_with_class_page', () => {
+  const data = structuredClone(fixture);
+  data.skills[0].archetype = 'veteran/nested';
+  data.routes[0].content_key = 'veteran/nested/practice-guard';
+  data.routes[0].target_route = '/skills/veteran/nested/practice-guard/';
+  assert.throws(() => validatePackage(data), /archetype.*segment|invalid.*archetype/i);
+});
+
 // Scenario: A real source ID contains underscores and is used in its canonical skill URL.
 // Purpose: Accept the source ID alphabet while preserving the exact route-to-record join.
 test('UnitT35_accepts_underscores_in_canonical_source_id_route', () => {
