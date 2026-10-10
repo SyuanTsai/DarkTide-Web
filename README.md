@@ -20,4 +20,6 @@ Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原�
 
 `renderReleaseSite(data, context)` 會在產生正式頁面前，核對三類內容的關係、taxonomy／欄位規則 hash、每個實際使用頁面的來源與權利，並把已驗證的圖示 byte 放入輸出。`renderSite(data)` 仍只接受虛構 fixture。`createGitVerifiedReleaseDraft(data, context, { gitCheckouts, workerBytes, toolCommitSha })` 先從本機 checkout 讀取指定 commit／path 的 Git blob，核對遠端身分、物件型別與原始位元組 SHA-256，再把已驗候選頁面、使用到的來源與權利快照、Worker 位元組組成固定草稿清單。圖示仍由受控呼叫端提供原始位元組並核對 hash；此流程不下載或爬取素材。草稿的 `validation.complete` 固定為 `false`，Worker 會拒絕部署。正式匯入器、來源 selector 的正文語義驗證、數值 claim、完整發布驗證與部署尚未接上，因此沒有可發布的真實內容包。
 
+`importSkillCandidate({ row, playerSource, indexSource, sourceBytes })` 可將一筆技能 TSV 身分與已鎖定 hash 的 Mods 玩家說明／索引位元組對帳，產生記有欄位、身分與分類來源座標的記憶體候選。呼叫端須先用固定 Git commit 的來源讀取流程驗證來源身分；匯入器核對傳入的原始位元組 hash、名稱、分類和技能類型。結果固定為 `review_status: 'pending'`，沒有發布權決策或數值主張，也不會寫檔或進入正式頁面。實際技能內容、翻譯品質及權利仍需審核。
+
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。
