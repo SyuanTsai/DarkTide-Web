@@ -45,6 +45,14 @@ test('UnitT35_accepts_underscores_in_canonical_source_id_route', () => {
   assert.doesNotThrow(() => validatePackage(data));
 });
 
+// Scenario: A skill lacks its separate mechanics explanation.
+// Purpose: Prevent a skill package from silently omitting the mechanics route content.
+test('UnitT36_rejects_skill_without_mechanics_text', () => {
+  const data = structuredClone(fixture);
+  delete data.skills[0].mechanics_zh_tw;
+  assert.throws(() => validatePackage(data), /mechanics/i);
+});
+
 // Scenario: A mark declares a canonical page nested under its owning weapon.
 // Purpose: Give each mark a unique validated destination for its own claims and relations.
 test('UnitT37_accepts_owned_mark_canonical_route', () => {

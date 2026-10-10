@@ -5,7 +5,7 @@ import { validateRecordPublication } from './publication.mjs';
 // Minimum fields consumed by the current page renderer. Versioned field
 // requirements may demand more evidence, but cannot remove these checks.
 const minimumFields = {
-  skill: ['/archetype', '/skill_id', '/kind', '/category', '/name_zh_tw', '/effect_zh_tw'],
+  skill: ['/archetype', '/skill_id', '/kind', '/category', '/name_zh_tw', '/effect_zh_tw', '/mechanics_zh_tw'],
   weapon: ['/weapon_id', '/kind', '/name_zh_tw', '/mark_ids'],
   mark: ['/mark_id', '/weapon_id', '/name_zh_tw'],
   blessing: ['/blessing_id', '/name_zh_tw', '/effect_zh_tw', '/variant_ids'],
@@ -159,6 +159,8 @@ export async function validateReleaseCandidate(data, context) {
   for (const skill of data.skills) {
     const detail = route('skill', `${skill.archetype}/${skill.skill_id}`);
     await check('skill', skill, detail);
+    await check('skill', skill, `${detail}mechanics/`,
+      ['/archetype', '/skill_id', '/name_zh_tw', '/mechanics_zh_tw'], false);
     await check('skill', skill, '/skills/', ['/archetype'], false);
     await check('skill', skill, `/skills/${skill.archetype}/`,
       ['/archetype', '/name_zh_tw', '/category'], false);

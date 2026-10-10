@@ -11,6 +11,7 @@ export const fixture = {
     category: '示範分類',
     name_zh_tw: '演示防護',
     effect_zh_tw: '這是一段虛構技能效果，僅用於版面測試。',
+    mechanics_zh_tw: '這是一段虛構機制說明，僅用於版面測試。',
     claims: [], evidence: [], asset_ids: []
   }],
   weapons: [{

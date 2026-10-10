@@ -58,6 +58,9 @@ export function validatePackage(data, { allowRelease = false } = {}) {
     if (!/^[a-z0-9_-]+$/.test(skill.archetype) || !/^[a-z0-9_-]+$/.test(skill.skill_id)) {
       throw new Error('invalid skill archetype or ID segment');
     }
+    if (typeof skill.mechanics_zh_tw !== 'string' || !skill.mechanics_zh_tw.trim()) {
+      throw new Error('skill mechanics text is missing');
+    }
     const id = `${skill.archetype}/${skill.skill_id}`;
     if (skills.has(id)) throw new Error(`duplicate skill: ${id}`);
     skills.set(id, skill);

@@ -11,7 +11,7 @@ import { renderReleaseSite, renderSite } from '../src/site/render.mjs';
 
 const sha = value => createHash('sha256').update(value).digest('hex');
 const required = {
-  skill: ['/archetype', '/skill_id', '/kind', '/category', '/name_zh_tw', '/effect_zh_tw'],
+  skill: ['/archetype', '/skill_id', '/kind', '/category', '/name_zh_tw', '/effect_zh_tw', '/mechanics_zh_tw'],
   weapon: ['/weapon_id', '/kind', '/name_zh_tw', '/mark_ids'],
   mark: ['/mark_id', '/weapon_id', '/name_zh_tw'],
   blessing: ['/blessing_id', '/name_zh_tw', '/effect_zh_tw', '/variant_ids'],
@@ -41,7 +41,8 @@ function candidate() {
   data.taxonomy_sha256 = sha(canonicalize(taxonomy));
   data.field_requirement_sha256 = sha(canonicalize(fieldRequirements));
 
-  const routes = ['/', '/skills/', '/skills/veteran/', '/weapons/', '/blessings/', ...data.routes.map(row => row.target_route)];
+  const routes = ['/', '/skills/', '/skills/veteran/', '/skills/veteran/practice-guard/mechanics/',
+    '/weapons/', '/blessings/', ...data.routes.map(row => row.target_route)];
   const rightsLedger = [];
   const selectors = [];
   let number = 0;
@@ -127,6 +128,7 @@ test('UnitT10_renders_approved_release_without_fixture_labels', async () => {
   const { data, context } = candidate();
   const files = await renderReleaseSite(data, context);
   assert.ok(files.has('skills/veteran/practice-guard/index.html'));
+  assert.ok(files.has('skills/veteran/practice-guard/mechanics/index.html'));
   assert.ok(files.has('skills/veteran/index.html'));
   assert.ok(files.has('weapons/practice-rifle/index.html'));
   assert.ok(files.has('weapons/practice-rifle/marks/practice-rifle-m1/index.html'));
@@ -153,6 +155,33 @@ test('UnitT20_rejects_missing_field_evidence_before_render', async () => {
   const { data, context } = candidate();
   data.blessings[0].evidence = data.blessings[0].evidence.filter(row => row.field_path !== '/effect_zh_tw');
   await assert.rejects(() => renderReleaseSite(data, context), /evidence.*effect_zh_tw/i);
+});
+
+// Scenario: The separate mechanics field has no source evidence.
+// Purpose: Keep the new mechanics route from publishing unaudited prose.
+test('UnitT22_rejects_mechanics_without_source_evidence', async () => {
+  const { data, context } = candidate();
+  data.skills[0].evidence = data.skills[0].evidence.filter(row => row.field_path !== '/mechanics_zh_tw');
+  await assert.rejects(() => renderReleaseSite(data, context), /evidence.*mechanics_zh_tw/i);
+});
+
+// Scenario: The mechanics text is approved on the player page but not its own route.
+// Purpose: Require route-specific approval for the separate mechanics page.
+test('UnitT23_rejects_mechanics_without_route_approval', async () => {
+  const { data, context } = candidate();
+  const evidence = data.skills[0].evidence.find(row => row.field_path === '/mechanics_zh_tw');
+  const right = context.rightsLedger.find(row => row.rights_id === evidence.rights_id);
+  right.publish.allowed_routes = right.publish.allowed_routes.filter(route =>
+    route !== '/skills/veteran/practice-guard/mechanics/');
+  await assert.rejects(() => renderReleaseSite(data, context), /route/i);
+});
+
+// Scenario: The requested mechanics explanation differs from the fixed source value.
+// Purpose: Reject edited prose even when an evidence selector and route right are present.
+test('UnitT24_rejects_mechanics_text_not_matching_source', async () => {
+  const { data, context } = candidate();
+  data.skills[0].mechanics_zh_tw = '來源並沒有這段機制說明';
+  await assert.rejects(() => renderReleaseSite(data, context), /source value differs.*mechanics_zh_tw/i);
 });
 
 // Scenario: The versioned rule requires Markdown for one displayed effect, but only JSON supports it.

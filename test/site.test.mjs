@@ -105,6 +105,29 @@ test('UnitT20_renders_attribution_on_each_using_page', () => {
   assert.doesNotMatch(page, /<meta name="robots" content="[^"]*nofollow/);
 });
 
+// Scenario: A skill has separate fictional player and mechanics explanations.
+// Purpose: Provide a dedicated mechanics route with links in both directions.
+test('UnitT25_renders_separate_skill_mechanics_page', () => {
+  const files = renderSite(structuredClone(fixture));
+  const player = files.get('skills/veteran/practice-guard/index.html');
+  const mechanics = files.get('skills/veteran/practice-guard/mechanics/index.html');
+  assert.match(player, /href="\/skills\/veteran\/practice-guard\/mechanics\/"/);
+  assert.match(mechanics, /虛構機制說明/);
+  assert.match(mechanics, /href="\/skills\/veteran\/practice-guard\/"/);
+  assert.doesNotMatch(mechanics, /虛構技能效果/);
+});
+
+// Scenario: Reviewed mechanics prose contains HTML-looking text and a line break.
+// Purpose: Keep source prose readable without executing embedded markup.
+test('UnitT26_escapes_mechanics_text_before_rendering', () => {
+  const data = structuredClone(fixture);
+  data.skills[0].mechanics_zh_tw = '<script>虛構內容</script>\n第二行';
+  const page = renderSite(data).get('skills/veteran/practice-guard/mechanics/index.html');
+  assert.doesNotMatch(page, /<script>/);
+  assert.match(page, /&lt;script&gt;虛構內容&lt;\/script&gt;\n第二行/);
+  assert.match(renderSite(data).get('assets/site.css'), /\.mechanics-text\{white-space:pre-line\}/);
+});
+
 // Scenario: The exact same fixed fixture is rendered twice.
 // Purpose: Prevent timestamps or process state from changing build inputs.
 test('UnitT30_renders_deterministic_file_bytes', () => {
