@@ -91,3 +91,24 @@ export async function importSkillCandidate({ row, playerSource, indexSource, sou
     asset_ids: []
   };
 }
+
+// Returns only after every row passes; a caller never receives a partial batch.
+export async function importSkillCandidates({ entries, sourceBytes } = {}) {
+  if (!Array.isArray(entries) || !(sourceBytes instanceof Map)) {
+    throw new Error('skill batch entries and source bytes are required');
+  }
+  const seen = new Set();
+  const ordered = [...entries].sort((left, right) => {
+    const a = `${left?.row?.archetype ?? ''}/${left?.row?.id ?? ''}`;
+    const b = `${right?.row?.archetype ?? ''}/${right?.row?.id ?? ''}`;
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
+  const candidates = [];
+  for (const entry of ordered) {
+    const key = `${entry?.row?.archetype ?? ''}/${entry?.row?.id ?? ''}`;
+    if (seen.has(key)) throw new Error(`duplicate skill identity: ${key}`);
+    seen.add(key);
+    candidates.push(await importSkillCandidate({ ...entry, sourceBytes }));
+  }
+  return candidates;
+}

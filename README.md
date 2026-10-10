@@ -22,4 +22,6 @@ Git JSON 來源的欄位證據使用 `json:/...` selector，從已核對的原�
 
 `importSkillCandidate({ row, playerSource, indexSource, sourceBytes })` 可將一筆技能 TSV 身分與已鎖定 hash 的 Mods 玩家說明／索引位元組對帳，產生記有欄位、身分與分類來源座標的記憶體候選。呼叫端須先用固定 Git commit 的來源讀取流程驗證來源身分；匯入器核對傳入的原始位元組 hash、名稱、分類和技能類型。結果固定為 `review_status: 'pending'`，沒有發布權決策或數值主張，也不會寫檔或進入正式頁面。實際技能內容、翻譯品質及權利仍需審核。
 
+`importSkillCandidates({ entries, sourceBytes })` 以 `(archetype, skill_id)` 排序並拒絕重複主鍵；任一筆對帳失敗時不回傳部分批次。以固定歷史 IO Git commit 的七份 TSV、固定現行 Mods Git commit 的玩家說明與索引跑過 646 筆，全部產生待審候選（28 基礎效果、587 一般技能、29 配方及兩種零點節點各一）。這是來源欄位對帳，不代表 646 筆已通過遊戲語義、翻譯品質或發布權審核；網站仍只建置虛構資料。
+
 `worker/index.mjs` 是私有 R2 讀取層：以 `ACTIVE_RELEASE` 指向 `CONTENT_BUCKET` 中 `releases/<id>/` 的固定版本，只服務正式 manifest 列出的檔案。正式 manifest 必須有依契約計算的 `sha256:<64hex>` release ID、排序的檔案清單、來源／權利快照摘要、Worker bundle 摘要與完成的驗證紀錄；每次 GET 還會核對 R2 物件的實際位元組數與 SHA-256。虛構建置的 `release_ready: false` 會被拒絕。因目前資產網址未帶版本號，Worker 對頁面和資產都使用短期快取，避免切換版本後沿用舊 CSS。現階段沒有正式內容包、Cloudflare 資源或部署設定；此模組以模擬 R2 的單元測試驗證。

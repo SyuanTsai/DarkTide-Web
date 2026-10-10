@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { importSkillCandidate } from '../src/content/import-skill.mjs';
+import { importSkillCandidate, importSkillCandidates } from '../src/content/import-skill.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const bytes = text => new TextEncoder().encode(text);
@@ -114,4 +114,76 @@ test('UnitT50_rejects_mismatched_classification_source', async () => {
   const input = indexedInput();
   input.indexSource.path = input.indexSource.path.replace('/Veteran/', '/Scum/');
   await assert.rejects(() => importSkillCandidate(input), /index source path mismatch/i);
+});
+
+function batchInput() {
+  const input = indexedInput();
+  const player = bytes([
+    '<a id="second-skill"></a>', '### 第二技能(Second Skill)',
+    '- **效果**：第二筆虛構效果。', '[詳細資料](second-skill.md)', '---',
+    '<a id="practice-guard"></a>', '### 演示防護(Practice Guard)',
+    '- **效果**：這是一段虛構技能效果。', '[詳細資料](practice-guard.md)', '---'
+  ].join('\n'));
+  const index = bytes([
+    '| [第二技能](second-skill.md) / `second-skill` | 技能 |',
+    '| [演示防護](practice-guard.md) / `practice-guard` | 技能 |'
+  ].join('\n'));
+  input.playerSource.sha256 = sha(player);
+  input.indexSource.sha256 = sha(index);
+  input.sourceBytes.set('player-source', player);
+  input.sourceBytes.set('index-source', index);
+  const second = { ...input.row, id: 'second-skill', zh: '第二技能' };
+  return { entries: [
+    { row: second, playerSource: input.playerSource, indexSource: input.indexSource },
+    { row: input.row, playerSource: input.playerSource, indexSource: input.indexSource }
+  ], sourceBytes: input.sourceBytes };
+}
+
+// Scenario: Two skills share one locked README and index but arrive in reverse ID order.
+// Purpose: Return a deterministic set of pending candidates without saving source text.
+test('UnitT60_imports_batch_in_stable_composite_key_order', async () => {
+  const input = batchInput();
+  const candidates = await importSkillCandidates(input);
+  assert.deepEqual(candidates.map(candidate => candidate.skill_id), ['practice-guard', 'second-skill']);
+  assert.ok(candidates.every(candidate => candidate.review_status === 'pending'));
+  assert.equal(input.entries[0].row.id, 'second-skill');
+});
+
+// Scenario: A batch repeats the same archetype and skill ID.
+// Purpose: Reject a route collision before returning any candidate collection.
+test('UnitT70_rejects_duplicate_skill_identity_in_batch', async () => {
+  const input = batchInput();
+  input.entries.push({ ...input.entries[1] });
+  await assert.rejects(() => importSkillCandidates(input), /duplicate.*skill/i);
+});
+
+// Scenario: Two archetypes legitimately reuse one raw skill ID in separate source files.
+// Purpose: Preserve the archetype and ID pair as the unique batch identity.
+test('UnitT75_accepts_shared_raw_id_across_archetypes', async () => {
+  const first = indexedInput();
+  const second = indexedInput();
+  second.row.archetype = 'arbites';
+  second.playerSource = { ...second.playerSource, source_id: 'arbites-player',
+    path: second.playerSource.path.replace('/Veteran/', '/Arbites/') };
+  second.indexSource = { ...second.indexSource, source_id: 'arbites-index',
+    path: second.indexSource.path.replace('/Veteran/', '/Arbites/') };
+  const candidates = await importSkillCandidates({
+    entries: [
+      { row: first.row, playerSource: first.playerSource, indexSource: first.indexSource },
+      { row: second.row, playerSource: second.playerSource, indexSource: second.indexSource }
+    ],
+    sourceBytes: new Map([...first.sourceBytes,
+      ['arbites-player', second.sourceBytes.get('player-source')],
+      ['arbites-index', second.sourceBytes.get('index-source')]])
+  });
+  assert.deepEqual(candidates.map(item => `${item.archetype}/${item.skill_id}`),
+    ['arbites/practice-guard', 'veteran/practice-guard']);
+});
+
+// Scenario: A later row has a TSV name that disagrees with its fixed Markdown title.
+// Purpose: Keep the batch atomic instead of exposing a partially imported set.
+test('UnitT80_rejects_entire_batch_when_one_skill_drifts', async () => {
+  const input = batchInput();
+  input.entries[0].row = { ...input.entries[0].row, zh: '錯誤名稱' };
+  await assert.rejects(() => importSkillCandidates(input), /name.*mismatch/i);
 });
