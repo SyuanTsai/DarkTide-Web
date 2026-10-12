@@ -328,7 +328,7 @@ async function assertTalentTreeDom(page, tree, context) {
   // Purpose: Preserve its native silhouette instead of forcing a circle or square mask.
   assert.equal(await page.locator('.talent-node:has(img:not([hidden]))').evaluateAll(nodes => nodes.every(node => {
     const style = getComputedStyle(node);
-    return style.overflow === 'visible' && style.borderTopColor === 'rgba(0, 0, 0, 0)' && style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.boxShadow === 'none';
+    return style.overflow === 'visible' && style.borderTopColor === 'rgba(0, 0, 0, 0)' && style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.boxShadow === 'none' && getComputedStyle(node.querySelector('img')).pointerEvents === 'none';
   })), true, context + ' original artwork must remain unmasked and unframed');
 
   // Scenario: Open a tree at its default scale on desktop or a narrow phone.

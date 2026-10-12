@@ -174,7 +174,7 @@ p { margin: .45rem 0 1rem; }
 .tree-lines line { stroke: #7c785c; stroke-width: 2; opacity: .8; }
 .talent-node { position: absolute; display: grid; place-items: center; width: 40px; height: 40px; padding: 1px; overflow: hidden; transform: translate(-50%, -50%); border: 2px solid #8d9d8e; border-radius: 50%; color: #d9e2d6; background: #16251f; box-shadow: 0 0 0 3px #101916; font-size: .7rem; line-height: 1.2; }
 /* Talent exports include transparent space around their centered artwork. */
-.talent-node img { display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(1.6); }
+.talent-node img { pointer-events: none; display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(1.6); }
 .talent-node[data-node-type="stat"] { width: 27px; height: 27px; }
 .talent-node[data-node-type="start"] { width: 52px; height: 52px; border-color: var(--gold); }
 .talent-node[data-node-type="tactical"], .talent-node[data-node-type="tactical_modifier"] { border-radius: .2rem; border-color: #a8c77a; }
