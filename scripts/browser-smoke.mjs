@@ -324,6 +324,13 @@ async function assertTalentTreeDom(page, tree, context) {
   const failedIcons = await page.locator('.talent-node img').evaluateAll(images => images.filter(image => !image.naturalWidth || image.hidden).map(image => image.src));
   assert.deepEqual(failedIcons, [], context + ' all original source icons must actually load');
 
+  // Scenario: Original talent artwork is loaded on nodes of different gameplay types.
+  // Purpose: Preserve its native silhouette instead of forcing a circle or square mask.
+  assert.equal(await page.locator('.talent-node:has(img:not([hidden]))').evaluateAll(nodes => nodes.every(node => {
+    const style = getComputedStyle(node);
+    return style.overflow === 'visible' && style.borderTopColor === 'rgba(0, 0, 0, 0)' && style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.boxShadow === 'none';
+  })), true, context + ' original artwork must remain unmasked and unframed');
+
   // Scenario: Open a tree at its default scale on desktop or a narrow phone.
   // Purpose: Keep skill icons readable and clickable without overlapping adjacent nodes.
   assert.equal(await page.locator('#tree-zoom').inputValue(), '100', context + ' opens at readable scale');
@@ -413,6 +420,15 @@ async function expectTalentTree(page, origin, catalog, item) {
   const nodeButton = page.locator('.talent-node[data-node-id="' + mappedNode.node_id + '"]');
   assert.equal(await nodeButton.count(), 1, context + ' mapped node must be uniquely selectable');
   await nodeButton.click();
+  if (skillDetail.assets.length) {
+    // Scenario: Select a node whose original artwork is available.
+    // Purpose: Retain a visible selection cue without adding a type-shaped frame.
+    await page.locator('main .page-intro h1').click(); // Move hover and focus away from the selected node.
+    assert.notEqual(await nodeButton.locator('img').evaluate(image => getComputedStyle(image).filter), 'none',
+      context + ' selected original artwork must have a visible highlight');
+    assert.equal(await nodeButton.evaluate(node => getComputedStyle(node).boxShadow), 'none',
+      context + ' selection must not restore the artificial frame');
+  }
 
   const panel = page.locator('#tree-detail-panel');
   await panel.waitFor({ state: 'visible' });

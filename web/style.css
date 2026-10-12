@@ -204,6 +204,12 @@ p { margin: .45rem 0 1rem; }
 .data-limitations summary { cursor: pointer; }
 .blessing-levels .field { max-width: 28rem; }
 
+/* Let the original transparent artwork define its shape, independent of node type. */
+.talent-node:has(img:not([hidden])) { border-color: transparent; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+.talent-node:has(img:not([hidden])):hover img { filter: drop-shadow(0 0 3px #e9efd8); }
+.talent-node:has(img:not([hidden]))[aria-pressed="true"] img,
+.talent-node:has(img:not([hidden])):focus-visible img { filter: drop-shadow(0 0 3px #edd696) drop-shadow(0 0 5px #edd696); }
+
 .talent-node img[hidden], .talent-node .talent-icon-fallback[hidden] { display: none; }
 
 .talent-icon-fallback { width: 80%; height: 80%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
