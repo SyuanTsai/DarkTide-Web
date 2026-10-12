@@ -166,13 +166,15 @@ p { margin: .45rem 0 1rem; }
 .view-switch [aria-current="page"] { border-color: var(--gold); color: var(--gold); }
 .tree-controls label { font-weight: 700; }
 .tree-controls input { max-width: min(15rem, 55vw); accent-color: var(--gold); }
-.tree-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(17rem, .55fr); gap: 1rem; align-items: start; }
+.main-content:has(.tree-layout) { width: min(96rem, calc(100% - 3rem)); }
+.tree-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem); gap: 1rem; align-items: start; }
 .tree-viewport { min-width: 0; max-width: 100%; height: min(75vh, 58rem); overflow: auto; overscroll-behavior: contain; border: 1px solid #526254; border-radius: .55rem; background: radial-gradient(ellipse at 50% 5%, #25372d, #101916 70%); }
 .tree-canvas { position: relative; margin-inline: auto; }
 .tree-lines { position: absolute; inset: 0; pointer-events: none; }
 .tree-lines line { stroke: #7c785c; stroke-width: 2; opacity: .8; }
-.talent-node { position: absolute; display: grid; place-items: center; width: 40px; height: 40px; padding: 3px; transform: translate(-50%, -50%); border: 2px solid #8d9d8e; border-radius: 50%; color: #d9e2d6; background: #16251f; box-shadow: 0 0 0 3px #101916; font-size: .7rem; line-height: 1.2; }
-.talent-node img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: inherit; }
+.talent-node { position: absolute; display: grid; place-items: center; width: 40px; height: 40px; padding: 1px; overflow: hidden; transform: translate(-50%, -50%); border: 2px solid #8d9d8e; border-radius: 50%; color: #d9e2d6; background: #16251f; box-shadow: 0 0 0 3px #101916; font-size: .7rem; line-height: 1.2; }
+/* Talent exports include transparent space around their centered artwork. */
+.talent-node img { display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(1.6); }
 .talent-node[data-node-type="stat"] { width: 27px; height: 27px; }
 .talent-node[data-node-type="start"] { width: 52px; height: 52px; border-color: var(--gold); }
 .talent-node[data-node-type="tactical"], .talent-node[data-node-type="tactical_modifier"] { border-radius: .2rem; border-color: #a8c77a; }
@@ -186,6 +188,7 @@ p { margin: .45rem 0 1rem; }
 .tree-detail .detail-section { margin-top: 1.2rem; padding: .7rem; }
 .tree-detail .asset-grid { grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); }
 @media (max-width: 900px) {
+  .main-content:has(.tree-layout) { width: calc(100% - 2rem); }
   .tree-layout { grid-template-columns: minmax(0, 1fr); }
   .tree-detail { position: static; max-height: none; grid-row: 1; }
   .tree-viewport { height: 65vh; }
