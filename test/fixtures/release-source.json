@@ -1,0 +1,40 @@
+{
+  "skills": [{
+    "archetype": "veteran",
+    "skill_id": "practice-guard",
+    "kind": "current-talent",
+    "category": "示範分類",
+    "name_zh_tw": "演示防護",
+    "effect_zh_tw": "這是一段虛構技能效果，僅用於版面測試。",
+    "mechanics_zh_tw": "這是一段虛構機制說明，僅用於版面測試。"
+  }],
+  "weapons": [{
+    "weapon_id": "practice-rifle",
+    "kind": "ranged",
+    "name_zh_tw": "演示步槍",
+    "mark_ids": ["practice-rifle-m1"]
+  }],
+  "marks": [{
+    "mark_id": "practice-rifle-m1",
+    "weapon_id": "practice-rifle",
+    "name_zh_tw": "演示型"
+  }],
+  "blessings": [{
+    "blessing_id": "steady-example",
+    "name_zh_tw": "演示穩定",
+    "effect_zh_tw": "這是一段虛構祝福效果，僅用於版面測試。",
+    "variant_ids": ["steady-example-rifle"]
+  }],
+  "variants": [{
+    "variant_id": "steady-example-rifle",
+    "blessing_id": "steady-example",
+    "weapon_id": "practice-rifle",
+    "defined_tiers": [1]
+  }],
+  "bindings": [{
+    "blessing_id": "steady-example",
+    "weapon_id": "practice-rifle",
+    "mark_id": "practice-rifle-m1",
+    "variant_id": "steady-example-rifle"
+  }]
+}

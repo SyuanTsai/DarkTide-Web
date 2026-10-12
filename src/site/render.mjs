@@ -1,0 +1,200 @@
+import { validatePackage } from '../content/validate.mjs';
+import { validateReleaseCandidate } from '../content/release-candidate.mjs';
+
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+})[character]);
+const list = items => `<ul class="link-list">${items.join('')}</ul>`;
+const item = (href, label, note = '') => `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a>${note ? `<span>${escapeHtml(note)}</span>` : ''}</li>`;
+
+function assetMarkup(record, assets) {
+  const icons = (record.asset_ids ?? []).map(id => assets.get(id));
+  const images = icons.map(asset => `<img class="content-icon" src="${escapeHtml(asset.path ?? `/${asset.delivery_path}`)}" alt="${escapeHtml(asset.alt ?? record.name_zh_tw ?? '')}">`).join('');
+  const notices = new Map();
+  for (const asset of icons) {
+    if (!asset.attribution) continue;
+    const { href, text } = asset.attribution;
+    notices.set(`${href}|${text}`, `<a href="${escapeHtml(href)}">${escapeHtml(text)}</a>`);
+  }
+  return {
+    images: images ? `<div class="icon-row">${images}</div>` : '',
+    notices: [...notices.values()].map(link => `<p class="asset-credit">${link}</p>`).join('')
+  };
+}
+
+function documentPage(title, section, content, credits = '', fixtureMode = true, noindex = false) {
+  return `<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  ${fixtureMode || noindex ? '<meta name="robots" content="noindex">' : ''}
+  <title>${escapeHtml(title)}｜黑潮繁體資料庫${fixtureMode ? '示範' : ''}</title>
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要內容</a>
+  <header class="site-header"><div class="shell header-inner"><a class="brand" href="/">黑潮<span>繁體資料庫</span></a><nav aria-label="主要導覽"><a href="/skills/"${section === 'skills' ? ' aria-current="page"' : ''}>技能</a><a href="/weapons/"${section === 'weapons' ? ' aria-current="page"' : ''}>武器</a><a href="/blessings/"${section === 'blessings' ? ' aria-current="page"' : ''}>祝福</a></nav></div></header>
+  <main id="main" class="shell">${content}</main>
+  <footer class="site-footer"><div class="shell"><p>${fixtureMode ? '虛構示範資料 · 僅用於網站結構與介面驗證' : '黑潮繁體資料庫'}</p>${credits}</div></footer>
+</body>
+</html>
+`;
+}
+
+function intro(kicker, title, description) {
+  return `<section class="intro"><p class="eyebrow">${escapeHtml(kicker)}</p><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></section>`;
+}
+
+function card(title, body) {
+  return `<section class="card"><h2>${escapeHtml(title)}</h2>${body}</section>`;
+}
+
+function groupedCatalog(rows, keyOf, titleOf, idOf, hrefOf, noteOf, navLabel, prefix) {
+  const grouped = new Map();
+  for (const row of rows) {
+    const key = keyOf(row);
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(row);
+  }
+  const groups = [...grouped].sort(([left], [right]) => left < right ? -1 : left > right ? 1 : 0);
+  if (!groups.length) return card('目前沒有資料', '<p>請稍後再查看。</p>');
+  const jump = `<nav class="catalog-jump" aria-label="${escapeHtml(navLabel)}">${groups.map(([key], index) =>
+    `<a href="#${prefix}-group-${index + 1}">${escapeHtml(titleOf(key))}</a>`).join('')}</nav>`;
+  const sections = groups.map(([key, members], index) => {
+    const links = list(members.sort((left, right) => idOf(left) < idOf(right) ? -1 : idOf(left) > idOf(right) ? 1 : 0)
+      .map(row => item(hrefOf(row), row.name_zh_tw, noteOf(row))));
+    return `<section class="card" id="${prefix}-group-${index + 1}"><h2>${escapeHtml(titleOf(key))}</h2>${links}</section>`;
+  });
+  return jump + sections.join('');
+}
+
+const claimUnits = { percent: '%', seconds: '秒', meters: '公尺', count: '個', multiplier: '倍', game_unit: '' };
+
+function claimMarkup(claims) {
+  if (!claims.length) return '';
+  return `<dl class="claim-list">${claims.map(claim => {
+    const value = claim.state === 'unknown' ? '尚未確認' :
+      `${claim.value}${claimUnits[claim.unit]}${claim.unit === 'game_unit' ? ` ${claim.unit_note}` : ''}`;
+    return `<div><dt>${escapeHtml(claim.claim_id)}</dt><dd>${escapeHtml(value)}</dd></div>`;
+  }).join('')}</dl>`;
+}
+
+function routeFor(indexes, kind, id) {
+  const route = [...indexes.routes.values()].find(row => row.content_kind === kind && row.content_key === id);
+  return route.target_route;
+}
+
+function fileFor(route) { return `${route.slice(1)}index.html`; }
+
+export function renderSite(data) {
+  const indexes = validatePackage(data);
+  return renderValidatedSite(data, indexes);
+}
+
+export async function renderReleaseSite(data, context) {
+  const stableData = structuredClone(data);
+  const stableContext = structuredClone(context);
+  const { indexes } = await validateReleaseCandidate(stableData, stableContext);
+  const files = renderValidatedSite(stableData, indexes);
+  for (const asset of stableData.assets) {
+    files.set(asset.delivery_path, stableContext.sourceBytes.get(asset.source_id));
+  }
+  return files;
+}
+
+function renderValidatedSite(data, indexes) {
+  const fixtureMode = data.package_kind === 'fixture';
+  const page = (title, section, content, credits = '', noindex = false) =>
+    documentPage(title, section, content, credits, fixtureMode, noindex);
+  const detailDescription = fixtureMode ? '虛構示範資料' : '繁體中文資料';
+  const files = new Map();
+  const skills = [...indexes.skills.values()];
+  const weapons = [...indexes.weapons.values()];
+  const blessings = [...indexes.blessings.values()];
+  const archetypes = [...new Set(skills.map(skill => skill.archetype))].sort();
+  const archetypeLinks = list(archetypes.map(archetype =>
+    item(`/skills/${archetype}/`, `職業：${archetype}`)));
+  const blessingLinks = list(blessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
+  const weaponCatalog = groupedCatalog(weapons, w => w.kind,
+    key => ({ melee: '近戰武器', ranged: '遠程武器' })[key] ?? `武器類型：${key}`,
+    w => w.weapon_id, w => routeFor(indexes, 'weapon', w.weapon_id),
+    () => '', '武器類型跳轉', 'weapon');
+  const home = `<div class="hero"><p class="eyebrow">社群資料庫 · 繁體中文</p><h1>在技能、武器與祝福之間，找到清楚的路徑。</h1><p>${fixtureMode ? '這個版本使用虛構內容展示查閱方式；真實遊戲資料尚未發布。' : '依類別查閱技能、武器與祝福，並追蹤它們之間的關聯。'}</p><div class="hero-links"><a href="/skills/">探索技能 ↗</a><a href="/weapons/">瀏覽武器 ↗</a><a href="/blessings/">查詢祝福 ↗</a></div></div>`;
+  files.set('index.html', page('首頁', '', `${home}<div class="section-grid">${card('技能', '<p>依職業查閱技能。</p><p><a href="/skills/">前往技能目錄</a></p>')}${card('武器', '<p>從武器追溯型號與祝福。</p><p><a href="/weapons/">前往武器目錄</a></p>')}${card('祝福', '<p>從祝福反查適用武器。</p><p><a href="/blessings/">前往祝福目錄</a></p>')}</div>`));
+  files.set('404.html', page('找不到頁面', '', intro('404', '找不到頁面', '這個網址沒有對應的資料。請從目錄重新查找。') +
+    card('繼續瀏覽', list([
+      item('/', '返回首頁'), item('/skills/', '技能目錄'),
+      item('/weapons/', '武器目錄'), item('/blessings/', '祝福目錄')
+    ])), '', true));
+  files.set('skills/index.html', page('技能', 'skills', intro('技能目錄', '技能', `依職業查閱技能。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('職業列表', archetypeLinks)));
+  for (const archetype of archetypes) {
+    const members = skills.filter(skill => skill.archetype === archetype);
+    const catalog = groupedCatalog(members, skill => skill.category, category => category,
+      skill => skill.skill_id,
+      skill => routeFor(indexes, 'skill', `${skill.archetype}/${skill.skill_id}`),
+      () => '', '技能分類跳轉', 'skill-category');
+    files.set(`skills/${archetype}/index.html`, page(`職業：${archetype}`, 'skills',
+      intro('技能目錄', `職業：${archetype}`, '依分類查閱這個職業的技能。') + catalog));
+  }
+  files.set('weapons/index.html', page('武器', 'weapons', intro('武器目錄', '武器', `從武器追溯型號與祝福。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + weaponCatalog));
+  files.set('blessings/index.html', page('祝福', 'blessings', intro('祝福目錄', '祝福', `從祝福反查適用武器。${fixtureMode ? '以下皆為虛構示範資料。' : ''}`) + card('祝福列表', blessingLinks)));
+
+  for (const skill of skills) {
+    const { images, notices } = assetMarkup(skill, indexes.assets);
+    const detailRoute = routeFor(indexes, 'skill', `${skill.archetype}/${skill.skill_id}`);
+    files.set(fileFor(detailRoute), page(skill.name_zh_tw, 'skills', `${intro(`技能 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}<p><a href="/skills/${escapeHtml(skill.archetype)}/">返回職業技能目錄</a></p>${card('技能效果', `${images}<p>${escapeHtml(skill.effect_zh_tw)}</p><p class="muted">分類：${escapeHtml(skill.category)}</p>`)}${skill.claims.length ? card('技能數值', claimMarkup(skill.claims)) : ''}${card('機制說明', list([item(`${detailRoute}mechanics/`, '閱讀機制說明')]))}`, notices));
+    files.set(fileFor(`${detailRoute}mechanics/`), page(`${skill.name_zh_tw}機制`, 'skills',
+      `${intro(`技能機制 / ${skill.archetype}`, skill.name_zh_tw, detailDescription)}<p><a href="${escapeHtml(detailRoute)}">返回技能頁</a></p>${card('機制說明', `<p class="mechanics-text">${escapeHtml(skill.mechanics_zh_tw)}</p>`)}`));
+  }
+  for (const weapon of weapons) {
+    const { images, notices } = assetMarkup(weapon, indexes.assets);
+    const marks = weapon.mark_ids.map(id => indexes.marks.get(id));
+    const related = data.bindings.filter(binding => binding.weapon_id === weapon.weapon_id).map(binding => indexes.blessings.get(binding.blessing_id));
+    const markList = list(marks.map(mark => `<li><a href="${escapeHtml(routeFor(indexes, 'mark', mark.mark_id))}">${escapeHtml(mark.name_zh_tw)}</a>${claimMarkup(mark.claims)}</li>`));
+    const uniqueBlessings = [...new Map(related.map(b => [b.blessing_id, b])).values()];
+    const relatedLinks = list(uniqueBlessings.map(b => item(routeFor(indexes, 'blessing', b.blessing_id), b.name_zh_tw)));
+    const content = intro('武器', weapon.name_zh_tw, detailDescription) +
+      (weapon.claims.length ? card('武器數值', claimMarkup(weapon.claims)) : '') +
+      card('型號', images + markList) + card('可用祝福', relatedLinks);
+    files.set(fileFor(routeFor(indexes, 'weapon', weapon.weapon_id)), page(weapon.name_zh_tw, 'weapons', content, notices));
+  }
+  for (const mark of indexes.marks.values()) {
+    const weapon = indexes.weapons.get(mark.weapon_id);
+    const related = data.bindings.filter(binding => binding.mark_id === mark.mark_id)
+      .map(binding => indexes.blessings.get(binding.blessing_id));
+    const uniqueBlessings = [...new Map(related.map(blessing => [blessing.blessing_id, blessing])).values()];
+    const weaponLink = list([item(routeFor(indexes, 'weapon', weapon.weapon_id), weapon.name_zh_tw)]);
+    const blessingLinks = list(uniqueBlessings.map(blessing =>
+      item(routeFor(indexes, 'blessing', blessing.blessing_id), blessing.name_zh_tw)));
+    const content = intro('武器型號', mark.name_zh_tw, detailDescription) +
+      card('所屬武器', weaponLink) +
+      (mark.claims.length ? card('型號數值', claimMarkup(mark.claims)) : '') +
+      card('可用祝福', blessingLinks);
+    files.set(fileFor(routeFor(indexes, 'mark', mark.mark_id)), page(mark.name_zh_tw, 'weapons', content));
+  }
+  for (const blessing of blessings) {
+    const { images, notices } = assetMarkup(blessing, indexes.assets);
+    const related = data.bindings.filter(binding => binding.blessing_id === blessing.blessing_id).map(binding => indexes.weapons.get(binding.weapon_id));
+    const uniqueWeapons = [...new Map(related.map(w => [w.weapon_id, w])).values()];
+    const relatedLinks = list(uniqueWeapons.map(w => item(routeFor(indexes, 'weapon', w.weapon_id), w.name_zh_tw)));
+    const variantLinks = list(blessing.variant_ids.map(id => {
+      const variant = indexes.variants.get(id);
+      return item(routeFor(indexes, 'variant', id), `${blessing.name_zh_tw} · ${indexes.weapons.get(variant.weapon_id).name_zh_tw}`);
+    }));
+    const content = intro('祝福', blessing.name_zh_tw, detailDescription) + card('祝福效果', `${images}<p>${escapeHtml(blessing.effect_zh_tw)}</p>`) + card('適用武器', relatedLinks) + card('變體', variantLinks);
+    files.set(fileFor(routeFor(indexes, 'blessing', blessing.blessing_id)), page(blessing.name_zh_tw, 'blessings', content, notices));
+  }
+  for (const variant of indexes.variants.values()) {
+    const blessing = indexes.blessings.get(variant.blessing_id);
+    const weapon = indexes.weapons.get(variant.weapon_id);
+    const { images, notices } = assetMarkup(variant, indexes.assets);
+    const tiers = `${images}<p>定義階級：${escapeHtml(variant.defined_tiers.join('、'))}</p><p class="muted">可用階級：${variant.available_tiers == null ? '尚未確認' : escapeHtml(variant.available_tiers.join('、'))}</p>` +
+      variant.tier_claims.map(row => `<h3>第 ${row.tier} 階</h3>${claimMarkup(row.claims)}`).join('');
+    const links = list([item(routeFor(indexes, 'blessing', blessing.blessing_id), blessing.name_zh_tw), item(routeFor(indexes, 'weapon', weapon.weapon_id), weapon.name_zh_tw)]);
+    const content = intro('祝福變體', `${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, detailDescription) + card('階級資訊', tiers) + card('關聯資料', links);
+    files.set(fileFor(routeFor(indexes, 'variant', variant.variant_id)), page(`${blessing.name_zh_tw} · ${weapon.name_zh_tw}`, 'blessings', content, notices));
+  }
+  files.set('assets/site.css', `:root{color-scheme:dark;font-family:system-ui,"Noto Sans TC",sans-serif;background:#101719;color:#e4e8df}*{box-sizing:border-box}body{margin:0;line-height:1.65}a{color:#a9d8ba}a:hover{color:#e3f6cc}.shell{width:min(1100px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:2}.site-header{border-bottom:1px solid #3d4d48;background:#15211f}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:18px 0}.brand{font-size:1.18rem;text-decoration:none;font-weight:800;color:#f0f0d9}.brand span{font-weight:400;color:#abc1ae;margin-left:.4rem}nav{display:flex;gap:1.3rem}nav a{text-decoration:none}nav a[aria-current]{color:#f7e5a1}.catalog-jump{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 2rem}.catalog-jump a{border:1px solid #40564d;border-radius:4px;padding:.4rem .7rem;text-decoration:none}.catalog-jump a:focus-visible{outline:2px solid #f7e5a1;outline-offset:2px}.hero{padding:82px 0 62px;max-width:800px}.eyebrow{text-transform:uppercase;letter-spacing:.18em;color:#dfc987;font-size:.78rem;font-weight:800}.hero h1{font-size:clamp(2.3rem,5vw,4.4rem);line-height:1.18;margin:.3em 0}.hero p,.intro p{color:#b9c8c1}.hero-links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}.hero-links a{background:#a9d8ba;color:#12201a;padding:.75rem 1rem;border-radius:4px;text-decoration:none;font-weight:800}.hero-links a:hover{background:#e3f6cc}.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:80px}.card{background:#1b2926;border:1px solid #40564d;border-radius:6px;padding:24px;margin:18px 0}.card h2{margin-top:0;color:#f5e7b9}.card p{color:#c3d1c9}.mechanics-text{white-space:pre-line}.intro{padding:54px 0 16px;max-width:750px}.intro h1{font-size:clamp(2rem,4vw,3.4rem);margin:0}.link-list{padding-left:1.2rem}.link-list li{margin:.6rem 0}.link-list span{color:#9fb4a9;margin-left:1rem}.muted{font-size:.9rem;color:#9fb4a9}.claim-list{margin:.7rem 0}.claim-list div{display:flex;gap:1rem;border-top:1px solid #40564d;padding:.35rem 0}.claim-list dt{min-width:8rem;color:#b9c8c1}.claim-list dd{margin:0;font-variant-numeric:tabular-nums}.icon-row{display:flex;gap:1rem}.content-icon{width:72px;height:72px;object-fit:contain}.site-footer{border-top:1px solid #3d4d48;padding:25px 0 40px;color:#a6bbb0}.asset-credit a{color:#a9d8ba}@media(max-width:700px){.header-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.section-grid{grid-template-columns:1fr}.hero{padding-top:48px}}\n`);
+  return files;
+}
