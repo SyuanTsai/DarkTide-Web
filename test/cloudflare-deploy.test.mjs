@@ -13,7 +13,6 @@ function harness({failAt}={}) {
   verify:async()=>artifact,
   api:async(endpoint, options={})=>{
    calls.push(['api',endpoint,options]);
-   if(endpoint.endsWith('/subdomain'))return {subdomain:'test-account'};
    if(endpoint.endsWith('/deployments') && !options.method)return {deployments:[{versions:[{version_id:'old-id',percentage:100}]}]};
    return {};
   },
@@ -50,6 +49,23 @@ test('UnitT35_preflight_permission_failure_stops_all_uploads',async()=>{
  await assert.rejects(deployVerifiedArtifact({token:'secret',config:settings},h.deps),/403/);
  assert.ok(!h.calls.some(x=>x[0]==='deploy'));
 });
+// Scenario: Editor is granted only to the production and preview Workers, not the account.
+// Purpose: Update existing Workers without requiring broader account permissions.
+test('UnitT36_scoped_editor_never_queries_account_metadata',async()=>{
+ const h=harness();const api=h.deps.api;
+ h.deps.api=async(p,o)=>{assert.notEqual(o?.allowMissing,true,'existing Worker is required');assert.match(p,/\/workers\/scripts\/(darktide-zh-tw|darktide-zh-tw-preview)\/deployments$/);return api(p,o);};
+ await deployVerifiedArtifact({token:'secret',config:settings},h.deps);
+ assert.ok(h.calls.some(x=>x[0]==='api'&&x[1].includes('/darktide-zh-tw-preview/deployments')));
+ assert.equal(h.calls.filter(x=>x[0]==='deploy').length,2);
+});
+// Scenario: Production is readable but the preview Worker is outside the token scope.
+// Purpose: Require both Worker permissions before any upload.
+test('UnitT37_preview_permission_failure_stops_all_uploads',async()=>{
+ const h=harness();const api=h.deps.api;
+ h.deps.api=async(p,o)=>{if(p.includes('/darktide-zh-tw-preview/'))throw new Error('HTTP 403');return api(p,o);};
+ await assert.rejects(deployVerifiedArtifact({token:'secret',config:settings},h.deps),/403/);
+ assert.ok(!h.calls.some(x=>x[0]==='deploy'));
+});
 // Scenario: Valid artifact, token, and successful preview.
 // Purpose: Require preview verification before production and preserve artifact identity.
 test('UnitT40_preview_precedes_production',async()=>{
@@ -57,7 +73,7 @@ test('UnitT40_preview_precedes_production',async()=>{
  await deployVerifiedArtifact({token:'secret',config:settings},h.deps);
  const phases=h.calls.filter(x=>x[0]==='deploy'||x[0]==='check');
  assert.deepEqual(phases,[
- ['deploy','wrangler.preview.json'],['check','https://darktide-zh-tw-preview.test-account.workers.dev'],
+ ['deploy','wrangler.preview.json'],['check','https://darktide-zh-tw-preview.syuan-tsai.workers.dev'],
  ['deploy','wrangler.json'],['check','https://darktide.tw-syuan.com']
  ]);
  const saved=h.calls.filter(x=>x[0]==='record').at(-1)[1];
@@ -67,7 +83,7 @@ test('UnitT40_preview_precedes_production',async()=>{
 // Scenario: Preview check fails.
 // Purpose: Do not mutate the production deployment when its candidate failed.
 test('UnitT50_preview_failure_never_deploys_production',async()=>{
- const h=harness({failAt:'https://darktide-zh-tw-preview.test-account.workers.dev'});
+ const h=harness({failAt:'https://darktide-zh-tw-preview.syuan-tsai.workers.dev'});
  await assert.rejects(deployVerifiedArtifact({token:'secret',config:settings},h.deps));
  assert.ok(!h.calls.some(x=>x[0]==='deploy'&&x[1]==='wrangler.json'));
 });

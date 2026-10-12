@@ -21,7 +21,7 @@ Token 存入 GitHub Secret，勿貼到對話、Issue、PR 或程式碼。Account
 - 正式網址：`https://darktide.tw-syuan.com`。
 - 不建立自訂後端、R2、KV、D1，也不變更 Nameserver 或 DNSSEC。
 
-Token 需允許在指定帳號建立 Workers、部署兩個 Worker、讀取既有 deployment 及 workers.dev subdomain，並在 tw-syuan.com 管理 Custom Domain／Workers Routes。新權限模式首次建立需 Workers 產品層級 Admin，以及指定 zone 的 Workers Routes Write。worker與網域就緒後可再收窄日常部署權限。
+日常更新只需要指定 darktide-zh-tw 與 darktide-zh-tw-preview 的 Editor。此工作流程要求兩個 Worker 與其連線已存在，使用 versions upload 與指定 Worker 的 deployments API 更新版本，不查詢帳號級子網域，也不重新設定 Custom Domain。初始建立另需由具 Workers 產品層級 Admin 與指定 zone 的 Workers Routes Write 權限者完成；詳細流程見 [指定 Worker Editor 部署](WORKER-EDITOR-DEPLOYMENT.md)。
 若帳號 workers.dev 子網域尚未設定、Token權限不足或現有網域紀錄衝突，工作流會報出診斷並停止，不改動其他服務。
 
 ## 自動流程
@@ -31,7 +31,7 @@ Token 需允許在指定帳號建立 Workers、部署兩個 Worker、讀取既�
 4. Token 未設定：摘要標示等待 Token，部署跳過。
 5. 驗證 SHA 仍為 main 最新，避免舊任務覆蓋新版；部署 job 序列化。
 6. 先部署預覽並驗首頁、深層路由、版本、三類 JSON、缺檔404、快取與可見署名。
-7. 通過才部署相同產物至正式 Worker。Wrangler Custom Domain 設定建立網站對應 DNS 與憑證，再檢查正式 HTTPS。
+7. 通過才將相同產物的精確版本發佈至正式 Worker，保留既有 Custom Domain、DNS 與憑證連線，再檢查正式 HTTPS。
 8. 在 Actions artifacts 保存完整網站與不含 Token 的版本 receipt。憑證若仍待驗證而超過重試期限，稍後重跑工作流。
 
 worker回復：正式部署／檢查失敗，有前版則透過 API 恢復之前完整 versions/percentage，receipt 記錄 api-accepted；是否實際恢復仍須線上驗證。首次沒有前版不虛構回復。Custom Domain／DNS 不會因 Worker版本回復而自動移除。
