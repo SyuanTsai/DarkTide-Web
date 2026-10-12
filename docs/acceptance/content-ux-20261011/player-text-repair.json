@@ -1,0 +1,416 @@
+{
+  "public_source": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/Game Info/releases/1.13.X/blessings",
+  "game_code_commit": "7e662fcda16219d775b84af50322be2e9cd9d62e",
+  "map_sha256": "ae012696f3e8135a26e45aa568655e54134e0b0d4a09f1364976d15614cf79f2",
+  "before_sha256": "984505e1457a63cddb79e58141a614ce774bbce13544d6dc7f2088f70d4ab392",
+  "after_sha256": "961d7368473fe3cac6fa731f3991155687c3f0c99c1e842f07fde3b25922ad08",
+  "patches": [
+    {
+      "kind": "blessing",
+      "id": "hammerblow",
+      "source_path": "entries/錘擊/README.md",
+      "source_sha256": "187da1e8c79386194c94b3e6d02438bb58f1a6f3cf4a6e8bcd6696a7c84c400d",
+      "before": null,
+      "after": "合格命中增加近戰衝擊層數。I／II／III／IV 每層分別增加 19／21／23／25 個百分點，最多 5 層，持續 3.5 秒；合格命中刷新期限。推擊可建立層數，但推擊本身不使用近戰衝擊加成；不增加生命傷害。",
+      "pinned_sha256": "9ace1b2c0652f4ec6c7734f8c457fb9e43bbaf9b1a9f93ad43002326ed2fdb21"
+    },
+    {
+      "kind": "blessing",
+      "id": "rending-shockwave",
+      "source_path": "entries/撕扯震盪/README.md",
+      "source_sha256": "8fdef399c2de7d7fb5d6aeac97c99181216fe25d4123d3ac0c51d85770cbca2d",
+      "before": null,
+      "after": "持用虛空爆破力場法杖，以次要蓄力範圍爆炸命中目標，依蓄力比例施加脆弱。I／II／III／IV 滿蓄力分別施加 2／4／6／8 層，每層 2.5%，共用上限 16 層，持續 5 秒。正數加層會刷新期限；新增層數不追溯增加當次傷害。處理事件時的動作判定可造成延遲命中例外。",
+      "pinned_sha256": "1d81528b022f37e3380e68e8f945082865df776c42d97a54c0ebdbff8ae14595"
+    },
+    {
+      "kind": "blessing",
+      "id": "slaughterer",
+      "source_path": "entries/殺戮者/README.md",
+      "source_sha256": "fb380c5574c2f33bd07838640d058cd7f97fe852b8092caffc39de36d1e17604",
+      "before": null,
+      "after": "持用裝有本祝福的武器並造成近戰擊殺，取得一層威力加成。I／II／III／IV 每層分別增加 5／6／7／8 個百分點，最多 5 層，持續 4.5 秒；合格擊殺刷新期限。新增層數供後續攻擊使用，不等於生命傷害固定增加同比例。純推擊、力場劍甩飛與碾壓者的額外範圍爆炸不能增加層數。",
+      "pinned_sha256": "11d601e40e2b9e15404a57798d5dd16f1c9516a34cbbead8bb116c44086fa692"
+    },
+    {
+      "kind": "blessing",
+      "id": "speedload",
+      "source_path": "entries/快速裝彈/README.md",
+      "source_sha256": "7ba5b6c57eecbb51eb1efa1fa5892eaf27d2d31c6c262ef514e5059489a5e003",
+      "before": null,
+      "after": "以持用的武器造成符合條件的近距離遠程擊殺後，取得裝填速度加成。I／II／III／IV 每層增加 7%／8%／9%／10%，最多 5 層；持續時間依武器不同。針彈手槍另有標記目標毒素死亡的觸發支線。",
+      "pinned_sha256": "e15e4edc2d909b617db5ea2b3bd243828232a7713b15362bd1429dd37c66fcf3"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_autogun_p1_increased_sprint_speed",
+      "source_path": "entries/輕裝/weapon_trait_bespoke_autogun_p1_increased_sprint_speed.md",
+      "source_sha256": "4dcf2c8e7f2d392fe9eb60f85aa804c883699e38ad295b8c7ae2212e74c902b0",
+      "before": null,
+      "after": "步兵自動槍族：持有該族相符武器、正在衝刺且目前剩餘耐力比例達到所選等級門檻時，條件式加入 遠程閃避效果。效果僅適用實際採用可閃避 遠程閃避 判定的攻擊，不增加移動速度，也不是通用傷害免疫。",
+      "pinned_sha256": "e50b50df945ebec240367ae0699bd114de5c2166624771906276d2330718fdcb"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_autogun_p2_increased_sprint_speed",
+      "source_path": "entries/輕裝/weapon_trait_bespoke_autogun_p2_increased_sprint_speed.md",
+      "source_sha256": "4eed90e61e2ec967e9b3718fe73a24655aca8334fe9fdf9af9711ff37589812f",
+      "before": null,
+      "after": "槍托自動槍族：持有該族相符武器、正在衝刺且目前剩餘耐力比例達到所選等級門檻時，條件式加入 遠程閃避效果。效果僅適用實際採用可閃避 遠程閃避 判定的攻擊，不增加移動速度，也不是通用傷害免疫。",
+      "pinned_sha256": "fe49b841be0bb0ecdeb701b61a052541bb069f7b2bdbccf5cd10dd76e667d3d5"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_autogun_p3_stagger_count_bonus_damage",
+      "source_path": "entries/刻不容緩/weapon_trait_bespoke_autogun_p3_stagger_count_bonus_damage.md",
+      "source_sha256": "ef40ad6dfa038984802d17c7e30a2c2ef2503313f3bfc261c4d002bc5a51ead9",
+      "before": null,
+      "after": "三 型號 都有 hip／zoomed 射擊及槍托輕／重 揮擊；Mk III／Mk IX 為連射型、Mk VII 為單發型。",
+      "pinned_sha256": "b71792d46b0ca25cdc4dfbb9886ab39ca84f38d5f90ca2b834ad9b17e0e879aa"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_bolter_p1_stacking_power_bonus_on_staggering_enemies",
+      "source_path": "entries/鉗制射擊/weapon_trait_bespoke_bolter_p1_stacking_power_bonus_on_staggering_enemies.md",
+      "source_sha256": "79468fbfb8b9bb54be1ab50031cc17bdb7e762f03b34bbe5b1dfa8dfe716bf09",
+      "before": null,
+      "after": "洛克 Mk IIb／Mk III 的腰射與瞄準射擊皆為 即時命中射擊，且分別有 5／3 基礎引爆距離的條件式爆炸；特殊動作雖名為 特殊推擊動作，實際是近戰 揮擊。",
+      "pinned_sha256": "17b5de8dd06620a69792402f609f13b255591020278e2e6027f34b4379b441dc"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p1_chained_hits_increases_crit_chance",
+      "source_path": "entries/粉碎/weapon_trait_bespoke_combataxe_p1_chained_hits_increases_crit_chance.md",
+      "source_sha256": "ffd8be14a8826b25d99ecb9b2850ad223cb3e3d6658ea7d7878385a7d7ed0c79",
+      "before": null,
+      "after": "近戰揮擊命中後每層增加2.5／3／3.5／4個百分點爆擊率，最多5層；命中刷新3.5秒，揮空清空。",
+      "pinned_sha256": "30654554262c8e335bfad74c6f056df6ea24df32ac0ab4b44cec3fd194fb2a34"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p1_chained_hits_increases_power",
+      "source_path": "entries/屠戮者/weapon_trait_bespoke_combataxe_p1_chained_hits_increases_power.md",
+      "source_sha256": "dc550d3acf7522f8d86a7c809aa8af8664688a4c60f23fbe9d08d5da74200f09",
+      "before": null,
+      "after": "近戰揮擊命中敵人後取得一層，每層近戰威力增加2／3／4／5%，最多10層；命中刷新2秒，揮空清空。",
+      "pinned_sha256": "393327986a829b423f86546c609a1532df03a88b7a95b0f00176bce2cee3a6f4"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p1_infinite_melee_cleave_on_weakspot_kill",
+      "source_path": "entries/野蠻攻勢/weapon_trait_bespoke_combataxe_p1_infinite_melee_cleave_on_weakspot_kill.md",
+      "source_sha256": "1a0c5115e42b637e2eb240228a06305851d952bc85ac0259290dac25f90e68d2",
+      "before": null,
+      "after": "近戰弱點額外傷害增加7.5／10／12.5／15%；同次揮擊前三次擊殺中，非歐格林敵人的弱點擊殺不累加該敵人命中質量。",
+      "pinned_sha256": "63897819e3a5ac8a2c2dacfc5bba1889b207000dbd35be11da6cd1a80860aff4"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p1_stacking_rending_on_one_hit_kill",
+      "source_path": "entries/斬首者/weapon_trait_bespoke_combataxe_p1_stacking_rending_on_one_hit_kill.md",
+      "source_sha256": "203a5d7a9bfdfb9ccdb7acf6ded2f67f14f9ef9b36e350d8d74b0ae1efa0f34b",
+      "before": null,
+      "after": "拉沙德、安塔克斯與阿克利斯的實際近戰命中若造成合格一擊擊殺，依戰鬥斧自己的 等級 值增加靈巧威力；三個 型號 的特殊掃掠 攻擊設定 各異。",
+      "pinned_sha256": "477fc580872f757442aa7f8efc5bd4d8eca02e3eb39c433286103581113a8a9d"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p2_chained_hits_increases_crit_chance",
+      "source_path": "entries/粉碎/weapon_trait_bespoke_combataxe_p2_chained_hits_increases_crit_chance.md",
+      "source_sha256": "f1035ddbb40029cf0a895c1b3789f3e2016cde2e1d9918b5338361463d3d007c",
+      "before": null,
+      "after": "近戰揮擊命中後每層增加2.5／3／3.5／4個百分點爆擊率，最多5層；命中刷新3.5秒，揮空清空。",
+      "pinned_sha256": "e3b5a5e77376c18811de3f0fed227791d4f57b3a93264bb7a50a7cc0c45429e3"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p2_chained_hits_increases_power",
+      "source_path": "entries/屠戮者/weapon_trait_bespoke_combataxe_p2_chained_hits_increases_power.md",
+      "source_sha256": "03c071b278a9a34fcadeb9bca8fe01dd04db319d09e8327f0e482e262bb0e419",
+      "before": null,
+      "after": "近戰揮擊命中敵人後取得一層，每層近戰威力增加2／3／4／5%，最多10層；命中刷新2秒，揮空清空。",
+      "pinned_sha256": "691037934e34a2b690fa29effe4b5c8ee7b40cc00bbdfc9075cf8bce67d9a599"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p2_consecutive_melee_hits_same_target_increases_melee_power",
+      "source_path": "entries/持續打擊/weapon_trait_bespoke_combataxe_p2_consecutive_melee_hits_same_target_increases_melee_power.md",
+      "source_sha256": "4ab9cae4c512a8fbe38a0a4eb4a97c1dbab7813ec8319778308de8e596f1d5d4",
+      "before": null,
+      "after": "埃托克斯 Mk II／IV／VII 的實際近戰掃掠依同目標命中追蹤逐層增加近戰威力；各 型號 攻擊設定 與特殊掃掠差異見完整說明。",
+      "pinned_sha256": "8d9a63a2914b46219b0d533655b818e262b7535fb06d98dd364906a2fa14bacf"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p2_infinite_melee_cleave_on_weakspot_kill",
+      "source_path": "entries/野蠻攻勢/weapon_trait_bespoke_combataxe_p2_infinite_melee_cleave_on_weakspot_kill.md",
+      "source_sha256": "a6ec1f3fcc5f802b59a248097e8c6066f5f8622808820ea71c7e077a2ff2974e",
+      "before": null,
+      "after": "近戰弱點額外傷害增加7.5／10／12.5／15%；同次揮擊前三次擊殺中，非歐格林敵人的弱點擊殺不累加該敵人命中質量。",
+      "pinned_sha256": "2e5e72ce654c392ef28142fb6216695d64f4e71ab313cc86e0a939d35c126a3d"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combataxe_p3_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_combataxe_p3_stacking_increase_impact_on_hit.md",
+      "source_sha256": "79812a669bad8006f1dc47fca021e8a954943a79b0aee8bb2f27e0811497c76f",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "fe7f8bcbf0e638976e9a4c3babf70767729bf68a3ae43f87db1510fe55084706"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combatknife_p1_rending_on_backstab",
+      "source_path": "entries/無情背刺/weapon_trait_bespoke_combatknife_p1_rending_on_backstab.md",
+      "source_sha256": "9e64f20970d9a517abf38158ef2c04d5015ba7193d102a0ea09898de5b27e683",
+      "before": null,
+      "after": "戰刃 卡塔昌 Mk III／Mk VI：只有符合近戰有效背刺幾何條件且持用此武器時，套用 I–IV 級 +70%／+80%／+90%／+100% 背刺撕裂加算。特殊鍵首拳是 punch-damage 揮擊；後續 heavy jab 是另一個 knife-攻擊設定 揮擊，兩段各自可判定。純推擊不符合。",
+      "pinned_sha256": "ed2c857bf829e43c7ba0e58dab89f085bc499e5e9b1875492695f6cf88f532dc"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combatsword_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_combatsword_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "854437f96e4fff47301a56dde4b437b8dd844d79c6210341dd7c95279f22c41f",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "7c76ad6dad1b6c72f5147e11f1e68683f3ba9938a9359ff679fb741a5ad2f4ab"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_combatsword_p3_consecutive_melee_hits_same_target_increases_melee_power",
+      "source_path": "entries/持續打擊/weapon_trait_bespoke_combatsword_p3_consecutive_melee_hits_same_target_increases_melee_power.md",
+      "source_sha256": "800879ca0f1f825f9f53416cdf3608909d34ef08479716cac668338a208d210c",
+      "before": null,
+      "after": "馬卡比安 Mk II／IV／V 的普通、重擊、推後連擊及格擋反擊掃掠可依同目標命中追蹤增加近戰威力；各 型號 攻擊設定 見完整說明。",
+      "pinned_sha256": "df8bc1220c218fd49c6b31fd487b451572a14d87e3c6b80600b123ca09f49ae5"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_dual_autopistols_p1_stacking_power_bonus_on_staggering_enemies",
+      "source_path": "entries/鉗制射擊/weapon_trait_bespoke_dual_autopistols_p1_stacking_power_bonus_on_staggering_enemies.md",
+      "source_sha256": "8f7e89479e7e123fd11d33bcb69e600fe00248f3774c9ad2fbfee32dde202ac4",
+      "before": null,
+      "after": "布蘭克斯 MkIII 的腰射與瞄準射擊都走 即時命中射擊；特殊動作是使用 手槍敲擊 的近戰 揮擊。",
+      "pinned_sha256": "3e26ab89c4fc218bdbacd8eb0ac9f7e921d99976afe2c95eeda66f1a7ee12f3f"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_forcestaff_p1_faster_charge_on_chained_secondary_attacks",
+      "source_path": "entries/亞空間亂舞/weapon_trait_bespoke_forcestaff_p1_faster_charge_on_chained_secondary_attacks.md",
+      "source_sha256": "b72c87b95d65aec315ebb857c4d3d9833a9143777c1e60304598eb0f8fcd5255",
+      "before": null,
+      "after": "觸發爆炸動作 開始時累積；只適用虛空爆破力場法杖 陰陽 Mk III。",
+      "pinned_sha256": "49fd1f953382108bc1309f572ce7afde0361f6735c9e8efafd6707bd31f2c07a"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_forcestaff_p1_rend_armor_on_aoe_charge",
+      "source_path": "entries/撕扯震盪/weapon_trait_bespoke_forcestaff_p1_rend_armor_on_aoe_charge.md",
+      "source_sha256": "7a159318840fb65a61641919c89e5942a35ccaba295a94723d070480ed7853ae",
+      "before": null,
+      "after": "持用虛空爆破力場法杖，以次要蓄力範圍爆炸命中目標，依蓄力比例施加脆弱。I／II／III／IV 滿蓄力分別施加 2／4／6／8 層，每層 2.5%，共用上限 16 層，持續 5 秒。正數加層會刷新期限；新增層數不追溯增加當次傷害。處理事件時的動作判定可造成延遲命中例外。",
+      "pinned_sha256": "d0a31be9d7b4c217784ddc6b50e663cd49c15b15c0a9acb2dfad11417ab84056"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_forcestaff_p2_faster_charge_on_chained_secondary_attacks",
+      "source_path": "entries/亞空間亂舞/weapon_trait_bespoke_forcestaff_p2_faster_charge_on_chained_secondary_attacks.md",
+      "source_sha256": "a9b9b1e523f5f5c2f976e145e20be7616bf2158fbe15a12375f0a7bcdcdc4ac0",
+      "before": null,
+      "after": "釋放蓄力火焰動作 開始時累積；只適用烈焰力場法杖 裂隙避難所 Mk II。",
+      "pinned_sha256": "220d235ad7356e755a1ecc803e586f03cebea084f1d103da3124391f69a76801"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_lasgun_p1_increased_zoom",
+      "source_path": "entries/千里眼/weapon_trait_bespoke_lasgun_p1_increased_zoom.md",
+      "source_sha256": "dae96d11d69f2cb50d977dc6e153c78a1dca5e8074cb3c39d9bdf2ab2709e8d0",
+      "before": null,
+      "after": "僅已核對 Mk VII／Mk IIb／Mk IX；三者 瞄準 輸入垂直視角均為 45°，I–IV 的 垂直視角乘數 均為 0.85。",
+      "pinned_sha256": "81e264a0f3df5afc9e987c32473d8a7cdd205baebf0d966707cd94062bcbc026"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_lasgun_p2_stagger_count_bonus_damage",
+      "source_path": "entries/刻不容緩/weapon_trait_bespoke_lasgun_p2_stagger_count_bonus_damage.md",
+      "source_sha256": "5d3d1a2394e2052e1b7181fbba25916c6ed08c573084b7cb9e0fbb656cc0825f",
+      "before": null,
+      "after": "三 型號 都有蓄力射擊；Mk IIIa／Mk V 是特殊刺刀 揮擊，Mk IV 是特殊斬擊 揮擊。",
+      "pinned_sha256": "53481293e19ebc64ef9c27c77438d020c61fb232cfad8378b0699485d1b8e459"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_lasgun_p3_increased_sprint_speed",
+      "source_path": "entries/輕裝/weapon_trait_bespoke_lasgun_p3_increased_sprint_speed.md",
+      "source_sha256": "45ffe086483b0205b50b5d5b295c0c3073b499a760bee46d2d16213da3dd5d83",
+      "before": null,
+      "after": "偵察鐳射槍族：持有該族相符武器、正在衝刺且目前剩餘耐力比例達到所選等級門檻時，條件式加入 遠程閃避效果。效果僅適用實際採用可閃避 遠程閃避 判定的攻擊，不增加移動速度，也不是通用傷害免疫。",
+      "pinned_sha256": "9d4814c18e6be3931107b53c5b3d3135464059a0292a705cf6fc057fbada3b7f"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_needlepistol_p1_increased_sprint_speed",
+      "source_path": "entries/輕裝/weapon_trait_bespoke_needlepistol_p1_increased_sprint_speed.md",
+      "source_sha256": "638ddc1e7529fd6cd4c0a59641225c0e3feab27b1026fabc4b9b2ec40f928575",
+      "before": null,
+      "after": "針彈手槍族：持有該族相符武器、正在衝刺且目前剩餘耐力比例達到所選等級門檻時，條件式加入 遠程閃避效果。效果僅適用實際採用可閃避 遠程閃避 判定的攻擊，不增加移動速度，也不是通用傷害免疫。",
+      "pinned_sha256": "2aae7f5ba5844b9dfdffad272b20ea223a4741e9ebbae796f152c977a2a0c5c1"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_ogryn_gauntlet_p1_chained_melee_hits_increases_power",
+      "source_path": "entries/交叉動量/weapon_trait_bespoke_ogryn_gauntlet_p1_chained_melee_hits_increases_power.md",
+      "source_sha256": "4ca07bf32f0520a758c32f96662eb20a61306b00995b318b7194d732b7dd3afa",
+      "before": null,
+      "after": "擲彈兵臂鎧 布拉斯托姆 Mk III：四級實際每層均為 +5% 近戰威力，最多 10 層；遊戲文字 I–III 顯示數值較低，IV 顯示值相符。",
+      "pinned_sha256": "a6ac500c0684c455ffe7e974ab166bdbe3a84f8ffcf9e902b5ed4a5d92ba4288"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_ogryn_hammer_2h_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_ogryn_hammer_2h_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "9e5a19e7ccc19d6ac7381e968de10b8b06c746f0620912e72219dae0e926a979",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "bcbe9866d8cdb24b3cb364863f4c0ed476097e7499e77ac23bb058014148138d"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_ogryn_thumper_p1_pass_past_armor_on_weapon_special",
+      "source_path": "entries/穿透/weapon_trait_bespoke_ogryn_thumper_p1_pass_past_armor_on_weapon_special.md",
+      "source_sha256": "b47fd68c5ed1809991dad34e63261afeec11585a2b91c30a10a739c2e2039b82",
+      "before": null,
+      "after": "反衝者 洛倫茲 Mk V：腰射／瞄準 霰彈 和特殊 槍托打擊 讀取此項的實際修正；一般敵人質量扣除降低，護甲中止另於 槍托打擊 被略過，預算與 敵人類型 中止仍保留。",
+      "pinned_sha256": "ef8d4c71736ce3d867f11775dbac9afa4c59422545fc257e363f04ba51ee118d"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_ogryn_thumper_p2_pass_past_armor_on_weapon_special",
+      "source_path": "entries/穿透/weapon_trait_bespoke_ogryn_thumper_p2_pass_past_armor_on_weapon_special.md",
+      "source_sha256": "448862b34582a7830063881f7e5ab354f77a2fd949223d1972e1d1effe5b4205",
+      "before": null,
+      "after": "震盪槍 洛倫茲 Mk VI：特殊 槍托打擊 讀取 近戰 衝擊、降低一般敵人 敵人命中質量 並略過護甲中止；普通／瞄準彈體及爆炸沒有 敵人命中質量計算，不套用該質量修正。",
+      "pinned_sha256": "53f51f882a6702792d4455ebcd54bf5ddb576583c200b4b2d1d8595ff1a927e7"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_ogryn_thumper_p3_pass_past_armor_on_weapon_special",
+      "source_path": "entries/穿透/weapon_trait_bespoke_ogryn_thumper_p3_pass_past_armor_on_weapon_special.md",
+      "source_sha256": "84927c3d404dd1c84e76c8442c8a277549d0bfc2fa1f0b4e1e1832348e302b9a",
+      "before": null,
+      "after": "惡棍槍 洛倫茲 Mk VII：腰射／瞄準 即時命中射擊 和特殊 槍托打擊 讀取此項的實際修正；一般敵人質量扣除降低，護甲中止另於 槍托打擊 被略過，預算與 敵人類型 中止仍保留。",
+      "pinned_sha256": "12f0c62151d51ba22fcc980c27e61b8e86e16a9cd6c7a824ffc01f93bdc5533b"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_2h_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_powermaul_2h_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "495598d906fed0f92db466c74ea97d14aafef9af2c76506092d99cef11049c44",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "21bbf755f88656dbfe7a7a6d3b40b7db82748db38e5f15eb02443c42582ff852"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_powermaul_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "28c5070c5012433b4d886126f20fca54160588378780895f8cd3c79c6b86a54e",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "f75a381930e588dc0e61b02e796c58821847e4af8d789cdd2c3595b43a8efd39"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_p2_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_powermaul_p2_stacking_increase_impact_on_hit.md",
+      "source_sha256": "45e85f2d309f57a474bddb11b4497ca4d7712313164e2f5f38e48d9ef92392d2",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "efd0a4358cd4c1817a4e21e92635ba60098ded74ad8abdebbcf722dec96b57b5"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_p2_targets_receive_rending_debuff",
+      "source_path": "entries/雷鳴/weapon_trait_bespoke_powermaul_p2_targets_receive_rending_debuff.md",
+      "source_sha256": "82106310e6526a8811862ce8dcfa8933a4ec6c7a0fa7315ede64f6597809e223",
+      "before": null,
+      "after": "符合條件的每次命中對該目標增加 I–IV 1/2/3/4 層脆弱（每層 2.5%，最多 16 層，5 秒）；P2 綁定的是一般命中 判定路徑，特殊掃掠仍按一般事件判斷；詳見型號差異。",
+      "pinned_sha256": "d433c602a89ec918a8b05317ab28bcbf7235cfbee55061fd9807d09fadd1c44f"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_p3_enhanced_arc_jumps_angle",
+      "source_path": "entries/強化電流弧/weapon_trait_bespoke_powermaul_p3_enhanced_arc_jumps_angle.md",
+      "source_sha256": "e512660e3aabe5b15f8a1bd1fd2828df611d501aec512246658e33c9be4b9eb0",
+      "before": null,
+      "after": "持用電弧鎚 布蘭克斯 Mk III 時，角度 I–IV 加 +5°／+7.5°／+10°／+12.5°、半徑加 +0.5／+1／+1.5／+2、最多連鎖目標數 加 1／1／2／2；掃擊路徑另受 特殊模式啟用條件 限制。",
+      "pinned_sha256": "d69dd19472ba7aa6cb15969ada73b4b169b87d36d6850c27cad3edd622ae6672"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_p3_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_powermaul_p3_stacking_increase_impact_on_hit.md",
+      "source_sha256": "b4ee0924e887c9717f3042fbc3465c2c92f1f2861be93d78f481ad60b649e5f2",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "b01d07a19b795a07540088050d33fe8f893573b2a0d599816cb24353ae776fcb"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powermaul_shield_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_powermaul_shield_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "6fee8dff16d66a1d933cd56a86c6f0d8ec1847b906664e1dd2488d6cff269532",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "d173d728b6bca64b70ec773d81b5aac74cb5f296a60406aac392666c96d51292"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_powersword_p2_stacking_finesse_on_one_hit_kill",
+      "source_path": "entries/斬首者/weapon_trait_bespoke_powersword_p2_stacking_finesse_on_one_hit_kill.md",
+      "source_sha256": "a39dd9f7cbba1d30f39bb08f4159f90395202213f181a949f8dfab961fbe0ae5",
+      "before": null,
+      "after": "阿里丁與執法者的普通／啟動型近戰 攻擊設定 皆按同一擊殺條件觸發，依動力彎刀自己的 等級 覆寫增加靈巧威力。",
+      "pinned_sha256": "c8091ebcddfaaf78ece300b79591267c7f76831b776cec497685f2a4b2145500"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_saw_p1_chained_hits_increases_power",
+      "source_path": "entries/屠戮者/weapon_trait_bespoke_saw_p1_chained_hits_increases_power.md",
+      "source_sha256": "c26db8b012797ce370c905ea60b6d88704a0e6e1fca87e1308bca6f27355c771",
+      "before": null,
+      "after": "近戰揮擊命中敵人後取得一層，每層近戰威力增加2／3／4／5%，最多10層；命中刷新2秒，揮空清空。",
+      "pinned_sha256": "a09277016a51b174cb8f11fb48deeacfc5046361997c32c6dba301f6a0c97b4e"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_saw_p1_stacking_finesse_on_one_hit_kill",
+      "source_path": "entries/斬首者/weapon_trait_bespoke_saw_p1_stacking_finesse_on_one_hit_kill.md",
+      "source_sha256": "eaffea09f5e497a97de7dd10b1601482aa0cb936e9762e7f26be82be3cb873f3",
+      "before": null,
+      "after": "外科醫師 Mk IV 的一般命中及黏附初擊可按一擊擊殺條件觸發；延遲撕裂僅在本身另造成合格旗標擊殺時才走獨立 擊殺事件 路徑.",
+      "pinned_sha256": "4b768462c69b5f3439fadd751600224209768780e7a6bf447cbfc9a51bd6a863"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_shotgun_p4_followup_shots_ranged_weakspot_damage",
+      "source_path": "entries/懲罰齊射/weapon_trait_bespoke_shotgun_p4_followup_shots_ranged_weakspot_damage.md",
+      "source_sha256": "80470db2bc83233cb59f61ce0d736a8fa01fee3b40e6e47feceb539a2d733b42",
+      "before": null,
+      "after": "弱點命中且射擊計數為1–3時，額外弱點傷害部分提高35–50%；分批結算可使轉場首殼符合。",
+      "pinned_sha256": "06796adbc370104933ab81ecbc3a02dd820b213d281e6930fe6f9e6ca6ac36d9"
+    },
+    {
+      "kind": "variant",
+      "id": "weapon_trait_bespoke_thunderhammer_2h_p1_stacking_increase_impact_on_hit",
+      "source_path": "entries/錘擊/weapon_trait_bespoke_thunderhammer_2h_p1_stacking_increase_impact_on_hit.md",
+      "source_sha256": "f07d82735b66d0da00e4858fb5bcec0ae5647b0dba76c4ee6d71d5f3b2c3cfdf",
+      "before": null,
+      "after": "符合來源武器與持用條件的命中可增加一層近戰衝擊效果；純推擊可建立層數，但推擊本身不受近戰衝擊加成。",
+      "pinned_sha256": "6ae8819a83ff125fc05c72a45b5c7b032c231bd47836d82ad8fe861a91d0faef"
+    }
+  ],
+  "source_commit": "2bfb2d1f9f4713d8b7ac25ec3d32a8aeed092980",
+  "pinned_input_verification": "45 files match the existing SOURCE-MANIFEST after CRLF-to-LF normalization; map exact bytes match."
+}

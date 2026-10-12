@@ -1,0 +1,25 @@
+{
+  "name": "darktide-zh-tw-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "build:fixture": "node scripts/build.mjs --fixture",
+    "verify:static": "node scripts/verify-static.mjs",
+    "serve:static": "node scripts/serve.mjs",
+    "smoke:browser": "node scripts/browser-smoke.mjs",
+    "prepare:deploy": "node scripts/prepare-deploy.mjs",
+    "verify:deploy-config": "node scripts/verify-deploy-config.mjs",
+    "smoke:cloudflare": "node scripts/cloudflare-runtime-smoke.mjs",
+    "deploy:cloudflare": "node scripts/cloudflare-deploy.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0",
+    "wrangler": "4.149.0",
+    "yaml": "2.9.1"
+  }
+}
