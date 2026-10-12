@@ -1,9 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {readFile} from 'node:fs/promises';
+import {createTestGitRepository} from './helpers/git-repository.mjs';
 import { fixture } from '../fixtures/site.mjs';
 import { canonicalize } from '../src/release/manifest.mjs';
 import { createGitVerifiedReleaseDraft, createValidatedReleaseDraft } from '../src/release/build.mjs';
@@ -501,15 +500,10 @@ test('UnitT110_rejects_unapproved_content_before_draft_creation', async () => {
 
 // Scenario: A candidate supplies stale in-memory source bytes alongside a fixed local Git source.
 // Purpose: Build pages from the locked Git blob instead of trusting the caller's byte map.
-test('InterT120_builds_candidate_using_verified_git_blob_bytes', async () => {
-  const checkout = dirname(dirname(fileURLToPath(import.meta.url)));
-  const git = (...args) => execFileSync('git', ['-C', checkout, ...args], { encoding: 'utf8' }).trim();
-  const origin = git('config', '--get', 'remote.origin.url');
-  const remote = origin.startsWith('git@github.com:')
-    ? `https://github.com/${origin.slice('git@github.com:'.length)}` : origin;
-  const commit = git('rev-parse', 'HEAD');
+test('InterT120_builds_candidate_using_verified_git_blob_bytes', async t => {
   const path = 'test/fixtures/release-source.json';
-  const blob = execFileSync('git', ['-C', checkout, 'cat-file', 'blob', `${commit}:${path}`]);
+  const blob = await readFile(new URL('./fixtures/release-source.json', import.meta.url));
+  const {checkout,remote,commit} = await createTestGitRepository(t,{[path]:blob});
   const { data, context } = candidate();
   Object.assign(context.sourceLocks[0], { repository_url: remote, commit_sha: commit,
     path, sha256: sha(blob) });
