@@ -649,8 +649,8 @@ function renderTalentTree(tree, catalog) {
   const zoomLabel = element('label', '縮放');
   zoomLabel.htmlFor = 'tree-zoom';
   const zoom = element('input');
-  zoom.type = 'range'; zoom.id = 'tree-zoom'; zoom.min = '35'; zoom.max = '100'; zoom.step = '5'; zoom.value = '55';
-  const zoomValue = element('output', '55%');
+  zoom.type = 'range'; zoom.id = 'tree-zoom'; zoom.min = '50'; zoom.max = '150'; zoom.step = '5'; zoom.value = '100';
+  const zoomValue = element('output', '100%');
   zoomValue.htmlFor = zoom.id;
   controls.append(zoomLabel, zoom, zoomValue);
   main.append(controls, element('p', '點選節點查看效果與機制。可縮放或在樹內捲動；連線顯示原始天賦結構。', 'result-note'));
@@ -673,7 +673,8 @@ function renderTalentTree(tree, catalog) {
   lines.classList.add('tree-lines');
   const edgeElements = [];
   const buttons = [];
-  let scale = .55;
+  let scale = 1;
+  const spacing = 1.25;
   const selectedPanel = panel('技能詳情');
   selectedPanel.id = 'tree-detail-panel';
   selectedPanel.classList.add('tree-detail');
@@ -736,21 +737,21 @@ function renderTalentTree(tree, catalog) {
   function resize() {
     scale = Number(zoom.value) / 100;
     zoomValue.textContent = zoom.value + '%';
-    canvas.style.width = width * scale + 'px'; canvas.style.height = height * scale + 'px';
-    lines.setAttribute('width', width * scale); lines.setAttribute('height', height * scale);
+    canvas.style.width = width * scale * spacing + 'px'; canvas.style.height = height * scale * spacing + 'px';
+    lines.setAttribute('width', width * scale * spacing); lines.setAttribute('height', height * scale * spacing);
     for (const { button, node } of buttons) {
       const size = (node.type === 'stat' ? 50 : node.type === 'start' ? 96 : 72) * scale;
       button.style.width = size + 'px'; button.style.height = size + 'px';
-      button.style.left = (node.x - minX) * scale + 'px'; button.style.top = (node.y - minY) * scale + 'px';
+      button.style.left = (node.x - minX) * scale * spacing + 'px'; button.style.top = (node.y - minY) * scale * spacing + 'px';
     }
     for (const { line, node, child } of edgeElements) {
-      line.setAttribute('x1', (node.x - minX) * scale); line.setAttribute('y1', (node.y - minY) * scale);
-      line.setAttribute('x2', (child.x - minX) * scale); line.setAttribute('y2', (child.y - minY) * scale);
+      line.setAttribute('x1', (node.x - minX) * scale * spacing); line.setAttribute('y1', (node.y - minY) * scale * spacing);
+      line.setAttribute('x2', (child.x - minX) * scale * spacing); line.setAttribute('y2', (child.y - minY) * scale * spacing);
     }
   }
   zoom.addEventListener('input', resize); resize();
   viewport.append(canvas); layout.append(viewport, selectedPanel); main.append(layout);
-  viewport.scrollLeft = Math.max(0, (width * scale - viewport.clientWidth) / 2);
+  viewport.scrollLeft = Math.max(0, (width * scale * spacing - viewport.clientWidth) / 2);
   const credit = makeLink('https://darktide.gameslantern.com/', '圖示素材來源：Games Lantern', 'asset-credit');
   if (tree.details.some(detail => detail.assets.some(asset => asset.path === null))) main.append(credit);
   renderSources(main, tree.sources);

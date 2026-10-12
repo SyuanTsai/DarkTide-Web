@@ -324,6 +324,21 @@ async function assertTalentTreeDom(page, tree, context) {
   const failedIcons = await page.locator('.talent-node img').evaluateAll(images => images.filter(image => !image.naturalWidth || image.hidden).map(image => image.src));
   assert.deepEqual(failedIcons, [], context + ' all original source icons must actually load');
 
+  // Scenario: Open a tree at its default scale on desktop or a narrow phone.
+  // Purpose: Keep skill icons readable and clickable without overlapping adjacent nodes.
+  assert.equal(await page.locator('#tree-zoom').inputValue(), '100', context + ' opens at readable scale');
+  const boxes = await page.locator('.talent-node').evaluateAll(nodes => nodes.map(node => {
+    const box = node.getBoundingClientRect();
+    return { type: node.dataset.nodeType, left: box.left, top: box.top, right: box.right, bottom: box.bottom, width: box.width };
+  }));
+  assert.ok(boxes.filter(box => !['stat', 'start'].includes(box.type)).every(box => box.width >= 70),
+    context + ' skill targets must be at least 70 CSS pixels at default scale');
+  for (let a = 0; a < boxes.length; a++) for (let b = a + 1; b < boxes.length; b++) {
+    const first = boxes[a], second = boxes[b];
+    assert.ok(first.right <= second.left || second.right <= first.left || first.bottom <= second.top || second.bottom <= first.top,
+      context + ' enlarged targets must not overlap');
+  }
+
   const actualNodes = await page.locator('.talent-node').evaluateAll(buttons => buttons.map(button => ({
     id: button.dataset.nodeId,
     type: button.dataset.nodeType,
@@ -339,7 +354,8 @@ async function assertTalentTreeDom(page, tree, context) {
     context + ' DOM nodes must match the verified tree data'
   );
 
-  const zoom = Number(await page.locator('#tree-zoom').inputValue()) / 100;
+  // Apply uniform display spacing while preserving every source coordinate and edge.
+  const zoom = Number(await page.locator('#tree-zoom').inputValue()) / 100 * 1.25;
   const minX = Math.min(...tree.nodes.map(node => node.x)) - 80;
   const minY = Math.min(...tree.nodes.map(node => node.y)) - 80;
   for (const node of tree.nodes) {
