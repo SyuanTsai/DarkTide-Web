@@ -3,7 +3,7 @@ import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {verifyStaticPackage} from '../src/static/verify.mjs';
-import {ACCOUNT_ID,assertDeploymentConfig,deployVerifiedArtifact,verifyOrigin} from '../src/deploy/cloudflare.mjs';
+import {ACCOUNT_ID,assertDeploymentConfig,deployVerifiedArtifact,verifyOrigin,parseUploadedWorkerVersion} from '../src/deploy/cloudflare.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const token=process.env.CLOUDFLARE_API_TOKEN;
 const redact=text=>token?String(text).split(token).join('[REDACTED]'):String(text);
@@ -30,15 +30,27 @@ try{
   const json=await r.json();if(!json.success)throw new Error('Cloudflare API rejected '+endpoint);
   return json.result;
  };
- const deploy=configFile=>new Promise((resolve,reject)=>{
-  const child=spawn(process.execPath,[path.join(root,'node_modules/wrangler/bin/wrangler.js'),'deploy','--config',configFile],{
-   cwd:root,env:{...process.env,CLOUDFLARE_ACCOUNT_ID:ACCOUNT_ID,WRANGLER_SEND_METRICS:'false',CI:'true'},stdio:['ignore','pipe','pipe']});
+ const upload=(configFile,workerName,outputPath)=>new Promise((resolve,reject)=>{
+  const child=spawn(process.execPath,[path.join(root,'node_modules/wrangler/bin/wrangler.js'),'versions','upload','--config',configFile,'--name',workerName],{
+   cwd:root,env:{...process.env,CLOUDFLARE_ACCOUNT_ID:ACCOUNT_ID,WRANGLER_SEND_METRICS:'false',WRANGLER_OUTPUT_FILE_PATH:outputPath,CI:'true'},stdio:['ignore','pipe','pipe']});
   let stdout='',stderr='';child.stdout.on('data',x=>stdout+=x);child.stderr.on('data',x=>stderr+=x);
   child.on('error',reject);child.on('exit',code=>{
    process.stdout.write(redact(stdout));process.stderr.write(redact(stderr));
-   code===0?resolve():reject(new Error('Wrangler deploy failed with exit '+code));
+   code===0?resolve():reject(new Error('Wrangler version upload failed with exit '+code));
   });
  });
+ const deploy=async configFile=>{
+  const workerConfig=configFile==='wrangler.preview.json'?preview:configFile==='wrangler.json'?config:null;
+  if(!workerConfig)throw new Error('unexpected Worker configuration');
+  const outputPath=path.join(root,'.deployment',workerConfig.name+'.version-upload.jsonl');
+  await mkdir(path.dirname(outputPath),{recursive:true});
+  await writeFile(outputPath,'');
+  await upload(configFile,workerConfig.name,outputPath);
+  const versionId=parseUploadedWorkerVersion(await readFile(outputPath,'utf8'),workerConfig.name);
+  await api('/accounts/'+ACCOUNT_ID+'/workers/scripts/'+workerConfig.name+'/deployments',{
+   method:'POST',body:{strategy:'percentage',versions:[{version_id:versionId,percentage:100}]}
+  });
+ };
  const check=async(origin,artifact)=>{
   let last;
   for(let i=0;i<12;i++){

@@ -1,6 +1,20 @@
 import assert from 'node:assert/strict';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
 export const SITE_ORIGIN='https://darktide.tw-syuan.com';
+export const PREVIEW_ORIGIN='https://darktide-zh-tw-preview.syuan-tsai.workers.dev';
+export function parseUploadedWorkerVersion(text,workerName) {
+ let entries;
+ try { entries=text.split(/\r?\n/).filter(line=>line.trim()).map(line=>JSON.parse(line)); }
+ catch { throw new Error('Invalid Wrangler version upload output'); }
+ const uploads=entries.filter(entry=>entry?.type==='version-upload');
+ assert.equal(uploads.length,1,'expected exactly one uploaded version');
+ const upload=uploads[0];
+ assert.equal(upload.version,1,'unsupported version output schema');
+ assert.equal(upload.worker_name,workerName,'uploaded Worker name mismatch');
+ assert.equal(typeof upload.version_id,'string','uploaded version ID must be a string');
+ assert.match(upload.version_id,/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i,'invalid uploaded version ID');
+ return upload.version_id;
+}
 export function assertDeploymentConfig(config,{preview=false}={}) {
  assert.equal(config.account_id,ACCOUNT_ID,'unexpected Cloudflare account');
  assert.equal(config.name,preview?'darktide-zh-tw-preview':'darktide-zh-tw','unexpected Worker name');
@@ -54,14 +68,13 @@ export async function deployVerifiedArtifact({token,config},deps) {
  if(artifact.package_kind!=='published')throw new Error('only verified published artifacts may deploy');
  const endpoint='/accounts/'+ACCOUNT_ID+'/workers/scripts/'+config.name+'/deployments';
  // Preflight permissions and capture a complete prior version set before mutations.
- const previous=await deps.api(endpoint,{allowMissing:true});
+ const previous=await deps.api(endpoint);
  const prior=previous?.deployments?.[0]?.versions??[];
- const domain=await deps.api('/accounts/'+ACCOUNT_ID+'/workers/subdomain');
- if(!domain?.subdomain||!/^[a-z0-9-]+$/.test(domain.subdomain))throw new Error('account workers.dev subdomain is not configured');
+ await deps.api('/accounts/'+ACCOUNT_ID+'/workers/scripts/darktide-zh-tw-preview/deployments');
  const receipt={status:'prepared',build_id:artifact.build_id,data_revision:artifact.data_revision,previous_versions:prior,production_origin:SITE_ORIGIN};
  await deps.record(receipt);
  await deps.deploy('wrangler.preview.json');
- await deps.check('https://darktide-zh-tw-preview.'+domain.subdomain+'.workers.dev',artifact);
+ await deps.check(PREVIEW_ORIGIN,artifact);
  let attempted=false;
  try{
   await deps.verifyUnchanged?.(artifact);
@@ -70,7 +83,7 @@ export async function deployVerifiedArtifact({token,config},deps) {
   await deps.check(SITE_ORIGIN,artifact);
   const deployed=await deps.api(endpoint);
   receipt.deployed_versions=deployed?.deployments?.[0]?.versions??[];
-  receipt.preview_origin='https://darktide-zh-tw-preview.'+domain.subdomain+'.workers.dev';
+  receipt.preview_origin=PREVIEW_ORIGIN;
   receipt.status='verified';await deps.record(receipt);
   return receipt;
  }catch(error){
