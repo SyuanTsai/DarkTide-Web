@@ -8,7 +8,7 @@ test('InterT10_published_blessings_have_effects_for_every_weapon',()=>{
  assert.deepEqual(c.blessings.filter(b=>!b.effect_zh_tw).map(b=>b.blessing_id),[]);
  assert.deepEqual(c.variants.filter(b=>!b.effect_zh_tw).map(b=>b.variant_id),[]);
 });
-// Scenario: Reviewed blessing repairs and the Holy Tools correction change only their explicitly approved public records.
+// Scenario: Reviewed blessing repairs, Holy Tools, and player wording change only their approved fields.
 // Purpose: Reject accidental source, number, relation, or tree mutations during content recovery.
 test('InterT20_effect_repairs_preserve_all_other_public_fields',()=>{
  const before=JSON.parse(fs.readFileSync(new URL('../docs/acceptance/content-ux-20261011/content.before.json',import.meta.url)));
@@ -29,5 +29,16 @@ test('InterT20_effect_repairs_preserve_all_other_public_fields',()=>{
  assert.equal(holySources.length,4);
  assert.ok(holySources.every(s=>s.source_id.startsWith('holy-tools-')));
  before.sources.push(...holySources);
+ const wording=JSON.parse(fs.readFileSync(new URL('../docs/acceptance/player-wording-20261012/review.json',import.meta.url)));
+ assert.equal(wording.patches.length,wording.changed_fields);
+ for(const p of wording.patches){
+  assert.ok(['skills','blessings','variants','weapons','marks'].includes(p.kind));
+  assert.ok(['effect_zh_tw','mechanics_zh_tw','trigger_zh_tw'].includes(p.field));
+  const id={skills:'skill_id',blessings:'blessing_id',variants:'variant_id',weapons:'weapon_id',marks:'mark_id'}[p.kind];
+  const row=before[p.kind].find(r=>r[id]===p.id);
+  assert.ok(row,'reviewed record must exist');
+  assert.equal(row[p.field],p.before,'wording baseline must match the reviewed text');
+  row[p.field]=p.after;
+ }
  assert.deepEqual(after,before);
 });
