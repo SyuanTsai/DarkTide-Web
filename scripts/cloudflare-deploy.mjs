@@ -70,4 +70,8 @@ try{
   }
  });
  console.log('Cloudflare deployment verified: '+receipt.production_origin);
-}catch(error){console.error(redact(error.message+(error.cause?.message?"; "+error.cause.message:"")));process.exitCode=token?1:2;}
+}catch(error){
+ const messages=[];
+ for(let cause=error;cause&&messages.length<4;cause=cause.cause)messages.push(cause.message);
+ console.error(redact(messages.join('; ')));process.exitCode=token?1:2;
+}
