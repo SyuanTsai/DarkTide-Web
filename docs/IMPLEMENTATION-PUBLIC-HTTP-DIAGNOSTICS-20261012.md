@@ -19,3 +19,11 @@
 結論：Token 已能部署兩個既有 Worker；目前失敗屬正式網域的公開 HTTPS 人機驗證。此回應不能分辨發出驗證的是哪項安全服務／規則，不能直接推論為 Bot Fight Mode、Under Attack Mode 或特定 WAF 規則。
 
 不要求使用者讓 Codex 登入 Cloudflare。可由使用者自行查看該主機、路徑及時間的 Security Events，回報 Service 與規則名稱；再針對來源提出設定方案。未核對及授權前不改防護，不繞過 challenge，不把 403 或預覽成功當成正式站驗收通過。正式站仍維持已回復的舊版。
+
+## 使用者補充的 Security Events 證據
+
+使用者提供同一 Ray ID 的事件截圖：Service=Bot fight mode、Action=Managed Challenge、GET darktide.tw-syuan.com/version.json、User-Agent=node。已確認安全服務來源，不再需要 Codex 登入 Cloudflare。
+
+[官方 Bot Fight Mode 文件](https://developers.cloudflare.com/bots/get-started/bot-fight-mode/)說明此功能涵蓋整個網域，不能以 WAF custom rules／Page Rules 的 Skip 排除。免費方案可由使用者自行在 tw-syuan.com → Security → Settings → Bot traffic 關閉 Bot Fight Mode；此操作影響整個 tw-syuan.com 網域，必須由使用者選擇。若需保留此類防護並設細緻例外，可另評估支援 Skip 的 Super Bot Fight Mode，不自動升級方案或設定廣泛 IP 白名單。
+
+目前沒有修改 Cloudflare 防護。設定調整完成後先用 GitHub 重新確認公開 HTTPS 200，再部署並執行完整正式驗證；不能以改 User-Agent、跳過 403 或只驗 workers.dev 代替正式網域驗收。診斷與靜態 CI 已在 head 6ac4acd 通過。
