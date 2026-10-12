@@ -1,0 +1,54 @@
+name: Public HTTPS diagnostics
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/public-http-diagnostics.yml'
+permissions:
+  contents: read
+jobs:
+  public-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Inspect public responses without credentials
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          const origins = [
+            'https://darktide.tw-syuan.com',
+            'https://darktide-zh-tw-preview.syuan-tsai.workers.dev',
+            'https://darktide-zh-tw.syuan-tsai.workers.dev',
+          ];
+          const allowedHeaders = ['server', 'cf-ray', 'cf-mitigated', 'content-type', 'cache-control', 'cf-cache-status'];
+          for (const origin of origins) {
+            try {
+              const response = await fetch(origin + '/version.json', {
+                cache: 'no-store', redirect: 'follow', signal: AbortSignal.timeout(15000),
+              });
+              const body = await response.text();
+              const result = {
+                origin, status: response.status, final_url: response.url,
+                headers: Object.fromEntries(allowedHeaders.flatMap(name => response.headers.has(name) ? [[name, response.headers.get(name)]] : [])),
+              };
+              if ((response.headers.get('content-type') || '').includes('application/json') && response.ok) {
+                const version = JSON.parse(body);
+                result.version = { build_id: version.build_id, data_revision: version.data_revision, published: version.published };
+              } else {
+                result.title = (body.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1] || '').replace(/[\r\n]/g, ' ').slice(0, 160);
+                result.cloudflare_error_code = body.match(/cf-error-code[^>]*>\s*(\d+)/i)?.[1] || null;
+                result.challenge = /cf-chl-|challenge-platform|Just a moment/i.test(body);
+                result.access_denied = /Access denied|Sorry, you have been blocked/i.test(body);
+              }
+              console.log(JSON.stringify(result));
+            } catch (error) {
+              console.log(JSON.stringify({ origin, error: error.message }));
+              process.exitCode = 1;
+            }
+          }
+          NODE
