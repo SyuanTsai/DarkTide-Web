@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import test from 'node:test';
-import { buildW01, verifyW01Package } from '../scripts/w01-build.mjs';
+import { verifyW01Package } from '../scripts/w01-build.mjs';
 import { createDeploymentReceipt } from '../scripts/w01-preview-deployment-receipt.mjs';
 import { rollbackToPinnedR1 } from '../scripts/w01-rollback-r1.mjs';
 
@@ -42,9 +42,10 @@ function assertRowsPreserved(beforeRows, afterReceipt) {
 // Scenario: CI starts empty, rebuilds exact R1 and baseline, builds R2, then runs the fixed R1 helper over a verified R2 output.
 // Purpose: prove R1/R2/baseline immutable URLs survive and the helper accepts only the exact R2 receipt identity.
 test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
-  skip: !process.env.W01_PRIOR_R1_ROOT || !process.env.W01_BASELINE_ROOT
+  skip: !process.env.W01_PRIOR_R1_ROOT || !process.env.W01_PRIOR_R2_ROOT || !process.env.W01_BASELINE_ROOT
 }, async t => {
   const priorR1Root = path.resolve(process.env.W01_PRIOR_R1_ROOT);
+  const priorR2Root = path.resolve(process.env.W01_PRIOR_R2_ROOT);
   const baselineRoot = path.resolve(process.env.W01_BASELINE_ROOT);
   const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'w01-r1-r2-lifecycle-'));
   const selectorRoot = await mkdtemp(path.join(os.tmpdir(), 'w01-r1-rollback-selector-'));
@@ -54,12 +55,13 @@ test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
   });
 
   assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: priorR1Root, encoding: 'utf8' }).trim(), pinnedR1.commit);
+  assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: priorR2Root, encoding: 'utf8' }).trim(), publishedR2.commit);
   assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: baselineRoot, encoding: 'utf8' }).trim(), '8a4b3db2b1e835f0757f387ca89a19b9092b35ee');
 
   const r1Builder = await import(pathToFileURL(path.join(priorR1Root, 'scripts', 'w01-build.mjs')).href);
   const r1Retainer = await import(pathToFileURL(path.join(priorR1Root, 'scripts', 'w01-retain-baseline.mjs')).href);
-  const currentRetainer = await import('../scripts/w01-retain-baseline.mjs');
-
+  const r2Builder = await import(pathToFileURL(path.join(priorR2Root, 'scripts', 'w01-build.mjs')).href);
+  const r2Retainer = await import(pathToFileURL(path.join(priorR2Root, 'scripts', 'w01-retain-baseline.mjs')).href);
   await r1Builder.buildW01({ repoRoot: priorR1Root, outputRoot });
   await r1Retainer.retainPinnedBaseline({ baselineRoot, outputRoot });
   await r1Builder.verifyW01Package(outputRoot);
@@ -73,9 +75,9 @@ test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
   const baselineRows = dataRows(r1Receipt, pinnedR1.baselineRevision);
   assert.equal(baselineRows.length, 2277);
 
-  await buildW01({ repoRoot: webRoot, outputRoot });
-  await currentRetainer.retainPinnedBaseline({ baselineRoot, outputRoot });
-  await verifyW01Package(outputRoot);
+  await r2Builder.buildW01({ repoRoot: priorR2Root, outputRoot });
+  await r2Retainer.retainPinnedBaseline({ baselineRoot, outputRoot });
+  await r2Builder.verifyW01Package(outputRoot);
   const r2Receipt = await readJson(path.join(outputRoot, 'receipt.json'));
   assert.equal(r2Receipt.contentVersion, '0.0.2');
   assert.notEqual(r2Receipt.dataRevision, pinnedR1.dataRevision);
@@ -113,7 +115,7 @@ test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
     baselineRoot,
     outputRoot
   }), /exact fixed R1 package/);
-  await verifyW01Package(outputRoot);
+  await r2Builder.verifyW01Package(outputRoot);
 
   await writeFile(selectorPath, JSON.stringify(selector));
 
@@ -123,7 +125,7 @@ test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
     webRoot: selectorRoot, expectedR2Commit: wrongExpectedCommit, sourceRoot: priorR1Root, baselineRoot, outputRoot
   }), /exact published R2 commit/);
   assert.deepEqual(await readFile(path.join(outputRoot, 'receipt.json')), beforeRejectedRollback);
-  await verifyW01Package(outputRoot);
+  await r2Builder.verifyW01Package(outputRoot);
 
   const rollbackReceipt = await rollbackToPinnedR1({
     webRoot: selectorRoot,
@@ -136,7 +138,7 @@ test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
   assert.equal(rollbackReceipt.previousContentVersion, '0.0.2');
   assert.equal(rollbackReceipt.previousWebCommit, r2Receipt.web.authoringCommit);
   assert.equal(rollbackReceipt.preservedPriorDataFileCount, allPriorDataRows.length);
-  await verifyW01Package(outputRoot);
+  await r1Builder.verifyW01Package(outputRoot);
   const restoredReceipt = await readJson(path.join(outputRoot, 'receipt.json'));
   assert.equal(restoredReceipt.contentVersion, pinnedR1.contentVersion);
   assert.equal(restoredReceipt.dataRevision, pinnedR1.dataRevision);

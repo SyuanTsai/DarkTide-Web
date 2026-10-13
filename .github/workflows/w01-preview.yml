@@ -44,7 +44,7 @@ jobs:
           ref: 872bd72bad255d40af62329b8ffe97a357935275
           path: prior-r1
           persist-credentials: false
-      - name: Check out the exact published R2 A rollback source
+      - name: Check out the exact published R2 A data source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           repository: SyuanTsai/DarkTide-Web
@@ -62,7 +62,7 @@ jobs:
       - name: Rebuild the pinned production baseline data
         working-directory: baseline
         run: npm run build
-      - name: Run Web repository tests and exact R1-to-R2-to-R1 lifecycle check
+      - name: Run Web repository tests and pinned historical lifecycle checks
         working-directory: web
         env:
           W01_PRIOR_R1_ROOT: ${{ github.workspace }}/prior-r1
@@ -87,12 +87,15 @@ jobs:
       - name: Verify exact published R2 A and retained R1 and production data revisions
         working-directory: prior-r2
         run: npm run w01:verify -- ../web/dist-w01
-      - name: Restore fixed R1 from exact published R2 A
+      - name: Build current pending W01 candidate preview
         working-directory: web
-        run: npm run w01:rollback-r1 -- --expected-r2-commit a7fabea66f56cd5c8236b6e84a3f6c6586175840 --source-root ../prior-r1 --baseline-root ../baseline
-      - name: Verify fixed R1 rollback and preserved R2 and production URLs
+        run: npm run w01:build -- --candidate-preview --output dist-w01
+      - name: Retain the pinned baseline in the pending candidate
         working-directory: web
-        run: npm run w01:verify
+        run: npm run w01:retain -- --baseline-root ../baseline --output dist-w01
+      - name: Verify the pending candidate and retained historical data URLs
+        working-directory: web
+        run: npm run w01:verify -- dist-w01
       - name: Upload only the isolated W01 preview artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:

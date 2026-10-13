@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -21,17 +22,18 @@ async function withTempRoots(callback) {
   }
 }
 
-async function writeSourceSnapshot(sourceRoot, sourceRevision = 'a'.repeat(64)) {
+async function writeSourceSnapshot(sourceRoot, sourceRevision = 'a'.repeat(64), fixtureOnly = true) {
   const revisionRoot = path.join(sourceRoot, 'dist-w01', 'source', sourceRevision);
   await mkdir(revisionRoot, { recursive: true });
-  const technical = jsonBytes({ fixtureOnly: true, records: [], sourceRevision });
-  const changes = jsonBytes({ changes: [], fixtureOnly: true, sourceRevision });
+  const gameReleaseId = 'fixture-game-1';
+  const technical = jsonBytes({ fixtureOnly, publicationEligible: false, gameReleaseId, records: [], sourceRevision });
+  const changes = jsonBytes({ changes: [], fixtureOnly, publicationEligible: false, gameReleaseId, sourceRevision });
   const sourceManifest = {
     schemaVersion: '1.0.0',
-    gameReleaseId: 'fixture-game-1',
+    gameReleaseId,
     gameVersion: 'fixture-preview',
     sourceRevision,
-    fixtureOnly: true,
+    fixtureOnly,
     publicationEligible: false,
     files: [
       { path: 'technical.json', sizeBytes: technical.byteLength, sha256: sha256(technical) },
@@ -101,5 +103,44 @@ test('UnitT30_composition-request-rejects-extra-request-fields', async () => {
       applyCompositionRequest({ request: { ...source.request, privateProof: 'not-public' }, sourceRoot, webRoot, verifyCheckout: false }),
       /missing or unsupported fields/
     );
+  });
+});
+
+// Scenario: a pinned, publication-ineligible non-fixture Source packet contains only pending records.
+// Purpose: source composition can stage a real candidate while keeping fixture and publication booleans explicit.
+test('UnitT40_composition-request-imports-pending-nonfixture-candidate', async () => {
+  await withTempRoots(async ({ sourceRoot, webRoot }) => {
+    const source = await writeSourceSnapshot(sourceRoot, 'b'.repeat(64), false);
+    const result = await applyCompositionRequest({ request: source.request, sourceRoot, webRoot, verifyCheckout: false });
+    const receipt = JSON.parse(await readFile(path.join(webRoot, 'content', 'w01', 'composition-receipt.json'), 'utf8'));
+    assert.equal(result.changed, true);
+    assert.equal(receipt.fixtureOnly, false);
+    assert.equal(receipt.publicationEligible, false);
+    assert.equal(receipt.formalPublishAllowed, false);
+  });
+});
+
+// Scenario: the public Source checkout HEAD matches the request but a tracked authoring/compiler file has local edits.
+// Purpose: composition refuses an unverifiable dirty input before writing any Web candidate files.
+test('UnitT50_composition-request-rejects-dirty-source-checkout-before-write', async () => {
+  await withTempRoots(async ({ sourceRoot, webRoot }) => {
+    const source = await writeSourceSnapshot(sourceRoot);
+    await writeFile(path.join(sourceRoot, '.gitignore'), 'dist-w01/\n', 'utf8');
+    await writeFile(path.join(sourceRoot, 'compile.mjs'), 'export const version = 1;\n', 'utf8');
+    execFileSync('git', ['init', '--quiet'], { cwd: sourceRoot });
+    execFileSync('git', ['config', 'user.email', 'w01-test@example.invalid'], { cwd: sourceRoot });
+    execFileSync('git', ['config', 'user.name', 'W01 Test'], { cwd: sourceRoot });
+    execFileSync('git', ['add', '.gitignore', 'compile.mjs'], { cwd: sourceRoot });
+    execFileSync('git', ['commit', '--quiet', '-m', 'test pinned public compiler'], { cwd: sourceRoot });
+    execFileSync('git', ['remote', 'add', 'origin', sourceRepository], { cwd: sourceRoot });
+    source.request.commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRoot, encoding: 'utf8' }).trim();
+    await writeFile(path.join(sourceRoot, 'compile.mjs'), 'export const version = 2;\n', 'utf8');
+
+    await assert.rejects(
+      applyCompositionRequest({ request: source.request, sourceRoot, webRoot, verifyCheckout: true }),
+      /checkout must be clean/i
+    );
+    await assert.rejects(readFile(path.join(webRoot, 'source.lock.json')), { code: 'ENOENT' });
+    await assert.rejects(readFile(path.join(webRoot, 'content', 'w01', 'source', 'technical.json')), { code: 'ENOENT' });
   });
 });

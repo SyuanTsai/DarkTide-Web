@@ -1,189 +1,552 @@
 {
   "schemaVersion": "1.0.0",
-  "fixtureOnly": true,
-  "gameReleaseId": "fixture-game-1",
+  "fixtureOnly": false,
+  "gameReleaseId": "darktide:1.13.2",
   "references": [
     {
-      "sourceId": "fixture:official-source:smite",
-      "fixtureOnly": true,
-      "safeSummary": "Synthetic presentation string for contract testing only; not an official game fact."
+      "sourceId": "official:items:5d0fe023:key-unknown:en:1",
+      "officialName": {
+        "sourceLocale": "en",
+        "resource": "items",
+        "sourceHash": "5d0fe023",
+        "key": null,
+        "occurrence": 1,
+        "text": "Rev it Up",
+        "sha256": "e90277aaf6113e9dc42ab801264a0b4ab1945eac75794636e73ed93ebbf89fa1"
+      }
+    },
+    {
+      "sourceId": "official:items:5d0fe023:key-unknown:zh-TW:1",
+      "officialName": {
+        "sourceLocale": "zh-TW",
+        "resource": "items",
+        "sourceHash": "5d0fe023",
+        "key": null,
+        "occurrence": 1,
+        "text": "提速",
+        "sha256": "e250174b67bd1691c61a74c5d5ed5253e0a42fbed4c475b00919d57b557a48cc"
+      }
+    },
+    {
+      "sourceId": "official:items:863b83e4:key-unknown:en:1",
+      "safeSummary": "Public official string excerpt identity; candidate remains pending human review."
+    },
+    {
+      "sourceId": "official:items:863b83e4:key-unknown:zh-TW:1",
+      "safeSummary": "Public official string excerpt identity; candidate remains pending human review."
+    },
+    {
+      "sourceId": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:en:1",
+      "officialName": {
+        "sourceLocale": "en",
+        "resource": "items",
+        "sourceHash": "ca7da17a",
+        "key": "loc_weapon_family_chainaxe_p1_m1",
+        "occurrence": 1,
+        "text": "Assault Chainaxe",
+        "sha256": "a85203a0468a248387d34fbb65a4efda6643045f41eba131eb1cd4073be4da33"
+      }
+    },
+    {
+      "sourceId": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:zh-TW:1",
+      "officialName": {
+        "sourceLocale": "zh-TW",
+        "resource": "items",
+        "sourceHash": "ca7da17a",
+        "key": "loc_weapon_family_chainaxe_p1_m1",
+        "occurrence": 1,
+        "text": "突擊鏈斧",
+        "sha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+      }
+    },
+    {
+      "sourceId": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:en:1",
+      "safeSummary": "Public official string excerpt identity; candidate remains pending human review."
+    },
+    {
+      "sourceId": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:zh-TW:1",
+      "safeSummary": "Public official string excerpt identity; candidate remains pending human review."
+    },
+    {
+      "sourceId": "official:ui:6f06e398:loc_ability_psyker_smite:en:1",
+      "officialName": {
+        "sourceLocale": "en",
+        "resource": "ui",
+        "sourceHash": "6f06e398",
+        "key": "loc_ability_psyker_smite",
+        "occurrence": 1,
+        "text": "Brain Burst",
+        "sha256": "2cf96d0910ad3b04b3a12ed0ea722619ea29b3de3e42cdb6bf4d063847f28651"
+      }
+    },
+    {
+      "sourceId": "official:ui:6f06e398:loc_ability_psyker_smite:zh-TW:1",
+      "officialName": {
+        "sourceLocale": "zh-TW",
+        "resource": "ui",
+        "sourceHash": "6f06e398",
+        "key": "loc_ability_psyker_smite",
+        "occurrence": 1,
+        "text": "顱腦爆裂",
+        "sha256": "a5c13ef08854f2c1bd44f92a232d02bda26073076882fa7cd6644bb65dcb4b0e"
+      }
+    },
+    {
+      "sourceId": "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:en:1",
+      "officialName": {
+        "sourceLocale": "en",
+        "resource": "ui",
+        "sourceHash": "c3b5cefd",
+        "key": "loc_talent_psyker_brain_burst_improved",
+        "occurrence": 1,
+        "text": "Brain Rupture",
+        "sha256": "48b11daef4a67532a1799c41e8ffe1267094b5cc59f76f69811060af26eb6f0f"
+      }
+    },
+    {
+      "sourceId": "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:zh-TW:1",
+      "officialName": {
+        "sourceLocale": "zh-TW",
+        "resource": "ui",
+        "sourceHash": "c3b5cefd",
+        "key": "loc_talent_psyker_brain_burst_improved",
+        "occurrence": 1,
+        "text": "顱腦崩裂",
+        "sha256": "3b696743acdcaf487ba4f9c1e02f379a82189a32b74983eabd5f1eadc0f3d0ee"
+      }
     }
   ],
   "records": [
     {
-      "recordId": "web:presentation:fixture-skill-smite",
+      "recordId": "web:presentation:psyker-brain-burst-improved",
       "owner": "web",
       "kind": "presentation",
-      "gameReleaseId": "fixture-game-1",
-      "entityRef": "fixture:skill:smite",
+      "gameReleaseId": "darktide:1.13.2",
+      "entityRef": "darktide:skill:psyker:brain-burst-improved",
       "locale": "zh-TW",
       "sourceRefs": [
-        "fixture:official-source:smite"
+        "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:en:1",
+        "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:zh-TW:1",
+        "official:ui:6f06e398:loc_ability_psyker_smite:en:1",
+        "official:ui:6f06e398:loc_ability_psyker_smite:zh-TW:1",
+        "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:en:1",
+        "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:zh-TW:1"
       ],
       "payload": {
-        "name": "合成技能示例（修訂2）",
+        "name": "顱腦崩裂",
         "official": {
-          "sourceRef": "fixture:official-source:smite",
+          "sourceRef": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:en:1",
           "sourceLocale": "en",
-          "resource": "fixture/skills",
-          "key": "fixture.cooldown",
+          "resource": "ui",
+          "sourceHash": "681e4980",
+          "key": "loc_talent_psyker_brain_burst_improved_description",
           "occurrence": 1,
-          "sourceText": "Cooldown: 40 seconds.",
-          "sourceTextSha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa",
+          "sourceText": "Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of {talent_old:%s} dealing {damage:%s} Damage.",
+          "sourceTextSha256": "dcdd0219e870c7b177e4db1d434582d4ace1678a7304c116c705ad2165e6015b",
           "segments": [
             {
-              "segmentId": "cooldown",
-              "text": "Cooldown: 40 seconds.",
-              "sha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa"
+              "segmentId": "segment-1",
+              "kind": "literal",
+              "text": "Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of ",
+              "sha256": "75480d83821ba58feb6cfd3abe9d81f4f1f946acd09d779fcfe73d6d38d2b671"
+            },
+            {
+              "segmentId": "segment-2",
+              "kind": "template-placeholder",
+              "text": "{talent_old:%s}",
+              "sha256": "b84074878dbcd309d7d6d437e5e759ec642e7966bd432a10efb002fe702c061d"
+            },
+            {
+              "segmentId": "segment-3",
+              "kind": "literal",
+              "text": " dealing ",
+              "sha256": "4edf527b6f1584f29a34423e8509242ed2161fa6fc8c0dd28418f7d1a240d6ac"
+            },
+            {
+              "segmentId": "segment-4",
+              "kind": "template-placeholder",
+              "text": "{damage:%s}",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd"
+            },
+            {
+              "segmentId": "segment-5",
+              "kind": "literal",
+              "text": " Damage.",
+              "sha256": "c59411295516d9f3ed84b53aec422b3399d0bb785535227f6fbcdaec317f9d05"
             }
           ],
-          "params": [],
-          "resolvedText": "Cooldown: 40 seconds.",
-          "resolvedTextSha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa",
+          "params": [
+            {
+              "name": "talent_old",
+              "placeholder": "{talent_old:%s}",
+              "status": "bound",
+              "bindingRef": "official:ui:6f06e398:loc_ability_psyker_smite:en:1",
+              "format": "official-name"
+            },
+            {
+              "name": "damage",
+              "placeholder": "{damage:%s}",
+              "status": "bound",
+              "bindingRef": "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+              "format": "signed-percent"
+            }
+          ],
           "localizations": {
             "zh-TW": {
-              "origin": "faithful-translation",
-              "text": "冷卻時間：40 秒。",
-              "sha256": "0c95ff69a49fca8fe6c07c9f5a54bd4e6270be4bf7294ebc5c76e396022ceb8c"
+              "origin": "official",
+              "sourceRef": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:zh-TW:1",
+              "sourceLocale": "zh-TW",
+              "resource": "ui",
+              "sourceHash": "681e4980",
+              "key": "loc_talent_psyker_brain_burst_improved_description",
+              "occurrence": 1,
+              "sourceText": "積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成{damage:%s}傷害的{talent_old:%s}的加強版。",
+              "sourceTextSha256": "3c2c9776162b4a5b5e88615acdb3fb8d8a64f976c17a733fa6ae681d6392da27",
+              "segments": [
+                {
+                  "segmentId": "segment-1",
+                  "kind": "literal",
+                  "text": "積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成",
+                  "sha256": "90db38f2cd20a87f38fd4e6acd5a8a75279da2ae4e197c3e96235ba69e8bd4d4"
+                },
+                {
+                  "segmentId": "segment-2",
+                  "kind": "template-placeholder",
+                  "text": "{damage:%s}",
+                  "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd"
+                },
+                {
+                  "segmentId": "segment-3",
+                  "kind": "literal",
+                  "text": "傷害的",
+                  "sha256": "b0c40a99136b52f3ed2405d07b1217683976c5fceaa49b06406025ed0623dcee"
+                },
+                {
+                  "segmentId": "segment-4",
+                  "kind": "template-placeholder",
+                  "text": "{talent_old:%s}",
+                  "sha256": "b84074878dbcd309d7d6d437e5e759ec642e7966bd432a10efb002fe702c061d"
+                },
+                {
+                  "segmentId": "segment-5",
+                  "kind": "literal",
+                  "text": "的加強版。",
+                  "sha256": "f141f500e7a84e040c65f34d49c19a1f4b7249db419e95e1e0825f5d4e970998"
+                }
+              ],
+              "params": [
+                {
+                  "name": "damage",
+                  "placeholder": "{damage:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "talent_old",
+                  "placeholder": "{talent_old:%s}",
+                  "status": "bound",
+                  "bindingRef": "official:ui:6f06e398:loc_ability_psyker_smite:zh-TW:1",
+                  "format": "official-name"
+                }
+              ]
             }
           }
         },
-        "errata": [
-          {
-            "erratumId": "fixture-erratum-smite-cooldown",
-            "anchor": {
-              "segmentId": "cooldown",
-              "sourceTextDigest": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa"
+        "errata": [],
+        "detailSections": {
+          "effects": [
+            {
+              "itemId": "psyker-description-damage-parameter",
+              "text": "官方句中的傷害佔位值以固定 Source claim 顯示為 +50%；這是描述格式化參數，不代表最終傷害。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+              ]
+            }
+          ],
+          "conditions": [],
+          "calculation": [],
+          "notes": [],
+          "extra": [
+            {
+              "itemId": "psyker-smite-term",
+              "termRef": "darktide:term:psyker:smite-damage-multiplier-parameter"
+            }
+          ]
+        }
+      },
+      "reviewState": "pending"
+    },
+    {
+      "recordId": "web:presentation:chainaxe-p1-movement-speed",
+      "owner": "web",
+      "kind": "presentation",
+      "gameReleaseId": "darktide:1.13.2",
+      "entityRef": "darktide:blessing:chainaxe:p1-movement-speed-on-activation",
+      "locale": "zh-TW",
+      "sourceRefs": [
+        "official:items:5d0fe023:key-unknown:en:1",
+        "official:items:5d0fe023:key-unknown:zh-TW:1",
+        "official:items:863b83e4:key-unknown:en:1",
+        "official:items:863b83e4:key-unknown:zh-TW:1"
+      ],
+      "payload": {
+        "name": "提速",
+        "official": {
+          "sourceRef": "official:items:863b83e4:key-unknown:en:1",
+          "sourceLocale": "en",
+          "resource": "items",
+          "sourceHash": "863b83e4",
+          "key": null,
+          "occurrence": 1,
+          "sourceText": "{movement_speed:%s} Movement Speed for {time:%s}s on Weapon Special Activation.",
+          "sourceTextSha256": "0b9996580a4b90df38fc200551c45c6b21f0a58819793b9e228df8b598d88518",
+          "segments": [
+            {
+              "segmentId": "segment-1",
+              "kind": "template-placeholder",
+              "text": "{movement_speed:%s}",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577"
             },
-            "gameReleaseId": "fixture-game-1",
-            "context": {},
-            "problem": "合成展示刻意保留官方摘錄40秒與Source合成claim 35秒的差異，以驗證勘誤呈現。",
-            "claimRef": "fixture:claim:smite-damage",
-            "evidenceRefs": [
-              "fixture:evidence:smite-template"
-            ],
-            "text": "此為合成勘誤樣本：保留原文40秒，Source合成claim為35秒；尚未經人工內容審核，不代表遊戲事實。",
-            "reviewState": "pending"
+            {
+              "segmentId": "segment-2",
+              "kind": "literal",
+              "text": " Movement Speed for ",
+              "sha256": "7f47160b7314a333091793fbe9407bd4267ba9c7a6b14905a44f7598cff24260"
+            },
+            {
+              "segmentId": "segment-3",
+              "kind": "template-placeholder",
+              "text": "{time:%s}",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b"
+            },
+            {
+              "segmentId": "segment-4",
+              "kind": "literal",
+              "text": "s on Weapon Special Activation.",
+              "sha256": "525eb71710e7860298e46cc25bff75f82bb800e32125c3e96ddc4d50bd3b2901"
+            }
+          ],
+          "params": [
+            {
+              "name": "movement_speed",
+              "placeholder": "{movement_speed:%s}",
+              "status": "bound",
+              "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+              "format": "signed-percent"
+            },
+            {
+              "name": "time",
+              "placeholder": "{time:%s}",
+              "status": "bound",
+              "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "format": "plain-number"
+            }
+          ],
+          "localizations": {
+            "zh-TW": {
+              "origin": "official",
+              "sourceRef": "official:items:863b83e4:key-unknown:zh-TW:1",
+              "sourceLocale": "zh-TW",
+              "resource": "items",
+              "sourceHash": "863b83e4",
+              "key": null,
+              "occurrence": 1,
+              "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+              "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887",
+              "segments": [
+                {
+                  "segmentId": "segment-1",
+                  "kind": "literal",
+                  "text": "武器特殊啟動後",
+                  "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78"
+                },
+                {
+                  "segmentId": "segment-2",
+                  "kind": "template-placeholder",
+                  "text": "{movement_speed:%s}",
+                  "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577"
+                },
+                {
+                  "segmentId": "segment-3",
+                  "kind": "literal",
+                  "text": "移動速度，持續",
+                  "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7"
+                },
+                {
+                  "segmentId": "segment-4",
+                  "kind": "template-placeholder",
+                  "text": "{time:%s}",
+                  "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b"
+                },
+                {
+                  "segmentId": "segment-5",
+                  "kind": "literal",
+                  "text": "秒。",
+                  "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe"
+                }
+              ],
+              "params": [
+                {
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "time",
+                  "placeholder": "{time:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "format": "plain-number"
+                }
+              ]
+            }
           }
-        ],
+        },
+        "errata": [],
         "detailSections": {
           "effects": [
             {
-              "itemId": "fixture-effect",
-              "text": "此合成項目僅驗證五節呈現，不代表已確認的遊戲效果。",
-              "claimRefs": []
+              "itemId": "chainaxe-tier-1-display-parameter",
+              "text": "此官方描述的定義階級 1 顯示值為 +17%；不代表已確認的遊戲內移動效果。",
+              "claimRefs": [
+                "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+              ]
             }
           ],
-          "conditions": [],
-          "calculation": [],
-          "notes": [],
-          "extra": [
+          "conditions": [
             {
-              "itemId": "fixture-term-reference",
-              "termRef": "fixture:term:smite"
+              "itemId": "chainaxe-template-duration-parameter",
+              "text": "Source 模板的啟動持續時間欄位為 2 秒；遊戲內效果尚未驗證。",
+              "claimRefs": [
+                "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+              ]
             }
-          ]
+          ],
+          "calculation": [],
+          "notes": [
+            {
+              "itemId": "chainaxe-tier-coverage",
+              "text": "Source 列出定義階級 1 至 4；可取得階級仍未知。"
+            }
+          ],
+          "extra": []
         }
       },
       "reviewState": "pending"
     },
     {
-      "recordId": "web:presentation:fixture-blessing",
+      "recordId": "web:presentation:chainaxe-p1-m1",
       "owner": "web",
       "kind": "presentation",
-      "gameReleaseId": "fixture-game-1",
-      "entityRef": "fixture:blessing:sample",
+      "gameReleaseId": "darktide:1.13.2",
+      "entityRef": "darktide:weapon:chainaxe:p1-m1",
       "locale": "zh-TW",
-      "sourceRefs": [],
+      "sourceRefs": [
+        "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:en:1",
+        "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:zh-TW:1"
+      ],
       "payload": {
-        "name": "合成祝福範例",
-        "detailSections": {
-          "effects": [
+        "name": "突擊鏈斧",
+        "official": {
+          "sourceRef": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:en:1",
+          "sourceLocale": "en",
+          "resource": "items",
+          "sourceHash": "ca7da17a",
+          "key": "loc_weapon_family_chainaxe_p1_m1",
+          "occurrence": 1,
+          "sourceText": "Assault Chainaxe",
+          "sourceTextSha256": "a85203a0468a248387d34fbb65a4efda6643045f41eba131eb1cd4073be4da33",
+          "segments": [
             {
-              "itemId": "fixture-tier-note",
-              "text": "此樣本保留已定義階級資料；可取得階級仍為未知。",
-              "claimRefs": []
+              "segmentId": "segment-1",
+              "kind": "literal",
+              "text": "Assault Chainaxe",
+              "sha256": "a85203a0468a248387d34fbb65a4efda6643045f41eba131eb1cd4073be4da33"
             }
           ],
-          "conditions": [],
-          "calculation": [],
-          "notes": [],
-          "extra": [
-            {
-              "itemId": "fixture-blessing-term",
-              "termRef": "fixture:term:smite"
+          "params": [],
+          "localizations": {
+            "zh-TW": {
+              "origin": "official",
+              "sourceRef": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:zh-TW:1",
+              "sourceLocale": "zh-TW",
+              "resource": "items",
+              "sourceHash": "ca7da17a",
+              "key": "loc_weapon_family_chainaxe_p1_m1",
+              "occurrence": 1,
+              "sourceText": "突擊鏈斧",
+              "sourceTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89",
+              "segments": [
+                {
+                  "segmentId": "segment-1",
+                  "kind": "literal",
+                  "text": "突擊鏈斧",
+                  "sha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+                }
+              ],
+              "params": []
             }
-          ]
-        }
-      },
-      "reviewState": "pending"
-    },
-    {
-      "recordId": "web:presentation:fixture-weapon",
-      "owner": "web",
-      "kind": "presentation",
-      "gameReleaseId": "fixture-game-1",
-      "entityRef": "fixture:weapon:sample",
-      "locale": "zh-TW",
-      "sourceRefs": [],
-      "payload": {
-        "name": "合成武器範例",
+          }
+        },
+        "errata": [],
         "detailSections": {
           "effects": [],
           "conditions": [
             {
-              "itemId": "fixture-range-note",
-              "text": "保留輸入範圍與單位；本預覽不計算結果。",
-              "claimRefs": []
+              "itemId": "chainaxe-attack-point-table",
+              "text": "Source 表格點為 1→80、2→140 point；僅保留原始表值，不進行插值或傷害計算。"
             }
           ],
           "calculation": [],
-          "notes": [],
-          "extra": [
+          "notes": [
             {
-              "itemId": "fixture-weapon-term",
-              "termRef": "fixture:term:smite"
+              "itemId": "chainaxe-armor-point-table",
+              "text": "護甲參數表點為 1→1.035、2→1.965 ratio；不是武器評分或最終傷害。動作／攻擊設定覆蓋尚未匯入。"
             }
-          ]
+          ],
+          "extra": []
         }
       },
       "reviewState": "pending"
     },
     {
-      "recordId": "web:term-localization:fixture-smite",
+      "recordId": "web:term-localization:psyker-smite-damage-multiplier-parameter",
       "owner": "web",
       "kind": "term-localization",
-      "gameReleaseId": "fixture-game-1",
-      "entityRef": "fixture:term:smite",
+      "gameReleaseId": "darktide:1.13.2",
+      "entityRef": "darktide:term:psyker:smite-damage-multiplier-parameter",
       "locale": "zh-TW",
       "sourceRefs": [],
       "payload": {
-        "label": "合成詞條",
-        "definition": "只用於驗證共用術語與呈現的連結。"
+        "label": "描述參數",
+        "definition": "Source 中的程式碼參數名稱；此連結只用於辨識官方描述格式化資料，不表示最終傷害結果。"
       },
       "reviewState": "pending"
     }
   ],
   "announcements": [
     {
-      "recordId": "web:announcement:w01-fixture-preview",
+      "recordId": "web:announcement:w01-real-candidate-003",
       "owner": "web",
       "kind": "announcement",
-      "gameReleaseId": "fixture-game-1",
+      "gameReleaseId": "darktide:1.13.2",
       "locale": "zh-TW",
       "sourceRefs": [],
       "payload": {
-        "title": "隔離預覽範例",
+        "title": "待審候選資料包 0.0.3",
         "blocks": [
           {
-            "blockId": "heading",
+            "blockId": "candidate-status",
             "type": "heading",
-            "text": "資料通路預覽"
+            "text": "候選狀態"
           },
           {
-            "blockId": "paragraph",
+            "blockId": "compatibility-warning",
             "type": "paragraph",
-            "text": "這是 Web 專有的 fixture 公告，用來驗證 ordered blocks；不是正式遊戲公告。"
+            "text": "來源快照 1.13.2 與 Steam Build 25681127 的相容性尚未核實；本資料包仍待人工內容審查。程式碼觀察與描述格式參數不代表遊戲內最終效果。"
           }
         ]
       },

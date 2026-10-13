@@ -49,10 +49,13 @@ export function mergeRetainedRows(receipt, copiedRows, inventory, inventorySha25
     'schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256',
     'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'
   ];
-  assertExactKeys(receipt, [...receiptKeys, ...(Object.hasOwn(receipt, 'retainedData') ? ['retainedData'] : [])], 'W01 build receipt');
-  if (receipt.requestKind !== 'isolated-w01-preview-build' || receipt.fixtureOnly !== true ||
+  const candidatePreviewOnly = Object.hasOwn(receipt, 'candidatePreviewOnly');
+  assertExactKeys(receipt, [...receiptKeys, ...(candidatePreviewOnly ? ['candidatePreviewOnly'] : []), ...(Object.hasOwn(receipt, 'retainedData') ? ['retainedData'] : [])], 'W01 build receipt');
+  const isFixture = receipt.fixtureOnly === true && !candidatePreviewOnly;
+  const isPendingCandidate = receipt.fixtureOnly === false && receipt.candidatePreviewOnly === true;
+  if (receipt.requestKind !== 'isolated-w01-preview-build' || (!isFixture && !isPendingCandidate) ||
       receipt.publicationEligible !== false || receipt.formalPublishAllowed !== false || receipt.deploymentPerformed !== false) {
-    fail('retained baseline can only be added to the quarantined W01 fixture preview');
+    fail('retained baseline can only be added to a quarantined W01 fixture or pending-candidate preview');
   }
   if (typeof receipt.contentVersion !== 'string' || !/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(receipt.contentVersion)) {
     fail('W01 build receipt contentVersion must be numeric major.minor.patch');

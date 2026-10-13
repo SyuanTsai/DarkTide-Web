@@ -4,13 +4,14 @@ import path from 'node:path';
 import test from 'node:test';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
+const fixtureRoot = path.join(repoRoot, 'test', 'fixtures', 'w01');
 
 // Scenario: R2 changes only the Web-owned synthetic presentation and release version.
 // Purpose: the generated package advances to 0.0.2 while Source claim and official source text stay fixed.
 test('UnitT40_r2-version-and-web-owned-name-preserve-source-claim-and-official-text', async () => {
-  const release = JSON.parse(await readFile(path.join(repoRoot, 'content', 'w01', 'release.json'), 'utf8'));
-  const web = JSON.parse(await readFile(path.join(repoRoot, 'content', 'w01', 'web-authoring.json'), 'utf8'));
-  const technical = JSON.parse(await readFile(path.join(repoRoot, 'content', 'w01', 'source', 'technical.json'), 'utf8'));
+  const release = JSON.parse(await readFile(path.join(fixtureRoot, 'content', 'w01', 'release.json'), 'utf8'));
+  const web = JSON.parse(await readFile(path.join(fixtureRoot, 'content', 'w01', 'web-authoring.json'), 'utf8'));
+  const technical = JSON.parse(await readFile(path.join(fixtureRoot, 'content', 'w01', 'source', 'technical.json'), 'utf8'));
   const skillPresentation = web.records.find(record => record.recordId === 'web:presentation:fixture-skill-smite');
   const claim = technical.records.find(record => record.recordId === 'fixture:claim:smite-damage');
 

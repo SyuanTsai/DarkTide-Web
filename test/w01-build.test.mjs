@@ -21,8 +21,60 @@ async function withTempDirectory(callback) {
 }
 
 async function copyBuildInputs(destination) {
+  const fixtureRoot = path.join(repoRoot, 'test', 'fixtures', 'w01');
+  await cp(path.join(fixtureRoot, 'content', 'w01'), path.join(destination, 'content', 'w01'), { recursive: true });
+  await cp(path.join(fixtureRoot, 'source.lock.json'), path.join(destination, 'source.lock.json'));
+}
+
+async function copyCurrentInputs(destination) {
+  await mkdir(path.join(destination, 'content'), { recursive: true });
   await cp(path.join(repoRoot, 'content', 'w01'), path.join(destination, 'content', 'w01'), { recursive: true });
   await cp(path.join(repoRoot, 'source.lock.json'), path.join(destination, 'source.lock.json'));
+}
+
+async function updatePinnedTechnical(copiedRoot, update) {
+  const sourceRoot = path.join(copiedRoot, 'content', 'w01', 'source');
+  const technicalPath = path.join(sourceRoot, 'technical.json');
+  const technical = JSON.parse(await readFile(technicalPath, 'utf8'));
+  update(technical);
+  const technicalBytes = jsonBytes(technical);
+  await writeFile(technicalPath, technicalBytes);
+
+  const sourceManifestPath = path.join(sourceRoot, 'source-manifest.json');
+  const sourceManifest = JSON.parse(await readFile(sourceManifestPath, 'utf8'));
+  const row = sourceManifest.files.find(file => file.path === 'technical.json');
+  row.sha256 = sha256(technicalBytes);
+  row.sizeBytes = technicalBytes.byteLength;
+  const manifestBytes = jsonBytes(sourceManifest);
+  await writeFile(sourceManifestPath, manifestBytes);
+
+  const lockPath = path.join(copiedRoot, 'source.lock.json');
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  lock.manifestSha256 = sha256(manifestBytes);
+  await writeFile(lockPath, jsonBytes(lock));
+}
+
+async function repinTechnicalClaimTarget(repoRoot, recordId, targetRef, { linkTermToClaim = false } = {}) {
+  const sourceRoot = path.join(repoRoot, 'content', 'w01', 'source');
+  const technicalPath = path.join(sourceRoot, 'technical.json');
+  const technical = JSON.parse(await readFile(technicalPath, 'utf8'));
+  technical.records.find(record => record.recordId === recordId).payload.targetRef = targetRef;
+  if (linkTermToClaim) technical.records.find(record => record.kind === 'term').payload.claimRefs = [recordId];
+  const technicalBytes = jsonBytes(technical);
+  await writeFile(technicalPath, technicalBytes);
+
+  const manifestPath = path.join(sourceRoot, 'source-manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const technicalRow = manifest.files.find(file => file.path === 'technical.json');
+  technicalRow.sha256 = sha256(technicalBytes);
+  technicalRow.sizeBytes = technicalBytes.byteLength;
+  const manifestBytes = jsonBytes(manifest);
+  await writeFile(manifestPath, manifestBytes);
+
+  const lockPath = path.join(repoRoot, 'source.lock.json');
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  lock.manifestSha256 = sha256(manifestBytes);
+  await writeFile(lockPath, jsonBytes(lock));
 }
 
 async function readBuildFiles(buildRoot) {
@@ -39,10 +91,12 @@ async function readBuildFiles(buildRoot) {
 // Purpose: generated output is reproducible and the shared package preserves v17-A ownership/identity and v17-D metadata.
 test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', async () => {
   await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
     const firstRoot = path.join(tempRoot, 'first');
     const secondRoot = path.join(tempRoot, 'second');
-    const first = await buildW01({ repoRoot, outputRoot: firstRoot });
-    const second = await buildW01({ repoRoot, outputRoot: secondRoot });
+    const first = await buildW01({ repoRoot: copiedRoot, outputRoot: firstRoot });
+    const second = await buildW01({ repoRoot: copiedRoot, outputRoot: secondRoot });
     const firstFiles = await readBuildFiles(firstRoot);
     const secondFiles = await readBuildFiles(secondRoot);
 
@@ -165,8 +219,10 @@ test('UnitT01_source-artifact-drift-fails-the-pinned-manifest', async () => {
 // Purpose: fixture and pending material can build a quarantined preview but can never pass the formal-publication gate.
 test('UnitT02_fixture-and-pending-data-cannot-pass-formal-publication', async () => {
   await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
     await assert.rejects(
-      buildW01({ repoRoot, outputRoot: path.join(tempRoot, 'formal'), mode: 'formal' }),
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'formal'), mode: 'formal' }),
       /fixture|pending|formal publication/i
     );
   });
@@ -176,7 +232,9 @@ test('UnitT02_fixture-and-pending-data-cannot-pass-formal-publication', async ()
 // Purpose: typed ranges and unknown tier coverage remain unchanged and no calculation or guessed tier is introduced.
 test('UnitT03_typed-ranges-and-unknown-tier-coverage-remain-unchanged', async () => {
   await withTempDirectory(async tempRoot => {
-    const result = await buildW01({ repoRoot, outputRoot: path.join(tempRoot, 'out') });
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'out') });
     const buildRoot = path.join(tempRoot, 'out', 'data', result.dataRevision);
     const weapons = JSON.parse(await readFile(path.join(buildRoot, 'weapons.json'), 'utf8'));
     const blessings = JSON.parse(await readFile(path.join(buildRoot, 'blessings.json'), 'utf8'));
@@ -349,3 +407,375 @@ test('UnitT10_versioned-rebuild-0.0.1-to-0.0.2-preserves-prior-data', async () =
     );
   });
 });
+
+// Scenario: a sanitized, non-fixture Source package is explicitly built in candidate-preview mode.
+// Purpose: pending public candidates can use the isolated preview while fixture mode and formal publication stay separately guarded.
+test('UnitT11_candidate-preview-requires-explicit-pending-nonfixture-flags', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
+    await makePendingCandidateInputs(copiedRoot);
+
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'implicit') }),
+      /candidate-preview|fixture-only/i
+    );
+    const candidate = await buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'candidate'), mode: 'candidate-preview' });
+    const version = JSON.parse(await readFile(path.join(tempRoot, 'candidate', 'version.json'), 'utf8'));
+    const manifest = JSON.parse(await readFile(path.join(tempRoot, 'candidate', candidate.manifestPath), 'utf8'));
+    const preview = JSON.parse(await readFile(path.join(tempRoot, 'candidate', 'preview.json'), 'utf8'));
+
+    assert.equal(candidate.receipt.fixtureOnly, false);
+    assert.equal(candidate.receipt.publicationEligible, false);
+    assert.equal(candidate.receipt.formalPublishAllowed, false);
+    assert.equal(version.package_kind, 'pending-preview');
+    assert.equal(manifest.fixtureOnly, false);
+    assert.equal(manifest.publicationEligible, false);
+    assert.equal(preview.candidatePreviewOnly, true);
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'formal'), mode: 'formal' }),
+      /formal publication/i
+    );
+  });
+});
+
+// Scenario: native official templates bind a Web-owned name or a matching Source claim, then reject a cross-entity claim.
+// Purpose: localized official text resolves from exact owner inputs and cannot display a valid-looking value for the wrong game entity.
+test('UnitT12_native-official-localization-resolves-ordered-source-spans', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const record = authoring.records[0];
+    const enNameRef = 'fixture:official-name:brain-burst-en';
+    const zhNameRef = 'fixture:official-name:brain-burst-zh-tw';
+    const zhTextRef = 'fixture:official-source:smite-zh-tw';
+    const enText = 'This is {talent_old:%s}.';
+    const zhText = '這是{talent_old:%s}。';
+    const enName = 'Brain Burst';
+    const zhName = '顱腦爆裂';
+    const digest = text => sha256(Buffer.from(text, 'utf8'));
+    const segments = (prefix, token, suffix) => [
+      { segmentId: prefix + '-literal', kind: 'literal', text: prefix, sha256: digest(prefix) },
+      { segmentId: 'talent-old', kind: 'template-placeholder', text: token, sha256: digest(token) },
+      { segmentId: suffix + '-literal', kind: 'literal', text: suffix, sha256: digest(suffix) }
+    ];
+    const enParams = [{ name: 'talent_old', placeholder: '{talent_old:%s}', status: 'bound', bindingRef: enNameRef, format: 'official-name' }];
+    const zhParams = [{ name: 'talent_old', placeholder: '{talent_old:%s}', status: 'bound', bindingRef: zhNameRef, format: 'official-name' }];
+    const officialSourceRef = record.payload.official.sourceRef;
+    authoring.references.push(
+      { sourceId: zhTextRef, safeSummary: 'Synthetic native official TC description identity for the contract test.' },
+      { sourceId: enNameRef, officialName: { sourceLocale: 'en', resource: 'skills/talents', sourceHash: '6f06e398', key: 'loc_ability_psyker_smite', occurrence: 1, text: enName, sha256: digest(enName) } },
+      { sourceId: zhNameRef, officialName: { sourceLocale: 'zh-TW', resource: 'skills/talents', sourceHash: '6f06e398', key: 'loc_ability_psyker_smite', occurrence: 1, text: zhName, sha256: digest(zhName) } }
+    );
+    record.sourceRefs = [...new Set([...record.sourceRefs, zhTextRef, enNameRef, zhNameRef])];
+    record.payload.official = {
+      sourceRef: officialSourceRef,
+      sourceLocale: 'en',
+      resource: 'skills/talents',
+      sourceHash: '681e4980',
+      key: 'loc_talent_psyker_brain_burst_improved_description',
+      occurrence: 1,
+      sourceText: enText,
+      sourceTextSha256: digest(enText),
+      segments: segments('This is ', '{talent_old:%s}', '.'),
+      params: enParams,
+      localizations: {
+        'zh-TW': {
+          origin: 'official',
+          sourceRef: zhTextRef,
+          sourceLocale: 'zh-TW',
+          resource: 'skills/talents',
+          sourceHash: '681e4980',
+          key: 'loc_talent_psyker_brain_burst_improved_description',
+          occurrence: 1,
+          sourceText: zhText,
+          sourceTextSha256: digest(zhText),
+          segments: segments('這是', '{talent_old:%s}', '。'),
+          params: zhParams
+        }
+      }
+    };
+    record.payload.errata = [{
+      erratumId: 'fixture-native-official-contract-test',
+      anchor: { segmentId: 'talent-old', sourceTextDigest: digest('{talent_old:%s}') },
+      gameReleaseId: record.gameReleaseId,
+      context: {},
+      problem: 'Synthetic contract test only.',
+      claimRef: 'fixture:claim:smite-damage',
+      evidenceRefs: ['fixture:evidence:smite-template'],
+      text: 'Synthetic pending erratum for identity-closure testing.',
+      reviewState: 'pending'
+    }];
+    await writeFile(authoringPath, jsonBytes(authoring));
+
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'out') });
+    const skills = JSON.parse(await readFile(path.join(tempRoot, 'out', 'data', result.dataRevision, 'skills.json'), 'utf8'));
+    const manifest = JSON.parse(await readFile(path.join(tempRoot, 'out', result.manifestPath), 'utf8'));
+    const compiled = skills.records.find(item => item.recordId === record.recordId);
+    const official = compiled.payload.official;
+    const localized = official.localizations['zh-TW'];
+
+    assert.ok(manifest.compatibility.requiredFeatures.includes('official-native-localizations-v1'));
+    assert.equal(official.resolvedText, 'This is Brain Burst.');
+    assert.equal(official.params[0].resolvedValue, enName);
+    assert.equal(localized.origin, 'official');
+    assert.equal(localized.sourceRef, zhTextRef);
+    assert.equal(localized.sourceText, zhText);
+    assert.equal(localized.resolvedText, '這是顱腦爆裂。');
+    assert.equal(localized.text, localized.resolvedText);
+    assert.equal(localized.params[0].resolvedValue, zhName);
+    assert.equal(localized.sha256, digest(localized.text));
+    assert.equal(official.segments.map(segment => segment.text).join(''), enText);
+    assert.equal(localized.segments.map(segment => segment.text).join(''), zhText);
+
+    await repinTechnicalClaimTarget(copiedRoot, 'fixture:claim:smite-damage', 'fixture:skill:smite', { linkTermToClaim: true });
+    record.entityRef = 'fixture:blessing:sample';
+    await writeFile(authoringPath, jsonBytes(authoring));
+    const blessingResult = await buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'blessing-out') });
+    const blessings = JSON.parse(await readFile(path.join(tempRoot, 'blessing-out', 'data', blessingResult.dataRevision, 'blessings.json'), 'utf8'));
+    const blessingManifest = JSON.parse(await readFile(path.join(tempRoot, 'blessing-out', blessingResult.manifestPath), 'utf8'));
+    const blessingPresentation = blessings.records.find(item => item.recordId === record.recordId);
+    assert.equal(blessingPresentation.payload.official.localizations['zh-TW'].resolvedText, '這是顱腦爆裂。');
+    assert.ok(blessingManifest.files.find(file => file.kind === 'blessings').dependencies.includes('skills'));
+    assert.deepEqual(blessingManifest.files.find(file => file.kind === 'blessings').dependencies, ['skills', 'weapons', 'terms']);
+    assert.deepEqual(blessingManifest.files.find(file => file.kind === 'skills').dependencies, ['terms']);
+    assert.deepEqual(blessingManifest.files.find(file => file.kind === 'terms').dependencies, ['skills']);
+    assert.deepEqual(blessingManifest.files.find(file => file.kind === 'weapons').dependencies, ['terms']);
+    assert.deepEqual(blessingManifest.files.find(file => file.kind === 'game-changes').dependencies, ['skills']);
+
+  });
+});
+
+// Scenario: a native official TC localization points to a missing Web-owned source identity.
+// Purpose: a hash alone cannot replace owner-checked locale references or allow an unresolved official record into output.
+test('UnitT13_native-official-localization-rejects-dangling-locale-source', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyBuildInputs(copiedRoot);
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const english = 'Original official text.';
+    const englishDigest = sha256(Buffer.from(english));
+    Object.assign(authoring.records[0].payload.official, {
+      sourceHash: '1234abcd',
+      sourceText: english,
+      sourceTextSha256: englishDigest,
+      segments: [{ segmentId: 'literal-en', kind: 'literal', text: english, sha256: englishDigest }],
+      params: []
+    });
+    delete authoring.records[0].payload.official.resolvedText;
+    delete authoring.records[0].payload.official.resolvedTextSha256;
+    authoring.records[0].payload.official.localizations['zh-TW'] = {
+      origin: 'official',
+      sourceRef: 'web:official:missing-tc-string',
+      sourceLocale: 'zh-TW',
+      resource: 'skills/talents',
+      sourceHash: '681e4980',
+      key: null,
+      occurrence: 1,
+      sourceText: '原始官方文字。',
+      sourceTextSha256: sha256(Buffer.from('原始官方文字。')),
+      segments: [{ segmentId: 'literal', kind: 'literal', text: '原始官方文字。', sha256: sha256(Buffer.from('原始官方文字。')) }],
+      params: []
+    };
+    await writeFile(authoringPath, jsonBytes(authoring));
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'out') }),
+      /Web-owned registry|unresolved Web-owned sourceRef|sourceRefs/i
+    );
+  });
+});
+
+// Scenario: a fixed public Source pin and official EN/TC strings compile into one pending shared package.
+// Purpose: real representative claims resolve only their matching native description parameters and all cross-domain references close.
+test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-references', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyCurrentInputs(copiedRoot);
+
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const version = JSON.parse(await readFile(path.join(outputRoot, 'version.json'), 'utf8'));
+    const manifest = JSON.parse(await readFile(path.join(outputRoot, result.manifestPath), 'utf8'));
+    const receipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const domains = Object.fromEntries(await Promise.all(domainKinds.map(async kind => [
+      kind,
+      JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, kind + '.json'), 'utf8'))
+    ])));
+    const find = (kind, recordId) => domains[kind].records.find(record => record.recordId === recordId);
+    const skill = find('skills', 'web:presentation:psyker-brain-burst-improved');
+    const blessing = find('blessings', 'web:presentation:chainaxe-p1-movement-speed');
+    const weapon = find('weapons', 'web:presentation:chainaxe-p1-m1');
+
+    assert.equal(manifest.source.commit, '83fdd201f67c6c490f32832419ea61353d7066d1');
+    assert.equal(manifest.source.sourceRevision, 'b48a8e6dcf61dcfbd8ca4ea8a89ebd636216c70907d82bd9fe6587b19c31851e');
+    assert.equal(version.package_kind, 'pending-preview');
+    assert.equal(version.game_releases[0].content_version, '0.0.3');
+    assert.equal(receipt.fixtureOnly, false);
+    assert.equal(receipt.publicationEligible, false);
+    assert.equal(receipt.formalPublishAllowed, false);
+    assert.equal(receipt.candidatePreviewOnly, true);
+    assert.equal(domains['game-changes'].records.length, 0);
+
+    assert.equal(skill.payload.official.sourceText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of {talent_old:%s} dealing {damage:%s} Damage.');
+    assert.equal(skill.payload.official.localizations['zh-TW'].sourceText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成{damage:%s}傷害的{talent_old:%s}的加強版。');
+    assert.equal(skill.payload.official.resolvedText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of Brain Burst dealing +50% Damage.');
+    assert.equal(skill.payload.official.localizations['zh-TW'].resolvedText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成+50%傷害的顱腦爆裂的加強版。');
+    assert.equal(blessing.payload.official.resolvedText, '+17% Movement Speed for 2s on Weapon Special Activation.');
+    assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+17%移動速度，持續2秒。');
+    assert.equal(weapon.payload.name, '突擊鏈斧');
+    assert.equal(blessing.payload.name, '提速');
+    assert.equal(skill.reviewState, 'pending');
+    assert.equal(blessing.reviewState, 'pending');
+    assert.equal(weapon.reviewState, 'pending');
+
+    for (const reference of manifest.source.references) {
+      if (!reference.repository) continue;
+      assert.equal(reference.repository, 'https://github.com/Aussiemon/Darktide-Source-Code');
+      assert.match(reference.commit, /^[a-f0-9]{40}$/);
+      assert.equal(reference.snapshot.commit, reference.commit);
+      assert.equal(reference.path.includes('\\'), false);
+      assert.equal(/^(?:[A-Za-z]:|\/)/.test(reference.path), false);
+      assert.equal(Object.hasOwn(reference, 'officialName'), false);
+    }
+    const dependencies = Object.fromEntries(manifest.files
+      .filter(file => domainKinds.includes(file.kind))
+      .map(file => [file.kind, file.dependencies]));
+    assert.deepEqual(dependencies.skills, ['blessings', 'terms']);
+    assert.deepEqual(dependencies.blessings, ['skills', 'weapons']);
+    assert.deepEqual(dependencies.weapons, []);
+    assert.deepEqual(dependencies.terms, ['skills']);
+    assert.deepEqual(dependencies['game-changes'], []);
+
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const psykerRecord = authoring.records.find(record => record.recordId === skill.recordId);
+    psykerRecord.payload.official.params.find(param => param.name === 'damage').bindingRef = 'darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent';
+    await writeFile(authoringPath, jsonBytes(authoring));
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'foreign-claim'), mode: 'candidate-preview' }),
+      /signed-percent requires a code-derived official format value|fixed property, unit, basis, or entity kind|does not target this presentation/
+    );
+  });
+});
+
+// Scenario: a repinned same-target percent claim describes a runtime outcome rather than official text formatting.
+// Purpose: a candidate cannot bind a final/game-tested damage percentage into a source template placeholder.
+test('UnitT15_native-percent-binding-requires-code-derived-official-formatter-claim', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyCurrentInputs(copiedRoot);
+    await updatePinnedTechnical(copiedRoot, technical => {
+      const claim = technical.records.find(record => record.recordId === 'darktide:claim:psyker:brain-burst-improved-description-display-percent');
+      claim.payload.basis = 'game-tested';
+    });
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'wrong-basis'), mode: 'candidate-preview' }),
+      /signed-percent requires a code-derived official format value|fixed property, unit, basis, or entity kind/
+    );
+
+    await copyCurrentInputs(copiedRoot);
+    await updatePinnedTechnical(copiedRoot, technical => {
+      const claim = technical.records.find(record => record.recordId === 'darktide:claim:psyker:brain-burst-improved-description-display-percent');
+      claim.payload.property = 'combat.final_damage_percent';
+    });
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'wrong-property'), mode: 'candidate-preview' }),
+      /signed-percent requires a code-derived official format value|fixed property, unit, basis, or entity kind/
+    );
+  });
+});
+
+// Scenario: a same-target raw 1.5 ratio is bound to the official damage token as a plain number.
+// Purpose: only the Source-derived formatter claim may populate this official display parameter; raw mechanic values cannot bypass the display binding contract.
+test('UnitT16_native-raw-ratio-cannot-bypass-official-display-binding', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyCurrentInputs(copiedRoot);
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const skill = authoring.records.find(record => record.recordId === 'web:presentation:psyker-brain-burst-improved');
+    const rawClaimId = 'darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier';
+    const nativeOfficial = skill.payload.official;
+    for (const entry of [nativeOfficial, nativeOfficial.localizations['zh-TW']]) {
+      const damage = entry.params.find(param => param.name === 'damage');
+      damage.bindingRef = rawClaimId;
+      damage.format = 'plain-number';
+    }
+    await writeFile(authoringPath, jsonBytes(authoring));
+
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'raw-ratio'), mode: 'candidate-preview' }),
+      /plain-number is limited to the fixed code-observed duration parameter/
+    );
+  });
+});
+
+// Scenario: a real candidate weapon name marks its English root template as zh-TW while keeping the existing locale references.
+// Purpose: the native localization contract always requires English at the root and a separate official zh-TW branch.
+test('UnitT17_native-official-root-template-must-remain-english', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyCurrentInputs(copiedRoot);
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const weapon = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m1');
+    weapon.payload.official.sourceLocale = 'zh-TW';
+    await writeFile(authoringPath, jsonBytes(authoring));
+
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'wrong-root-locale'), mode: 'candidate-preview' }),
+      /sourceLocale does not match its official locale/
+    );
+  });
+});
+
+async function makePendingCandidateInputs(copiedRoot) {
+  const releaseId = 'candidate-test-release';
+  const sourceRoot = path.join(copiedRoot, 'content', 'w01', 'source');
+  const technicalPath = path.join(sourceRoot, 'technical.json');
+  const changesPath = path.join(sourceRoot, 'game-changes.json');
+  const sourceManifestPath = path.join(sourceRoot, 'source-manifest.json');
+  const lockPath = path.join(copiedRoot, 'source.lock.json');
+  const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+  const technical = JSON.parse(await readFile(technicalPath, 'utf8'));
+  const changes = JSON.parse(await readFile(changesPath, 'utf8'));
+  const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+  const sourceManifest = JSON.parse(await readFile(sourceManifestPath, 'utf8'));
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  for (const item of [technical, changes, authoring, sourceManifest, lock]) item.gameReleaseId = releaseId;
+  technical.gameVersion = '1.13.2';
+  sourceManifest.gameVersion = '1.13.2';
+  lock.gameVersion = '1.13.2';
+  for (const reference of [...technical.sourceRefs, ...authoring.references]) {
+    if (Object.hasOwn(reference, 'fixtureOnly')) reference.fixtureOnly = false;
+  }
+  for (const record of technical.records) record.gameReleaseId = releaseId;
+  for (const change of technical.gameChanges) change.gameReleaseId = releaseId;
+  for (const change of changes.changes) change.gameReleaseId = releaseId;
+  for (const record of authoring.records) {
+    record.gameReleaseId = releaseId;
+    for (const erratum of record.payload.errata ?? []) erratum.gameReleaseId = releaseId;
+  }
+  for (const announcement of authoring.announcements) announcement.gameReleaseId = releaseId;
+  for (const item of [technical, changes, authoring, sourceManifest]) item.fixtureOnly = false;
+  sourceManifest.publicationEligible = false;
+  technical.publicationEligible = false;
+  changes.publicationEligible = false;
+  authoring.fixtureOnly = false;
+
+  for (const [name, value] of [['technical.json', technical], ['game-changes.json', changes]]) {
+    const bytes = jsonBytes(value);
+    await writeFile(path.join(sourceRoot, name), bytes);
+    const row = sourceManifest.files.find(file => file.path === name);
+    row.sha256 = sha256(bytes);
+    row.sizeBytes = bytes.byteLength;
+  }
+  const manifestBytes = jsonBytes(sourceManifest);
+  await writeFile(sourceManifestPath, manifestBytes);
+  lock.manifestSha256 = sha256(manifestBytes);
+  await writeFile(lockPath, jsonBytes(lock));
+  await writeFile(authoringPath, jsonBytes(authoring));
+}

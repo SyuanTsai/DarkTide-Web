@@ -41,12 +41,12 @@ test('UnitT01_workflow-deploys-only-the-guarded-preview-worker', () => {
   assert.ok(steps.some(step => step.name === 'Verify the deployed preview and write a deployment receipt'));
 });
 
-// Scenario: rollback candidate B starts from an empty runner and must reconstruct the exact published R2 A before restoring R1.
-// Purpose: prevent B from rebuilding R2 with its own commit identity and dropping A's immutable data URLs.
-test('UnitT02_workflow-rebuilds-exact-published-r2-before-fixed-r1-rollback', () => {
+// Scenario: the pending 0.0.3 candidate starts from an empty runner with historical preview URLs.
+// Purpose: rebuild exact R1 and A inputs, then compile and verify the candidate before any preview-only deploy.
+test('UnitT02_workflow-builds-pending-candidate-after-pinned-history', () => {
   const steps = workflow.jobs['isolated-preview'].steps;
   const priorR1Checkout = steps.find(step => step.name === 'Check out the exact pinned R1 preview source');
-  const priorR2Checkout = steps.find(step => step.name === 'Check out the exact published R2 A rollback source');
+  const priorR2Checkout = steps.find(step => step.name === 'Check out the exact published R2 A data source');
   const baselineBuild = steps.findIndex(step => step.name === 'Rebuild the pinned production baseline data');
   const r1Build = steps.findIndex(step => step.name === 'Rebuild exact R1 package into the candidate output');
   const r1Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in R1 package');
@@ -54,13 +54,14 @@ test('UnitT02_workflow-rebuilds-exact-published-r2-before-fixed-r1-rollback', ()
   const r2Build = steps.findIndex(step => step.name === 'Rebuild exact published R2 A package into the candidate output');
   const r2Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in exact R2 A package');
   const r2Verify = steps.findIndex(step => step.name === 'Verify exact published R2 A and retained R1 and production data revisions');
-  const rollback = steps.find(step => step.name === 'Restore fixed R1 from exact published R2 A');
-  const rollbackVerify = steps.findIndex(step => step.name === 'Verify fixed R1 rollback and preserved R2 and production URLs');
+  const candidateBuild = steps.find(step => step.name === 'Build current pending W01 candidate preview');
+  const candidateRetain = steps.findIndex(step => step.name === 'Retain the pinned baseline in the pending candidate');
+  const candidateVerify = steps.findIndex(step => step.name === 'Verify the pending candidate and retained historical data URLs');
   const upload = steps.findIndex(step => step.name === 'Upload only the isolated W01 preview artifact');
   const deploy = steps.findIndex(step => step.name === 'Deploy only the fixed W01 preview worker');
   const deploymentReceipt = steps.findIndex(step => step.name === 'Verify the deployed preview and write a deployment receipt');
   const receiptUpload = steps.findIndex(step => step.name === 'Upload the public preview deployment receipt');
-  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, steps.indexOf(rollback), rollbackVerify, upload, deploy, deploymentReceipt, receiptUpload];
+  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, steps.indexOf(candidateBuild), candidateRetain, candidateVerify, upload, deploy, deploymentReceipt, receiptUpload];
 
   assert.equal(priorR1Checkout.with.ref, '872bd72bad255d40af62329b8ffe97a357935275');
   assert.equal(priorR2Checkout.with.ref, 'a7fabea66f56cd5c8236b6e84a3f6c6586175840');
@@ -71,12 +72,13 @@ test('UnitT02_workflow-rebuilds-exact-published-r2-before-fixed-r1-rollback', ()
   assert.ok(baselineBuild < r1Build);
   assert.ok(r1Build < r1Retain && r1Retain < r1Verify);
   assert.ok(r1Verify < r2Build && r2Build < r2Retain && r2Retain < r2Verify);
-  assert.ok(r2Verify < steps.indexOf(rollback) && steps.indexOf(rollback) < rollbackVerify);
-  assert.ok(rollbackVerify < upload && upload < deploy);
-  assert.equal(rollback['working-directory'], 'web');
-  assert.match(rollback.run, /--expected-r2-commit a7fabea66f56cd5c8236b6e84a3f6c6586175840/);
-  assert.match(rollback.run, /--source-root \.\.\/prior-r1/);
-  assert.match(rollback.run, /--baseline-root \.\.\/baseline/);
+  assert.ok(r2Verify < steps.indexOf(candidateBuild) && steps.indexOf(candidateBuild) < candidateRetain);
+  assert.ok(candidateRetain < candidateVerify && candidateVerify < upload && upload < deploy);
+  assert.equal(candidateBuild['working-directory'], 'web');
+  assert.match(candidateBuild.run, /w01:build -- --candidate-preview --output dist-w01/);
+  assert.match(steps[candidateRetain].run, /--baseline-root \.\.\/baseline --output dist-w01/);
+  assert.match(steps[candidateVerify].run, /w01:verify -- dist-w01/);
+  assert.equal(steps.some(step => step.name === 'Restore fixed R1 from exact published R2 A'), false);
+  assert.equal(steps.some(step => JSON.stringify(step).includes('w01:rollback-r1')), false);
   assert.ok(deploy < deploymentReceipt && deploymentReceipt < receiptUpload);
-  assert.equal(steps.some(step => step.name === 'Build the R2 isolated W01 fixture preview'), false);
 });

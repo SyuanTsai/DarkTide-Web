@@ -54,6 +54,11 @@ const SOURCE_REQUIRED_PAYLOAD_KEYS = {
 };
 const RECORD_STATES = new Set(['draft', 'pending', 'approved', 'rejected', 'stale']);
 const DETAIL_SECTION_KEYS = ['effects', 'conditions', 'calculation', 'notes', 'extra'];
+const NATIVE_NUMERIC_PARAMETER_CONTRACTS = {
+  damage: { property: 'description.format_values.damage.display_percent', format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'skill' },
+  movement_speed: { property: 'description.format_values.movement_speed.defined_tier_1_display_percent', format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'blessing' },
+  time: { property: 'template.buff_override.active_duration', format: 'plain-number', unit: 's', basis: 'code-observed', entityKind: 'blessing' }
+};
 const W01_RUNTIME_OUTPUT_PATHS = new Set(['_headers', 'index.html', 'preview.css', 'preview.js', 'preview.json', 'robots.txt', 'version.json']);
 const CONTENT_VERSION_PATTERN = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
 
@@ -287,25 +292,179 @@ function validateSourceInput(lock, sourceManifest, technical, gameChanges, webAu
     fail('game-changes.json metadata does not match the pinned Source package');
   }
   if (JSON.stringify(technical.gameChanges) !== JSON.stringify(gameChanges.changes)) fail('technical.json and game-changes.json contain different change records');
-  if (webAuthoring.schemaVersion !== '1.0.0' || webAuthoring.gameReleaseId !== lock.gameReleaseId || webAuthoring.fixtureOnly !== true) {
-    fail('Web authoring input must be the pinned W01 fixture-only package');
+  if (webAuthoring.schemaVersion !== '1.0.0' || webAuthoring.gameReleaseId !== lock.gameReleaseId) {
+    fail('Web authoring input metadata does not match source.lock.json');
   }
+  requireBoolean(webAuthoring.fixtureOnly, 'Web authoring fixtureOnly');
 }
 
-function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceReferences, gameReleaseId) {
+function validateOfficialIdentity(value, label, expectedLocale, record, referenceIds) {
+  requireString(value.sourceRef, label + '.sourceRef');
+  if (!referenceIds.has(value.sourceRef) || !record.sourceRefs.includes(value.sourceRef)) {
+    fail(label + '.sourceRef must be a Web-owned registry reference listed by the record');
+  }
+  if (value.sourceLocale !== expectedLocale) fail(label + '.sourceLocale does not match its official locale');
+  requireString(value.resource, label + '.resource');
+  if (typeof value.sourceHash !== 'string' || !/^[a-f0-9]{8}$/.test(value.sourceHash)) {
+    fail(label + '.sourceHash must be the exact 8-character lowercase source hash');
+  }
+  if (value.key !== null) requireString(value.key, label + '.key');
+  if (!Number.isInteger(value.occurrence) || value.occurrence < 1) fail(label + '.occurrence must be a positive locale-local ordinal');
+  requireString(value.sourceText, label + '.sourceText');
+  if (value.sourceTextSha256 !== sha256(Buffer.from(value.sourceText, 'utf8'))) fail(label + '.sourceText hash mismatch');
+}
+
+function resolveOfficialParam(param, label, locale, record, referenceById, sourceRecordById, sourceKindById) {
+  assertExactKeys(param, ['name', 'placeholder', 'status', 'bindingRef', 'format'], label);
+  if (typeof param.name !== 'string' || !/^[a-z][a-z0-9_]*$/.test(param.name)) fail(label + '.name is invalid');
+  if (param.placeholder !== '{' + param.name + ':%s}') fail(label + '.placeholder does not match its parameter name');
+  if (param.status !== 'bound') fail(label + ' is unbound; this official candidate cannot be compiled');
+  requireString(param.bindingRef, label + '.bindingRef');
+  if (!['official-name', 'plain-number', 'signed-percent'].includes(param.format)) fail(label + '.format is unsupported');
+
+  let resolvedValue;
+  if (param.format === 'official-name') {
+    const reference = referenceById.get(param.bindingRef);
+    if (!reference?.officialName) fail(label + '.bindingRef must identify a Web-owned officialName');
+    if (!record.sourceRefs.includes(param.bindingRef)) fail(label + '.bindingRef must be listed by the Web record');
+    if (reference.officialName.sourceLocale !== locale) fail(label + '.officialName locale does not match the template locale');
+    resolvedValue = reference.officialName.text;
+  } else {
+    const bindingContract = NATIVE_NUMERIC_PARAMETER_CONTRACTS[param.name];
+    if (!bindingContract) fail(label + ' does not match the fixed W01 numeric parameter contract');
+    const claim = sourceRecordById.get(param.bindingRef);
+    if (!claim || sourceKindById.get(param.bindingRef) !== 'claim') fail(label + '.bindingRef must identify a Source claim');
+    if (claim.gameReleaseId !== record.gameReleaseId || claim.payload.value.status !== 'known' ||
+        claim.payload.basis === 'unknown') fail(label + '.bindingRef is not a known claim for this game release');
+    const value = claim.payload.value;
+    if (typeof value.decimal !== 'string') fail(label + '.bindingRef claim must be a scalar decimal');
+    if (param.format === 'signed-percent') {
+      if (claim.payload.basis !== 'code-derived' ||
+          !claim.payload.property.startsWith('description.format_values.' + param.name + '.') || value.unit !== 'percent') {
+        fail(label + '.signed-percent requires a code-derived official format value with unit percent');
+      }
+    } else if (param.format === 'plain-number') {
+      const fixedDuration = param.name === 'time' && claim.payload.property === 'template.buff_override.active_duration' &&
+        claim.payload.basis === 'code-observed' && value.unit === 's';
+      if (!fixedDuration) fail(label + '.plain-number is limited to the fixed code-observed duration parameter');
+      if (value.unit === 'percent' || value.unit === 'ratio') fail(label + '.plain-number cannot format percent or ratio values');
+    }
+    if (param.format !== bindingContract.format) fail(label + ' does not match the fixed W01 numeric parameter contract');
+    const entity = sourceRecordById.get(record.entityRef);
+    if (entity?.kind !== bindingContract.entityKind || claim.payload.property !== bindingContract.property ||
+        claim.payload.basis !== bindingContract.basis || claim.payload.value.unit !== bindingContract.unit) {
+      fail(label + '.bindingRef claim does not match its fixed property, unit, basis, or entity kind');
+    }
+    const relatedClaim = entity.kind === 'skill'
+      ? claim.payload.targetRef === record.entityRef
+      : entity.payload.variantRefs.includes(claim.payload.targetRef);
+    if (!relatedClaim) fail(label + '.bindingRef claim does not target this presentation');
+    if (param.format === 'signed-percent') {
+      const isZero = /^-?0(?:\.0+)?$/.test(value.decimal);
+      resolvedValue = (value.decimal.startsWith('-') || isZero ? value.decimal : '+' + value.decimal) + '%';
+    } else {
+      resolvedValue = value.decimal;
+    }
+  }
+  if (/[{}]/.test(resolvedValue)) fail(label + '.resolvedValue may not contain template braces');
+  return { ...param, resolvedValue };
+}
+
+function resolveOfficialLocale(entry, label, locale, record, referenceIds, referenceById, sourceRecordById, sourceKindById, includeOrigin) {
+  const identityKeys = ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params'];
+  assertExactKeys(entry, [...(includeOrigin ? ['origin'] : []), ...identityKeys], label);
+  if (includeOrigin && entry.origin !== 'official') fail(label + '.origin must be official');
+  validateOfficialIdentity(entry, label, locale, record, referenceIds);
+  requireArray(entry.segments, label + '.segments');
+  if (entry.segments.length === 0) fail(label + '.segments must not be empty');
+  const segmentIds = new Set();
+  for (const [index, segment] of entry.segments.entries()) {
+    const segmentLabel = label + '.segments[' + index + ']';
+    assertExactKeys(segment, ['segmentId', 'kind', 'text', 'sha256'], segmentLabel);
+    requireString(segment.segmentId, segmentLabel + '.segmentId');
+    if (!['literal', 'template-placeholder'].includes(segment.kind)) fail(segmentLabel + '.kind is unsupported');
+    requireString(segment.text, segmentLabel + '.text');
+    if (segment.sha256 !== sha256(Buffer.from(segment.text, 'utf8'))) fail(segmentLabel + ' hash mismatch');
+    if (segmentIds.has(segment.segmentId)) fail(segmentLabel + ' has a duplicate segmentId');
+    segmentIds.add(segment.segmentId);
+  }
+  if (entry.segments.map(segment => segment.text).join('') !== entry.sourceText) fail(label + '.segments do not preserve sourceText');
+  requireArray(entry.params, label + '.params');
+  const paramsByName = new Map();
+  for (const [index, param] of entry.params.entries()) {
+    const resolved = resolveOfficialParam(param, label + '.params[' + index + ']', locale, record, referenceById, sourceRecordById, sourceKindById);
+    if (paramsByName.has(resolved.name)) fail(label + '.params contains a duplicate parameter name');
+    paramsByName.set(resolved.name, resolved);
+  }
+  const usedNames = new Set();
+  for (const [index, segment] of entry.segments.entries()) {
+    if (segment.kind === 'literal') {
+      if (/\{[a-z][a-z0-9_]*:%s\}/.test(segment.text)) fail(label + '.literal segment contains an unresolved template placeholder');
+      continue;
+    }
+    const match = /^\{([a-z][a-z0-9_]*):%s\}$/.exec(segment.text);
+    if (!match) fail(label + '.segments[' + index + '] has an invalid template placeholder');
+    const param = paramsByName.get(match[1]);
+    if (!param || param.placeholder !== segment.text) fail(label + '.template placeholder has no matching bound parameter');
+    usedNames.add(match[1]);
+  }
+  if (usedNames.size !== paramsByName.size) fail(label + '.params contains a binding not used by the source template');
+  const resolvedText = entry.segments.map(segment => segment.kind === 'literal' ? segment.text : paramsByName.get(segment.text.slice(1, segment.text.indexOf(':'))).resolvedValue).join('');
+  if (/\{[a-z][a-z0-9_]*:%s\}/.test(resolvedText)) fail(label + '.resolvedText contains an unresolved placeholder');
+  const resolvedTextSha256 = sha256(Buffer.from(resolvedText, 'utf8'));
+  return {
+    ...(includeOrigin ? { origin: entry.origin } : {}),
+    sourceRef: entry.sourceRef,
+    sourceLocale: entry.sourceLocale,
+    resource: entry.resource,
+    sourceHash: entry.sourceHash,
+    key: entry.key,
+    occurrence: entry.occurrence,
+    sourceText: entry.sourceText,
+    sourceTextSha256: entry.sourceTextSha256,
+    segments: entry.segments,
+    params: [...paramsByName.values()],
+    resolvedText,
+    resolvedTextSha256,
+    ...(includeOrigin ? { text: resolvedText, sha256: resolvedTextSha256 } : {})
+  };
+}
+
+function compileNativeOfficial(official, label, record, referenceIds, referenceById, sourceRecordById, sourceKindById) {
+  assertExactKeys(official, ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params', 'localizations'], label);
+  assertExactKeys(official.localizations, ['zh-TW'], label + '.localizations');
+  const english = resolveOfficialLocale({
+    sourceRef: official.sourceRef,
+    sourceLocale: official.sourceLocale,
+    resource: official.resource,
+    sourceHash: official.sourceHash,
+    key: official.key,
+    occurrence: official.occurrence,
+    sourceText: official.sourceText,
+    sourceTextSha256: official.sourceTextSha256,
+    segments: official.segments,
+    params: official.params
+  }, label, 'en', record, referenceIds, referenceById, sourceRecordById, sourceKindById, false);
+  const traditionalChinese = resolveOfficialLocale(official.localizations['zh-TW'], label + '.localizations.zh-TW', 'zh-TW', record, referenceIds, referenceById, sourceRecordById, sourceKindById, true);
+  return { ...english, localizations: { 'zh-TW': traditionalChinese } };
+}
+
+function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceReferences, gameReleaseId, sourceRecordById) {
   assertExactKeys(authoring, ['schemaVersion', 'fixtureOnly', 'gameReleaseId', 'references', 'records', 'announcements'], 'web-authoring.json');
-  if (authoring.schemaVersion !== '1.0.0' || authoring.fixtureOnly !== true || authoring.gameReleaseId !== gameReleaseId) {
-    fail('Web authoring input is not a compatible fixture package');
+  if (authoring.schemaVersion !== '1.0.0' || typeof authoring.fixtureOnly !== 'boolean' || authoring.gameReleaseId !== gameReleaseId) {
+    fail('Web authoring input is not a compatible W01 package');
   }
   requireArray(authoring.records, 'Web authoring records');
   requireArray(authoring.announcements, 'Web authoring announcements');
-  const references = validateSourceReferenceClosure([], authoring.references);
+  const references = validateSourceReferenceClosure([], authoring.references, 'web');
   const referenceIds = new Set(references.map(reference => reference.sourceId));
+  const referenceById = new Map(references.map(reference => [reference.sourceId, reference]));
   for (const reference of references) {
     if (sourceReferences.some(source => source.sourceId === reference.sourceId)) fail('source reference has conflicting owners: ' + reference.sourceId);
   }
   const seen = new Set();
   const recordEnvelopeKeys = ['recordId', 'owner', 'kind', 'gameReleaseId', 'entityRef', 'locale', 'sourceRefs', 'payload', 'reviewState'];
+  let usesNativeOfficialLocalizations = false;
   for (const [index, record] of authoring.records.entries()) {
     const label = 'Web authoring record[' + index + ']';
     assertExactKeys(record, recordEnvelopeKeys, label);
@@ -330,6 +489,10 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
       }
       if (Object.hasOwn(record.payload, 'official')) {
         const official = record.payload.official;
+        if (official?.localizations?.['zh-TW']?.origin === 'official') {
+          record.payload.official = compileNativeOfficial(official, label + '.official', record, referenceIds, referenceById, sourceRecordById, sourceKindById);
+          usesNativeOfficialLocalizations = true;
+        } else {
         assertExactKeys(official, ['sourceRef', 'sourceLocale', 'resource', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params', 'resolvedText', 'resolvedTextSha256', 'localizations'], label + '.official');
         if (!referenceIds.has(official.sourceRef) || !record.sourceRefs.includes(official.sourceRef)) fail(label + '.official.sourceRef must use the Web-owned registry and record sourceRefs');
         requireString(official.sourceLocale, label + '.official.sourceLocale');
@@ -361,6 +524,7 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
         if (localization.origin !== 'faithful-translation') fail(label + '.official zh-TW text must be marked as a faithful translation');
         requireString(localization.text, label + '.official.localizations.zh-TW.text');
         if (localization.sha256 !== sha256(Buffer.from(localization.text, 'utf8'))) fail(label + '.official zh-TW hash mismatch');
+        }
         requireArray(record.payload.errata, label + '.errata');
         for (const [erratumIndex, erratum] of record.payload.errata.entries()) {
           const erratumLabel = label + '.errata[' + erratumIndex + ']';
@@ -430,19 +594,57 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
     if (seen.has(announcement.recordId)) fail('duplicate Web authoring recordId ' + announcement.recordId);
     seen.add(announcement.recordId);
   }
-  return { records: authoring.records, announcements: authoring.announcements, references };
+  return { records: authoring.records, announcements: authoring.announcements, references, usesNativeOfficialLocalizations };
 }
 
-function validateSourceReferenceClosure(sourceRecords, sourceRefs) {
+function validateSourceReferenceClosure(sourceRecords, sourceRefs, owner) {
   const registry = new Map();
   for (const [index, sourceRef] of sourceRefs.entries()) {
-    const label = 'Source reference[' + index + ']';
+    const label = (owner === 'source' ? 'Source' : 'Web') + ' reference[' + index + ']';
     assertPlainObject(sourceRef, label);
-    const keys = ['sourceId', ...(Object.hasOwn(sourceRef, 'fixtureOnly') ? ['fixtureOnly'] : []), ...(Object.hasOwn(sourceRef, 'safeSummary') ? ['safeSummary'] : [])];
+    const locatorKeys = ['repository', 'commit', 'path', 'snapshot'];
+    const hasLocator = locatorKeys.some(key => Object.hasOwn(sourceRef, key));
+    if (owner !== 'source' && hasLocator) fail(label + ' may not contain Source-owned repository locators');
+    if (owner === 'source' && Object.hasOwn(sourceRef, 'officialName')) fail(label + ' may not contain Web-owned officialName data');
+    if (hasLocator) {
+      if (owner !== 'source' || locatorKeys.some(key => !Object.hasOwn(sourceRef, key))) {
+        fail(label + ' public locator must contain repository, commit, path, and snapshot together');
+      }
+      if (sourceRef.repository !== 'https://github.com/Aussiemon/Darktide-Source-Code') {
+        fail(label + '.repository is not an allowlisted public Source repository');
+      }
+      if (typeof sourceRef.commit !== 'string' || !/^[a-f0-9]{40}$/.test(sourceRef.commit)) {
+        fail(label + '.commit must be a full lowercase Git SHA');
+      }
+      safeRelativePath(sourceRef.path, label + '.path');
+      assertExactKeys(sourceRef.snapshot, ['commit'], label + '.snapshot');
+      if (sourceRef.snapshot.commit !== sourceRef.commit) fail(label + '.snapshot.commit must match its fixed repository commit');
+      if (sourceRef.fixtureOnly !== false) fail(label + ' public locator must be explicitly non-fixture');
+      requireString(sourceRef.safeSummary, label + '.safeSummary');
+    }
+    const keys = [
+      'sourceId',
+      ...(Object.hasOwn(sourceRef, 'fixtureOnly') ? ['fixtureOnly'] : []),
+      ...(Object.hasOwn(sourceRef, 'safeSummary') ? ['safeSummary'] : []),
+      ...(owner === 'source' && hasLocator ? locatorKeys : []),
+      ...(owner === 'web' && Object.hasOwn(sourceRef, 'officialName') ? ['officialName'] : [])
+    ];
     assertExactKeys(sourceRef, keys, label);
     requireString(sourceRef.sourceId, label + '.sourceId');
     if ('fixtureOnly' in sourceRef) requireBoolean(sourceRef.fixtureOnly, label + '.fixtureOnly');
     if ('safeSummary' in sourceRef) requireString(sourceRef.safeSummary, label + '.safeSummary');
+    if ('officialName' in sourceRef) {
+      if (owner !== 'web') fail(label + '.officialName is only valid in the Web-owned registry');
+      const officialName = sourceRef.officialName;
+      assertExactKeys(officialName, ['sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'text', 'sha256'], label + '.officialName');
+      if (!['en', 'zh-TW'].includes(officialName.sourceLocale)) fail(label + '.officialName.sourceLocale is unsupported');
+      requireString(officialName.resource, label + '.officialName.resource');
+      if (typeof officialName.sourceHash !== 'string' || !/^[a-f0-9]{8}$/.test(officialName.sourceHash)) fail(label + '.officialName.sourceHash must be 8 lowercase hex characters');
+      if (officialName.key !== null) requireString(officialName.key, label + '.officialName.key');
+      if (!Number.isInteger(officialName.occurrence) || officialName.occurrence < 1) fail(label + '.officialName.occurrence must be a positive locale-local ordinal');
+      requireString(officialName.text, label + '.officialName.text');
+      if (officialName.sha256 !== sha256(Buffer.from(officialName.text, 'utf8'))) fail(label + '.officialName hash mismatch');
+    }
     if (registry.has(sourceRef.sourceId)) fail('duplicate Source reference ' + sourceRef.sourceId);
     registry.set(sourceRef.sourceId, sourceRef);
   }
@@ -500,6 +702,50 @@ function validateDomainReferences(records, kindById) {
       default: fail(record.recordId + ' has an unsupported shared kind ' + record.kind);
     }
   }
+}
+
+function sharedRecordReferences(record, sourceRecordById) {
+  const references = [];
+  const add = value => {
+    if (typeof value === 'string') references.push(value);
+    else if (Array.isArray(value)) references.push(...value.filter(item => typeof item === 'string'));
+  };
+  const payload = record.payload ?? {};
+  switch (record.kind) {
+    case 'skill': add(payload.termRef); add(payload.claimRefs); break;
+    case 'claim': add(payload.targetRef); add(payload.evidenceRefs); break;
+    case 'blessing': add(payload.variantRefs); break;
+    case 'blessing-variant': add(payload.blessingRef); add(payload.weaponRefs); break;
+    case 'weapon': add(payload.statRefs); add(payload.armorRefs); add(payload.attackProfileRefs); break;
+    case 'stat-definition': add(payload.curveRef); break;
+    case 'term': add(payload.claimRefs); break;
+    case 'presentation':
+      add(record.entityRef);
+      for (const section of Object.values(payload.detailSections ?? {})) {
+        for (const item of section) { add(item.claimRefs); add(item.termRef); }
+      }
+      for (const erratum of payload.errata ?? []) { add(erratum.claimRef); add(erratum.evidenceRefs); }
+      for (const entry of [payload.official, payload.official?.localizations?.['zh-TW']]) {
+        for (const param of entry?.params ?? []) if (sourceRecordById.has(param.bindingRef)) add(param.bindingRef);
+      }
+      break;
+    case 'term-localization': add(record.entityRef); break;
+    case 'game-change': add(payload.targetRef); add(payload.evidenceRefs); break;
+    default: break;
+  }
+  return references;
+}
+
+function dependenciesForDomain(kind, records, domainById, sourceRecordById, useNativeDependencies) {
+  if (!useNativeDependencies) return [...DOMAIN_DEPENDENCIES[kind]];
+  const dependencies = new Set();
+  for (const record of records) {
+    for (const reference of sharedRecordReferences(record, sourceRecordById)) {
+      const targetDomain = domainById.get(reference);
+      if (targetDomain && targetDomain !== kind) dependencies.add(targetDomain);
+    }
+  }
+  return DOMAIN_KINDS.filter(domain => dependencies.has(domain));
 }
 
 function currentCommit(repoRoot) {
@@ -587,7 +833,7 @@ async function writeOutputs(outputRoot, files, receipt, previousOutput) {
 export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(repoRoot, 'dist-w01'), mode = 'preview', contentVersion } = {}) {
   repoRoot = path.resolve(repoRoot);
   outputRoot = path.resolve(outputRoot);
-  if (mode !== 'preview' && mode !== 'formal') fail('mode must be preview or formal');
+  if (!['preview', 'candidate-preview', 'formal'].includes(mode)) fail('mode must be preview, candidate-preview, or formal');
   if (outputRoot === path.join(repoRoot, 'dist')) fail('W01 output may not overwrite the production dist directory');
 
   const inputRoot = path.join(repoRoot, 'content', 'w01');
@@ -615,14 +861,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
   }
   validateSourceInput(lock, sourceManifest, technical, sourceGameChanges, webAuthoring);
 
-  if (mode === 'formal') fail('formal publication is blocked: the pinned Source and Web authoring are fixture-only or pending; W01 is a preview compiler');
-  if (sourceManifest.publicationEligible !== true || technical.publicationEligible !== true ||
-      sourceManifest.fixtureOnly || technical.fixtureOnly || webAuthoring.fixtureOnly ||
-      technical.records.some(record => record.reviewState !== 'approved') ||
-      webAuthoring.records.some(record => record.reviewState !== 'approved') ||
-      webAuthoring.announcements.some(record => record.reviewState !== 'approved')) {
-    // The POC deliberately stays publication-ineligible, even when some source rows are approved.
-  }
+  if (mode === 'formal') fail('formal publication is blocked: W01 only builds isolated fixture or pending-candidate previews');
 
   requireArray(technical.records, 'technical.json records');
   requireArray(technical.sourceRefs, 'technical.json sourceRefs');
@@ -633,7 +872,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     validateSourcePayload(record.kind, record.payload, label + '.payload');
     return record;
   });
-  const sourceRefs = validateSourceReferenceClosure(sourceRecords, technical.sourceRefs);
+  const sourceRefs = validateSourceReferenceClosure(sourceRecords, technical.sourceRefs, 'source');
   const sourceIds = new Set();
   const sourceKindById = new Map();
   for (const record of sourceRecords) {
@@ -641,7 +880,24 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     sourceIds.add(record.recordId);
     sourceKindById.set(record.recordId, record.kind);
   }
-  const webInput = validateWebAuthoring(webAuthoring, sourceIds, sourceKindById, sourceRefs, lock.gameReleaseId);
+  const sourceRecordById = new Map(sourceRecords.map(record => [record.recordId, record]));
+  const webInput = validateWebAuthoring(webAuthoring, sourceIds, sourceKindById, sourceRefs, lock.gameReleaseId, sourceRecordById);
+
+  const sourceFlags = [sourceManifest, technical, sourceGameChanges];
+  const allPending = sourceRecords.every(record => record.reviewState === 'pending') &&
+    sourceGameChanges.changes.every(change => change.reviewState === 'pending') &&
+    webInput.records.every(record => record.reviewState === 'pending') &&
+    webInput.announcements.every(record => record.reviewState === 'pending');
+  if (mode === 'preview') {
+    if (sourceFlags.some(input => input.fixtureOnly !== true || input.publicationEligible !== false) || webAuthoring.fixtureOnly !== true) {
+      fail('fixture preview mode requires every pinned owner package to be fixture-only and publication-ineligible');
+    }
+  } else if (sourceFlags.some(input => input.fixtureOnly !== false || input.publicationEligible !== false) || webAuthoring.fixtureOnly !== false || !allPending) {
+    fail('candidate-preview mode requires explicit non-fixture, publication-ineligible inputs with all records pending');
+  } else if (sourceRefs.some(reference => reference.fixtureOnly === true) || webInput.references.some(reference => reference.fixtureOnly === true) ||
+      /^fixture-/i.test(lock.gameReleaseId) || lock.gameVersion === 'fixture-preview') {
+    fail('candidate-preview mode may not contain fixture-owned references or fixture release metadata');
+  }
 
   const baseRecords = [...sourceRecords];
   const records = [...baseRecords, ...webInput.records];
@@ -704,6 +960,8 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     kindById.set(change.recordId, change.kind);
   }
   validateDomainReferences(allSharedRecords, kindById);
+  const domainById = new Map();
+  for (const kind of DOMAIN_KINDS) for (const record of domainRecords[kind]) domainById.set(record.recordId, kind);
 
   const fixtureOnly = sourceManifest.fixtureOnly || technical.fixtureOnly || webAuthoring.fixtureOnly;
   const publicationEligible = false;
@@ -729,7 +987,13 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
   const fileRows = DOMAIN_KINDS.map(kind => {
     const name = kind + '.json';
     const bytes = domainBytes.get(name);
-    return { kind, path: name, sizeBytes: bytes.byteLength, sha256: sha256(bytes), dependencies: DOMAIN_DEPENDENCIES[kind] };
+    return {
+      kind,
+      path: name,
+      sizeBytes: bytes.byteLength,
+      sha256: sha256(bytes),
+      dependencies: dependenciesForDomain(kind, domainRecords[kind], domainById, sourceRecordById, webInput.usesNativeOfficialLocalizations)
+    };
   });
   const manifest = {
     schemaVersion: '2.0.0',
@@ -755,7 +1019,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     },
     compatibility: {
       dataContractMajor: 2,
-      requiredFeatures: ['official-errata-details-v1'],
+      requiredFeatures: ['official-errata-details-v1', ...(webInput.usesNativeOfficialLocalizations ? ['official-native-localizations-v1'] : [])],
       gameSnapshotRefs: sourceRefs.map(reference => reference.sourceId)
     },
     files: fileRows,
@@ -777,10 +1041,18 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     data_revision: dataRevision,
     build_id: '',
     game_version: lock.gameVersion,
-    package_kind: 'fixture',
+    package_kind: mode === 'candidate-preview' ? 'pending-preview' : 'fixture',
     game_releases: [release]
   };
-  const previewBytes = jsonBytes({ fixtureOnly, publicationEligible, announcements: webInput.announcements });
+  const previewBytes = jsonBytes({
+    fixtureOnly,
+    publicationEligible,
+    ...(mode === 'candidate-preview' ? {
+      candidatePreviewOnly: true,
+      warningText: '來源快照 ' + lock.gameVersion + ' 與 Steam Build 25681127 的相容性尚未核實；此候選仍待人工內容審核，不代表已核准的遊戲事實。'
+    } : {}),
+    announcements: webInput.announcements
+  });
   const baseFiles = new Map([
     ['index.html', Buffer.from(previewAssets.html, 'utf8')],
     ['preview.css', Buffer.from(previewAssets.css, 'utf8')],
@@ -818,6 +1090,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     web: { authoringCommit },
     fixtureOnly,
     publicationEligible,
+    ...(mode === 'candidate-preview' ? { candidatePreviewOnly: true } : {}),
     formalPublishAllowed: false,
     deploymentPerformed: false,
     files: receiptFileRows,
@@ -849,9 +1122,16 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
   outputRoot = path.resolve(outputRoot);
   const receiptBytes = await readFile(path.join(outputRoot, 'receipt.json'));
   const receipt = parseJson(receiptBytes, 'W01 receipt.json');
-  assertExactKeys(receipt, ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'], 'W01 receipt');
+  assertExactKeys(receipt, [
+    'schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web',
+    'fixtureOnly', 'publicationEligible', ...(Object.hasOwn(receipt, 'candidatePreviewOnly') ? ['candidatePreviewOnly'] : []),
+    'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'
+  ], 'W01 receipt');
   validateContentVersion(receipt.contentVersion);
-  if (receipt.requestKind !== 'isolated-w01-preview-build' || receipt.fixtureOnly !== true || receipt.publicationEligible !== false ||
+  const isFixturePackage = receipt.fixtureOnly === true;
+  const isPendingPreview = receipt.candidatePreviewOnly === true;
+  if (receipt.requestKind !== 'isolated-w01-preview-build' || typeof receipt.fixtureOnly !== 'boolean' ||
+      isPendingPreview !== !isFixturePackage || receipt.publicationEligible !== false ||
       receipt.formalPublishAllowed !== false || receipt.deploymentPerformed !== false) fail('W01 receipt is not a quarantined preview build');
   const retainedManifest = parseJson(await readFile(path.join(SCRIPT_ROOT, 'docs', 'w01', 'retained-preview-manifest.json')), 'retained preview manifest');
   assertExactKeys(retainedManifest, ['schemaVersion', 'baselineCommit', 'dataRevision', 'fileCount', 'totalBytes', 'files'], 'retained preview manifest');
@@ -882,24 +1162,31 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
 
   const version = parseJson(await readFile(path.join(outputRoot, 'version.json')), 'version.json');
   if (version.schema_version !== 2 || version.build_id !== receipt.buildId || version.data_revision !== receipt.dataRevision ||
-      version.package_kind !== 'fixture' || !Array.isArray(version.game_releases) || version.game_releases.length !== 1) {
+      version.package_kind !== (isPendingPreview ? 'pending-preview' : 'fixture') || !Array.isArray(version.game_releases) || version.game_releases.length !== 1) {
     fail('W01 version.json does not match the quarantined build receipt or D v2 contract');
   }
   const manifestBytes = await readFile(path.join(outputRoot, ...safeRelativePath(receipt.manifestPath).split('/')));
   if (sha256(manifestBytes) !== receipt.manifestSha256) fail('W01 manifest hash does not match the build receipt');
   const manifest = parseJson(manifestBytes, 'W01 manifest');
   const release = version.game_releases[0];
-  if (release.data_revision !== receipt.dataRevision || release.content_version !== receipt.contentVersion ||
+  if (release.data_revision !== receipt.dataRevision || manifest.dataRevision !== receipt.dataRevision || release.content_version !== receipt.contentVersion ||
       manifest.contentVersion !== receipt.contentVersion ||
       release.manifest_path !== '/' + receipt.manifestPath || release.manifest_sha256 !== receipt.manifestSha256 ||
       release.game_version !== manifest.gameVersion) fail('W01 game_releases entry does not match the D v2 manifest contract');
+  const features = manifest.compatibility?.requiredFeatures;
   if (manifest.schemaVersion !== '2.0.0' || manifest.compatibility?.dataContractMajor !== 2 ||
-      JSON.stringify(manifest.compatibility?.requiredFeatures) !== JSON.stringify(['official-errata-details-v1']) ||
-      manifest.changeIndexPath !== 'game-changes.json' || manifest.fixtureOnly !== true || manifest.publicationEligible !== false ||
+      !Array.isArray(features) || !features.includes('official-errata-details-v1') ||
+      features.some(feature => !['official-errata-details-v1', 'official-native-localizations-v1'].includes(feature)) ||
+      manifest.changeIndexPath !== 'game-changes.json' || manifest.fixtureOnly !== isFixturePackage || manifest.publicationEligible !== false ||
       manifest.files.length !== 5 || manifest.files.some((file, index) => file.kind !== DOMAIN_KINDS[index] || file.path !== file.kind + '.json')) {
     fail('W01 package does not match the D v2 contract or exact five quarantined shared domains');
   }
-  return { buildId: receipt.buildId, dataRevision: receipt.dataRevision, fileCount: receipt.files.length, fixtureOnly: true };
+  const activeDataRoot = path.join(outputRoot, 'data', receipt.dataRevision);
+  const hasNativeOfficialLocalizations = (await Promise.all(manifest.files.map(async file =>
+    parseJson(await readRequired(activeDataRoot, file.path), file.kind + '.json').records.some(record => record.payload?.official?.localizations?.['zh-TW']?.origin === 'official'))
+  )).some(Boolean);
+  if (hasNativeOfficialLocalizations !== features.includes('official-native-localizations-v1')) fail('W01 native-localization feature flag does not match the shared domains');
+  return { buildId: receipt.buildId, dataRevision: receipt.dataRevision, fileCount: receipt.files.length, fixtureOnly: isFixturePackage, candidatePreviewOnly: isPendingPreview };
 }
 
 function parseCliArgs(args) {
@@ -910,6 +1197,9 @@ function parseCliArgs(args) {
     if (arg === '--formal' && !seen.has(arg)) {
       seen.add(arg);
       options.mode = 'formal';
+    } else if (arg === '--candidate-preview' && !seen.has(arg)) {
+      seen.add(arg);
+      options.mode = 'candidate-preview';
     } else if (arg === '--output' && !seen.has(arg) && args[index + 1]) {
       seen.add(arg);
       options.outputRoot = path.resolve(args[++index]);
@@ -917,7 +1207,7 @@ function parseCliArgs(args) {
       seen.add(arg);
       options.contentVersion = validateContentVersion(args[++index]);
     } else {
-      fail('Usage: node scripts/w01-build.mjs [--formal] [--content-version major.minor.patch] [--output path]');
+      fail('Usage: node scripts/w01-build.mjs [--formal | --candidate-preview] [--content-version major.minor.patch] [--output path]');
     }
   }
   return options;
@@ -926,7 +1216,7 @@ function parseCliArgs(args) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const result = await buildW01(parseCliArgs(process.argv.slice(2)));
-    process.stdout.write('Built isolated W01 fixture preview build_id=' + result.buildId + ' data_revision=' + result.dataRevision + ' output=' + result.outputRoot + '\n');
+    process.stdout.write('Built isolated W01 ' + (result.receipt.candidatePreviewOnly ? 'pending candidate' : 'fixture') + ' preview build_id=' + result.buildId + ' data_revision=' + result.dataRevision + ' output=' + result.outputRoot + '\n');
   } catch (error) {
     process.stderr.write('W01 preview build failed: ' + (error?.message ?? String(error)) + '\n');
     process.exitCode = error?.message?.startsWith('Usage:') ? 2 : 1;

@@ -59,16 +59,19 @@ export async function applyCompositionRequest({ request, sourceRoot, webRoot = W
   if (verifyCheckout) {
     let remote;
     let commit;
+    let status;
     try {
       remote = execFileSync('git', ['remote', 'get-url', 'origin'], { cwd: sourceRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
         .trim().replace(/\.git$/i, '').replace(/\/+$/, '');
       commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: sourceRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+      status = execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all', '--ignore-submodules'], { cwd: sourceRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
     } catch {
       fail('sourceRoot must be a Git checkout of the pinned public Source repository');
     }
     if (remote !== SOURCE_REPOSITORY || commit !== request.commit) {
       fail('composition request does not match the local Source repository and exact commit');
     }
+    if (status.trim().length > 0) fail('Source checkout must be clean of tracked changes and non-ignored untracked files before composition');
   }
 
   const sourceRealRoot = await realpath(sourceRoot);
@@ -79,8 +82,8 @@ export async function applyCompositionRequest({ request, sourceRoot, webRoot = W
   const sourceManifest = parseJson(manifestBytes, 'Source manifest');
   assertExactKeys(sourceManifest, ['schemaVersion', 'gameReleaseId', 'gameVersion', 'sourceRevision', 'fixtureOnly', 'publicationEligible', 'files'], 'Source manifest');
   if (sourceManifest.schemaVersion !== '1.0.0' || sourceManifest.sourceRevision !== request.sourceRevision ||
-      sourceManifest.fixtureOnly !== true || sourceManifest.publicationEligible !== false) {
-    fail('composition request must reference a fixture-only Source preview manifest');
+      typeof sourceManifest.fixtureOnly !== 'boolean' || sourceManifest.publicationEligible !== false) {
+    fail('composition request must reference a publication-ineligible Source preview manifest');
   }
 
   const artifacts = new Map();
@@ -88,6 +91,18 @@ export async function applyCompositionRequest({ request, sourceRoot, webRoot = W
     const bytes = await readSourceFile(revisionRoot, name);
     verifyPinnedArtifact(sourceManifest, name, bytes);
     artifacts.set(name, bytes);
+  }
+  const technical = parseJson(artifacts.get('technical.json'), 'technical.json');
+  const gameChanges = parseJson(artifacts.get('game-changes.json'), 'game-changes.json');
+  if (technical.fixtureOnly !== sourceManifest.fixtureOnly || technical.publicationEligible !== false ||
+      technical.gameReleaseId !== sourceManifest.gameReleaseId || technical.sourceRevision !== request.sourceRevision ||
+      gameChanges.fixtureOnly !== sourceManifest.fixtureOnly || gameChanges.publicationEligible !== false ||
+      gameChanges.gameReleaseId !== sourceManifest.gameReleaseId || gameChanges.sourceRevision !== request.sourceRevision) {
+    fail('Source preview artifact flags or identities do not match the pinned manifest');
+  }
+  if (!sourceManifest.fixtureOnly &&
+      (technical.records.some(record => record.reviewState !== 'pending') || gameChanges.changes.some(change => change.reviewState !== 'pending'))) {
+    fail('non-fixture Source composition requires every record to remain pending');
   }
   const lock = {
     schemaVersion: '1.0.0',
@@ -113,7 +128,7 @@ export async function applyCompositionRequest({ request, sourceRoot, webRoot = W
       branch: WEB_BRANCH,
       baseBranch: 'main'
     },
-    fixtureOnly: true,
+    fixtureOnly: sourceManifest.fixtureOnly,
     publicationEligible: false,
     formalPublishAllowed: false
   };

@@ -81,7 +81,7 @@ test('UnitT30_retention-receipt-merge-is-idempotent', () => {
     totalBytes: 5
   };
   const row = { path: 'data/' + revision + '/catalog.json', sizeBytes: 5, sha256: 'a'.repeat(64) };
-  const makeReceipt = () => ({
+  const makeReceipt = (pendingCandidate = false) => ({
     schemaVersion: '1.0.0',
     requestKind: 'isolated-w01-preview-build',
     buildId: 'b'.repeat(64),
@@ -91,8 +91,9 @@ test('UnitT30_retention-receipt-merge-is-idempotent', () => {
     manifestSha256: 'd'.repeat(64),
     source: {},
     web: {},
-    fixtureOnly: true,
+    fixtureOnly: !pendingCandidate,
     publicationEligible: false,
+    ...(pendingCandidate ? { candidatePreviewOnly: true } : {}),
     formalPublishAllowed: false,
     deploymentPerformed: false,
     files: [{ path: 'version.json', sizeBytes: 1, sha256: 'e'.repeat(64) }]
@@ -105,5 +106,20 @@ test('UnitT30_retention-receipt-merge-is-idempotent', () => {
   assert.throws(
     () => mergeRetainedRows(receipt, [{ ...row, sha256: '0'.repeat(64) }], inventory, 'f'.repeat(64)),
     /collides with a different W01 output row/
+  );
+
+  const candidateReceipt = makeReceipt(true);
+  mergeRetainedRows(candidateReceipt, [row], inventory, 'f'.repeat(64));
+  const candidateSnapshot = JSON.stringify(candidateReceipt);
+  mergeRetainedRows(candidateReceipt, [row], inventory, 'f'.repeat(64));
+  assert.equal(JSON.stringify(candidateReceipt), candidateSnapshot);
+  assert.equal(candidateReceipt.fixtureOnly, false);
+  assert.equal(candidateReceipt.candidatePreviewOnly, true);
+  assert.equal(candidateReceipt.formalPublishAllowed, false);
+
+  candidateReceipt.candidatePreviewOnly = false;
+  assert.throws(
+    () => mergeRetainedRows(candidateReceipt, [row], inventory, 'f'.repeat(64)),
+    /quarantined W01 fixture or pending-candidate preview/
   );
 });

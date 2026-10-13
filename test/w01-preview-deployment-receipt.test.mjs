@@ -18,8 +18,9 @@ test('UnitT00_deployment-receipt-verifies-version-domains-and-retained-url', asy
   try {
     const copiedRoot = path.join(tempRoot, 'repo');
     const outputRoot = path.join(tempRoot, 'dist-w01');
-    await cp(path.join(repoRoot, 'content', 'w01'), path.join(copiedRoot, 'content', 'w01'), { recursive: true });
-    await cp(path.join(repoRoot, 'source.lock.json'), path.join(copiedRoot, 'source.lock.json'));
+    const fixtureRoot = path.join(repoRoot, 'test', 'fixtures', 'w01');
+    await cp(path.join(fixtureRoot, 'content', 'w01'), path.join(copiedRoot, 'content', 'w01'), { recursive: true });
+    await cp(path.join(fixtureRoot, 'source.lock.json'), path.join(copiedRoot, 'source.lock.json'));
     const build = await buildW01({ repoRoot: copiedRoot, outputRoot });
     const versionBytes = await readFile(path.join(outputRoot, 'version.json'));
     const version = JSON.parse(versionBytes);

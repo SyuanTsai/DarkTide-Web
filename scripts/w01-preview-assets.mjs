@@ -14,7 +14,7 @@ export const previewAssets = {
   <header class="site-header">
     <p class="eyebrow">SYP-311 · W01 隔離預覽</p>
     <h1>Darktide 繁體中文資料預覽</h1>
-    <p class="warning" role="note">此頁只供 schema 與資料連結驗證。內容皆為 fixture／待審資料，不是已核准的遊戲事實或正式公告。</p>
+    <p id="package-warning" class="warning" role="note">此頁只供 schema 與資料連結驗證。內容皆為 fixture／待審資料，不是已核准的遊戲事實或正式公告。</p>
   </header>
   <main id="main" aria-labelledby="content-heading">
     <section class="announcement" aria-labelledby="announcement-heading">
@@ -136,8 +136,24 @@ function renderPresentation(record, parent, termsById) {
   appendText(article, "h3", "", payload.name).id = record.recordId.replaceAll(":", "-");
   if (payload.official) {
     const localized = payload.official.localizations?.["zh-TW"];
-    if (!localized || localized.origin !== "faithful-translation") throw new Error("官方文字缺少繁體中文忠實翻譯。");
-    appendText(article, "p", "official-label", "官方原句（忠實翻譯）");
+    if (!localized) throw new Error("官方文字缺少繁體中文內容，預覽不會以英文回退。");
+    if (localized.origin === "faithful-translation") {
+      if (typeof localized.text !== "string" || typeof localized.sha256 !== "string") throw new Error("繁體中文忠實翻譯資料無效。");
+      appendText(article, "p", "official-label", "官方原句（忠實翻譯）");
+    } else if (localized.origin === "official") {
+      if (localized.sourceLocale !== "zh-TW" || !/^[a-f0-9]{8}$/.test(localized.sourceHash) ||
+          localized.key !== null && typeof localized.key !== "string" ||
+          typeof localized.sourceText !== "string" || typeof localized.resolvedText !== "string" ||
+          localized.text !== localized.resolvedText || localized.sha256 !== localized.resolvedTextSha256 ||
+          !/^[a-f0-9]{64}$/.test(localized.sourceTextSha256) || !/^[a-f0-9]{64}$/.test(localized.resolvedTextSha256) ||
+          !Array.isArray(localized.segments) || localized.segments.some(segment => !["literal", "template-placeholder"].includes(segment.kind)) ||
+          localized.segments.map(segment => segment.text).join("") !== localized.sourceText || /\\{[a-z][a-z0-9_]*:%s\\}/.test(localized.text)) {
+        throw new Error("繁體中文官方原文身分或解析結果無效。");
+      }
+      appendText(article, "p", "official-label", "繁體中文官方原文（待審）");
+    } else {
+      throw new Error("繁體中文官方文字來源類型無效。");
+    }
     appendText(article, "p", "official-text", localized.text);
     renderErrata(payload.official, payload.errata ?? [], article);
   }
@@ -191,8 +207,10 @@ async function loadPreview() {
   const status = byId("status");
   try {
     const version = parseJson(await fetchBytes("/version.json"), "version.json");
-    if (version.schema_version !== 2 || version.package_kind !== "fixture" || !Array.isArray(version.game_releases) || version.game_releases.length !== 1) {
-      throw new Error("這不是隔離 fixture 預覽套件。");
+    const isFixturePackage = version.package_kind === "fixture";
+    const isPendingPreview = version.package_kind === "pending-preview";
+    if (version.schema_version !== 2 || (!isFixturePackage && !isPendingPreview) || !Array.isArray(version.game_releases) || version.game_releases.length !== 1) {
+      throw new Error("這不是隔離 fixture 或待審候選預覽套件。");
     }
     const release = version.game_releases[0];
     if (typeof release.content_version !== "string" || !contentVersionPattern.test(release.content_version) ||
@@ -203,8 +221,10 @@ async function loadPreview() {
     if (manifestUrl.origin !== location.origin) throw new Error("資料必須來自同一來源。");
     const manifest = await checkedJson(manifestUrl, release.manifest_sha256, "manifest");
     if (manifest.schemaVersion !== "2.0.0" || manifest.compatibility?.dataContractMajor !== 2 ||
+        !Array.isArray(manifest.compatibility.requiredFeatures) ||
         !manifest.compatibility.requiredFeatures.includes("official-errata-details-v1") ||
-        manifest.fixtureOnly !== true || manifest.publicationEligible !== false || manifest.dataRevision !== version.data_revision ||
+        manifest.compatibility.requiredFeatures.some(feature => !["official-errata-details-v1", "official-native-localizations-v1"].includes(feature)) ||
+        manifest.fixtureOnly !== isFixturePackage || manifest.publicationEligible !== false || manifest.dataRevision !== version.data_revision ||
         manifest.contentVersion !== release.content_version) {
       throw new Error("預覽套件狀態不符，已停止載入。");
     }
@@ -218,8 +238,13 @@ async function loadPreview() {
       const url = new URL(file.path, manifestUrl);
       if (url.origin !== location.origin) throw new Error("資料必須來自同一來源。");
       const domain = await checkedJson(url, file.sha256, kind);
-      if (domain.fixtureOnly !== true || domain.publicationEligible !== false) throw new Error("資料域不再是隔離 fixture。");
+      if (domain.fixtureOnly !== isFixturePackage || domain.publicationEligible !== false) throw new Error("資料域狀態與隔離預覽套件不符。");
       domains.set(kind, domain);
+    }
+    const hasNativeOfficialLocalizations = [...domains.values()].some(domain => domain.records.some(record =>
+      record.payload?.official?.localizations?.["zh-TW"]?.origin === "official"));
+    if (hasNativeOfficialLocalizations !== manifest.compatibility.requiredFeatures.includes("official-native-localizations-v1")) {
+      throw new Error("官方繁體中文資料與套件功能標記不一致。");
     }
 
     const terms = domains.get("terms").records.filter(record => record.kind === "term-localization");
@@ -244,12 +269,24 @@ async function loadPreview() {
     for (const record of presentationRecords) renderPresentation(record, content, termsById);
 
     const changes = domains.get("game-changes").records.filter(record => record.kind === "game-change");
-    if (changes.length === 0) throw new Error("沒有可顯示的遊戲變更識別記錄。");
     const changesContent = byId("changes-content");
-    for (const change of changes) renderGameChange(change, changesContent);
+    if (changes.length === 0) {
+      if (!isPendingPreview) throw new Error("隔離 fixture 預覽缺少遊戲變更識別記錄。");
+      appendText(changesContent, "p", "change-empty", "本待審候選沒有 Source 遊戲變更記錄；這不表示遊戲已發布更新。");
+    } else {
+      for (const change of changes) renderGameChange(change, changesContent);
+    }
 
     const preview = parseJson(await fetchBytes("/preview.json"), "preview.json");
-    if (preview.fixtureOnly !== true || preview.publicationEligible !== false) throw new Error("預覽公告狀態不符。");
+    if (preview.fixtureOnly !== isFixturePackage || preview.publicationEligible !== false ||
+        isPendingPreview && preview.candidatePreviewOnly !== true ||
+        isFixturePackage && Object.hasOwn(preview, "candidatePreviewOnly") && preview.candidatePreviewOnly !== false) {
+      throw new Error("預覽公告狀態不符。");
+    }
+    if (isPendingPreview) {
+      if (typeof preview.warningText !== "string" || preview.warningText.length === 0) throw new Error("待審候選缺少繁體中文風險提示。");
+      byId("package-warning").textContent = preview.warningText;
+    }
     const announcementRoot = byId("announcement-content");
     for (const announcement of preview.announcements) {
       if (announcement.owner !== "web" || announcement.kind !== "announcement" || announcement.locale !== "zh-TW") {
@@ -266,7 +303,7 @@ async function loadPreview() {
       announcementRoot.append(article);
     }
     byId("revision").textContent = "資料版本：" + version.game_version + " · 內容版本：" + release.content_version + " · 資料修訂：" + version.data_revision;
-    status.textContent = "已載入隔離 fixture 預覽；內容尚未核准發布。";
+    status.textContent = isPendingPreview ? "已載入隔離的待審候選預覽；內容尚未核准發布。" : "已載入隔離 fixture 預覽；內容尚未核准發布。";
   } catch (error) {
     status.dataset.state = "error";
     status.textContent = error instanceof Error ? error.message : "隔離預覽載入失敗。";

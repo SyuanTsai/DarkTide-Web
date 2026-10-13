@@ -10,7 +10,7 @@ if (args.length > 1) {
 } else {
   try {
     const result = await verifyW01Package(args.length ? path.resolve(args[0]) : path.join(root, 'dist-w01'));
-    process.stdout.write('Verified isolated W01 fixture package build_id=' + result.buildId + ' data_revision=' + result.dataRevision + ' files=' + result.fileCount + '\n');
+    process.stdout.write('Verified isolated W01 ' + (result.candidatePreviewOnly ? 'pending candidate' : 'fixture') + ' package build_id=' + result.buildId + ' data_revision=' + result.dataRevision + ' files=' + result.fileCount + '\n');
   } catch (error) {
     process.stderr.write('W01 preview verification failed: ' + (error?.message ?? String(error)) + '\n');
     process.exitCode = 1;
