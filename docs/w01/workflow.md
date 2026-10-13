@@ -22,7 +22,9 @@ The composer verifies the Source repository origin, exact HEAD commit, manifest 
 
 `content/w01/release.json` pins the public fixture content version. It begins at `0.0.1`; a later content revision can set `0.0.2`. The compiler accepts an explicit `--content-version major.minor.patch` when rebuilding a historical release. The resolved version is included in the data revision and must agree across the manifest, `version.json`, and the build receipt.
 
-R1 `0.0.1` is pinned to Web commit `872bd72bad255d40af62329b8ffe97a357935275`. The preview workflow checks out and rebuilds that exact public commit before building R2 `0.0.2`, so the R1 data URLs are recreated on a clean runner rather than taken from local or runner leftovers. `UnitT10` tests an explicit `0.0.1` to `0.0.2` rebuild, and `UnitT41` reconstructs pinned public R1 plus the baseline before building current R2 and exercising the final fixed-R1 helper. R2 changes only the Web-owned synthetic skill name to `合成技能示例（修訂2）`; its official source text and Source claim stay byte-for-byte unchanged.
+R1 `0.0.1` is pinned to Web commit `872bd72bad255d40af62329b8ffe97a357935275`. Published R2 A is pinned to Web commit `a7fabea66f56cd5c8236b6e84a3f6c6586175840`, package version `0.0.2`, data revision `954cbfaec4340d6237913c0edae39967ff28c55fee7b372bc74367a95a85d292`, build ID `1aea7c152c5383457f7b87e38f7c840bc7fa92cf3c9276fb18214d29ad790023`, and manifest SHA-256 `c2a17c9d17da123940e1432a957e5ced31be9f2977c3df7530deaacaa5ce361f`. R2 changes only the Web-owned synthetic skill name to `合成技能示例（修訂2）`; its official source text and Source claim stay byte-for-byte unchanged.
+
+`UnitT10` tests an explicit `0.0.1` to `0.0.2` rebuild. `UnitT41` checks the helper against the current checkout, while `UnitT42` models a clean rollback commit B: it rebuilds fixed R1 and the baseline, rebuilds exact published A, then restores fixed R1 and verifies the immutable R1, A, and baseline data rows. The rollback workflow does not build R2 from B's authoring commit.
 
 ## Build and retain the old data URLs
 
@@ -41,7 +43,7 @@ When rebuilding into an existing dist-w01, the compiler first checks the prior r
 
 ## Fixed-R1 rollback helper
 
-The reviewed rollback input for a future rollback candidate is an exact `content/w01/rollback.json` file. The file must contain only these keys and values:
+The reviewed rollback input is the exact `content/w01/rollback.json` file. It contains only these keys and values:
 
     {
       "schemaVersion": "1.0.0",
@@ -52,13 +54,13 @@ The reviewed rollback input for a future rollback candidate is an exact `content
       "manifestSha256": "368451efd002e16c1ce068643bc1cac8bb7a90b51d7200f31d68aaaf07e189f7"
     }
 
-The helper can be run after `dist-w01` has been reconstructed from the exact published R2 commit:
+The rollback workflow reconstructs the output from clean pinned inputs in this order: build baseline, build and retain exact R1, rebuild and retain exact published R2 A (`a7fabea66f56cd5c8236b6e84a3f6c6586175840`), verify A, then run the fixed-R1 helper and verify the restored package. The exact A checkout is separate from rollback candidate B, so the R2 data revision remains byte-identical to the deployed A package.
+
+The helper command is:
 
     npm run w01:rollback-r1 -- --expected-r2-commit <exact-R2-SHA> --source-root <pinned-R1-checkout> --baseline-root <pinned-base-checkout>
 
-It verifies the active receipt's authoring commit against `--expected-r2-commit`, requires a clean R1 checkout at the fixed SHA, rebuilds R1 into the same output, and confirms all prior content-addressed data URLs remain byte-identical. It does not deploy by itself and does not accept an arbitrary R1 ref.
-
-The current R2 workflow does not invoke this helper. A separate, reviewed rollback commit must pin and rebuild the exact published R2 commit before calling it; rebuilding R2 from the rollback commit would create a different data revision because the authoring commit is part of the package identity. `UnitT41` exercises the helper over the package it built, but does not prove a later rollback commit can reconstruct R2 A. That future clean-runner A-to-B reconstruction still requires its own pinned-commit acceptance test before any rollback workflow is enabled.
+It verifies the active receipt's authoring commit against `--expected-r2-commit`, requires a clean R1 checkout at the fixed SHA, rebuilds R1 into the same output, and confirms all prior content-addressed data URLs remain byte-identical. It does not deploy by itself and does not accept an arbitrary R1 ref. The workflow's preview-only deploy step publishes the resulting R1 runtime after verifying the exact branch head; the deployment receipt records R1 as active while retaining R2 A and baseline data URLs.
 
 ## Candidate pull request
 
