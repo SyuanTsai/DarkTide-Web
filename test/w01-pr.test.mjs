@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import { ensureCandidatePullRequest } from '../scripts/w01-pr.mjs';
 import { jsonBytes, sha256 } from '../src/static/common.mjs';
@@ -47,6 +48,36 @@ test('UnitT10_existing-w01-pull-request-is-reused', () => {
   });
   assert.deepEqual(result, { created: false, number: 7, url: 'https://github.com/SyuanTsai/DarkTide-Web/pull/7', state: 'OPEN' });
   assert.equal(calls, 1);
+});
+
+// Scenario: the fixed branch has no PR and the helper creates one with a multiline description.
+// Purpose: gh receives exact body bytes through a private temporary file that is removed afterward.
+test('UnitT15_create-uses-private-body-file-and-cleans-it-up', () => {
+  let listCalls = 0;
+  let bodyPath;
+  const result = ensureCandidatePullRequest({
+    receipt: receipt(),
+    runGh: args => {
+      if (args[1] === 'list') {
+        listCalls += 1;
+        return JSON.stringify(listCalls === 1 ? [] : [{
+          number: 12,
+          url: 'https://github.com/SyuanTsai/DarkTide-Web/pull/12',
+          state: 'OPEN',
+          headRefName: 'codex/SYP-311-w01',
+          baseRefName: 'main'
+        }]);
+      }
+      assert.deepEqual(args.slice(-2, -1), ['--body-file']);
+      bodyPath = args.at(-1);
+      const body = readFileSync(bodyPath, 'utf8');
+      assert.match(body, /Source commit: 2c1e26ecde70773fc2588a8a70baba9a28770586\nSource revision:/);
+      assert.match(body, /fixture-only and publication-ineligible\. Formal content still requires human review\.$/);
+      return '';
+    }
+  });
+  assert.deepEqual(result, { created: true, number: 12, url: 'https://github.com/SyuanTsai/DarkTide-Web/pull/12', state: 'OPEN' });
+  assert.equal(existsSync(bodyPath), false);
 });
 
 // Scenario: no PR exists, then a concurrent caller creates the same branch PR first.

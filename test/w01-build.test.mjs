@@ -127,6 +127,11 @@ test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', a
     assert.equal(preview.announcements[0].reviewState, 'pending');
 
     const previewJs = firstFiles.get('preview.js').toString('utf8');
+    const versionPatternLiteral = previewJs.match(/const contentVersionPattern = (\/[^\n]+\/);/)?.[1];
+    assert.ok(versionPatternLiteral, 'generated preview.js contains the content version validator');
+    const versionPattern = new RegExp(versionPatternLiteral.slice(1, versionPatternLiteral.lastIndexOf('/')));
+    assert.equal(versionPattern.test('0.0.2'), true);
+    assert.equal(versionPattern.test('0x0x1'), false);
     assert.ok(previewJs.includes('補充說明'));
     assert.ok(previewJs.includes('額外說明'));
     assert.ok(previewJs.includes('renderErrata'));
@@ -309,5 +314,42 @@ test('UnitT09_same-output-rebuild-retains-prior-revision-files', async () => {
     await assertExactOutputInventory(outputRoot, second.receipt.files);
     assert.deepEqual(await readFile(firstManifestPath), firstManifestBytes);
     assert.ok(second.receipt.files.some(row => row.path === 'data/' + first.dataRevision + '/manifest.json'));
+  });
+});
+
+// Scenario: a fixture package is rebuilt as content release 0.0.2 into the same output after 0.0.1.
+// Purpose: numeric content versions bind to the data revision and the older release URL stays byte-identical.
+test('UnitT10_r1-to-r2-versioned-rebuild-preserves-r1-data', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyBuildInputs(copiedRoot);
+    const r1 = await buildW01({ repoRoot: copiedRoot, outputRoot });
+    const r1ManifestPath = path.join(outputRoot, ...r1.manifestPath.split('/'));
+    const r1ManifestBytes = await readFile(r1ManifestPath);
+    const r1DomainPath = path.join(outputRoot, 'data', r1.dataRevision, 'skills.json');
+    const r1DomainBytes = await readFile(r1DomainPath);
+
+    const releaseInputPath = path.join(copiedRoot, 'content', 'w01', 'release.json');
+    const releaseInput = JSON.parse(await readFile(releaseInputPath, 'utf8'));
+    releaseInput.contentVersion = '0.0.2';
+    await writeFile(releaseInputPath, jsonBytes(releaseInput));
+    const r2 = await buildW01({ repoRoot: copiedRoot, outputRoot });
+    const version = JSON.parse(await readFile(path.join(outputRoot, 'version.json'), 'utf8'));
+    const r2Manifest = JSON.parse(await readFile(path.join(outputRoot, ...r2.manifestPath.split('/')), 'utf8'));
+    const receipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+
+    assert.notEqual(r2.dataRevision, r1.dataRevision);
+    assert.equal(version.game_releases[0].content_version, '0.0.2');
+    assert.equal(r2Manifest.contentVersion, '0.0.2');
+    assert.equal(receipt.contentVersion, '0.0.2');
+    assert.deepEqual(await readFile(r1ManifestPath), r1ManifestBytes);
+    assert.deepEqual(await readFile(r1DomainPath), r1DomainBytes);
+    assert.ok(receipt.files.some(row => row.path === 'data/' + r1.dataRevision + '/manifest.json'));
+    await assertExactOutputInventory(outputRoot, receipt.files);
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'invalid'), contentVersion: '0.02.0' }),
+      /numeric major\.minor\.patch/
+    );
   });
 });

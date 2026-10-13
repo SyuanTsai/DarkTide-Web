@@ -73,6 +73,7 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 footer { padding-block: 1rem 2rem; }
 `,
   js: `const domainKinds = ["skills", "blessings", "weapons", "terms", "game-changes"];
+const contentVersionPattern = /^(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)$/;
 const detailLabels = {
   effects: "效果",
   conditions: "條件",
@@ -194,7 +195,8 @@ async function loadPreview() {
       throw new Error("這不是隔離 fixture 預覽套件。");
     }
     const release = version.game_releases[0];
-    if (release.content_version !== "0.0.1" || release.data_revision !== version.data_revision || !release.manifest_path.startsWith("/data/")) {
+    if (typeof release.content_version !== "string" || !contentVersionPattern.test(release.content_version) ||
+        release.data_revision !== version.data_revision || !release.manifest_path.startsWith("/data/")) {
       throw new Error("資料版本入口無效。");
     }
     const manifestUrl = new URL(release.manifest_path, location.origin + "/");
@@ -202,7 +204,8 @@ async function loadPreview() {
     const manifest = await checkedJson(manifestUrl, release.manifest_sha256, "manifest");
     if (manifest.schemaVersion !== "2.0.0" || manifest.compatibility?.dataContractMajor !== 2 ||
         !manifest.compatibility.requiredFeatures.includes("official-errata-details-v1") ||
-        manifest.fixtureOnly !== true || manifest.publicationEligible !== false || manifest.dataRevision !== version.data_revision) {
+        manifest.fixtureOnly !== true || manifest.publicationEligible !== false || manifest.dataRevision !== version.data_revision ||
+        manifest.contentVersion !== release.content_version) {
       throw new Error("預覽套件狀態不符，已停止載入。");
     }
     const fileByKind = new Map(manifest.files.map(file => [file.kind, file]));

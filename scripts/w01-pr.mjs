@@ -1,5 +1,7 @@
 import { execFileSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -80,13 +82,20 @@ export function ensureCandidatePullRequest({ receipt, runGh } = {}) {
     '',
     'This package is fixture-only and publication-ineligible. Formal content still requires human review.'
   ].join('\n');
+  const bodyDirectory = mkdtempSync(path.join(tmpdir(), 'syp-311-w01-pr-'));
   try {
-    runGh(['pr', 'create', '--base', BASE_BRANCH, '--head', WEB_BRANCH,
-      '--title', 'SYP-311: Compose the W01 Source preview', '--body', body]);
-  } catch {
-    const raced = lookup();
-    if (raced.pullRequest) return { created: false, ...raced.pullRequest };
-    fail('gh could not create the W01 pull request; no matching open pull request was found');
+    const bodyPath = path.join(bodyDirectory, 'pull-request-body.md');
+    writeFileSync(bodyPath, body, { encoding: 'utf8', flag: 'wx', mode: 0o600 });
+    try {
+      runGh(['pr', 'create', '--base', BASE_BRANCH, '--head', WEB_BRANCH,
+        '--title', 'SYP-311: Compose the W01 Source preview', '--body-file', bodyPath]);
+    } catch {
+      const raced = lookup();
+      if (raced.pullRequest) return { created: false, ...raced.pullRequest };
+      fail('gh could not create the W01 pull request; no matching open pull request was found');
+    }
+  } finally {
+    rmSync(bodyDirectory, { recursive: true, force: true });
   }
   const created = lookup();
   if (!created.pullRequest) fail('gh completed without an open pull request for the W01 candidate branch');

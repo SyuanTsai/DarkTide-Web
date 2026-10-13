@@ -54,7 +54,8 @@ const SOURCE_REQUIRED_PAYLOAD_KEYS = {
 };
 const RECORD_STATES = new Set(['draft', 'pending', 'approved', 'rejected', 'stale']);
 const DETAIL_SECTION_KEYS = ['effects', 'conditions', 'calculation', 'notes', 'extra'];
-const W01_RUNTIME_OUTPUT_PATHS = new Set(['index.html', 'preview.css', 'preview.js', 'preview.json', 'robots.txt', 'version.json']);
+const W01_RUNTIME_OUTPUT_PATHS = new Set(['_headers', 'index.html', 'preview.css', 'preview.js', 'preview.json', 'robots.txt', 'version.json']);
+const CONTENT_VERSION_PATTERN = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
 
 function fail(message) {
   throw new Error(message);
@@ -62,6 +63,14 @@ function fail(message) {
 
 function requireString(value, label) {
   if (typeof value !== 'string' || value.length === 0) fail(label + ' must be a non-empty string');
+  return value;
+}
+
+function validateContentVersion(value) {
+  if (typeof value !== 'string' || !CONTENT_VERSION_PATTERN.test(value) ||
+      value.split('.').some(part => !Number.isSafeInteger(Number(part)))) {
+    fail('contentVersion must be a numeric major.minor.patch version');
+  }
   return value;
 }
 
@@ -527,13 +536,14 @@ async function readPreviousOutput(outputRoot) {
   } catch {
     fail('existing W01 output has no verifiable receipt; refusing to overwrite it');
   }
-  const previousKeys = ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'];
+  const previousKeys = ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'];
   const expectedPreviousKeys = [...previousKeys, ...(Object.hasOwn(previous, 'retainedData') ? ['retainedData'] : [])];
   assertExactKeys(previous, expectedPreviousKeys, 'previous W01 receipt');
   if (previous.schemaVersion !== '1.0.0' || previous.requestKind !== 'isolated-w01-preview-build' || previous.fixtureOnly !== true ||
       previous.publicationEligible !== false || previous.formalPublishAllowed !== false || previous.deploymentPerformed !== false) {
     fail('existing output is not a receipt-verified W01 fixture package');
   }
+  validateContentVersion(previous.contentVersion);
   requireArray(previous.files, 'previous W01 receipt.files');
   await assertExactOutputInventory(outputRoot, previous.files);
 
@@ -574,7 +584,7 @@ async function writeOutputs(outputRoot, files, receipt, previousOutput) {
   await writeFile(assertChildPath(outputRoot, path.join(outputRoot, 'receipt.json'), 'W01 receipt'), receiptBytes);
 }
 
-export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(repoRoot, 'dist-w01'), mode = 'preview' } = {}) {
+export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(repoRoot, 'dist-w01'), mode = 'preview', contentVersion } = {}) {
   repoRoot = path.resolve(repoRoot);
   outputRoot = path.resolve(outputRoot);
   if (mode !== 'preview' && mode !== 'formal') fail('mode must be preview or formal');
@@ -582,11 +592,16 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
 
   const inputRoot = path.join(repoRoot, 'content', 'w01');
   const sourceRoot = path.join(inputRoot, 'source');
+  const releaseInputBytes = await readRequired(inputRoot, 'release.json');
   const lockBytes = await readRequired(repoRoot, 'source.lock.json');
   const sourceManifestBytes = await readRequired(sourceRoot, 'source-manifest.json');
   const technicalBytes = await readRequired(sourceRoot, 'technical.json');
   const gameChangesBytes = await readRequired(sourceRoot, 'game-changes.json');
   const webAuthoringBytes = await readRequired(inputRoot, 'web-authoring.json');
+  const releaseInput = parseJson(releaseInputBytes, 'content/w01/release.json');
+  assertExactKeys(releaseInput, ['schemaVersion', 'contentVersion'], 'content/w01/release.json');
+  if (releaseInput.schemaVersion !== '1.0.0') fail('content/w01/release.json schemaVersion is unsupported');
+  const resolvedContentVersion = validateContentVersion(contentVersion ?? releaseInput.contentVersion);
   const lock = parseJson(lockBytes, 'source.lock.json');
   const sourceManifest = parseJson(sourceManifestBytes, 'source-manifest.json');
   const technical = parseJson(technicalBytes, 'technical.json');
@@ -705,6 +720,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
   const domainBytes = new Map(DOMAIN_KINDS.map(kind => [kind + '.json', jsonBytes(sourceDomains[kind])]));
   const dataRevision = hashNamedFiles(new Map([
     ['source.lock.json', jsonBytes(lock)],
+    ['release.json', jsonBytes({ schemaVersion: releaseInput.schemaVersion, contentVersion: resolvedContentVersion })],
     ['source/references.json', jsonBytes(sourceRefs)],
     ['web/references.json', jsonBytes(webInput.references)],
     ['web/authoring-commit.txt', Buffer.from(authoringCommit + '\n')],
@@ -719,7 +735,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     schemaVersion: '2.0.0',
     gameReleaseId: lock.gameReleaseId,
     gameVersion: lock.gameVersion,
-    contentVersion: '0.0.1',
+    contentVersion: resolvedContentVersion,
     dataRevision,
     fixtureOnly,
     publicationEligible,
@@ -751,7 +767,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
   const versionManifestPath = '/' + manifestPath;
   const release = {
     game_version: lock.gameVersion,
-    content_version: '0.0.1',
+    content_version: resolvedContentVersion,
     data_revision: dataRevision,
     manifest_path: versionManifestPath,
     manifest_sha256: manifestSha256
@@ -771,6 +787,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     ['preview.js', Buffer.from(previewAssets.js, 'utf8')],
     ['preview.json', previewBytes],
     ['robots.txt', Buffer.from('User-agent: *\nDisallow: /\n', 'utf8')],
+    ['_headers', Buffer.from('/*\n  Access-Control-Allow-Origin: *\n  X-Robots-Tag: noindex, nofollow, noarchive\n', 'utf8')],
     ['version-template.json', jsonBytes(versionWithoutBuildId)],
     [manifestPath, manifestBytes],
     ...[...domainBytes].map(([name, bytes]) => ['data/' + dataRevision + '/' + name, bytes])
@@ -794,6 +811,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     requestKind: 'isolated-w01-preview-build',
     buildId,
     dataRevision,
+    contentVersion: resolvedContentVersion,
     manifestPath,
     manifestSha256,
     source: { repository: lock.repository, commit: lock.commit, sourceRevision: lock.sourceRevision, manifestSha256: lock.manifestSha256 },
@@ -831,7 +849,8 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
   outputRoot = path.resolve(outputRoot);
   const receiptBytes = await readFile(path.join(outputRoot, 'receipt.json'));
   const receipt = parseJson(receiptBytes, 'W01 receipt.json');
-  assertExactKeys(receipt, ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'], 'W01 receipt');
+  assertExactKeys(receipt, ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'], 'W01 receipt');
+  validateContentVersion(receipt.contentVersion);
   if (receipt.requestKind !== 'isolated-w01-preview-build' || receipt.fixtureOnly !== true || receipt.publicationEligible !== false ||
       receipt.formalPublishAllowed !== false || receipt.deploymentPerformed !== false) fail('W01 receipt is not a quarantined preview build');
   const retainedManifest = parseJson(await readFile(path.join(SCRIPT_ROOT, 'docs', 'w01', 'retained-preview-manifest.json')), 'retained preview manifest');
@@ -870,7 +889,8 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
   if (sha256(manifestBytes) !== receipt.manifestSha256) fail('W01 manifest hash does not match the build receipt');
   const manifest = parseJson(manifestBytes, 'W01 manifest');
   const release = version.game_releases[0];
-  if (release.data_revision !== receipt.dataRevision || release.content_version !== '0.0.1' ||
+  if (release.data_revision !== receipt.dataRevision || release.content_version !== receipt.contentVersion ||
+      manifest.contentVersion !== receipt.contentVersion ||
       release.manifest_path !== '/' + receipt.manifestPath || release.manifest_sha256 !== receipt.manifestSha256 ||
       release.game_version !== manifest.gameVersion) fail('W01 game_releases entry does not match the D v2 manifest contract');
   if (manifest.schemaVersion !== '2.0.0' || manifest.compatibility?.dataContractMajor !== 2 ||
@@ -893,8 +913,11 @@ function parseCliArgs(args) {
     } else if (arg === '--output' && !seen.has(arg) && args[index + 1]) {
       seen.add(arg);
       options.outputRoot = path.resolve(args[++index]);
+    } else if (arg === '--content-version' && !seen.has(arg) && args[index + 1]) {
+      seen.add(arg);
+      options.contentVersion = validateContentVersion(args[++index]);
     } else {
-      fail('Usage: node scripts/w01-build.mjs [--formal] [--output path]');
+      fail('Usage: node scripts/w01-build.mjs [--formal] [--content-version major.minor.patch] [--output path]');
     }
   }
   return options;

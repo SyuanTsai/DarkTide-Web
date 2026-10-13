@@ -44,6 +44,48 @@ export function assertExactDataInventory(actualRows, expectedRows) {
   return expected;
 }
 
+export function mergeRetainedRows(receipt, copiedRows, inventory, inventorySha256) {
+  const receiptKeys = [
+    'schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256',
+    'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'
+  ];
+  assertExactKeys(receipt, [...receiptKeys, ...(Object.hasOwn(receipt, 'retainedData') ? ['retainedData'] : [])], 'W01 build receipt');
+  if (receipt.requestKind !== 'isolated-w01-preview-build' || receipt.fixtureOnly !== true ||
+      receipt.publicationEligible !== false || receipt.formalPublishAllowed !== false || receipt.deploymentPerformed !== false) {
+    fail('retained baseline can only be added to the quarantined W01 fixture preview');
+  }
+  if (typeof receipt.contentVersion !== 'string' || !/^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(receipt.contentVersion)) {
+    fail('W01 build receipt contentVersion must be numeric major.minor.patch');
+  }
+  if (!Array.isArray(receipt.files)) fail('W01 build receipt files must be an array');
+  const retainedData = {
+    baselineCommit: inventory.baselineCommit,
+    dataRevision: inventory.dataRevision,
+    fileCount: inventory.fileCount,
+    totalBytes: inventory.totalBytes,
+    inventorySha256
+  };
+  if (Object.hasOwn(receipt, 'retainedData')) {
+    assertExactKeys(receipt.retainedData, ['baselineCommit', 'dataRevision', 'fileCount', 'totalBytes', 'inventorySha256'], 'W01 retainedData receipt');
+    if (JSON.stringify(receipt.retainedData) !== JSON.stringify(retainedData)) fail('W01 receipt already pins a different retained baseline');
+  }
+  const byPath = new Map();
+  for (const [index, row] of receipt.files.entries()) {
+    assertExactKeys(row, ['path', 'sizeBytes', 'sha256'], 'W01 build receipt.files[' + index + ']');
+    const name = safeRelativePath(row.path, 'W01 build receipt file path');
+    if (byPath.has(name)) fail('W01 build receipt contains duplicate file paths');
+    byPath.set(name, { path: name, sizeBytes: row.sizeBytes, sha256: row.sha256 });
+  }
+  for (const row of copiedRows) {
+    const existing = byPath.get(row.path);
+    if (existing && JSON.stringify(existing) !== JSON.stringify(row)) fail('retained data path collides with a different W01 output row: ' + row.path);
+    byPath.set(row.path, row);
+  }
+  receipt.files = [...byPath.values()].sort((left, right) => compareUtf8(left.path, right.path));
+  receipt.retainedData = retainedData;
+  return receipt;
+}
+
 export async function copyRetainedData({ baselineRoot, outputRoot, files } = {}) {
   baselineRoot = path.resolve(baselineRoot);
   outputRoot = path.resolve(outputRoot);
@@ -123,24 +165,7 @@ export async function retainPinnedBaseline({ baselineRoot, outputRoot = path.joi
 
   const receiptPath = path.join(outputRoot, 'receipt.json');
   const receipt = parseJson(await readFile(receiptPath), 'W01 build receipt');
-  assertExactKeys(receipt, [
-    'schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'manifestPath', 'manifestSha256',
-    'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'
-  ], 'W01 build receipt before retention');
-  if (receipt.requestKind !== 'isolated-w01-preview-build' || receipt.fixtureOnly !== true ||
-      receipt.publicationEligible !== false || receipt.formalPublishAllowed !== false || receipt.deploymentPerformed !== false) {
-    fail('retained baseline can only be added to the quarantined W01 fixture preview');
-  }
-  const existingPaths = new Set(receipt.files.map(file => file.path));
-  if (copiedRows.some(row => existingPaths.has(row.path))) fail('retained data path collides with a W01 generated file');
-  receipt.files = [...receipt.files, ...copiedRows].sort((left, right) => compareUtf8(left.path, right.path));
-  receipt.retainedData = {
-    baselineCommit: inventory.baselineCommit,
-    dataRevision: inventory.dataRevision,
-    fileCount: inventory.fileCount,
-    totalBytes: inventory.totalBytes,
-    inventorySha256
-  };
+  mergeRetainedRows(receipt, copiedRows, inventory, inventorySha256);
   await writeFile(receiptPath, jsonBytes(receipt));
   return {
     baselineCommit: inventory.baselineCommit,

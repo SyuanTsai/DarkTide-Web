@@ -1,4 +1,4 @@
-name: W01 isolated preview build
+name: W01 isolated preview
 on:
   pull_request:
     branches: [main]
@@ -28,6 +28,7 @@ jobs:
         with:
           path: web
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
           persist-credentials: false
       - name: Check out the pinned prior preview source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -66,3 +67,32 @@ jobs:
           path: web/dist-w01/
           if-no-files-found: error
           retention-days: 7
+      - name: Deploy only the fixed W01 preview worker
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        working-directory: web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "SyuanTsai/DarkTide-Web"
+          test "$GITHUB_REF" = "refs/heads/codex/SYP-311-w01"
+          git fetch --no-tags origin "refs/heads/codex/SYP-311-w01:refs/remotes/origin/codex/SYP-311-w01"
+          branch_head="$(git rev-parse refs/remotes/origin/codex/SYP-311-w01)"
+          test "$branch_head" = "$GITHUB_SHA"
+          npm run w01:verify
+          ./node_modules/.bin/wrangler deploy --config wrangler.w01-preview.json
+      - name: Verify the deployed preview and write a deployment receipt
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        working-directory: web
+        env:
+          W01_DEPLOYMENT_RECEIPT: ${{ runner.temp }}/w01-preview-deployment-receipt.json
+        run: node scripts/w01-preview-deployment-receipt.mjs --output "$W01_DEPLOYMENT_RECEIPT"
+      - name: Upload the public preview deployment receipt
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: darktide-w01-preview-deployment-receipt
+          path: ${{ runner.temp }}/w01-preview-deployment-receipt.json
+          if-no-files-found: error
+          retention-days: 30
