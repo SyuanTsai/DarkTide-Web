@@ -1,0 +1,68 @@
+name: W01 isolated preview build
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'content/w01/**'
+      - 'source.lock.json'
+      - 'scripts/w01-*.mjs'
+      - 'test/w01-*.test.mjs'
+      - 'docs/w01/retained-preview-manifest.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/w01-preview.yml'
+  push:
+    branches: [codex/SYP-311-w01]
+permissions:
+  contents: read
+concurrency:
+  group: w01-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  isolated-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out Web candidate without persisted credentials
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          path: web
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check out the pinned prior preview source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Web
+          ref: 8a4b3db2b1e835f0757f387ca89a19b9092b35ee
+          path: baseline
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install locked Web dependencies
+        working-directory: web
+        run: npm ci
+      - name: Run Web repository tests
+        working-directory: web
+        run: npm test
+      - name: Rebuild the exact pinned prior preview data
+        working-directory: baseline
+        run: npm run build
+      - name: Build the isolated W01 fixture preview
+        working-directory: web
+        run: npm run w01:build
+      - name: Retain the verified old data URLs
+        working-directory: web
+        run: npm run w01:retain -- --baseline-root ../baseline
+      - name: Verify the fixture receipt and both data revisions
+        working-directory: web
+        run: npm run w01:verify
+      - name: Upload only the isolated W01 preview artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: darktide-w01-isolated-preview
+          path: web/dist-w01/
+          if-no-files-found: error
+          retention-days: 7

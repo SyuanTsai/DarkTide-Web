@@ -1,0 +1,276 @@
+{
+  "fixtureOnly": true,
+  "gameChanges": [
+    {
+      "changeId": "fixture:change:smite-claim",
+      "changedFields": [
+        {
+          "after": {
+            "decimal": "35",
+            "status": "known",
+            "unit": "s"
+          },
+          "before": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "field": "value"
+        }
+      ],
+      "comparison": {
+        "fromGameVersion": "fixture-before",
+        "toGameVersion": "fixture-preview"
+      },
+      "entityKind": "claim",
+      "evidenceRefs": [
+        "fixture:evidence:smite-template"
+      ],
+      "gameReleaseId": "fixture-game-1",
+      "operation": "modified",
+      "owner": "source",
+      "recordId": "fixture:claim:smite-damage",
+      "reviewState": "pending",
+      "verificationMethod": "fixture"
+    }
+  ],
+  "gameReleaseId": "fixture-game-1",
+  "gameVersion": "fixture-preview",
+  "publicationEligible": false,
+  "records": [
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "term",
+      "owner": "source",
+      "payload": {
+        "claimRefs": [],
+        "contextKey": "fixture_context",
+        "technicalDefinitionEn": "Synthetic term definition.",
+        "termKey": "fixture_term"
+      },
+      "recordId": "fixture:term:smite",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "skill",
+      "owner": "source",
+      "payload": {
+        "claimRefs": [
+          "fixture:claim:smite-damage"
+        ],
+        "termRef": "fixture:term:smite"
+      },
+      "recordId": "fixture:skill:smite",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-observed",
+        "context": {},
+        "evidenceRefs": [
+          "fixture:evidence:smite-template"
+        ],
+        "property": "cooldown",
+        "targetRef": "fixture:skill:smite",
+        "value": {
+          "decimal": "35",
+          "status": "known",
+          "unit": "s"
+        }
+      },
+      "recordId": "fixture:claim:smite-damage",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "Synthetic fixture only; not an observed game fact.",
+        "sourceRef": "fixture:snapshot:upstream"
+      },
+      "recordId": "fixture:evidence:smite-template",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "blessing",
+      "owner": "source",
+      "payload": {
+        "variantRefs": [
+          "fixture:blessing-variant:sample-tier"
+        ]
+      },
+      "recordId": "fixture:blessing:sample",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "blessing-variant",
+      "owner": "source",
+      "payload": {
+        "blessingRef": "fixture:blessing:sample",
+        "definedTiers": [
+          1,
+          2
+        ],
+        "obtainableTiers": {
+          "reasonCode": "NOT_VERIFIED",
+          "status": "unknown"
+        },
+        "tierValues": [
+          {
+            "tier": 1,
+            "value": {
+              "decimal": "0.02",
+              "status": "known",
+              "unit": "ratio"
+            }
+          },
+          {
+            "tier": 2,
+            "value": {
+              "decimal": "0.03",
+              "status": "known",
+              "unit": "ratio"
+            }
+          }
+        ],
+        "weaponRefs": [
+          "fixture:weapon:sample"
+        ]
+      },
+      "recordId": "fixture:blessing-variant:sample-tier",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "weapon",
+      "owner": "source",
+      "payload": {
+        "attackProfileRefs": [],
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "attackProfileRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "familyId": "fixture:family:sample",
+        "markId": "fixture:mark:sample",
+        "statRefs": [
+          "fixture:weapon-stat:sample"
+        ],
+        "templateKey": "fixture_weapon_template",
+        "theoreticalInputRange": {
+          "inclusive": true,
+          "max": "100",
+          "min": "0",
+          "status": "known",
+          "step": "0.5",
+          "unit": "rating"
+        }
+      },
+      "recordId": "fixture:weapon:sample",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "stat-definition",
+      "owner": "source",
+      "payload": {
+        "curveRef": "fixture:curve:sample",
+        "inputUnit": "rating",
+        "obtainableInputRange": {
+          "reasonCode": "NOT_VERIFIED",
+          "status": "unknown"
+        },
+        "outputUnit": "damage",
+        "quantity": "damage",
+        "theoreticalInputRange": {
+          "inclusive": true,
+          "max": "100",
+          "min": "0",
+          "status": "known",
+          "unit": "rating"
+        }
+      },
+      "recordId": "fixture:weapon-stat:sample",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    },
+    {
+      "gameReleaseId": "fixture-game-1",
+      "kind": "stat-curve",
+      "owner": "source",
+      "payload": {
+        "edgePolicy": {
+          "reasonCode": "NOT_VERIFIED",
+          "status": "unknown"
+        },
+        "inputUnit": "rating",
+        "interpolation": {
+          "reasonCode": "NOT_VERIFIED",
+          "status": "unknown"
+        },
+        "knots": [
+          {
+            "x": "0",
+            "y": "100"
+          },
+          {
+            "x": "50",
+            "y": "150"
+          },
+          {
+            "x": "100",
+            "y": "140"
+          }
+        ],
+        "outputUnit": "damage"
+      },
+      "recordId": "fixture:curve:sample",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "fixture:snapshot:upstream"
+      ]
+    }
+  ],
+  "schemaVersion": "2.0.0",
+  "sourceRefs": [
+    {
+      "fixtureOnly": true,
+      "safeSummary": "Synthetic reference only; no upstream snapshot is included.",
+      "sourceId": "fixture:snapshot:upstream"
+    }
+  ],
+  "sourceRevision": "94d2e7767bf60d56793a6b9a910376c975fef3439afe5931fbb03d763913ef4b"
+}
