@@ -70,7 +70,7 @@ test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', a
     assert.equal(manifest.changeIndexPath, 'game-changes.json');
     assert.equal(version.schema_version, 2);
     assert.equal(version.package_kind, 'fixture');
-    assert.equal(version.game_releases[0].content_version, '0.0.1');
+    assert.equal(version.game_releases[0].content_version, '0.0.2');
     assert.equal(version.game_releases[0].manifest_path, '/data/' + first.dataRevision + '/manifest.json');
     assert.equal(version.game_releases[0].manifest_sha256, first.manifestSha256);
     assert.equal(manifest.source.commit, 'fa8711c3cab784b83238709e728f3df497b2624a');
@@ -317,24 +317,20 @@ test('UnitT09_same-output-rebuild-retains-prior-revision-files', async () => {
   });
 });
 
-// Scenario: a fixture package is rebuilt as content release 0.0.2 into the same output after 0.0.1.
-// Purpose: numeric content versions bind to the data revision and the older release URL stays byte-identical.
-test('UnitT10_r1-to-r2-versioned-rebuild-preserves-r1-data', async () => {
+// Scenario: one fixture input is built explicitly as 0.0.1, then 0.0.2 into the same output.
+// Purpose: a numeric version transition changes the data revision while retaining the older release URL byte-for-byte.
+test('UnitT10_versioned-rebuild-0.0.1-to-0.0.2-preserves-prior-data', async () => {
   await withTempDirectory(async tempRoot => {
     const copiedRoot = path.join(tempRoot, 'repo');
     const outputRoot = path.join(tempRoot, 'out');
     await copyBuildInputs(copiedRoot);
-    const r1 = await buildW01({ repoRoot: copiedRoot, outputRoot });
+    const r1 = await buildW01({ repoRoot: copiedRoot, outputRoot, contentVersion: '0.0.1' });
     const r1ManifestPath = path.join(outputRoot, ...r1.manifestPath.split('/'));
     const r1ManifestBytes = await readFile(r1ManifestPath);
     const r1DomainPath = path.join(outputRoot, 'data', r1.dataRevision, 'skills.json');
     const r1DomainBytes = await readFile(r1DomainPath);
 
-    const releaseInputPath = path.join(copiedRoot, 'content', 'w01', 'release.json');
-    const releaseInput = JSON.parse(await readFile(releaseInputPath, 'utf8'));
-    releaseInput.contentVersion = '0.0.2';
-    await writeFile(releaseInputPath, jsonBytes(releaseInput));
-    const r2 = await buildW01({ repoRoot: copiedRoot, outputRoot });
+    const r2 = await buildW01({ repoRoot: copiedRoot, outputRoot, contentVersion: '0.0.2' });
     const version = JSON.parse(await readFile(path.join(outputRoot, 'version.json'), 'utf8'));
     const r2Manifest = JSON.parse(await readFile(path.join(outputRoot, ...r2.manifestPath.split('/')), 'utf8'));
     const receipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));

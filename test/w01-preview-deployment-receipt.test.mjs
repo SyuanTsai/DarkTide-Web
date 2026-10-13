@@ -70,7 +70,7 @@ test('UnitT00_deployment-receipt-verifies-version-domains-and-retained-url', asy
       repoRoot: copiedRoot, outputRoot, receiptPath, fetchImpl, createdAt: '2026-10-13T00:00:00.000Z'
     });
     assert.equal(result.requestKind, 'w01-preview-deployment-receipt');
-    assert.equal(result.contentVersion, '0.0.1');
+    assert.equal(result.contentVersion, '0.0.2');
     assert.equal(result.verifiedRemoteObjects, 8);
     assert.equal(result.retainedBaseline.sampleSha256, oldRow.sha256);
     assert.equal(JSON.parse(await readFile(receiptPath, 'utf8')).deploymentPerformed, true);

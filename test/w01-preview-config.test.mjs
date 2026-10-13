@@ -40,3 +40,25 @@ test('UnitT01_workflow-deploys-only-the-guarded-preview-worker', () => {
   assert.deepEqual(secretConsumers, [deploy]);
   assert.ok(steps.some(step => step.name === 'Verify the deployed preview and write a deployment receipt'));
 });
+
+// Scenario: a clean preview runner reconstructs R1 before compiling the current R2 candidate.
+// Purpose: pin the historical input and enforce the build/retain/verify ordering that preserves every immutable data URL.
+test('UnitT02_workflow-rebuilds-fixed-r1-before-r2', () => {
+  const steps = workflow.jobs['isolated-preview'].steps;
+  const priorR1Checkout = steps.find(step => step.name === 'Check out the exact pinned R1 preview source');
+  const baselineBuild = steps.findIndex(step => step.name === 'Rebuild the pinned production baseline data');
+  const r1Build = steps.findIndex(step => step.name === 'Rebuild exact R1 package into the candidate output');
+  const r1Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in R1 package');
+  const r1Verify = steps.findIndex(step => step.name === 'Verify exact R1 package and retained data');
+  const r2Build = steps.findIndex(step => step.name === 'Build the R2 isolated W01 fixture preview');
+  const r2Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in R2 package');
+  const r2Verify = steps.findIndex(step => step.name === 'Verify R2 and the retained R1 and production data revisions');
+  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify];
+
+  assert.equal(priorR1Checkout.with.ref, '872bd72bad255d40af62329b8ffe97a357935275');
+  assert.ok(order.every(index => index >= 0));
+  assert.ok(baselineBuild < r1Build);
+  assert.ok(r1Build < r1Retain && r1Retain < r1Verify);
+  assert.ok(r1Verify < r2Build && r2Build < r2Retain && r2Retain < r2Verify);
+  assert.equal(steps.some(step => step.name.includes('rollback')), false);
+});
