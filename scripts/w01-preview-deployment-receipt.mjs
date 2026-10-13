@@ -39,7 +39,7 @@ async function fetchVerified(fetchImpl, pathname, expectedBytes, label) {
   if (response.status !== 200) fail(label + ' returned HTTP ' + response.status);
   const robots = response.headers.get('x-robots-tag') ?? '';
   if (!robots.toLowerCase().includes('noindex')) fail(label + ' is missing the preview noindex response header');
-  if (response.headers.get('access-control-allow-origin') !== '*') fail(label + ' is missing the public fixture CORS response header');
+  if (response.headers.get('access-control-allow-origin') !== '*') fail(label + ' is missing the preview CORS response header');
   const actualBytes = Buffer.from(await response.arrayBuffer());
   if (actualBytes.byteLength !== expectedBytes.byteLength || sha256(actualBytes) !== sha256(expectedBytes)) {
     fail(label + ' bytes do not match the verified local preview package');
@@ -52,16 +52,20 @@ export async function createDeploymentReceipt({ repoRoot = SCRIPT_ROOT, outputRo
   repoRoot = path.resolve(repoRoot);
   outputRoot = path.resolve(outputRoot);
   const receipt = parseJson(await readArtifactFile(outputRoot, 'receipt.json'), 'W01 build receipt');
-  assertExactKeys(receipt, ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'], 'W01 build receipt');
+  const baseReceiptKeys = ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'];
+  const hasCandidatePreviewFlag = Object.hasOwn(receipt, 'candidatePreviewOnly');
+  assertExactKeys(receipt, [...baseReceiptKeys, ...(hasCandidatePreviewFlag ? ['candidatePreviewOnly'] : [])], 'W01 build receipt');
+  const isFixturePreview = receipt.fixtureOnly === true && !hasCandidatePreviewFlag;
+  const isPendingCandidate = receipt.fixtureOnly === false && hasCandidatePreviewFlag && receipt.candidatePreviewOnly === true;
   if (receipt.schemaVersion !== '1.0.0' || receipt.requestKind !== 'isolated-w01-preview-build' ||
-      receipt.fixtureOnly !== true || receipt.publicationEligible !== false || receipt.formalPublishAllowed !== false ||
+      (!isFixturePreview && !isPendingCandidate) || receipt.publicationEligible !== false || receipt.formalPublishAllowed !== false ||
       receipt.deploymentPerformed !== false || !CONTENT_VERSION_PATTERN.test(receipt.contentVersion)) {
     fail('W01 receipt is not a versioned, quarantined preview build');
   }
   const localVersionBytes = await readArtifactFile(outputRoot, 'version.json');
   const version = parseJson(localVersionBytes, 'W01 version.json');
   if (version.build_id !== receipt.buildId || version.data_revision !== receipt.dataRevision ||
-      version.package_kind !== 'fixture' || version.game_releases?.length !== 1 ||
+      version.package_kind !== (isPendingCandidate ? 'pending-preview' : 'fixture') || version.game_releases?.length !== 1 ||
       version.game_releases[0].content_version !== receipt.contentVersion) {
     fail('W01 version.json does not match its local receipt');
   }
@@ -69,8 +73,8 @@ export async function createDeploymentReceipt({ repoRoot = SCRIPT_ROOT, outputRo
   if (sha256(manifestBytes) !== receipt.manifestSha256) fail('local W01 manifest does not match its receipt');
   const manifest = parseJson(manifestBytes, 'W01 manifest');
   if (manifest.dataRevision !== receipt.dataRevision || manifest.contentVersion !== receipt.contentVersion ||
-      manifest.fixtureOnly !== true || manifest.publicationEligible !== false || manifest.files?.length !== DOMAIN_KINDS.length) {
-    fail('local W01 manifest does not match the quarantined version receipt');
+      manifest.fixtureOnly !== isFixturePreview || manifest.publicationEligible !== false || manifest.files?.length !== DOMAIN_KINDS.length) {
+    fail('local W01 manifest does not match the selected quarantined preview mode');
   }
   const remoteChecks = [];
   remoteChecks.push(await fetchVerified(fetchImpl, '/version.json', localVersionBytes, 'version.json'));
@@ -115,6 +119,8 @@ export async function createDeploymentReceipt({ repoRoot = SCRIPT_ROOT, outputRo
     commit: process.env.GITHUB_SHA ?? null,
     origin: PREVIEW_ORIGIN,
     contentVersion: receipt.contentVersion,
+    packageKind: version.package_kind,
+    candidatePreviewOnly: isPendingCandidate,
     buildId: receipt.buildId,
     dataRevision: receipt.dataRevision,
     manifestPath: receipt.manifestPath,

@@ -782,12 +782,19 @@ async function readPreviousOutput(outputRoot) {
   } catch {
     fail('existing W01 output has no verifiable receipt; refusing to overwrite it');
   }
+  const hasCandidatePreviewFlag = Object.hasOwn(previous, 'candidatePreviewOnly');
   const previousKeys = ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'formalPublishAllowed', 'deploymentPerformed', 'files'];
-  const expectedPreviousKeys = [...previousKeys, ...(Object.hasOwn(previous, 'retainedData') ? ['retainedData'] : [])];
+  const expectedPreviousKeys = [
+    ...previousKeys,
+    ...(hasCandidatePreviewFlag ? ['candidatePreviewOnly'] : []),
+    ...(Object.hasOwn(previous, 'retainedData') ? ['retainedData'] : [])
+  ];
   assertExactKeys(previous, expectedPreviousKeys, 'previous W01 receipt');
-  if (previous.schemaVersion !== '1.0.0' || previous.requestKind !== 'isolated-w01-preview-build' || previous.fixtureOnly !== true ||
+  const isLegacyFixture = previous.fixtureOnly === true && !hasCandidatePreviewFlag;
+  const isPendingCandidate = previous.fixtureOnly === false && hasCandidatePreviewFlag && previous.candidatePreviewOnly === true;
+  if ((!isLegacyFixture && !isPendingCandidate) || previous.schemaVersion !== '1.0.0' || previous.requestKind !== 'isolated-w01-preview-build' ||
       previous.publicationEligible !== false || previous.formalPublishAllowed !== false || previous.deploymentPerformed !== false) {
-    fail('existing output is not a receipt-verified W01 fixture package');
+    fail('previous W01 receipt is not a quarantined fixture or pending-candidate preview');
   }
   validateContentVersion(previous.contentVersion);
   requireArray(previous.files, 'previous W01 receipt.files');
@@ -809,6 +816,23 @@ async function readPreviousOutput(outputRoot) {
     } else {
       fail('existing W01 output contains an unsupported path: ' + relativeName);
     }
+  }
+
+  const previousVersion = parseJson(await readRequired(outputRoot, 'version.json'), 'previous version.json');
+  const previousManifestBytes = await readRequired(outputRoot, previous.manifestPath);
+  if (sha256(previousManifestBytes) !== previous.manifestSha256) fail('previous W01 manifest hash does not match its receipt');
+  const previousManifest = parseJson(previousManifestBytes, 'previous W01 manifest');
+  const previousRelease = previousVersion.game_releases?.[0];
+  const expectedPackageKind = isPendingCandidate ? 'pending-preview' : 'fixture';
+  if (previousVersion.schema_version !== 2 || previousVersion.package_kind !== expectedPackageKind ||
+      previousVersion.build_id !== previous.buildId || previousVersion.data_revision !== previous.dataRevision ||
+      previousVersion.game_releases?.length !== 1 || previousRelease?.data_revision !== previous.dataRevision ||
+      previousRelease?.content_version !== previous.contentVersion || previousRelease?.manifest_path !== '/' + previous.manifestPath ||
+      previousRelease?.manifest_sha256 !== previous.manifestSha256 || previousManifest.schemaVersion !== '2.0.0' ||
+      previousManifest.dataRevision !== previous.dataRevision || previousManifest.contentVersion !== previous.contentVersion ||
+      previousManifest.fixtureOnly !== previous.fixtureOnly || previousManifest.publicationEligible !== false ||
+      previousRelease?.game_version !== previousManifest.gameVersion) {
+    fail('previous W01 package does not match its quarantined receipt mode and identity');
   }
   return { dataFiles, runtimePaths, retainedData: previous.retainedData ?? null };
 }

@@ -612,7 +612,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.commit, '83fdd201f67c6c490f32832419ea61353d7066d1');
     assert.equal(manifest.source.sourceRevision, 'b48a8e6dcf61dcfbd8ca4ea8a89ebd636216c70907d82bd9fe6587b19c31851e');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.3');
+    assert.equal(version.game_releases[0].content_version, '0.0.4');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -623,6 +623,9 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(skill.payload.official.localizations['zh-TW'].sourceText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成{damage:%s}傷害的{talent_old:%s}的加強版。');
     assert.equal(skill.payload.official.resolvedText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of Brain Burst dealing +50% Damage.');
     assert.equal(skill.payload.official.localizations['zh-TW'].resolvedText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成+50%傷害的顱腦爆裂的加強版。');
+    assert.deepEqual(skill.payload.detailSections.notes, [
+      { itemId: 'candidate-update-channel-check', text: '此段僅供資料更新通路測試，內容仍待審。' }
+    ]);
     assert.equal(blessing.payload.official.resolvedText, '+17% Movement Speed for 2s on Weapon Special Activation.');
     assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+17%移動速度，持續2秒。');
     assert.equal(weapon.payload.name, '突擊鏈斧');
@@ -729,6 +732,68 @@ test('UnitT17_native-official-root-template-must-remain-english', async () => {
       buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'wrong-root-locale'), mode: 'candidate-preview' }),
       /sourceLocale does not match its official locale/
     );
+  });
+});
+
+// Scenario: a quarantined real candidate is rebuilt after a neutral Web-owned data update.
+// Purpose: a valid pending-preview receipt is accepted as prior output and every old data URL remains byte-identical.
+test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyCurrentInputs(copiedRoot);
+    const prior = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview', contentVersion: '0.0.3' });
+    const priorReceiptBytes = await readFile(path.join(outputRoot, 'receipt.json'));
+    const priorReceipt = JSON.parse(priorReceiptBytes);
+    const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/' + prior.dataRevision + '/'));
+    const priorDataBytes = new Map(await Promise.all(priorDataRows.map(async row => [
+      row.path,
+      await readFile(path.join(outputRoot, ...row.path.split('/')))
+    ])));
+
+    const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
+    assert.notEqual(current.dataRevision, prior.dataRevision);
+    assert.equal(currentReceipt.contentVersion, '0.0.4');
+    for (const row of priorDataRows) {
+      assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
+      assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
+    }
+    await assertExactOutputInventory(outputRoot, currentReceipt.files);
+  });
+});
+
+// Scenario: a pending candidate's previous receipt has a mixed or missing quarantine flag.
+// Purpose: reject before writing and preserve every listed output byte plus the supplied receipt bytes.
+test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyCurrentInputs(copiedRoot);
+    await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview', contentVersion: '0.0.3' });
+    const receiptPath = path.join(outputRoot, 'receipt.json');
+    const validReceipt = JSON.parse(await readFile(receiptPath, 'utf8'));
+    const snapshots = new Map(await Promise.all(validReceipt.files.map(async row => [
+      row.path,
+      await readFile(path.join(outputRoot, ...row.path.split('/')))
+    ])));
+    const invalidReceipts = [
+      { ...validReceipt, candidatePreviewOnly: false },
+      { ...validReceipt, fixtureOnly: true }
+    ];
+
+    for (const invalidReceipt of invalidReceipts) {
+      const invalidBytes = jsonBytes(invalidReceipt);
+      await writeFile(receiptPath, invalidBytes);
+      await assert.rejects(
+        buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' }),
+        /previous W01 receipt is not a quarantined fixture or pending-candidate preview/
+      );
+      assert.deepEqual(await readFile(receiptPath), invalidBytes);
+      for (const [relativePath, bytes] of snapshots) {
+        assert.deepEqual(await readFile(path.join(outputRoot, ...relativePath.split('/'))), bytes);
+      }
+    }
   });
 });
 
