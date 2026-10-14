@@ -258,18 +258,42 @@
           "effects": [
             {
               "itemId": "psyker-description-damage-parameter",
-              "text": "遊戲說明中的傷害加成為 50%。",
+              "text": "提高顱腦崩裂相關傷害；官方說明中的加成為 50%。",
               "claimRefs": [
-                "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+                "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+                "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
               ]
             }
           ],
-          "conditions": [],
-          "calculation": [],
+          "conditions": [
+            {
+              "itemId": "psyker-selected-talent-condition",
+              "text": "需選用顱腦崩裂天賦。"
+            },
+            {
+              "itemId": "psyker-smite-damage-type-condition",
+              "text": "此加成套用於顱腦崩裂使用的傷害類型。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+              ]
+            }
+          ],
+          "calculation": [
+            {
+              "itemId": "psyker-smite-multiplier-calculation",
+              "text": "這項加成會把原有的傷害倍率乘以 1.5。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+              ]
+            }
+          ],
           "notes": [
             {
               "itemId": "psyker-damage-effect-caution",
-              "text": "實際效果仍待確認。"
+              "text": "這是倍率加成，不是額外固定傷害；敵人實際受到的傷害還會受其他因素影響。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+              ]
             }
           ],
           "extra": [
@@ -535,7 +559,7 @@
       "sourceRefs": [],
       "payload": {
         "label": "傷害倍率",
-        "definition": "用來辨識技能的傷害資料；實際影響仍待確認。"
+        "definition": "此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。"
       },
       "reviewState": "pending"
     }

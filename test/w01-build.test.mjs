@@ -9,6 +9,7 @@ import { jsonBytes } from '../src/static/common.mjs';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
 const domainKinds = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
+const publishedR5Root = process.env.W01_PRIOR_REAL_R5_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function withTempDirectory(callback) {
@@ -85,6 +86,13 @@ async function readBuildFiles(buildRoot) {
     if (stat.isFile()) output.set(name.replaceAll(path.sep, '/'), await readFile(absolute));
   }
   return output;
+}
+
+async function readOfficialPresentations(buildRoot, receipt) {
+  const domains = await Promise.all(['skills', 'blessings', 'weapons'].map(async kind =>
+    JSON.parse(await readFile(path.join(buildRoot, 'data', receipt.dataRevision, kind + '.json'), 'utf8'))));
+  return domains.flatMap(domain => domain.records)
+    .filter(record => record.owner === 'web' && record.kind === 'presentation');
 }
 
 // Scenario: the same pinned Source and Web fixture are compiled twice in clean directories.
@@ -612,10 +620,10 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const blessing = find('blessings', 'web:presentation:chainaxe-p1-movement-speed');
     const weapon = find('weapons', 'web:presentation:chainaxe-p1-m1');
 
-    assert.equal(manifest.source.commit, '83fdd201f67c6c490f32832419ea61353d7066d1');
-    assert.equal(manifest.source.sourceRevision, 'b48a8e6dcf61dcfbd8ca4ea8a89ebd636216c70907d82bd9fe6587b19c31851e');
+    assert.equal(manifest.source.commit, 'a205df69621d308a3d4b57461ec8128e359b48e3');
+    assert.equal(manifest.source.sourceRevision, '1a92c29a928bcd766a453b69555930bfb5d57c86b3dfbd593b34bac29404f20d');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.5');
+    assert.equal(version.game_releases[0].content_version, '0.0.6');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -626,8 +634,40 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(skill.payload.official.localizations['zh-TW'].sourceText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成{damage:%s}傷害的{talent_old:%s}的加強版。');
     assert.equal(skill.payload.official.resolvedText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of Brain Burst dealing +50% Damage.');
     assert.equal(skill.payload.official.localizations['zh-TW'].resolvedText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成+50%傷害的顱腦爆裂的加強版。');
+    assert.deepEqual(skill.payload.detailSections.effects, [
+      {
+        itemId: 'psyker-description-damage-parameter',
+        text: '提高顱腦崩裂相關傷害；官方說明中的加成為 50%。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-description-display-percent',
+          'darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier'
+        ]
+      }
+    ]);
+    assert.deepEqual(skill.payload.detailSections.conditions, [
+      { itemId: 'psyker-selected-talent-condition', text: '需選用顱腦崩裂天賦。' },
+      {
+        itemId: 'psyker-smite-damage-type-condition',
+        text: '此加成套用於顱腦崩裂使用的傷害類型。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
+      }
+    ]);
+    assert.deepEqual(skill.payload.detailSections.calculation, [
+      {
+        itemId: 'psyker-smite-multiplier-calculation',
+        text: '這項加成會把原有的傷害倍率乘以 1.5。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
+      }
+    ]);
     assert.deepEqual(skill.payload.detailSections.notes, [
-      { itemId: 'psyker-damage-effect-caution', text: '實際效果仍待確認。' }
+      {
+        itemId: 'psyker-damage-effect-caution',
+        text: '這是倍率加成，不是額外固定傷害；敵人實際受到的傷害還會受其他因素影響。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
+      }
+    ]);
+    assert.deepEqual(skill.payload.detailSections.extra, [
+      { itemId: 'psyker-smite-term', termRef: 'darktide:term:psyker:smite-damage-multiplier-parameter' }
     ]);
     assert.deepEqual(blessing.payload.detailSections.effects, [
       { itemId: 'chainaxe-tier-1-display-parameter', text: '第 1 階級的說明數值為 +17%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent'] }
@@ -645,7 +685,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     ]);
     const damageTerm = domains.terms.records.find(record => record.recordId === 'web:term-localization:psyker-smite-damage-multiplier-parameter');
     assert.equal(damageTerm.payload.label, '傷害倍率');
-    assert.equal(damageTerm.payload.definition, '用來辨識技能的傷害資料；實際影響仍待確認。');
+    assert.equal(damageTerm.payload.definition, '此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。');
     assert.equal(blessing.payload.official.resolvedText, '+17% Movement Speed for 2s on Weapon Special Activation.');
     assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+17%移動速度，持續2秒。');
     assert.equal(weapon.payload.name, '突擊鏈斧');
@@ -774,7 +814,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.5');
+    assert.equal(currentReceipt.contentVersion, '0.0.6');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -814,6 +854,52 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
         assert.deepEqual(await readFile(path.join(outputRoot, ...relativePath.split('/'))), bytes);
       }
     }
+  });
+});
+
+// Scenario: the exact published 0.0.5 package is the previous output for the 0.0.6 candidate build.
+// Purpose: preserve every published 0.0.5 immutable data URL with identical receipt rows and bytes.
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-6', { skip: !publishedR5Root }, async () => {
+  await withTempDirectory(async tempRoot => {
+    const outputRoot = path.join(tempRoot, 'dist-w01');
+    await cp(publishedR5Root, outputRoot, { recursive: true });
+    const priorReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    assert.equal(priorReceipt.contentVersion, '0.0.5');
+    assert.equal(priorReceipt.web.authoringCommit, 'a09863ceac2bfca3944d09081c315d62b704563c');
+    const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/'));
+    const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
+    const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
+
+    assert.equal(current.receipt.contentVersion, '0.0.6');
+    assert.equal(currentReceipt.contentVersion, '0.0.6');
+    assert.equal(currentReceipt.fixtureOnly, false);
+    assert.equal(currentReceipt.candidatePreviewOnly, true);
+    assert.equal(currentReceipt.publicationEligible, false);
+    assert.equal(currentReceipt.formalPublishAllowed, false);
+    assert.equal(priorDataRows.length, 2307);
+    for (const row of priorDataRows) {
+      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.5 receipt row ${row.path}`);
+      assert.deepEqual(
+        await readFile(path.join(outputRoot, ...row.path.split('/'))),
+        await readFile(path.join(publishedR5Root, ...row.path.split('/'))),
+        `retained 0.0.5 data bytes ${row.path}`
+      );
+    }
+    const previousPresentations = await readOfficialPresentations(publishedR5Root, priorReceipt);
+    const currentPresentations = await readOfficialPresentations(outputRoot, currentReceipt);
+    assert.equal(previousPresentations.length, 3);
+    assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
+    for (const previous of previousPresentations) {
+      const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
+      assert.deepEqual(currentPresentation.payload.official, previous.payload.official, `unchanged official text ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.payload.name, previous.payload.name, `unchanged displayed name ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.sourceRefs, previous.sourceRefs, `unchanged official references ${previous.recordId}`);
+      assert.ok(Array.isArray(previous.payload.errata), `published errata array ${previous.recordId}`);
+      assert.ok(Array.isArray(currentPresentation.payload.errata), `current errata array ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.payload.errata, previous.payload.errata, `unchanged separate errata ${previous.recordId}`);
+    }
+    await assertExactOutputInventory(outputRoot, currentReceipt.files);
   });
 });
 

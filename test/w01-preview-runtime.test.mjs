@@ -35,7 +35,7 @@ function renderedText(node) {
   return node.textContent + node.children.map(renderedText).join('');
 }
 
-async function runPreviewModule(outputRoot) {
+async function runPreviewModule(outputRoot, fetchOverride) {
   const page = new Map();
   const document = {
     createElement: tagName => fakeElement(tagName),
@@ -45,7 +45,7 @@ async function runPreviewModule(outputRoot) {
     }
   };
   const location = { origin: 'http://w01.test' };
-  const fetch = async input => {
+  const packageFetch = async input => {
     const url = new URL(input, location.origin);
     const relative = url.pathname.slice(1).split('/').join(path.sep);
     try {
@@ -55,6 +55,9 @@ async function runPreviewModule(outputRoot) {
       return new Response(new Uint8Array(), { status: 404 });
     }
   };
+  const fetch = fetchOverride
+    ? (input, init) => fetchOverride(input, init, packageFetch)
+    : packageFetch;
   const replacements = new Map();
   for (const [name, value] of Object.entries({ document, location, fetch, crypto: webcrypto })) {
     const descriptor = Object.getOwnPropertyDescriptor(globalThis, name);
@@ -102,8 +105,12 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
-  assert.match(candidateText, /遊戲說明中的傷害加成為 50%。/);
-  assert.match(candidateText, /實際效果仍待確認。/);
+  assert.match(candidateText, /提高顱腦崩裂相關傷害；官方說明中的加成為 50%。/);
+  assert.match(candidateText, /需選用顱腦崩裂天賦。/);
+  assert.match(candidateText, /此加成套用於顱腦崩裂使用的傷害類型。/);
+  assert.match(candidateText, /這項加成會把原有的傷害倍率乘以 1\.5。/);
+  assert.match(candidateText, /這是倍率加成，不是額外固定傷害；敵人實際受到的傷害還會受其他因素影響。/);
+  assert.match(candidateText, /傷害倍率：此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。/);
   assert.match(candidateText, /提速/);
   assert.match(candidateText, /第 1 階級的說明數值為 \+17%。/);
   assert.match(candidateText, /說明中的持續時間為 2 秒。/);
@@ -117,9 +124,12 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   const contentNodes = descendants(candidatePage.get('content'));
   const lists = contentNodes.filter(node => node.tagName === 'ul');
   const listItems = contentNodes.filter(node => node.tagName === 'li');
-  assert.equal(lists.length, 8);
-  assert.equal(listItems.length, 10);
+  assert.equal(lists.length, 10);
+  assert.equal(listItems.length, 13);
   assert.ok(lists.every(list => list.children.length > 0));
+  const skillCardNodes = descendants(candidatePage.get('content').children[0]);
+  assert.equal(skillCardNodes.filter(node => node.tagName === 'ul').length, 5);
+  assert.equal(skillCardNodes.filter(node => node.tagName === 'li').length, 6);
   const images = contentNodes.filter(node => node.tagName === 'img');
   assert.equal(images.length, 2);
   assert.deepEqual(images.map(image => image.attributes.src), [
@@ -153,4 +163,75 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   const wrongFixturePage = await runPreviewModule(fixtureOutput);
   assert.equal(wrongFixturePage.get('status').dataset.state, 'error');
   assert.equal(wrongFixturePage.get('status').textContent, '預覽公告狀態不符。');
+});
+
+// Scenario: all five domain responses are held by a barrier while the generated runtime starts loading.
+// Purpose: prove the runtime starts every request before any domain response arrives, and still renders nothing when one domain hash is invalid.
+test('UnitT10_domain-requests-start-together-before-first-response-and-hash-failure-renders-nothing', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-preview-parallel-'));
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  const fixtureRepo = path.join(tempRoot, 'fixture-repo');
+  const fixtureOutput = path.join(tempRoot, 'fixture-output');
+  await copyInputRoot(fixtureRepo, true);
+  await buildW01({ repoRoot: fixtureRepo, outputRoot: fixtureOutput });
+
+  const version = JSON.parse(await readFile(path.join(fixtureOutput, 'version.json'), 'utf8'));
+  const release = version.game_releases[0];
+  const manifestPath = path.join(fixtureOutput, release.manifest_path.slice(1).split('/').join(path.sep));
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const manifestUrl = new URL(release.manifest_path, 'http://w01.test/');
+  const domainPaths = new Set(manifest.files.map(file => new URL(file.path, manifestUrl).pathname));
+  let notifyFirstDomainRequest;
+  const firstDomainRequest = new Promise(resolve => { notifyFirstDomainRequest = resolve; });
+  const requestedPaths = [];
+  const pendingResponses = [];
+  let releaseResponses = false;
+  const controlledFetch = (input, init, packageFetch) => {
+    const url = new URL(input, 'http://w01.test');
+    if (!domainPaths.has(url.pathname)) return packageFetch(input, init);
+    requestedPaths.push(url.pathname);
+    if (requestedPaths.length === 1) notifyFirstDomainRequest();
+    return new Promise((resolve, reject) => {
+      const respond = async () => {
+        try {
+          resolve(await packageFetch(input, init));
+        } catch (error) {
+          reject(error);
+        }
+      };
+      pendingResponses.push(respond);
+      if (releaseResponses) void respond();
+    });
+  };
+
+  const pagePromise = runPreviewModule(fixtureOutput, controlledFetch);
+  const firstRequestStarted = await Promise.race([
+    firstDomainRequest.then(() => true),
+    pagePromise.then(() => false),
+    new Promise(resolve => setTimeout(() => resolve(false), 1000))
+  ]);
+  const requestsBeforeAnyDomainResponse = requestedPaths.length;
+  releaseResponses = true;
+  await Promise.all(pendingResponses.map(respond => respond()));
+  const page = await pagePromise;
+  assert.equal(firstRequestStarted, true);
+  assert.equal(requestsBeforeAnyDomainResponse, 5);
+  assert.equal(new Set(requestedPaths).size, 5);
+  assert.equal(page.get('status').dataset.state, undefined);
+
+  const skillsPath = new URL(manifest.files.find(file => file.kind === 'skills').path, manifestUrl).pathname;
+  const badHashPage = await runPreviewModule(fixtureOutput, async (input, init, packageFetch) => {
+    const response = await packageFetch(input, init);
+    const url = new URL(input, 'http://w01.test');
+    if (url.pathname !== skillsPath) return response;
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    bytes[bytes.length - 1] ^= 1;
+    return new Response(bytes, { status: 200 });
+  });
+  assert.equal(badHashPage.get('status').dataset.state, 'error');
+  assert.match(badHashPage.get('status').textContent, /雜湊不符/);
+  assert.equal(badHashPage.get('content')?.children.length ?? 0, 0);
+  assert.equal(badHashPage.get('terms-content')?.children.length ?? 0, 0);
+  assert.equal(badHashPage.get('changes-content')?.children.length ?? 0, 0);
 });

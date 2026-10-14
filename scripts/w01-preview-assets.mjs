@@ -272,15 +272,15 @@ async function loadPreview() {
     if (domainKinds.some(kind => !fileByKind.has(kind)) || fileByKind.size !== domainKinds.length) {
       throw new Error("共享資料域不完整。");
     }
-    const domains = new Map();
-    for (const kind of domainKinds) {
+    const domainEntries = await Promise.all(domainKinds.map(async kind => {
       const file = fileByKind.get(kind);
       const url = new URL(file.path, manifestUrl);
       if (url.origin !== location.origin) throw new Error("資料必須來自同一來源。");
       const domain = await checkedJson(url, file.sha256, kind);
       if (domain.fixtureOnly !== isFixturePackage || domain.publicationEligible !== false) throw new Error("資料域狀態與隔離預覽套件不符。");
-      domains.set(kind, domain);
-    }
+      return [kind, domain];
+    }));
+    const domains = new Map(domainEntries);
     const hasNativeOfficialLocalizations = [...domains.values()].some(domain => domain.records.some(record =>
       record.payload?.official?.localizations?.["zh-TW"]?.origin === "official"));
     if (hasNativeOfficialLocalizations !== manifest.compatibility.requiredFeatures.includes("official-native-localizations-v1")) {
