@@ -40,7 +40,8 @@ The current preview workflow uses one clean `dist-w01` output and runs these ste
 2. Build exact R1 from `872bd72bad255d40af62329b8ffe97a357935275` into `dist-w01`, retain the baseline data, and verify.
 3. Build published A from `a7fabea66f56cd5c8236b6e84a3f6c6586175840` into the same output, retain the baseline data again, and verify.
 4. Build the exact published `.3` candidate from Web commit `e516a5b896f78273544c16047126c327337a8424` into the same output, retain baseline data, and verify its existing data URLs.
-5. Build the current pending `.4` candidate into that output, retain the baseline data again, and verify the candidate plus all prior data URLs.
+5. Freeze that verified `.3` package in runner temp storage, then check out the exact published `.4` source (`b401ae50d7ebb7e44aeb59a8c864a8b93628aead`) and rebuild it into the same output. Retain baseline data and verify the exact `.4` package before recovery.
+6. Run the lifecycle tests against the frozen `.3` and exact `.4` packages, then restore the complete `.3` runtime/version/manifest into `dist-w01` while retaining every verified `.4` immutable data URL. Verify the restored package before artifact upload or preview deploy.
 
 The equivalent local commands must be run from the indicated pinned checkouts, in the same order:
 
@@ -54,8 +55,10 @@ The equivalent local commands must be run from the indicated pinned checkouts, i
     npm --prefix <published-real-0.0.3-checkout> run w01:build -- --candidate-preview --output <web-checkout>/dist-w01
     npm --prefix <published-real-0.0.3-checkout> run w01:retain -- --baseline-root <pinned-base-checkout> --output <web-checkout>/dist-w01
     npm --prefix <published-real-0.0.3-checkout> run w01:verify -- <web-checkout>/dist-w01
-    npm --prefix <web-checkout> run w01:build -- --candidate-preview --output dist-w01
-    npm --prefix <web-checkout> run w01:retain -- --baseline-root <pinned-base-checkout> --output dist-w01
+    npm --prefix <published-real-0.0.4-checkout> run w01:build -- --candidate-preview --output <web-checkout>/dist-w01
+    npm --prefix <published-real-0.0.4-checkout> run w01:retain -- --baseline-root <pinned-base-checkout> --output <web-checkout>/dist-w01
+    npm --prefix <published-real-0.0.4-checkout> run w01:verify -- <web-checkout>/dist-w01
+    npm --prefix <web-checkout> run w01:restore-preview -- --target-root <frozen-published-real-0.0.3-package> --active-root dist-w01 --proof-path <public-safe-recovery-proof.json>
     npm --prefix <web-checkout> run w01:verify -- dist-w01
 
 The baseline checkout must be commit 8a4b3db2b1e835f0757f387ca89a19b9092b35ee. The copier checks every one of the 2,277 old data paths, sizes, and SHA-256 hashes against docs/w01/retained-preview-manifest.json, refuses to overwrite different bytes, and records the retained inventory in the W01 receipt. The old data revision remains 0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b. The W01 preview uses a new immutable data revision and includes no old index, version, or runtime files.
@@ -81,12 +84,18 @@ The reviewed rollback input is the exact `content/w01/rollback.json` file. It co
 
 This section documents the historical B/fixed-R1 helper validation path. It is not the current preview deployment workflow: current pushes reconstruct baseline, R1, published A, and the exact published `.3` candidate before building pending `.4`. The current workflow does not invoke this helper. The helper remains the exact historical `0.0.2`-to-`0.0.1` recovery path; whole-preview rollback for the real `.3`/`.4` sequence requires a separately pinned release identity and reviewed selector before use.
 
-The helper command is:
+The historical helper command is:
 
     npm run w01:rollback-r1 -- --expected-r2-commit <exact-R2-SHA> --source-root <pinned-R1-checkout> --baseline-root <pinned-base-checkout>
 
-It verifies the active receipt's authoring commit against `--expected-r2-commit`, requires a clean R1 checkout at the fixed SHA, rebuilds R1 into the same output, and confirms all prior content-addressed data URLs remain byte-identical. It does not deploy by itself and does not accept an arbitrary R1 ref. The historical B/R2 rollback contract verifies this helper locally; the current candidate workflow publishes pending `.4` only after verifying retained baseline, R1, A, and exact published `.3` data.
+It verifies the active receipt's authoring commit against `--expected-r2-commit`, requires a clean R1 checkout at the fixed SHA, rebuilds R1 into the same output, and confirms all prior content-addressed data URLs remain byte-identical. It does not deploy by itself and does not accept an arbitrary R1 ref. The historical B/R2 rollback contract verifies this helper locally; it is not used by the current preview workflow.
+
+## Fixed real-candidate preview recovery
+
+The current preview deploy restores the exact published `.3` runtime from Web commit `e516a5b896f78273544c16047126c327337a8424` after rebuilding and verifying the exact published `.4` package from commit `b401ae50d7ebb7e44aeb59a8c864a8b93628aead`. The recovery helper accepts only those pinned package identities and their exact receipts, checks every listed file and path, copies `.3` runtime files, and unions the verified `.4` `data/` rows. Any shared immutable path must have identical bytes. It verifies the staged result before replacing the active output; the `.4` output remains as a same-parent backup, and a failed replacement restores it. The final package uses `.3` version/build/manifest identity and retains all `.4` data URLs.
+
+The workflow writes a public-safe recovery proof with the controller commit that ran the recovery, the unchanged `.3` and `.4` compiler/source identities, both input receipt hashes, the retained `.4` data inventory digest, and the final receipt hash. It contains no local paths or private source material. The helper does not build a release or deploy; only the existing guarded workflow deploys the verified `dist-w01` to the fixed preview worker.
 
 ## Candidate pull request
 
-After the candidate branch is committed and pushed, run npm run w01:pr from the fixed W01 branch. It uses the local gh CLI to reuse an existing open PR for that branch or create one if none exists. It refuses to silently reopen or duplicate a closed PR. Git push updates the existing branch; the script does not push code.
+After the candidate branch is committed and pushed, run npm run w01:pr from the fixed W01 branch. It uses the local gh CLI to reuse an existing open PR for that branch or create one if none exists. It refuses to silently reopen or duplicate a closed PR. Fixture and sanitized native pending-preview composition receipts are accepted only while publication and formal publishing remain disabled; PR text keeps human content review pending and does not label a native candidate as a fixture. Git push updates the existing branch; the script does not push code.

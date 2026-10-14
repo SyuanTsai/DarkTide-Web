@@ -58,6 +58,13 @@ jobs:
           ref: e516a5b896f78273544c16047126c327337a8424
           path: prior-real-0-0-3
           persist-credentials: false
+      - name: Check out the exact published pending 0.0.4 candidate source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Web
+          ref: b401ae50d7ebb7e44aeb59a8c864a8b93628aead
+          path: prior-real-0-0-4
+          persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -69,13 +76,6 @@ jobs:
       - name: Rebuild the pinned production baseline data
         working-directory: baseline
         run: npm run build
-      - name: Run Web repository tests and pinned historical lifecycle checks
-        working-directory: web
-        env:
-          W01_PRIOR_R1_ROOT: ${{ github.workspace }}/prior-r1
-          W01_PRIOR_R2_ROOT: ${{ github.workspace }}/prior-r2
-          W01_BASELINE_ROOT: ${{ github.workspace }}/baseline
-        run: npm test
       - name: Rebuild exact R1 package into the candidate output
         working-directory: prior-r1
         run: npm run w01:build -- --output ../web/dist-w01
@@ -103,13 +103,36 @@ jobs:
       - name: Verify exact published real 0.0.3 and retained historical data URLs
         working-directory: prior-real-0-0-3
         run: npm run w01:verify -- ../web/dist-w01
-      - name: Build current pending W01 candidate preview
+      - name: Freeze the verified published 0.0.3 package for recovery
+        working-directory: prior-real-0-0-3
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/w01-real-r3"
+          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r3/"
+      - name: Rebuild the exact published 0.0.4 package and retained data
+        working-directory: prior-real-0-0-4
+        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
+      - name: Retain the pinned baseline in exact published 0.0.4 package
+        working-directory: prior-real-0-0-4
+        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
+      - name: Verify exact published 0.0.4 and retained historical data URLs
+        working-directory: prior-real-0-0-4
+        run: npm run w01:verify -- ../web/dist-w01
+      - name: Run Web tests against pinned lifecycle packages
         working-directory: web
-        run: npm run w01:build -- --candidate-preview --output dist-w01
-      - name: Retain the pinned baseline in the pending candidate
+        env:
+          W01_PRIOR_R1_ROOT: ${{ github.workspace }}/prior-r1
+          W01_PRIOR_R2_ROOT: ${{ github.workspace }}/prior-r2
+          W01_BASELINE_ROOT: ${{ github.workspace }}/baseline
+          W01_PRIOR_REAL_R3_ROOT: ${{ runner.temp }}/w01-real-r3
+          W01_PRIOR_REAL_R4_ROOT: ${{ github.workspace }}/web/dist-w01
+        run: npm test
+      - name: Restore exact published 0.0.3 runtime and retain 0.0.4 data URLs
         working-directory: web
-        run: npm run w01:retain -- --baseline-root ../baseline --output dist-w01
-      - name: Verify the pending candidate and retained historical data URLs
+        shell: bash
+        run: npm run w01:restore-preview -- --target-root "$RUNNER_TEMP/w01-real-r3" --active-root dist-w01 --proof-path "$RUNNER_TEMP/w01-preview-recovery-proof.json"
+      - name: Verify restored 0.0.3 runtime and retained 0.0.4 data URLs
         working-directory: web
         run: npm run w01:verify -- dist-w01
       - name: Upload only the isolated W01 preview artifact
@@ -119,6 +142,13 @@ jobs:
           path: web/dist-w01/
           if-no-files-found: error
           retention-days: 7
+      - name: Upload the public-safe fixed recovery proof
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: darktide-w01-fixed-preview-recovery-proof
+          path: ${{ runner.temp }}/w01-preview-recovery-proof.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Deploy only the fixed W01 preview worker
         if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
         working-directory: web

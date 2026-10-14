@@ -41,13 +41,14 @@ test('UnitT01_workflow-deploys-only-the-guarded-preview-worker', () => {
   assert.ok(steps.some(step => step.name === 'Verify the deployed preview and write a deployment receipt'));
 });
 
-// Scenario: the pending 0.0.4 candidate starts from an empty runner with historical preview URLs.
-// Purpose: rebuild exact R1, A, and published 0.0.3 inputs, then compile and verify 0.0.4 before preview-only deploy.
-test('UnitT02_workflow-builds-pending-candidate-after-pinned-history', () => {
+// Scenario: the fixed preview workflow starts on an empty runner and restores the exact published .3 runtime.
+// Purpose: rebuild the pinned history and exact .3/.4 packages, retain all .4 data URLs, restore .3, and verify before preview-only deploy.
+test('UnitT02_workflow-restores-exact-published-0-0-3-and-retains-0-0-4-data', () => {
   const steps = workflow.jobs['isolated-preview'].steps;
   const priorR1Checkout = steps.find(step => step.name === 'Check out the exact pinned R1 preview source');
   const priorR2Checkout = steps.find(step => step.name === 'Check out the exact published R2 A data source');
   const priorRealR1Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.3 candidate source');
+  const priorRealR2Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.4 candidate source');
   const baselineBuild = steps.findIndex(step => step.name === 'Rebuild the pinned production baseline data');
   const r1Build = steps.findIndex(step => step.name === 'Rebuild exact R1 package into the candidate output');
   const r1Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in R1 package');
@@ -58,14 +59,19 @@ test('UnitT02_workflow-builds-pending-candidate-after-pinned-history', () => {
   const priorRealR1Build = steps.findIndex(step => step.name === 'Rebuild exact published real 0.0.3 package into the candidate output');
   const priorRealR1Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in exact 0.0.3 package');
   const priorRealR1Verify = steps.findIndex(step => step.name === 'Verify exact published real 0.0.3 and retained historical data URLs');
-  const candidateBuild = steps.find(step => step.name === 'Build current pending W01 candidate preview');
-  const candidateRetain = steps.findIndex(step => step.name === 'Retain the pinned baseline in the pending candidate');
-  const candidateVerify = steps.findIndex(step => step.name === 'Verify the pending candidate and retained historical data URLs');
+  const r3Freeze = steps.findIndex(step => step.name === 'Freeze the verified published 0.0.3 package for recovery');
+  const r4Build = steps.findIndex(step => step.name === 'Rebuild the exact published 0.0.4 package and retained data');
+  const r4Retain = steps.findIndex(step => step.name === 'Retain the pinned baseline in exact published 0.0.4 package');
+  const r4Verify = steps.findIndex(step => step.name === 'Verify exact published 0.0.4 and retained historical data URLs');
+  const runTests = steps.findIndex(step => step.name === 'Run Web tests against pinned lifecycle packages');
+  const restore = steps.findIndex(step => step.name === 'Restore exact published 0.0.3 runtime and retain 0.0.4 data URLs');
+  const restoredVerify = steps.findIndex(step => step.name === 'Verify restored 0.0.3 runtime and retained 0.0.4 data URLs');
   const upload = steps.findIndex(step => step.name === 'Upload only the isolated W01 preview artifact');
+  const proofUpload = steps.findIndex(step => step.name === 'Upload the public-safe fixed recovery proof');
   const deploy = steps.findIndex(step => step.name === 'Deploy only the fixed W01 preview worker');
   const deploymentReceipt = steps.findIndex(step => step.name === 'Verify the deployed preview and write a deployment receipt');
   const receiptUpload = steps.findIndex(step => step.name === 'Upload the public preview deployment receipt');
-  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, priorRealR1Build, priorRealR1Retain, priorRealR1Verify, steps.indexOf(candidateBuild), candidateRetain, candidateVerify, upload, deploy, deploymentReceipt, receiptUpload];
+  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, priorRealR1Build, priorRealR1Retain, priorRealR1Verify, r3Freeze, r4Build, r4Retain, r4Verify, runTests, restore, restoredVerify, upload, proofUpload, deploy, deploymentReceipt, receiptUpload];
 
   assert.equal(priorR1Checkout.with.ref, '872bd72bad255d40af62329b8ffe97a357935275');
   assert.equal(priorR2Checkout.with.ref, 'a7fabea66f56cd5c8236b6e84a3f6c6586175840');
@@ -76,21 +82,32 @@ test('UnitT02_workflow-builds-pending-candidate-after-pinned-history', () => {
   assert.equal(priorRealR1Checkout.with.path, 'prior-real-0-0-3');
   assert.equal(priorRealR1Checkout.with.repository, 'SyuanTsai/DarkTide-Web');
   assert.equal(priorRealR1Checkout.with['persist-credentials'], false);
+  assert.equal(priorRealR2Checkout.with.ref, 'b401ae50d7ebb7e44aeb59a8c864a8b93628aead');
+  assert.equal(priorRealR2Checkout.with.path, 'prior-real-0-0-4');
+  assert.equal(priorRealR2Checkout.with.repository, 'SyuanTsai/DarkTide-Web');
+  assert.equal(priorRealR2Checkout.with['persist-credentials'], false);
   assert.ok(order.every(index => index >= 0));
   assert.ok(baselineBuild < r1Build);
   assert.ok(r1Build < r1Retain && r1Retain < r1Verify);
   assert.ok(r1Verify < r2Build && r2Build < r2Retain && r2Retain < r2Verify);
   assert.ok(r2Verify < priorRealR1Build && priorRealR1Build < priorRealR1Retain && priorRealR1Retain < priorRealR1Verify);
-  assert.ok(priorRealR1Verify < steps.indexOf(candidateBuild) && steps.indexOf(candidateBuild) < candidateRetain);
-  assert.ok(candidateRetain < candidateVerify && candidateVerify < upload && upload < deploy);
-  assert.equal(candidateBuild['working-directory'], 'web');
+  assert.ok(priorRealR1Verify < r3Freeze && r3Freeze < r4Build && r4Build < r4Retain && r4Retain < r4Verify);
+  assert.ok(r4Verify < runTests && runTests < restore && restore < restoredVerify && restoredVerify < upload && upload < proofUpload && proofUpload < deploy);
   assert.equal(steps[priorRealR1Build]['working-directory'], 'prior-real-0-0-3');
   assert.match(steps[priorRealR1Build].run, /w01:build -- --candidate-preview --output \.\.\/web\/dist-w01/);
   assert.match(steps[priorRealR1Retain].run, /--baseline-root \.\.\/baseline --output \.\.\/web\/dist-w01/);
   assert.match(steps[priorRealR1Verify].run, /w01:verify -- \.\.\/web\/dist-w01/);
-  assert.match(candidateBuild.run, /w01:build -- --candidate-preview --output dist-w01/);
-  assert.match(steps[candidateRetain].run, /--baseline-root \.\.\/baseline --output dist-w01/);
-  assert.match(steps[candidateVerify].run, /w01:verify -- dist-w01/);
+  assert.match(steps[r3Freeze].run, /cp -a \.\.\/web\/dist-w01/);
+  assert.match(steps[r4Build].run, /w01:build -- --candidate-preview --output \.\.\/web\/dist-w01/);
+  assert.match(steps[r4Retain].run, /--baseline-root \.\.\/baseline --output \.\.\/web\/dist-w01/);
+  assert.match(steps[r4Verify].run, /w01:verify -- \.\.\/web\/dist-w01/);
+  assert.equal(steps[runTests].env.W01_PRIOR_REAL_R3_ROOT, '${{ runner.temp }}/w01-real-r3');
+  assert.equal(steps[runTests].env.W01_PRIOR_REAL_R4_ROOT, '${{ github.workspace }}/web/dist-w01');
+  assert.match(steps[restore].run, /w01:restore-preview -- --target-root .*w01-real-r3.*--active-root dist-w01.*--proof-path .*w01-preview-recovery-proof\.json/);
+  assert.match(steps[restoredVerify].run, /w01:verify -- dist-w01/);
+  assert.equal(steps[restore]['working-directory'], 'web');
+  assert.equal(steps[proofUpload].with.path, '${{ runner.temp }}/w01-preview-recovery-proof.json');
+  assert.equal(steps.some(step => step.name === 'Build current pending W01 candidate preview'), false);
   assert.equal(steps.some(step => step.name === 'Restore fixed R1 from exact published R2 A'), false);
   assert.equal(steps.some(step => JSON.stringify(step).includes('w01:rollback-r1')), false);
   assert.ok(deploy < deploymentReceipt && deploymentReceipt < receiptUpload);
