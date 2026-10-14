@@ -258,21 +258,54 @@
           "effects": [
             {
               "itemId": "psyker-description-damage-parameter",
-              "text": "提高顱腦崩裂相關傷害；官方說明中的加成為 50%。",
+              "text": "選用此天賦後，顱腦崩裂相關傷害會套用 1.5 倍倍率；在其他條件相同時，相當於增加 50%。這是乘算，不是額外固定傷害。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-description-display-percent",
                 "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+              ]
+            },
+            {
+              "itemId": "psyker-base-hit-peril-cost",
+              "text": "成功造成傷害才會額外增加反噬；沒有其他加成時，基本增加量為 25%，不隨蓄力程度改變。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
               ]
             }
           ],
           "conditions": [
             {
-              "itemId": "psyker-selected-talent-condition",
-              "text": "需選用顱腦崩裂天賦。"
+              "itemId": "psyker-normal-charge-condition",
+              "text": "一般模式不必先取得目標即可開始蓄力，也會開始累積反噬；瞄準會跟隨系統選定的目標更新。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+              ]
+            },
+            {
+              "itemId": "psyker-sticky-charge-condition",
+              "text": "鎖定目標模式需先取得有效目標；尚未鎖定時不會預先蓄力，鎖定後也不會隨瞄準切換目標。目標改變會重新計算這次蓄力時間。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+              ]
+            },
+            {
+              "itemId": "psyker-lock-on-charge-condition",
+              "text": "開始鎖定蓄力需要有效目標。從一般蓄力切換成鎖定時，可接續已累積的蓄力；重新開始蓄力則採一般模式的基本時間。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+              ]
+            },
+            {
+              "itemId": "psyker-lock-on-stagger-condition",
+              "text": "可受此攻擊僵直的目標：直接鎖定維持 1 秒會造成一次小幅僵直；從一般蓄力切換鎖定後，超過 0.25 秒也會造成一次小幅僵直。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+              ]
             },
             {
               "itemId": "psyker-smite-damage-type-condition",
-              "text": "此加成套用於顱腦崩裂使用的傷害類型。",
+              "text": "這項倍率只套用於顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
               ]
@@ -280,20 +313,65 @@
           ],
           "calculation": [
             {
-              "itemId": "psyker-smite-multiplier-calculation",
-              "text": "這項加成會把原有的傷害倍率乘以 1.5。",
+              "itemId": "psyker-estimate-assumptions",
+              "text": "以下是既有分析的估算，假設蓄力速度沒有修正、沒有其他角色加成，並在滿蓄後立即成功造成傷害；尚未經遊戲內實測。"
+            },
+            {
+              "itemId": "psyker-damage-multiplier-example",
+              "text": "同一次攻擊、同一目標與部位、同一蓄力程度，且其他倍率不變時，假設傷害值為 100，乘上 1.5 後為 150；100 只是比較基準，不是固定實際傷害。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+              ]
+            },
+            {
+              "itemId": "psyker-normal-charge-peril-estimate",
+              "text": "一般模式約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。滿蓄後每多持續 1 秒，約再增加 9%。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+              ]
+            },
+            {
+              "itemId": "psyker-normal-charge-total-peril-estimate",
+              "text": "在上述條件下，3 秒滿蓄約累積 20%，成功造成傷害再加基本 25% 命中成本，合計約 45%；滿蓄後多持續 1 秒再命中，合計約 54%。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+              ]
+            },
+            {
+              "itemId": "psyker-sticky-charge-peril-estimate",
+              "text": "鎖定目標模式需先取得有效目標；蓄力 1、2 秒時，反噬約為 10%、20%，約 2 秒滿蓄。滿蓄後每多持續 1 秒，反噬約再增加 9%；滿蓄後立即成功造成傷害，合計約為 45%。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
               ]
             }
           ],
           "notes": [
             {
-              "itemId": "psyker-damage-effect-caution",
-              "text": "這是倍率加成，不是額外固定傷害；敵人實際受到的傷害還會受其他因素影響。",
+              "itemId": "psyker-empty-cast-peril-cost",
+              "text": "空放或未實際造成傷害時，不會支付基本命中成本；但蓄力期間已累積的反噬仍會保留。",
               "claimRefs": [
-                "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
               ]
+            },
+            {
+              "itemId": "psyker-peril-estimate-limits",
+              "text": "蓄力速度與角色加成會改變實際蓄力時間或反噬；其他屬性與能力加成也會影響實際數字，以上假設不適用於所有配裝。",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+              ]
+            },
+            {
+              "itemId": "psyker-final-damage-limits",
+              "text": "攻擊資料中的基礎數值不能直接當成最終傷害；護甲、部位、蓄力與其他加成都會影響結果。"
+            },
+            {
+              "itemId": "psyker-runtime-flow-limits",
+              "text": "移動、目標消失或改變、受到僵直及連線同步都可能影響實際流程。"
             }
           ],
           "extra": [

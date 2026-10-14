@@ -17,6 +17,13 @@ import { previewAssets } from './w01-preview-assets.mjs';
 
 const SCRIPT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
+const UPSTREAM_GAME_SOURCE_REPOSITORY = 'https://github.com/Aussiemon/Darktide-Source-Code';
+const FIXED_LEGACY_ANALYSIS_REFERENCE = {
+  sourceId: 'legacy:mods:psyker:brain-burst-improved:analysis-en',
+  repository: 'https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods',
+  commit: '241ad76ce62330472aa423055a5b85db59bb6c0d',
+  path: 'Game Info/releases/1.13.X/skills/talents/Psyker/en/psyker_brain_burst_improved.md'
+};
 const SOURCE_ARTIFACTS = ['technical.json', 'game-changes.json'];
 const DOMAIN_KINDS = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
 const DOMAIN_DEPENDENCIES = {
@@ -604,13 +611,22 @@ function validateSourceReferenceClosure(sourceRecords, sourceRefs, owner) {
     assertPlainObject(sourceRef, label);
     const locatorKeys = ['repository', 'commit', 'path', 'snapshot'];
     const hasLocator = locatorKeys.some(key => Object.hasOwn(sourceRef, key));
+    if (owner === 'source' && sourceRef.sourceId === FIXED_LEGACY_ANALYSIS_REFERENCE.sourceId && !hasLocator) {
+      fail(label + ' legacy analysis reference must retain its fixed public locator');
+    }
     if (owner !== 'source' && hasLocator) fail(label + ' may not contain Source-owned repository locators');
     if (owner === 'source' && Object.hasOwn(sourceRef, 'officialName')) fail(label + ' may not contain Web-owned officialName data');
     if (hasLocator) {
       if (owner !== 'source' || locatorKeys.some(key => !Object.hasOwn(sourceRef, key))) {
         fail(label + ' public locator must contain repository, commit, path, and snapshot together');
       }
-      if (sourceRef.repository !== 'https://github.com/Aussiemon/Darktide-Source-Code') {
+      if (sourceRef.sourceId === FIXED_LEGACY_ANALYSIS_REFERENCE.sourceId) {
+        if (sourceRef.repository !== FIXED_LEGACY_ANALYSIS_REFERENCE.repository ||
+            sourceRef.commit !== FIXED_LEGACY_ANALYSIS_REFERENCE.commit ||
+            sourceRef.path !== FIXED_LEGACY_ANALYSIS_REFERENCE.path) {
+          fail(label + ' legacy analysis reference does not match its fixed public locator');
+        }
+      } else if (sourceRef.repository !== UPSTREAM_GAME_SOURCE_REPOSITORY) {
         fail(label + '.repository is not an allowlisted public Source repository');
       }
       if (typeof sourceRef.commit !== 'string' || !/^[a-f0-9]{40}$/.test(sourceRef.commit)) {

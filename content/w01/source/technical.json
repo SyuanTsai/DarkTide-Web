@@ -31,7 +31,10 @@
       "owner": "source",
       "payload": {
         "claimRefs": [
-          "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+          "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier",
+          "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+          "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+          "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
         ],
         "termRef": "darktide:term:psyker:smite-damage-multiplier-parameter"
       },
@@ -51,7 +54,8 @@
         "evidenceRefs": [
           "darktide:evidence:psyker:brain-burst-improved-smite-damage-multiplier-code",
           "darktide:evidence:psyker:brain-burst-improved-smite-damage-calculation-code",
-          "darktide:evidence:psyker:smite-action-damage-type-code"
+          "darktide:evidence:psyker:smite-action-damage-type-code",
+          "darktide:evidence:psyker:brain-burst-improved-legacy-analysis-smite-damage-multiplier"
         ],
         "property": "template.stat_buffs.smite_damage_multiplier",
         "targetRef": "darktide:skill:psyker:brain-burst-improved",
@@ -458,6 +462,231 @@
       "sourceRefs": [
         "public-code:psyker-smite-action-ba6c148"
       ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "The archived analysis identifies a 1.5 Smite damage multiplier and relates it to the Smite-only calculation branch. This is a bounded parameter relationship, not a final-damage result.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-legacy-analysis-smite-damage-multiplier",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-tree-ba6c148",
+        "public-code:psyker-talents-ba6c148",
+        "public-code:psyker-abilities-ba6c148",
+        "public-code:psyker-buff-templates-ba6c148",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:damage-calculation-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "The archived analysis records a 3-second normal-charge default when smite_attack_speed=1. Under the described non-target-locked update conditions, charging and Peril can begin before a valid target is acquired. This is a template-level observation, not a universal runtime time.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-normal-charge-base-time-legacy-analysis",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-abilities-ba6c148",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "The archived analysis records a 2-second sticky charge when smite_attack_speed=1, after acquiring a valid lockable target; target-locked mode cannot precharge or switch targets while the lock is maintained. If the target supports Smite stagger, maintaining the lock for 1 second applies one small stagger.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-sticky-charge-base-time-legacy-analysis",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148",
+        "public-code:charge-action-module-ba6c148",
+        "public-code:warp-charge-action-module-ba6c148",
+        "public-code:warp-charge-ba6c148",
+        "public-code:shared-overheat-warp-charge-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "A fresh lock-on charge requires a valid Smite target and uses the normal 3-second default. Chaining can preserve current charge level, while changing the target resets the charge timer. If a target supports Smite stagger, more than 0.25 seconds locked applies one small stagger; these are bounded branch observations, not universal runtime timing.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-lock-on-charge-legacy-analysis",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148",
+        "public-code:charge-action-module-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "The archived analysis records a 0.25 base Peril parameter paid only after successful damage; empty casts and misses do not enter that payment branch. The described payment is independent of charge level because the template does not enable use_charge.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-successful-hit-base-peril-legacy-analysis",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-damage-target-ba6c148",
+        "public-code:warp-charge-action-module-ba6c148",
+        "public-code:warp-charge-ba6c148",
+        "public-code:shared-overheat-warp-charge-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "Under the archived no-buff assumptions with smite_attack_speed=1, full charge is estimated at 20% Peril; a successful hit adds the 25% base cost for 45% total. Holding full charge for another second adds 9%/s. These are template-based estimates, not measured runtime outcomes.",
+        "sourceRef": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+      },
+      "recordId": "darktide:evidence:psyker:brain-burst-improved-combined-charge-and-peril-example-legacy-analysis",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-tree-ba6c148",
+        "public-code:psyker-talents-ba6c148",
+        "public-code:psyker-abilities-ba6c148",
+        "public-code:psyker-buff-templates-ba6c148",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:damage-calculation-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148",
+        "public-code:charge-action-module-ba6c148",
+        "public-code:warp-charge-action-module-ba6c148",
+        "public-code:action-damage-target-ba6c148",
+        "public-code:warp-charge-ba6c148",
+        "public-code:shared-overheat-warp-charge-ba6c148",
+        "public-code:psyker-damage-profile-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-observed",
+        "context": {},
+        "evidenceRefs": [
+          "darktide:evidence:psyker:brain-burst-improved-normal-charge-base-time-legacy-analysis",
+          "darktide:evidence:psyker:brain-burst-improved-lock-on-charge-legacy-analysis",
+          "darktide:evidence:psyker:brain-burst-improved-combined-charge-and-peril-example-legacy-analysis"
+        ],
+        "property": "action.psyker_smite.action_charge_target.default_charge_time",
+        "targetRef": "darktide:skill:psyker:brain-burst-improved",
+        "value": {
+          "decimal": "3",
+          "status": "known",
+          "unit": "s"
+        }
+      },
+      "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-abilities-ba6c148",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148",
+        "public-code:charge-action-module-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-observed",
+        "context": {},
+        "evidenceRefs": [
+          "darktide:evidence:psyker:brain-burst-improved-sticky-charge-base-time-legacy-analysis",
+          "darktide:evidence:psyker:brain-burst-improved-combined-charge-and-peril-example-legacy-analysis"
+        ],
+        "property": "action.psyker_smite.action_charge_target_sticky.charge_time",
+        "targetRef": "darktide:skill:psyker:brain-burst-improved",
+        "value": {
+          "decimal": "2",
+          "status": "known",
+          "unit": "s"
+        }
+      },
+      "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-smite-targeting-ba6c148",
+        "public-code:psyker-smite-targeting-module-ba6c148",
+        "public-code:charge-action-module-ba6c148",
+        "public-code:warp-charge-action-module-ba6c148",
+        "public-code:warp-charge-ba6c148",
+        "public-code:shared-overheat-warp-charge-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-observed",
+        "context": {},
+        "evidenceRefs": [
+          "darktide:evidence:psyker:brain-burst-improved-successful-hit-base-peril-legacy-analysis",
+          "darktide:evidence:psyker:brain-burst-improved-combined-charge-and-peril-example-legacy-analysis"
+        ],
+        "property": "charge_template.psyker_smite_use_power.warp_charge_percent",
+        "targetRef": "darktide:skill:psyker:brain-burst-improved",
+        "value": {
+          "decimal": "0.25",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "legacy:mods:psyker:brain-burst-improved:analysis-en",
+        "public-code:psyker-smite-action-ba6c148",
+        "public-code:weapon-charge-templates-ba6c148",
+        "public-code:action-damage-target-ba6c148",
+        "public-code:warp-charge-action-module-ba6c148",
+        "public-code:warp-charge-ba6c148",
+        "public-code:shared-overheat-warp-charge-ba6c148"
+      ]
     }
   ],
   "schemaVersion": "2.0.0",
@@ -571,7 +800,139 @@
         "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
       },
       "sourceId": "public-code:psyker-smite-action-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/ui/views/talent_builder_view/layouts/psyker_tree.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 657003b3b9c92f83fb7dedf7fb5b1d91360049f2. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 255-284; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:psyker-tree-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/ability/player_abilities/abilities/psyker_abilities.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 fb1626cbfe5dcc01f6733434557515fa3026e26a. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 106-118; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:psyker-abilities-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_handling_templates/weapon_charge_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 8c0d08ae230c2db8b9fd28741daa57a188e544e7. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 136-154; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-charge-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/actions/action_smite_targeting.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 47c655fe4fe405532c417cdbd1122c400220744b. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 41-60, 69-124, 153-172; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:action-smite-targeting-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/actions/modules/psyker_smite_targeting_action_module.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 383d5b48cc38be66730bb1e31ea597c1cd675e61. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 32-66; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:psyker-smite-targeting-module-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/actions/modules/charge_action_module.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 97a088567030c6dcfee114158ab9a065a8e7a923. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 20-67; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:charge-action-module-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/actions/modules/warp_charge_action_module.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 f2e3f34a6a0f8859dd7ea14f4647daf2e936fb95. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 19-39; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:warp-charge-action-module-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/actions/action_damage_target.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 893011d7446d0ee3b4e6791bb8f5845c8daf4265. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 57-102, 169-178; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:action-damage-target-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/utilities/warp_charge.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 18b479af32968f8ba5f5e93b042fb3da616b7389. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 58-85, 116-139; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:warp-charge-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/utilities/shared_overheat_and_warp_charge_functions.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 b55bc8f7fa0235e81d4df4c02e6c7323f3f4f2d2. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 5-8, 26-41; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:shared-overheat-warp-charge-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/damage/damage_profiles/archetypes/psyker_damage_profile_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code file with Git blob SHA-1 bf3cfb8939ca682cc1604d9d5cb37b506d11a19d. It is the same blob at the 1.13.1 and 1.13.2 commits for the historical citation range(s) 143-184; this does not establish a runtime result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:psyker-damage-profile-ba6c148"
+    },
+    {
+      "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+      "fixtureOnly": false,
+      "path": "Game Info/releases/1.13.X/skills/talents/Psyker/en/psyker_brain_burst_improved.md",
+      "repository": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+      "safeSummary": "Byte-exact historical English analysis from the public Mods repository at the fixed 1.13.1 baseline. It is retained as an archive and is not current approved technical data.",
+      "snapshot": {
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d"
+      },
+      "sourceId": "legacy:mods:psyker:brain-burst-improved:analysis-en"
     }
   ],
-  "sourceRevision": "1a92c29a928bcd766a453b69555930bfb5d57c86b3dfbd593b34bac29404f20d"
+  "sourceRevision": "b4068895536183ee34d3beff4d6741c8d6355c3912dd7e8bb1955c110d7d7ddc"
 }

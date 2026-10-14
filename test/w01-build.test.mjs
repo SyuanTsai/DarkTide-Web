@@ -10,6 +10,7 @@ import { jsonBytes } from '../src/static/common.mjs';
 const repoRoot = path.resolve(import.meta.dirname, '..');
 const domainKinds = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
 const publishedR5Root = process.env.W01_PRIOR_REAL_R5_ROOT;
+const publishedR6Root = process.env.W01_PRIOR_REAL_R6_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function withTempDirectory(callback) {
@@ -620,10 +621,11 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const blessing = find('blessings', 'web:presentation:chainaxe-p1-movement-speed');
     const weapon = find('weapons', 'web:presentation:chainaxe-p1-m1');
 
-    assert.equal(manifest.source.commit, 'a205df69621d308a3d4b57461ec8128e359b48e3');
-    assert.equal(manifest.source.sourceRevision, '1a92c29a928bcd766a453b69555930bfb5d57c86b3dfbd593b34bac29404f20d');
+    assert.equal(manifest.source.commit, 'f216b61e78b5507877645623950b954c1f8ec01b');
+    assert.equal(manifest.source.sourceRevision, 'b4068895536183ee34d3beff4d6741c8d6355c3912dd7e8bb1955c110d7d7ddc');
+    assert.equal(manifest.source.manifestSha256, '64cb59aa48064f5e2cc31a6279fa8ba074bee1a4659830658da7cae5805ae982');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.6');
+    assert.equal(version.game_releases[0].content_version, '0.0.7');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -637,33 +639,108 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.effects, [
       {
         itemId: 'psyker-description-damage-parameter',
-        text: '提高顱腦崩裂相關傷害；官方說明中的加成為 50%。',
+        text: '選用此天賦後，顱腦崩裂相關傷害會套用 1.5 倍倍率；在其他條件相同時，相當於增加 50%。這是乘算，不是額外固定傷害。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-description-display-percent',
           'darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier'
         ]
+      },
+      {
+        itemId: 'psyker-base-hit-peril-cost',
+        text: '成功造成傷害才會額外增加反噬；沒有其他加成時，基本增加量為 25%，不隨蓄力程度改變。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio']
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.conditions, [
-      { itemId: 'psyker-selected-talent-condition', text: '需選用顱腦崩裂天賦。' },
+      {
+        itemId: 'psyker-normal-charge-condition',
+        text: '一般模式不必先取得目標即可開始蓄力，也會開始累積反噬；瞄準會跟隨系統選定的目標更新。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
+      },
+      {
+        itemId: 'psyker-sticky-charge-condition',
+        text: '鎖定目標模式需先取得有效目標；尚未鎖定時不會預先蓄力，鎖定後也不會隨瞄準切換目標。目標改變會重新計算這次蓄力時間。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
+        ]
+      },
+      {
+        itemId: 'psyker-lock-on-charge-condition',
+        text: '開始鎖定蓄力需要有效目標。從一般蓄力切換成鎖定時，可接續已累積的蓄力；重新開始蓄力則採一般模式的基本時間。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
+      },
+      {
+        itemId: 'psyker-lock-on-stagger-condition',
+        text: '可受此攻擊僵直的目標：直接鎖定維持 1 秒會造成一次小幅僵直；從一般蓄力切換鎖定後，超過 0.25 秒也會造成一次小幅僵直。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
+        ]
+      },
       {
         itemId: 'psyker-smite-damage-type-condition',
-        text: '此加成套用於顱腦崩裂使用的傷害類型。',
+        text: '這項倍率只套用於顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.calculation, [
       {
-        itemId: 'psyker-smite-multiplier-calculation',
-        text: '這項加成會把原有的傷害倍率乘以 1.5。',
+        itemId: 'psyker-estimate-assumptions',
+        text: '以下是既有分析的估算，假設蓄力速度沒有修正、沒有其他角色加成，並在滿蓄後立即成功造成傷害；尚未經遊戲內實測。'
+      },
+      {
+        itemId: 'psyker-damage-multiplier-example',
+        text: '同一次攻擊、同一目標與部位、同一蓄力程度，且其他倍率不變時，假設傷害值為 100，乘上 1.5 後為 150；100 只是比較基準，不是固定實際傷害。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
+      },
+      {
+        itemId: 'psyker-normal-charge-peril-estimate',
+        text: '一般模式約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。滿蓄後每多持續 1 秒，約再增加 9%。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
+        ]
+      },
+      {
+        itemId: 'psyker-normal-charge-total-peril-estimate',
+        text: '在上述條件下，3 秒滿蓄約累積 20%，成功造成傷害再加基本 25% 命中成本，合計約 45%；滿蓄後多持續 1 秒再命中，合計約 54%。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
+        ]
+      },
+      {
+        itemId: 'psyker-sticky-charge-peril-estimate',
+        text: '鎖定目標模式需先取得有效目標；蓄力 1、2 秒時，反噬約為 10%、20%，約 2 秒滿蓄。滿蓄後每多持續 1 秒，反噬約再增加 9%；滿蓄後立即成功造成傷害，合計約為 45%。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
+        ]
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.notes, [
       {
-        itemId: 'psyker-damage-effect-caution',
-        text: '這是倍率加成，不是額外固定傷害；敵人實際受到的傷害還會受其他因素影響。',
-        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
+        itemId: 'psyker-empty-cast-peril-cost',
+        text: '空放或未實際造成傷害時，不會支付基本命中成本；但蓄力期間已累積的反噬仍會保留。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio']
+      },
+      {
+        itemId: 'psyker-peril-estimate-limits',
+        text: '蓄力速度與角色加成會改變實際蓄力時間或反噬；其他屬性與能力加成也會影響實際數字，以上假設不適用於所有配裝。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
+        ]
+      },
+      {
+        itemId: 'psyker-final-damage-limits',
+        text: '攻擊資料中的基礎數值不能直接當成最終傷害；護甲、部位、蓄力與其他加成都會影響結果。'
+      },
+      {
+        itemId: 'psyker-runtime-flow-limits',
+        text: '移動、目標消失或改變、受到僵直及連線同步都可能影響實際流程。'
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.extra, [
@@ -694,8 +771,14 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(blessing.reviewState, 'pending');
     assert.equal(weapon.reviewState, 'pending');
 
+    const legacyAnalysisRefs = manifest.source.references.filter(reference => reference.sourceId === 'legacy:mods:psyker:brain-burst-improved:analysis-en');
+    assert.equal(legacyAnalysisRefs.length, 1);
+    assert.equal(legacyAnalysisRefs[0].repository, 'https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods');
+    assert.equal(legacyAnalysisRefs[0].commit, '241ad76ce62330472aa423055a5b85db59bb6c0d');
+    assert.equal(legacyAnalysisRefs[0].path, 'Game Info/releases/1.13.X/skills/talents/Psyker/en/psyker_brain_burst_improved.md');
+    assert.deepEqual(legacyAnalysisRefs[0].snapshot, { commit: '241ad76ce62330472aa423055a5b85db59bb6c0d' });
     for (const reference of manifest.source.references) {
-      if (!reference.repository) continue;
+      if (!reference.repository || reference.sourceId === 'legacy:mods:psyker:brain-burst-improved:analysis-en') continue;
       assert.equal(reference.repository, 'https://github.com/Aussiemon/Darktide-Source-Code');
       assert.match(reference.commit, /^[a-f0-9]{40}$/);
       assert.equal(reference.snapshot.commit, reference.commit);
@@ -814,7 +897,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.6');
+    assert.equal(currentReceipt.contentVersion, '0.0.7');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -857,9 +940,9 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is the previous output for the 0.0.6 candidate build.
-// Purpose: preserve every published 0.0.5 immutable data URL with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-6', { skip: !publishedR5Root }, async () => {
+// Scenario: the exact published 0.0.5 package is present in the 0.0.7 candidate's retained history.
+// Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-7', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -871,8 +954,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-6', { ski
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.6');
-    assert.equal(currentReceipt.contentVersion, '0.0.6');
+    assert.equal(current.receipt.contentVersion, '0.0.7');
+    assert.equal(currentReceipt.contentVersion, '0.0.7');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -901,6 +984,105 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-6', { ski
     }
     await assertExactOutputInventory(outputRoot, currentReceipt.files);
   });
+});
+
+// Scenario: the exact published 0.0.6 package is the previous output for the 0.0.7 candidate build.
+// Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-7', { skip: !publishedR6Root }, async () => {
+  await withTempDirectory(async tempRoot => {
+    const outputRoot = path.join(tempRoot, 'dist-w01');
+    await cp(publishedR6Root, outputRoot, { recursive: true });
+    const priorReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    assert.equal(priorReceipt.contentVersion, '0.0.6');
+    assert.equal(priorReceipt.web.authoringCommit, 'f2a465e9858e57c3a4850126522dacc71226453d');
+    const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/'));
+    const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
+    const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
+
+    assert.equal(current.receipt.contentVersion, '0.0.7');
+    assert.equal(currentReceipt.contentVersion, '0.0.7');
+    assert.equal(currentReceipt.fixtureOnly, false);
+    assert.equal(currentReceipt.candidatePreviewOnly, true);
+    assert.equal(currentReceipt.publicationEligible, false);
+    assert.equal(currentReceipt.formalPublishAllowed, false);
+    assert.equal(priorDataRows.length, 2313);
+    for (const row of priorDataRows) {
+      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.6 receipt row ${row.path}`);
+      assert.deepEqual(
+        await readFile(path.join(outputRoot, ...row.path.split('/'))),
+        await readFile(path.join(publishedR6Root, ...row.path.split('/'))),
+        `retained 0.0.6 data bytes ${row.path}`
+      );
+    }
+    const previousPresentations = await readOfficialPresentations(publishedR6Root, priorReceipt);
+    const currentPresentations = await readOfficialPresentations(outputRoot, currentReceipt);
+    assert.equal(previousPresentations.length, 3);
+    assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
+    for (const previous of previousPresentations) {
+      const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
+      assert.deepEqual(currentPresentation.payload.official, previous.payload.official, `unchanged official text ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.payload.name, previous.payload.name, `unchanged displayed name ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.sourceRefs, previous.sourceRefs, `unchanged official references ${previous.recordId}`);
+      assert.ok(Array.isArray(previous.payload.errata), `published errata array ${previous.recordId}`);
+      assert.ok(Array.isArray(currentPresentation.payload.errata), `current errata array ${previous.recordId}`);
+      assert.deepEqual(currentPresentation.payload.errata, previous.payload.errata, `unchanged separate errata ${previous.recordId}`);
+    }
+    await assertExactOutputInventory(outputRoot, currentReceipt.files);
+  });
+});
+
+// Scenario: the Source-owned archive registry carries one fixed public Mods analysis locator.
+// Purpose: preserve that exact source path while rejecting nearby repositories, commits, paths, and IDs.
+test('UnitT22_fixed-legacy-analysis-reference-is-accepted-exactly', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyCurrentInputs(copiedRoot);
+
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const manifest = JSON.parse(await readFile(path.join(outputRoot, result.manifestPath), 'utf8'));
+    const references = manifest.source.references.filter(reference => reference.sourceId === 'legacy:mods:psyker:brain-burst-improved:analysis-en');
+    assert.equal(references.length, 1);
+    assert.deepEqual(references[0], {
+      sourceId: 'legacy:mods:psyker:brain-burst-improved:analysis-en',
+      fixtureOnly: false,
+      safeSummary: references[0].safeSummary,
+      repository: 'https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods',
+      commit: '241ad76ce62330472aa423055a5b85db59bb6c0d',
+      path: 'Game Info/releases/1.13.X/skills/talents/Psyker/en/psyker_brain_burst_improved.md',
+      snapshot: { commit: '241ad76ce62330472aa423055a5b85db59bb6c0d' }
+    });
+  });
+});
+
+// Scenario: a candidate attempts to substitute a nearby locator for the fixed archive source.
+// Purpose: keep the new repository exception pinned to one source ID, repository, commit, and path.
+test('UnitT23_legacy-analysis-reference-rejects-nearby-locator-identities', async () => {
+  const mutations = [
+    ['repository', reference => { reference.repository = 'https://github.com/example/Warhammer-40-000-DARKTIDE-Mods'; }],
+    ['commit', reference => { reference.commit = '241ad76ce62330472aa423055a5b85db59bb6c0d'.replace(/^2/, '3'); reference.snapshot.commit = reference.commit; }],
+    ['path', reference => { reference.path = 'Game Info/releases/1.13.X/skills/talents/Psyker/psyker_brain_burst_improved.md'; }],
+    ['sourceId', reference => { reference.sourceId = 'legacy:mods:psyker:other-analysis'; }]
+  ];
+
+  for (const [label, mutate] of mutations) {
+    await withTempDirectory(async tempRoot => {
+      const copiedRoot = path.join(tempRoot, 'repo');
+      const outputRoot = path.join(tempRoot, 'out');
+      await copyCurrentInputs(copiedRoot);
+      await updatePinnedTechnical(copiedRoot, technical => {
+        mutate(technical.sourceRefs.find(reference => reference.sourceId === 'legacy:mods:psyker:brain-burst-improved:analysis-en'));
+      });
+
+      await assert.rejects(
+        buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' }),
+        /legacy analysis reference does not match its fixed public locator|repository is not an allowlisted public Source repository/,
+        label
+      );
+      await assert.rejects(readdir(outputRoot), { code: 'ENOENT' }, label + ' is rejected before writing output');
+    });
+  }
 });
 
 async function makePendingCandidateInputs(copiedRoot) {
