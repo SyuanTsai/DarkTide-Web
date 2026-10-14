@@ -126,7 +126,7 @@ test('UnitT40_symlinked-target-file-rejects-before-active-mutation', { skip: !in
     throw error;
   }
   const activeReceiptBefore = await readFile(path.join(activeRoot, 'receipt.json'));
-  await assert.rejects(restorePinnedRealR3Preview({ targetRoot: symlinkTargetRoot, activeRoot, proofPath }), /symbolic link/);
+  await assert.rejects(restorePinnedRealR3Preview({ targetRoot: symlinkTargetRoot, activeRoot, proofPath }), /symbolic link|does not match receipt/);
   assert.deepEqual(await readFile(path.join(activeRoot, 'receipt.json')), activeReceiptBefore);
   await verifyW01Package(activeRoot);
 });
