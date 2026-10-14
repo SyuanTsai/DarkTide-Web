@@ -64,9 +64,9 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 .official-label, .errata-label { color: #d8aa68; font-weight: 700; }
 .errata { padding: .8rem; border-inline-start: .25rem solid #d8aa68; background: #332a1e; white-space: pre-wrap; }
 .game-change { padding: 1rem; border-radius: .4rem; background: #252c2e; }
-.record-image { display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem; }
-.record-image img { width: 6rem; height: 6rem; object-fit: contain; border-radius: .35rem; background: #141719; }
-.record-image figcaption { color: #bac1c1; font-size: .85rem; }
+.record-image { display: flex; flex-direction: column; align-items: center; gap: .35rem; max-width: 100%; margin: 0 0 1rem; }
+.record-image img { width: 8rem; height: 8rem; max-width: 100%; object-fit: contain; border-radius: .35rem; background: #141719; }
+.record-image figcaption { color: #bac1c1; font-size: .75rem; line-height: 1.3; }
 .record-image a { color: #e5c18d; }
 .tier-selector-label { display: flex; align-items: center; gap: .6rem; margin-block: .8rem; }
 .tier-selector-label select { min-height: 2.5rem; padding-inline: .6rem; color: inherit; background: #141719; border: 1px solid #747d7e; border-radius: .3rem; font: inherit; }
@@ -150,16 +150,17 @@ function renderImage(record, article) {
   const image = document.createElement("img");
   image.setAttribute("src", asset.src);
   image.setAttribute("alt", asset.alt);
-  image.setAttribute("width", "96");
-  image.setAttribute("height", "96");
+  image.setAttribute("width", "128");
+  image.setAttribute("height", "128");
   image.setAttribute("loading", "lazy");
   image.setAttribute("decoding", "async");
   figure.append(image);
   const caption = document.createElement("figcaption");
-  appendText(caption, "span", "", "圖片來源：");
   const credit = document.createElement("a");
   credit.setAttribute("href", "https://darktide.gameslantern.com");
-  credit.textContent = "Games Lantern";
+  credit.setAttribute("aria-label", "圖片來源：Games Lantern");
+  credit.setAttribute("title", "圖片來源：Games Lantern");
+  credit.textContent = "圖片來源";
   caption.append(credit);
   figure.append(caption);
   article.append(figure);

@@ -241,10 +241,13 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
     'https://github.com/user-attachments/assets/215cb557-8544-4d05-876a-871e70dc093a',
     'https://github.com/user-attachments/assets/8a6ba0a3-cdaf-403f-a87b-3743b3fcfe97'
   ]);
-  assert.ok(images.every(image => image.attributes.alt && image.attributes.width === '96' && image.attributes.height === '96'));
+  assert.ok(images.every(image => image.attributes.alt && image.attributes.width === '128' && image.attributes.height === '128'));
+  assert.ok(images.every(image => image.attributes.loading === 'lazy' && image.attributes.decoding === 'async'));
   const credits = contentNodes.filter(node => node.tagName === 'a');
   assert.equal(credits.length, 2);
-  assert.ok(credits.every(link => link.attributes.href === 'https://darktide.gameslantern.com' && !link.attributes.rel));
+  assert.ok(credits.every(link => link.attributes.href === 'https://darktide.gameslantern.com' &&
+    link.attributes['aria-label'] === '圖片來源：Games Lantern' && link.attributes.title === '圖片來源：Games Lantern' &&
+    link.textContent === '圖片來源' && !link.attributes.rel));
   const playerCopy = [
     candidatePage.get('package-warning'), candidatePage.get('status'), candidatePage.get('content'),
     candidatePage.get('announcement-content'), candidatePage.get('changes-content'), candidatePage.get('terms-content'),
