@@ -258,7 +258,7 @@
           "effects": [
             {
               "itemId": "psyker-description-damage-parameter",
-              "text": "官方句中的傷害佔位值以固定 Source claim 顯示為 +50%；這是描述格式化參數，不代表最終傷害。",
+              "text": "遊戲說明中的傷害加成為 50%。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-description-display-percent"
               ]
@@ -268,8 +268,8 @@
           "calculation": [],
           "notes": [
             {
-              "itemId": "candidate-update-channel-check",
-              "text": "此段僅供資料更新通路測試，內容仍待審。"
+              "itemId": "psyker-damage-effect-caution",
+              "text": "實際效果仍待確認。"
             }
           ],
           "extra": [
@@ -415,7 +415,7 @@
           "effects": [
             {
               "itemId": "chainaxe-tier-1-display-parameter",
-              "text": "此官方描述的定義階級 1 顯示值為 +17%；不代表已確認的遊戲內移動效果。",
+              "text": "第 1 階級的說明數值為 +17%。",
               "claimRefs": [
                 "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
               ]
@@ -423,8 +423,12 @@
           ],
           "conditions": [
             {
+              "itemId": "chainaxe-special-activation-condition",
+              "text": "啟動武器的特殊動作。"
+            },
+            {
               "itemId": "chainaxe-template-duration-parameter",
-              "text": "Source 模板的啟動持續時間欄位為 2 秒；遊戲內效果尚未驗證。",
+              "text": "說明中的持續時間為 2 秒。",
               "claimRefs": [
                 "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
               ]
@@ -434,7 +438,7 @@
           "notes": [
             {
               "itemId": "chainaxe-tier-coverage",
-              "text": "Source 列出定義階級 1 至 4；可取得階級仍未知。"
+              "text": "說明列出 4 個階級；可取得的階級尚未確認。"
             }
           ],
           "extra": []
@@ -502,14 +506,18 @@
           "conditions": [
             {
               "itemId": "chainaxe-attack-point-table",
-              "text": "Source 表格點為 1→80、2→140 point；僅保留原始表值，不進行插值或傷害計算。"
+              "text": "已收錄的攻擊數值：80、140。"
             }
           ],
           "calculation": [],
           "notes": [
             {
               "itemId": "chainaxe-armor-point-table",
-              "text": "護甲參數表點為 1→1.035、2→1.965 ratio；不是武器評分或最終傷害。動作／攻擊設定覆蓋尚未匯入。"
+              "text": "已收錄的護甲修正值：1.035、1.965。"
+            },
+            {
+              "itemId": "chainaxe-incomplete-attack-data",
+              "text": "其他攻擊資料尚未補齊。"
             }
           ],
           "extra": []
@@ -526,8 +534,8 @@
       "locale": "zh-TW",
       "sourceRefs": [],
       "payload": {
-        "label": "描述參數",
-        "definition": "Source 中的程式碼參數名稱；此連結只用於辨識官方描述格式化資料，不表示最終傷害結果。"
+        "label": "傷害倍率",
+        "definition": "用來辨識技能的傷害資料；實際影響仍待確認。"
       },
       "reviewState": "pending"
     }
@@ -541,17 +549,17 @@
       "locale": "zh-TW",
       "sourceRefs": [],
       "payload": {
-        "title": "待審候選資料包 0.0.4",
+        "title": "內容狀態",
         "blocks": [
           {
             "blockId": "candidate-status",
             "type": "heading",
-            "text": "候選狀態"
+            "text": "目前狀態"
           },
           {
             "blockId": "compatibility-warning",
             "type": "paragraph",
-            "text": "來源快照 1.13.2 與 Steam Build 25681127 的相容性尚未核實；本資料包仍待人工內容審查。程式碼觀察與描述格式參數不代表遊戲內最終效果。"
+            "text": "說明文字與遊戲版本尚未核對，內容仍待審核。"
           }
         ]
       },

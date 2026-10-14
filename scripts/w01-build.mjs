@@ -1083,7 +1083,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     ['preview.js', Buffer.from(previewAssets.js, 'utf8')],
     ['preview.json', previewBytes],
     ['robots.txt', Buffer.from('User-agent: *\nDisallow: /\n', 'utf8')],
-    ['_headers', Buffer.from('/*\n  Access-Control-Allow-Origin: *\n  X-Robots-Tag: noindex, nofollow, noarchive\n', 'utf8')],
+    ['_headers', Buffer.from('/*\n  Access-Control-Allow-Origin: *\n  X-Robots-Tag: noindex, noarchive\n', 'utf8')],
     ['version-template.json', jsonBytes(versionWithoutBuildId)],
     [manifestPath, manifestBytes],
     ...[...domainBytes].map(([name, bytes]) => ['data/' + dataRevision + '/' + name, bytes])

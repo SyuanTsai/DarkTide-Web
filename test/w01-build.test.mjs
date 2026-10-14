@@ -191,8 +191,11 @@ test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', a
     assert.ok(previewJs.includes('renderErrata'));
     assert.ok(previewJs.includes('renderGameChange'));
     assert.ok(previewJs.includes('announcement.payload.blocks'));
-    assert.equal(firstFiles.get('index.html').toString('utf8').includes('name="robots" content="noindex, nofollow, noarchive"'), true);
-    assert.equal(firstFiles.get('index.html').toString('utf8').includes('不是已核准的遊戲事實'), true);
+    assert.equal(firstFiles.get('index.html').toString('utf8').includes('name="robots" content="noindex, noarchive"'), true);
+    assert.equal(firstFiles.get('index.html').toString('utf8').includes('nofollow'), false);
+    assert.equal(firstFiles.get('index.html').toString('utf8').includes('此頁僅供資料預覽'), true);
+    assert.equal(firstFiles.get('_headers').toString('utf8').includes('X-Robots-Tag: noindex, noarchive'), true);
+    assert.equal(firstFiles.get('_headers').toString('utf8').includes('nofollow'), false);
     assert.equal(firstFiles.has('dist/index.html'), false);
     assert.equal(firstFiles.has('analysis.md'), false);
     assert.equal(firstFiles.has('game-changes.md'), false);
@@ -612,7 +615,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.commit, '83fdd201f67c6c490f32832419ea61353d7066d1');
     assert.equal(manifest.source.sourceRevision, 'b48a8e6dcf61dcfbd8ca4ea8a89ebd636216c70907d82bd9fe6587b19c31851e');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.4');
+    assert.equal(version.game_releases[0].content_version, '0.0.5');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -624,8 +627,25 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(skill.payload.official.resolvedText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of Brain Burst dealing +50% Damage.');
     assert.equal(skill.payload.official.localizations['zh-TW'].resolvedText, '積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成+50%傷害的顱腦爆裂的加強版。');
     assert.deepEqual(skill.payload.detailSections.notes, [
-      { itemId: 'candidate-update-channel-check', text: '此段僅供資料更新通路測試，內容仍待審。' }
+      { itemId: 'psyker-damage-effect-caution', text: '實際效果仍待確認。' }
     ]);
+    assert.deepEqual(blessing.payload.detailSections.effects, [
+      { itemId: 'chainaxe-tier-1-display-parameter', text: '第 1 階級的說明數值為 +17%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent'] }
+    ]);
+    assert.deepEqual(blessing.payload.detailSections.conditions, [
+      { itemId: 'chainaxe-special-activation-condition', text: '啟動武器的特殊動作。' },
+      { itemId: 'chainaxe-template-duration-parameter', text: '說明中的持續時間為 2 秒。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-duration'] }
+    ]);
+    assert.deepEqual(weapon.payload.detailSections.conditions, [
+      { itemId: 'chainaxe-attack-point-table', text: '已收錄的攻擊數值：80、140。' }
+    ]);
+    assert.deepEqual(weapon.payload.detailSections.notes, [
+      { itemId: 'chainaxe-armor-point-table', text: '已收錄的護甲修正值：1.035、1.965。' },
+      { itemId: 'chainaxe-incomplete-attack-data', text: '其他攻擊資料尚未補齊。' }
+    ]);
+    const damageTerm = domains.terms.records.find(record => record.recordId === 'web:term-localization:psyker-smite-damage-multiplier-parameter');
+    assert.equal(damageTerm.payload.label, '傷害倍率');
+    assert.equal(damageTerm.payload.definition, '用來辨識技能的傷害資料；實際影響仍待確認。');
     assert.equal(blessing.payload.official.resolvedText, '+17% Movement Speed for 2s on Weapon Special Activation.');
     assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+17%移動速度，持續2秒。');
     assert.equal(weapon.payload.name, '突擊鏈斧');
@@ -754,7 +774,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.4');
+    assert.equal(currentReceipt.contentVersion, '0.0.5');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));

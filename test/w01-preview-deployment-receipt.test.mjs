@@ -64,7 +64,7 @@ test('UnitT00_deployment-receipt-verifies-version-domains-and-retained-url', asy
     }
     const fetchImpl = async url => new Response(objects.get(new URL(url).pathname) ?? new Uint8Array(), {
       status: objects.has(new URL(url).pathname) ? 200 : 404,
-      headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, nofollow, noarchive' }
+      headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
     });
     const receiptPath = path.join(tempRoot, 'deployment-receipt.json');
     const result = await createDeploymentReceipt({
@@ -143,7 +143,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       fetchCount += 1;
       return new Response(objects.get(new URL(url).pathname) ?? new Uint8Array(), {
         status: objects.has(new URL(url).pathname) ? 200 : 404,
-        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, nofollow, noarchive' }
+        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
       });
     };
     const receiptPath = path.join(tempRoot, 'deployment-receipt.json');
@@ -151,7 +151,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       repoRoot: copiedRoot, outputRoot, receiptPath, fetchImpl, createdAt: '2026-10-14T00:00:00.000Z'
     });
     assert.equal(result.requestKind, 'w01-preview-deployment-receipt');
-    assert.equal(result.contentVersion, '0.0.4');
+    assert.equal(result.contentVersion, '0.0.5');
     assert.equal(result.packageKind, 'pending-preview');
     assert.equal(result.candidatePreviewOnly, true);
     assert.equal(result.verifiedRemoteObjects, 8);

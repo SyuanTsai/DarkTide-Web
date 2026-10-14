@@ -17,8 +17,9 @@ async function copyInputRoot(destination, fixture) {
   await cp(path.join(source, 'source.lock.json'), path.join(destination, 'source.lock.json'));
 }
 
-function fakeElement() {
+function fakeElement(tagName = '') {
   return {
+    tagName,
     children: [],
     dataset: {},
     attributes: {},
@@ -37,7 +38,7 @@ function renderedText(node) {
 async function runPreviewModule(outputRoot) {
   const page = new Map();
   const document = {
-    createElement: () => fakeElement(),
+    createElement: tagName => fakeElement(tagName),
     getElementById(id) {
       if (!page.has(id)) page.set(id, fakeElement());
       return page.get(id);
@@ -85,7 +86,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
 
   const fixturePage = await runPreviewModule(fixtureOutput);
   assert.equal(fixturePage.get('status').dataset.state, undefined);
-  assert.equal(fixturePage.get('status').textContent, '已載入隔離 fixture 預覽；內容尚未核准發布。');
+  assert.equal(fixturePage.get('status').textContent, '資料已載入，內容仍待審核。');
   const fixturePreview = JSON.parse(await readFile(path.join(fixtureOutput, 'preview.json'), 'utf8'));
   assert.equal(Object.hasOwn(fixturePreview, 'candidatePreviewOnly'), false);
 
@@ -96,15 +97,46 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
 
   const candidatePage = await runPreviewModule(candidateOutput);
   assert.equal(candidatePage.get('status').dataset.state, undefined);
-  assert.equal(candidatePage.get('status').textContent, '已載入隔離的待審候選預覽；內容尚未核准發布。');
-  assert.match(candidatePage.get('package-warning').textContent, /相容性尚未核實.*待人工內容審核/);
+  assert.equal(candidatePage.get('status').textContent, '資料已載入，內容仍待審核。');
+  assert.equal(candidatePage.get('package-warning').textContent, '說明文字與遊戲版本尚未核對，內容仍待審核。');
   assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
-  assert.match(candidateText, /\+50%傷害/);
+  assert.match(candidateText, /遊戲說明中的傷害加成為 50%。/);
+  assert.match(candidateText, /實際效果仍待確認。/);
   assert.match(candidateText, /提速/);
-  assert.match(candidateText, /\+17%移動速度，持續2秒/);
+  assert.match(candidateText, /第 1 階級的說明數值為 \+17%。/);
+  assert.match(candidateText, /說明中的持續時間為 2 秒。/);
+  assert.match(candidateText, /已收錄的攻擊數值：80、140。/);
+  assert.match(candidateText, /已收錄的護甲修正值：1\.035、1\.965。/);
+  assert.match(candidateText, /其他攻擊資料尚未補齊。/);
   assert.doesNotMatch(candidateText, /Brain Rupture|Movement Speed/);
+  assert.doesNotMatch(candidateText, /Source|claim|point|ratio|Steam Build|SYP-311|W01/);
+
+  const descendants = node => [node, ...node.children.flatMap(descendants)];
+  const contentNodes = descendants(candidatePage.get('content'));
+  const lists = contentNodes.filter(node => node.tagName === 'ul');
+  const listItems = contentNodes.filter(node => node.tagName === 'li');
+  assert.equal(lists.length, 8);
+  assert.equal(listItems.length, 10);
+  assert.ok(lists.every(list => list.children.length > 0));
+  const images = contentNodes.filter(node => node.tagName === 'img');
+  assert.equal(images.length, 2);
+  assert.deepEqual(images.map(image => image.attributes.src), [
+    'https://github.com/user-attachments/assets/215cb557-8544-4d05-876a-871e70dc093a',
+    'https://github.com/user-attachments/assets/8a6ba0a3-cdaf-403f-a87b-3743b3fcfe97'
+  ]);
+  assert.ok(images.every(image => image.attributes.alt && image.attributes.width === '96' && image.attributes.height === '96'));
+  const credits = contentNodes.filter(node => node.tagName === 'a');
+  assert.equal(credits.length, 2);
+  assert.ok(credits.every(link => link.attributes.href === 'https://darktide.gameslantern.com' && !link.attributes.rel));
+  const playerCopy = [
+    candidatePage.get('package-warning'), candidatePage.get('status'), candidatePage.get('content'),
+    candidatePage.get('announcement-content'), candidatePage.get('changes-content'), candidatePage.get('terms-content'),
+    candidatePage.get('revision')
+  ].map(renderedText).join(' ');
+  assert.doesNotMatch(playerCopy, /Source|claim|point|ratio|Steam Build|資料修訂|SYP-311|W01/);
+  assert.equal(candidatePage.get('revision').textContent, '');
 
   await writeFile(path.join(candidateOutput, 'preview.json'), jsonBytes({
     ...JSON.parse(await readFile(path.join(candidateOutput, 'preview.json'), 'utf8')),

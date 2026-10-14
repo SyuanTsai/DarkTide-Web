@@ -4,39 +4,38 @@ export const previewAssets = {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="robots" content="noindex, noarchive">
   <meta name="referrer" content="no-referrer">
-  <title>Darktide 資料隔離預覽</title>
+  <title>Darktide 繁體中文資料</title>
   <link rel="stylesheet" href="/preview.css">
   <script type="module" src="/preview.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <p class="eyebrow">SYP-311 · W01 隔離預覽</p>
-    <h1>Darktide 繁體中文資料預覽</h1>
-    <p id="package-warning" class="warning" role="note">此頁只供 schema 與資料連結驗證。內容皆為 fixture／待審資料，不是已核准的遊戲事實或正式公告。</p>
+    <h1>Darktide 繁體中文資料</h1>
+    <p id="package-warning" class="warning" role="note">此頁僅供資料預覽，內容尚未核准，不代表已確認的遊戲內容。</p>
   </header>
   <main id="main" aria-labelledby="content-heading">
     <section class="announcement" aria-labelledby="announcement-heading">
-      <h2 id="announcement-heading">預覽公告</h2>
+      <h2 id="announcement-heading">公告</h2>
       <div id="announcement-content"></div>
     </section>
     <section aria-labelledby="content-heading">
-      <h2 id="content-heading">繁體中文資料樣本</h2>
+      <h2 id="content-heading">技能、祝福與武器</h2>
       <p id="status" role="status" aria-live="polite">正在載入隔離預覽資料…</p>
       <div id="content" class="cards"></div>
     </section>
     <section aria-labelledby="changes-heading">
-      <h2 id="changes-heading">遊戲變更識別樣本</h2>
+      <h2 id="changes-heading">遊戲更新</h2>
       <div id="changes-content"></div>
     </section>
     <section aria-labelledby="terms-heading">
-      <h2 id="terms-heading">術語連結樣本</h2>
+      <h2 id="terms-heading">名詞說明</h2>
       <div id="terms-content"></div>
     </section>
     <p id="revision" class="revision"></p>
   </main>
-  <footer>資料來源與內容狀態以同源 version.json、manifest 及五個共享資料域為準。</footer>
+  <footer>目前顯示的內容尚待審核。</footer>
 </body>
 </html>
 `,
@@ -65,9 +64,14 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 .official-label, .errata-label { color: #d8aa68; font-weight: 700; }
 .errata { padding: .8rem; border-inline-start: .25rem solid #d8aa68; background: #332a1e; white-space: pre-wrap; }
 .game-change { padding: 1rem; border-radius: .4rem; background: #252c2e; }
-.card dl { display: grid; grid-template-columns: minmax(5.4rem, .35fr) 1fr; gap: .45rem .8rem; }
-.card dt { color: #d8aa68; font-weight: 700; }
-.card dd { margin: 0; white-space: pre-wrap; }
+.record-image { display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem; }
+.record-image img { width: 6rem; height: 6rem; object-fit: contain; border-radius: .35rem; background: #141719; }
+.record-image figcaption { color: #bac1c1; font-size: .85rem; }
+.record-image a { color: #e5c18d; }
+.detail-section h4 { margin: .9rem 0 .35rem; color: #d8aa68; }
+.detail-section ul { margin: 0; padding-inline-start: 1.35rem; }
+.detail-section li { margin-block: .25rem; white-space: pre-wrap; }
+.official-text { white-space: pre-wrap; }
 #status[data-state="error"] { color: #ffb8a8; }
 .revision, footer { color: #bac1c1; font-size: .85rem; }
 footer { padding-block: 1rem 2rem; }
@@ -81,6 +85,16 @@ const detailLabels = {
   notes: "補充說明",
   extra: "額外說明"
 };
+const imageByRecordId = new Map([
+  ["web:presentation:psyker-brain-burst-improved", {
+    src: "https://github.com/user-attachments/assets/215cb557-8544-4d05-876a-871e70dc093a",
+    alt: "顱腦崩裂圖片"
+  }],
+  ["web:presentation:chainaxe-p1-movement-speed", {
+    src: "https://github.com/user-attachments/assets/8a6ba0a3-cdaf-403f-a87b-3743b3fcfe97",
+    alt: "提速圖片"
+  }]
+]);
 const byId = id => document.getElementById(id);
 
 async function fetchBytes(url) {
@@ -125,6 +139,29 @@ function renderErrata(official, errata, article) {
   }
 }
 
+function renderImage(record, article) {
+  const asset = imageByRecordId.get(record.recordId);
+  if (!asset) return;
+  const figure = document.createElement("figure");
+  figure.className = "record-image";
+  const image = document.createElement("img");
+  image.setAttribute("src", asset.src);
+  image.setAttribute("alt", asset.alt);
+  image.setAttribute("width", "96");
+  image.setAttribute("height", "96");
+  image.setAttribute("loading", "lazy");
+  image.setAttribute("decoding", "async");
+  figure.append(image);
+  const caption = document.createElement("figcaption");
+  appendText(caption, "span", "", "圖片來源：");
+  const credit = document.createElement("a");
+  credit.setAttribute("href", "https://darktide.gameslantern.com");
+  credit.textContent = "Games Lantern";
+  caption.append(credit);
+  figure.append(caption);
+  article.append(figure);
+}
+
 function renderPresentation(record, parent, termsById) {
   const payload = record.payload;
   if (record.owner !== "web" || record.kind !== "presentation" || record.locale !== "zh-TW") {
@@ -134,6 +171,7 @@ function renderPresentation(record, parent, termsById) {
   article.className = "card";
   article.setAttribute("aria-labelledby", record.recordId.replaceAll(":", "-"));
   appendText(article, "h3", "", payload.name).id = record.recordId.replaceAll(":", "-");
+  renderImage(record, article);
   if (payload.official) {
     const localized = payload.official.localizations?.["zh-TW"];
     if (!localized) throw new Error("官方文字缺少繁體中文內容，預覽不會以英文回退。");
@@ -157,14 +195,16 @@ function renderPresentation(record, parent, termsById) {
     appendText(article, "p", "official-text", localized.text);
     renderErrata(payload.official, payload.errata ?? [], article);
   }
-  const list = document.createElement("dl");
   for (const [key, label] of Object.entries(detailLabels)) {
     const items = payload.detailSections?.[key];
     if (!Array.isArray(items)) throw new Error("繁體中文呈現缺少五節資料。");
     if (items.length === 0) continue;
-    appendText(list, "dt", "", label);
+    const section = document.createElement("section");
+    section.className = "detail-section";
+    appendText(section, "h4", "", label);
+    const list = document.createElement("ul");
     for (const item of items) {
-      const detail = document.createElement("dd");
+      const detail = document.createElement("li");
       if (typeof item.text === "string") appendText(detail, "span", "", item.text);
       if (item.termRef) {
         const term = termsById.get(item.termRef);
@@ -174,8 +214,9 @@ function renderPresentation(record, parent, termsById) {
       }
       list.append(detail);
     }
+    section.append(list);
+    article.append(section);
   }
-  article.append(list);
   parent.append(article);
 }
 
@@ -194,8 +235,7 @@ function renderGameChange(record, parent) {
   }
   const article = document.createElement("article");
   article.className = "game-change";
-  appendText(article, "h3", "", "Source 變更樣本");
-  appendText(article, "p", "", "變更識別：" + payload.changeId);
+  appendText(article, "h3", "", "遊戲內容變更");
   for (const field of payload.changedFields) {
     const label = field.field === "value" ? "數值" : "其他欄位";
     appendText(article, "p", "change-row", label + "：" + formatValue(field.before) + " → " + formatValue(field.after));
@@ -272,7 +312,7 @@ async function loadPreview() {
     const changesContent = byId("changes-content");
     if (changes.length === 0) {
       if (!isPendingPreview) throw new Error("隔離 fixture 預覽缺少遊戲變更識別記錄。");
-      appendText(changesContent, "p", "change-empty", "本待審候選沒有 Source 遊戲變更記錄；這不表示遊戲已發布更新。");
+      appendText(changesContent, "p", "change-empty", "此預覽尚未收錄遊戲更新內容。");
     } else {
       for (const change of changes) renderGameChange(change, changesContent);
     }
@@ -285,7 +325,7 @@ async function loadPreview() {
     }
     if (isPendingPreview) {
       if (typeof preview.warningText !== "string" || preview.warningText.length === 0) throw new Error("待審候選缺少繁體中文風險提示。");
-      byId("package-warning").textContent = preview.warningText;
+      byId("package-warning").textContent = "說明文字與遊戲版本尚未核對，內容仍待審核。";
     }
     const announcementRoot = byId("announcement-content");
     for (const announcement of preview.announcements) {
@@ -302,8 +342,8 @@ async function loadPreview() {
       }
       announcementRoot.append(article);
     }
-    byId("revision").textContent = "資料版本：" + version.game_version + " · 內容版本：" + release.content_version + " · 資料修訂：" + version.data_revision;
-    status.textContent = isPendingPreview ? "已載入隔離的待審候選預覽；內容尚未核准發布。" : "已載入隔離 fixture 預覽；內容尚未核准發布。";
+    status.textContent = "資料已載入，內容仍待審核。";
+    byId("revision").textContent = "";
   } catch (error) {
     status.dataset.state = "error";
     status.textContent = error instanceof Error ? error.message : "隔離預覽載入失敗。";
