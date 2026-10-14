@@ -68,6 +68,8 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 .record-image img { width: 6rem; height: 6rem; object-fit: contain; border-radius: .35rem; background: #141719; }
 .record-image figcaption { color: #bac1c1; font-size: .85rem; }
 .record-image a { color: #e5c18d; }
+.tier-selector-label { display: flex; align-items: center; gap: .6rem; margin-block: .8rem; }
+.tier-selector-label select { min-height: 2.5rem; padding-inline: .6rem; color: inherit; background: #141719; border: 1px solid #747d7e; border-radius: .3rem; font: inherit; }
 .detail-section h4 { margin: .9rem 0 .35rem; color: #d8aa68; }
 .detail-section ul { margin: 0; padding-inline-start: 1.35rem; }
 .detail-section li { margin-block: .25rem; white-space: pre-wrap; }
@@ -78,6 +80,7 @@ footer { padding-block: 1rem 2rem; }
 `,
   js: `const domainKinds = ["skills", "blessings", "weapons", "terms", "game-changes"];
 const contentVersionPattern = /^(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)$/;
+const blessingTierFeature = "blessing-tier-presentations-v1";
 const detailLabels = {
   effects: "效果",
   conditions: "條件",
@@ -162,6 +165,101 @@ function renderImage(record, article) {
   article.append(figure);
 }
 
+function sameJson(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function ratioAsPercentDecimal(decimal) {
+  if (typeof decimal !== "string" || !/^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/.test(decimal)) throw new Error("階級數值來源無效。");
+  const [whole, fraction = ""] = decimal.split(".");
+  const digits = whole + fraction;
+  const shiftedPosition = whole.length + 2;
+  const shifted = shiftedPosition >= digits.length
+    ? digits + "0".repeat(shiftedPosition - digits.length)
+    : digits.slice(0, shiftedPosition) + "." + digits.slice(shiftedPosition);
+  const [integerPart, fractionalPart] = shifted.split(".");
+  const normalizedInteger = integerPart.replace(/^0+(?=[0-9])/, "");
+  const normalizedFraction = fractionalPart?.replace(/0+$/, "");
+  return normalizedFraction ? normalizedInteger + "." + normalizedFraction : normalizedInteger;
+}
+
+function identityOf(entry) {
+  return {
+    sourceRef: entry.sourceRef, sourceLocale: entry.sourceLocale, resource: entry.resource,
+    sourceHash: entry.sourceHash, key: entry.key, occurrence: entry.occurrence,
+    sourceText: entry.sourceText, sourceTextSha256: entry.sourceTextSha256, segments: entry.segments
+  };
+}
+
+function validateTierPresentations(record, recordsById) {
+  const tiered = record.payload.tierPresentations;
+  if (!tiered || Object.keys(tiered).sort().join(",") !== "defaultTier,options,variantRef" ||
+      typeof tiered.variantRef !== "string" || tiered.defaultTier !== 4 || !Array.isArray(tiered.options) || tiered.options.length !== 4) {
+    throw new Error("祝福階級資料無效。");
+  }
+  const blessing = recordsById.get(record.entityRef);
+  const variant = recordsById.get(tiered.variantRef);
+  if (record.owner !== "web" || record.kind !== "presentation" || blessing?.kind !== "blessing" ||
+      variant?.kind !== "blessing-variant" || variant.payload?.blessingRef !== record.entityRef ||
+      !blessing.payload?.variantRefs?.includes(tiered.variantRef) ||
+      !sameJson(variant.payload.definedTiers, [1, 2, 3, 4])) {
+    throw new Error("祝福階級與來源資料不一致。");
+  }
+  if (!sameJson(record.payload.official, tiered.options[3]?.official) ||
+      !sameJson(record.payload.detailSections, tiered.options[3]?.detailSections)) {
+    throw new Error("預設階級與祝福內容不一致。");
+  }
+  const rootEnglishIdentity = identityOf(record.payload.official);
+  const rootChineseIdentity = identityOf(record.payload.official.localizations?.["zh-TW"] ?? {});
+  let timeParamAtDefault;
+  for (const [index, option] of tiered.options.entries()) {
+    const tier = index + 1;
+    if (!option || Object.keys(option).sort().join(",") !== "detailSections,official,tier" || option.tier !== tier ||
+        !option.official || !option.detailSections ||
+        option.official.sourceLocale !== "en" ||
+        option.official.localizations?.["zh-TW"]?.origin !== "official" ||
+        !sameJson(identityOf(option.official), rootEnglishIdentity) ||
+        !sameJson(identityOf(option.official.localizations["zh-TW"]), rootChineseIdentity)) {
+      throw new Error("祝福階級缺少相同的英文與繁體中文官方文字來源。");
+    }
+    const chinese = option.official.localizations["zh-TW"];
+    const movementParam = option.official.params?.find(param => param.name === "movement_speed");
+    const chineseMovementParam = chinese.params?.find(param => param.name === "movement_speed");
+    const timeParam = option.official.params?.find(param => param.name === "time");
+    const chineseTimeParam = chinese.params?.find(param => param.name === "time");
+    const expectedClaimId = "darktide:claim:" + tiered.variantRef.replace(/^darktide:blessing-variant:/, "") + "-tier" + tier + "-display-percent";
+    const claim = recordsById.get(expectedClaimId);
+    const ratio = variant.payload.tierValues?.find(item => item.tier === tier)?.value;
+    const expectedProperty = "description.format_values.movement_speed.defined_tier_" + tier + "_display_percent";
+    const displayDecimal = claim?.payload?.value?.decimal;
+    const isZeroDisplay = typeof displayDecimal === "string" && /^-?0(?:\.0+)?$/.test(displayDecimal);
+    const expectedResolvedValue = typeof displayDecimal !== "string"
+      ? null
+      : (displayDecimal.startsWith("-") || isZeroDisplay ? "" : "+") + displayDecimal + "%";
+    if (!movementParam || !chineseMovementParam || movementParam.bindingRef !== expectedClaimId ||
+        chineseMovementParam.bindingRef !== expectedClaimId || movementParam.format !== "signed-percent" ||
+        movementParam.resolvedValue !== expectedResolvedValue || chineseMovementParam.format !== "signed-percent" ||
+        chineseMovementParam.resolvedValue !== movementParam.resolvedValue) {
+      throw new Error("祝福階級官方文字未綁定同一階級數值。");
+    }
+    if (!claim || claim.kind !== "claim" || claim.payload?.targetRef !== tiered.variantRef || claim.payload?.property !== expectedProperty ||
+        claim.payload?.basis !== "code-derived" || !sameJson(claim.payload?.context, {}) ||
+        claim.payload?.value?.status !== "known" || claim.payload?.value?.unit !== "percent" ||
+        claim.payload.value.decimal !== ratioAsPercentDecimal(ratio?.decimal)) {
+      throw new Error("祝福階級數值與來源主張不一致。");
+    }
+    if (!timeParam || !chineseTimeParam || !sameJson(option.official.params, chinese.params) || timeParam.bindingRef !== chineseTimeParam.bindingRef ||
+        timeParam.resolvedValue !== chineseTimeParam.resolvedValue || timeParam.format !== "plain-number") {
+      throw new Error("祝福階級的持續時間資料不一致。");
+    }
+    if (index === 0) timeParamAtDefault = timeParam;
+    else if (!sameJson(timeParamAtDefault, timeParam)) throw new Error("祝福階級不得改變持續時間來源。");
+    for (const section of ["effects", "conditions", "calculation", "notes", "extra"]) {
+      if (!Array.isArray(option.detailSections[section])) throw new Error("祝福階級缺少完整的繁體中文說明。");
+    }
+  }
+}
+
 function renderPresentation(record, parent, termsById) {
   const payload = record.payload;
   if (record.owner !== "web" || record.kind !== "presentation" || record.locale !== "zh-TW") {
@@ -172,31 +270,56 @@ function renderPresentation(record, parent, termsById) {
   article.setAttribute("aria-labelledby", record.recordId.replaceAll(":", "-"));
   appendText(article, "h3", "", payload.name).id = record.recordId.replaceAll(":", "-");
   renderImage(record, article);
-  if (payload.official) {
-    const localized = payload.official.localizations?.["zh-TW"];
-    if (!localized) throw new Error("官方文字缺少繁體中文內容，預覽不會以英文回退。");
-    if (localized.origin === "faithful-translation") {
-      if (typeof localized.text !== "string" || typeof localized.sha256 !== "string") throw new Error("繁體中文忠實翻譯資料無效。");
-      appendText(article, "p", "official-label", "官方原句（忠實翻譯）");
-    } else if (localized.origin === "official") {
-      if (localized.sourceLocale !== "zh-TW" || !/^[a-f0-9]{8}$/.test(localized.sourceHash) ||
-          localized.key !== null && typeof localized.key !== "string" ||
-          typeof localized.sourceText !== "string" || typeof localized.resolvedText !== "string" ||
-          localized.text !== localized.resolvedText || localized.sha256 !== localized.resolvedTextSha256 ||
-          !/^[a-f0-9]{64}$/.test(localized.sourceTextSha256) || !/^[a-f0-9]{64}$/.test(localized.resolvedTextSha256) ||
-          !Array.isArray(localized.segments) || localized.segments.some(segment => !["literal", "template-placeholder"].includes(segment.kind)) ||
-          localized.segments.map(segment => segment.text).join("") !== localized.sourceText || /\\{[a-z][a-z0-9_]*:%s\\}/.test(localized.text)) {
-        throw new Error("繁體中文官方原文身分或解析結果無效。");
-      }
-      appendText(article, "p", "official-label", "繁體中文官方原文（待審）");
-    } else {
-      throw new Error("繁體中文官方文字來源類型無效。");
+  let tierSelect;
+  if (payload.tierPresentations) {
+    const selectorLabel = document.createElement("label");
+    selectorLabel.className = "tier-selector-label";
+    selectorLabel.textContent = "選擇階級：";
+    tierSelect = document.createElement("select");
+    tierSelect.setAttribute("aria-label", "選擇階級");
+    for (const option of payload.tierPresentations.options) {
+      const element = document.createElement("option");
+      element.setAttribute("value", String(option.tier));
+      element.value = String(option.tier);
+      element.textContent = "第 " + option.tier + " 階級";
+      tierSelect.append(element);
     }
-    appendText(article, "p", "official-text", localized.text);
-    renderErrata(payload.official, payload.errata ?? [], article);
+    tierSelect.value = String(payload.tierPresentations.defaultTier);
+    selectorLabel.append(tierSelect);
+    article.append(selectorLabel);
   }
+  const presentationBody = document.createElement("div");
+  presentationBody.className = "presentation-body";
+  const renderBody = selectedOption => {
+    presentationBody.replaceChildren();
+    const displayedPayload = selectedOption
+      ? { ...payload, official: selectedOption.official, detailSections: selectedOption.detailSections }
+      : payload;
+    if (displayedPayload.official) {
+      const localized = displayedPayload.official.localizations?.["zh-TW"];
+      if (!localized) throw new Error("官方文字缺少繁體中文內容，預覽不會以英文回退。");
+      if (localized.origin === "faithful-translation") {
+        if (typeof localized.text !== "string" || typeof localized.sha256 !== "string") throw new Error("繁體中文忠實翻譯資料無效。");
+        appendText(presentationBody, "p", "official-label", "官方原句（忠實翻譯）");
+      } else if (localized.origin === "official") {
+        if (localized.sourceLocale !== "zh-TW" || !/^[a-f0-9]{8}$/.test(localized.sourceHash) ||
+            localized.key !== null && typeof localized.key !== "string" ||
+            typeof localized.sourceText !== "string" || typeof localized.resolvedText !== "string" ||
+            localized.text !== localized.resolvedText || localized.sha256 !== localized.resolvedTextSha256 ||
+            !/^[a-f0-9]{64}$/.test(localized.sourceTextSha256) || !/^[a-f0-9]{64}$/.test(localized.resolvedTextSha256) ||
+            !Array.isArray(localized.segments) || localized.segments.some(segment => !["literal", "template-placeholder"].includes(segment.kind)) ||
+            localized.segments.map(segment => segment.text).join("") !== localized.sourceText || /\\{[a-z][a-z0-9_]*:%s\\}/.test(localized.text)) {
+          throw new Error("繁體中文官方原文身分或解析結果無效。");
+        }
+        appendText(presentationBody, "p", "official-label", "繁體中文官方原文（待審）");
+      } else {
+        throw new Error("繁體中文官方文字來源類型無效。");
+      }
+      appendText(presentationBody, "p", "official-text", localized.text);
+      renderErrata(displayedPayload.official, payload.errata ?? [], presentationBody);
+    }
   for (const [key, label] of Object.entries(detailLabels)) {
-    const items = payload.detailSections?.[key];
+    const items = displayedPayload.detailSections?.[key];
     if (!Array.isArray(items)) throw new Error("繁體中文呈現缺少五節資料。");
     if (items.length === 0) continue;
     const section = document.createElement("section");
@@ -215,8 +338,19 @@ function renderPresentation(record, parent, termsById) {
       list.append(detail);
     }
     section.append(list);
-    article.append(section);
+    presentationBody.append(section);
   }
+  };
+  const initialOption = payload.tierPresentations?.options.find(option => option.tier === payload.tierPresentations.defaultTier);
+  renderBody(initialOption);
+  if (tierSelect) {
+    tierSelect.addEventListener("change", () => {
+      const selectedTier = payload.tierPresentations.options.find(option => String(option.tier) === tierSelect.value);
+      if (!selectedTier) throw new Error("選擇的祝福階級不存在。");
+      renderBody(selectedTier);
+    });
+  }
+  article.append(presentationBody);
   parent.append(article);
 }
 
@@ -263,7 +397,7 @@ async function loadPreview() {
     if (manifest.schemaVersion !== "2.0.0" || manifest.compatibility?.dataContractMajor !== 2 ||
         !Array.isArray(manifest.compatibility.requiredFeatures) ||
         !manifest.compatibility.requiredFeatures.includes("official-errata-details-v1") ||
-        manifest.compatibility.requiredFeatures.some(feature => !["official-errata-details-v1", "official-native-localizations-v1"].includes(feature)) ||
+        manifest.compatibility.requiredFeatures.some(feature => !["official-errata-details-v1", "official-native-localizations-v1", blessingTierFeature].includes(feature)) ||
         manifest.fixtureOnly !== isFixturePackage || manifest.publicationEligible !== false || manifest.dataRevision !== version.data_revision ||
         manifest.contentVersion !== release.content_version) {
       throw new Error("預覽套件狀態不符，已停止載入。");
@@ -287,6 +421,17 @@ async function loadPreview() {
       throw new Error("官方繁體中文資料與套件功能標記不一致。");
     }
 
+    const presentationRecords = [];
+    for (const kind of ["skills", "blessings", "weapons"]) {
+      presentationRecords.push(...domains.get(kind).records.filter(record => record.kind === "presentation"));
+    }
+    if (presentationRecords.length === 0) throw new Error("沒有可顯示的繁體中文呈現記錄。");
+    const recordsById = new Map([...domains.values()].flatMap(domain => domain.records.map(record => [record.recordId, record])));
+    const hasBlessingTierPresentations = presentationRecords.some(record => Object.hasOwn(record.payload ?? {}, "tierPresentations"));
+    if (hasBlessingTierPresentations !== manifest.compatibility.requiredFeatures.includes(blessingTierFeature)) {
+      throw new Error("祝福階級資料與套件功能標記不一致。");
+    }
+    for (const record of presentationRecords) if (record.payload?.tierPresentations) validateTierPresentations(record, recordsById);
     const terms = domains.get("terms").records.filter(record => record.kind === "term-localization");
     if (terms.some(record => record.owner !== "web" || record.locale !== "zh-TW")) throw new Error("繁體中文術語記錄無效。");
     const termsById = new Map(terms.map(record => [record.entityRef, record.payload]));
@@ -299,12 +444,6 @@ async function loadPreview() {
       appendText(article, "p", "", term.payload.definition);
       termsContent.append(article);
     }
-
-    const presentationRecords = [];
-    for (const kind of ["skills", "blessings", "weapons"]) {
-      presentationRecords.push(...domains.get(kind).records.filter(record => record.kind === "presentation"));
-    }
-    if (presentationRecords.length === 0) throw new Error("沒有可顯示的繁體中文呈現記錄。");
     const content = byId("content");
     for (const record of presentationRecords) renderPresentation(record, content, termsById);
 

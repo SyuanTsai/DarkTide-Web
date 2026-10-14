@@ -3,12 +3,16 @@ import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { webcrypto } from 'node:crypto';
+import { createHash, webcrypto } from 'node:crypto';
 import { buildW01 } from '../scripts/w01-build.mjs';
 import { jsonBytes } from '../src/static/common.mjs';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
 let runtimeImportId = 0;
+const tierVariantId = 'darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation';
+const tierClaimId = tier => 'darktide:claim:chainaxe:p1-movement-speed-on-activation-tier' + tier + '-display-percent';
+const tierPercent = tier => String(16 + tier);
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function copyInputRoot(destination, fixture) {
   const source = fixture ? path.join(repoRoot, 'test', 'fixtures', 'w01') : repoRoot;
@@ -23,10 +27,15 @@ function fakeElement(tagName = '') {
     children: [],
     dataset: {},
     attributes: {},
+    listeners: {},
     textContent: '',
     className: '',
     id: '',
+    value: '',
     append(child) { this.children.push(child); },
+    replaceChildren(...children) { this.children = children; },
+    addEventListener(name, listener) { (this.listeners[name] ??= []).push(listener); },
+    dispatchEvent(event) { for (const listener of this.listeners[event.type] ?? []) listener(event); },
     setAttribute(name, value) { this.attributes[name] = value; }
   };
 }
@@ -59,7 +68,8 @@ async function runPreviewModule(outputRoot, fetchOverride) {
     ? (input, init) => fetchOverride(input, init, packageFetch)
     : packageFetch;
   const replacements = new Map();
-  for (const [name, value] of Object.entries({ document, location, fetch, crypto: webcrypto })) {
+  const globals = { document, location, fetch, crypto: webcrypto };
+  for (const [name, value] of Object.entries(globals)) {
     const descriptor = Object.getOwnPropertyDescriptor(globalThis, name);
     replacements.set(name, descriptor);
     Object.defineProperty(globalThis, name, { configurable: true, enumerable: descriptor?.enumerable ?? false, writable: true, value });
@@ -73,7 +83,98 @@ async function runPreviewModule(outputRoot, fetchOverride) {
       else delete globalThis[name];
     }
   }
+  page.dispatchWithGlobals = (element, event) => {
+    const descriptors = new Map();
+    for (const [name, value] of Object.entries(globals)) {
+      descriptors.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
+      Object.defineProperty(globalThis, name, { configurable: true, enumerable: descriptors.get(name)?.enumerable ?? false, writable: true, value });
+    }
+    try {
+      element.dispatchEvent(event);
+    } finally {
+      for (const [name, descriptor] of descriptors) {
+        if (descriptor) Object.defineProperty(globalThis, name, descriptor);
+        else delete globalThis[name];
+      }
+    }
+  };
   return page;
+}
+
+async function makeTieredCandidateInput(destination) {
+  await copyInputRoot(destination, false);
+  const sourceRoot = path.join(destination, 'content', 'w01', 'source');
+  const technicalPath = path.join(sourceRoot, 'technical.json');
+  const technical = JSON.parse(await readFile(technicalPath, 'utf8'));
+  const existingClaims = new Set(technical.records.map(record => record.recordId));
+  const tierOne = technical.records.find(record => record.recordId === tierClaimId(1));
+  assert.ok(tierOne, 'tier-one claim exists in the pinned source');
+  if (![2, 3, 4].every(tier => existingClaims.has(tierClaimId(tier)))) {
+    for (const tier of [2, 3, 4]) {
+      if (existingClaims.has(tierClaimId(tier))) continue;
+      const evidenceId = 'test-only:evidence:chainaxe:tier-' + tier + '-display-percent';
+      technical.records.push({
+        recordId: evidenceId, owner: 'source', kind: 'evidence', gameReleaseId: tierOne.gameReleaseId,
+        payload: { sourceRef: 'public-code:trait-value-parser-ba6c148', safeSummary: 'TEST ONLY: synthetic tier binding evidence.' },
+        sourceRefs: ['public-code:chainaxe-p1-traits-ba6c148', 'public-code:trait-value-parser-ba6c148'], reviewState: 'pending'
+      });
+      technical.records.push({
+        ...structuredClone(tierOne),
+        recordId: tierClaimId(tier),
+        payload: {
+          ...structuredClone(tierOne.payload),
+          evidenceRefs: [...tierOne.payload.evidenceRefs, evidenceId],
+          property: 'description.format_values.movement_speed.defined_tier_' + tier + '_display_percent',
+          value: { status: 'known', decimal: tierPercent(tier), unit: 'percent' }
+        }
+      });
+    }
+    const technicalBytes = jsonBytes(technical);
+    await writeFile(technicalPath, technicalBytes);
+    const manifestPath = path.join(sourceRoot, 'source-manifest.json');
+    const sourceManifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+    const row = sourceManifest.files.find(file => file.path === 'technical.json');
+    row.sha256 = sha256(technicalBytes);
+    row.sizeBytes = technicalBytes.byteLength;
+    const manifestBytes = jsonBytes(sourceManifest);
+    await writeFile(manifestPath, manifestBytes);
+    const lockPath = path.join(destination, 'source.lock.json');
+    const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+    lock.manifestSha256 = sha256(manifestBytes);
+    await writeFile(lockPath, jsonBytes(lock));
+  }
+
+  const authoringPath = path.join(destination, 'content', 'w01', 'web-authoring.json');
+  const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+  const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+  const claimFor = tier => tierClaimId(tier);
+  const paramsFor = tier => presentation.payload.official.params.map(param => ({
+    ...param,
+    ...(param.name === 'movement_speed' ? { bindingRef: claimFor(tier) } : {})
+  }));
+  const sectionsFor = tier => {
+    const sections = structuredClone(presentation.payload.detailSections);
+    const claimRef = claimFor(tier);
+    sections.effects = [{
+      itemId: 'chainaxe-tier-display-parameter',
+      parts: [
+        { kind: 'literal', text: '此階級的說明數值為 ' },
+        { kind: 'signed-percent', bindingRef: claimRef },
+        { kind: 'literal', text: '。' }
+      ],
+      claimRefs: [claimRef]
+    }];
+    return sections;
+  };
+  presentation.payload.official.params = paramsFor(4);
+  presentation.payload.official.localizations['zh-TW'].params = paramsFor(4);
+  presentation.payload.detailSections = sectionsFor(4);
+  presentation.payload.tierPresentations = {
+    variantRef: tierVariantId,
+    defaultTier: 4,
+    options: [1, 2, 3, 4].map(tier => ({ tier, params: paramsFor(tier), detailSections: sectionsFor(tier) }))
+  };
+  await writeFile(authoringPath, jsonBytes(authoring));
 }
 
 // Scenario: the real generated runtime loads a legacy fixture with no candidate flag and a native official pending candidate.
@@ -116,7 +217,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /這是乘算，不是額外固定傷害。/);
   assert.match(candidateText, /傷害倍率：此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。/);
   assert.match(candidateText, /提速/);
-  assert.match(candidateText, /第 1 階級的說明數值為 \+17%。/);
+  assert.match(candidateText, /此階級的說明數值為 \+20%。/);
   assert.match(candidateText, /說明中的持續時間為 2 秒。/);
   assert.match(candidateText, /已收錄的攻擊數值：80、140。/);
   assert.match(candidateText, /已收錄的護甲修正值：1\.035、1\.965。/);
@@ -222,7 +323,7 @@ test('UnitT10_domain-requests-start-together-before-first-response-and-hash-fail
   assert.equal(firstRequestStarted, true);
   assert.equal(requestsBeforeAnyDomainResponse, 5);
   assert.equal(new Set(requestedPaths).size, 5);
-  assert.equal(page.get('status').dataset.state, undefined);
+  assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
 
   const skillsPath = new URL(manifest.files.find(file => file.kind === 'skills').path, manifestUrl).pathname;
   const badHashPage = await runPreviewModule(fixtureOutput, async (input, init, packageFetch) => {
@@ -238,4 +339,104 @@ test('UnitT10_domain-requests-start-together-before-first-response-and-hash-fail
   assert.equal(badHashPage.get('content')?.children.length ?? 0, 0);
   assert.equal(badHashPage.get('terms-content')?.children.length ?? 0, 0);
   assert.equal(badHashPage.get('changes-content')?.children.length ?? 0, 0);
+});
+
+// Scenario: the shared package contains four compiler-bound blessing tiers and uses the source-defined tier 4 by default.
+// Purpose: let players select only a verified option, keep the official EN/zh-TW template identity and duration fixed, and fail closed before partial rendering when the feature flag is absent.
+test('UnitT11_runtime-selects-only-source-verified-tier-presentations', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-tier-runtime-'));
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  const candidateRepo = path.join(tempRoot, 'candidate-repo');
+  const candidateOutput = path.join(tempRoot, 'candidate-output');
+  await makeTieredCandidateInput(candidateRepo);
+  await buildW01({ repoRoot: candidateRepo, outputRoot: candidateOutput, mode: 'candidate-preview' });
+
+  const page = await runPreviewModule(candidateOutput);
+  assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
+  const cards = page.get('content').children;
+  assert.equal(cards.length, 3);
+  const blessingCard = cards.find(card => card.children.some(child => child.tagName === 'label' && child.children.some(nested => nested.tagName === 'select')));
+  assert.ok(blessingCard, 'the blessing card has an accessible tier selector');
+  const selector = blessingCard.children.find(child => child.tagName === 'label')?.children.find(child => child.tagName === 'select');
+  assert.ok(selector);
+  assert.equal(selector.attributes['aria-label'], '選擇階級');
+  assert.equal(selector.value, '4');
+  assert.deepEqual(selector.children.map(option => option.value), ['1', '2', '3', '4']);
+  assert.match(renderedText(blessingCard), /武器特殊啟動後\+20%移動速度，持續2秒。/);
+  assert.match(renderedText(blessingCard), /此階級的說明數值為 \+20%。/);
+
+  for (const tier of [1, 2, 3, 4]) {
+    selector.value = String(tier);
+    page.dispatchWithGlobals(selector, { type: 'change' });
+    const cardText = renderedText(blessingCard);
+    assert.match(cardText, new RegExp('武器特殊啟動後\\+' + tierPercent(tier) + '%移動速度，持續2秒。'));
+    assert.match(cardText, new RegExp('此階級的說明數值為 \\+' + tierPercent(tier) + '%。'));
+    assert.doesNotMatch(cardText, /Movement Speed|Weapon Special Activation/);
+  }
+
+  const wrongFeatureRoot = path.join(tempRoot, 'wrong-feature');
+  await cp(candidateOutput, wrongFeatureRoot, { recursive: true });
+  const versionPath = path.join(wrongFeatureRoot, 'version.json');
+  const version = JSON.parse(await readFile(versionPath, 'utf8'));
+  const manifestPath = path.join(wrongFeatureRoot, version.game_releases[0].manifest_path.slice(1).split('/').join(path.sep));
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  manifest.compatibility.requiredFeatures = manifest.compatibility.requiredFeatures.filter(feature => feature !== 'blessing-tier-presentations-v1');
+  const manifestBytes = jsonBytes(manifest);
+  await writeFile(manifestPath, manifestBytes);
+  version.game_releases[0].manifest_sha256 = sha256(manifestBytes);
+  await writeFile(versionPath, jsonBytes(version));
+
+  const rejectedPage = await runPreviewModule(wrongFeatureRoot);
+  assert.equal(rejectedPage.get('status').dataset.state, 'error');
+  assert.match(rejectedPage.get('status').textContent, /階級資料與套件功能標記不一致/);
+  assert.equal(rejectedPage.get('content')?.children.length ?? 0, 0);
+  assert.equal(rejectedPage.get('terms-content')?.children.length ?? 0, 0);
+});
+
+// Scenario: a verified tier-specific display claim resolves to zero percent.
+// Purpose: keep the runtime expectation aligned with the compiler's signed-percent zero formatting on initial load and after selection.
+test('UnitT12_runtime-accepts-zero-tier-display-value', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-tier-zero-'));
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+  const candidateRepo = path.join(tempRoot, 'candidate-repo');
+  const candidateOutput = path.join(tempRoot, 'candidate-output');
+  await makeTieredCandidateInput(candidateRepo);
+
+  const sourceRoot = path.join(candidateRepo, 'content', 'w01', 'source');
+  const technicalPath = path.join(sourceRoot, 'technical.json');
+  const technical = JSON.parse(await readFile(technicalPath, 'utf8'));
+  const variant = technical.records.find(record => record.recordId === tierVariantId);
+  const claim = technical.records.find(record => record.recordId === tierClaimId(4));
+  assert.ok(variant && claim);
+  variant.payload.tierValues.find(value => value.tier === 4).value.decimal = '0';
+  claim.payload.value.decimal = '0';
+  const technicalBytes = jsonBytes(technical);
+  await writeFile(technicalPath, technicalBytes);
+  const sourceManifestPath = path.join(sourceRoot, 'source-manifest.json');
+  const sourceManifest = JSON.parse(await readFile(sourceManifestPath, 'utf8'));
+  const technicalRow = sourceManifest.files.find(file => file.path === 'technical.json');
+  technicalRow.sizeBytes = technicalBytes.byteLength;
+  technicalRow.sha256 = sha256(technicalBytes);
+  const sourceManifestBytes = jsonBytes(sourceManifest);
+  await writeFile(sourceManifestPath, sourceManifestBytes);
+  const lockPath = path.join(candidateRepo, 'source.lock.json');
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  lock.manifestSha256 = sha256(sourceManifestBytes);
+  await writeFile(lockPath, jsonBytes(lock));
+
+  await buildW01({ repoRoot: candidateRepo, outputRoot: candidateOutput, mode: 'candidate-preview' });
+  const page = await runPreviewModule(candidateOutput);
+  assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
+  const blessing = page.get('content').children.find(card => card.children.some(child => child.tagName === 'label'));
+  const selector = blessing.children.find(child => child.tagName === 'label').children.find(child => child.tagName === 'select');
+  assert.equal(selector.value, '4');
+  assert.match(renderedText(blessing), /武器特殊啟動後0%移動速度，持續2秒。/);
+  assert.match(renderedText(blessing), /此階級的說明數值為 0%。/);
+  selector.value = '1';
+  page.dispatchWithGlobals(selector, { type: 'change' });
+  assert.match(renderedText(blessing), /此階級的說明數值為 \+17%。/);
+  selector.value = '4';
+  page.dispatchWithGlobals(selector, { type: 'change' });
+  assert.match(renderedText(blessing), /此階級的說明數值為 0%。/);
 });

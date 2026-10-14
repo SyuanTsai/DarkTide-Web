@@ -11,6 +11,7 @@ const repoRoot = path.resolve(import.meta.dirname, '..');
 const domainKinds = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
 const publishedR5Root = process.env.W01_PRIOR_REAL_R5_ROOT;
 const publishedR6Root = process.env.W01_PRIOR_REAL_R6_ROOT;
+const publishedR7Root = process.env.W01_PRIOR_REAL_R7_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function withTempDirectory(callback) {
@@ -56,6 +57,93 @@ async function updatePinnedTechnical(copiedRoot, update) {
   await writeFile(lockPath, jsonBytes(lock));
 }
 
+const chainaxeTierVariantId = 'darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation';
+const chainaxeTierClaimId = tier => 'darktide:claim:chainaxe:p1-movement-speed-on-activation-tier' + tier + '-display-percent';
+const chainaxeTierPercent = tier => String(16 + tier);
+
+async function addSyntheticTierClaims(copiedRoot) {
+  await updatePinnedTechnical(copiedRoot, technical => {
+    const tierOneClaim = technical.records.find(record => record.recordId === chainaxeTierClaimId(1));
+    assert.ok(tierOneClaim, 'the real tier-1 display claim is present');
+    const existingRecordIds = new Set(technical.records.map(record => record.recordId));
+    for (const tier of [2, 3, 4]) {
+      if (existingRecordIds.has(chainaxeTierClaimId(tier))) continue;
+      const evidenceId = 'test-only:evidence:chainaxe:tier-' + tier + '-display-percent';
+      technical.records.push({
+        recordId: evidenceId,
+        owner: 'source',
+        kind: 'evidence',
+        gameReleaseId: tierOneClaim.gameReleaseId,
+        payload: {
+          sourceRef: 'public-code:trait-value-parser-ba6c148',
+          safeSummary: 'TEST ONLY: synthetic fixture evidence for one tier-specific display binding.'
+        },
+        sourceRefs: ['public-code:chainaxe-p1-traits-ba6c148', 'public-code:trait-value-parser-ba6c148'],
+        reviewState: 'pending'
+      });
+      technical.records.push({
+        ...structuredClone(tierOneClaim),
+        recordId: chainaxeTierClaimId(tier),
+        payload: {
+          ...structuredClone(tierOneClaim.payload),
+          evidenceRefs: [
+            'darktide:evidence:chainaxe:p1-movement-speed-on-activation-code',
+            evidenceId
+          ],
+          property: 'description.format_values.movement_speed.defined_tier_' + tier + '_display_percent',
+          value: { status: 'known', decimal: chainaxeTierPercent(tier), unit: 'percent' }
+        }
+      });
+      existingRecordIds.add(evidenceId);
+      existingRecordIds.add(chainaxeTierClaimId(tier));
+    }
+  });
+}
+
+function tierParamsFor(record, tier) {
+  return record.payload.official.params.map(param => ({
+    ...param,
+    ...(param.name === 'movement_speed' ? { bindingRef: chainaxeTierClaimId(tier) } : {})
+  }));
+}
+
+function tierSectionsFor(record, tier) {
+  const sections = structuredClone(record.payload.detailSections);
+  const claimRef = chainaxeTierClaimId(tier);
+  sections.effects = [{
+    itemId: 'chainaxe-tier-display-parameter',
+    parts: [
+      { kind: 'literal', text: '此階級的說明數值為 ' },
+      { kind: 'signed-percent', bindingRef: claimRef },
+      { kind: 'literal', text: '。' }
+    ],
+    claimRefs: [claimRef]
+  }];
+  return sections;
+}
+
+async function prepareTieredCandidateInputs(copiedRoot) {
+  await copyCurrentInputs(copiedRoot);
+  await addSyntheticTierClaims(copiedRoot);
+  const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+  const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+  const record = authoring.records.find(item => item.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+  assert.ok(record, 'the blessing presentation is present');
+  record.payload.official.params = tierParamsFor(record, 4);
+  record.payload.official.localizations['zh-TW'].params = tierParamsFor(record, 4);
+  record.payload.detailSections = tierSectionsFor(record, 4);
+  record.payload.tierPresentations = {
+    variantRef: chainaxeTierVariantId,
+    defaultTier: 4,
+    options: [1, 2, 3, 4].map(tier => ({
+      tier,
+      params: tierParamsFor(record, tier),
+      detailSections: tierSectionsFor(record, tier)
+    }))
+  };
+  await writeFile(authoringPath, jsonBytes(authoring));
+  return { authoringPath, recordId: record.recordId };
+}
 async function repinTechnicalClaimTarget(repoRoot, recordId, targetRef, { linkTermToClaim = false } = {}) {
   const sourceRoot = path.join(repoRoot, 'content', 'w01', 'source');
   const technicalPath = path.join(sourceRoot, 'technical.json');
@@ -94,6 +182,12 @@ async function readOfficialPresentations(buildRoot, receipt) {
     JSON.parse(await readFile(path.join(buildRoot, 'data', receipt.dataRevision, kind + '.json'), 'utf8'))));
   return domains.flatMap(domain => domain.records)
     .filter(record => record.owner === 'web' && record.kind === 'presentation');
+}
+
+function officialSourceIdentity(official) {
+  const keys = ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments'];
+  const pick = entry => Object.fromEntries(keys.map(key => [key, entry[key]]));
+  return { root: pick(official), zhTW: { origin: official.localizations['zh-TW'].origin, ...pick(official.localizations['zh-TW']) } };
 }
 
 // Scenario: the same pinned Source and Web fixture are compiled twice in clean directories.
@@ -621,11 +715,11 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const blessing = find('blessings', 'web:presentation:chainaxe-p1-movement-speed');
     const weapon = find('weapons', 'web:presentation:chainaxe-p1-m1');
 
-    assert.equal(manifest.source.commit, 'f216b61e78b5507877645623950b954c1f8ec01b');
-    assert.equal(manifest.source.sourceRevision, 'b4068895536183ee34d3beff4d6741c8d6355c3912dd7e8bb1955c110d7d7ddc');
-    assert.equal(manifest.source.manifestSha256, '64cb59aa48064f5e2cc31a6279fa8ba074bee1a4659830658da7cae5805ae982');
+    assert.equal(manifest.source.commit, '5d16c70a828d4bd6293a12430cd4ebea36c6ed1c');
+    assert.equal(manifest.source.sourceRevision, '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d');
+    assert.equal(manifest.source.manifestSha256, '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.7');
+    assert.equal(version.game_releases[0].content_version, '0.0.8');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -747,7 +841,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       { itemId: 'psyker-smite-term', termRef: 'darktide:term:psyker:smite-damage-multiplier-parameter' }
     ]);
     assert.deepEqual(blessing.payload.detailSections.effects, [
-      { itemId: 'chainaxe-tier-1-display-parameter', text: '第 1 階級的說明數值為 +17%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent'] }
+      { itemId: 'chainaxe-tier-display-parameter', text: '此階級的說明數值為 +20%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent'] }
     ]);
     assert.deepEqual(blessing.payload.detailSections.conditions, [
       { itemId: 'chainaxe-special-activation-condition', text: '啟動武器的特殊動作。' },
@@ -763,8 +857,8 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const damageTerm = domains.terms.records.find(record => record.recordId === 'web:term-localization:psyker-smite-damage-multiplier-parameter');
     assert.equal(damageTerm.payload.label, '傷害倍率');
     assert.equal(damageTerm.payload.definition, '此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。');
-    assert.equal(blessing.payload.official.resolvedText, '+17% Movement Speed for 2s on Weapon Special Activation.');
-    assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+17%移動速度，持續2秒。');
+    assert.equal(blessing.payload.official.resolvedText, '+20% Movement Speed for 2s on Weapon Special Activation.');
+    assert.equal(blessing.payload.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+20%移動速度，持續2秒。');
     assert.equal(weapon.payload.name, '突擊鏈斧');
     assert.equal(blessing.payload.name, '提速');
     assert.equal(skill.reviewState, 'pending');
@@ -897,7 +991,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.7');
+    assert.equal(currentReceipt.contentVersion, '0.0.8');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -940,9 +1034,9 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.7 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.8 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-7', { skip: !publishedR5Root }, async () => {
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-8', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -954,8 +1048,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-7', { ski
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.7');
-    assert.equal(currentReceipt.contentVersion, '0.0.7');
+    assert.equal(current.receipt.contentVersion, '0.0.8');
+    assert.equal(currentReceipt.contentVersion, '0.0.8');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -975,7 +1069,7 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-7', { ski
     assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
     for (const previous of previousPresentations) {
       const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
-      assert.deepEqual(currentPresentation.payload.official, previous.payload.official, `unchanged official text ${previous.recordId}`);
+      assert.deepEqual(officialSourceIdentity(currentPresentation.payload.official), officialSourceIdentity(previous.payload.official), `unchanged official source identity ${previous.recordId}`);
       assert.deepEqual(currentPresentation.payload.name, previous.payload.name, `unchanged displayed name ${previous.recordId}`);
       assert.deepEqual(currentPresentation.sourceRefs, previous.sourceRefs, `unchanged official references ${previous.recordId}`);
       assert.ok(Array.isArray(previous.payload.errata), `published errata array ${previous.recordId}`);
@@ -986,9 +1080,9 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-7', { ski
   });
 });
 
-// Scenario: the exact published 0.0.6 package is the previous output for the 0.0.7 candidate build.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.8 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
-test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-7', { skip: !publishedR6Root }, async () => {
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-8', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR6Root, outputRoot, { recursive: true });
@@ -1000,8 +1094,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.7');
-    assert.equal(currentReceipt.contentVersion, '0.0.7');
+    assert.equal(current.receipt.contentVersion, '0.0.8');
+    assert.equal(currentReceipt.contentVersion, '0.0.8');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1021,7 +1115,7 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
     for (const previous of previousPresentations) {
       const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
-      assert.deepEqual(currentPresentation.payload.official, previous.payload.official, `unchanged official text ${previous.recordId}`);
+      assert.deepEqual(officialSourceIdentity(currentPresentation.payload.official), officialSourceIdentity(previous.payload.official), `unchanged official source identity ${previous.recordId}`);
       assert.deepEqual(currentPresentation.payload.name, previous.payload.name, `unchanged displayed name ${previous.recordId}`);
       assert.deepEqual(currentPresentation.sourceRefs, previous.sourceRefs, `unchanged official references ${previous.recordId}`);
       assert.ok(Array.isArray(previous.payload.errata), `published errata array ${previous.recordId}`);
@@ -1132,3 +1226,189 @@ async function makePendingCandidateInputs(copiedRoot) {
   await writeFile(lockPath, jsonBytes(lock));
   await writeFile(authoringPath, jsonBytes(authoring));
 }
+
+// Scenario: one pending blessing exposes every Source-defined tier with the source-backed highest tier selected by default.
+// Purpose: compile complete tier options from the original official template and keep its EN/zh-TW identity fixed.
+test('UnitT24_blessing-tier-presentations-compile-all-options-with-tier-four-default', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await prepareTieredCandidateInputs(copiedRoot);
+
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const manifest = JSON.parse(await readFile(path.join(outputRoot, result.manifestPath), 'utf8'));
+    const domains = Object.fromEntries(await Promise.all(domainKinds.map(async kind => [
+      kind,
+      JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, kind + '.json'), 'utf8'))
+    ])));
+    const blessing = domains.blessings.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+    const sourceVariant = domains.blessings.records.find(record => record.recordId === chainaxeTierVariantId);
+    const claimsById = new Map(domains.skills.records.filter(record => record.kind === 'claim').map(record => [record.recordId, record]));
+    const tiered = blessing.payload.tierPresentations;
+
+    assert.deepEqual(manifest.compatibility.requiredFeatures, [
+      'official-errata-details-v1', 'official-native-localizations-v1', 'blessing-tier-presentations-v1'
+    ]);
+    assert.equal(tiered.variantRef, chainaxeTierVariantId);
+    assert.equal(tiered.defaultTier, 4);
+    assert.deepEqual(tiered.options.map(option => option.tier), sourceVariant.payload.definedTiers);
+    assert.deepEqual(blessing.payload.official, tiered.options[3].official);
+    assert.deepEqual(blessing.payload.detailSections, tiered.options[3].detailSections);
+    assert.deepEqual(blessing.payload.errata, []);
+    assert.equal(sourceVariant.payload.obtainableTiers.status, 'unknown');
+
+    const baseOfficial = blessing.payload.official;
+    const expectedRatios = ['0.17', '0.18', '0.19', '0.2'];
+    for (const [index, option] of tiered.options.entries()) {
+      const tier = index + 1;
+      const claimId = chainaxeTierClaimId(tier);
+      const claim = claimsById.get(claimId);
+      const variantValue = sourceVariant.payload.tierValues.find(item => item.tier === tier).value;
+      assert.equal(claim.payload.targetRef, tiered.variantRef);
+      assert.equal(claim.payload.property, 'description.format_values.movement_speed.defined_tier_' + tier + '_display_percent');
+      assert.equal(claim.payload.basis, 'code-derived');
+      assert.deepEqual(claim.payload.context, {});
+      assert.equal(claim.payload.value.decimal, chainaxeTierPercent(tier));
+      assert.equal(claim.payload.value.unit, 'percent');
+      assert.equal(variantValue.decimal, expectedRatios[index]);
+      assert.equal(option.official.params.find(param => param.name === 'movement_speed').bindingRef, claimId);
+      assert.equal(option.official.params.find(param => param.name === 'movement_speed').resolvedValue, '+' + chainaxeTierPercent(tier) + '%');
+      assert.deepEqual(option.official.params.find(param => param.name === 'time'), baseOfficial.params.find(param => param.name === 'time'));
+      assert.equal(option.official.resolvedText, '+' + chainaxeTierPercent(tier) + '% Movement Speed for 2s on Weapon Special Activation.');
+      assert.equal(option.official.localizations['zh-TW'].resolvedText, '武器特殊啟動後+' + chainaxeTierPercent(tier) + '%移動速度，持續2秒。');
+      assert.equal(option.official.sourceText, baseOfficial.sourceText);
+      assert.equal(option.official.sourceTextSha256, baseOfficial.sourceTextSha256);
+      assert.deepEqual(option.official.segments, baseOfficial.segments);
+      assert.equal(option.official.localizations['zh-TW'].sourceText, baseOfficial.localizations['zh-TW'].sourceText);
+      assert.equal(option.official.localizations['zh-TW'].sourceTextSha256, baseOfficial.localizations['zh-TW'].sourceTextSha256);
+      assert.deepEqual(option.official.localizations['zh-TW'].segments, baseOfficial.localizations['zh-TW'].segments);
+      assert.deepEqual(option.detailSections.effects, [{
+        itemId: 'chainaxe-tier-display-parameter',
+        text: '此階級的說明數值為 +' + chainaxeTierPercent(tier) + '%。',
+        claimRefs: [claimId]
+      }]);
+      assert.equal(Object.hasOwn(option.detailSections.effects[0], 'parts'), false);
+      assert.deepEqual(option.detailSections.conditions, baseOfficial ? blessing.payload.detailSections.conditions : []);
+    }
+    assert.equal(result.receipt.fixtureOnly, false);
+    assert.equal(result.receipt.candidatePreviewOnly, true);
+    assert.equal(result.receipt.formalPublishAllowed, false);
+  });
+});
+
+// Scenario: an otherwise pinned four-tier package contains a mismatched tier binding, Source ratio, or variant identity.
+// Purpose: reject cross-tier and disconnected records before producing shared bytes.
+test('UnitT25_blessing-tier-presentations-reject-cross-tier-and-source-mismatches', async () => {
+  const cases = [
+    {
+      name: 'cross-tier binding',
+      mutateAuthoring: authoring => {
+        const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+        presentation.payload.tierPresentations.options[1].params.find(param => param.name === 'movement_speed').bindingRef = chainaxeTierClaimId(1);
+      },
+      expected: /movement_speed bindingRef does not identify its tier/
+    },
+    {
+      name: 'different variant',
+      mutateAuthoring: authoring => {
+        const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+        presentation.payload.tierPresentations.variantRef = 'darktide:blessing-variant:other';
+      },
+      expected: /variantRef must identify a variant of this blessing/
+    },
+    {
+      name: 'ratio and display claim disagree',
+      mutateSource: technical => {
+        const variant = technical.records.find(record => record.recordId === chainaxeTierVariantId);
+        variant.payload.tierValues.find(entry => entry.tier === 2).value.decimal = '0.19';
+      },
+      expected: /does not match the selected blessing tier and Source value/
+    },
+    {
+      name: 'non-default root',
+      mutateAuthoring: authoring => {
+        const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+        presentation.payload.tierPresentations.defaultTier = 3;
+      },
+      expected: /requires the four defined tiers with tier 4 as default/
+    }
+  ];
+
+  for (const item of cases) {
+    await withTempDirectory(async tempRoot => {
+      const copiedRoot = path.join(tempRoot, 'repo');
+      const outputRoot = path.join(tempRoot, 'out');
+      await prepareTieredCandidateInputs(copiedRoot);
+      if (item.mutateSource) await updatePinnedTechnical(copiedRoot, item.mutateSource);
+      if (item.mutateAuthoring) {
+        const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+        const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+        item.mutateAuthoring(authoring);
+        await writeFile(authoringPath, jsonBytes(authoring));
+      }
+      await assert.rejects(buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' }), item.expected, item.name);
+      await assert.rejects(readdir(outputRoot), { code: 'ENOENT' }, 'invalid tier data is rejected before output writes');
+    });
+  }
+});
+
+// Scenario: a tiered effect repeats a tier percentage as authored text instead of binding it to the selected Source claim.
+// Purpose: make the dynamic value mandatory and prevent every option from carrying a disconnected hard-coded number.
+test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await prepareTieredCandidateInputs(copiedRoot);
+    const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+    const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+    const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+    for (const option of presentation.payload.tierPresentations.options) {
+      const claimRef = chainaxeTierClaimId(option.tier);
+      option.detailSections.effects = [{
+        itemId: 'hard-coded-tier-value',
+        text: '此階級的說明數值為 +20%。',
+        claimRefs: [claimRef]
+      }];
+    }
+    presentation.payload.detailSections = structuredClone(presentation.payload.tierPresentations.options[3].detailSections);
+    await writeFile(authoringPath, jsonBytes(authoring));
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' }),
+      /may not hard-code a tier percentage/
+    );
+    await assert.rejects(readdir(outputRoot), { code: 'ENOENT' });
+  });
+});
+
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.8 output.
+// Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
+test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-8', { skip: !publishedR7Root }, async () => {
+  await withTempDirectory(async tempRoot => {
+    const outputRoot = path.join(tempRoot, 'dist-w01');
+    const priorReceipt = JSON.parse(await readFile(path.join(publishedR7Root, 'receipt.json'), 'utf8'));
+    assert.equal(priorReceipt.contentVersion, '0.0.7');
+    assert.equal(priorReceipt.web.authoringCommit, 'a11bdb73d4e00b735051bfcb55685623c05c9c12');
+    const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/'));
+    assert.equal(priorDataRows.length, 2319);
+    await cp(publishedR7Root, outputRoot, { recursive: true });
+
+    const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
+    const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
+    assert.equal(current.receipt.contentVersion, '0.0.8');
+    assert.equal(currentReceipt.contentVersion, '0.0.8');
+    assert.equal(currentReceipt.fixtureOnly, false);
+    assert.equal(currentReceipt.candidatePreviewOnly, true);
+    assert.equal(currentReceipt.publicationEligible, false);
+    assert.equal(currentReceipt.formalPublishAllowed, false);
+    for (const row of priorDataRows) {
+      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.7 receipt row ${row.path}`);
+      assert.deepEqual(
+        await readFile(path.join(outputRoot, ...row.path.split('/'))),
+        await readFile(path.join(publishedR7Root, ...row.path.split('/'))),
+        `retained 0.0.7 data bytes ${row.path}`
+      );
+    }
+    await assertExactOutputInventory(outputRoot, currentReceipt.files);
+  });
+});

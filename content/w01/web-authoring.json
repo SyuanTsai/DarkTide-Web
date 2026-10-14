@@ -439,7 +439,7 @@
               "name": "movement_speed",
               "placeholder": "{movement_speed:%s}",
               "status": "bound",
-              "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+              "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
               "format": "signed-percent"
             },
             {
@@ -498,7 +498,7 @@
                   "name": "movement_speed",
                   "placeholder": "{movement_speed:%s}",
                   "status": "bound",
-                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
                   "format": "signed-percent"
                 },
                 {
@@ -516,10 +516,23 @@
         "detailSections": {
           "effects": [
             {
-              "itemId": "chainaxe-tier-1-display-parameter",
-              "text": "第 1 階級的說明數值為 +17%。",
+              "itemId": "chainaxe-tier-display-parameter",
+              "parts": [
+                {
+                  "kind": "literal",
+                  "text": "此階級的說明數值為 "
+                },
+                {
+                  "kind": "signed-percent",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                },
+                {
+                  "kind": "literal",
+                  "text": "。"
+                }
+              ],
               "claimRefs": [
-                "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
               ]
             }
           ],
@@ -544,6 +557,268 @@
             }
           ],
           "extra": []
+        },
+        "tierPresentations": {
+          "variantRef": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+          "defaultTier": 4,
+          "options": [
+            {
+              "tier": 1,
+              "params": [
+                {
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "time",
+                  "placeholder": "{time:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "format": "plain-number"
+                }
+              ],
+              "detailSections": {
+                "effects": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "此階級的說明數值為 "
+                      },
+                      {
+                        "kind": "signed-percent",
+                        "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "啟動武器的特殊動作。"
+                  },
+                  {
+                    "itemId": "chainaxe-template-duration-parameter",
+                    "text": "說明中的持續時間為 2 秒。",
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                    ]
+                  }
+                ],
+                "calculation": [],
+                "notes": [
+                  {
+                    "itemId": "chainaxe-tier-coverage",
+                    "text": "說明列出 4 個階級；可取得的階級尚未確認。"
+                  }
+                ],
+                "extra": []
+              }
+            },
+            {
+              "tier": 2,
+              "params": [
+                {
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "time",
+                  "placeholder": "{time:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "format": "plain-number"
+                }
+              ],
+              "detailSections": {
+                "effects": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "此階級的說明數值為 "
+                      },
+                      {
+                        "kind": "signed-percent",
+                        "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "啟動武器的特殊動作。"
+                  },
+                  {
+                    "itemId": "chainaxe-template-duration-parameter",
+                    "text": "說明中的持續時間為 2 秒。",
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                    ]
+                  }
+                ],
+                "calculation": [],
+                "notes": [
+                  {
+                    "itemId": "chainaxe-tier-coverage",
+                    "text": "說明列出 4 個階級；可取得的階級尚未確認。"
+                  }
+                ],
+                "extra": []
+              }
+            },
+            {
+              "tier": 3,
+              "params": [
+                {
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "time",
+                  "placeholder": "{time:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "format": "plain-number"
+                }
+              ],
+              "detailSections": {
+                "effects": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "此階級的說明數值為 "
+                      },
+                      {
+                        "kind": "signed-percent",
+                        "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "啟動武器的特殊動作。"
+                  },
+                  {
+                    "itemId": "chainaxe-template-duration-parameter",
+                    "text": "說明中的持續時間為 2 秒。",
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                    ]
+                  }
+                ],
+                "calculation": [],
+                "notes": [
+                  {
+                    "itemId": "chainaxe-tier-coverage",
+                    "text": "說明列出 4 個階級；可取得的階級尚未確認。"
+                  }
+                ],
+                "extra": []
+              }
+            },
+            {
+              "tier": 4,
+              "params": [
+                {
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                  "format": "signed-percent"
+                },
+                {
+                  "name": "time",
+                  "placeholder": "{time:%s}",
+                  "status": "bound",
+                  "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "format": "plain-number"
+                }
+              ],
+              "detailSections": {
+                "effects": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "此階級的說明數值為 "
+                      },
+                      {
+                        "kind": "signed-percent",
+                        "bindingRef": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "啟動武器的特殊動作。"
+                  },
+                  {
+                    "itemId": "chainaxe-template-duration-parameter",
+                    "text": "說明中的持續時間為 2 秒。",
+                    "claimRefs": [
+                      "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                    ]
+                  }
+                ],
+                "calculation": [],
+                "notes": [
+                  {
+                    "itemId": "chainaxe-tier-coverage",
+                    "text": "說明列出 4 個階級；可取得的階級尚未確認。"
+                  }
+                ],
+                "extra": []
+              }
+            }
+          ]
         }
       },
       "reviewState": "pending"

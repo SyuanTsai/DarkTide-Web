@@ -61,6 +61,7 @@ const SOURCE_REQUIRED_PAYLOAD_KEYS = {
 };
 const RECORD_STATES = new Set(['draft', 'pending', 'approved', 'rejected', 'stale']);
 const DETAIL_SECTION_KEYS = ['effects', 'conditions', 'calculation', 'notes', 'extra'];
+const BLESSING_TIER_PRESENTATIONS_FEATURE = 'blessing-tier-presentations-v1';
 const NATIVE_NUMERIC_PARAMETER_CONTRACTS = {
   damage: { property: 'description.format_values.damage.display_percent', format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'skill' },
   movement_speed: { property: 'description.format_values.movement_speed.defined_tier_1_display_percent', format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'blessing' },
@@ -321,7 +322,25 @@ function validateOfficialIdentity(value, label, expectedLocale, record, referenc
   if (value.sourceTextSha256 !== sha256(Buffer.from(value.sourceText, 'utf8'))) fail(label + '.sourceText hash mismatch');
 }
 
-function resolveOfficialParam(param, label, locale, record, referenceById, sourceRecordById, sourceKindById) {
+function ratioAsPercentDecimal(value, label) {
+  validateDecimal(value, label);
+  if (value.startsWith('-')) fail(label + ' must be a non-negative ratio');
+  const [whole, fraction = ''] = value.split('.');
+  const digits = whole + fraction;
+  const shiftedPosition = whole.length + 2;
+  let shifted;
+  if (shiftedPosition >= digits.length) {
+    shifted = digits + '0'.repeat(shiftedPosition - digits.length);
+  } else {
+    shifted = digits.slice(0, shiftedPosition) + '.' + digits.slice(shiftedPosition);
+  }
+  const [integerPart, fractionalPart] = shifted.split('.');
+  const normalizedInteger = integerPart.replace(/^0+(?=\d)/, '');
+  const normalizedFraction = fractionalPart?.replace(/0+$/, '');
+  return normalizedFraction ? normalizedInteger + '.' + normalizedFraction : normalizedInteger;
+}
+
+function resolveOfficialParam(param, label, locale, record, referenceById, sourceRecordById, sourceKindById, tierContext = null) {
   assertExactKeys(param, ['name', 'placeholder', 'status', 'bindingRef', 'format'], label);
   if (typeof param.name !== 'string' || !/^[a-z][a-z0-9_]*$/.test(param.name)) fail(label + '.name is invalid');
   if (param.placeholder !== '{' + param.name + ':%s}') fail(label + '.placeholder does not match its parameter name');
@@ -337,7 +356,13 @@ function resolveOfficialParam(param, label, locale, record, referenceById, sourc
     if (reference.officialName.sourceLocale !== locale) fail(label + '.officialName locale does not match the template locale');
     resolvedValue = reference.officialName.text;
   } else {
-    const bindingContract = NATIVE_NUMERIC_PARAMETER_CONTRACTS[param.name];
+    const tieredMovement = tierContext && param.name === 'movement_speed';
+    const bindingContract = tieredMovement
+      ? {
+          property: 'description.format_values.movement_speed.defined_tier_' + tierContext.tier + '_display_percent',
+          format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'blessing'
+        }
+      : NATIVE_NUMERIC_PARAMETER_CONTRACTS[param.name];
     if (!bindingContract) fail(label + ' does not match the fixed W01 numeric parameter contract');
     const claim = sourceRecordById.get(param.bindingRef);
     if (!claim || sourceKindById.get(param.bindingRef) !== 'claim') fail(label + '.bindingRef must identify a Source claim');
@@ -362,9 +387,24 @@ function resolveOfficialParam(param, label, locale, record, referenceById, sourc
         claim.payload.basis !== bindingContract.basis || claim.payload.value.unit !== bindingContract.unit) {
       fail(label + '.bindingRef claim does not match its fixed property, unit, basis, or entity kind');
     }
+    if (tieredMovement) {
+      const variant = sourceRecordById.get(tierContext.variantRef);
+      const expectedClaimId = 'darktide:claim:' + tierContext.variantRef.replace(/^darktide:blessing-variant:/, '') + '-tier' + tierContext.tier + '-display-percent';
+      const tierValue = variant?.payload?.tierValues?.find(entry => entry.tier === tierContext.tier)?.value;
+      if (!variant || variant.kind !== 'blessing-variant' || variant.gameReleaseId !== record.gameReleaseId ||
+          variant.recordId !== tierContext.variantRef || variant.payload.blessingRef !== record.entityRef ||
+          !entity.payload.variantRefs.includes(tierContext.variantRef) || param.bindingRef !== expectedClaimId ||
+          claim.payload.targetRef !== tierContext.variantRef || !claim.payload.context ||
+          Object.keys(claim.payload.context).length !== 0 || !tierValue || tierValue.status !== 'known' || tierValue.unit !== 'ratio' ||
+          ratioAsPercentDecimal(tierValue.decimal, label + '.variant ratio') !== value.decimal) {
+        fail(label + '.bindingRef does not match the selected blessing tier and Source value');
+      }
+    }
     const relatedClaim = entity.kind === 'skill'
       ? claim.payload.targetRef === record.entityRef
-      : entity.payload.variantRefs.includes(claim.payload.targetRef);
+      : tieredMovement
+        ? claim.payload.targetRef === tierContext.variantRef
+        : entity.payload.variantRefs.includes(claim.payload.targetRef);
     if (!relatedClaim) fail(label + '.bindingRef claim does not target this presentation');
     if (param.format === 'signed-percent') {
       const isZero = /^-?0(?:\.0+)?$/.test(value.decimal);
@@ -377,7 +417,7 @@ function resolveOfficialParam(param, label, locale, record, referenceById, sourc
   return { ...param, resolvedValue };
 }
 
-function resolveOfficialLocale(entry, label, locale, record, referenceIds, referenceById, sourceRecordById, sourceKindById, includeOrigin) {
+function resolveOfficialLocale(entry, label, locale, record, referenceIds, referenceById, sourceRecordById, sourceKindById, includeOrigin, tierContext = null) {
   const identityKeys = ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params'];
   assertExactKeys(entry, [...(includeOrigin ? ['origin'] : []), ...identityKeys], label);
   if (includeOrigin && entry.origin !== 'official') fail(label + '.origin must be official');
@@ -399,7 +439,7 @@ function resolveOfficialLocale(entry, label, locale, record, referenceIds, refer
   requireArray(entry.params, label + '.params');
   const paramsByName = new Map();
   for (const [index, param] of entry.params.entries()) {
-    const resolved = resolveOfficialParam(param, label + '.params[' + index + ']', locale, record, referenceById, sourceRecordById, sourceKindById);
+    const resolved = resolveOfficialParam(param, label + '.params[' + index + ']', locale, record, referenceById, sourceRecordById, sourceKindById, tierContext);
     if (paramsByName.has(resolved.name)) fail(label + '.params contains a duplicate parameter name');
     paramsByName.set(resolved.name, resolved);
   }
@@ -437,7 +477,7 @@ function resolveOfficialLocale(entry, label, locale, record, referenceIds, refer
   };
 }
 
-function compileNativeOfficial(official, label, record, referenceIds, referenceById, sourceRecordById, sourceKindById) {
+function compileNativeOfficial(official, label, record, referenceIds, referenceById, sourceRecordById, sourceKindById, tierContext = null) {
   assertExactKeys(official, ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params', 'localizations'], label);
   assertExactKeys(official.localizations, ['zh-TW'], label + '.localizations');
   const english = resolveOfficialLocale({
@@ -451,9 +491,165 @@ function compileNativeOfficial(official, label, record, referenceIds, referenceB
     sourceTextSha256: official.sourceTextSha256,
     segments: official.segments,
     params: official.params
-  }, label, 'en', record, referenceIds, referenceById, sourceRecordById, sourceKindById, false);
-  const traditionalChinese = resolveOfficialLocale(official.localizations['zh-TW'], label + '.localizations.zh-TW', 'zh-TW', record, referenceIds, referenceById, sourceRecordById, sourceKindById, true);
+  }, label, 'en', record, referenceIds, referenceById, sourceRecordById, sourceKindById, false, tierContext);
+  const traditionalChinese = resolveOfficialLocale(official.localizations['zh-TW'], label + '.localizations.zh-TW', 'zh-TW', record, referenceIds, referenceById, sourceRecordById, sourceKindById, true, tierContext);
   return { ...english, localizations: { 'zh-TW': traditionalChinese } };
+}
+
+function compileDetailSections(input, label, sourceIds, sourceKindById, tierContext = null) {
+  assertPlainObject(input, label);
+  assertExactKeys(input, DETAIL_SECTION_KEYS, label);
+  const output = {};
+  for (const section of DETAIL_SECTION_KEYS) {
+    requireArray(input[section], label + '.' + section);
+    let tierBoundItemCount = 0;
+    output[section] = input[section].map((item, itemIndex) => {
+      const itemLabel = label + '.' + section + '[' + itemIndex + ']';
+      assertPlainObject(item, itemLabel);
+      if (Object.hasOwn(item, 'parts')) {
+        if (!tierContext || section !== 'effects') fail(itemLabel + '.parts is only allowed for a tier-bound blessing effect');
+        assertExactKeys(item, ['itemId', 'parts', 'claimRefs'], itemLabel);
+        requireString(item.itemId, itemLabel + '.itemId');
+        requireArray(item.parts, itemLabel + '.parts');
+        if (item.parts.length === 0) fail(itemLabel + '.parts must not be empty');
+        requireArray(item.claimRefs, itemLabel + '.claimRefs');
+        const claimRef = tierContext.claimRef;
+        if (item.claimRefs.length !== 1 || item.claimRefs[0] !== claimRef) {
+          fail(itemLabel + '.claimRefs must identify the selected tier display claim');
+        }
+        const resolvedParam = tierContext.params.find(param => param.name === 'movement_speed' && param.bindingRef === claimRef);
+        if (!resolvedParam) fail(itemLabel + ' has no selected tier display binding');
+        let signedPercentParts = 0;
+        const text = item.parts.map((part, partIndex) => {
+          const partLabel = itemLabel + '.parts[' + partIndex + ']';
+          assertPlainObject(part, partLabel);
+          if (part.kind === 'literal') {
+            assertExactKeys(part, ['kind', 'text'], partLabel);
+            requireString(part.text, partLabel + '.text');
+            if (/[{}]|(?:^|\D)\d+(?:\.\d+)?\s*%/.test(part.text)) {
+              fail(partLabel + '.literal may not contain template syntax or a hard-coded percentage');
+            }
+            return part.text;
+          }
+          if (part.kind === 'signed-percent') {
+            assertExactKeys(part, ['kind', 'bindingRef'], partLabel);
+            requireString(part.bindingRef, partLabel + '.bindingRef');
+            if (part.bindingRef !== claimRef) fail(partLabel + '.bindingRef does not match the selected tier');
+            signedPercentParts += 1;
+            return resolvedParam.resolvedValue;
+          }
+          fail(partLabel + '.kind is unsupported');
+        }).join('');
+        if (signedPercentParts !== 1) fail(itemLabel + '.parts must contain exactly one selected tier percentage');
+        tierBoundItemCount += 1;
+        return { itemId: item.itemId, text, claimRefs: [claimRef] };
+      }
+      const keys = ['itemId', ...(Object.hasOwn(item, 'text') ? ['text'] : []), ...(Object.hasOwn(item, 'claimRefs') ? ['claimRefs'] : []), ...(Object.hasOwn(item, 'termRef') ? ['termRef'] : [])];
+      assertExactKeys(item, keys, itemLabel);
+      requireString(item.itemId, itemLabel + '.itemId');
+      if (!Object.hasOwn(item, 'text') && !Object.hasOwn(item, 'termRef')) fail(itemLabel + ' needs text or termRef');
+      if ('text' in item) {
+        requireString(item.text, itemLabel + '.text');
+        if (tierContext && section === 'effects' && /(?:^|\D)\d+(?:\.\d+)?\s*%/.test(item.text)) {
+          fail(itemLabel + '.text may not hard-code a tier percentage');
+        }
+      }
+      if ('claimRefs' in item) {
+        requireRefList(item.claimRefs, itemLabel + '.claimRefs');
+        for (const claimRef of item.claimRefs) if (!sourceIds.has(claimRef) || sourceKindById.get(claimRef) !== 'claim') fail(itemLabel + ' has an unresolved claimRef');
+      }
+      if ('termRef' in item && (!sourceIds.has(item.termRef) || sourceKindById.get(item.termRef) !== 'term')) fail(itemLabel + ' has an unresolved termRef');
+      return item;
+    });
+    if (tierContext && section === 'effects' && tierBoundItemCount === 0) {
+      fail(label + '.effects must contain a typed selected-tier percentage');
+    }
+  }
+  return output;
+}
+
+function normalizeTierSectionBindings(sections, tierContext) {
+  const clone = structuredClone(sections);
+  for (const section of DETAIL_SECTION_KEYS) {
+    for (const item of clone[section]) {
+      if (Array.isArray(item.claimRefs) && item.claimRefs.length === 1 && item.claimRefs[0] === tierContext.claimRef) {
+        item.claimRefs = ['$selected-tier-claim'];
+      }
+      for (const part of item.parts ?? []) {
+        if (part.kind === 'signed-percent' && part.bindingRef === tierContext.claimRef) part.bindingRef = '$selected-tier-claim';
+      }
+    }
+  }
+  return JSON.stringify(clone);
+}
+
+function compileTierPresentations(record, rawTierPresentations, referenceIds, referenceById, sourceRecordById, sourceKindById, sourceIds, label) {
+  assertExactKeys(rawTierPresentations, ['variantRef', 'defaultTier', 'options'], label + '.tierPresentations');
+  const variantRef = requireString(rawTierPresentations.variantRef, label + '.tierPresentations.variantRef');
+  if (sourceKindById.get(record.entityRef) !== 'blessing') fail(label + '.tierPresentations is only valid for a blessing presentation');
+  const blessing = sourceRecordById.get(record.entityRef);
+  const variant = sourceRecordById.get(variantRef);
+  if (!variant || sourceKindById.get(variantRef) !== 'blessing-variant' || variant.gameReleaseId !== record.gameReleaseId ||
+      variant.payload.blessingRef !== record.entityRef || !blessing.payload.variantRefs.includes(variantRef)) {
+    fail(label + '.tierPresentations.variantRef must identify a variant of this blessing');
+  }
+  const definedTiers = variant.payload.definedTiers;
+  if (!Array.isArray(definedTiers) || JSON.stringify(definedTiers) !== '[1,2,3,4]' || rawTierPresentations.defaultTier !== 4) {
+    fail(label + '.tierPresentations requires the four defined tiers with tier 4 as default');
+  }
+  requireArray(rawTierPresentations.options, label + '.tierPresentations.options');
+  if (rawTierPresentations.options.length !== definedTiers.length ||
+      JSON.stringify(rawTierPresentations.options.map(option => option?.tier)) !== JSON.stringify(definedTiers)) {
+    fail(label + '.tierPresentations.options must match every defined tier in order');
+  }
+  if (!record.payload.official?.localizations?.['zh-TW'] || record.payload.official.localizations['zh-TW'].origin !== 'official') {
+    fail(label + '.tierPresentations requires native English and zh-TW official templates');
+  }
+  const baseOfficial = record.payload.official;
+  const defaultOption = rawTierPresentations.options.at(-1);
+  const defaultParams = defaultOption.params;
+  if (JSON.stringify(baseOfficial.params) !== JSON.stringify(defaultParams) ||
+      JSON.stringify(baseOfficial.localizations['zh-TW'].params) !== JSON.stringify(defaultParams)) {
+    fail(label + '.official params must match the default tier option in both locales');
+  }
+  const baseParamShape = baseOfficial.params.map(param => ({
+    name: param.name, placeholder: param.placeholder, status: param.status, format: param.format,
+    bindingRef: param.name === 'movement_speed' ? '$selected-tier-claim' : param.bindingRef
+  }));
+  const compiledOptions = rawTierPresentations.options.map((option, optionIndex) => {
+    const optionLabel = label + '.tierPresentations.options[' + optionIndex + ']';
+    assertExactKeys(option, ['tier', 'params', 'detailSections'], optionLabel);
+    const tier = option.tier;
+    const expectedClaimId = 'darktide:claim:' + variantRef.replace(/^darktide:blessing-variant:/, '') + '-tier' + tier + '-display-percent';
+    if (!Number.isInteger(tier) || tier !== definedTiers[optionIndex]) fail(optionLabel + '.tier does not match the source defined tier');
+    requireArray(option.params, optionLabel + '.params');
+    const paramShape = option.params.map(param => ({
+      name: param.name, placeholder: param.placeholder, status: param.status, format: param.format,
+      bindingRef: param.name === 'movement_speed' ? '$selected-tier-claim' : param.bindingRef
+    }));
+    if (JSON.stringify(paramShape) !== JSON.stringify(baseParamShape)) fail(optionLabel + '.params may change only the movement-speed tier claim');
+    const movementParam = option.params.find(param => param.name === 'movement_speed');
+    if (!movementParam || movementParam.bindingRef !== expectedClaimId) fail(optionLabel + '.movement_speed bindingRef does not identify its tier');
+    const tierContext = { tier, variantRef, claimRef: expectedClaimId, params: option.params };
+    const optionOfficial = {
+      ...baseOfficial,
+      params: option.params,
+      localizations: { 'zh-TW': { ...baseOfficial.localizations['zh-TW'], params: option.params } }
+    };
+    const official = compileNativeOfficial(optionOfficial, optionLabel + '.official', record, referenceIds, referenceById, sourceRecordById, sourceKindById, tierContext);
+    const detailSections = compileDetailSections(option.detailSections, optionLabel + '.detailSections', sourceIds, sourceKindById, { ...tierContext, params: official.params });
+    if (normalizeTierSectionBindings(option.detailSections, tierContext) !== normalizeTierSectionBindings(defaultOption.detailSections, {
+      claimRef: 'darktide:claim:' + variantRef.replace(/^darktide:blessing-variant:/, '') + '-tier4-display-percent'
+    })) fail(optionLabel + '.detailSections may vary only by the generated tier percentage binding');
+    return { tier, official, detailSections };
+  });
+  const defaultCompiled = compiledOptions.at(-1);
+  if (JSON.stringify(record.payload.detailSections) !== JSON.stringify(defaultOption.detailSections)) {
+    fail(label + '.detailSections must be the default tier authoring');
+  }
+  record.payload.official = defaultCompiled.official;
+  record.payload.detailSections = defaultCompiled.detailSections;
+  return { variantRef, defaultTier: 4, options: compiledOptions };
 }
 
 function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceReferences, gameReleaseId, sourceRecordById) {
@@ -472,6 +668,7 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
   const seen = new Set();
   const recordEnvelopeKeys = ['recordId', 'owner', 'kind', 'gameReleaseId', 'entityRef', 'locale', 'sourceRefs', 'payload', 'reviewState'];
   let usesNativeOfficialLocalizations = false;
+  let usesBlessingTierPresentations = false;
   for (const [index, record] of authoring.records.entries()) {
     const label = 'Web authoring record[' + index + ']';
     assertExactKeys(record, recordEnvelopeKeys, label);
@@ -488,7 +685,7 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
     seen.add(record.recordId);
     if (record.kind === 'presentation') {
       if (!['skill', 'blessing', 'weapon'].includes(sourceKindById.get(record.entityRef))) fail(label + '.entityRef has the wrong owner kind');
-      const allowedPayloadKeys = ['name', 'official', 'errata', 'detailSections'].filter(key => Object.hasOwn(record.payload, key));
+      const allowedPayloadKeys = ['name', 'official', 'errata', 'detailSections', 'tierPresentations'].filter(key => Object.hasOwn(record.payload, key));
       assertExactKeys(record.payload, allowedPayloadKeys, label + '.payload');
       requireString(record.payload.name, label + '.name');
       if (Object.hasOwn(record.payload, 'official') !== Object.hasOwn(record.payload, 'errata')) {
@@ -497,7 +694,9 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
       if (Object.hasOwn(record.payload, 'official')) {
         const official = record.payload.official;
         if (official?.localizations?.['zh-TW']?.origin === 'official') {
-          record.payload.official = compileNativeOfficial(official, label + '.official', record, referenceIds, referenceById, sourceRecordById, sourceKindById);
+          if (!Object.hasOwn(record.payload, 'tierPresentations')) {
+            record.payload.official = compileNativeOfficial(official, label + '.official', record, referenceIds, referenceById, sourceRecordById, sourceKindById);
+          }
           usesNativeOfficialLocalizations = true;
         } else {
         assertExactKeys(official, ['sourceRef', 'sourceLocale', 'resource', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments', 'params', 'resolvedText', 'resolvedTextSha256', 'localizations'], label + '.official');
@@ -550,24 +749,16 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
           requireString(erratum.text, erratumLabel + '.text');
         }
       }
-      assertPlainObject(record.payload.detailSections, label + '.detailSections');
-      assertExactKeys(record.payload.detailSections, DETAIL_SECTION_KEYS, label + '.detailSections');
-      for (const section of DETAIL_SECTION_KEYS) {
-        requireArray(record.payload.detailSections[section], label + '.detailSections.' + section);
-        for (const [itemIndex, item] of record.payload.detailSections[section].entries()) {
-          const itemLabel = label + '.detailSections.' + section + '[' + itemIndex + ']';
-          assertPlainObject(item, itemLabel);
-          const keys = ['itemId', ...(Object.hasOwn(item, 'text') ? ['text'] : []), ...(Object.hasOwn(item, 'claimRefs') ? ['claimRefs'] : []), ...(Object.hasOwn(item, 'termRef') ? ['termRef'] : [])];
-          assertExactKeys(item, keys, itemLabel);
-          requireString(item.itemId, itemLabel + '.itemId');
-          if (!Object.hasOwn(item, 'text') && !Object.hasOwn(item, 'termRef')) fail(itemLabel + ' needs text or termRef');
-          if ('text' in item) requireString(item.text, itemLabel + '.text');
-          if ('claimRefs' in item) {
-            requireRefList(item.claimRefs, itemLabel + '.claimRefs');
-            for (const claimRef of item.claimRefs) if (!sourceIds.has(claimRef) || sourceKindById.get(claimRef) !== 'claim') fail(itemLabel + ' has an unresolved claimRef');
-          }
-          if ('termRef' in item && (!sourceIds.has(item.termRef) || sourceKindById.get(item.termRef) !== 'term')) fail(itemLabel + ' has an unresolved termRef');
+      if (Object.hasOwn(record.payload, 'tierPresentations')) {
+        if (!Object.hasOwn(record.payload, 'official') || !Object.hasOwn(record.payload, 'errata') ||
+            record.payload.official?.localizations?.['zh-TW']?.origin !== 'official') {
+          fail(label + '.tierPresentations requires native official text and errata');
         }
+        record.payload.tierPresentations = compileTierPresentations(record, record.payload.tierPresentations, referenceIds, referenceById, sourceRecordById, sourceKindById, sourceIds, label);
+        usesNativeOfficialLocalizations = true;
+        usesBlessingTierPresentations = true;
+      } else {
+        record.payload.detailSections = compileDetailSections(record.payload.detailSections, label + '.detailSections', sourceIds, sourceKindById);
       }
     } else {
       if (sourceKindById.get(record.entityRef) !== 'term') fail(label + '.entityRef must identify a Source term');
@@ -601,7 +792,7 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
     if (seen.has(announcement.recordId)) fail('duplicate Web authoring recordId ' + announcement.recordId);
     seen.add(announcement.recordId);
   }
-  return { records: authoring.records, announcements: authoring.announcements, references, usesNativeOfficialLocalizations };
+  return { records: authoring.records, announcements: authoring.announcements, references, usesNativeOfficialLocalizations, usesBlessingTierPresentations };
 }
 
 function validateSourceReferenceClosure(sourceRecords, sourceRefs, owner) {
@@ -701,10 +892,22 @@ function validateDomainReferences(records, kindById) {
       case 'term': refs('claimRefs', ['claim']); break;
       case 'presentation': {
         check(record.recordId, record.entityRef, ['skill', 'blessing', 'weapon'], 'entityRef');
-        for (const section of Object.values(payload.detailSections ?? {})) {
+        const checkDetails = sections => {
+          for (const section of Object.values(sections ?? {})) {
           for (const item of section) {
             if ('claimRefs' in item) for (const claimRef of item.claimRefs) check(record.recordId, claimRef, ['claim'], 'claimRef');
             if ('termRef' in item) check(record.recordId, item.termRef, ['term'], 'termRef');
+          }
+          }
+        };
+        checkDetails(payload.detailSections);
+        if (payload.tierPresentations) {
+          check(record.recordId, payload.tierPresentations.variantRef, ['blessing-variant'], 'tier variantRef');
+          for (const option of payload.tierPresentations.options) {
+            checkDetails(option.detailSections);
+            for (const entry of [option.official, option.official?.localizations?.['zh-TW']]) {
+              for (const param of entry?.params ?? []) check(record.recordId, param.bindingRef, ['claim'], 'tier official bindingRef');
+            }
           }
         }
         for (const erratum of payload.errata ?? []) {
@@ -737,12 +940,24 @@ function sharedRecordReferences(record, sourceRecordById) {
     case 'term': add(payload.claimRefs); break;
     case 'presentation':
       add(record.entityRef);
-      for (const section of Object.values(payload.detailSections ?? {})) {
+      const addDetails = sections => {
+        for (const section of Object.values(sections ?? {})) {
         for (const item of section) { add(item.claimRefs); add(item.termRef); }
-      }
+        }
+      };
+      addDetails(payload.detailSections);
       for (const erratum of payload.errata ?? []) { add(erratum.claimRef); add(erratum.evidenceRefs); }
       for (const entry of [payload.official, payload.official?.localizations?.['zh-TW']]) {
         for (const param of entry?.params ?? []) if (sourceRecordById.has(param.bindingRef)) add(param.bindingRef);
+      }
+      if (payload.tierPresentations) {
+        add(payload.tierPresentations.variantRef);
+        for (const option of payload.tierPresentations.options) {
+          addDetails(option.detailSections);
+          for (const entry of [option.official, option.official?.localizations?.['zh-TW']]) {
+            for (const param of entry?.params ?? []) if (sourceRecordById.has(param.bindingRef)) add(param.bindingRef);
+          }
+        }
       }
       break;
     case 'term-localization': add(record.entityRef); break;
@@ -1059,7 +1274,11 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     },
     compatibility: {
       dataContractMajor: 2,
-      requiredFeatures: ['official-errata-details-v1', ...(webInput.usesNativeOfficialLocalizations ? ['official-native-localizations-v1'] : [])],
+      requiredFeatures: [
+        'official-errata-details-v1',
+        ...(webInput.usesNativeOfficialLocalizations ? ['official-native-localizations-v1'] : []),
+        ...(webInput.usesBlessingTierPresentations ? [BLESSING_TIER_PRESENTATIONS_FEATURE] : [])
+      ],
       gameSnapshotRefs: sourceRefs.map(reference => reference.sourceId)
     },
     files: fileRows,
@@ -1216,7 +1435,7 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
   const features = manifest.compatibility?.requiredFeatures;
   if (manifest.schemaVersion !== '2.0.0' || manifest.compatibility?.dataContractMajor !== 2 ||
       !Array.isArray(features) || !features.includes('official-errata-details-v1') ||
-      features.some(feature => !['official-errata-details-v1', 'official-native-localizations-v1'].includes(feature)) ||
+      features.some(feature => !['official-errata-details-v1', 'official-native-localizations-v1', BLESSING_TIER_PRESENTATIONS_FEATURE].includes(feature)) ||
       manifest.changeIndexPath !== 'game-changes.json' || manifest.fixtureOnly !== isFixturePackage || manifest.publicationEligible !== false ||
       manifest.files.length !== 5 || manifest.files.some((file, index) => file.kind !== DOMAIN_KINDS[index] || file.path !== file.kind + '.json')) {
     fail('W01 package does not match the D v2 contract or exact five quarantined shared domains');
@@ -1226,6 +1445,12 @@ export async function verifyW01Package(outputRoot = path.join(SCRIPT_ROOT, 'dist
     parseJson(await readRequired(activeDataRoot, file.path), file.kind + '.json').records.some(record => record.payload?.official?.localizations?.['zh-TW']?.origin === 'official'))
   )).some(Boolean);
   if (hasNativeOfficialLocalizations !== features.includes('official-native-localizations-v1')) fail('W01 native-localization feature flag does not match the shared domains');
+  const hasBlessingTierPresentations = (await Promise.all(manifest.files.map(async file =>
+    parseJson(await readRequired(activeDataRoot, file.path), file.kind + '.json').records.some(record => Object.hasOwn(record.payload ?? {}, 'tierPresentations')))
+  )).some(Boolean);
+  if (hasBlessingTierPresentations !== features.includes(BLESSING_TIER_PRESENTATIONS_FEATURE)) {
+    fail('W01 blessing-tier feature flag does not match the shared domains');
+  }
   return { buildId: receipt.buildId, dataRevision: receipt.dataRevision, fileCount: receipt.files.length, fixtureOnly: isFixturePackage, candidatePreviewOnly: isPendingPreview };
 }
 
