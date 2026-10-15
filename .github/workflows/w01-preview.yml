@@ -331,7 +331,8 @@ jobs:
         working-directory: web
         env:
           W01_DEPLOYMENT_RECEIPT: ${{ runner.temp }}/w01-preview-deployment-receipt.json
-        run: node scripts/w01-preview-deployment-receipt.mjs --output "$W01_DEPLOYMENT_RECEIPT"
+          W01_PREVIOUS_PACKAGE_ROOT: ${{ runner.temp }}/w01-real-r12
+        run: node scripts/w01-preview-deployment-receipt.mjs --output "$W01_DEPLOYMENT_RECEIPT" --previous-package "$W01_PREVIOUS_PACKAGE_ROOT"
       - name: Upload the public preview deployment receipt
         if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

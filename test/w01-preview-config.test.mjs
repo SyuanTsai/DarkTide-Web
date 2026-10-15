@@ -38,7 +38,13 @@ test('UnitT01_workflow-deploys-only-the-guarded-preview-worker', () => {
   assert.doesNotMatch(deploy.run, /cloudflare-deploy\.mjs|deploy:cloudflare|wrangler\.json/);
   const secretConsumers = steps.filter(step => JSON.stringify(step).includes('secrets.'));
   assert.deepEqual(secretConsumers, [deploy]);
-  assert.ok(steps.some(step => step.name === 'Verify the deployed preview and write a deployment receipt'));
+  const receipt = steps.find(step => step.name === 'Verify the deployed preview and write a deployment receipt');
+  assert.ok(receipt);
+  assert.equal(receipt['working-directory'], 'web');
+  assert.equal(receipt.env.W01_DEPLOYMENT_RECEIPT, '${{ runner.temp }}/w01-preview-deployment-receipt.json');
+  assert.equal(receipt.env.W01_PREVIOUS_PACKAGE_ROOT, '${{ runner.temp }}/w01-real-r12');
+  assert.match(receipt.run, /--output "\$W01_DEPLOYMENT_RECEIPT"/);
+  assert.match(receipt.run, /--previous-package "\$W01_PREVIOUS_PACKAGE_ROOT"/);
 });
 
 // Scenario: the fixed preview workflow starts on an empty runner and builds current pending 0.0.13 after exact published history.
