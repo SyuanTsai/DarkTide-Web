@@ -257,8 +257,12 @@
         "detailSections": {
           "effects": [
             {
+              "itemId": "psyker-numerical-assumptions",
+              "text": "以下數值以未受其他加成或減免影響為前提。"
+            },
+            {
               "itemId": "psyker-description-damage-parameter",
-              "text": "其他條件相同時，顱腦崩裂傷害提高 50%（1.5 倍）；這項加成不適用於所有靈能攻擊。",
+              "text": "顱腦崩裂的傷害提高 50%（1.5 倍）；這項增傷不會套用到所有靈能攻擊。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-description-display-percent",
                 "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
@@ -266,8 +270,10 @@
             },
             {
               "itemId": "psyker-base-hit-peril-cost",
-              "text": "成功造成傷害時，基本增加 25% 反噬，不隨蓄力程度改變。",
+              "text": "蓄力期間會累積反噬；攻擊造成傷害時，還會額外增加 25% 反噬。",
               "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
               ]
             }
@@ -275,14 +281,14 @@
           "conditions": [
             {
               "itemId": "psyker-normal-charge-condition",
-              "text": "一般蓄力不必先取得目標，期間會累積反噬；選定目標會隨瞄準方向改變。",
+              "text": "先蓄力再鎖定：可以先蓄力，之後再鎖定敵人；鎖定時會接續先前的蓄力進度。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
               ]
             },
             {
               "itemId": "psyker-sticky-charge-condition",
-              "text": "先鎖定再蓄力時，需要可鎖定的目標；鎖定後，移動準星不會更換目標。",
+              "text": "直接鎖定蓄力：鎖定敵人後開始蓄力。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -290,34 +296,35 @@
             },
             {
               "itemId": "psyker-lock-on-charge-condition",
-              "text": "從一般蓄力轉為鎖定時，可保留已累積的蓄力進度。",
+              "text": "鎖定後，即使移開準星，也不會更換目標。",
               "claimRefs": [
-                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
               ]
             }
           ],
           "calculation": [
             {
               "itemId": "psyker-estimate-assumptions",
-              "text": "以下假設從 0% 反噬開始，沒有蓄力速度或反噬相關加成，且蓄力不中斷。"
+              "text": "以下從 0% 反噬開始，連續完成下列其中一種蓄力方式："
             },
             {
               "itemId": "psyker-normal-charge-peril-estimate",
-              "text": "一般蓄力約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。",
+              "text": "先完成蓄力再鎖定：蓄力約 3 秒完成；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
               ]
             },
             {
               "itemId": "psyker-sticky-charge-peril-estimate",
-              "text": "先鎖定再蓄力約 2 秒滿蓄；蓄力 1、2 秒時，反噬約為 10%、20%。",
+              "text": "直接鎖定蓄力：蓄力約 2 秒完成；蓄力 1、2 秒時，反噬約為 10%、20%。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
               ]
             },
             {
               "itemId": "psyker-full-charge-peril-rate-estimate",
-              "text": "滿蓄後每多維持 1 秒，反噬約再增加 9%。",
+              "text": "完成蓄力後若繼續維持，每秒約再增加 9% 反噬。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -325,7 +332,7 @@
             },
             {
               "itemId": "psyker-full-charge-hit-peril-estimate",
-              "text": "滿蓄後立即成功造成傷害，反噬合計約 45%；再維持 1 秒才成功造成傷害，合計約 54%。",
+              "text": "以上兩種方式完成蓄力後，立刻施放並造成傷害，反噬合計約 45%；若再維持蓄力 1 秒才施放並造成傷害，合計約 54%。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
@@ -336,7 +343,7 @@
           "notes": [
             {
               "itemId": "psyker-empty-cast-peril-cost",
-              "text": "空放或未造成傷害時，不增加上述 25% 反噬；蓄力期間已累積的反噬仍會保留。",
+              "text": "攻擊沒有造成傷害時，不會增加額外的 25% 反噬；蓄力期間累積的反噬仍會保留。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
               ]
@@ -344,8 +351,16 @@
           ],
           "extra": [
             {
+              "itemId": "psyker-stagger-eligible-target-condition",
+              "text": "以下情形只適用於可被這次攻擊打出踉蹌的敵人：",
+              "claimRefs": [
+                "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+              ]
+            },
+            {
               "itemId": "psyker-lock-on-direct-stagger-condition",
-              "text": "若目標能被此攻擊打出踉蹌，直接鎖定超過 1 秒會造成一次輕微踉蹌。",
+              "text": "直接鎖定蓄力：鎖定同一敵人並持續超過 1 秒，可造成一次輕微踉蹌。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -353,7 +368,7 @@
             },
             {
               "itemId": "psyker-lock-on-transition-stagger-condition",
-              "text": "若目標能被此攻擊打出踉蹌，從一般蓄力轉為鎖定後，從切換起持續鎖定超過 0.25 秒會造成一次輕微踉蹌。",
+              "text": "先蓄力再鎖定：轉為鎖定後持續超過 0.25 秒，可造成一次輕微踉蹌。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -500,7 +515,7 @@
               "parts": [
                 {
                   "kind": "literal",
-                  "text": "本階級標示的移動速度加成為 "
+                  "text": "移動速度加成："
                 },
                 {
                   "kind": "signed-percent",
@@ -519,7 +534,7 @@
           "conditions": [
             {
               "itemId": "chainaxe-special-activation-condition",
-              "text": "啟動武器特殊動作後生效。"
+              "text": "使用武器特殊動作後生效。"
             }
           ],
           "calculation": [],
@@ -555,7 +570,7 @@
                     "parts": [
                       {
                         "kind": "literal",
-                        "text": "本階級標示的移動速度加成為 "
+                        "text": "移動速度加成："
                       },
                       {
                         "kind": "signed-percent",
@@ -574,7 +589,7 @@
                 "conditions": [
                   {
                     "itemId": "chainaxe-special-activation-condition",
-                    "text": "啟動武器特殊動作後生效。"
+                    "text": "使用武器特殊動作後生效。"
                   }
                 ],
                 "calculation": [],
@@ -607,7 +622,7 @@
                     "parts": [
                       {
                         "kind": "literal",
-                        "text": "本階級標示的移動速度加成為 "
+                        "text": "移動速度加成："
                       },
                       {
                         "kind": "signed-percent",
@@ -626,7 +641,7 @@
                 "conditions": [
                   {
                     "itemId": "chainaxe-special-activation-condition",
-                    "text": "啟動武器特殊動作後生效。"
+                    "text": "使用武器特殊動作後生效。"
                   }
                 ],
                 "calculation": [],
@@ -659,7 +674,7 @@
                     "parts": [
                       {
                         "kind": "literal",
-                        "text": "本階級標示的移動速度加成為 "
+                        "text": "移動速度加成："
                       },
                       {
                         "kind": "signed-percent",
@@ -678,7 +693,7 @@
                 "conditions": [
                   {
                     "itemId": "chainaxe-special-activation-condition",
-                    "text": "啟動武器特殊動作後生效。"
+                    "text": "使用武器特殊動作後生效。"
                   }
                 ],
                 "calculation": [],
@@ -711,7 +726,7 @@
                     "parts": [
                       {
                         "kind": "literal",
-                        "text": "本階級標示的移動速度加成為 "
+                        "text": "移動速度加成："
                       },
                       {
                         "kind": "signed-percent",
@@ -730,7 +745,7 @@
                 "conditions": [
                   {
                     "itemId": "chainaxe-special-activation-condition",
-                    "text": "啟動武器特殊動作後生效。"
+                    "text": "使用武器特殊動作後生效。"
                   }
                 ],
                 "calculation": [],

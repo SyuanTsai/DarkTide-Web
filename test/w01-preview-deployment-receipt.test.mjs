@@ -151,7 +151,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       repoRoot: copiedRoot, outputRoot, receiptPath, fetchImpl, createdAt: '2026-10-14T00:00:00.000Z'
     });
     assert.equal(result.requestKind, 'w01-preview-deployment-receipt');
-    assert.equal(result.contentVersion, '0.0.11');
+    assert.equal(result.contentVersion, '0.0.12');
     assert.equal(result.packageKind, 'pending-preview');
     assert.equal(result.candidatePreviewOnly, true);
     assert.equal(result.verifiedRemoteObjects, 8);
