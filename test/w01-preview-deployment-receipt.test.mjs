@@ -9,6 +9,7 @@ import { buildW01 } from '../scripts/w01-build.mjs';
 import { jsonBytes } from '../src/static/common.mjs';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
+const publishedR13Root = process.env.W01_PRIOR_REAL_R13_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 // Scenario: a deployed preview serves the local versioned package and one pinned old data URL.
@@ -64,7 +65,7 @@ test('UnitT00_deployment-receipt-verifies-version-domains-and-retained-url', asy
     }
     const fetchImpl = async url => new Response(objects.get(new URL(url).pathname) ?? new Uint8Array(), {
       status: objects.has(new URL(url).pathname) ? 200 : 404,
-      headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+      headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
     });
     const receiptPath = path.join(tempRoot, 'deployment-receipt.json');
     const result = await createDeploymentReceipt({
@@ -196,7 +197,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         : objects.get(pathname) ?? new Uint8Array();
       return new Response(body, {
         status: isVersion || objects.has(pathname) ? 200 : 404,
-        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
       });
     };
     const receiptPath = path.join(tempRoot, 'deployment-receipt.json');
@@ -253,7 +254,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       const body = pathname === '/version.json' ? unrelatedVersionBytes : objects.get(pathname) ?? new Uint8Array();
       return new Response(body, {
         status: pathname === '/version.json' || objects.has(pathname) ? 200 : 404,
-        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
       });
     };
     await assert.rejects(
@@ -277,7 +278,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
           const pathname = new URL(url).pathname;
           return new Response(pathname === '/version.json' ? previousVersionBytes : objects.get(pathname) ?? new Uint8Array(), {
             status: pathname === '/version.json' || objects.has(pathname) ? 200 : 404,
-            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
           });
         },
         sleepImpl: async milliseconds => staleRetryDelays.push(milliseconds)
@@ -302,12 +303,12 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
               mismatchedObjectChecks += 1;
               return new Response('tampered package object', {
                 status: 200,
-                headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+                headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
               });
             }
             return new Response(objects.get(requestPath) ?? new Uint8Array(), {
               status: objects.has(requestPath) ? 200 : 404,
-              headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+              headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
             });
           },
           sleepImpl: async milliseconds => delays.push(milliseconds)
@@ -332,7 +333,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
           const pathname = new URL(url).pathname;
           return new Response(pathname === '/version.json' ? previousVersionBytes : objects.get(pathname) ?? new Uint8Array(), {
             status: pathname === '/version.json' ? 503 : 200,
-            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
           });
         },
         sleepImpl: async milliseconds => staleRetryDelays.push(milliseconds)
@@ -360,6 +361,30 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
     );
     assert.equal(missingHeaderCount, 1, 'missing required headers are never retried');
 
+    let wrongContentTypeCount = 0;
+    const contentTypeRetryDelays = [];
+    await assert.rejects(
+      createDeploymentReceipt({
+        repoRoot: copiedRoot, outputRoot, previousOutputRoot,
+        receiptPath: path.join(tempRoot, 'wrong-content-type.json'),
+        fetchImpl: async url => {
+          wrongContentTypeCount += 1;
+          const pathname = new URL(url).pathname;
+          return new Response(pathname === '/version.json' ? versionBytes : objects.get(pathname) ?? new Uint8Array(), {
+            status: pathname === '/version.json' || objects.has(pathname) ? 200 : 404,
+            headers: {
+              'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive',
+              'content-type': pathname === '/version.json' ? 'text/plain; charset=utf-8' : 'application/json; charset=utf-8'
+            }
+          });
+        },
+        sleepImpl: async milliseconds => contentTypeRetryDelays.push(milliseconds)
+      }),
+      /version\.json has unexpected content-type/
+    );
+    assert.equal(wrongContentTypeCount, 1, 'a wrong JSON content type is rejected immediately');
+    assert.deepEqual(contentTypeRetryDelays, [], 'a content-type error must not trigger a propagation wait');
+
     let wrongPathCount = 0;
     await assert.rejects(
       createDeploymentReceipt({
@@ -370,7 +395,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
           const pathname = new URL(url).pathname;
           const response = new Response(pathname === '/version.json' ? previousVersionBytes : objects.get(pathname) ?? new Uint8Array(), {
             status: 200,
-            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive' }
+            headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' }
           });
           if (pathname === '/version.json') Object.defineProperty(response, 'url', { value: 'https://example.invalid/version.json' });
           return response;
@@ -412,6 +437,161 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       );
       assert.equal(fetchCount, 0, 'an invalid preview mode must be rejected before fetching remote objects');
     }
+  } finally {
+    await rm(tempRoot, { recursive: true, force: true });
+  }
+});
+
+// Scenario: version.json has switched to 0.0.14 while Cloudflare briefly returns 404 for new content-addressed package objects.
+// Purpose: retry only exact-path 404 responses within one shared bounded budget; old or unknown bytes fail closed.
+test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { skip: !publishedR13Root }, async () => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-object-propagation-'));
+  try {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'dist-w01');
+    await cp(path.join(repoRoot, 'content', 'w01'), path.join(copiedRoot, 'content', 'w01'), { recursive: true });
+    await cp(path.join(repoRoot, 'source.lock.json'), path.join(copiedRoot, 'source.lock.json'));
+    const build = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const versionBytes = await readFile(path.join(outputRoot, 'version.json'));
+    const version = JSON.parse(versionBytes);
+    const manifestPath = version.game_releases[0].manifest_path;
+    const manifestBytes = await readFile(path.join(outputRoot, ...manifestPath.slice(1).split('/')));
+    const manifest = JSON.parse(manifestBytes);
+
+    const retainedBytes = Buffer.from('test-only pinned retained preview bytes');
+    const retainedRevision = 'b'.repeat(64);
+    const retainedRow = { path: 'data/' + retainedRevision + '/retained.json', sizeBytes: retainedBytes.byteLength, sha256: sha256(retainedBytes) };
+    const retainedManifest = {
+      schemaVersion: '1.0.0', baselineCommit: 'e'.repeat(40), dataRevision: retainedRevision,
+      fileCount: 1, totalBytes: retainedBytes.byteLength, files: [retainedRow]
+    };
+    await mkdir(path.join(copiedRoot, 'docs', 'w01'), { recursive: true });
+    await writeFile(path.join(copiedRoot, 'docs', 'w01', 'retained-preview-manifest.json'), jsonBytes(retainedManifest));
+    const retainedPath = path.join(outputRoot, ...retainedRow.path.split('/'));
+    await mkdir(path.dirname(retainedPath), { recursive: true });
+    await writeFile(retainedPath, retainedBytes);
+    const buildReceiptPath = path.join(outputRoot, 'receipt.json');
+    const buildReceipt = JSON.parse(await readFile(buildReceiptPath, 'utf8'));
+    buildReceipt.files.push(retainedRow);
+    buildReceipt.files.sort((left, right) => left.path.localeCompare(right.path, 'en'));
+    buildReceipt.retainedData = {
+      baselineCommit: retainedManifest.baselineCommit,
+      dataRevision: retainedManifest.dataRevision,
+      fileCount: retainedManifest.fileCount,
+      totalBytes: retainedManifest.totalBytes,
+      inventorySha256: sha256(jsonBytes(retainedManifest))
+    };
+    await writeFile(buildReceiptPath, jsonBytes(buildReceipt));
+
+    const previousReceipt = JSON.parse(await readFile(path.join(publishedR13Root, 'receipt.json'), 'utf8'));
+    const previousManifestBytes = await readFile(path.join(publishedR13Root, ...previousReceipt.manifestPath.split('/')));
+    const previousManifest = JSON.parse(previousManifestBytes);
+    const previousDomainBytes = new Map(await Promise.all(previousManifest.files.map(async file => [
+      file.kind,
+      await readFile(path.join(publishedR13Root, 'data', previousReceipt.dataRevision, file.path))
+    ])));
+    const currentObjects = new Map([
+      ['/version.json', versionBytes],
+      [manifestPath, manifestBytes],
+      ['/' + retainedRow.path, retainedBytes]
+    ]);
+    for (const file of manifest.files) {
+      currentObjects.set('/data/' + build.dataRevision + '/' + file.path,
+        await readFile(path.join(outputRoot, 'data', build.dataRevision, file.path)));
+    }
+
+    const headers = { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, noarchive', 'content-type': 'application/json; charset=utf-8' };
+    const manifestRequestCount = { value: 0 };
+    const skillsRequestCount = { value: 0 };
+    const retryDelays = [];
+    let fetchCount = 0;
+    const skillsPath = '/data/' + build.dataRevision + '/skills.json';
+    const fetchImpl = async url => {
+      fetchCount += 1;
+      const pathname = new URL(url).pathname;
+      if (pathname === manifestPath) {
+        manifestRequestCount.value += 1;
+        if (manifestRequestCount.value === 1) return new Response('not propagated yet', { status: 404, headers });
+      }
+      if (pathname === skillsPath) {
+        skillsRequestCount.value += 1;
+        if (skillsRequestCount.value === 1) return new Response('not propagated yet', { status: 404, headers });
+      }
+      const body = currentObjects.get(pathname);
+      return new Response(body ?? new Uint8Array(), { status: body ? 200 : 404, headers });
+    };
+
+    const result = await createDeploymentReceipt({
+      repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+      receiptPath: path.join(tempRoot, 'deployment-receipt.json'), fetchImpl,
+      sleepImpl: async milliseconds => retryDelays.push(milliseconds)
+    });
+    assert.equal(result.contentVersion, '0.0.14');
+    assert.equal(result.verifiedRemoteObjects, 8);
+    assert.equal(manifestRequestCount.value, 2, 'a transient manifest 404 is retried once');
+    assert.equal(skillsRequestCount.value, 2, 'a transient domain 404 is retried once');
+    assert.deepEqual(retryDelays, [250, 500]);
+    assert.equal(fetchCount, 10);
+    assert.equal(JSON.parse(await readFile(path.join(tempRoot, 'deployment-receipt.json'), 'utf8')).deploymentPerformed, true);
+
+    for (const [pathname, pinnedBytes, label] of [
+      [manifestPath, previousManifestBytes, 'manifest'],
+      [skillsPath, previousDomainBytes.get('skills'), 'skills']
+    ]) {
+      let staleObjectCount = 0;
+      const staleObjectDelays = [];
+      await assert.rejects(
+        createDeploymentReceipt({
+          repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+          receiptPath: path.join(tempRoot, 'stale-' + label + '-at-new-path.json'),
+          fetchImpl: async url => {
+            const requestPath = new URL(url).pathname;
+            if (requestPath === pathname) {
+              staleObjectCount += 1;
+              return new Response(pinnedBytes, { status: 200, headers });
+            }
+            const body = currentObjects.get(requestPath);
+            return new Response(body ?? new Uint8Array(), { status: body ? 200 : 404, headers });
+          },
+          sleepImpl: async milliseconds => staleObjectDelays.push(milliseconds)
+        }),
+        new RegExp(label + ' bytes do not match')
+      );
+      assert.equal(staleObjectCount, 1, 'pinned 0.0.13 ' + label + ' bytes at a new revision URL are rejected immediately');
+      assert.deepEqual(staleObjectDelays, [], 'old ' + label + ' content at a new revision URL is not retryable');
+    }
+
+    let exhaustedManifestCount = 0;
+    let exhaustedSkillsCount = 0;
+    let exhaustedBlessingsCount = 0;
+    const exhaustedDelays = [];
+    await assert.rejects(
+      createDeploymentReceipt({
+        repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+        receiptPath: path.join(tempRoot, 'shared-retry-budget-exhausted.json'),
+        fetchImpl: async url => {
+          const pathname = new URL(url).pathname;
+          if (pathname === manifestPath && ++exhaustedManifestCount <= 5) {
+            return new Response('not propagated yet', { status: 404, headers });
+          }
+          if (pathname === skillsPath && ++exhaustedSkillsCount === 1) {
+            return new Response('not propagated yet', { status: 404, headers });
+          }
+          if (pathname === '/data/' + build.dataRevision + '/blessings.json') {
+            exhaustedBlessingsCount += 1;
+            return new Response('not propagated yet', { status: 404, headers });
+          }
+          const body = currentObjects.get(pathname);
+          return new Response(body ?? new Uint8Array(), { status: body ? 200 : 404, headers });
+        },
+        sleepImpl: async milliseconds => exhaustedDelays.push(milliseconds)
+      }),
+      /shared package-object propagation retry budget is exhausted/
+    );
+    assert.equal(exhaustedManifestCount, 6, 'the manifest consumes five retries from the shared budget');
+    assert.equal(exhaustedSkillsCount, 2, 'the first domain consumes the sixth and final retry');
+    assert.equal(exhaustedBlessingsCount, 1, 'the next domain fails at its first 404 after the shared budget is exhausted');
+    assert.deepEqual(exhaustedDelays, [250, 500, 1000, 2000, 4000, 8000]);
   } finally {
     await rm(tempRoot, { recursive: true, force: true });
   }

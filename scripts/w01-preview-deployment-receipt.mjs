@@ -20,7 +20,7 @@ const PINNED_PRIOR_CANDIDATE = Object.freeze({
   sourceManifestSha256: '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc',
   versionSha256: '1a021c145b28bf0353442b687d587e00b735eb6873e64876f7521101f0a91197'
 });
-const VERSION_PROPAGATION_RETRY_DELAYS_MS = Object.freeze([250, 500, 1000, 2000, 4000, 8000]);
+const PROPAGATION_RETRY_DELAYS_MS = Object.freeze([250, 500, 1000, 2000, 4000, 8000]);
 
 function fail(message) {
   throw new Error(message);
@@ -50,7 +50,7 @@ function validateRows(rows, label) {
   }).sort((left, right) => left.path.localeCompare(right.path, 'en'));
 }
 
-async function requestVerified(fetchImpl, pathname, label) {
+async function requestVerified(fetchImpl, pathname, label, { allowNotFound = false } = {}) {
   const url = new URL(pathname, PREVIEW_ORIGIN + '/');
   if (url.origin !== PREVIEW_ORIGIN || !url.pathname.startsWith('/')) fail(label + ' URL is outside the fixed W01 preview origin');
   const response = await fetchImpl(url, { cache: 'no-store', credentials: 'omit', redirect: 'error', signal: AbortSignal.timeout(15000) });
@@ -61,10 +61,15 @@ async function requestVerified(fetchImpl, pathname, label) {
       fail(label + ' returned from an unexpected origin or path');
     }
   }
+  if (response.status === 404 && allowNotFound) return { status: response.status };
   if (response.status !== 200) fail(label + ' returned HTTP ' + response.status);
   const robots = response.headers.get('x-robots-tag') ?? '';
   if (!robots.toLowerCase().includes('noindex')) fail(label + ' is missing the preview noindex response header');
   if (response.headers.get('access-control-allow-origin') !== '*') fail(label + ' is missing the preview CORS response header');
+  const contentType = response.headers.get('content-type') ?? '';
+  if (contentType.split(';', 1)[0].trim().toLowerCase() !== 'application/json') {
+    fail(label + ' has unexpected content-type: ' + (contentType || '(missing)'));
+  }
   const actualBytes = Buffer.from(await response.arrayBuffer());
   return { status: response.status, robots, cors: response.headers.get('access-control-allow-origin'), actualBytes };
 }
@@ -134,7 +139,17 @@ async function readPinnedPreviousVersion(previousOutputRoot) {
   return previousVersionBytes;
 }
 
-async function fetchVersionWithPropagation({ fetchImpl, expectedBytes, previousBytes, sleepImpl }) {
+function createPropagationRetryBudget() {
+  let nextAttempt = 0;
+  return {
+    takeDelay() {
+      if (nextAttempt >= PROPAGATION_RETRY_DELAYS_MS.length) return undefined;
+      return PROPAGATION_RETRY_DELAYS_MS[nextAttempt++];
+    }
+  };
+}
+
+async function fetchVersionWithPropagation({ fetchImpl, expectedBytes, previousBytes, retryBudget, sleepImpl }) {
   for (let attempt = 0; ; attempt += 1) {
     const response = await requestVerified(fetchImpl, '/version.json', 'version.json');
     const matchesExpected = bytesEqual(response.actualBytes, expectedBytes);
@@ -142,10 +157,29 @@ async function fetchVersionWithPropagation({ fetchImpl, expectedBytes, previousB
 
     const matchesPinnedPrevious = previousBytes && bytesEqual(response.actualBytes, previousBytes);
     if (!matchesPinnedPrevious) fail('version.json bytes do not match the verified local preview package');
-    if (attempt >= VERSION_PROPAGATION_RETRY_DELAYS_MS.length) {
+    const delay = retryBudget.takeDelay();
+    if (delay === undefined) {
       fail('version.json still serves the pinned prior 0.0.13 package after ' + (attempt + 1) + ' checks');
     }
-    await sleepImpl(VERSION_PROPAGATION_RETRY_DELAYS_MS[attempt]);
+    await sleepImpl(delay);
+  }
+}
+
+async function fetchContentAddressedObjectWithPropagation({ fetchImpl, pathname, expectedBytes, label, retryBudget, sleepImpl }) {
+  for (;;) {
+    const response = await requestVerified(fetchImpl, pathname, label, { allowNotFound: true });
+    if (response.status === 200) {
+      if (!bytesEqual(response.actualBytes, expectedBytes)) {
+        fail(label + ' bytes do not match the verified local preview package');
+      }
+      return { status: response.status, robots: response.robots, cors: response.cors };
+    }
+
+    const delay = retryBudget.takeDelay();
+    if (delay === undefined) {
+      fail(label + ' returned HTTP 404; shared package-object propagation retry budget is exhausted');
+    }
+    await sleepImpl(delay);
   }
 }
 
@@ -191,15 +225,20 @@ export async function createDeploymentReceipt({ repoRoot = SCRIPT_ROOT, outputRo
   const remoteChecks = [];
   const pinnedPreviousVersionBytes = isPendingCandidate ? await readPinnedPreviousVersion(previousOutputRoot) : undefined;
   if (typeof sleepImpl !== 'function') fail('sleepImpl must be a function');
-  remoteChecks.push(await fetchVersionWithPropagation({ fetchImpl, expectedBytes: localVersionBytes, previousBytes: pinnedPreviousVersionBytes, sleepImpl }));
-  remoteChecks.push(await fetchVerified(fetchImpl, version.game_releases[0].manifest_path, manifestBytes, 'manifest'));
+  const retryBudget = createPropagationRetryBudget();
+  remoteChecks.push(await fetchVersionWithPropagation({ fetchImpl, expectedBytes: localVersionBytes, previousBytes: pinnedPreviousVersionBytes, retryBudget, sleepImpl }));
+  remoteChecks.push(await fetchContentAddressedObjectWithPropagation({
+    fetchImpl, pathname: version.game_releases[0].manifest_path, expectedBytes: manifestBytes, label: 'manifest', retryBudget, sleepImpl
+  }));
   for (const [index, file] of manifest.files.entries()) {
     if (file.kind !== DOMAIN_KINDS[index] || file.path !== file.kind + '.json' || !/^[a-f0-9]{64}$/.test(file.sha256)) {
       fail('W01 manifest does not contain the exact ordered shared domains');
     }
     const localBytes = await readArtifactFile(outputRoot, 'data/' + receipt.dataRevision + '/' + file.path);
     if (sha256(localBytes) !== file.sha256) fail('local W01 domain hash does not match manifest: ' + file.kind);
-    remoteChecks.push(await fetchVerified(fetchImpl, '/data/' + receipt.dataRevision + '/' + file.path, localBytes, file.kind));
+    remoteChecks.push(await fetchContentAddressedObjectWithPropagation({
+      fetchImpl, pathname: '/data/' + receipt.dataRevision + '/' + file.path, expectedBytes: localBytes, label: file.kind, retryBudget, sleepImpl
+    }));
   }
 
   const retainedManifest = parseJson(await readFile(path.join(repoRoot, 'docs', 'w01', 'retained-preview-manifest.json')), 'pinned retained preview manifest');
