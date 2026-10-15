@@ -197,6 +197,10 @@
       "kind": "stat-definition",
       "owner": "source",
       "payload": {
+        "claimRefs": [
+          "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+          "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80"
+        ],
         "curveRef": "darktide:stat-curve:chainaxe-p1-m1-default-light-attack-power-table",
         "inputUnit": "point",
         "obtainableInputRange": {
@@ -257,6 +261,10 @@
       "kind": "stat-definition",
       "owner": "source",
       "payload": {
+        "claimRefs": [
+          "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+          "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
+        ],
         "curveRef": "darktide:stat-curve:chainaxe-p1-m1-default-light-armored-parameter-table",
         "inputUnit": "point",
         "obtainableInputRange": {
@@ -810,6 +818,179 @@
         "public-code:chainaxe-p1-traits-ba6c148",
         "public-code:trait-value-parser-ba6c148"
       ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-default-light-attack-power-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].power_distribution.attack",
+        "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table",
+        "value": {
+          "decimal": "113",
+          "status": "known",
+          "unit": "point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-default-light-attack-power-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].power_distribution.attack",
+        "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table",
+        "value": {
+          "decimal": "119",
+          "status": "known",
+          "unit": "point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-default-light-armored-modifier-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table",
+        "value": {
+          "decimal": "1.6023",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148",
+        "public-code:damage-profile-settings-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-default-light-armored-modifier-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table",
+        "value": {
+          "decimal": "1.7604",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148",
+        "public-code:damage-profile-settings-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At the pinned source commit, chainaxe_dps_stat selects default_melee_dps_stat with attack-trait endpoints 0.25 and 0.75. The analysis-selected comparison inputs are 60 percent and 80 percent, giving first-stage t values lerp(0.25, 0.75, 0.60) = 0.55 and lerp(0.25, 0.75, 0.80) = 0.65. _resolve_template applies those values to default_light_chainaxe.targets[1].power_distribution.attack raw endpoints 80 and 140, yielding lerp(80, 140, 0.55) = 113 and lerp(80, 140, 0.65) = 119 attack-power points. These are code-derived parameter comparisons only, not an obtainable range or final damage.",
+        "sourceRef": "public-code:weapon-tweak-templates-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-default-light-attack-power-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At the pinned source commit, chainaxe_armor_pierce_stat selects default_armor_pierce_stat with armored-attack endpoints 0.1 and 0.95. The analysis-selected comparison inputs are 60 percent and 80 percent, giving first-stage t values lerp(0.1, 0.95, 0.60) = 0.61 and lerp(0.1, 0.95, 0.80) = 0.78. _resolve_template applies those values to default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored] raw endpoints 1.035 and 1.965, yielding lerp(1.035, 1.965, 0.61) = 1.6023 and lerp(1.035, 1.965, 0.78) = 1.7604 ratios. These are code-derived parameter comparisons only, not an obtainable range or final damage.",
+        "sourceRef": "public-code:weapon-tweak-templates-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-default-light-armored-modifier-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-default-light-profile-ba6c148",
+        "public-code:damage-profile-settings-ba6c148"
+      ]
     }
   ],
   "schemaVersion": "2.0.0",
@@ -852,7 +1033,7 @@
       "fixtureOnly": false,
       "path": "scripts/settings/equipment/weapon_templates/chain_axes/chainaxe_p1_m1.lua",
       "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
-      "safeSummary": "Pinned public code blob f42be428d76cf30d6b2488d2c24dfee1294023b5, lines 2072-2076: the chainaxe_p1_m1 template appends WeaponTraitsBespokeChainaxeP1. This records template linkage only.",
+      "safeSummary": "Pinned public code blob f42be428d76cf30d6b2488d2c24dfee1294023b5: the chainaxe_p1_m1 template appends WeaponTraitsBespokeChainaxeP1 (lines 2072-2076) and maps chainaxe_dps_stat to damage_trait_templates.default_melee_dps_stat and chainaxe_armor_pierce_stat to default_armor_pierce_stat for action_left_down_light (lines 1701-1808). This records source bindings only.",
       "snapshot": {
         "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
       },
@@ -863,7 +1044,7 @@
       "fixtureOnly": false,
       "path": "scripts/settings/equipment/weapon_templates/chain_axes/settings_templates/chain_axe_damage_profile_templates.lua",
       "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
-      "safeSummary": "Pinned public code blob 64e0f96ccbfd011bf183bbaa1c36e693dc0e8ac1: default_light_chainaxe contains raw attack power endpoints 80 and 140; the armored parameter property references damage_lerp_values.lerp_1_5. This candidate preserves source table values without resolving a runtime action.",
+      "safeSummary": "Pinned public code blob 64e0f96ccbfd011bf183bbaa1c36e693dc0e8ac1: default_light_chainaxe.targets[1] has raw attack-power endpoints [80, 140] and maps the armored attack modifier to damage_lerp_values.lerp_1_5. These raw profile parameters support the selected 60% and 80% code-derived comparison inputs; they are not an obtainable range or final damage.",
       "snapshot": {
         "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
       },
@@ -874,7 +1055,7 @@
       "fixtureOnly": false,
       "path": "scripts/settings/damage/damage_profile_settings.lua",
       "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
-      "safeSummary": "Pinned public code blob 9298f8cdc27aa0323a9eff76c286cecb6350b9b1, lines 32-35: damage_lerp_values.lerp_1_5 is the raw two-point table [1.035, 1.965]. The candidate preserves these points without interpolation or a final damage claim.",
+      "safeSummary": "Pinned public code blob 9298f8cdc27aa0323a9eff76c286cecb6350b9b1, lines 32-35: damage_lerp_values.lerp_1_5 contains raw endpoints [1.035, 1.965]. They are inputs to the selected 60% and 80% code-derived armored-modifier comparisons, not a 60%-to-80% obtainable range or final damage.",
       "snapshot": {
         "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
       },
@@ -1055,7 +1236,29 @@
         "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d"
       },
       "sourceId": "legacy:mods:psyker:brain-burst-improved:analysis-en"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code blob 8de5ad64061f10eff8d03040849115cb0ae1da03, lines 648-1006: default_melee_dps_stat sets attack-trait min/max to 0.25/0.75, and default_armor_pierce_stat sets the armored attack-modifier min/max to 0.1/0.95.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:damage-trait-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code blob d5fbc52370dec64b9d46e1dd9e1f012f440ee5cf, lines 371-404 and 434-455: _add_lerped_tweak_modifiers_helper lerps trait min/max with the selected player stat, then _resolve_template lerps the raw profile endpoints with that t. This two-stage parameter derivation supports comparison values only, not a final damage result.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-tweak-templates-ba6c148"
     }
   ],
-  "sourceRevision": "8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d"
+  "sourceRevision": "f9917e5f8c14e1fd768f502b9c0cafa59602cae1ac5e9bf8372e467268de38e2"
 }

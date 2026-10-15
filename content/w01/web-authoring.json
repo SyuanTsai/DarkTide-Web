@@ -817,19 +817,45 @@
           "effects": [],
           "conditions": [
             {
-              "itemId": "chainaxe-attack-point-table",
-              "text": "已收錄的攻擊數值：80、140。"
+              "itemId": "chainaxe-attack-power-comparison",
+              "parts": [
+                { "kind": "literal", "text": "輕攻擊威力：" },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "boundary" },
+                { "kind": "literal", "text": "；" },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "boundary" },
+                { "kind": "literal", "text": "。" }
+              ],
+              "claimRefs": [
+                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80"
+              ]
             }
           ],
           "calculation": [],
           "notes": [
             {
-              "itemId": "chainaxe-armor-point-table",
-              "text": "已收錄的護甲修正值：1.035、1.965。"
+              "itemId": "chainaxe-armored-modifier-comparison",
+              "parts": [
+                { "kind": "literal", "text": "對防彈護甲傷害修正：" },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "boundary" },
+                { "kind": "literal", "text": "；" },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "boundary" },
+                { "kind": "literal", "text": "。" }
+              ],
+              "claimRefs": [
+                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
+              ]
             },
             {
-              "itemId": "chainaxe-incomplete-attack-data",
-              "text": "其他攻擊資料尚未補齊。"
+              "itemId": "chainaxe-comparison-scope",
+              "text": "表列 60%／80% 是本頁比較上下限，不代表武器可取得、掉落或全域範圍；數值是預設輕攻擊第一個命中目標的來源參數，不是最終傷害。",
+              "claimRefs": [
+                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
+                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
+              ]
             }
           ],
           "extra": []

@@ -8,17 +8,17 @@ const PREVIEW_ORIGIN = 'https://darktide-zh-tw-preview.syuan-tsai.workers.dev';
 const DOMAIN_KINDS = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
 const CONTENT_VERSION_PATTERN = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
 const PINNED_PRIOR_CANDIDATE = Object.freeze({
-  contentVersion: '0.0.12',
-  authoringCommit: '869f03f829b377ed4779ec73f55baf8a7507d6c4',
-  buildId: '29c6afffe8d43428fee79330765efb9522b2759f08e2afd0e2853e1ebdced870',
-  dataRevision: '4cee11795d2a67f960428e86a54dd6f5c081d21c5f5587ad7e9f143b359c4589',
-  manifestPath: 'data/4cee11795d2a67f960428e86a54dd6f5c081d21c5f5587ad7e9f143b359c4589/manifest.json',
-  manifestSha256: '282dd235c98638eeb4d04dcd3e25fa018457bd8fdec90e58f25029675c1d7b92',
+  contentVersion: '0.0.13',
+  authoringCommit: '58487ee15c16e398b091c9ad2c29322f3bf5548e',
+  buildId: '917817b8aa55fae6859f4379538e87b67f7933ebfc4314baeafa164639bca3da',
+  dataRevision: '4fa2f97e2995011d64f1c057c268c6ec04cfa9b9a9fb8dce34c989a87315ce04',
+  manifestPath: 'data/4fa2f97e2995011d64f1c057c268c6ec04cfa9b9a9fb8dce34c989a87315ce04/manifest.json',
+  manifestSha256: '7d35414e18a4dff97dd50356ac79357fefee6bb06e112ba484e293b4ba630550',
   sourceRepository: 'https://github.com/SyuanTsai/DarkTide-Source-Data',
   sourceCommit: '5d16c70a828d4bd6293a12430cd4ebea36c6ed1c',
   sourceRevision: '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d',
   sourceManifestSha256: '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc',
-  versionSha256: '60c2a5c2d0ba7e6414434e6b14a7b489469bc250bafd95ec515c232436fc74c5'
+  versionSha256: '1a021c145b28bf0353442b687d587e00b735eb6873e64876f7521101f0a91197'
 });
 const VERSION_PROPAGATION_RETRY_DELAYS_MS = Object.freeze([250, 500, 1000, 2000, 4000, 8000]);
 
@@ -80,17 +80,17 @@ async function fetchVerified(fetchImpl, pathname, expectedBytes, label) {
 
 async function readPinnedPreviousVersion(previousOutputRoot) {
   if (typeof previousOutputRoot !== 'string' || previousOutputRoot.length === 0) {
-    fail('a verified pinned 0.0.12 package is required for pending-preview deployment checks');
+    fail('a verified pinned 0.0.13 package is required for pending-preview deployment checks');
   }
   previousOutputRoot = path.resolve(previousOutputRoot);
   const rootInfo = await lstat(previousOutputRoot);
-  if (rootInfo.isSymbolicLink() || !rootInfo.isDirectory()) fail('the pinned 0.0.12 package root must be a regular directory');
+  if (rootInfo.isSymbolicLink() || !rootInfo.isDirectory()) fail('the pinned 0.0.13 package root must be a regular directory');
 
-  const previousReceipt = parseJson(await readArtifactFile(previousOutputRoot, 'receipt.json'), 'pinned 0.0.12 build receipt');
+  const previousReceipt = parseJson(await readArtifactFile(previousOutputRoot, 'receipt.json'), 'pinned 0.0.13 build receipt');
   const receiptKeys = ['schemaVersion', 'requestKind', 'buildId', 'dataRevision', 'contentVersion', 'manifestPath', 'manifestSha256', 'source', 'web', 'fixtureOnly', 'publicationEligible', 'candidatePreviewOnly', 'formalPublishAllowed', 'deploymentPerformed', 'files', 'retainedData'];
-  assertExactKeys(previousReceipt, receiptKeys, 'pinned 0.0.12 build receipt');
-  assertExactKeys(previousReceipt.source, ['repository', 'commit', 'sourceRevision', 'manifestSha256'], 'pinned 0.0.12 source identity');
-  assertExactKeys(previousReceipt.web, ['authoringCommit'], 'pinned 0.0.12 Web identity');
+  assertExactKeys(previousReceipt, receiptKeys, 'pinned 0.0.13 build receipt');
+  assertExactKeys(previousReceipt.source, ['repository', 'commit', 'sourceRevision', 'manifestSha256'], 'pinned 0.0.13 source identity');
+  assertExactKeys(previousReceipt.web, ['authoringCommit'], 'pinned 0.0.13 Web identity');
   if (previousReceipt.schemaVersion !== '1.0.0' || previousReceipt.requestKind !== 'isolated-w01-preview-build' ||
       previousReceipt.contentVersion !== PINNED_PRIOR_CANDIDATE.contentVersion ||
       previousReceipt.buildId !== PINNED_PRIOR_CANDIDATE.buildId || previousReceipt.dataRevision !== PINNED_PRIOR_CANDIDATE.dataRevision ||
@@ -102,34 +102,34 @@ async function readPinnedPreviousVersion(previousOutputRoot) {
       previousReceipt.web.authoringCommit !== PINNED_PRIOR_CANDIDATE.authoringCommit || previousReceipt.fixtureOnly !== false ||
       previousReceipt.publicationEligible !== false || previousReceipt.candidatePreviewOnly !== true ||
       previousReceipt.formalPublishAllowed !== false || previousReceipt.deploymentPerformed !== false) {
-    fail('local prior package is not the pinned quarantined 0.0.12 candidate');
+    fail('local prior package is not the pinned quarantined 0.0.13 candidate');
   }
 
   const previousVersionBytes = await readArtifactFile(previousOutputRoot, 'version.json');
   if (sha256(previousVersionBytes) !== PINNED_PRIOR_CANDIDATE.versionSha256) {
-    fail('local pinned 0.0.12 version.json does not match its fixed identity');
+    fail('local pinned 0.0.13 version.json does not match its fixed identity');
   }
-  const previousVersion = parseJson(previousVersionBytes, 'pinned 0.0.12 version.json');
-  assertExactKeys(previousVersion, ['schema_version', 'data_revision', 'build_id', 'game_version', 'package_kind', 'game_releases'], 'pinned 0.0.12 version.json');
+  const previousVersion = parseJson(previousVersionBytes, 'pinned 0.0.13 version.json');
+  assertExactKeys(previousVersion, ['schema_version', 'data_revision', 'build_id', 'game_version', 'package_kind', 'game_releases'], 'pinned 0.0.13 version.json');
   if (previousVersion.schema_version !== 2 || previousVersion.data_revision !== PINNED_PRIOR_CANDIDATE.dataRevision ||
       previousVersion.build_id !== PINNED_PRIOR_CANDIDATE.buildId || previousVersion.package_kind !== 'pending-preview' ||
       previousVersion.game_releases?.length !== 1) {
-    fail('local pinned 0.0.12 version identity is invalid');
+    fail('local pinned 0.0.13 version identity is invalid');
   }
   const previousRelease = previousVersion.game_releases[0];
-  assertExactKeys(previousRelease, ['game_version', 'content_version', 'data_revision', 'manifest_path', 'manifest_sha256'], 'pinned 0.0.12 game release');
+  assertExactKeys(previousRelease, ['game_version', 'content_version', 'data_revision', 'manifest_path', 'manifest_sha256'], 'pinned 0.0.13 game release');
   if (previousRelease.game_version !== '1.13.2' || previousRelease.content_version !== PINNED_PRIOR_CANDIDATE.contentVersion ||
       previousRelease.data_revision !== PINNED_PRIOR_CANDIDATE.dataRevision ||
       previousRelease.manifest_path !== '/' + PINNED_PRIOR_CANDIDATE.manifestPath ||
       previousRelease.manifest_sha256 !== PINNED_PRIOR_CANDIDATE.manifestSha256) {
-    fail('local pinned 0.0.12 game release does not match its fixed identity');
+    fail('local pinned 0.0.13 game release does not match its fixed identity');
   }
-  const previousRows = validateRows(previousReceipt.files, 'pinned 0.0.12 build receipt.files');
+  const previousRows = validateRows(previousReceipt.files, 'pinned 0.0.13 build receipt.files');
   const previousVersionRows = previousRows.filter(row => row.path === 'version.json');
   const previousVersionRow = previousVersionRows[0];
   if (previousVersionRows.length !== 1 || !previousVersionRow || previousVersionRow.sizeBytes !== previousVersionBytes.byteLength ||
       previousVersionRow.sha256 !== PINNED_PRIOR_CANDIDATE.versionSha256) {
-    fail('local pinned 0.0.12 receipt does not bind its version.json bytes');
+    fail('local pinned 0.0.13 receipt does not bind its version.json bytes');
   }
   return previousVersionBytes;
 }
@@ -143,7 +143,7 @@ async function fetchVersionWithPropagation({ fetchImpl, expectedBytes, previousB
     const matchesPinnedPrevious = previousBytes && bytesEqual(response.actualBytes, previousBytes);
     if (!matchesPinnedPrevious) fail('version.json bytes do not match the verified local preview package');
     if (attempt >= VERSION_PROPAGATION_RETRY_DELAYS_MS.length) {
-      fail('version.json still serves the pinned prior 0.0.12 package after ' + (attempt + 1) + ' checks');
+      fail('version.json still serves the pinned prior 0.0.13 package after ' + (attempt + 1) + ' checks');
     }
     await sleepImpl(VERSION_PROPAGATION_RETRY_DELAYS_MS[attempt]);
   }
@@ -260,9 +260,9 @@ function parseArgs(args) {
   for (let index = 0; index < args.length; index += 1) {
     if (args[index] === '--output' && !options.receiptPath && args[index + 1]) options.receiptPath = args[++index];
     else if (args[index] === '--previous-package' && !options.previousOutputRoot && args[index + 1]) options.previousOutputRoot = args[++index];
-    else fail('Usage: node scripts/w01-preview-deployment-receipt.mjs --output receipt.json [--previous-package pinned-0.0.12-package]');
+    else fail('Usage: node scripts/w01-preview-deployment-receipt.mjs --output receipt.json [--previous-package pinned-0.0.13-package]');
   }
-  if (!options.receiptPath) fail('Usage: node scripts/w01-preview-deployment-receipt.mjs --output receipt.json [--previous-package pinned-0.0.12-package]');
+  if (!options.receiptPath) fail('Usage: node scripts/w01-preview-deployment-receipt.mjs --output receipt.json [--previous-package pinned-0.0.13-package]');
   return options;
 }
 

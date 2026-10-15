@@ -51,13 +51,14 @@ const SOURCE_PAYLOAD_KEYS = {
   blessing: ['variantRefs'],
   'blessing-variant': ['blessingRef', 'weaponRefs', 'definedTiers', 'obtainableTiers', 'tierValues'],
   weapon: ['familyId', 'markId', 'templateKey', 'statRefs', 'attackProfileRefs', 'dataCoverage', 'armorRefs', 'theoreticalInputRange'],
-  'stat-definition': ['quantity', 'inputUnit', 'outputUnit', 'theoreticalInputRange', 'obtainableInputRange', 'curveRef'],
+  'stat-definition': ['quantity', 'inputUnit', 'outputUnit', 'theoreticalInputRange', 'obtainableInputRange', 'curveRef', 'claimRefs'],
   'stat-curve': ['inputUnit', 'outputUnit', 'knots', 'interpolation', 'edgePolicy'],
   term: ['termKey', 'contextKey', 'technicalDefinitionEn', 'claimRefs']
 };
 const SOURCE_REQUIRED_PAYLOAD_KEYS = {
   ...SOURCE_PAYLOAD_KEYS,
-  weapon: ['familyId', 'markId', 'templateKey', 'statRefs', 'attackProfileRefs', 'dataCoverage']
+  weapon: ['familyId', 'markId', 'templateKey', 'statRefs', 'attackProfileRefs', 'dataCoverage'],
+  'stat-definition': ['quantity', 'inputUnit', 'outputUnit', 'theoreticalInputRange', 'obtainableInputRange', 'curveRef']
 };
 const RECORD_STATES = new Set(['draft', 'pending', 'approved', 'rejected', 'stale']);
 const DETAIL_SECTION_KEYS = ['effects', 'conditions', 'calculation', 'notes', 'extra'];
@@ -67,6 +68,32 @@ const NATIVE_NUMERIC_PARAMETER_CONTRACTS = {
   movement_speed: { property: 'description.format_values.movement_speed.defined_tier_1_display_percent', format: 'signed-percent', unit: 'percent', basis: 'code-derived', entityKind: 'blessing' },
   time: { property: 'template.buff_override.active_duration', format: 'plain-number', unit: 's', basis: 'code-observed', entityKind: 'blessing' }
 };
+const CHAINAXE_COMPARISON_GROUPS = {
+  attack: {
+    statDefinition: 'darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table',
+    weaponStat: 'chainaxe_dps_stat',
+    property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack',
+    unit: 'point',
+    mode: 'boundary',
+    claims: [
+      { id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60' },
+      { id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80' }
+    ]
+  },
+  armored: {
+    statDefinition: 'darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table',
+    weaponStat: 'chainaxe_armor_pierce_stat',
+    property: 'damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]',
+    unit: 'ratio',
+    mode: 'boundary',
+    claims: [
+      { id: 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60' },
+      { id: 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80' }
+    ]
+  }
+};
+const CHAINAXE_COMPARISON_BY_CLAIM = new Map(Object.entries(CHAINAXE_COMPARISON_GROUPS)
+  .flatMap(([groupId, group]) => group.claims.map(claim => [claim.id, { ...claim, groupId, ...group }])));
 const W01_RUNTIME_OUTPUT_PATHS = new Set(['_headers', 'index.html', 'preview.css', 'preview.js', 'preview.json', 'robots.txt', 'version.json']);
 const CONTENT_VERSION_PATTERN = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
 
@@ -171,10 +198,20 @@ function validateSourcePayload(kind, payload, label) {
       requireString(payload.property, label + '.property');
       validateTypedValue(payload.value, label + '.value');
       assertPlainObject(payload.context, label + '.context');
-      const contextKeys = ['attackMode', 'charge', 'armorClass', 'targetId', 'hitZone', 'critical', 'weakspot', 'distance'];
+      const contextKeys = ['attackMode', 'charge', 'armorClass', 'targetId', 'hitZone', 'critical', 'weakspot', 'distance', 'weaponStat', 'comparisonStat'];
       if (Object.keys(payload.context).some(key => !contextKeys.includes(key))) fail(label + '.context has unsupported fields');
       if ('charge' in payload.context) validateTypedValue(payload.context.charge, label + '.context.charge');
       if ('distance' in payload.context) validateTypedValue(payload.context.distance, label + '.context.distance');
+      if ('weaponStat' in payload.context) requireString(payload.context.weaponStat, label + '.context.weaponStat');
+      if ('comparisonStat' in payload.context) {
+        validateTypedValue(payload.context.comparisonStat, label + '.context.comparisonStat');
+        if (payload.context.comparisonStat.status !== 'known' || payload.context.comparisonStat.unit !== 'percent') {
+          fail(label + '.context.comparisonStat must be a known percent input');
+        }
+      }
+      if (('weaponStat' in payload.context) !== ('comparisonStat' in payload.context)) {
+        fail(label + '.context must provide weaponStat and comparisonStat together');
+      }
       if (!['code-observed', 'code-derived', 'game-tested', 'unknown'].includes(payload.basis)) fail(label + '.basis is unsupported');
       requireRefList(payload.evidenceRefs, label + '.evidenceRefs');
       break;
@@ -220,6 +257,7 @@ function validateSourcePayload(kind, payload, label) {
       for (const key of ['quantity', 'inputUnit', 'outputUnit', 'curveRef']) requireString(payload[key], label + '.' + key);
       validateTypedValue(payload.theoreticalInputRange, label + '.theoreticalInputRange');
       validateTypedValue(payload.obtainableInputRange, label + '.obtainableInputRange');
+      if ('claimRefs' in payload) requireRefList(payload.claimRefs, label + '.claimRefs');
       break;
     case 'stat-curve':
       for (const key of ['inputUnit', 'outputUnit']) requireString(payload[key], label + '.' + key);
@@ -306,6 +344,46 @@ function validateSourceInput(lock, sourceManifest, technical, gameChanges, webAu
   requireBoolean(webAuthoring.fixtureOnly, 'Web authoring fixtureOnly');
 }
 
+function validateChainaxeComparisonSource(sourceRecordById) {
+  const hasComparisonClaims = Object.values(CHAINAXE_COMPARISON_GROUPS)
+    .flatMap(group => group.claims)
+    .some(claim => sourceRecordById.has(claim.id));
+  if (!hasComparisonClaims) return;
+
+  const weapon = sourceRecordById.get('darktide:weapon:chainaxe:p1-m1');
+  if (!weapon || weapon.kind !== 'weapon') fail('Chainaxe comparison contract requires its Source weapon record');
+  for (const [groupId, group] of Object.entries(CHAINAXE_COMPARISON_GROUPS)) {
+    const stat = sourceRecordById.get(group.statDefinition);
+    if (!stat || stat.kind !== 'stat-definition') fail('Chainaxe ' + groupId + ' comparison requires its Source stat definition');
+    if (stat.payload.quantity !== group.property || stat.payload.outputUnit !== group.unit ||
+        !Array.isArray(stat.payload.claimRefs) ||
+        JSON.stringify(stat.payload.claimRefs) !== JSON.stringify(group.claims.map(claim => claim.id))) {
+      fail('Chainaxe ' + groupId + ' stat definition must link the exact comparison claims');
+    }
+    if (!weapon.payload.statRefs.includes(group.statDefinition)) {
+      fail('Chainaxe Source weapon statRefs must link the ' + groupId + ' comparison stat definition');
+    }
+    if (stat.payload.obtainableInputRange.status !== 'unknown') {
+      fail('Chainaxe comparison inputs may not be represented as an obtainable range');
+    }
+    for (const expected of group.claims) {
+      const claim = sourceRecordById.get(expected.id);
+      if (!claim || claim.kind !== 'claim') fail('Chainaxe ' + groupId + ' comparison claim is missing: ' + expected.id);
+      const context = claim.payload.context;
+      const comparisonStat = context.comparisonStat;
+      const value = claim.payload.value;
+      const expectedInput = expected.id.match(/-(\d+)$/)?.[1];
+      if (claim.payload.basis !== 'code-derived' || claim.payload.targetRef !== group.statDefinition ||
+          claim.payload.property !== group.property || Object.keys(context).length !== 2 || context.weaponStat !== group.weaponStat ||
+          comparisonStat.status !== 'known' || comparisonStat.decimal !== expectedInput || comparisonStat.unit !== 'percent' ||
+          value.status !== 'known' || value.unit !== group.unit ||
+          claim.payload.evidenceRefs.length === 0 || !stat.payload.claimRefs.includes(claim.recordId)) {
+        fail('Chainaxe comparison claim does not match its code-derived weaponStat/comparisonStat contract: ' + expected.id);
+      }
+    }
+  }
+}
+
 function validateOfficialIdentity(value, label, expectedLocale, record, referenceIds) {
   requireString(value.sourceRef, label + '.sourceRef');
   if (!referenceIds.has(value.sourceRef) || !record.sourceRefs.includes(value.sourceRef)) {
@@ -338,6 +416,16 @@ function ratioAsPercentDecimal(value, label) {
   const normalizedInteger = integerPart.replace(/^0+(?=\d)/, '');
   const normalizedFraction = fractionalPart?.replace(/0+$/, '');
   return normalizedFraction ? normalizedInteger + '.' + normalizedFraction : normalizedInteger;
+}
+
+function ratioAsFixedPercent(value, label) {
+  validateDecimal(value, label);
+  if (value.startsWith('-')) fail(label + ' must be a non-negative ratio');
+  const [whole, fraction = ''] = value.split('.');
+  const denominator = 10n ** BigInt(fraction.length);
+  const numerator = BigInt(whole + fraction) * 10000n;
+  const roundedCents = (numerator + denominator / 2n) / denominator;
+  return String(roundedCents / 100n) + '.' + String(roundedCents % 100n).padStart(2, '0');
 }
 
 function resolveOfficialParam(param, label, locale, record, referenceById, sourceRecordById, sourceKindById, tierContext = null) {
@@ -496,7 +584,69 @@ function compileNativeOfficial(official, label, record, referenceIds, referenceB
   return { ...english, localizations: { 'zh-TW': traditionalChinese } };
 }
 
-function compileDetailSections(input, label, sourceIds, sourceKindById, tierContext = null) {
+function compileWeaponComparisonItem(item, itemLabel, section, sourceRecordById, presentationRecord) {
+  if (!sourceRecordById) fail(itemLabel + '.parts requires the pinned Source comparison records');
+  if (presentationRecord?.recordId !== 'web:presentation:chainaxe-p1-m1' ||
+      presentationRecord.entityRef !== 'darktide:weapon:chainaxe:p1-m1') {
+    fail(itemLabel + '.parts is only supported for the representative Chainaxe weapon presentation');
+  }
+  assertExactKeys(item, ['itemId', 'parts', 'claimRefs'], itemLabel);
+  requireString(item.itemId, itemLabel + '.itemId');
+  requireArray(item.parts, itemLabel + '.parts');
+  requireRefList(item.claimRefs, itemLabel + '.claimRefs');
+  if (item.claimRefs.length !== 2) fail(itemLabel + '.claimRefs must contain one complete comparison pair');
+  const comparison = CHAINAXE_COMPARISON_BY_CLAIM.get(item.claimRefs[0]);
+  if (!comparison || comparison.groupId !== CHAINAXE_COMPARISON_BY_CLAIM.get(item.claimRefs[1])?.groupId) {
+    fail(itemLabel + '.claimRefs must identify one Source comparison pair');
+  }
+  const group = CHAINAXE_COMPARISON_GROUPS[comparison.groupId];
+  const expectedClaims = group.claims.map(claim => claim.id);
+  const expectedSection = comparison.groupId === 'attack' ? 'conditions' : 'notes';
+  const expectedItemId = comparison.groupId === 'attack' ? 'chainaxe-attack-power-comparison' : 'chainaxe-armored-modifier-comparison';
+  const labelText = comparison.groupId === 'attack' ? '輕攻擊威力：' : '對防彈護甲傷害修正：';
+  if (section !== expectedSection || item.itemId !== expectedItemId ||
+      JSON.stringify(item.claimRefs) !== JSON.stringify(expectedClaims)) {
+    fail(itemLabel + '.itemId, section, or claimRefs do not match the Source comparison pair');
+  }
+  if (item.parts.length !== 5) fail(itemLabel + '.parts must contain the fixed label and both Source bindings');
+
+  const literals = [labelText, '；', '。'];
+  const boundClaims = group.claims;
+  const text = [];
+  for (const [index, part] of item.parts.entries()) {
+    const partLabel = itemLabel + '.parts[' + index + ']';
+    assertPlainObject(part, partLabel);
+    if (index === 0 || index === 2 || index === 4) {
+      assertExactKeys(part, ['kind', 'text'], partLabel);
+      requireString(part.text, partLabel + '.text');
+      const expectedLiteral = literals[index === 0 ? 0 : index === 2 ? 1 : 2];
+      if (part.kind !== 'literal' || part.text !== expectedLiteral || /[0-9%]/.test(part.text)) {
+        fail(partLabel + '.literal must be the fixed non-numeric Web label or separator');
+      }
+      text.push(part.text);
+      continue;
+    }
+    assertExactKeys(part, ['kind', 'bindingRef', 'format'], partLabel);
+    if (part.kind !== 'source-comparison' || part.bindingRef !== boundClaims[index === 1 ? 0 : 1].id || part.format !== group.mode) {
+      fail(partLabel + ' must bind the matching Source comparison input');
+    }
+    const claim = sourceRecordById.get(part.bindingRef);
+    if (!claim || claim.kind !== 'claim' || claim.payload.targetRef !== group.statDefinition ||
+        claim.payload.property !== group.property || claim.payload.context.weaponStat !== group.weaponStat ||
+        claim.payload.value.status !== 'known' || claim.payload.value.unit !== group.unit) {
+      fail(partLabel + '.bindingRef does not match this presentation weapon stat and comparison input');
+    }
+    const input = claim.payload.context.comparisonStat.decimal;
+    const value = group.unit === 'ratio'
+      ? ratioAsFixedPercent(claim.payload.value.decimal, partLabel + '.ratio') + '%'
+      : claim.payload.value.decimal;
+    const boundary = group.mode === 'boundary' ? '（本次比較' + (index === 1 ? '下限' : '上限') + '）' : '';
+    text.push(input + '%' + boundary + '為 ' + value);
+  }
+  return { itemId: item.itemId, text: text.join(''), claimRefs: expectedClaims };
+}
+
+function compileDetailSections(input, label, sourceIds, sourceKindById, tierContext = null, sourceRecordById = null, presentationRecord = null) {
   assertPlainObject(input, label);
   assertExactKeys(input, DETAIL_SECTION_KEYS, label);
   const output = {};
@@ -507,7 +657,9 @@ function compileDetailSections(input, label, sourceIds, sourceKindById, tierCont
       const itemLabel = label + '.' + section + '[' + itemIndex + ']';
       assertPlainObject(item, itemLabel);
       if (Object.hasOwn(item, 'parts')) {
-        if (!tierContext || section !== 'effects') fail(itemLabel + '.parts is only allowed for a tier-bound blessing effect');
+        if (!tierContext || section !== 'effects') {
+          return compileWeaponComparisonItem(item, itemLabel, section, sourceRecordById, presentationRecord);
+        }
         assertExactKeys(item, ['itemId', 'parts', 'claimRefs'], itemLabel);
         requireString(item.itemId, itemLabel + '.itemId');
         requireArray(item.parts, itemLabel + '.parts');
@@ -763,7 +915,7 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
         usesNativeOfficialLocalizations = true;
         usesBlessingTierPresentations = true;
       } else {
-        record.payload.detailSections = compileDetailSections(record.payload.detailSections, label + '.detailSections', sourceIds, sourceKindById);
+        record.payload.detailSections = compileDetailSections(record.payload.detailSections, label + '.detailSections', sourceIds, sourceKindById, null, sourceRecordById, record);
       }
     } else {
       if (sourceKindById.get(record.entityRef) !== 'term') fail(label + '.entityRef must identify a Source term');
@@ -892,7 +1044,7 @@ function validateDomainReferences(records, kindById) {
       case 'blessing': refs('variantRefs', ['blessing-variant']); break;
       case 'blessing-variant': refs('blessingRef', ['blessing']); refs('weaponRefs', ['weapon']); break;
       case 'weapon': refs('statRefs', ['stat-definition']); refs('armorRefs'); refs('attackProfileRefs'); break;
-      case 'stat-definition': refs('curveRef', ['stat-curve']); break;
+      case 'stat-definition': refs('curveRef', ['stat-curve']); refs('claimRefs', ['claim']); break;
       case 'stat-curve': break;
       case 'term': refs('claimRefs', ['claim']); break;
       case 'presentation': {
@@ -941,7 +1093,7 @@ function sharedRecordReferences(record, sourceRecordById) {
     case 'blessing': add(payload.variantRefs); break;
     case 'blessing-variant': add(payload.blessingRef); add(payload.weaponRefs); break;
     case 'weapon': add(payload.statRefs); add(payload.armorRefs); add(payload.attackProfileRefs); break;
-    case 'stat-definition': add(payload.curveRef); break;
+    case 'stat-definition': add(payload.curveRef); add(payload.claimRefs); break;
     case 'term': add(payload.claimRefs); break;
     case 'presentation':
       add(record.entityRef);
@@ -1141,6 +1293,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
     sourceKindById.set(record.recordId, record.kind);
   }
   const sourceRecordById = new Map(sourceRecords.map(record => [record.recordId, record]));
+  validateChainaxeComparisonSource(sourceRecordById);
   const webInput = validateWebAuthoring(webAuthoring, sourceIds, sourceKindById, sourceRefs, lock.gameReleaseId, sourceRecordById);
 
   const sourceFlags = [sourceManifest, technical, sourceGameChanges];

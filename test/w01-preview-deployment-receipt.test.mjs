@@ -138,11 +138,11 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       objects.set('/data/' + build.dataRevision + '/' + file.path,
         await readFile(path.join(outputRoot, 'data', build.dataRevision, file.path)));
     }
-    const previousOutputRoot = path.join(tempRoot, 'pinned-prior-0.0.12');
+    const previousOutputRoot = path.join(tempRoot, 'pinned-prior-0.0.13');
     await mkdir(previousOutputRoot, { recursive: true });
-    const previousRevision = '4cee11795d2a67f960428e86a54dd6f5c081d21c5f5587ad7e9f143b359c4589';
-    const previousBuildId = '29c6afffe8d43428fee79330765efb9522b2759f08e2afd0e2853e1ebdced870';
-    const previousManifestSha256 = '282dd235c98638eeb4d04dcd3e25fa018457bd8fdec90e58f25029675c1d7b92';
+    const previousRevision = '4fa2f97e2995011d64f1c057c268c6ec04cfa9b9a9fb8dce34c989a87315ce04';
+    const previousBuildId = '917817b8aa55fae6859f4379538e87b67f7933ebfc4314baeafa164639bca3da';
+    const previousManifestSha256 = '7d35414e18a4dff97dd50356ac79357fefee6bb06e112ba484e293b4ba630550';
     const previousVersion = {
       schema_version: 2,
       data_revision: previousRevision,
@@ -151,19 +151,19 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       package_kind: 'pending-preview',
       game_releases: [{
         game_version: '1.13.2',
-        content_version: '0.0.12',
+        content_version: '0.0.13',
         data_revision: previousRevision,
         manifest_path: '/data/' + previousRevision + '/manifest.json',
         manifest_sha256: previousManifestSha256
       }]
     };
     const previousVersionBytes = jsonBytes(previousVersion);
-    assert.equal(sha256(previousVersionBytes), '60c2a5c2d0ba7e6414434e6b14a7b489469bc250bafd95ec515c232436fc74c5');
+    assert.equal(sha256(previousVersionBytes), '1a021c145b28bf0353442b687d587e00b735eb6873e64876f7521101f0a91197');
     const previousReceipt = {
       ...buildReceipt,
       buildId: previousBuildId,
       dataRevision: previousRevision,
-      contentVersion: '0.0.12',
+      contentVersion: '0.0.13',
       manifestPath: 'data/' + previousRevision + '/manifest.json',
       manifestSha256: previousManifestSha256,
       source: {
@@ -172,7 +172,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         sourceRevision: '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d',
         manifestSha256: '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc'
       },
-      web: { authoringCommit: '869f03f829b377ed4779ec73f55baf8a7507d6c4' },
+      web: { authoringCommit: '58487ee15c16e398b091c9ad2c29322f3bf5548e' },
       fixtureOnly: false,
       publicationEligible: false,
       candidatePreviewOnly: true,
@@ -206,11 +206,11 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       createdAt: '2026-10-14T00:00:00.000Z'
     });
     assert.equal(result.requestKind, 'w01-preview-deployment-receipt');
-    assert.equal(result.contentVersion, '0.0.13');
+    assert.equal(result.contentVersion, '0.0.14');
     assert.equal(result.packageKind, 'pending-preview');
     assert.equal(result.candidatePreviewOnly, true);
     assert.equal(result.verifiedRemoteObjects, 8);
-    assert.equal(versionFetchCount, 4, 'only the exact pinned 0.0.12 version may be retried before 0.0.13');
+    assert.equal(versionFetchCount, 4, 'only the exact pinned 0.0.13 version may be retried before 0.0.14');
     assert.deepEqual(retryDelays, [250, 500, 1000], 'the propagation wait is bounded and injectable');
     assert.equal(fetchCount, 11, 'all eight required objects are verified after three prior-version responses');
     assert.equal(result.retainedBaseline.sampleSha256, oldRow.sha256);
@@ -229,7 +229,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         receiptPath: path.join(tempRoot, 'wrong-prior.json'),
         fetchImpl: async () => { invalidPriorFetchCount += 1; return new Response(); }
       }),
-      /local prior package is not the pinned quarantined 0\.0\.12 candidate/
+      /local prior package is not the pinned quarantined 0\.0\.13 candidate/
     );
     assert.equal(invalidPriorFetchCount, 0, 'an invalid pinned prior package is rejected before any network request');
 
@@ -282,7 +282,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         },
         sleepImpl: async milliseconds => staleRetryDelays.push(milliseconds)
       }),
-      /still serves the pinned prior 0\.0\.12 package after 7 checks/
+      /still serves the pinned prior 0\.0\.13 package after 7 checks/
     );
     assert.equal(staleFetchCount, 7, 'retry stops after the initial check plus six bounded retries');
     assert.deepEqual(staleRetryDelays, [250, 500, 1000, 2000, 4000, 8000]);
