@@ -719,7 +719,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.sourceRevision, '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d');
     assert.equal(manifest.source.manifestSha256, '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.9');
+    assert.equal(version.game_releases[0].content_version, '0.0.10');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -748,12 +748,12 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.conditions, [
       {
         itemId: 'psyker-normal-charge-condition',
-        text: '一般模式不必先取得目標即可開始蓄力，也會開始累積反噬；瞄準會跟隨系統選定的目標更新。',
+        text: '一般模式不用先鎖定目標就能開始蓄力，蓄力期間也會累積反噬；瞄準方向改變時，目標也會跟著更新。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
         itemId: 'psyker-sticky-charge-condition',
-        text: '鎖定目標模式需先取得有效目標；尚未鎖定時不會預先蓄力，鎖定後也不會隨瞄準切換目標。目標改變會重新計算這次蓄力時間。',
+        text: '鎖定目標模式要先找到可鎖定的目標才會開始蓄力；開始蓄力後，移動準星不會改變鎖定目標。若鎖定目標改變，這次蓄力會重新計時。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -761,12 +761,12 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-lock-on-charge-condition',
-        text: '開始鎖定蓄力需要有效目標。從一般蓄力切換成鎖定時，可接續已累積的蓄力；重新開始蓄力則採一般模式的基本時間。',
+        text: '蓄力途中找到可鎖定的目標後，就能切換成鎖定，並接續原本的蓄力進度。這種鎖定方式若從頭開始蓄力，基本時間和一般蓄力相同。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
         itemId: 'psyker-lock-on-stagger-condition',
-        text: '可受此攻擊僵直的目標：直接鎖定維持 1 秒會造成一次小幅僵直；從一般蓄力切換鎖定後，超過 0.25 秒也會造成一次小幅僵直。',
+        text: '若目標能被此攻擊打出踉蹌，直接鎖定維持 1 秒會造成一次輕微踉蹌；從一般蓄力切換到鎖定後，若持續鎖定超過 0.25 秒，也會造成一次輕微踉蹌。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -774,7 +774,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-smite-damage-type-condition',
-        text: '這項倍率只套用於顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。',
+        text: '這項傷害倍率只作用在顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
       }
     ]);
@@ -991,7 +991,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.9');
+    assert.equal(currentReceipt.contentVersion, '0.0.10');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -1034,9 +1034,9 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.9 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.10 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-9', { skip: !publishedR5Root }, async () => {
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-10', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -1048,8 +1048,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-9', { ski
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.9');
-    assert.equal(currentReceipt.contentVersion, '0.0.9');
+    assert.equal(current.receipt.contentVersion, '0.0.10');
+    assert.equal(currentReceipt.contentVersion, '0.0.10');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1080,9 +1080,9 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-9', { ski
   });
 });
 
-// Scenario: the exact published 0.0.6 package is present in the 0.0.9 candidate's retained history.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.10 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
-test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-9', { skip: !publishedR6Root }, async () => {
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-10', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR6Root, outputRoot, { recursive: true });
@@ -1094,8 +1094,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.9');
-    assert.equal(currentReceipt.contentVersion, '0.0.9');
+    assert.equal(current.receipt.contentVersion, '0.0.10');
+    assert.equal(currentReceipt.contentVersion, '0.0.10');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1380,9 +1380,9 @@ test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', asyn
   });
 });
 
-// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.9 output.
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.10 output.
 // Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
-test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-9', { skip: !publishedR7Root }, async () => {
+test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-10', { skip: !publishedR7Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     const priorReceipt = JSON.parse(await readFile(path.join(publishedR7Root, 'receipt.json'), 'utf8'));
@@ -1395,8 +1395,8 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-9', { ski
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.9');
-    assert.equal(currentReceipt.contentVersion, '0.0.9');
+    assert.equal(current.receipt.contentVersion, '0.0.10');
+    assert.equal(currentReceipt.contentVersion, '0.0.10');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);

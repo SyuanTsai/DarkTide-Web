@@ -41,9 +41,9 @@ test('UnitT01_workflow-deploys-only-the-guarded-preview-worker', () => {
   assert.ok(steps.some(step => step.name === 'Verify the deployed preview and write a deployment receipt'));
 });
 
-// Scenario: the fixed preview workflow starts on an empty runner and builds current pending 0.0.9 after exact published history.
-// Purpose: rebuild the pinned baseline, R1, A, and .3 through .8; retain their data URLs in current .9; then verify before preview-only deploy.
-test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
+// Scenario: the fixed preview workflow starts on an empty runner and builds current pending 0.0.10 after exact published history.
+// Purpose: rebuild the pinned baseline, R1, A, and .3 through .9; retain their data URLs in current .10; then verify before preview-only deploy.
+test('UnitT02_workflow-builds-pending-0-0-10-from-pinned-history', () => {
   const steps = workflow.jobs['isolated-preview'].steps;
   const priorR1Checkout = steps.find(step => step.name === 'Check out the exact pinned R1 preview source');
   const priorR2Checkout = steps.find(step => step.name === 'Check out the exact published R2 A data source');
@@ -53,6 +53,7 @@ test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
   const priorRealR4Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.6 candidate source');
   const priorRealR5Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.7 candidate source');
   const priorRealR6Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.8 candidate source');
+  const priorRealR7Checkout = steps.find(step => step.name === 'Check out the exact published pending 0.0.9 candidate source');
   const baselineBuild = steps.findIndex(step => step.name === 'Rebuild the pinned production baseline data');
   const r1Build = steps.findIndex(step => step.name === 'Rebuild exact R1 package into the candidate output');
   const r1Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in R1 package');
@@ -83,15 +84,18 @@ test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
   const r8Build = steps.findIndex(step => step.name === 'Rebuild exact published pending 0.0.8 candidate into output');
   const r8Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in exact published 0.0.8 candidate');
   const r8Verify = steps.findIndex(step => step.name === 'Verify exact published 0.0.8 and retained historical data URLs');
-  const currentBuild = steps.findIndex(step => step.name === 'Build current pending 0.0.9 candidate preview');
-  const currentRetain = steps.findIndex(step => step.name === 'Retain the pinned baseline in current 0.0.9 candidate');
-  const currentVerify = steps.findIndex(step => step.name === 'Verify current 0.0.9 and retained historical data URLs');
+  const r9Build = steps.findIndex(step => step.name === 'Rebuild exact published pending 0.0.9 candidate into output');
+  const r9Retain = steps.findIndex(step => step.name === 'Retain the pinned production baseline in exact published 0.0.9 candidate');
+  const r9Verify = steps.findIndex(step => step.name === 'Verify exact published 0.0.9 and retained historical data URLs');
+  const currentBuild = steps.findIndex(step => step.name === 'Build current pending 0.0.10 candidate preview');
+  const currentRetain = steps.findIndex(step => step.name === 'Retain the pinned baseline in current 0.0.10 candidate');
+  const currentVerify = steps.findIndex(step => step.name === 'Verify current 0.0.10 and retained historical data URLs');
   const runTests = steps.findIndex(step => step.name === 'Run Web tests against pinned lifecycle packages');
   const upload = steps.findIndex(step => step.name === 'Upload only the isolated W01 preview artifact');
   const deploy = steps.findIndex(step => step.name === 'Deploy only the fixed W01 preview worker');
   const deploymentReceipt = steps.findIndex(step => step.name === 'Verify the deployed preview and write a deployment receipt');
   const receiptUpload = steps.findIndex(step => step.name === 'Upload the public preview deployment receipt');
-  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, priorRealR1Build, priorRealR1Retain, priorRealR1Verify, r3Freeze, r4Build, r4Retain, r4Verify, r4Freeze, r5Build, r5Retain, r5Verify, r5Freeze, r6Build, r6Retain, r6Verify, r6Freeze, r7Build, r7Retain, r7Verify, r7Freeze, r8Build, r8Retain, r8Verify, currentBuild, currentRetain, currentVerify, runTests, upload, deploy, deploymentReceipt, receiptUpload];
+  const order = [baselineBuild, r1Build, r1Retain, r1Verify, r2Build, r2Retain, r2Verify, priorRealR1Build, priorRealR1Retain, priorRealR1Verify, r3Freeze, r4Build, r4Retain, r4Verify, r4Freeze, r5Build, r5Retain, r5Verify, r5Freeze, r6Build, r6Retain, r6Verify, r6Freeze, r7Build, r7Retain, r7Verify, r7Freeze, r8Build, r8Retain, r8Verify, r9Build, r9Retain, r9Verify, currentBuild, currentRetain, currentVerify, runTests, upload, deploy, deploymentReceipt, receiptUpload];
 
   assert.equal(priorR1Checkout.with.ref, '872bd72bad255d40af62329b8ffe97a357935275');
   assert.equal(priorR2Checkout.with.ref, 'a7fabea66f56cd5c8236b6e84a3f6c6586175840');
@@ -122,6 +126,10 @@ test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
   assert.equal(priorRealR6Checkout.with.path, 'prior-real-0-0-8');
   assert.equal(priorRealR6Checkout.with.repository, 'SyuanTsai/DarkTide-Web');
   assert.equal(priorRealR6Checkout.with['persist-credentials'], false);
+  assert.equal(priorRealR7Checkout.with.ref, 'd4a99510ea355b4703cf715c7f0978209cb04dd0');
+  assert.equal(priorRealR7Checkout.with.path, 'prior-real-0-0-9');
+  assert.equal(priorRealR7Checkout.with.repository, 'SyuanTsai/DarkTide-Web');
+  assert.equal(priorRealR7Checkout.with['persist-credentials'], false);
   assert.ok(order.every(index => index >= 0));
   assert.ok(baselineBuild < r1Build);
   assert.ok(r1Build < r1Retain && r1Retain < r1Verify);
@@ -132,7 +140,8 @@ test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
   assert.ok(r5Freeze < r6Build && r6Build < r6Retain && r6Retain < r6Verify && r6Verify < r6Freeze);
   assert.ok(r6Freeze < r7Build && r7Build < r7Retain && r7Retain < r7Verify && r7Verify < r7Freeze);
   assert.ok(r7Freeze < r8Build && r8Build < r8Retain && r8Retain < r8Verify);
-  assert.ok(r8Verify < currentBuild && currentBuild < currentRetain && currentRetain < currentVerify && currentVerify < runTests && runTests < upload && upload < deploy);
+  assert.ok(r8Verify < r9Build && r9Build < r9Retain && r9Retain < r9Verify);
+  assert.ok(r9Verify < currentBuild && currentBuild < currentRetain && currentRetain < currentVerify && currentVerify < runTests && runTests < upload && upload < deploy);
   assert.equal(steps[priorRealR1Build]['working-directory'], 'prior-real-0-0-3');
   assert.match(steps[priorRealR1Build].run, /w01:build -- --candidate-preview --output \.\.\/web\/dist-w01/);
   assert.match(steps[priorRealR1Retain].run, /--baseline-root \.\.\/baseline --output \.\.\/web\/dist-w01/);
@@ -162,6 +171,11 @@ test('UnitT02_workflow-builds-pending-0-0-9-from-pinned-history', () => {
   assert.match(steps[r8Retain].run, /--baseline-root \.\.\/baseline --output \.\.\/web\/dist-w01/);
   assert.match(steps[r8Verify].run, /w01:verify -- \.\.\/web\/dist-w01/);
   assert.equal(steps.some(step => step.name.includes('Freeze the verified published 0.0.8')), false);
+  assert.equal(steps[r9Build]['working-directory'], 'prior-real-0-0-9');
+  assert.match(steps[r9Build].run, /w01:build -- --candidate-preview --output \.\.\/web\/dist-w01/);
+  assert.match(steps[r9Retain].run, /--baseline-root \.\.\/baseline --output \.\.\/web\/dist-w01/);
+  assert.match(steps[r9Verify].run, /w01:verify -- \.\.\/web\/dist-w01/);
+  assert.equal(steps.some(step => step.name.includes('Freeze the verified published 0.0.9')), false);
   assert.equal(steps[currentBuild]['working-directory'], 'web');
   assert.match(steps[currentBuild].run, /w01:build -- --candidate-preview --output dist-w01/);
   assert.match(steps[currentRetain].run, /--baseline-root \.\.\/baseline --output dist-w01/);

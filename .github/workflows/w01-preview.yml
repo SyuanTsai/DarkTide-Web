@@ -93,6 +93,13 @@ jobs:
           ref: b55cc3e21024b364bc6aa95f4ad46a9a3f6c48a1
           path: prior-real-0-0-8
           persist-credentials: false
+      - name: Check out the exact published pending 0.0.9 candidate source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Web
+          ref: d4a99510ea355b4703cf715c7f0978209cb04dd0
+          path: prior-real-0-0-9
+          persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -211,13 +218,22 @@ jobs:
       - name: Verify exact published 0.0.8 and retained historical data URLs
         working-directory: prior-real-0-0-8
         run: npm run w01:verify -- ../web/dist-w01
-      - name: Build current pending 0.0.9 candidate preview
+      - name: Rebuild exact published pending 0.0.9 candidate into output
+        working-directory: prior-real-0-0-9
+        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
+      - name: Retain the pinned production baseline in exact published 0.0.9 candidate
+        working-directory: prior-real-0-0-9
+        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
+      - name: Verify exact published 0.0.9 and retained historical data URLs
+        working-directory: prior-real-0-0-9
+        run: npm run w01:verify -- ../web/dist-w01
+      - name: Build current pending 0.0.10 candidate preview
         working-directory: web
         run: npm run w01:build -- --candidate-preview --output dist-w01
-      - name: Retain the pinned baseline in current 0.0.9 candidate
+      - name: Retain the pinned baseline in current 0.0.10 candidate
         working-directory: web
         run: npm run w01:retain -- --baseline-root ../baseline --output dist-w01
-      - name: Verify current 0.0.9 and retained historical data URLs
+      - name: Verify current 0.0.10 and retained historical data URLs
         working-directory: web
         run: npm run w01:verify -- dist-w01
       - name: Run Web tests against pinned lifecycle packages

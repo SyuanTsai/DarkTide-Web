@@ -275,14 +275,14 @@
           "conditions": [
             {
               "itemId": "psyker-normal-charge-condition",
-              "text": "一般模式不必先取得目標即可開始蓄力，也會開始累積反噬；瞄準會跟隨系統選定的目標更新。",
+              "text": "一般模式不用先鎖定目標就能開始蓄力，蓄力期間也會累積反噬；瞄準方向改變時，目標也會跟著更新。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
               ]
             },
             {
               "itemId": "psyker-sticky-charge-condition",
-              "text": "鎖定目標模式需先取得有效目標；尚未鎖定時不會預先蓄力，鎖定後也不會隨瞄準切換目標。目標改變會重新計算這次蓄力時間。",
+              "text": "鎖定目標模式要先找到可鎖定的目標才會開始蓄力；開始蓄力後，移動準星不會改變鎖定目標。若鎖定目標改變，這次蓄力會重新計時。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -290,14 +290,14 @@
             },
             {
               "itemId": "psyker-lock-on-charge-condition",
-              "text": "開始鎖定蓄力需要有效目標。從一般蓄力切換成鎖定時，可接續已累積的蓄力；重新開始蓄力則採一般模式的基本時間。",
+              "text": "蓄力途中找到可鎖定的目標後，就能切換成鎖定，並接續原本的蓄力進度。這種鎖定方式若從頭開始蓄力，基本時間和一般蓄力相同。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
               ]
             },
             {
               "itemId": "psyker-lock-on-stagger-condition",
-              "text": "可受此攻擊僵直的目標：直接鎖定維持 1 秒會造成一次小幅僵直；從一般蓄力切換鎖定後，超過 0.25 秒也會造成一次小幅僵直。",
+              "text": "若目標能被此攻擊打出踉蹌，直接鎖定維持 1 秒會造成一次輕微踉蹌；從一般蓄力切換到鎖定後，若持續鎖定超過 0.25 秒，也會造成一次輕微踉蹌。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
                 "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
@@ -305,7 +305,7 @@
             },
             {
               "itemId": "psyker-smite-damage-type-condition",
-              "text": "這項倍率只套用於顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。",
+              "text": "這項傷害倍率只作用在顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。",
               "claimRefs": [
                 "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
               ]

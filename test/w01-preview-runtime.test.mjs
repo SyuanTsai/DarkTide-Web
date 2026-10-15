@@ -210,8 +210,8 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /成功造成傷害才會額外增加反噬；沒有其他加成時，基本增加量為 25%，不隨蓄力程度改變。/);
   assert.match(candidateText, /一般模式約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6\.67%、13\.33%、20%。/);
   assert.match(candidateText, /鎖定目標模式需先取得有效目標；蓄力 1、2 秒時，反噬約為 10%、20%，約 2 秒滿蓄。/);
-  assert.match(candidateText, /開始鎖定蓄力需要有效目標。從一般蓄力切換成鎖定時，可接續已累積的蓄力；重新開始蓄力則採一般模式的基本時間。/);
-  assert.match(candidateText, /可受此攻擊僵直的目標：直接鎖定維持 1 秒會造成一次小幅僵直；從一般蓄力切換鎖定後，超過 0\.25 秒也會造成一次小幅僵直。/);
+  assert.match(candidateText, /蓄力途中找到可鎖定的目標後，就能切換成鎖定，並接續原本的蓄力進度。這種鎖定方式若從頭開始蓄力，基本時間和一般蓄力相同。/);
+  assert.match(candidateText, /若目標能被此攻擊打出踉蹌，直接鎖定維持 1 秒會造成一次輕微踉蹌；從一般蓄力切換到鎖定後，若持續鎖定超過 0\.25 秒，也會造成一次輕微踉蹌。/);
   assert.match(candidateText, /以下是既有分析的估算，假設蓄力速度沒有修正、沒有其他角色加成，並在滿蓄後立即成功造成傷害；尚未經遊戲內實測。/);
   assert.match(candidateText, /在上述條件下，3 秒滿蓄約累積 20%，成功造成傷害再加基本 25% 命中成本，合計約 45%/);
   assert.match(candidateText, /這是乘算，不是額外固定傷害。/);
