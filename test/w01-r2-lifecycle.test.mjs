@@ -39,6 +39,36 @@ function assertRowsPreserved(beforeRows, afterReceipt) {
   for (const row of beforeRows) assert.deepEqual(afterRows.get(row.path), row, `preserved ${row.path}`);
 }
 
+async function fetchRollbackOutput(outputRoot, url) {
+  const pathname = new URL(url).pathname;
+  const filePath = path.join(outputRoot, ...pathname.slice(1).split('/'));
+  try {
+    return new Response(await readFile(filePath), {
+      status: 200,
+      headers: {
+        'access-control-allow-origin': '*',
+        'x-robots-tag': 'noindex, nofollow, noarchive',
+        'content-type': 'application/json; charset=utf-8'
+      }
+    });
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    return new Response(new Uint8Array(), { status: 404 });
+  }
+}
+
+// Scenario: the lifecycle's local-package fetch stub serves a JSON artifact to the deployment receipt checker.
+// Purpose: keep the test server response consistent with the JSON MIME contract required by the production checker.
+test('UnitT40_rollback-output-fetch-declares-JSON-content-type', async t => {
+  const outputRoot = await mkdtemp(path.join(os.tmpdir(), 'w01-rollback-output-fetch-'));
+  t.after(() => rm(outputRoot, { recursive: true, force: true }));
+  await writeFile(path.join(outputRoot, 'version.json'), '{"schema_version":2}');
+
+  const response = await fetchRollbackOutput(outputRoot, 'https://preview.invalid/version.json');
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'application/json; charset=utf-8');
+});
+
 // Scenario: CI starts empty, rebuilds exact R1 and baseline, builds R2, then runs the fixed R1 helper over a verified R2 output.
 // Purpose: prove R1/R2/baseline immutable URLs survive and the helper accepts only the exact R2 receipt identity.
 test('UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions', {
@@ -227,24 +257,11 @@ test('UnitT42_clean-runner-rebuilds-published-a-then-restores-fixed-r1-with-all-
   assertRowsPreserved(baselineRows, restoredReceipt);
   assert.equal(restoredReceipt.files.filter(row => row.path.startsWith('data/')).length, 2289);
 
-  const fetchFromRollbackOutput = async url => {
-    const pathname = new URL(url).pathname;
-    const filePath = path.join(outputRoot, ...pathname.slice(1).split('/'));
-    try {
-      return new Response(await readFile(filePath), {
-        status: 200,
-        headers: { 'access-control-allow-origin': '*', 'x-robots-tag': 'noindex, nofollow, noarchive' }
-      });
-    } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
-      return new Response(new Uint8Array(), { status: 404 });
-    }
-  };
   const deploymentReceipt = await createDeploymentReceipt({
     repoRoot: webRoot,
     outputRoot,
     receiptPath: path.join(receiptRoot, 'deployment-receipt.json'),
-    fetchImpl: fetchFromRollbackOutput,
+    fetchImpl: url => fetchRollbackOutput(outputRoot, url),
     createdAt: '2026-10-13T00:00:00.000Z'
   });
   assert.equal(deploymentReceipt.contentVersion, pinnedR1.contentVersion);
