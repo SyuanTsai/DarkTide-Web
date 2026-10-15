@@ -814,42 +814,50 @@
         },
         "errata": [],
         "detailSections": {
-          "effects": [],
-          "conditions": [
+          "effects": [
             {
               "itemId": "chainaxe-attack-power-comparison",
               "parts": [
-                { "kind": "literal", "text": "輕攻擊威力：" },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "boundary" },
-                { "kind": "literal", "text": "；" },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "boundary" },
+                { "kind": "literal", "text": "傷害素質 " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "comparison-stat" },
+                { "kind": "literal", "text": " → " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "comparison-stat" },
+                { "kind": "literal", "text": "：輕攻擊對第一個目標的威力 " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "comparison-value" },
+                { "kind": "literal", "text": " → " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "comparison-value" },
                 { "kind": "literal", "text": "。" }
               ],
               "claimRefs": [
                 "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
                 "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80"
               ]
-            }
-          ],
-          "calculation": [],
-          "notes": [
+            },
             {
               "itemId": "chainaxe-armored-modifier-comparison",
               "parts": [
-                { "kind": "literal", "text": "對防彈護甲傷害修正：" },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "boundary" },
-                { "kind": "literal", "text": "；" },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "boundary" },
-                { "kind": "literal", "text": "。" }
+                { "kind": "literal", "text": "護甲穿透素質 " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "comparison-stat" },
+                { "kind": "literal", "text": " → " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "comparison-stat" },
+                { "kind": "literal", "text": "：輕攻擊對防彈護甲的傷害倍率約 " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "comparison-value" },
+                { "kind": "literal", "text": " → " },
+                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "comparison-value" },
+                { "kind": "literal", "text": " 倍。" }
               ],
               "claimRefs": [
                 "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
                 "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
               ]
-            },
+            }
+          ],
+          "conditions": [],
+          "calculation": [],
+          "notes": [
             {
               "itemId": "chainaxe-comparison-scope",
-              "text": "表列 60%／80% 是本頁比較上下限，不代表武器可取得、掉落或全域範圍；數值是預設輕攻擊第一個命中目標的來源參數，不是最終傷害。",
+              "text": "這些是傷害計算值，不是實際扣血量。",
               "claimRefs": [
                 "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
                 "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",

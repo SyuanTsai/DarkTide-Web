@@ -74,7 +74,11 @@ const CHAINAXE_COMPARISON_GROUPS = {
     weaponStat: 'chainaxe_dps_stat',
     property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack',
     unit: 'point',
-    mode: 'boundary',
+    section: 'effects',
+    itemId: 'chainaxe-attack-power-comparison',
+    inputLabel: '傷害素質 ',
+    valueLabel: '：輕攻擊對第一個目標的威力 ',
+    valueSuffix: '',
     claims: [
       { id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60' },
       { id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80' }
@@ -85,7 +89,11 @@ const CHAINAXE_COMPARISON_GROUPS = {
     weaponStat: 'chainaxe_armor_pierce_stat',
     property: 'damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]',
     unit: 'ratio',
-    mode: 'boundary',
+    section: 'effects',
+    itemId: 'chainaxe-armored-modifier-comparison',
+    inputLabel: '護甲穿透素質 ',
+    valueLabel: '：輕攻擊對防彈護甲的傷害倍率約 ',
+    valueSuffix: ' 倍',
     claims: [
       { id: 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60' },
       { id: 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80' }
@@ -418,12 +426,12 @@ function ratioAsPercentDecimal(value, label) {
   return normalizedFraction ? normalizedInteger + '.' + normalizedFraction : normalizedInteger;
 }
 
-function ratioAsFixedPercent(value, label) {
+function decimalAsFixed2(value, label) {
   validateDecimal(value, label);
-  if (value.startsWith('-')) fail(label + ' must be a non-negative ratio');
+  if (value.startsWith('-')) fail(label + ' must be a non-negative decimal');
   const [whole, fraction = ''] = value.split('.');
   const denominator = 10n ** BigInt(fraction.length);
-  const numerator = BigInt(whole + fraction) * 10000n;
+  const numerator = BigInt(whole + fraction) * 100n;
   const roundedCents = (numerator + denominator / 2n) / denominator;
   return String(roundedCents / 100n) + '.' + String(roundedCents % 100n).padStart(2, '0');
 }
@@ -601,34 +609,31 @@ function compileWeaponComparisonItem(item, itemLabel, section, sourceRecordById,
   }
   const group = CHAINAXE_COMPARISON_GROUPS[comparison.groupId];
   const expectedClaims = group.claims.map(claim => claim.id);
-  const expectedSection = comparison.groupId === 'attack' ? 'conditions' : 'notes';
-  const expectedItemId = comparison.groupId === 'attack' ? 'chainaxe-attack-power-comparison' : 'chainaxe-armored-modifier-comparison';
-  const labelText = comparison.groupId === 'attack' ? '輕攻擊威力：' : '對防彈護甲傷害修正：';
-  if (section !== expectedSection || item.itemId !== expectedItemId ||
+  if (section !== group.section || item.itemId !== group.itemId ||
       JSON.stringify(item.claimRefs) !== JSON.stringify(expectedClaims)) {
     fail(itemLabel + '.itemId, section, or claimRefs do not match the Source comparison pair');
   }
-  if (item.parts.length !== 5) fail(itemLabel + '.parts must contain the fixed label and both Source bindings');
+  const expectedParts = [
+    { kind: 'literal', text: group.inputLabel },
+    { kind: 'source-comparison', bindingRef: expectedClaims[0], format: 'comparison-stat' },
+    { kind: 'literal', text: ' → ' },
+    { kind: 'source-comparison', bindingRef: expectedClaims[1], format: 'comparison-stat' },
+    { kind: 'literal', text: group.valueLabel },
+    { kind: 'source-comparison', bindingRef: expectedClaims[0], format: 'comparison-value' },
+    { kind: 'literal', text: ' → ' },
+    { kind: 'source-comparison', bindingRef: expectedClaims[1], format: 'comparison-value' },
+    { kind: 'literal', text: group.valueSuffix + '。' }
+  ];
+  if (JSON.stringify(item.parts) !== JSON.stringify(expectedParts)) {
+    fail(itemLabel + '.parts must bind both Source comparison inputs and values in the fixed Chainaxe copy format');
+  }
 
-  const literals = [labelText, '；', '。'];
-  const boundClaims = group.claims;
   const text = [];
-  for (const [index, part] of item.parts.entries()) {
+  for (const [index, part] of expectedParts.entries()) {
     const partLabel = itemLabel + '.parts[' + index + ']';
-    assertPlainObject(part, partLabel);
-    if (index === 0 || index === 2 || index === 4) {
-      assertExactKeys(part, ['kind', 'text'], partLabel);
-      requireString(part.text, partLabel + '.text');
-      const expectedLiteral = literals[index === 0 ? 0 : index === 2 ? 1 : 2];
-      if (part.kind !== 'literal' || part.text !== expectedLiteral || /[0-9%]/.test(part.text)) {
-        fail(partLabel + '.literal must be the fixed non-numeric Web label or separator');
-      }
+    if (part.kind === 'literal') {
       text.push(part.text);
       continue;
-    }
-    assertExactKeys(part, ['kind', 'bindingRef', 'format'], partLabel);
-    if (part.kind !== 'source-comparison' || part.bindingRef !== boundClaims[index === 1 ? 0 : 1].id || part.format !== group.mode) {
-      fail(partLabel + ' must bind the matching Source comparison input');
     }
     const claim = sourceRecordById.get(part.bindingRef);
     if (!claim || claim.kind !== 'claim' || claim.payload.targetRef !== group.statDefinition ||
@@ -636,12 +641,13 @@ function compileWeaponComparisonItem(item, itemLabel, section, sourceRecordById,
         claim.payload.value.status !== 'known' || claim.payload.value.unit !== group.unit) {
       fail(partLabel + '.bindingRef does not match this presentation weapon stat and comparison input');
     }
-    const input = claim.payload.context.comparisonStat.decimal;
-    const value = group.unit === 'ratio'
-      ? ratioAsFixedPercent(claim.payload.value.decimal, partLabel + '.ratio') + '%'
-      : claim.payload.value.decimal;
-    const boundary = group.mode === 'boundary' ? '（本次比較' + (index === 1 ? '下限' : '上限') + '）' : '';
-    text.push(input + '%' + boundary + '為 ' + value);
+    if (part.format === 'comparison-stat') {
+      text.push(claim.payload.context.comparisonStat.decimal + '%');
+    } else {
+      text.push(group.unit === 'ratio'
+        ? decimalAsFixed2(claim.payload.value.decimal, partLabel + '.ratio')
+        : claim.payload.value.decimal);
+    }
   }
   return { itemId: item.itemId, text: text.join(''), claimRefs: expectedClaims };
 }

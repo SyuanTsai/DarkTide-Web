@@ -223,10 +223,11 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /先蓄力再鎖定：鎖定敵人超過 0\.25 秒，顱腦崩裂使其輕微踉蹌一次。/);
   assert.match(candidateText, /提速/);
   assert.match(candidateText, /你的移動速度提高 20%。/);
-  assert.match(candidateText, /輕攻擊威力：60%（本次比較下限）為 113；80%（本次比較上限）為 119。/);
-  assert.match(candidateText, /對防彈護甲傷害修正：60%（本次比較下限）為 160\.23%；80%（本次比較上限）為 176\.04%。/);
-  assert.match(candidateText, /不代表武器可取得、掉落或全域範圍/);
+  assert.match(candidateText, /傷害素質 60% → 80%：輕攻擊對第一個目標的威力 113 → 119。/);
+  assert.match(candidateText, /護甲穿透素質 60% → 80%：輕攻擊對防彈護甲的傷害倍率約 1\.60 → 1\.76 倍。/);
+  assert.match(candidateText, /這些是傷害計算值，不是實際扣血量。/);
   assert.doesNotMatch(candidateText, /已收錄的攻擊數值：80、140。|已收錄的護甲修正值：1\.035、1\.965。|其他攻擊資料尚未補齊。/);
+  assert.doesNotMatch(candidateText, /本次比較上下限|比較下限|比較上限|可取得範圍|掉落範圍|全域範圍|160\.23%|176\.04%/);
   assert.doesNotMatch(candidateText, /Brain Rupture|Movement Speed/);
   assert.doesNotMatch(candidateText, /Source|claim|point|ratio|Steam Build|SYP-311|W01/);
 

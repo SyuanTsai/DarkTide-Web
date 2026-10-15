@@ -9,7 +9,7 @@ import { buildW01 } from '../scripts/w01-build.mjs';
 import { jsonBytes } from '../src/static/common.mjs';
 
 const repoRoot = path.resolve(import.meta.dirname, '..');
-const publishedR13Root = process.env.W01_PRIOR_REAL_R13_ROOT;
+const publishedR14Root = process.env.W01_PRIOR_REAL_R14_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 // Scenario: a deployed preview serves the local versioned package and one pinned old data URL.
@@ -139,11 +139,11 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       objects.set('/data/' + build.dataRevision + '/' + file.path,
         await readFile(path.join(outputRoot, 'data', build.dataRevision, file.path)));
     }
-    const previousOutputRoot = path.join(tempRoot, 'pinned-prior-0.0.13');
+    const previousOutputRoot = path.join(tempRoot, 'pinned-prior-0.0.14');
     await mkdir(previousOutputRoot, { recursive: true });
-    const previousRevision = '4fa2f97e2995011d64f1c057c268c6ec04cfa9b9a9fb8dce34c989a87315ce04';
-    const previousBuildId = '917817b8aa55fae6859f4379538e87b67f7933ebfc4314baeafa164639bca3da';
-    const previousManifestSha256 = '7d35414e18a4dff97dd50356ac79357fefee6bb06e112ba484e293b4ba630550';
+    const previousRevision = '9bd96c5e5dead2999ef76ce9b86d0568724b761050ea3ec40b66e47ff815778d';
+    const previousBuildId = '6591d2c886a7bb1bb41f8dc9cb7e261dea570ebd0d8e7e956ee5e4d3d536daa4';
+    const previousManifestSha256 = '58c326e0777cda314bb9016e0d8f3cb748cc59de1ceb33bd0ac4b92fcd717492';
     const previousVersion = {
       schema_version: 2,
       data_revision: previousRevision,
@@ -152,28 +152,28 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       package_kind: 'pending-preview',
       game_releases: [{
         game_version: '1.13.2',
-        content_version: '0.0.13',
+        content_version: '0.0.14',
         data_revision: previousRevision,
         manifest_path: '/data/' + previousRevision + '/manifest.json',
         manifest_sha256: previousManifestSha256
       }]
     };
     const previousVersionBytes = jsonBytes(previousVersion);
-    assert.equal(sha256(previousVersionBytes), '1a021c145b28bf0353442b687d587e00b735eb6873e64876f7521101f0a91197');
+    assert.equal(sha256(previousVersionBytes), '86f853ffc0b38c17e31b7c224dcacaa9344c9fa4e8f9f2bee3ae1dbdf7fe5b2d');
     const previousReceipt = {
       ...buildReceipt,
       buildId: previousBuildId,
       dataRevision: previousRevision,
-      contentVersion: '0.0.13',
+      contentVersion: '0.0.14',
       manifestPath: 'data/' + previousRevision + '/manifest.json',
       manifestSha256: previousManifestSha256,
       source: {
         repository: 'https://github.com/SyuanTsai/DarkTide-Source-Data',
-        commit: '5d16c70a828d4bd6293a12430cd4ebea36c6ed1c',
-        sourceRevision: '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d',
-        manifestSha256: '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc'
+        commit: '7f88a1368a29a79c0de654ee5cd17886dd360a47',
+        sourceRevision: 'f9917e5f8c14e1fd768f502b9c0cafa59602cae1ac5e9bf8372e467268de38e2',
+        manifestSha256: 'e8ec9697ce5b15d3e9e040a2c023f18db23e2fa7ab41ea25c28f75eb75e85835'
       },
-      web: { authoringCommit: '58487ee15c16e398b091c9ad2c29322f3bf5548e' },
+      web: { authoringCommit: 'b57d6268a470009a560eb03a8a3da4ba6748f106' },
       fixtureOnly: false,
       publicationEligible: false,
       candidatePreviewOnly: true,
@@ -207,11 +207,11 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
       createdAt: '2026-10-14T00:00:00.000Z'
     });
     assert.equal(result.requestKind, 'w01-preview-deployment-receipt');
-    assert.equal(result.contentVersion, '0.0.14');
+    assert.equal(result.contentVersion, '0.0.15');
     assert.equal(result.packageKind, 'pending-preview');
     assert.equal(result.candidatePreviewOnly, true);
     assert.equal(result.verifiedRemoteObjects, 8);
-    assert.equal(versionFetchCount, 4, 'only the exact pinned 0.0.13 version may be retried before 0.0.14');
+    assert.equal(versionFetchCount, 4, 'only the exact pinned 0.0.14 version may be retried before 0.0.15');
     assert.deepEqual(retryDelays, [250, 500, 1000], 'the propagation wait is bounded and injectable');
     assert.equal(fetchCount, 11, 'all eight required objects are verified after three prior-version responses');
     assert.equal(result.retainedBaseline.sampleSha256, oldRow.sha256);
@@ -230,7 +230,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         receiptPath: path.join(tempRoot, 'wrong-prior.json'),
         fetchImpl: async () => { invalidPriorFetchCount += 1; return new Response(); }
       }),
-      /local prior package is not the pinned quarantined 0\.0\.13 candidate/
+      /local prior package is not the pinned quarantined 0\.0\.14 candidate/
     );
     assert.equal(invalidPriorFetchCount, 0, 'an invalid pinned prior package is rejected before any network request');
 
@@ -283,7 +283,7 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
         },
         sleepImpl: async milliseconds => staleRetryDelays.push(milliseconds)
       }),
-      /still serves the pinned prior 0\.0\.13 package after 7 checks/
+      /still serves the pinned prior 0\.0\.14 package after 7 checks/
     );
     assert.equal(staleFetchCount, 7, 'retry stops after the initial check plus six bounded retries');
     assert.deepEqual(staleRetryDelays, [250, 500, 1000, 2000, 4000, 8000]);
@@ -442,9 +442,9 @@ test('UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantin
   }
 });
 
-// Scenario: version.json has switched to 0.0.14 while Cloudflare briefly returns 404 for new content-addressed package objects.
+// Scenario: version.json has switched to 0.0.15 while Cloudflare briefly returns 404 for new content-addressed package objects.
 // Purpose: retry only exact-path 404 responses within one shared bounded budget; old or unknown bytes fail closed.
-test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { skip: !publishedR13Root }, async () => {
+test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { skip: !publishedR14Root }, async () => {
   const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-object-propagation-'));
   try {
     const copiedRoot = path.join(tempRoot, 'repo');
@@ -483,12 +483,12 @@ test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { 
     };
     await writeFile(buildReceiptPath, jsonBytes(buildReceipt));
 
-    const previousReceipt = JSON.parse(await readFile(path.join(publishedR13Root, 'receipt.json'), 'utf8'));
-    const previousManifestBytes = await readFile(path.join(publishedR13Root, ...previousReceipt.manifestPath.split('/')));
+    const previousReceipt = JSON.parse(await readFile(path.join(publishedR14Root, 'receipt.json'), 'utf8'));
+    const previousManifestBytes = await readFile(path.join(publishedR14Root, ...previousReceipt.manifestPath.split('/')));
     const previousManifest = JSON.parse(previousManifestBytes);
     const previousDomainBytes = new Map(await Promise.all(previousManifest.files.map(async file => [
       file.kind,
-      await readFile(path.join(publishedR13Root, 'data', previousReceipt.dataRevision, file.path))
+      await readFile(path.join(publishedR14Root, 'data', previousReceipt.dataRevision, file.path))
     ])));
     const currentObjects = new Map([
       ['/version.json', versionBytes],
@@ -522,11 +522,11 @@ test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { 
     };
 
     const result = await createDeploymentReceipt({
-      repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+      repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR14Root,
       receiptPath: path.join(tempRoot, 'deployment-receipt.json'), fetchImpl,
       sleepImpl: async milliseconds => retryDelays.push(milliseconds)
     });
-    assert.equal(result.contentVersion, '0.0.14');
+    assert.equal(result.contentVersion, '0.0.15');
     assert.equal(result.verifiedRemoteObjects, 8);
     assert.equal(manifestRequestCount.value, 2, 'a transient manifest 404 is retried once');
     assert.equal(skillsRequestCount.value, 2, 'a transient domain 404 is retried once');
@@ -536,13 +536,13 @@ test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { 
 
     for (const [pathname, pinnedBytes, label] of [
       [manifestPath, previousManifestBytes, 'manifest'],
-      [skillsPath, previousDomainBytes.get('skills'), 'skills']
+      ['/data/' + build.dataRevision + '/weapons.json', previousDomainBytes.get('weapons'), 'weapons']
     ]) {
       let staleObjectCount = 0;
       const staleObjectDelays = [];
       await assert.rejects(
         createDeploymentReceipt({
-          repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+          repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR14Root,
           receiptPath: path.join(tempRoot, 'stale-' + label + '-at-new-path.json'),
           fetchImpl: async url => {
             const requestPath = new URL(url).pathname;
@@ -557,7 +557,7 @@ test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { 
         }),
         new RegExp(label + ' bytes do not match')
       );
-      assert.equal(staleObjectCount, 1, 'pinned 0.0.13 ' + label + ' bytes at a new revision URL are rejected immediately');
+      assert.equal(staleObjectCount, 1, 'pinned 0.0.14 ' + label + ' bytes at a new revision URL are rejected immediately');
       assert.deepEqual(staleObjectDelays, [], 'old ' + label + ' content at a new revision URL is not retryable');
     }
 
@@ -567,7 +567,7 @@ test('InterT02_deployment-receipt-retries-only-content-addressed-object-404', { 
     const exhaustedDelays = [];
     await assert.rejects(
       createDeploymentReceipt({
-        repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR13Root,
+        repoRoot: copiedRoot, outputRoot, previousOutputRoot: publishedR14Root,
         receiptPath: path.join(tempRoot, 'shared-retry-budget-exhausted.json'),
         fetchImpl: async url => {
           const pathname = new URL(url).pathname;
