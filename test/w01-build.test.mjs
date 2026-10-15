@@ -719,7 +719,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.sourceRevision, '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d');
     assert.equal(manifest.source.manifestSha256, '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.10');
+    assert.equal(version.game_releases[0].content_version, '0.0.11');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -733,7 +733,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.effects, [
       {
         itemId: 'psyker-description-damage-parameter',
-        text: '選用此天賦後，顱腦崩裂相關傷害會套用 1.5 倍倍率；在其他條件相同時，相當於增加 50%。這是乘算，不是額外固定傷害。',
+        text: '其他條件相同時，顱腦崩裂傷害提高 50%（1.5 倍）；這項加成不適用於所有靈能攻擊。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-description-display-percent',
           'darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier'
@@ -741,19 +741,19 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-base-hit-peril-cost',
-        text: '成功造成傷害才會額外增加反噬；沒有其他加成時，基本增加量為 25%，不隨蓄力程度改變。',
+        text: '成功造成傷害時，基本增加 25% 反噬，不隨蓄力程度改變。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio']
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.conditions, [
       {
         itemId: 'psyker-normal-charge-condition',
-        text: '一般模式不用先鎖定目標就能開始蓄力，蓄力期間也會累積反噬；瞄準方向改變時，目標也會跟著更新。',
+        text: '一般蓄力不必先取得目標，期間會累積反噬；選定目標會隨瞄準方向改變。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
         itemId: 'psyker-sticky-charge-condition',
-        text: '鎖定目標模式要先找到可鎖定的目標才會開始蓄力；開始蓄力後，移動準星不會改變鎖定目標。若鎖定目標改變，這次蓄力會重新計時。',
+        text: '先鎖定再蓄力時，需要可鎖定的目標；鎖定後，移動準星不會更換目標。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -761,53 +761,38 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-lock-on-charge-condition',
-        text: '蓄力途中找到可鎖定的目標後，就能切換成鎖定，並接續原本的蓄力進度。這種鎖定方式若從頭開始蓄力，基本時間和一般蓄力相同。',
+        text: '從一般蓄力轉為鎖定時，可保留已累積的蓄力進度。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
+      }
+    ]);
+    assert.deepEqual(skill.payload.detailSections.calculation, [
+      {
+        itemId: 'psyker-estimate-assumptions',
+        text: '以下假設從 0% 反噬開始，沒有蓄力速度或反噬相關加成，且蓄力不中斷。'
+      },
+      {
+        itemId: 'psyker-normal-charge-peril-estimate',
+        text: '一般蓄力約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
-        itemId: 'psyker-lock-on-stagger-condition',
-        text: '若目標能被此攻擊打出踉蹌，直接鎖定維持 1 秒會造成一次輕微踉蹌；從一般蓄力切換到鎖定後，若持續鎖定超過 0.25 秒，也會造成一次輕微踉蹌。',
+        itemId: 'psyker-sticky-charge-peril-estimate',
+        text: '先鎖定再蓄力約 2 秒滿蓄；蓄力 1、2 秒時，反噬約為 10%、20%。',
+        claimRefs: ['darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time']
+      },
+      {
+        itemId: 'psyker-full-charge-peril-rate-estimate',
+        text: '滿蓄後每多維持 1 秒，反噬約再增加 9%。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
         ]
       },
       {
-        itemId: 'psyker-smite-damage-type-condition',
-        text: '這項傷害倍率只作用在顱腦崩裂使用的傷害類型，不代表所有靈能攻擊都會套用。',
-        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
-      }
-    ]);
-    assert.deepEqual(skill.payload.detailSections.calculation, [
-      {
-        itemId: 'psyker-estimate-assumptions',
-        text: '以下是既有分析的估算，假設蓄力速度沒有修正、沒有其他角色加成，並在滿蓄後立即成功造成傷害；尚未經遊戲內實測。'
-      },
-      {
-        itemId: 'psyker-damage-multiplier-example',
-        text: '同一次攻擊、同一目標與部位、同一蓄力程度，且其他倍率不變時，假設傷害值為 100，乘上 1.5 後為 150；100 只是比較基準，不是固定實際傷害。',
-        claimRefs: ['darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier']
-      },
-      {
-        itemId: 'psyker-normal-charge-peril-estimate',
-        text: '一般模式約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。滿蓄後每多持續 1 秒，約再增加 9%。',
+        itemId: 'psyker-full-charge-hit-peril-estimate',
+        text: '滿蓄後立即成功造成傷害，反噬合計約 45%；再維持 1 秒才成功造成傷害，合計約 54%。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
-          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
-        ]
-      },
-      {
-        itemId: 'psyker-normal-charge-total-peril-estimate',
-        text: '在上述條件下，3 秒滿蓄約累積 20%，成功造成傷害再加基本 25% 命中成本，合計約 45%；滿蓄後多持續 1 秒再命中，合計約 54%。',
-        claimRefs: [
-          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
-          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
-        ]
-      },
-      {
-        itemId: 'psyker-sticky-charge-peril-estimate',
-        text: '鎖定目標模式需先取得有效目標；蓄力 1、2 秒時，反噬約為 10%、20%，約 2 秒滿蓄。滿蓄後每多持續 1 秒，反噬約再增加 9%；滿蓄後立即成功造成傷害，合計約為 45%。',
-        claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
         ]
@@ -816,36 +801,33 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.notes, [
       {
         itemId: 'psyker-empty-cast-peril-cost',
-        text: '空放或未實際造成傷害時，不會支付基本命中成本；但蓄力期間已累積的反噬仍會保留。',
+        text: '空放或未造成傷害時，不增加上述 25% 反噬；蓄力期間已累積的反噬仍會保留。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio']
-      },
-      {
-        itemId: 'psyker-peril-estimate-limits',
-        text: '蓄力速度與角色加成會改變實際蓄力時間或反噬；其他屬性與能力加成也會影響實際數字，以上假設不適用於所有配裝。',
-        claimRefs: [
-          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
-          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
-          'darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio'
-        ]
-      },
-      {
-        itemId: 'psyker-final-damage-limits',
-        text: '攻擊資料中的基礎數值不能直接當成最終傷害；護甲、部位、蓄力與其他加成都會影響結果。'
-      },
-      {
-        itemId: 'psyker-runtime-flow-limits',
-        text: '移動、目標消失或改變、受到僵直及連線同步都可能影響實際流程。'
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.extra, [
-      { itemId: 'psyker-smite-term', termRef: 'darktide:term:psyker:smite-damage-multiplier-parameter' }
+      {
+        itemId: 'psyker-lock-on-direct-stagger-condition',
+        text: '若目標能被此攻擊打出踉蹌，直接鎖定超過 1 秒會造成一次輕微踉蹌。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
+        ]
+      },
+      {
+        itemId: 'psyker-lock-on-transition-stagger-condition',
+        text: '若目標能被此攻擊打出踉蹌，從一般蓄力轉為鎖定後，從切換起持續鎖定超過 0.25 秒會造成一次輕微踉蹌。',
+        claimRefs: [
+          'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
+          'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
+        ]
+      }
     ]);
     assert.deepEqual(blessing.payload.detailSections.effects, [
-      { itemId: 'chainaxe-tier-display-parameter', text: '此階級的說明數值為 +20%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent'] }
+      { itemId: 'chainaxe-tier-display-parameter', text: '本階級標示的移動速度加成為 +20%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent'] }
     ]);
     assert.deepEqual(blessing.payload.detailSections.conditions, [
-      { itemId: 'chainaxe-special-activation-condition', text: '啟動武器的特殊動作。' },
-      { itemId: 'chainaxe-template-duration-parameter', text: '說明中的持續時間為 2 秒。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-duration'] }
+      { itemId: 'chainaxe-special-activation-condition', text: '啟動武器特殊動作後生效。' }
     ]);
     assert.deepEqual(weapon.payload.detailSections.conditions, [
       { itemId: 'chainaxe-attack-point-table', text: '已收錄的攻擊數值：80、140。' }
@@ -991,7 +973,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.10');
+    assert.equal(currentReceipt.contentVersion, '0.0.11');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -1034,7 +1016,7 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.10 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.11 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
 test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-10', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1048,8 +1030,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-10', { sk
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.10');
-    assert.equal(currentReceipt.contentVersion, '0.0.10');
+    assert.equal(current.receipt.contentVersion, '0.0.11');
+    assert.equal(currentReceipt.contentVersion, '0.0.11');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1080,7 +1062,7 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-10', { sk
   });
 });
 
-// Scenario: the exact published 0.0.6 package is present in the 0.0.10 candidate's retained history.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.11 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
 test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-10', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1094,8 +1076,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.10');
-    assert.equal(currentReceipt.contentVersion, '0.0.10');
+    assert.equal(current.receipt.contentVersion, '0.0.11');
+    assert.equal(currentReceipt.contentVersion, '0.0.11');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1380,7 +1362,7 @@ test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', asyn
   });
 });
 
-// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.10 output.
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.11 output.
 // Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
 test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-10', { skip: !publishedR7Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1395,8 +1377,8 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-10', { sk
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.10');
-    assert.equal(currentReceipt.contentVersion, '0.0.10');
+    assert.equal(current.receipt.contentVersion, '0.0.11');
+    assert.equal(currentReceipt.contentVersion, '0.0.11');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);

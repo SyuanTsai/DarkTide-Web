@@ -158,9 +158,9 @@ function renderImage(record, article) {
   const caption = document.createElement("figcaption");
   const credit = document.createElement("a");
   credit.setAttribute("href", "https://darktide.gameslantern.com");
-  credit.setAttribute("aria-label", "圖片來源：Games Lantern");
-  credit.setAttribute("title", "圖片來源：Games Lantern");
-  credit.textContent = "圖片來源";
+  credit.setAttribute("aria-label", "圖示來源：Games Lantern");
+  credit.setAttribute("title", "圖示來源：Games Lantern");
+  credit.textContent = "圖示來源：Games Lantern";
   caption.append(credit);
   figure.append(caption);
   article.append(figure);

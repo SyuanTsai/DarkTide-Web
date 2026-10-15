@@ -206,19 +206,21 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
-  assert.match(candidateText, /選用此天賦後，顱腦崩裂相關傷害會套用 1\.5 倍倍率；在其他條件相同時，相當於增加 50%。/);
-  assert.match(candidateText, /成功造成傷害才會額外增加反噬；沒有其他加成時，基本增加量為 25%，不隨蓄力程度改變。/);
-  assert.match(candidateText, /一般模式約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6\.67%、13\.33%、20%。/);
-  assert.match(candidateText, /鎖定目標模式需先取得有效目標；蓄力 1、2 秒時，反噬約為 10%、20%，約 2 秒滿蓄。/);
-  assert.match(candidateText, /蓄力途中找到可鎖定的目標後，就能切換成鎖定，並接續原本的蓄力進度。這種鎖定方式若從頭開始蓄力，基本時間和一般蓄力相同。/);
-  assert.match(candidateText, /若目標能被此攻擊打出踉蹌，直接鎖定維持 1 秒會造成一次輕微踉蹌；從一般蓄力切換到鎖定後，若持續鎖定超過 0\.25 秒，也會造成一次輕微踉蹌。/);
-  assert.match(candidateText, /以下是既有分析的估算，假設蓄力速度沒有修正、沒有其他角色加成，並在滿蓄後立即成功造成傷害；尚未經遊戲內實測。/);
-  assert.match(candidateText, /在上述條件下，3 秒滿蓄約累積 20%，成功造成傷害再加基本 25% 命中成本，合計約 45%/);
-  assert.match(candidateText, /這是乘算，不是額外固定傷害。/);
-  assert.match(candidateText, /傷害倍率：此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。/);
+  assert.match(candidateText, /其他條件相同時，顱腦崩裂傷害提高 50%（1\.5 倍）；這項加成不適用於所有靈能攻擊。/);
+  assert.match(candidateText, /成功造成傷害時，基本增加 25% 反噬，不隨蓄力程度改變。/);
+  assert.match(candidateText, /一般蓄力不必先取得目標，期間會累積反噬；選定目標會隨瞄準方向改變。/);
+  assert.match(candidateText, /先鎖定再蓄力時，需要可鎖定的目標；鎖定後，移動準星不會更換目標。/);
+  assert.match(candidateText, /從一般蓄力轉為鎖定時，可保留已累積的蓄力進度。/);
+  assert.match(candidateText, /以下假設從 0% 反噬開始，沒有蓄力速度或反噬相關加成，且蓄力不中斷。/);
+  assert.match(candidateText, /一般蓄力約 3 秒滿蓄；蓄力 1、2、3 秒時，反噬約為 6\.67%、13\.33%、20%。/);
+  assert.match(candidateText, /先鎖定再蓄力約 2 秒滿蓄；蓄力 1、2 秒時，反噬約為 10%、20%。/);
+  assert.match(candidateText, /滿蓄後每多維持 1 秒，反噬約再增加 9%。/);
+  assert.match(candidateText, /滿蓄後立即成功造成傷害，反噬合計約 45%；再維持 1 秒才成功造成傷害，合計約 54%。/);
+  assert.match(candidateText, /空放或未造成傷害時，不增加上述 25% 反噬；蓄力期間已累積的反噬仍會保留。/);
+  assert.match(candidateText, /若目標能被此攻擊打出踉蹌，直接鎖定超過 1 秒會造成一次輕微踉蹌。/);
+  assert.match(candidateText, /若目標能被此攻擊打出踉蹌，從一般蓄力轉為鎖定後，從切換起持續鎖定超過 0\.25 秒會造成一次輕微踉蹌。/);
   assert.match(candidateText, /提速/);
-  assert.match(candidateText, /此階級的說明數值為 \+20%。/);
-  assert.match(candidateText, /說明中的持續時間為 2 秒。/);
+  assert.match(candidateText, /本階級標示的移動速度加成為 \+20%。/);
   assert.match(candidateText, /已收錄的攻擊數值：80、140。/);
   assert.match(candidateText, /已收錄的護甲修正值：1\.035、1\.965。/);
   assert.match(candidateText, /其他攻擊資料尚未補齊。/);
@@ -229,12 +231,12 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   const contentNodes = descendants(candidatePage.get('content'));
   const lists = contentNodes.filter(node => node.tagName === 'ul');
   const listItems = contentNodes.filter(node => node.tagName === 'li');
-  assert.equal(lists.length, 10);
-  assert.equal(listItems.length, 24);
+  assert.equal(lists.length, 9);
+  assert.equal(listItems.length, 18);
   assert.ok(lists.every(list => list.children.length > 0));
   const skillCardNodes = descendants(candidatePage.get('content').children[0]);
   assert.equal(skillCardNodes.filter(node => node.tagName === 'ul').length, 5);
-  assert.equal(skillCardNodes.filter(node => node.tagName === 'li').length, 17);
+  assert.equal(skillCardNodes.filter(node => node.tagName === 'li').length, 13);
   const images = contentNodes.filter(node => node.tagName === 'img');
   assert.equal(images.length, 2);
   assert.deepEqual(images.map(image => image.attributes.src), [
@@ -246,8 +248,8 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   const credits = contentNodes.filter(node => node.tagName === 'a');
   assert.equal(credits.length, 2);
   assert.ok(credits.every(link => link.attributes.href === 'https://darktide.gameslantern.com' &&
-    link.attributes['aria-label'] === '圖片來源：Games Lantern' && link.attributes.title === '圖片來源：Games Lantern' &&
-    link.textContent === '圖片來源' && !link.attributes.rel));
+    link.attributes['aria-label'] === '圖示來源：Games Lantern' && link.attributes.title === '圖示來源：Games Lantern' &&
+    link.textContent === '圖示來源：Games Lantern' && !link.attributes.rel));
   const playerCopy = [
     candidatePage.get('package-warning'), candidatePage.get('status'), candidatePage.get('content'),
     candidatePage.get('announcement-content'), candidatePage.get('changes-content'), candidatePage.get('terms-content'),
