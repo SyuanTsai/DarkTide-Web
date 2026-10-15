@@ -114,6 +114,13 @@ jobs:
           ref: 3cf93b2e8c9acdcdc7ea5695c24e57a49c04b9b1
           path: prior-real-0-0-11
           persist-credentials: false
+      - name: Check out the exact published pending 0.0.12 candidate source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Web
+          ref: 869f03f829b377ed4779ec73f55baf8a7507d6c4
+          path: prior-real-0-0-12
+          persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -259,13 +266,29 @@ jobs:
       - name: Verify exact published 0.0.11 and retained historical data URLs
         working-directory: prior-real-0-0-11
         run: npm run w01:verify -- ../web/dist-w01
-      - name: Build current pending 0.0.12 candidate preview
+      - name: Rebuild exact published pending 0.0.12 candidate into output
+        working-directory: prior-real-0-0-12
+        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
+      - name: Retain the pinned production baseline in exact published 0.0.12 candidate
+        working-directory: prior-real-0-0-12
+        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
+      - name: Verify exact published 0.0.12 and retained historical data URLs
+        working-directory: prior-real-0-0-12
+        run: npm run w01:verify -- ../web/dist-w01
+      - name: Freeze the verified published 0.0.12 package for lifecycle tests
+        working-directory: prior-real-0-0-12
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/w01-real-r12"
+          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r12/"
+      - name: Build current pending 0.0.13 candidate preview
         working-directory: web
         run: npm run w01:build -- --candidate-preview --output dist-w01
-      - name: Retain the pinned baseline in current 0.0.12 candidate
+      - name: Retain the pinned baseline in current 0.0.13 candidate
         working-directory: web
         run: npm run w01:retain -- --baseline-root ../baseline --output dist-w01
-      - name: Verify current 0.0.12 and retained historical data URLs
+      - name: Verify current 0.0.13 and retained historical data URLs
         working-directory: web
         run: npm run w01:verify -- dist-w01
       - name: Run Web tests against pinned lifecycle packages
@@ -279,6 +302,7 @@ jobs:
           W01_PRIOR_REAL_R5_ROOT: ${{ runner.temp }}/w01-real-r5
           W01_PRIOR_REAL_R6_ROOT: ${{ runner.temp }}/w01-real-r6
           W01_PRIOR_REAL_R7_ROOT: ${{ runner.temp }}/w01-real-r7
+          W01_PRIOR_REAL_R12_ROOT: ${{ runner.temp }}/w01-real-r12
         run: npm test
       - name: Upload only the isolated W01 preview artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

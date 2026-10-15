@@ -12,6 +12,7 @@ const domainKinds = ['skills', 'blessings', 'weapons', 'terms', 'game-changes'];
 const publishedR5Root = process.env.W01_PRIOR_REAL_R5_ROOT;
 const publishedR6Root = process.env.W01_PRIOR_REAL_R6_ROOT;
 const publishedR7Root = process.env.W01_PRIOR_REAL_R7_ROOT;
+const publishedR12Root = process.env.W01_PRIOR_REAL_R12_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function withTempDirectory(callback) {
@@ -113,8 +114,8 @@ function tierSectionsFor(record, tier) {
   sections.effects = [{
     itemId: 'chainaxe-tier-display-parameter',
     parts: [
-      { kind: 'literal', text: '此階級的說明數值為 ' },
-      { kind: 'signed-percent', bindingRef: claimRef },
+      { kind: 'literal', text: '你的移動速度提高 ' },
+      { kind: 'unsigned-percent', bindingRef: claimRef },
       { kind: 'literal', text: '。' }
     ],
     claimRefs: [claimRef]
@@ -719,7 +720,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.sourceRevision, '8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d');
     assert.equal(manifest.source.manifestSha256, '625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.12');
+    assert.equal(version.game_releases[0].content_version, '0.0.13');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -733,11 +734,11 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.effects, [
       {
         itemId: 'psyker-numerical-assumptions',
-        text: '以下數值以未受其他加成或減免影響為前提。'
+        text: '以下數值不含其他加成或減免。'
       },
       {
         itemId: 'psyker-description-damage-parameter',
-        text: '顱腦崩裂的傷害提高 50%（1.5 倍）；這項增傷不會套用到所有靈能攻擊。',
+        text: '相較於顱腦爆裂，顱腦崩裂傷害提高 50%（1.5 倍）；這項加成不適用於所有靈能攻擊。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-description-display-percent',
           'darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier'
@@ -745,7 +746,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-base-hit-peril-cost',
-        text: '蓄力期間會累積反噬；攻擊造成傷害時，還會額外增加 25% 反噬。',
+        text: '顱腦崩裂蓄力時，你會累積反噬；造成傷害後再增加 25%。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
@@ -756,12 +757,12 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.conditions, [
       {
         itemId: 'psyker-normal-charge-condition',
-        text: '先蓄力再鎖定：可以先蓄力，之後再鎖定敵人；鎖定時會接續先前的蓄力進度。',
+        text: '先蓄力再鎖定：未鎖定敵人也能蓄力；鎖定後接續蓄力進度。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
         itemId: 'psyker-sticky-charge-condition',
-        text: '直接鎖定蓄力：鎖定敵人後開始蓄力。',
+        text: '直接鎖定蓄力：先鎖定敵人，再蓄力。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -769,7 +770,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-lock-on-charge-condition',
-        text: '鎖定後，即使移開準星，也不會更換目標。',
+        text: '鎖定後，移開準星也不會更換目標。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -779,21 +780,21 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.calculation, [
       {
         itemId: 'psyker-estimate-assumptions',
-        text: '以下從 0% 反噬開始，連續完成下列其中一種蓄力方式：'
+        text: '你的反噬從 0% 起算，且蓄力不中斷：'
       },
       {
         itemId: 'psyker-normal-charge-peril-estimate',
-        text: '先完成蓄力再鎖定：蓄力約 3 秒完成；蓄力 1、2、3 秒時，反噬約為 6.67%、13.33%、20%。',
+        text: '先蓄力再鎖定：約 3 秒蓄滿；1／2／3 秒時，你的反噬約 6.67%／13.33%／20%。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-normal-charge-base-time']
       },
       {
         itemId: 'psyker-sticky-charge-peril-estimate',
-        text: '直接鎖定蓄力：蓄力約 2 秒完成；蓄力 1、2 秒時，反噬約為 10%、20%。',
+        text: '直接鎖定蓄力：約 2 秒蓄滿；1／2 秒時，你的反噬約 10%／20%。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time']
       },
       {
         itemId: 'psyker-full-charge-peril-rate-estimate',
-        text: '完成蓄力後若繼續維持，每秒約再增加 9% 反噬。',
+        text: '滿蓄後繼續蓄力，你的反噬每秒約增加 9%。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -801,7 +802,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-full-charge-hit-peril-estimate',
-        text: '以上兩種方式完成蓄力後，立刻施放並造成傷害，反噬合計約 45%；若再維持蓄力 1 秒才施放並造成傷害，合計約 54%。',
+        text: '顱腦崩裂蓄滿後立即造成傷害，你的反噬約 45%；多維持 1 秒則約 54%。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time',
@@ -812,14 +813,14 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(skill.payload.detailSections.notes, [
       {
         itemId: 'psyker-empty-cast-peril-cost',
-        text: '攻擊沒有造成傷害時，不會增加額外的 25% 反噬；蓄力期間累積的反噬仍會保留。',
+        text: '顱腦崩裂未造成傷害時，你不會再累積 25% 反噬；蓄力時累積的反噬仍保留。',
         claimRefs: ['darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio']
       }
     ]);
     assert.deepEqual(skill.payload.detailSections.extra, [
       {
         itemId: 'psyker-stagger-eligible-target-condition',
-        text: '以下情形只適用於可被這次攻擊打出踉蹌的敵人：',
+        text: '以下僅適用於會被顱腦崩裂打出踉蹌的敵人：',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -827,7 +828,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-lock-on-direct-stagger-condition',
-        text: '直接鎖定蓄力：鎖定同一敵人並持續超過 1 秒，可造成一次輕微踉蹌。',
+        text: '直接鎖定：鎖定同一敵人超過 1 秒，顱腦崩裂使其輕微踉蹌一次。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -835,7 +836,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       },
       {
         itemId: 'psyker-lock-on-transition-stagger-condition',
-        text: '先蓄力再鎖定：轉為鎖定後持續超過 0.25 秒，可造成一次輕微踉蹌。',
+        text: '先蓄力再鎖定：鎖定敵人超過 0.25 秒，顱腦崩裂使其輕微踉蹌一次。',
         claimRefs: [
           'darktide:claim:psyker:brain-burst-improved-normal-charge-base-time',
           'darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time'
@@ -843,10 +844,10 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
       }
     ]);
     assert.deepEqual(blessing.payload.detailSections.effects, [
-      { itemId: 'chainaxe-tier-display-parameter', text: '移動速度加成：+20%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent'] }
+      { itemId: 'chainaxe-tier-display-parameter', text: '你的移動速度提高 20%。', claimRefs: ['darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent'] }
     ]);
     assert.deepEqual(blessing.payload.detailSections.conditions, [
-      { itemId: 'chainaxe-special-activation-condition', text: '使用武器特殊動作後生效。' }
+      { itemId: 'chainaxe-special-activation-condition', text: '使用武器特殊動作後生效，持續 2 秒。' }
     ]);
     assert.deepEqual(weapon.payload.detailSections.conditions, [
       { itemId: 'chainaxe-attack-point-table', text: '已收錄的攻擊數值：80、140。' }
@@ -992,7 +993,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.12');
+    assert.equal(currentReceipt.contentVersion, '0.0.13');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -1035,9 +1036,9 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.12 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.13 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-12', { skip: !publishedR5Root }, async () => {
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-13', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -1049,8 +1050,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-12', { sk
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.12');
-    assert.equal(currentReceipt.contentVersion, '0.0.12');
+    assert.equal(current.receipt.contentVersion, '0.0.13');
+    assert.equal(currentReceipt.contentVersion, '0.0.13');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1081,9 +1082,9 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-12', { sk
   });
 });
 
-// Scenario: the exact published 0.0.6 package is present in the 0.0.12 candidate's retained history.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.13 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
-test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-12', { skip: !publishedR6Root }, async () => {
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-13', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR6Root, outputRoot, { recursive: true });
@@ -1095,8 +1096,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.12');
-    assert.equal(currentReceipt.contentVersion, '0.0.12');
+    assert.equal(current.receipt.contentVersion, '0.0.13');
+    assert.equal(currentReceipt.contentVersion, '0.0.13');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1285,7 +1286,7 @@ test('UnitT24_blessing-tier-presentations-compile-all-options-with-tier-four-def
       assert.deepEqual(option.official.localizations['zh-TW'].segments, baseOfficial.localizations['zh-TW'].segments);
       assert.deepEqual(option.detailSections.effects, [{
         itemId: 'chainaxe-tier-display-parameter',
-        text: '此階級的說明數值為 +' + chainaxeTierPercent(tier) + '%。',
+        text: '你的移動速度提高 ' + chainaxeTierPercent(tier) + '%。',
         claimRefs: [claimId]
       }]);
       assert.equal(Object.hasOwn(option.detailSections.effects[0], 'parts'), false);
@@ -1308,6 +1309,22 @@ test('UnitT25_blessing-tier-presentations-reject-cross-tier-and-source-mismatche
         presentation.payload.tierPresentations.options[1].params.find(param => param.name === 'movement_speed').bindingRef = chainaxeTierClaimId(1);
       },
       expected: /movement_speed bindingRef does not identify its tier/
+    },
+    {
+      name: 'cross-tier detail display binding',
+      mutateAuthoring: authoring => {
+        const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+        presentation.payload.tierPresentations.options[1].detailSections.effects[0].parts[1].bindingRef = chainaxeTierClaimId(1);
+      },
+      expected: /parts\[1\]\.bindingRef does not match the selected tier/
+    },
+    {
+      name: 'missing detail display binding',
+      mutateAuthoring: authoring => {
+        const presentation = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-movement-speed');
+        delete presentation.payload.tierPresentations.options[1].detailSections.effects[0].parts[1].bindingRef;
+      },
+      expected: /parts\[1\] has missing or unsupported fields/
     },
     {
       name: 'different variant',
@@ -1381,9 +1398,9 @@ test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', asyn
   });
 });
 
-// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.12 output.
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.13 output.
 // Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
-test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-12', { skip: !publishedR7Root }, async () => {
+test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-13', { skip: !publishedR7Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     const priorReceipt = JSON.parse(await readFile(path.join(publishedR7Root, 'receipt.json'), 'utf8'));
@@ -1396,8 +1413,8 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-12', { sk
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.12');
-    assert.equal(currentReceipt.contentVersion, '0.0.12');
+    assert.equal(current.receipt.contentVersion, '0.0.13');
+    assert.equal(currentReceipt.contentVersion, '0.0.13');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1408,6 +1425,39 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-12', { sk
         await readFile(path.join(outputRoot, ...row.path.split('/'))),
         await readFile(path.join(publishedR7Root, ...row.path.split('/'))),
         `retained 0.0.7 data bytes ${row.path}`
+      );
+    }
+    await assertExactOutputInventory(outputRoot, currentReceipt.files);
+  });
+});
+
+// Scenario: the exact published 0.0.12 package is present in the 0.0.13 candidate's retained history.
+// Purpose: preserve every published 0.0.12 immutable data URL and byte while only Web-owned copy advances.
+test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-13', { skip: !publishedR12Root }, async () => {
+  await withTempDirectory(async tempRoot => {
+    const outputRoot = path.join(tempRoot, 'dist-w01');
+    const priorReceipt = JSON.parse(await readFile(path.join(publishedR12Root, 'receipt.json'), 'utf8'));
+    assert.equal(priorReceipt.contentVersion, '0.0.12');
+    assert.equal(priorReceipt.web.authoringCommit, '869f03f829b377ed4779ec73f55baf8a7507d6c4');
+    const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/'));
+    await cp(publishedR12Root, outputRoot, { recursive: true });
+
+    const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
+    const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
+    assert.equal(current.receipt.contentVersion, '0.0.13');
+    assert.equal(currentReceipt.contentVersion, '0.0.13');
+    assert.equal(currentReceipt.fixtureOnly, false);
+    assert.equal(currentReceipt.candidatePreviewOnly, true);
+    assert.equal(currentReceipt.publicationEligible, false);
+    assert.equal(currentReceipt.formalPublishAllowed, false);
+    assert.ok(priorDataRows.length > 0);
+    for (const row of priorDataRows) {
+      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.12 receipt row ${row.path}`);
+      assert.deepEqual(
+        await readFile(path.join(outputRoot, ...row.path.split('/'))),
+        await readFile(path.join(publishedR12Root, ...row.path.split('/'))),
+        `retained 0.0.12 data bytes ${row.path}`
       );
     }
     await assertExactOutputInventory(outputRoot, currentReceipt.files);

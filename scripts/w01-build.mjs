@@ -519,7 +519,7 @@ function compileDetailSections(input, label, sourceIds, sourceKindById, tierCont
         }
         const resolvedParam = tierContext.params.find(param => param.name === 'movement_speed' && param.bindingRef === claimRef);
         if (!resolvedParam) fail(itemLabel + ' has no selected tier display binding');
-        let signedPercentParts = 0;
+        let tierPercentParts = 0;
         const text = item.parts.map((part, partIndex) => {
           const partLabel = itemLabel + '.parts[' + partIndex + ']';
           assertPlainObject(part, partLabel);
@@ -531,16 +531,21 @@ function compileDetailSections(input, label, sourceIds, sourceKindById, tierCont
             }
             return part.text;
           }
-          if (part.kind === 'signed-percent') {
+          if (part.kind === 'signed-percent' || part.kind === 'unsigned-percent') {
             assertExactKeys(part, ['kind', 'bindingRef'], partLabel);
             requireString(part.bindingRef, partLabel + '.bindingRef');
             if (part.bindingRef !== claimRef) fail(partLabel + '.bindingRef does not match the selected tier');
-            signedPercentParts += 1;
+            tierPercentParts += 1;
+            if (part.kind === 'unsigned-percent') {
+              return resolvedParam.resolvedValue.startsWith('+')
+                ? resolvedParam.resolvedValue.slice(1)
+                : resolvedParam.resolvedValue;
+            }
             return resolvedParam.resolvedValue;
           }
           fail(partLabel + '.kind is unsupported');
         }).join('');
-        if (signedPercentParts !== 1) fail(itemLabel + '.parts must contain exactly one selected tier percentage');
+        if (tierPercentParts !== 1) fail(itemLabel + '.parts must contain exactly one selected tier percentage');
         tierBoundItemCount += 1;
         return { itemId: item.itemId, text, claimRefs: [claimRef] };
       }
@@ -576,7 +581,7 @@ function normalizeTierSectionBindings(sections, tierContext) {
         item.claimRefs = ['$selected-tier-claim'];
       }
       for (const part of item.parts ?? []) {
-        if (part.kind === 'signed-percent' && part.bindingRef === tierContext.claimRef) part.bindingRef = '$selected-tier-claim';
+        if ((part.kind === 'signed-percent' || part.kind === 'unsigned-percent') && part.bindingRef === tierContext.claimRef) part.bindingRef = '$selected-tier-claim';
       }
     }
   }

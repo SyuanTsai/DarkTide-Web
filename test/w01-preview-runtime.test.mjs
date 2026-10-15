@@ -158,8 +158,8 @@ async function makeTieredCandidateInput(destination) {
     sections.effects = [{
       itemId: 'chainaxe-tier-display-parameter',
       parts: [
-        { kind: 'literal', text: '此階級的說明數值為 ' },
-        { kind: 'signed-percent', bindingRef: claimRef },
+        { kind: 'literal', text: '你的移動速度提高 ' },
+        { kind: 'unsigned-percent', bindingRef: claimRef },
         { kind: 'literal', text: '。' }
       ],
       claimRefs: [claimRef]
@@ -206,23 +206,23 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
-  assert.match(candidateText, /以下數值以未受其他加成或減免影響為前提。/);
-  assert.match(candidateText, /顱腦崩裂的傷害提高 50%（1\.5 倍）；這項增傷不會套用到所有靈能攻擊。/);
-  assert.match(candidateText, /蓄力期間會累積反噬；攻擊造成傷害時，還會額外增加 25% 反噬。/);
-  assert.match(candidateText, /先蓄力再鎖定：可以先蓄力，之後再鎖定敵人；鎖定時會接續先前的蓄力進度。/);
-  assert.match(candidateText, /直接鎖定蓄力：鎖定敵人後開始蓄力。/);
-  assert.match(candidateText, /鎖定後，即使移開準星，也不會更換目標。/);
-  assert.match(candidateText, /以下從 0% 反噬開始，連續完成下列其中一種蓄力方式：/);
-  assert.match(candidateText, /先完成蓄力再鎖定：蓄力約 3 秒完成；蓄力 1、2、3 秒時，反噬約為 6\.67%、13\.33%、20%。/);
-  assert.match(candidateText, /直接鎖定蓄力：蓄力約 2 秒完成；蓄力 1、2 秒時，反噬約為 10%、20%。/);
-  assert.match(candidateText, /完成蓄力後若繼續維持，每秒約再增加 9% 反噬。/);
-  assert.match(candidateText, /以上兩種方式完成蓄力後，立刻施放並造成傷害，反噬合計約 45%；若再維持蓄力 1 秒才施放並造成傷害，合計約 54%。/);
-  assert.match(candidateText, /攻擊沒有造成傷害時，不會增加額外的 25% 反噬；蓄力期間累積的反噬仍會保留。/);
-  assert.match(candidateText, /以下情形只適用於可被這次攻擊打出踉蹌的敵人：/);
-  assert.match(candidateText, /直接鎖定蓄力：鎖定同一敵人並持續超過 1 秒，可造成一次輕微踉蹌。/);
-  assert.match(candidateText, /先蓄力再鎖定：轉為鎖定後持續超過 0\.25 秒，可造成一次輕微踉蹌。/);
+  assert.match(candidateText, /以下數值不含其他加成或減免。/);
+  assert.match(candidateText, /相較於顱腦爆裂，顱腦崩裂傷害提高 50%（1\.5 倍）；這項加成不適用於所有靈能攻擊。/);
+  assert.match(candidateText, /顱腦崩裂蓄力時，你會累積反噬；造成傷害後再增加 25%。/);
+  assert.match(candidateText, /先蓄力再鎖定：未鎖定敵人也能蓄力；鎖定後接續蓄力進度。/);
+  assert.match(candidateText, /直接鎖定蓄力：先鎖定敵人，再蓄力。/);
+  assert.match(candidateText, /鎖定後，移開準星也不會更換目標。/);
+  assert.match(candidateText, /你的反噬從 0% 起算，且蓄力不中斷：/);
+  assert.match(candidateText, /先蓄力再鎖定：約 3 秒蓄滿；1／2／3 秒時，你的反噬約 6\.67%／13\.33%／20%。/);
+  assert.match(candidateText, /直接鎖定蓄力：約 2 秒蓄滿；1／2 秒時，你的反噬約 10%／20%。/);
+  assert.match(candidateText, /滿蓄後繼續蓄力，你的反噬每秒約增加 9%。/);
+  assert.match(candidateText, /顱腦崩裂蓄滿後立即造成傷害，你的反噬約 45%；多維持 1 秒則約 54%。/);
+  assert.match(candidateText, /顱腦崩裂未造成傷害時，你不會再累積 25% 反噬；蓄力時累積的反噬仍保留。/);
+  assert.match(candidateText, /以下僅適用於會被顱腦崩裂打出踉蹌的敵人：/);
+  assert.match(candidateText, /直接鎖定：鎖定同一敵人超過 1 秒，顱腦崩裂使其輕微踉蹌一次。/);
+  assert.match(candidateText, /先蓄力再鎖定：鎖定敵人超過 0\.25 秒，顱腦崩裂使其輕微踉蹌一次。/);
   assert.match(candidateText, /提速/);
-  assert.match(candidateText, /移動速度加成：\+20%。/);
+  assert.match(candidateText, /你的移動速度提高 20%。/);
   assert.match(candidateText, /已收錄的攻擊數值：80、140。/);
   assert.match(candidateText, /已收錄的護甲修正值：1\.035、1\.965。/);
   assert.match(candidateText, /其他攻擊資料尚未補齊。/);
@@ -371,14 +371,14 @@ test('UnitT11_runtime-selects-only-source-verified-tier-presentations', async t 
   assert.equal(selector.value, '4');
   assert.deepEqual(selector.children.map(option => option.value), ['1', '2', '3', '4']);
   assert.match(renderedText(blessingCard), /武器特殊啟動後\+20%移動速度，持續2秒。/);
-  assert.match(renderedText(blessingCard), /此階級的說明數值為 \+20%。/);
+  assert.match(renderedText(blessingCard), /你的移動速度提高 20%。/);
 
   for (const tier of [1, 2, 3, 4]) {
     selector.value = String(tier);
     page.dispatchWithGlobals(selector, { type: 'change' });
     const cardText = renderedText(blessingCard);
     assert.match(cardText, new RegExp('武器特殊啟動後\\+' + tierPercent(tier) + '%移動速度，持續2秒。'));
-    assert.match(cardText, new RegExp('此階級的說明數值為 \\+' + tierPercent(tier) + '%。'));
+    assert.match(cardText, new RegExp('你的移動速度提高 ' + tierPercent(tier) + '%。'));
     assert.doesNotMatch(cardText, /Movement Speed|Weapon Special Activation/);
   }
 
@@ -439,11 +439,11 @@ test('UnitT12_runtime-accepts-zero-tier-display-value', async t => {
   const selector = blessing.children.find(child => child.tagName === 'label').children.find(child => child.tagName === 'select');
   assert.equal(selector.value, '4');
   assert.match(renderedText(blessing), /武器特殊啟動後0%移動速度，持續2秒。/);
-  assert.match(renderedText(blessing), /此階級的說明數值為 0%。/);
+  assert.match(renderedText(blessing), /你的移動速度提高 0%。/);
   selector.value = '1';
   page.dispatchWithGlobals(selector, { type: 'change' });
-  assert.match(renderedText(blessing), /此階級的說明數值為 \+17%。/);
+  assert.match(renderedText(blessing), /你的移動速度提高 17%。/);
   selector.value = '4';
   page.dispatchWithGlobals(selector, { type: 'change' });
-  assert.match(renderedText(blessing), /此階級的說明數值為 0%。/);
+  assert.match(renderedText(blessing), /你的移動速度提高 0%。/);
 });
