@@ -187,6 +187,39 @@ async function readOfficialPresentations(buildRoot, receipt) {
     .filter(record => record.owner === 'web' && record.kind === 'presentation');
 }
 
+async function assertNewMkXIIChainaxePresentation(buildRoot, receipt) {
+  const [weaponsDomain, technical] = await Promise.all([
+    readFile(path.join(buildRoot, 'data', receipt.dataRevision, 'weapons.json'), 'utf8').then(JSON.parse),
+    readFile(path.join(repoRoot, 'content', 'w01', 'source', 'technical.json'), 'utf8').then(JSON.parse)
+  ]);
+  const presentation = weaponsDomain.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m2');
+  assert.ok(presentation, '0.0.16 adds the Mk XII chainaxe presentation');
+  const rows = presentation.payload.weaponView.statSections.flatMap(section => section.rows);
+  assert.equal(rows.length, 19, 'the Mk XII presentation contains all 19 comparison rows');
+
+  const sourceRecords = new Map(technical.records.map(record => [record.recordId, record]));
+  const claimRefs = rows.flatMap(row => row.claimRefs);
+  assert.equal(claimRefs.length, 38, 'each of the 19 rows is bound to its 60% and 80% Source claims');
+  assert.equal(new Set(claimRefs).size, 38, 'each displayed Mk XII value resolves to a distinct Source claim');
+  for (const row of rows) {
+    assert.equal(row.values.length, 2, `two comparison values are present for ${row.label}`);
+    assert.deepEqual(row.claimRefs, row.values.map(value => value.claimRef), `row claim refs match its values for ${row.label}`);
+    for (const [index, value] of row.values.entries()) {
+      const claim = sourceRecords.get(value.claimRef);
+      assert.ok(claim, `Source claim exists: ${value.claimRef}`);
+      assert.equal(claim.owner, 'source', `Source ownership for ${value.claimRef}`);
+      assert.equal(claim.kind, 'claim', `claim kind for ${value.claimRef}`);
+      assert.equal(claim.payload.context.weaponRef, 'darktide:weapon:chainaxe:p1-m2', `Mk XII binding for ${value.claimRef}`);
+      assert.deepEqual(claim.payload.context.comparisonStat, {
+        status: 'known', decimal: index === 0 ? '60' : '80', unit: 'percent'
+      }, `comparison input for ${value.claimRef}`);
+      assert.deepEqual(value.value, claim.payload.value, `raw Source value for ${value.claimRef}`);
+      assert.deepEqual(value.displayValue, claim.payload.displayValue, `display Source value for ${value.claimRef}`);
+      assert.equal(value.displayFormat, claim.payload.displayFormat, `display format for ${value.claimRef}`);
+    }
+  }
+}
+
 function officialSourceIdentity(official) {
   const keys = ['sourceRef', 'sourceLocale', 'resource', 'sourceHash', 'key', 'occurrence', 'sourceText', 'sourceTextSha256', 'segments'];
   const pick = entry => Object.fromEntries(keys.map(key => [key, entry[key]]));
@@ -1041,7 +1074,7 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
 
 // Scenario: the exact published 0.0.5 package is present in the 0.0.16 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { skip: !publishedR5Root }, async () => {
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-16', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -1071,7 +1104,12 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { sk
     const previousPresentations = await readOfficialPresentations(publishedR5Root, priorReceipt);
     const currentPresentations = await readOfficialPresentations(outputRoot, currentReceipt);
     assert.equal(previousPresentations.length, 3);
-    assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
+    assert.deepEqual(
+      currentPresentations.map(record => record.recordId),
+      [...previousPresentations.map(record => record.recordId), 'web:presentation:chainaxe-p1-m2'],
+      'the three published presentation identities retain their order, followed by the new Mk XII presentation'
+    );
+    await assertNewMkXIIChainaxePresentation(outputRoot, currentReceipt);
     for (const previous of previousPresentations) {
       const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
       assert.deepEqual(officialSourceIdentity(currentPresentation.payload.official), officialSourceIdentity(previous.payload.official), `unchanged official source identity ${previous.recordId}`);
@@ -1087,7 +1125,7 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { sk
 
 // Scenario: the exact published 0.0.6 package is present in the 0.0.16 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
-test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-15', { skip: !publishedR6Root }, async () => {
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-16', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR6Root, outputRoot, { recursive: true });
@@ -1117,7 +1155,12 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const previousPresentations = await readOfficialPresentations(publishedR6Root, priorReceipt);
     const currentPresentations = await readOfficialPresentations(outputRoot, currentReceipt);
     assert.equal(previousPresentations.length, 3);
-    assert.deepEqual(currentPresentations.map(record => record.recordId).sort(), previousPresentations.map(record => record.recordId).sort());
+    assert.deepEqual(
+      currentPresentations.map(record => record.recordId),
+      [...previousPresentations.map(record => record.recordId), 'web:presentation:chainaxe-p1-m2'],
+      'the three published presentation identities retain their order, followed by the new Mk XII presentation'
+    );
+    await assertNewMkXIIChainaxePresentation(outputRoot, currentReceipt);
     for (const previous of previousPresentations) {
       const currentPresentation = currentPresentations.find(record => record.recordId === previous.recordId);
       assert.deepEqual(officialSourceIdentity(currentPresentation.payload.official), officialSourceIdentity(previous.payload.official), `unchanged official source identity ${previous.recordId}`);
