@@ -59,6 +59,7 @@ h2 { margin-top: 0; font-size: 1.35rem; }
 main { display: grid; gap: 1.4rem; padding-bottom: 2.5rem; }
 main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5rem; background: #1c2123; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; }
+.cards > .card:has(.chainaxe-view) { grid-column: 1 / -1; }
 .card, .term, .announcement-card { padding: 1rem; border-radius: .4rem; background: #252c2e; }
 .card h3, .term h3, .announcement-card h3, .game-change h3 { margin-top: 0; color: #e5c18d; }
 .official-label, .errata-label { color: #d8aa68; font-weight: 700; }
