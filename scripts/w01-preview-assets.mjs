@@ -74,6 +74,10 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 .detail-section h4 { margin: .9rem 0 .35rem; color: #d8aa68; }
 .detail-section ul { margin: 0; padding-inline-start: 1.35rem; }
 .detail-section li { margin-block: .25rem; white-space: pre-wrap; }
+.chainaxe-mark-selector { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; min-width: 0; }
+.chainaxe-mark-button { min-width: 4.5rem; min-height: 2.75rem; padding: .5rem .8rem; color: #f3eee7; border: 1px solid #747d7e; border-radius: .35rem; background: #141719; font: inherit; cursor: pointer; }
+.chainaxe-mark-button[aria-pressed="true"] { color: #141719; border-color: #e5c18d; background: #e5c18d; font-weight: 700; }
+.chainaxe-mark-button:focus-visible { outline: 2px solid #e5c18d; outline-offset: 2px; }
 .chainaxe-view { margin-block: 1rem; padding-top: .8rem; border-top: 1px solid #414749; }
 .chainaxe-view h4, .chainaxe-stat-section h5 { margin: .6rem 0 .35rem; color: #d8aa68; }
 .chainaxe-attack-modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
@@ -299,7 +303,7 @@ function formatChainaxeDisplay(value, omitStaminaUnit = false) {
   return decimal + suffix;
 }
 
-function renderChainaxeWeaponView(view, parent) {
+function validateChainaxeWeaponView(view) {
   const exactKeys = (value, keys) => value && Object.keys(value).sort().join(",") === [...keys].sort().join(",");
   if (!exactKeys(view, ["markLabel", "attackHeading", "comparisonHeading", "note", "attackModes", "statSections"]) ||
       !["Mk IV", "Mk XII"].includes(view.markLabel) || !Array.isArray(view.attackModes) || !Array.isArray(view.statSections)) {
@@ -331,7 +335,10 @@ function renderChainaxeWeaponView(view, parent) {
   const banned = /smiter|linesman|tank|resistant|disgustingly_resilient|chainaxe_|Source|claim|ratio|point|review|provenance|coverage|status/i;
   const viewText = [view.attackHeading, view.comparisonHeading, view.note, ...view.statSections.flatMap(section => [section.label, ...section.rows.map(row => row.label)])].join(" ");
   if (banned.test(viewText)) throw new Error("鏈斧玩家文字含有不支援的欄位名稱。");
+}
 
+function renderChainaxeWeaponView(view, parent) {
+  validateChainaxeWeaponView(view);
   const section = document.createElement("section");
   section.className = "chainaxe-view";
   appendText(section, "h4", "", view.markLabel);
@@ -380,6 +387,69 @@ function renderChainaxeWeaponView(view, parent) {
   }
   appendText(section, "p", "chainaxe-view-note", view.note);
   parent.append(section);
+}
+
+function resolveChainaxeWeaponMarks(records, recordsById) {
+  const expected = [
+    { presentationId: "web:presentation:chainaxe-p1-m1", entityRef: "darktide:weapon:chainaxe:p1-m1", markId: "chainaxe_p1_m1", markLabel: "Mk IV" },
+    { presentationId: "web:presentation:chainaxe-p1-m2", entityRef: "darktide:weapon:chainaxe:p1-m2", markId: "chainaxe_p1_m2", markLabel: "Mk XII" }
+  ];
+  if (!Array.isArray(records) || records.length !== expected.length) throw new Error("鏈斧型號資料不完整。");
+  const byMark = new Map();
+  for (const record of records) {
+    const match = expected.find(mark => mark.presentationId === record.recordId || mark.entityRef === record.entityRef);
+    const weapon = recordsById.get(record.entityRef);
+    if (!match || record.recordId !== match.presentationId || record.entityRef !== match.entityRef ||
+        record.owner !== "web" || record.kind !== "presentation" || record.locale !== "zh-TW" ||
+        weapon?.owner !== "source" || weapon.kind !== "weapon" || weapon.recordId !== match.entityRef ||
+        weapon.payload?.familyId !== "chainaxe_p1" || weapon.payload.markId !== match.markId ||
+        record.payload?.weaponView?.markLabel !== match.markLabel || typeof record.payload?.name !== "string" ||
+        record.payload.name.length === 0 || byMark.has(match.markLabel)) {
+      throw new Error("鏈斧型號與來源武器資料不一致。");
+    }
+    validateChainaxeWeaponView(record.payload.weaponView);
+    byMark.set(match.markLabel, record);
+  }
+  const ordered = expected.map(mark => byMark.get(mark.markLabel));
+  if (ordered.some(record => !record) || ordered[0].payload.name !== ordered[1].payload.name) {
+    throw new Error("鏈斧型號資料不完整。");
+  }
+  return ordered;
+}
+
+function renderChainaxeWeaponSelector(records, parent) {
+  const card = document.createElement("article");
+  card.className = "card";
+  card.setAttribute("aria-labelledby", "chainaxe-p1-title");
+  appendText(card, "h3", "", records[0].payload.name).id = "chainaxe-p1-title";
+  const selector = document.createElement("div");
+  selector.className = "chainaxe-mark-selector";
+  selector.setAttribute("role", "group");
+  selector.setAttribute("aria-label", "選擇型號");
+  const panel = document.createElement("div");
+  panel.className = "presentation-body";
+  const buttonsByRecord = new Map();
+  for (const record of records) {
+    const button = document.createElement("button");
+    button.className = "chainaxe-mark-button";
+    button.setAttribute("type", "button");
+    button.setAttribute("aria-pressed", "false");
+    appendText(button, "span", "", record.payload.weaponView.markLabel);
+    buttonsByRecord.set(record, button);
+    selector.append(button);
+  }
+  const selectMark = record => {
+    for (const [candidate, button] of buttonsByRecord) {
+      button.setAttribute("aria-pressed", candidate === record ? "true" : "false");
+    }
+    panel.replaceChildren();
+    renderChainaxeWeaponView(record.payload.weaponView, panel);
+  };
+  for (const [record, button] of buttonsByRecord) button.addEventListener("click", () => selectMark(record));
+  card.append(selector);
+  card.append(panel);
+  selectMark(records[0]);
+  parent.append(card);
 }
 
 function renderPresentation(record, parent, termsById) {
@@ -568,7 +638,23 @@ async function loadPreview() {
       termsContent.append(article);
     }
     const content = byId("content");
-    for (const record of presentationRecords) renderPresentation(record, content, termsById);
+    const chainaxeCandidates = presentationRecords.filter(record =>
+      record.recordId === "web:presentation:chainaxe-p1-m1" || record.recordId === "web:presentation:chainaxe-p1-m2" || record.entityRef?.startsWith("darktide:weapon:chainaxe:p1-"));
+    const chainaxeMarks = !isFixturePackage || chainaxeCandidates.length > 0
+      ? resolveChainaxeWeaponMarks(chainaxeCandidates, recordsById)
+      : [];
+    let chainaxeCardRendered = false;
+    for (const record of presentationRecords) {
+      if (chainaxeMarks.includes(record)) {
+        if (!chainaxeCardRendered) {
+          renderChainaxeWeaponSelector(chainaxeMarks, content);
+          chainaxeCardRendered = true;
+        }
+      } else {
+        renderPresentation(record, content, termsById);
+      }
+    }
+    if (chainaxeMarks.length > 0 && !chainaxeCardRendered) throw new Error("鏈斧型號資料不完整。");
 
     const changes = domains.get("game-changes").records.filter(record => record.kind === "game-change");
     const changesContent = byId("changes-content");

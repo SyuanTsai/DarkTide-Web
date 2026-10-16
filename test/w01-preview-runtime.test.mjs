@@ -14,6 +14,27 @@ const tierClaimId = tier => 'darktide:claim:chainaxe:p1-movement-speed-on-activa
 const tierPercent = tier => String(16 + tier);
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
+async function mutatePublishedDomain(outputRoot, kind, mutate) {
+  const versionPath = path.join(outputRoot, 'version.json');
+  const version = JSON.parse(await readFile(versionPath, 'utf8'));
+  const release = version.game_releases[0];
+  const manifestPath = path.join(outputRoot, release.manifest_path.slice(1).split('/').join(path.sep));
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const file = manifest.files.find(entry => entry.kind === kind);
+  assert.ok(file, 'the published package contains its ' + kind + ' domain');
+  const domainPath = path.join(outputRoot, new URL(file.path, new URL(release.manifest_path, 'http://w01.test')).pathname.slice(1).split('/').join(path.sep));
+  const domain = JSON.parse(await readFile(domainPath, 'utf8'));
+  mutate(domain);
+  const domainBytes = jsonBytes(domain);
+  await writeFile(domainPath, domainBytes);
+  file.sha256 = sha256(domainBytes);
+  file.sizeBytes = domainBytes.byteLength;
+  const manifestBytes = jsonBytes(manifest);
+  await writeFile(manifestPath, manifestBytes);
+  release.manifest_sha256 = sha256(manifestBytes);
+  await writeFile(versionPath, jsonBytes(version));
+}
+
 async function copyInputRoot(destination, fixture) {
   const source = fixture ? path.join(repoRoot, 'test', 'fixtures', 'w01') : repoRoot;
   await mkdir(path.join(destination, 'content'), { recursive: true });
@@ -203,7 +224,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(candidatePage.get('status').dataset.state, undefined);
   assert.equal(candidatePage.get('status').textContent, '資料已載入，內容仍待審核。');
   assert.equal(candidatePage.get('package-warning').textContent, '說明文字與遊戲版本尚未核對，內容仍待審核。');
-  assert.equal(candidatePage.get('content').children.length, 4);
+  assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
   assert.match(candidateText, /以下數值不含其他加成或減免。/);
@@ -230,7 +251,6 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /輕攻擊第一個目標攻擊威力60%：113\.00 → 80%：119\.00/);
   assert.match(candidateText, /輕攻擊對防彈護甲的敵人傷害倍率60%：160\.23% → 80%：176\.04%/);
   assert.match(candidateText, /對不屈的敵人傷害倍率/);
-  assert.match(candidateText, /對被感染的敵人傷害倍率/);
   assert.match(candidateText, /衝刺體力消耗60%：0\.97 耐力／秒 → 80%：0\.93 耐力／秒/);
   assert.match(candidateText, /耐力60%：\+4\.00 → 80%：\+4\.00/);
   assert.match(candidateText, /推擊耐力消耗60%：1\.80 耐力 → 80%：1\.40 耐力/);
@@ -250,16 +270,30 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
     return [node, ...node.children.flatMap(child => descendants(child, node))];
   };
   const contentNodes = descendants(candidatePage.get('content'));
+  const weaponCards = contentNodes.filter(node => node.className === 'card' &&
+    descendants(node).some(child => child.className === 'chainaxe-mark-selector'));
+  assert.equal(weaponCards.length, 1, 'both marks are presented in one weapon card');
+  const weaponCard = weaponCards[0];
+  const markButtons = descendants(weaponCard).filter(node => node.className === 'chainaxe-mark-button');
+  assert.deepEqual(markButtons.map(renderedText), ['Mk IV', 'Mk XII']);
+  assert.deepEqual(markButtons.map(button => button.attributes['aria-pressed']), ['true', 'false']);
+  assert.equal(descendants(weaponCard).filter(node => node.tagName === 'h3').length, 1);
+  assert.equal((renderedText(weaponCard).match(/突擊鏈斧/g) ?? []).length, 1, 'the type name appears once');
+  assert.equal(descendants(weaponCard).filter(node => node.className === 'chainaxe-view').length, 1,
+    'only the default Mk IV panel is rendered initially');
+  assert.match(renderedText(weaponCard), /Mk IV/);
+  assert.doesNotMatch(renderedText(weaponCard), /118\.50|125\.50|166\.00|178\.00|對被感染的敵人傷害倍率/,
+    'Mk XII content is available only after selecting its button');
   const lists = contentNodes.filter(node => node.tagName === 'ul');
   const listItems = contentNodes.filter(node => node.tagName === 'li');
-  assert.equal(lists.length, 17);
-  assert.equal(listItems.length, 55);
+  assert.equal(lists.length, 12);
+  assert.equal(listItems.length, 36);
   assert.ok(lists.every(list => list.children.length > 0));
   const skillCardNodes = descendants(candidatePage.get('content').children[0]);
   assert.equal(skillCardNodes.filter(node => node.tagName === 'ul').length, 5);
   assert.equal(skillCardNodes.filter(node => node.tagName === 'li').length, 15);
   const weaponViews = contentNodes.filter(node => node.className === 'chainaxe-view');
-  assert.equal(weaponViews.length, 2);
+  assert.equal(weaponViews.length, 1);
   for (const view of weaponViews) {
     let card = parentByNode.get(view);
     while (card && card.className !== 'card') card = parentByNode.get(card);
@@ -268,7 +302,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
     assert.doesNotMatch(cardText, /官方原句（忠實翻譯）|繁體中文官方原文（待審）/);
     assert.equal((cardText.match(/突擊鏈斧/g) ?? []).length, 1, 'the official weapon name appears once as the card title');
   }
-  assert.equal(contentNodes.filter(node => node.className === 'chainaxe-stat-row').length, 38);
+  assert.equal(contentNodes.filter(node => node.className === 'chainaxe-stat-row').length, 19);
   const images = contentNodes.filter(node => node.tagName === 'img');
   assert.equal(images.length, 2);
   assert.deepEqual(images.map(image => image.attributes.src), [
@@ -307,6 +341,145 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(wrongFixturePage.get('status').textContent, '預覽公告狀態不符。');
 });
 
+// Scenario: the generated pending-preview package contains Mk IV and Mk XII chainaxe presentations from one Source weapon family.
+// Purpose: keep one accessible type card, show each mark's own full attack and 19-row stat data, and discard the previous panel on selection.
+test('UnitT05_runtime-switches-one-chainaxe-card-between-mark-specific-attacks-and-stats', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-chainaxe-switch-'));
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  const candidateRepo = path.join(tempRoot, 'candidate-repo');
+  const candidateOutput = path.join(tempRoot, 'candidate-output');
+  await copyInputRoot(candidateRepo, false);
+  await buildW01({ repoRoot: candidateRepo, outputRoot: candidateOutput, mode: 'candidate-preview' });
+  const page = await runPreviewModule(candidateOutput);
+
+  const version = JSON.parse(await readFile(path.join(candidateOutput, 'version.json'), 'utf8'));
+  const release = version.game_releases[0];
+  const manifestRelativePath = release.manifest_path.slice(1).split('/').join(path.sep);
+  const manifest = JSON.parse(await readFile(path.join(candidateOutput, manifestRelativePath), 'utf8'));
+  const weaponsFile = manifest.files.find(file => file.kind === 'weapons');
+  assert.ok(weaponsFile, 'the generated package contains its weapons domain');
+  const weaponsUrl = new URL(weaponsFile.path, new URL(release.manifest_path, 'http://w01.test'));
+  const weaponsRelativePath = weaponsUrl.pathname.slice(1).split('/').join(path.sep);
+  const weapons = JSON.parse(await readFile(path.join(candidateOutput, weaponsRelativePath), 'utf8'));
+  const presentations = new Map(weapons.records
+    .filter(record => record.owner === 'web' && record.kind === 'presentation' && record.payload.weaponView)
+    .map(record => [record.payload.weaponView.markLabel, record]));
+  assert.deepEqual([...presentations.keys()].sort(), ['Mk IV', 'Mk XII']);
+
+  const descendants = node => [node, ...node.children.flatMap(descendants)];
+  const contentNodes = descendants(page.get('content'));
+  const weaponCards = contentNodes.filter(node => node.className === 'card' &&
+    descendants(node).some(child => child.className === 'chainaxe-mark-selector'));
+  assert.equal(weaponCards.length, 1, 'the two marks share one weapon card');
+  const weaponCard = weaponCards[0];
+  const title = descendants(weaponCard).find(node => node.tagName === 'h3');
+  assert.equal(title.textContent, '突擊鏈斧');
+  const selectors = descendants(weaponCard).filter(node => node.className === 'chainaxe-mark-selector');
+  assert.equal(selectors.length, 1);
+  assert.equal(selectors[0].attributes.role, 'group');
+  assert.equal(selectors[0].attributes['aria-label'], '選擇型號');
+  const buttons = descendants(selectors[0]).filter(node => node.className === 'chainaxe-mark-button');
+  assert.deepEqual(buttons.map(node => renderedText(node)), ['Mk IV', 'Mk XII']);
+  assert.ok(buttons.every(button => button.attributes.type === 'button'));
+  assert.equal(buttons[0].attributes['aria-pressed'], 'true', 'Mk IV is selected by default');
+  assert.equal(buttons[1].attributes['aria-pressed'], 'false');
+
+  const expectedSegments = {
+    'Mk IV': [
+      { label: '輕攻擊', segments: ['第 1 段・單體', '第 2 段・單體', '第 3 段・單體', '第 4 段・單體'] },
+      { label: '重攻擊', segments: ['第 1 段・群體（順劈）', '第 2 段・群體（順劈）'] }
+    ],
+    'Mk XII': [
+      { label: '輕攻擊', segments: ['第 1 段・群體（順劈）', '第 2 段・群體（順劈）'] },
+      { label: '重攻擊', segments: ['第 1 段・單體', '第 2 段・單體'] }
+    ]
+  };
+  const assertSelectedMark = markLabel => {
+    const viewNodes = descendants(weaponCard).filter(node => node.className === 'chainaxe-view');
+    assert.equal(viewNodes.length, 1, 'only the selected mark panel is present');
+    const viewNode = viewNodes[0];
+    const headings = descendants(viewNode).filter(node => node.tagName === 'h4');
+    assert.ok(headings.some(node => node.textContent === markLabel));
+
+    const modes = descendants(viewNode).filter(node => node.className === 'chainaxe-attack-mode');
+    const renderedModes = modes.map(mode => ({
+      label: descendants(mode).find(node => node.tagName === 'h5').textContent,
+      segments: descendants(mode).filter(node => node.className === 'chainaxe-attack-segment').map(renderedText)
+    }));
+    assert.deepEqual(renderedModes, expectedSegments[markLabel]);
+
+    const presentation = presentations.get(markLabel);
+    const expectedSections = presentation.payload.weaponView.statSections;
+    const sections = descendants(viewNode).filter(node => node.className === 'chainaxe-stat-section');
+    assert.equal(sections.length, 5, 'all five stat families are present');
+    assert.deepEqual(sections.map(section => descendants(section).find(node => node.tagName === 'h5').textContent),
+      expectedSections.map(section => section.label));
+    const expectedRows = expectedSections.flatMap(section => section.rows);
+    const rows = descendants(viewNode).filter(node => node.className === 'chainaxe-stat-row');
+    assert.equal(rows.length, 19, 'the selected mark keeps all 19 stat rows');
+    assert.equal(rows.length, expectedRows.length);
+    rows.forEach((rowNode, index) => {
+      const rowParts = descendants(rowNode);
+      assert.equal(rowParts.find(node => node.className === 'chainaxe-stat-label').textContent, expectedRows[index].label);
+      const valueText = rowParts.find(node => node.className === 'chainaxe-stat-value').textContent;
+      assert.match(valueText, /60%：.+→ 80%：.+/);
+      for (const value of expectedRows[index].values) {
+        assert.ok(valueText.includes(value.displayValue.decimal), 'each comparison value comes from the selected mark row');
+      }
+    });
+    const note = descendants(viewNode).find(node => node.className === 'chainaxe-view-note');
+    assert.equal(note.textContent, presentation.payload.weaponView.note);
+    return note;
+  };
+
+  const mkIvNote = assertSelectedMark('Mk IV');
+  const mkIvText = renderedText(weaponCard);
+  assert.match(mkIvText, /輕攻擊第一個目標攻擊威力60%：113\.00 → 80%：119\.00/);
+  assert.match(mkIvText, /重攻擊第一個目標攻擊威力60%：232\.50 → 80%：247\.50/);
+  assert.match(mkIvText, /一般輕攻擊末段鋸擊威力/);
+  assert.doesNotMatch(mkIvText, /對被感染的敵人傷害倍率/);
+
+  page.dispatchWithGlobals(buttons[1], { type: 'click' });
+  assert.equal(buttons[0].attributes['aria-pressed'], 'false');
+  assert.equal(buttons[1].attributes['aria-pressed'], 'true');
+  const mkXiiNote = assertSelectedMark('Mk XII');
+  assert.notEqual(mkXiiNote, mkIvNote, 'switching replaces the entire mark panel, including its note');
+  const mkXiiText = renderedText(weaponCard);
+  assert.match(mkXiiText, /輕攻擊第一個目標攻擊威力60%：118\.50 → 80%：125\.50/);
+  assert.match(mkXiiText, /重攻擊第一個目標攻擊威力60%：166\.00 → 80%：178\.00/);
+  assert.match(mkXiiText, /對被感染的敵人傷害倍率/);
+  assert.doesNotMatch(mkXiiText, /輕攻擊普通動作末段鋸擊威力|113\.00|119\.00|232\.50|247\.50/);
+  assert.equal(descendants(weaponCard).some(node => node.tagName === 'img'), false,
+    'the type selector does not attach a mark-specific weapon image');
+
+  page.dispatchWithGlobals(buttons[0], { type: 'click' });
+  assert.equal(buttons[0].attributes['aria-pressed'], 'true');
+  assert.equal(buttons[1].attributes['aria-pressed'], 'false');
+  assertSelectedMark('Mk IV');
+});
+
+// Scenario: a hash-valid package contains a malformed non-default chainaxe mark.
+// Purpose: reject both marks during initial load instead of exposing an invalid mark only after selection.
+test('UnitT06_runtime-validates-non-default-chainaxe-view-before-rendering', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'darktide-w01-chainaxe-invalid-mark-'));
+  t.after(async () => rm(tempRoot, { recursive: true, force: true }));
+
+  const candidateRepo = path.join(tempRoot, 'candidate-repo');
+  const candidateOutput = path.join(tempRoot, 'candidate-output');
+  await copyInputRoot(candidateRepo, false);
+  await buildW01({ repoRoot: candidateRepo, outputRoot: candidateOutput, mode: 'candidate-preview' });
+  await mutatePublishedDomain(candidateOutput, 'weapons', domain => {
+    const mkXii = domain.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m2');
+    assert.ok(mkXii, 'the generated weapons domain contains Mk XII');
+    mkXii.payload.weaponView.attackModes[0].segments.pop();
+  });
+
+  const page = await runPreviewModule(candidateOutput);
+  assert.equal(page.get('status').dataset.state, 'error');
+  assert.equal(page.get('status').textContent, '鏈斧攻擊段定位資料無效。');
+  assert.equal(page.get('content').children.length, 0, 'no presentation becomes visible from an invalid package');
+});
 // Scenario: all five domain responses are held by a barrier while the generated runtime starts loading.
 // Purpose: prove the runtime starts every request before any domain response arrives, and still renders nothing when one domain hash is invalid.
 test('UnitT10_domain-requests-start-together-before-first-response-and-hash-failure-renders-nothing', async t => {
@@ -392,7 +565,7 @@ test('UnitT11_runtime-selects-only-source-verified-tier-presentations', async t 
   const page = await runPreviewModule(candidateOutput);
   assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
   const cards = page.get('content').children;
-  assert.equal(cards.length, 4);
+  assert.equal(cards.length, 3);
   const blessingCard = cards.find(card => card.children.some(child => child.tagName === 'label' && child.children.some(nested => nested.tagName === 'select')));
   assert.ok(blessingCard, 'the blessing card has an accessible tier selector');
   const selector = blessingCard.children.find(child => child.tagName === 'label')?.children.find(child => child.tagName === 'select');
