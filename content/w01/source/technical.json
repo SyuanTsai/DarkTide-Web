@@ -168,6 +168,46 @@
       "owner": "source",
       "payload": {
         "attackProfileRefs": [],
+        "claimRefs": [
+          "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+          "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-60",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-60",
+          "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
+          "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-80",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-80",
+          "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-60",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-60",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-60",
+          "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-80",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-80",
+          "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-80",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-60",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-80",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-60",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-80",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-60",
+          "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-80",
+          "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-60",
+          "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-80",
+          "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-60",
+          "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-80",
+          "darktide:claim:chainaxe:p1-m1-defence-stamina-60",
+          "darktide:claim:chainaxe:p1-m1-defence-stamina-80",
+          "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-60",
+          "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-80",
+          "darktide:claim:chainaxe:p1-m1-defence-push-cost-60",
+          "darktide:claim:chainaxe:p1-m1-defence-push-cost-80",
+          "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-60",
+          "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-80",
+          "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-60",
+          "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-80",
+          "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-60",
+          "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-80",
+          "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-60",
+          "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-80"
+        ],
         "dataCoverage": {
           "missing": [
             {
@@ -177,6 +217,74 @@
           ],
           "status": "partial"
         },
+        "displayedAttacks": [
+          {
+            "displayedType": "smiter",
+            "evidenceRefs": [
+              "darktide:evidence:chainaxe:p1-m1-displayed-attack-role-summary-code"
+            ],
+            "key": "primary",
+            "mode": "light",
+            "scope": "display-summary",
+            "segments": [
+              {
+                "attackType": "smiter",
+                "index": 1,
+                "roleProfileKey": "default_light_chainaxe",
+                "targetRole": "single-target"
+              },
+              {
+                "attackType": "smiter",
+                "index": 2,
+                "roleProfileKey": "default_light_chainaxe",
+                "targetRole": "single-target"
+              },
+              {
+                "attackType": "smiter",
+                "index": 3,
+                "roleProfileKey": "default_light_chainaxe",
+                "targetRole": "single-target"
+              },
+              {
+                "attackType": "smiter",
+                "index": 4,
+                "roleProfileKey": "default_light_chainaxe",
+                "targetRole": "single-target"
+              }
+            ],
+            "sourceRefs": [
+              "public-code:chainaxe-p1-m1-ba6c148",
+              "public-code:chainaxe-damage-profiles-ba6c148"
+            ]
+          },
+          {
+            "displayedType": "linesman",
+            "evidenceRefs": [
+              "darktide:evidence:chainaxe:p1-m1-displayed-attack-role-summary-code"
+            ],
+            "key": "secondary",
+            "mode": "heavy",
+            "scope": "display-summary",
+            "segments": [
+              {
+                "attackType": "linesman",
+                "index": 1,
+                "roleProfileKey": "heavy_chainaxe",
+                "targetRole": "multi-target-cleave"
+              },
+              {
+                "attackType": "linesman",
+                "index": 2,
+                "roleProfileKey": "heavy_chainaxe",
+                "targetRole": "multi-target-cleave"
+              }
+            ],
+            "sourceRefs": [
+              "public-code:chainaxe-p1-m1-ba6c148",
+              "public-code:chainaxe-damage-profiles-ba6c148"
+            ]
+          }
+        ],
         "familyId": "chainaxe_p1",
         "markId": "chainaxe_p1_m1",
         "statRefs": [
@@ -189,7 +297,8 @@
       "reviewState": "pending",
       "sourceRefs": [
         "public-code:chainaxe-p1-m1-ba6c148",
-        "public-code:chainaxe-p1-traits-ba6c148"
+        "public-code:chainaxe-p1-traits-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148"
       ]
     },
     {
@@ -207,7 +316,7 @@
           "reasonCode": "NOT_VERIFIED",
           "status": "unknown"
         },
-        "outputUnit": "point",
+        "outputUnit": "attack-power-point",
         "quantity": "damage_templates.default_light_chainaxe.targets[1].power_distribution.attack",
         "theoreticalInputRange": {
           "inclusive": true,
@@ -248,7 +357,7 @@
             "y": "140"
           }
         ],
-        "outputUnit": "point"
+        "outputUnit": "attack-power-point"
       },
       "recordId": "darktide:stat-curve:chainaxe-p1-m1-default-light-attack-power-table",
       "reviewState": "pending",
@@ -826,22 +935,31 @@
       "payload": {
         "basis": "code-derived",
         "context": {
+          "attackMode": "light",
           "comparisonStat": {
             "decimal": "60",
             "status": "known",
             "unit": "percent"
           },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
           "weaponStat": "chainaxe_dps_stat"
         },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "113.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
         "evidenceRefs": [
-          "darktide:evidence:chainaxe:p1-m1-default-light-attack-power-comparison-code"
+          "darktide:evidence:chainaxe:p1-m1-damage-comparison-code"
         ],
         "property": "damage_templates.default_light_chainaxe.targets[1].power_distribution.attack",
         "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table",
         "value": {
           "decimal": "113",
           "status": "known",
-          "unit": "point"
+          "unit": "attack-power-point"
         }
       },
       "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
@@ -850,7 +968,9 @@
         "public-code:chainaxe-p1-m1-ba6c148",
         "public-code:damage-trait-templates-ba6c148",
         "public-code:weapon-tweak-templates-ba6c148",
-        "public-code:chainaxe-default-light-profile-ba6c148"
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
       ]
     },
     {
@@ -860,22 +980,31 @@
       "payload": {
         "basis": "code-derived",
         "context": {
+          "attackMode": "light",
           "comparisonStat": {
             "decimal": "80",
             "status": "known",
             "unit": "percent"
           },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
           "weaponStat": "chainaxe_dps_stat"
         },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "119.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
         "evidenceRefs": [
-          "darktide:evidence:chainaxe:p1-m1-default-light-attack-power-comparison-code"
+          "darktide:evidence:chainaxe:p1-m1-damage-comparison-code"
         ],
         "property": "damage_templates.default_light_chainaxe.targets[1].power_distribution.attack",
         "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table",
         "value": {
           "decimal": "119",
           "status": "known",
-          "unit": "point"
+          "unit": "attack-power-point"
         }
       },
       "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
@@ -884,7 +1013,9 @@
         "public-code:chainaxe-p1-m1-ba6c148",
         "public-code:damage-trait-templates-ba6c148",
         "public-code:weapon-tweak-templates-ba6c148",
-        "public-code:chainaxe-default-light-profile-ba6c148"
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
       ]
     },
     {
@@ -894,15 +1025,25 @@
       "payload": {
         "basis": "code-derived",
         "context": {
+          "armorClass": "armored",
+          "attackMode": "light",
           "comparisonStat": {
             "decimal": "60",
             "status": "known",
             "unit": "percent"
           },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
           "weaponStat": "chainaxe_armor_pierce_stat"
         },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "160.23",
+          "status": "known",
+          "unit": "percent"
+        },
         "evidenceRefs": [
-          "darktide:evidence:chainaxe:p1-m1-default-light-armored-modifier-comparison-code"
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
         ],
         "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
         "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table",
@@ -918,8 +1059,11 @@
         "public-code:chainaxe-p1-m1-ba6c148",
         "public-code:damage-trait-templates-ba6c148",
         "public-code:weapon-tweak-templates-ba6c148",
-        "public-code:chainaxe-default-light-profile-ba6c148",
-        "public-code:damage-profile-settings-ba6c148"
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
       ]
     },
     {
@@ -929,15 +1073,25 @@
       "payload": {
         "basis": "code-derived",
         "context": {
+          "armorClass": "armored",
+          "attackMode": "light",
           "comparisonStat": {
             "decimal": "80",
             "status": "known",
             "unit": "percent"
           },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
           "weaponStat": "chainaxe_armor_pierce_stat"
         },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "176.04",
+          "status": "known",
+          "unit": "percent"
+        },
         "evidenceRefs": [
-          "darktide:evidence:chainaxe:p1-m1-default-light-armored-modifier-comparison-code"
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
         ],
         "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
         "targetRef": "darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table",
@@ -953,8 +1107,11 @@
         "public-code:chainaxe-p1-m1-ba6c148",
         "public-code:damage-trait-templates-ba6c148",
         "public-code:weapon-tweak-templates-ba6c148",
-        "public-code:chainaxe-default-light-profile-ba6c148",
-        "public-code:damage-profile-settings-ba6c148"
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
       ]
     },
     {
@@ -990,6 +1147,3668 @@
         "public-code:weapon-tweak-templates-ba6c148",
         "public-code:chainaxe-default-light-profile-ba6c148",
         "public-code:damage-profile-settings-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At the fixed commit, primary light card is smiter with four smiter displayed_attacks segments; secondary heavy card is linesman with two linesman displayed_attacks segments. weapon_card_data maps primary to light and secondary to heavy. The source role classification is a display summary of displayed_attacks, not the complete action chain; action/profile overrides and per-segment execution remain NOT_IMPORTED.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-displayed-attack-role-summary-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At the fixed commit, primary light card is tank with two tank displayed_attacks segments; secondary heavy card is smiter with two smiter displayed_attacks segments. weapon_card_data maps primary to light and secondary to heavy. The source role classification is a display summary of displayed_attacks, not the complete action chain; action/profile overrides and per-segment execution remain NOT_IMPORTED.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-displayed-attack-role-summary-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_p1_m1 displays action_left_down_light as the light attack-power row and action_left_heavy as the heavy row. The mapped profiles are default_light_chainaxe with raw target-1 attack endpoints 80 and 140, and heavy_chainaxe with endpoints 150 and 300. default_melee_dps_stat interpolates 0.25 to 0.75: inputs 60% and 80% give t=0.55 and 0.65. The resulting source parameters are light 113 and 119; heavy 232.5 and 247.5 attack-power points. These are profile/mode-scoped parameters, not final HP damage and not values for every displayed segment. The player-facing weapon-info panel exposes the raw power_distribution.attack value through a default display row, with no scalar conversion, and formats it to two decimals; this is a source parameter, not health damage.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-damage-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_armor_pierce_stat applies default_armor_pierce_stat endpoints 0.1 and 0.95; inputs 60% and 80% give t=0.61 and 0.78. The light default_light_chainaxe profile exposes armored/resistant via lerp_1_5 [1.035,1.965] -> 1.6023/1.7604 and super_armor via lerp_0_75 [0.48,1.02] -> 0.8094/0.9012. The heavy_chainaxe profile exposes armored via lerp_0_75 -> 0.8094/0.9012 and super_armor via lerp_0_3 [0.174,0.426] -> 0.32772/0.37056. UI display_type percentage multiplies each raw ratio by 100 and prints two decimals. Only explicit profile armor keys are claimed; values are not final damage.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148 both chainaxe marks use the linesman stamina template. The player-visible stamina_modifier is the fixed value 4, shown with a plus sign and two decimals as +4.00. The defence slider maps sprint_cost_per_second endpoints 0.25 to 0.75, so inputs 60% and 80% produce first-stage t=0.55 and 0.65, then linesman endpoints 1.25 to 0.75 produce raw 0.975 and 0.925 stamina points per second. The push_cost slider endpoints are 0 to 1, so t=0.60 and 0.80 applied to linesman endpoints 3 to 1 produce 1.8 and 1.4 stamina points. The Source UI formats stamina, sprint cost, and push cost with two decimals; binary floating-point therefore displays sprint cost as 0.97 and 0.93 while raw values remain 0.975 and 0.925, and push cost as 1.80 and 1.40.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-defence-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_sawing_stat maps the displayed light/heavy saw rows to source profile overrides. default_melee_dps_stat endpoints 0.25 to 0.75 give t=0.55/0.65 for the 60%/80% comparison. Profile raw attack-power endpoints yield light active first saw 248/264 (160 to 320), light active final saw 465/495 (300 to 600), ordinary light final saw 173.75/196.25 (50 to 275), heavy active first saw 310/330 (200 to 400), and heavy active final saw 852.5/907.5 (550 to 1100). These are sawing profile attack-power parameters, not health damage or the ordinary light/heavy attack power rows. The player-facing weapon-info panel exposes the raw power_distribution.attack value through a default display row, with no scalar conversion, and formats it to two decimals; this is a source parameter, not health damage.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148 both marks use smiter_plus dodge and default sprint templates. default_dodge_stat endpoints 0.25 to 0.75 make t=0.55/0.65 at 60%/80%; smiter_plus distance_scale 0.85 to 1.05 yields raw 0.96/0.98, displayed as -4.00%/-2.00% by (value-1)*100. Its diminishing_return_start endpoints 2 to 4 yield raw 3.1/3.3 effective dodges, floored then displayed as 3.00/3.00; speed_modifier stays 1 and displays +0.00%. default_sprint_stat endpoints 0.05 to 0.95 yield t=0.59/0.77; default sprint_speed_mod endpoints -0.5 to 0.5 yield raw ratios 0.09/0.27, displayed as +0.09/+0.27. The UI uses two decimal places and signed formatting for these rows. Hidden movement-curve and non-displayed fields are not included.",
+        "sourceRef": "public-code:chainaxe-p1-m1-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_p1_m2 displays action_left_down_light as the light attack-power row and action_heavy_1 as the heavy row. The mapped profiles are light_chainaxe_tank with raw target-1 attack endpoints 80 and 150, and heavy_chainaxe_smiter with endpoints 100 and 220. default_melee_dps_stat interpolates 0.25 to 0.75: inputs 60% and 80% give t=0.55 and 0.65. The resulting source parameters are light 118.5 and 125.5; heavy 166 and 178 attack-power points. These are profile/mode-scoped parameters, not final HP damage and not values for every displayed segment. The player-facing weapon-info panel exposes the raw power_distribution.attack value through a default display row, with no scalar conversion, and formats it to two decimals; this is a source parameter, not health damage.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-damage-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_armor_pierce_stat applies default_armor_pierce_stat endpoints 0.1 and 0.95; inputs 60% and 80% give t=0.61 and 0.78. The light_chainaxe_tank profile exposes armored/resistant via lerp_1_5 [1.035,1.965] -> 1.6023/1.7604, super_armor via lerp_0_75 [0.48,1.02] -> 0.8094/0.9012, and disgustingly_resilient via lerp_1_33 [0.9,1.77] -> 1.4307/1.5786. heavy_chainaxe_smiter exposes armored via lerp_0_75 -> 0.8094/0.9012 and super_armor via lerp_0_3 [0.174,0.426] -> 0.32772/0.37056. UI display_type percentage multiplies each raw ratio by 100 and prints two decimals. Only explicit profile armor keys are claimed; values are not final damage.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148 both chainaxe marks use the linesman stamina template. The player-visible stamina_modifier is the fixed value 4, shown with a plus sign and two decimals as +4.00. The defence slider maps sprint_cost_per_second endpoints 0.25 to 0.75, so inputs 60% and 80% produce first-stage t=0.55 and 0.65, then linesman endpoints 1.25 to 0.75 produce raw 0.975 and 0.925 stamina points per second. The push_cost slider endpoints are 0 to 1, so t=0.60 and 0.80 applied to linesman endpoints 3 to 1 produce 1.8 and 1.4 stamina points. The Source UI formats stamina, sprint cost, and push cost with two decimals; binary floating-point therefore displays sprint cost as 0.97 and 0.93 while raw values remain 0.975 and 0.925, and push cost as 1.80 and 1.40.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-defence-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148, chainaxe_sawing_stat maps the displayed light/heavy saw rows to source profile overrides. default_melee_dps_stat endpoints 0.25 to 0.75 give t=0.55/0.65 for the 60%/80% comparison. Profile raw attack-power endpoints yield light active first saw 248/264 (160 to 320), light active final saw 465/495 (300 to 600), heavy active first saw 310/330 (200 to 400), and heavy active final saw 852.5/907.5 (550 to 1100). These are sawing profile attack-power parameters, not health damage or the ordinary light/heavy attack power rows. The player-facing weapon-info panel exposes the raw power_distribution.attack value through a default display row, with no scalar conversion, and formats it to two decimals; this is a source parameter, not health damage.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "evidence",
+      "owner": "source",
+      "payload": {
+        "safeSummary": "At commit ba6c148 both marks use smiter_plus dodge and default sprint templates. default_dodge_stat endpoints 0.25 to 0.75 make t=0.55/0.65 at 60%/80%; smiter_plus distance_scale 0.85 to 1.05 yields raw 0.96/0.98, displayed as -4.00%/-2.00% by (value-1)*100. Its diminishing_return_start endpoints 2 to 4 yield raw 3.1/3.3 effective dodges, floored then displayed as 3.00/3.00; speed_modifier stays 1 and displays +0.00%. default_sprint_stat endpoints 0.05 to 0.95 yield t=0.59/0.77; default sprint_speed_mod endpoints -0.5 to 0.5 yield raw ratios 0.09/0.27, displayed as +0.09/+0.27. The UI uses two decimal places and signed formatting for these rows. Hidden movement-curve and non-displayed fields are not included.",
+        "sourceRef": "public-code:chainaxe-p1-m2-ba6c148"
+      },
+      "recordId": "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "80.94",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.8094",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "resistant",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "160.23",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.resistant]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1.6023",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "90.12",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.9012",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "resistant",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default_light_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "176.04",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.resistant]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1.7604",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "232.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-damage-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "232.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "80.94",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.8094",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "32.77",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.32772",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "247.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-damage-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "247.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "90.12",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.9012",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "37.06",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.37056",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "118.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-damage-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "118.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "160.23",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.6023",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "80.94",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.8094",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "resistant",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "160.23",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.resistant]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.6023",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "disgustingly_resilient",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "143.07",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.disgustingly_resilient]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.4307",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "125.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-damage-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "125.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "176.04",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.7604",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "90.12",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.9012",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "resistant",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "176.04",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.resistant]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.7604",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "disgustingly_resilient",
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_tank",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "157.86",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.light_chainaxe_tank.targets[1].armor_damage_modifier.attack[armor_types.disgustingly_resilient]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.5786",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "166.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-damage-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "166",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "80.94",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.8094",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "32.77",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.32772",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_dps_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "178.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-damage-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "178",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "armored",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "90.12",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].armor_damage_modifier.attack[armor_types.armored]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.9012",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "armorClass": "super_armor",
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_smiter",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_armor_pierce_stat"
+        },
+        "displayFormat": "percentage-fixed-2",
+        "displayValue": {
+          "decimal": "37.06",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-armor-penetration-comparison-code"
+        ],
+        "property": "damage_templates.heavy_chainaxe_smiter.targets[1].armor_damage_modifier.attack[armor_types.super_armor]",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.37056",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:damage-profile-settings-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-bar-ui-descriptions-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "248.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "248",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "264.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "264",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "465.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "465",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "495.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "495",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_sticky_last_quick",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "173.75",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_sticky_last_quick.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "173.75",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_sticky_last_quick",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "196.25",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_sticky_last_quick.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "196.25",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "310.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_heavy.overrides.heavy_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "310",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "330.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_heavy.overrides.heavy_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "330",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "852.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_heavy.overrides.heavy_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "852.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "907.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_heavy.overrides.heavy_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "907.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "248.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "248",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "264.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "264",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "465.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "465",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "light",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "light_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "495.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_left_down_light.overrides.light_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "495",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "310.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_heavy_1.overrides.heavy_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "310",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "330.00",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_heavy_1.overrides.heavy_chainaxe_active_sticky.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "330",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "852.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_heavy_1.overrides.heavy_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "852.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "attackMode": "heavy",
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "heavy_chainaxe_active_sticky_last",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_sawing_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "907.50",
+          "status": "known",
+          "unit": "attack-power-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-sawing-comparison-code"
+        ],
+        "property": "base_stats.chainaxe_sawing_stat.damage.action_heavy_1.overrides.heavy_chainaxe_active_sticky_last.targets[1].power_distribution.attack",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "907.5",
+          "status": "known",
+          "unit": "attack-power-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:damage-trait-templates-ba6c148",
+        "public-code:weapon-tweak-templates-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "4.00",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.stamina_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-stamina-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "4.00",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.stamina_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-stamina-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "0.97",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.sprint_cost_per_second",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.975",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "0.93",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.sprint_cost_per_second",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.925",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "1.80",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.push_cost",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1.8",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-push-cost-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "1.40",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.push_cost",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1.4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-defence-push-cost-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "-4.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.distance_scale",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.96",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "-2.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.distance_scale",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.98",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "floor-fixed-2",
+        "displayValue": {
+          "decimal": "3.00",
+          "status": "known",
+          "unit": "dodge-count"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.diminishing_return_start",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "3.1",
+          "status": "known",
+          "unit": "dodge-count"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "floor-fixed-2",
+        "displayValue": {
+          "decimal": "3.00",
+          "status": "known",
+          "unit": "dodge-count"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.diminishing_return_start",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "3.3",
+          "status": "known",
+          "unit": "dodge-count"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.speed_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.speed_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "1",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.09",
+          "status": "known",
+          "unit": "ratio"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_sprint_templates.default.sprint_speed_mod",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.09",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m1",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.27",
+          "status": "known",
+          "unit": "ratio"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m1-mobility-comparison-code"
+        ],
+        "property": "weapon_sprint_templates.default.sprint_speed_mod",
+        "targetRef": "darktide:weapon:chainaxe:p1-m1",
+        "value": {
+          "decimal": "0.27",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m1-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "4.00",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.stamina_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-stamina-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "4.00",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.stamina_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-stamina-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "0.97",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.sprint_cost_per_second",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.975",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "0.93",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.sprint_cost_per_second",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.925",
+          "status": "known",
+          "unit": "stamina-point-per-second"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "1.80",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.push_cost",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.8",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-push-cost-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "linesman",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_defence_stat"
+        },
+        "displayFormat": "fixed-2",
+        "displayValue": {
+          "decimal": "1.40",
+          "status": "known",
+          "unit": "stamina-point"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-defence-comparison-code"
+        ],
+        "property": "weapon_stamina_templates.linesman.push_cost",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1.4",
+          "status": "known",
+          "unit": "stamina-point"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-defence-push-cost-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-stamina-trait-templates-ba6c148",
+        "public-code:weapon-stamina-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "-4.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.distance_scale",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.96",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "-2.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.distance_scale",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.98",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "floor-fixed-2",
+        "displayValue": {
+          "decimal": "3.00",
+          "status": "known",
+          "unit": "dodge-count"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.diminishing_return_start",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "3.1",
+          "status": "known",
+          "unit": "dodge-count"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "floor-fixed-2",
+        "displayValue": {
+          "decimal": "3.00",
+          "status": "known",
+          "unit": "dodge-count"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.diminishing_return_start",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "3.3",
+          "status": "known",
+          "unit": "dodge-count"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.speed_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "smiter_plus",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "multiplier-percent-fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.00",
+          "status": "known",
+          "unit": "percent"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_dodge_templates.smiter_plus.speed_modifier",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "1",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.09",
+          "status": "known",
+          "unit": "ratio"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_sprint_templates.default.sprint_speed_mod",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.09",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-60",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "claim",
+      "owner": "source",
+      "payload": {
+        "basis": "code-derived",
+        "context": {
+          "comparisonStat": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          },
+          "profile": "default",
+          "weaponRef": "darktide:weapon:chainaxe:p1-m2",
+          "weaponStat": "chainaxe_mobility_stat"
+        },
+        "displayFormat": "fixed-2-signed",
+        "displayValue": {
+          "decimal": "0.27",
+          "status": "known",
+          "unit": "ratio"
+        },
+        "evidenceRefs": [
+          "darktide:evidence:chainaxe:p1-m2-mobility-comparison-code"
+        ],
+        "property": "weapon_sprint_templates.default.sprint_speed_mod",
+        "targetRef": "darktide:weapon:chainaxe:p1-m2",
+        "value": {
+          "decimal": "0.27",
+          "status": "known",
+          "unit": "ratio"
+        }
+      },
+      "recordId": "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-80",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:weapon-dodge-trait-templates-ba6c148",
+        "public-code:weapon-dodge-templates-ba6c148",
+        "public-code:weapon-sprint-trait-templates-ba6c148",
+        "public-code:weapon-sprint-templates-ba6c148",
+        "public-code:weapon-tweak-stats-ui-data-ba6c148",
+        "public-code:weapon-ui-stats-templates-ba6c148",
+        "public-code:weapon-info-value-formatting-ba6c148"
+      ]
+    },
+    {
+      "gameReleaseId": "darktide:1.13.2",
+      "kind": "weapon",
+      "owner": "source",
+      "payload": {
+        "attackProfileRefs": [],
+        "claimRefs": [
+          "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-60",
+          "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-80",
+          "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-60",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-60",
+          "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-80",
+          "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-80",
+          "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-60",
+          "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-80",
+          "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-60",
+          "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-80",
+          "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-60",
+          "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-80",
+          "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-60",
+          "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-80",
+          "darktide:claim:chainaxe:p1-m2-defence-stamina-60",
+          "darktide:claim:chainaxe:p1-m2-defence-stamina-80",
+          "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-60",
+          "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-80",
+          "darktide:claim:chainaxe:p1-m2-defence-push-cost-60",
+          "darktide:claim:chainaxe:p1-m2-defence-push-cost-80",
+          "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-60",
+          "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-80",
+          "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-60",
+          "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-80",
+          "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-60",
+          "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-80",
+          "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-60",
+          "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-80"
+        ],
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "action/profile override resolution",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "displayedAttacks": [
+          {
+            "displayedType": "tank",
+            "evidenceRefs": [
+              "darktide:evidence:chainaxe:p1-m2-displayed-attack-role-summary-code"
+            ],
+            "key": "primary",
+            "mode": "light",
+            "scope": "display-summary",
+            "segments": [
+              {
+                "attackType": "tank",
+                "index": 1,
+                "roleProfileKey": "light_chainaxe_tank",
+                "targetRole": "multi-target-cleave"
+              },
+              {
+                "attackType": "tank",
+                "index": 2,
+                "roleProfileKey": "light_chainaxe_tank",
+                "targetRole": "multi-target-cleave"
+              }
+            ],
+            "sourceRefs": [
+              "public-code:chainaxe-p1-m2-ba6c148",
+              "public-code:chainaxe-damage-profiles-ba6c148"
+            ]
+          },
+          {
+            "displayedType": "smiter",
+            "evidenceRefs": [
+              "darktide:evidence:chainaxe:p1-m2-displayed-attack-role-summary-code"
+            ],
+            "key": "secondary",
+            "mode": "heavy",
+            "scope": "display-summary",
+            "segments": [
+              {
+                "attackType": "smiter",
+                "index": 1,
+                "roleProfileKey": "heavy_chainaxe_smiter",
+                "targetRole": "single-target"
+              },
+              {
+                "attackType": "smiter",
+                "index": 2,
+                "roleProfileKey": "heavy_chainaxe_smiter",
+                "targetRole": "single-target"
+              }
+            ],
+            "sourceRefs": [
+              "public-code:chainaxe-p1-m2-ba6c148",
+              "public-code:chainaxe-damage-profiles-ba6c148"
+            ]
+          }
+        ],
+        "familyId": "chainaxe_p1",
+        "markId": "chainaxe_p1_m2",
+        "statRefs": [],
+        "templateKey": "chainaxe_p1_m2"
+      },
+      "recordId": "darktide:weapon:chainaxe:p1-m2",
+      "reviewState": "pending",
+      "sourceRefs": [
+        "public-code:chainaxe-p1-m2-ba6c148",
+        "public-code:chainaxe-p1-traits-ba6c148",
+        "public-code:chainaxe-damage-profiles-ba6c148"
       ]
     }
   ],
@@ -1258,7 +5077,139 @@
         "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
       },
       "sourceId": "public-code:weapon-tweak-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/chain_axes/chainaxe_p1_m2.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public code at lines 364-453 binds the ordinary light action_left_down_light profile to light_chainaxe_tank and action_heavy_1 to heavy_chainaxe_smiter; lines 1008-1278 define the five weapon bar stat families and lines 1295-1337 define displayed_attacks and weapon_card_data.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:chainaxe-p1-m2-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/chain_axes/settings_templates/chain_axe_damage_profile_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned public chainaxe damage profile source. Relevant definitions: default_light_chainaxe near line 159, light_chainaxe_tank near 696, heavy_chainaxe near 790, heavy_chainaxe_smiter near 1391, and the active/last sawing profiles near lines 342, 429, 1025, and 1108. The selected endpoint parameters are not final in-game health damage.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:chainaxe-damage-profiles-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/stamina_trait_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 17-47 define the chainaxe defence slider endpoints for sprint_cost_per_second and push_cost. It does not bind stamina_modifier to that slider.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-stamina-trait-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/stamina/weapon_stamina_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 39-58 define linesman stamina_modifier=4, sprint cost endpoints 1.25 and 0.75, and push cost endpoints 3 and 1.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-stamina-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 7-27 map the default dodge slider to distance_scale and diminishing_return_start with endpoints 0.25 and 0.75.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-dodge-trait-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/dodge/weapon_dodge_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 51-72 define smiter_plus distance_scale 0.85 to 1.05, diminishing_return_start 2 to 4, and speed_modifier fixed at 1.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-dodge-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 7-18 define sprint_speed_mod slider endpoints 0.05 and 0.95.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-sprint-trait-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/sprint/weapon_sprint_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 5-17 define the default sprint_speed_mod interpolation endpoints -0.5 and 0.5.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-sprint-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_tweak_stats_ui_data.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 7-36 define the six attack armor-class percentage descriptors; lines 531-546 define the displayed stamina, sprint-cost, and push-cost fields; lines 569-588 define dodge distance, speed, and effective-dodge presentation including flooring.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-tweak-stats-ui-data-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_ui_stats_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 24-111 define player-facing weapon statistic rows, including effective dodges, dodge distance, sprint speed, stamina, and sprint cost.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-ui-stats-templates-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/settings/equipment/weapon_bar_ui_description_templates.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source lines 80-89 define the armor damage modifier display keys; lines 94-98 identify the basic-stat display group.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-bar-ui-descriptions-ba6c148"
+    },
+    {
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "fixtureOnly": false,
+      "path": "scripts/ui/view_elements/view_element_weapon_info/view_element_weapon_info.lua",
+      "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+      "safeSummary": "Pinned source blob 3133ddcc64050f4f8f9c91c5aa056713718427c9, lines 409-467: ViewElementWeaponInfo._scale_value_by_type applies only declared multiplier, inverse-multiplier, inverse-percentage, percentage, and angle conversions; default display type leaves the raw value unchanged. _value_to_text formats ordinary values with string.format(\"%0.2f\", value) and adds + for non-negative signed values. This is player-facing UI formatting code, not runtime verification.",
+      "snapshot": {
+        "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e"
+      },
+      "sourceId": "public-code:weapon-info-value-formatting-ba6c148"
     }
   ],
-  "sourceRevision": "f9917e5f8c14e1fd768f502b9c0cafa59602cae1ac5e9bf8372e467268de38e2"
+  "sourceRevision": "3af04f0212a88e6b29f91f397178dd6d22c0c27d40566088eca8f8f06d4845c1"
 }

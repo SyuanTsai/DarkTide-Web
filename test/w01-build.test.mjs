@@ -14,7 +14,7 @@ const publishedR6Root = process.env.W01_PRIOR_REAL_R6_ROOT;
 const publishedR7Root = process.env.W01_PRIOR_REAL_R7_ROOT;
 const publishedR12Root = process.env.W01_PRIOR_REAL_R12_ROOT;
 const publishedR13Root = process.env.W01_PRIOR_REAL_R13_ROOT;
-const publishedR14Root = process.env.W01_PRIOR_REAL_R14_ROOT;
+const publishedR15Root = process.env.W01_PRIOR_REAL_R15_ROOT;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function withTempDirectory(callback) {
@@ -718,11 +718,11 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const blessing = find('blessings', 'web:presentation:chainaxe-p1-movement-speed');
     const weapon = find('weapons', 'web:presentation:chainaxe-p1-m1');
 
-    assert.equal(manifest.source.commit, '7f88a1368a29a79c0de654ee5cd17886dd360a47');
-    assert.equal(manifest.source.sourceRevision, 'f9917e5f8c14e1fd768f502b9c0cafa59602cae1ac5e9bf8372e467268de38e2');
-    assert.equal(manifest.source.manifestSha256, 'e8ec9697ce5b15d3e9e040a2c023f18db23e2fa7ab41ea25c28f75eb75e85835');
+    assert.equal(manifest.source.commit, '285a06c8939ac505ac48e4d0e93b939a2b959211');
+    assert.equal(manifest.source.sourceRevision, '3af04f0212a88e6b29f91f397178dd6d22c0c27d40566088eca8f8f06d4845c1');
+    assert.equal(manifest.source.manifestSha256, '3140d7c5f8f49b2cd9b8574819159079d8542cf165d870af96890ca8efe063d6');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.15');
+    assert.equal(version.game_releases[0].content_version, '0.0.16');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
@@ -851,37 +851,14 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.deepEqual(blessing.payload.detailSections.conditions, [
       { itemId: 'chainaxe-special-activation-condition', text: '使用武器特殊動作後生效，持續 2 秒。' }
     ]);
-    assert.deepEqual(weapon.payload.detailSections.conditions, []);
-    assert.deepEqual(weapon.payload.detailSections.effects, [
-      {
-        itemId: 'chainaxe-attack-power-comparison',
-        text: '傷害素質 60% → 80%：輕攻擊對第一個目標的威力 113 → 119。',
-        claimRefs: [
-          'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60',
-          'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80'
-        ]
-      },
-      {
-        itemId: 'chainaxe-armored-modifier-comparison',
-        text: '護甲穿透素質 60% → 80%：輕攻擊對防彈護甲的傷害倍率約 1.60 → 1.76 倍。',
-        claimRefs: [
-          'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60',
-          'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80'
-        ]
-      }
+    assert.deepEqual(weapon.payload.detailSections, {
+      effects: [], conditions: [], calculation: [], notes: [], extra: []
+    });
+    assert.equal(weapon.payload.weaponView.markLabel, 'Mk IV');
+    assert.deepEqual(weapon.payload.weaponView.statSections.map(section => section.label), [
+      '傷害', '護甲穿透', '防禦', '鏈鋸', '移動性'
     ]);
-    assert.deepEqual(weapon.payload.detailSections.notes, [
-      {
-        itemId: 'chainaxe-comparison-scope',
-        text: '這些是傷害計算值，不是實際扣血量。',
-        claimRefs: [
-          'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60',
-          'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80',
-          'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60',
-          'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80'
-        ]
-      }
-    ]);
+    assert.equal(weapon.payload.weaponView.note, '60% 與 80% 是比較點，不代表掉落上下限；攻擊威力和鋸擊威力不等於實際扣血。');
     const damageTerm = domains.terms.records.find(record => record.recordId === 'web:term-localization:psyker-smite-damage-multiplier-parameter');
     assert.equal(damageTerm.payload.label, '傷害倍率');
     assert.equal(damageTerm.payload.definition, '此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。');
@@ -1019,7 +996,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -1062,7 +1039,7 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.15 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.16 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
 test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1076,8 +1053,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { sk
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1108,7 +1085,7 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-15', { sk
   });
 });
 
-// Scenario: the exact published 0.0.6 package is present in the 0.0.15 candidate's retained history.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.16 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
 test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-15', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1122,8 +1099,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1424,7 +1401,7 @@ test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', asyn
   });
 });
 
-// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.15 output.
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.16 output.
 // Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
 test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { skip: !publishedR7Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1439,8 +1416,8 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { sk
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1457,7 +1434,7 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { sk
   });
 });
 
-// Scenario: the exact published 0.0.12 package is present in the 0.0.15 candidate's retained history.
+// Scenario: the exact published 0.0.12 package is present in the 0.0.16 candidate's retained history.
 // Purpose: preserve every published 0.0.12 immutable data URL and byte while only Web-owned copy advances.
 test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { skip: !publishedR12Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1471,8 +1448,8 @@ test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { s
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1490,9 +1467,9 @@ test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { s
   });
 });
 
-// Scenario: the pinned Source package provides two comparison inputs for each Chainaxe output parameter.
-// Purpose: comparison copy resolves only from the four code-derived claims and advances the pending candidate without changing official identity.
-test('UnitT29_chainaxe-comparison-copy-resolves-readable-0-0-15-lines-from-four-source-claims', async () => {
+// Scenario: the pinned Source package provides every paired Chainaxe stat row for both marks.
+// Purpose: the 0.0.16 player view must preserve Source values, display values, official names, and pending-preview isolation.
+test('UnitT29_chainaxe-comparison-rows-resolve-from-all-76-source-claims-in-0-0-16', async () => {
   await withTempDirectory(async tempRoot => {
     const copiedRoot = path.join(tempRoot, 'repo');
     const outputRoot = path.join(tempRoot, 'out');
@@ -1507,18 +1484,17 @@ test('UnitT29_chainaxe-comparison-copy-resolves-readable-0-0-15-lines-from-four-
       JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, kind + '.json'), 'utf8'))
     ])));
     const weapon = domains.weapons.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m1');
-    const authoredWeapon = authoring.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m1');
     const records = new Map(source.records.map(record => [record.recordId, record]));
     const expectedClaims = [
       {
         id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60',
         weaponStat: 'chainaxe_dps_stat', statDefinition: 'darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table',
-        property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack', input: '60', value: '113', unit: 'point'
+        property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack', input: '60', value: '113', unit: 'attack-power-point'
       },
       {
         id: 'darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80',
         weaponStat: 'chainaxe_dps_stat', statDefinition: 'darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table',
-        property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack', input: '80', value: '119', unit: 'point'
+        property: 'damage_templates.default_light_chainaxe.targets[1].power_distribution.attack', input: '80', value: '119', unit: 'attack-power-point'
       },
       {
         id: 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60',
@@ -1538,11 +1514,12 @@ test('UnitT29_chainaxe-comparison-copy-resolves-readable-0-0-15-lines-from-four-
       assert.equal(claim.payload.basis, 'code-derived');
       assert.equal(claim.payload.targetRef, expected.statDefinition);
       assert.equal(claim.payload.property, expected.property);
-      assert.deepEqual(claim.payload.context, {
-        weaponStat: expected.weaponStat,
-        comparisonStat: { status: 'known', decimal: expected.input, unit: 'percent' }
-      });
+      assert.equal(claim.payload.context.weaponStat, expected.weaponStat);
+      assert.equal(claim.payload.context.weaponRef, 'darktide:weapon:chainaxe:p1-m1');
+      assert.deepEqual(claim.payload.context.comparisonStat, { status: 'known', decimal: expected.input, unit: 'percent' });
       assert.deepEqual(claim.payload.value, { status: 'known', decimal: expected.value, unit: expected.unit });
+      assert.equal(claim.payload.displayValue.status, 'known');
+      assert.equal(claim.payload.displayFormat, expected.weaponStat === 'chainaxe_dps_stat' ? 'fixed-2' : 'percentage-fixed-2');
       assert.ok(claim.payload.evidenceRefs.length > 0);
       const stat = records.get(expected.statDefinition);
       assert.ok(stat.payload.claimRefs.includes(expected.id));
@@ -1550,21 +1527,41 @@ test('UnitT29_chainaxe-comparison-copy-resolves-readable-0-0-15-lines-from-four-
     }
 
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.15');
+    assert.equal(result.receipt.contentVersion, '0.0.16');
+    assert.equal(version.game_releases[0].content_version, '0.0.16');
     assert.equal(weapon.payload.name, '突擊鏈斧');
-    assert.doesNotMatch(JSON.stringify(authoredWeapon.payload.detailSections), /113|119|1\.6023|1\.7604/);
-    const authoredLiterals = authoredWeapon.payload.detailSections.effects.flatMap(item => item.parts ?? [])
-      .filter(part => part.kind === 'literal').map(part => part.text);
-    assert.ok(authoredLiterals.every(text => !/[0-9%]/.test(text)), 'comparison stats and values come only from Source bindings');
-    assert.deepEqual(weapon.payload.detailSections.effects, [
-      { itemId: 'chainaxe-attack-power-comparison', text: '傷害素質 60% → 80%：輕攻擊對第一個目標的威力 113 → 119。', claimRefs: expectedClaims.slice(0, 2).map(claim => claim.id) },
-      { itemId: 'chainaxe-armored-modifier-comparison', text: '護甲穿透素質 60% → 80%：輕攻擊對防彈護甲的傷害倍率約 1.60 → 1.76 倍。', claimRefs: expectedClaims.slice(2).map(claim => claim.id) }
-    ]);
-    assert.deepEqual(weapon.payload.detailSections.notes, [
-      { itemId: 'chainaxe-comparison-scope', text: '這些是傷害計算值，不是實際扣血量。', claimRefs: expectedClaims.map(claim => claim.id) }
-    ]);
-    const playerText = JSON.stringify(weapon.payload.detailSections);
-    assert.doesNotMatch(playerText, /本次比較上下限|下限|上限|可取得範圍|掉落範圍|全域範圍|80、140|1\.035、1\.965|其他攻擊資料尚未補齊|160\.23%|176\.04%/);
+    assert.deepEqual(weapon.payload.detailSections.effects, []);
+    assert.equal(weapon.payload.weaponView.statSections.reduce((count, section) => count + section.rows.length, 0), 19);
+    assert.equal(weapon.payload.weaponView.statSections[0].rows[0].values[0].displayValue.decimal, '113.00');
+    assert.equal(weapon.payload.weaponView.statSections[1].rows.find(row => row.label.includes('防彈護甲')).values[0].displayValue.decimal, '160.23');
+    const secondMark = domains.weapons.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m2');
+    assert.ok(secondMark, 'Mk XII player card is generated');
+    assert.equal(secondMark.payload.weaponView.statSections.reduce((count, section) => count + section.rows.length, 0), 19);
+    for (const presentation of [weapon, secondMark]) {
+      const official = presentation.payload.official;
+      const traditionalChinese = official.localizations['zh-TW'];
+      assert.equal(official.sourceText, 'Assault Chainaxe');
+      assert.equal(official.sourceTextSha256, sha256(Buffer.from('Assault Chainaxe', 'utf8')));
+      assert.equal(traditionalChinese.sourceText, '突擊鏈斧');
+      assert.equal(traditionalChinese.sourceTextSha256, sha256(Buffer.from('突擊鏈斧', 'utf8')));
+      assert.equal(presentation.payload.name, '突擊鏈斧');
+    }
+    const sourceById = new Map(source.records.map(record => [record.recordId, record]));
+    for (const row of [weapon.payload.weaponView, secondMark.payload.weaponView].flatMap(view => view.statSections.flatMap(section => section.rows))) {
+      assert.equal(row.claimRefs.length, 2, row.label);
+      for (const [index, value] of row.values.entries()) {
+        const claim = sourceById.get(value.claimRef);
+        assert.ok(claim, `Source claim exists: ${value.claimRef}`);
+        assert.deepEqual(value.value, claim.payload.value);
+        assert.deepEqual(value.displayValue, claim.payload.displayValue);
+        assert.equal(value.displayFormat, claim.payload.displayFormat);
+        assert.equal(value.comparisonStat.decimal, index === 0 ? '60' : '80');
+      }
+    }
+    const authoredViews = authoring.records.filter(record => record.payload.weaponView);
+    assert.equal(authoredViews.length, 2);
+    assert.ok(authoredViews.every(record => !JSON.stringify(record.payload.weaponView).match(/113|119|160\.23|176\.04/)),
+      'numeric values come from Source records, not Web-authored copy');
     assert.equal(JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8')).publicationEligible, false);
 
     const tamperedRoot = path.join(tempRoot, 'tampered-source');
@@ -1613,7 +1610,7 @@ test('UnitT30_chainaxe-comparison-rejects-range-labels-and-broken-stat-links', a
     });
     await assert.rejects(
       buildW01({ repoRoot: inputCopy, outputRoot: path.join(tempRoot, 'input-out'), mode: 'candidate-preview' }),
-      /Chainaxe comparison claim does not match its code-derived weaponStat\/comparisonStat contract/
+      /has a claim outside the typed 60\/80 weapon-stat contract/
     );
 
     const targetCopy = await makeInvalidCopy('wrong-target');
@@ -1623,7 +1620,7 @@ test('UnitT30_chainaxe-comparison-rejects-range-labels-and-broken-stat-links', a
     });
     await assert.rejects(
       buildW01({ repoRoot: targetCopy, outputRoot: path.join(tempRoot, 'target-out'), mode: 'candidate-preview' }),
-      /Chainaxe comparison claim does not match its code-derived weaponStat\/comparisonStat contract/
+      /has a claim detached from its Source weapon or stat definition/
     );
 
     const statLinkCopy = await makeInvalidCopy('missing-stat-link');
@@ -1633,36 +1630,159 @@ test('UnitT30_chainaxe-comparison-rejects-range-labels-and-broken-stat-links', a
     });
     await assert.rejects(
       buildW01({ repoRoot: statLinkCopy, outputRoot: path.join(tempRoot, 'stat-link-out'), mode: 'candidate-preview' }),
-      /Source weapon statRefs must link the attack comparison stat definition/
+      /has a claim detached from its Source weapon or stat definition/
     );
   });
 });
 
-// Scenario: a Source ratio has precision beyond the player-facing multiplier format.
-// Purpose: round Source-bound ratios half-up to exactly two decimal places without floating-point drift.
-test('UnitT31_ratio-display-rounds-half-up-to-two-decimal-places', async () => {
+// Scenario: Source UI formatting rounds binary floating-point values to two visible decimals.
+// Purpose: preserve both raw stamina inputs and the exact 0.97/0.93 values shown by the game UI.
+test('UnitT31_source-ui-display-retains-binary-float-rounding-and-raw-values', async () => {
   await withTempDirectory(async tempRoot => {
     const copiedRoot = path.join(tempRoot, 'web-input');
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await copyCurrentInputs(copiedRoot);
-    await updatePinnedTechnical(copiedRoot, technical => {
-      const claim = technical.records.find(record => record.recordId === 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60');
-      assert.ok(claim, 'the Source armored comparison claim is present');
-      claim.payload.value.decimal = '1.605';
-    });
-
     const result = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const source = JSON.parse(await readFile(path.join(copiedRoot, 'content', 'w01', 'source', 'technical.json'), 'utf8'));
     const weapons = JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, 'weapons.json'), 'utf8'));
     const weapon = weapons.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m1');
     assert.ok(weapon, 'the representative Chainaxe weapon presentation is present');
-    assert.equal(
-      weapon.payload.detailSections.effects.find(item => item.itemId === 'chainaxe-armored-modifier-comparison')?.text,
-      '護甲穿透素質 60% → 80%：輕攻擊對防彈護甲的傷害倍率約 1.61 → 1.76 倍。'
+    const claimIds = [
+      'darktide:claim:chainaxe:p1-m1-defence-sprint-cost-60',
+      'darktide:claim:chainaxe:p1-m1-defence-sprint-cost-80'
+    ];
+    const sourceById = new Map(source.records.map(record => [record.recordId, record]));
+    const sourceClaims = claimIds.map(id => sourceById.get(id));
+    assert.ok(sourceClaims.every(Boolean));
+    assert.deepEqual(sourceClaims.map(claim => claim.payload.value.decimal), ['0.975', '0.925']);
+    assert.deepEqual(sourceClaims.map(claim => claim.payload.displayValue.decimal), ['0.97', '0.93']);
+    const row = weapon.payload.weaponView.statSections.find(section => section.sourceStat === 'chainaxe_defence_stat')
+      .rows.find(item => item.label === '衝刺體力消耗');
+    assert.deepEqual(row.claimRefs, claimIds);
+    assert.deepEqual(row.values.map(value => value.value.decimal), ['0.975', '0.925']);
+    assert.deepEqual(row.values.map(value => value.displayValue.decimal), ['0.97', '0.93']);
+    const staminaClaims = ['darktide:claim:chainaxe:p1-m1-defence-stamina-60', 'darktide:claim:chainaxe:p1-m1-defence-stamina-80'].map(id => sourceById.get(id));
+    assert.ok(staminaClaims.every(Boolean));
+    assert.deepEqual(staminaClaims.map(claim => claim.payload.displayValue.unit), ['stamina-point', 'stamina-point']);
+    const staminaRow = weapon.payload.weaponView.statSections.find(section => section.sourceStat === 'chainaxe_defence_stat')
+      .rows.find(item => item.label === '耐力');
+    assert.ok(staminaRow, 'the concise player label retains its typed stamina-point unit in Source');
+    assert.deepEqual(staminaRow.values.map(value => value.displayValue.unit), ['stamina-point', 'stamina-point']);
+  });
+});
+
+// Scenario: a display value is changed without changing its raw Source value or formatter.
+// Purpose: reject a row whose displayed number does not match the pinned UI formatting rule.
+test('UnitT35_source-display-value-must-match-raw-value-and-whitelisted-formatter', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'mismatched-display');
+    await copyCurrentInputs(copiedRoot);
+    await updatePinnedTechnical(copiedRoot, technical => {
+      const claim = technical.records.find(record => record.recordId === 'darktide:claim:chainaxe:p1-m1-defence-sprint-cost-60');
+      assert.ok(claim, 'the Source sprint-cost claim is present');
+      claim.payload.displayValue.decimal = '0.98';
+    });
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'out'), mode: 'candidate-preview' }),
+      /displayValue does not match its raw value and Source UI formatter/
     );
   });
 });
 
-// Scenario: the exact 0.0.13 package is supplied to the 0.0.15 release workflow.
+// Scenario: the 0.0.16 candidate contains Source-bound weapon roles and all five stat families for both chainaxe marks.
+// Purpose: only pinned 60/80 display values and per-segment target roles may reach the player preview.
+test('UnitT33_chainaxe-mk-iv-and-mk-xii-render-source-bound-attack-roles-and-five-stat-families', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyCurrentInputs(copiedRoot);
+    const result = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
+    const weapons = JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, 'weapons.json'), 'utf8'));
+    const views = weapons.records.filter(record => record.kind === 'presentation' && record.payload.weaponView);
+    assert.equal(views.length, 2);
+    const expected = [
+      {
+        mark: 'Mk IV', rows: [2, 5, 3, 5, 4],
+        roles: [
+          { mode: 'light', targetRole: 'single-target', count: 4 },
+          { mode: 'heavy', targetRole: 'multi-target-cleave', count: 2 }
+        ],
+        armorLabels: ['防彈護甲', '甲殼護甲', '不屈']
+      },
+      {
+        mark: 'Mk XII', rows: [2, 6, 3, 4, 4],
+        roles: [
+          { mode: 'light', targetRole: 'multi-target-cleave', count: 2 },
+          { mode: 'heavy', targetRole: 'single-target', count: 2 }
+        ],
+        armorLabels: ['防彈護甲', '甲殼護甲', '不屈', '被感染']
+      }
+    ];
+    for (const [index, expectation] of expected.entries()) {
+      const view = views[index].payload.weaponView;
+      assert.equal(view.markLabel, expectation.mark);
+      assert.deepEqual(view.attackModes.map(mode => ({
+        mode: mode.mode,
+        targetRole: mode.segments[0].targetRole,
+        count: mode.segments.length
+      })), expectation.roles);
+      assert.equal(view.statSections.length, 5);
+      assert.deepEqual(view.statSections.map(section => section.rows.length), expectation.rows);
+      assert.equal(view.statSections.reduce((count, section) => count + section.rows.length, 0), 19);
+      for (const row of view.statSections.flatMap(section => section.rows)) {
+        assert.equal(row.claimRefs.length, 2, row.label);
+        assert.deepEqual(row.values.map(value => value.comparisonStat.decimal), ['60', '80'], row.label);
+        assert.ok(row.values.every(value => value.displayValue.status === 'known' && value.claimRef), row.label);
+      }
+      const armorRows = view.statSections.find(section => section.sourceStat === 'chainaxe_armor_pierce_stat').rows;
+      for (const armorLabel of expectation.armorLabels) {
+        assert.ok(armorRows.some(row => row.label.includes(armorLabel)), `${expectation.mark} includes ${armorLabel} damage values`);
+      }
+    }
+  });
+});
+
+// Scenario: a new armor class appears in a pinned Chainaxe damage modifier without a player label.
+// Purpose: reject unmapped armor rows instead of silently omitting their numeric values from the preview.
+test('UnitT34_chainaxe-unmapped-armor-class-fails-closed', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    await copyCurrentInputs(copiedRoot);
+    const claimId = 'darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60';
+    await updatePinnedTechnical(copiedRoot, technical => {
+      const claim = technical.records.find(record => record.recordId === claimId);
+      assert.ok(claim, 'the representative light armor comparison claim is present');
+      claim.payload.context.armorClass = 'void_shield';
+      claim.payload.property = 'damage_templates.default_light_chainaxe.targets[1].armor_damage_modifier.attack[armor_types.void_shield]';
+    });
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, 'out'), mode: 'candidate-preview' }),
+      /invalid armor-penetration display contract/
+    );
+  });
+});
+
+// Scenario: a Source weapon claimRefs list is redirected to an existing record of the wrong kind.
+// Purpose: require every weapon-level comparison claim reference to resolve as a Source claim.
+test('UnitT36_source-weapon-claimrefs-must-resolve-to-claims', async () => {
+  await withTempDirectory(async tempRoot => {
+    const copiedRoot = path.join(tempRoot, 'repo');
+    const outputRoot = path.join(tempRoot, 'out');
+    await copyBuildInputs(copiedRoot);
+    await updatePinnedTechnical(copiedRoot, technical => {
+      const weapon = technical.records.find(record => record.recordId === 'fixture:weapon:sample');
+      assert.ok(weapon, 'the fixture Source weapon is present');
+      weapon.payload.claimRefs = [weapon.recordId];
+    });
+    await assert.rejects(
+      buildW01({ repoRoot: copiedRoot, outputRoot }),
+      /invalid claimRefs kind weapon/
+    );
+    await assert.rejects(readdir(outputRoot), { code: 'ENOENT' });
+  });
+});
+
+// Scenario: the exact 0.0.13 package is supplied to the 0.0.16 release workflow.
 // Purpose: retain every prior data file byte-for-byte while advancing the current preview candidate.
 test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { skip: !publishedR13Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1676,8 +1796,8 @@ test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { s
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.publicationEligible, false);
     assert.equal(currentReceipt.formalPublishAllowed, false);
     assert.ok(priorDataRows.length > 0);
@@ -1693,37 +1813,37 @@ test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { s
   });
 });
 
-// Scenario: the exact 0.0.14 package from its authoring commit is supplied to the 0.0.15 workflow.
-// Purpose: pin the prior package identity and retain every immutable .14 data URL and byte.
-test('UnitT33_exact-0-0-14-identity-and-data-remain-immutable-in-0-0-15', { skip: !publishedR14Root }, async () => {
+// Scenario: the exact 0.0.15 package from its authoring commit is supplied to the 0.0.16 workflow.
+// Purpose: pin the prior package identity and retain every immutable .15 data URL and byte.
+test('UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-16', { skip: !publishedR15Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
-    const priorReceipt = JSON.parse(await readFile(path.join(publishedR14Root, 'receipt.json'), 'utf8'));
-    const priorVersionBytes = await readFile(path.join(publishedR14Root, 'version.json'));
-    assert.equal(priorReceipt.contentVersion, '0.0.14');
-    assert.equal(priorReceipt.web.authoringCommit, 'b57d6268a470009a560eb03a8a3da4ba6748f106');
-    assert.equal(priorReceipt.buildId, '6591d2c886a7bb1bb41f8dc9cb7e261dea570ebd0d8e7e956ee5e4d3d536daa4');
-    assert.equal(priorReceipt.dataRevision, '9bd96c5e5dead2999ef76ce9b86d0568724b761050ea3ec40b66e47ff815778d');
-    assert.equal(priorReceipt.manifestPath, 'data/9bd96c5e5dead2999ef76ce9b86d0568724b761050ea3ec40b66e47ff815778d/manifest.json');
-    assert.equal(priorReceipt.manifestSha256, '58c326e0777cda314bb9016e0d8f3cb748cc59de1ceb33bd0ac4b92fcd717492');
-    assert.equal(sha256(priorVersionBytes), '86f853ffc0b38c17e31b7c224dcacaa9344c9fa4e8f9f2bee3ae1dbdf7fe5b2d');
+    const priorReceipt = JSON.parse(await readFile(path.join(publishedR15Root, 'receipt.json'), 'utf8'));
+    const priorVersionBytes = await readFile(path.join(publishedR15Root, 'version.json'));
+    assert.equal(priorReceipt.contentVersion, '0.0.15');
+    assert.equal(priorReceipt.web.authoringCommit, 'b3836b0e4ed8698aefff2973ad77a507709a39a9');
+    assert.equal(priorReceipt.buildId, 'f1861d87432e029dc481b0aecf766453b7be19f14ebc0b9027f4d272b9f9ae05');
+    assert.equal(priorReceipt.dataRevision, '8779928fdee5e31577bb8f33ccc94980d5ebb47d29d62a6aeb4571b0ae2e350c');
+    assert.equal(priorReceipt.manifestPath, 'data/8779928fdee5e31577bb8f33ccc94980d5ebb47d29d62a6aeb4571b0ae2e350c/manifest.json');
+    assert.equal(priorReceipt.manifestSha256, '6b607fafe5a2ee07b15872b6b08da96a8457fb86c134a5e4876c633fcee56b81');
+    assert.equal(sha256(priorVersionBytes), '529b72a85d6e5a602c3a29f754d402251ab511d165c1d20f04dddf3c429bee22');
     const priorDataRows = priorReceipt.files.filter(row => row.path.startsWith('data/'));
-    await cp(publishedR14Root, outputRoot, { recursive: true });
+    await cp(publishedR15Root, outputRoot, { recursive: true });
 
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.15');
-    assert.equal(currentReceipt.contentVersion, '0.0.15');
+    assert.equal(current.receipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.16');
     assert.equal(currentReceipt.publicationEligible, false);
     assert.equal(currentReceipt.formalPublishAllowed, false);
     assert.ok(priorDataRows.length > 0);
     for (const row of priorDataRows) {
-      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.14 data row ${row.path}`);
+      assert.deepEqual(currentRows.get(row.path), row, `retained 0.0.15 data row ${row.path}`);
       assert.deepEqual(
         await readFile(path.join(outputRoot, ...row.path.split('/'))),
-        await readFile(path.join(publishedR14Root, ...row.path.split('/'))),
-        `retained 0.0.14 data bytes ${row.path}`
+        await readFile(path.join(publishedR15Root, ...row.path.split('/'))),
+        `retained 0.0.15 data bytes ${row.path}`
       );
     }
     await assertExactOutputInventory(outputRoot, currentReceipt.files);

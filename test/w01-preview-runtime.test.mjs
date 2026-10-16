@@ -203,7 +203,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(candidatePage.get('status').dataset.state, undefined);
   assert.equal(candidatePage.get('status').textContent, '資料已載入，內容仍待審核。');
   assert.equal(candidatePage.get('package-warning').textContent, '說明文字與遊戲版本尚未核對，內容仍待審核。');
-  assert.equal(candidatePage.get('content').children.length, 3);
+  assert.equal(candidatePage.get('content').children.length, 4);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
   assert.match(candidateText, /以下數值不含其他加成或減免。/);
@@ -223,24 +223,52 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /先蓄力再鎖定：鎖定敵人超過 0\.25 秒，顱腦崩裂使其輕微踉蹌一次。/);
   assert.match(candidateText, /提速/);
   assert.match(candidateText, /你的移動速度提高 20%。/);
-  assert.match(candidateText, /傷害素質 60% → 80%：輕攻擊對第一個目標的威力 113 → 119。/);
-  assert.match(candidateText, /護甲穿透素質 60% → 80%：輕攻擊對防彈護甲的傷害倍率約 1\.60 → 1\.76 倍。/);
-  assert.match(candidateText, /這些是傷害計算值，不是實際扣血量。/);
+  assert.match(candidateText, /Mk IV/);
+  assert.match(candidateText, /Mk XII/);
+  assert.match(candidateText, /第 1 段・單體/);
+  assert.match(candidateText, /第 1 段・群體（順劈）/);
+  assert.match(candidateText, /輕攻擊第一個目標攻擊威力60%：113\.00 → 80%：119\.00/);
+  assert.match(candidateText, /輕攻擊對防彈護甲的敵人傷害倍率60%：160\.23% → 80%：176\.04%/);
+  assert.match(candidateText, /對不屈的敵人傷害倍率/);
+  assert.match(candidateText, /對被感染的敵人傷害倍率/);
+  assert.match(candidateText, /衝刺體力消耗60%：0\.97 耐力／秒 → 80%：0\.93 耐力／秒/);
+  assert.match(candidateText, /耐力60%：\+4\.00 → 80%：\+4\.00/);
+  assert.match(candidateText, /推擊耐力消耗60%：1\.80 耐力 → 80%：1\.40 耐力/);
+  assert.match(candidateText, /輕攻擊特殊動作首段鋸擊威力/);
+  assert.match(candidateText, /閃避距離修正/);
+  assert.match(candidateText, /閃避速度修正60%：\+0\.00% → 80%：\+0\.00%/);
+  assert.match(candidateText, /60% 與 80% 是比較點，不代表掉落上下限/);
+  assert.match(candidateText, /攻擊威力和鋸擊威力不等於實際扣血/);
   assert.doesNotMatch(candidateText, /已收錄的攻擊數值：80、140。|已收錄的護甲修正值：1\.035、1\.965。|其他攻擊資料尚未補齊。/);
-  assert.doesNotMatch(candidateText, /本次比較上下限|比較下限|比較上限|可取得範圍|掉落範圍|全域範圍|160\.23%|176\.04%/);
+  assert.doesNotMatch(candidateText, /可取得範圍|全域範圍/);
   assert.doesNotMatch(candidateText, /Brain Rupture|Movement Speed/);
   assert.doesNotMatch(candidateText, /Source|claim|point|ratio|Steam Build|SYP-311|W01/);
 
-  const descendants = node => [node, ...node.children.flatMap(descendants)];
+  const parentByNode = new Map();
+  const descendants = (node, parent = null) => {
+    if (parent) parentByNode.set(node, parent);
+    return [node, ...node.children.flatMap(child => descendants(child, node))];
+  };
   const contentNodes = descendants(candidatePage.get('content'));
   const lists = contentNodes.filter(node => node.tagName === 'ul');
   const listItems = contentNodes.filter(node => node.tagName === 'li');
-  assert.equal(lists.length, 9);
-  assert.equal(listItems.length, 20);
+  assert.equal(lists.length, 17);
+  assert.equal(listItems.length, 55);
   assert.ok(lists.every(list => list.children.length > 0));
   const skillCardNodes = descendants(candidatePage.get('content').children[0]);
   assert.equal(skillCardNodes.filter(node => node.tagName === 'ul').length, 5);
   assert.equal(skillCardNodes.filter(node => node.tagName === 'li').length, 15);
+  const weaponViews = contentNodes.filter(node => node.className === 'chainaxe-view');
+  assert.equal(weaponViews.length, 2);
+  for (const view of weaponViews) {
+    let card = parentByNode.get(view);
+    while (card && card.className !== 'card') card = parentByNode.get(card);
+    assert.ok(card, 'each Chainaxe view belongs to its weapon card');
+    const cardText = renderedText(card);
+    assert.doesNotMatch(cardText, /官方原句（忠實翻譯）|繁體中文官方原文（待審）/);
+    assert.equal((cardText.match(/突擊鏈斧/g) ?? []).length, 1, 'the official weapon name appears once as the card title');
+  }
+  assert.equal(contentNodes.filter(node => node.className === 'chainaxe-stat-row').length, 38);
   const images = contentNodes.filter(node => node.tagName === 'img');
   assert.equal(images.length, 2);
   assert.deepEqual(images.map(image => image.attributes.src), [
@@ -364,7 +392,7 @@ test('UnitT11_runtime-selects-only-source-verified-tier-presentations', async t 
   const page = await runPreviewModule(candidateOutput);
   assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
   const cards = page.get('content').children;
-  assert.equal(cards.length, 3);
+  assert.equal(cards.length, 4);
   const blessingCard = cards.find(card => card.children.some(child => child.tagName === 'label' && child.children.some(nested => nested.tagName === 'select')));
   assert.ok(blessingCard, 'the blessing card has an accessible tier selector');
   const selector = blessingCard.children.find(child => child.tagName === 'label')?.children.find(child => child.tagName === 'select');

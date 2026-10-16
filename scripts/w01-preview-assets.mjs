@@ -73,10 +73,27 @@ main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5r
 .detail-section h4 { margin: .9rem 0 .35rem; color: #d8aa68; }
 .detail-section ul { margin: 0; padding-inline-start: 1.35rem; }
 .detail-section li { margin-block: .25rem; white-space: pre-wrap; }
+.chainaxe-view { margin-block: 1rem; padding-top: .8rem; border-top: 1px solid #414749; }
+.chainaxe-view h4, .chainaxe-stat-section h5 { margin: .6rem 0 .35rem; color: #d8aa68; }
+.chainaxe-attack-modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+.chainaxe-attack-mode { min-width: 0; padding: .65rem; border-radius: .35rem; background: #1c2123; }
+.chainaxe-attack-mode h5 { margin: 0 0 .45rem; }
+.chainaxe-attack-segments { display: flex; flex-wrap: wrap; gap: .35rem; }
+.chainaxe-attack-segment { padding: .2rem .45rem; border: 1px solid #596365; border-radius: 999px; color: #f3eee7; font-size: .85rem; }
+.chainaxe-stat-section { margin-top: .75rem; }
+.chainaxe-stat-rows { display: grid; gap: .35rem; margin: 0; padding: 0; list-style: none; }
+.chainaxe-stat-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem .75rem; padding: .4rem .5rem; border-radius: .3rem; background: #252c2e; }
+.chainaxe-stat-value { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.chainaxe-view-note { margin: .75rem 0 0; color: #bac1c1; font-size: .9rem; }
 .official-text { white-space: pre-wrap; }
 #status[data-state="error"] { color: #ffb8a8; }
 .revision, footer { color: #bac1c1; font-size: .85rem; }
 footer { padding-block: 1rem 2rem; }
+@media (max-width: 420px) {
+  .chainaxe-attack-modes { grid-template-columns: 1fr; }
+  .chainaxe-stat-row { grid-template-columns: 1fr; }
+  .chainaxe-stat-value { text-align: left; white-space: normal; }
+}
 `,
   js: `const domainKinds = ["skills", "blessings", "weapons", "terms", "game-changes"];
 const contentVersionPattern = /^(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)$/;
@@ -261,6 +278,109 @@ function validateTierPresentations(record, recordsById) {
   }
 }
 
+function formatChainaxeDisplay(value, omitStaminaUnit = false) {
+  if (!value || value.displayValue?.status !== "known" || typeof value.displayValue.decimal !== "string" ||
+      !["fixed-2", "fixed-2-signed", "percentage-fixed-2", "multiplier-percent-fixed-2-signed", "floor-fixed-2"].includes(value.displayFormat)) {
+    throw new Error("鏈斧素質顯示值無效。");
+  }
+  let decimal = value.displayValue.decimal;
+  if (["fixed-2-signed", "multiplier-percent-fixed-2-signed"].includes(value.displayFormat) && !decimal.startsWith("-")) decimal = "+" + decimal;
+  const suffixByUnit = {
+    "attack-power-point": "",
+    "percent": "%",
+    "stamina-point": " 耐力",
+    "stamina-point-per-second": " 耐力／秒",
+    "dodge-count": " 次",
+    "ratio": ""
+  };
+  if (!Object.hasOwn(suffixByUnit, value.displayValue.unit)) throw new Error("鏈斧素質單位無效。");
+  const suffix = omitStaminaUnit && value.displayValue.unit === "stamina-point" ? "" : suffixByUnit[value.displayValue.unit];
+  return decimal + suffix;
+}
+
+function renderChainaxeWeaponView(view, parent) {
+  const exactKeys = (value, keys) => value && Object.keys(value).sort().join(",") === [...keys].sort().join(",");
+  if (!exactKeys(view, ["markLabel", "attackHeading", "comparisonHeading", "note", "attackModes", "statSections"]) ||
+      !["Mk IV", "Mk XII"].includes(view.markLabel) || !Array.isArray(view.attackModes) || !Array.isArray(view.statSections)) {
+    throw new Error("鏈斧武器資料無效。");
+  }
+  const expectedRoles = view.markLabel === "Mk IV"
+    ? [{ mode: "light", targetRole: "single-target", count: 4 }, { mode: "heavy", targetRole: "multi-target-cleave", count: 2 }]
+    : [{ mode: "light", targetRole: "multi-target-cleave", count: 2 }, { mode: "heavy", targetRole: "single-target", count: 2 }];
+  if (view.attackModes.length !== expectedRoles.length || view.attackModes.some((mode, index) =>
+    !exactKeys(mode, ["mode", "segments"]) || mode.mode !== expectedRoles[index].mode || !Array.isArray(mode.segments) ||
+    mode.segments.length !== expectedRoles[index].count || mode.segments.some((segment, segmentIndex) =>
+      !exactKeys(segment, ["index", "targetRole"]) || segment.index !== segmentIndex + 1 || segment.targetRole !== expectedRoles[index].targetRole))) {
+    throw new Error("鏈斧攻擊段定位資料無效。");
+  }
+  const expectedStats = [
+    ["chainaxe_dps_stat", "傷害"], ["chainaxe_armor_pierce_stat", "護甲穿透"], ["chainaxe_defence_stat", "防禦"],
+    ["chainaxe_sawing_stat", "鏈鋸"], ["chainaxe_mobility_stat", "移動性"]
+  ];
+  const expectedCounts = view.markLabel === "Mk IV" ? [2, 5, 3, 5, 4] : [2, 6, 3, 4, 4];
+  if (view.statSections.length !== expectedStats.length || view.statSections.some((section, index) =>
+    !exactKeys(section, ["sourceStat", "label", "rows"]) || section.sourceStat !== expectedStats[index][0] ||
+    section.label !== expectedStats[index][1] || !Array.isArray(section.rows) || section.rows.length !== expectedCounts[index])) {
+    throw new Error("鏈斧素質比較資料不完整。");
+  }
+  if (view.statSections.reduce((count, section) => count + section.rows.length, 0) !== 19) throw new Error("鏈斧素質比較資料不完整。");
+  const armorRows = view.statSections[1].rows;
+  const requiredArmorNames = view.markLabel === "Mk IV" ? ["防彈護甲", "甲殼護甲", "不屈"] : ["防彈護甲", "甲殼護甲", "不屈", "被感染"];
+  if (requiredArmorNames.some(name => !armorRows.some(row => row.label.includes(name)))) throw new Error("鏈斧護甲對照資料不完整。");
+  const banned = /smiter|linesman|tank|resistant|disgustingly_resilient|chainaxe_|Source|claim|ratio|point|review|provenance|coverage|status/i;
+  const viewText = [view.attackHeading, view.comparisonHeading, view.note, ...view.statSections.flatMap(section => [section.label, ...section.rows.map(row => row.label)])].join(" ");
+  if (banned.test(viewText)) throw new Error("鏈斧玩家文字含有不支援的欄位名稱。");
+
+  const section = document.createElement("section");
+  section.className = "chainaxe-view";
+  appendText(section, "h4", "", view.markLabel);
+  appendText(section, "p", "chainaxe-view-heading", view.attackHeading);
+  const modes = document.createElement("div");
+  modes.className = "chainaxe-attack-modes";
+  const roleLabels = { "single-target": "單體", "multi-target-cleave": "群體（順劈）" };
+  for (const mode of view.attackModes) {
+    const modeCard = document.createElement("div");
+    modeCard.className = "chainaxe-attack-mode";
+    appendText(modeCard, "h5", "", mode.mode === "light" ? "輕攻擊" : "重攻擊");
+    const segments = document.createElement("div");
+    segments.className = "chainaxe-attack-segments";
+    for (const segment of mode.segments) {
+      const roleLabel = roleLabels[segment.targetRole];
+      if (!roleLabel) throw new Error("鏈斧攻擊段定位類型無效。");
+      appendText(segments, "span", "chainaxe-attack-segment", "第 " + segment.index + " 段・" + roleLabel);
+    }
+    modeCard.append(segments);
+    modes.append(modeCard);
+  }
+  section.append(modes);
+  appendText(section, "h4", "", view.comparisonHeading);
+  for (const stat of view.statSections) {
+    const statSection = document.createElement("section");
+    statSection.className = "chainaxe-stat-section";
+    appendText(statSection, "h5", "", stat.label);
+    const rows = document.createElement("ul");
+    rows.className = "chainaxe-stat-rows";
+    for (const row of stat.rows) {
+      if (typeof row.label !== "string" || !Array.isArray(row.claimRefs) || row.claimRefs.length !== 2 ||
+          !Array.isArray(row.values) || row.values.length !== 2 || row.values.some((value, index) =>
+            value.claimRef !== row.claimRefs[index] || value.comparisonStat?.status !== "known" || value.comparisonStat.unit !== "percent" ||
+            value.comparisonStat.decimal !== (index === 0 ? "60" : "80"))) {
+        throw new Error("鏈斧素質列未綁定 60% 與 80% 比較值。");
+      }
+      const item = document.createElement("li");
+      item.className = "chainaxe-stat-row";
+      appendText(item, "span", "chainaxe-stat-label", row.label);
+      const omitStaminaUnit = row.label === "耐力";
+      appendText(item, "span", "chainaxe-stat-value", "60%：" + formatChainaxeDisplay(row.values[0], omitStaminaUnit) + " → 80%：" + formatChainaxeDisplay(row.values[1], omitStaminaUnit));
+      rows.append(item);
+    }
+    statSection.append(rows);
+    section.append(statSection);
+  }
+  appendText(section, "p", "chainaxe-view-note", view.note);
+  parent.append(section);
+}
+
 function renderPresentation(record, parent, termsById) {
   const payload = record.payload;
   if (record.owner !== "web" || record.kind !== "presentation" || record.locale !== "zh-TW") {
@@ -296,7 +416,7 @@ function renderPresentation(record, parent, termsById) {
     const displayedPayload = selectedOption
       ? { ...payload, official: selectedOption.official, detailSections: selectedOption.detailSections }
       : payload;
-    if (displayedPayload.official) {
+    if (displayedPayload.official && !displayedPayload.weaponView) {
       const localized = displayedPayload.official.localizations?.["zh-TW"];
       if (!localized) throw new Error("官方文字缺少繁體中文內容，預覽不會以英文回退。");
       if (localized.origin === "faithful-translation") {
@@ -319,6 +439,7 @@ function renderPresentation(record, parent, termsById) {
       appendText(presentationBody, "p", "official-text", localized.text);
       renderErrata(displayedPayload.official, payload.errata ?? [], presentationBody);
     }
+    if (displayedPayload.weaponView) renderChainaxeWeaponView(displayedPayload.weaponView, presentationBody);
   for (const [key, label] of Object.entries(detailLabels)) {
     const items = displayedPayload.detailSections?.[key];
     if (!Array.isArray(items)) throw new Error("繁體中文呈現缺少五節資料。");

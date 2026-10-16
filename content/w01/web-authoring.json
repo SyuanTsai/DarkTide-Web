@@ -814,59 +814,132 @@
         },
         "errata": [],
         "detailSections": {
-          "effects": [
-            {
-              "itemId": "chainaxe-attack-power-comparison",
-              "parts": [
-                { "kind": "literal", "text": "傷害素質 " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "comparison-stat" },
-                { "kind": "literal", "text": " → " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "comparison-stat" },
-                { "kind": "literal", "text": "：輕攻擊對第一個目標的威力 " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60", "format": "comparison-value" },
-                { "kind": "literal", "text": " → " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80", "format": "comparison-value" },
-                { "kind": "literal", "text": "。" }
-              ],
-              "claimRefs": [
-                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
-                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80"
-              ]
-            },
-            {
-              "itemId": "chainaxe-armored-modifier-comparison",
-              "parts": [
-                { "kind": "literal", "text": "護甲穿透素質 " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "comparison-stat" },
-                { "kind": "literal", "text": " → " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "comparison-stat" },
-                { "kind": "literal", "text": "：輕攻擊對防彈護甲的傷害倍率約 " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60", "format": "comparison-value" },
-                { "kind": "literal", "text": " → " },
-                { "kind": "source-comparison", "bindingRef": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80", "format": "comparison-value" },
-                { "kind": "literal", "text": " 倍。" }
-              ],
-              "claimRefs": [
-                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
-                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
-              ]
-            }
-          ],
+          "effects": [],
           "conditions": [],
           "calculation": [],
-          "notes": [
+          "notes": [],
+          "extra": []
+        },
+        "weaponView": {
+          "markLabel": "Mk IV",
+          "attackHeading": "遊戲顯示的攻擊段定位",
+          "comparisonHeading": "素質比較點（60% → 80%）",
+          "note": "60% 與 80% 是比較點，不代表掉落上下限；攻擊威力和鋸擊威力不等於實際扣血。",
+          "statSections": [
             {
-              "itemId": "chainaxe-comparison-scope",
-              "text": "這些是傷害計算值，不是實際扣血量。",
-              "claimRefs": [
-                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
-                "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
-                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
-                "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80"
-              ]
+              "sourceStat": "chainaxe_dps_stat",
+              "label": "傷害"
+            },
+            {
+              "sourceStat": "chainaxe_armor_pierce_stat",
+              "label": "護甲穿透"
+            },
+            {
+              "sourceStat": "chainaxe_defence_stat",
+              "label": "防禦"
+            },
+            {
+              "sourceStat": "chainaxe_sawing_stat",
+              "label": "鏈鋸"
+            },
+            {
+              "sourceStat": "chainaxe_mobility_stat",
+              "label": "移動性"
+            }
+          ]
+        }
+      },
+      "reviewState": "pending"
+    },
+    {
+      "recordId": "web:presentation:chainaxe-p1-m2",
+      "owner": "web",
+      "kind": "presentation",
+      "gameReleaseId": "darktide:1.13.2",
+      "entityRef": "darktide:weapon:chainaxe:p1-m2",
+      "locale": "zh-TW",
+      "sourceRefs": [
+        "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:en:1",
+        "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:zh-TW:1"
+      ],
+      "payload": {
+        "name": "突擊鏈斧",
+        "official": {
+          "sourceRef": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:en:1",
+          "sourceLocale": "en",
+          "resource": "items",
+          "sourceHash": "ca7da17a",
+          "key": "loc_weapon_family_chainaxe_p1_m1",
+          "occurrence": 1,
+          "sourceText": "Assault Chainaxe",
+          "sourceTextSha256": "a85203a0468a248387d34fbb65a4efda6643045f41eba131eb1cd4073be4da33",
+          "segments": [
+            {
+              "segmentId": "segment-1",
+              "kind": "literal",
+              "text": "Assault Chainaxe",
+              "sha256": "a85203a0468a248387d34fbb65a4efda6643045f41eba131eb1cd4073be4da33"
             }
           ],
+          "params": [],
+          "localizations": {
+            "zh-TW": {
+              "origin": "official",
+              "sourceRef": "official:items:ca7da17a:loc_weapon_family_chainaxe_p1_m1:zh-TW:1",
+              "sourceLocale": "zh-TW",
+              "resource": "items",
+              "sourceHash": "ca7da17a",
+              "key": "loc_weapon_family_chainaxe_p1_m1",
+              "occurrence": 1,
+              "sourceText": "突擊鏈斧",
+              "sourceTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89",
+              "segments": [
+                {
+                  "segmentId": "segment-1",
+                  "kind": "literal",
+                  "text": "突擊鏈斧",
+                  "sha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+                }
+              ],
+              "params": []
+            }
+          }
+        },
+        "errata": [],
+        "detailSections": {
+          "effects": [],
+          "conditions": [],
+          "calculation": [],
+          "notes": [],
           "extra": []
+        },
+        "weaponView": {
+          "markLabel": "Mk XII",
+          "attackHeading": "遊戲顯示的攻擊段定位",
+          "comparisonHeading": "素質比較點（60% → 80%）",
+          "note": "60% 與 80% 是比較點，不代表掉落上下限；攻擊威力和鋸擊威力不等於實際扣血。",
+          "statSections": [
+            {
+              "sourceStat": "chainaxe_dps_stat",
+              "label": "傷害"
+            },
+            {
+              "sourceStat": "chainaxe_armor_pierce_stat",
+              "label": "護甲穿透"
+            },
+            {
+              "sourceStat": "chainaxe_defence_stat",
+              "label": "防禦"
+            },
+            {
+              "sourceStat": "chainaxe_sawing_stat",
+              "label": "鏈鋸"
+            },
+            {
+              "sourceStat": "chainaxe_mobility_stat",
+              "label": "移動性"
+            }
+          ]
         }
       },
       "reviewState": "pending"
