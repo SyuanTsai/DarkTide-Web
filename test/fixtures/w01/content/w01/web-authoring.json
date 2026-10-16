@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "1.0.0",
+  "fixtureOnly": true,
+  "gameReleaseId": "fixture-game-1",
+  "references": [
+    {
+      "sourceId": "fixture:official-source:smite",
+      "fixtureOnly": true,
+      "safeSummary": "Synthetic presentation string for contract testing only; not an official game fact."
+    }
+  ],
+  "records": [
+    {
+      "recordId": "web:presentation:fixture-skill-smite",
+      "owner": "web",
+      "kind": "presentation",
+      "gameReleaseId": "fixture-game-1",
+      "entityRef": "fixture:skill:smite",
+      "locale": "zh-TW",
+      "sourceRefs": [
+        "fixture:official-source:smite"
+      ],
+      "payload": {
+        "name": "合成技能示例（修訂2）",
+        "official": {
+          "sourceRef": "fixture:official-source:smite",
+          "sourceLocale": "en",
+          "resource": "fixture/skills",
+          "key": "fixture.cooldown",
+          "occurrence": 1,
+          "sourceText": "Cooldown: 40 seconds.",
+          "sourceTextSha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa",
+          "segments": [
+            {
+              "segmentId": "cooldown",
+              "text": "Cooldown: 40 seconds.",
+              "sha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa"
+            }
+          ],
+          "params": [],
+          "resolvedText": "Cooldown: 40 seconds.",
+          "resolvedTextSha256": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa",
+          "localizations": {
+            "zh-TW": {
+              "origin": "faithful-translation",
+              "text": "冷卻時間：40 秒。",
+              "sha256": "0c95ff69a49fca8fe6c07c9f5a54bd4e6270be4bf7294ebc5c76e396022ceb8c"
+            }
+          }
+        },
+        "errata": [
+          {
+            "erratumId": "fixture-erratum-smite-cooldown",
+            "anchor": {
+              "segmentId": "cooldown",
+              "sourceTextDigest": "a474c376d1febdc86664256edba7e7136740f9b03f1bbda55fec2bb7d6bfe8fa"
+            },
+            "gameReleaseId": "fixture-game-1",
+            "context": {},
+            "problem": "合成展示刻意保留官方摘錄40秒與Source合成claim 35秒的差異，以驗證勘誤呈現。",
+            "claimRef": "fixture:claim:smite-damage",
+            "evidenceRefs": [
+              "fixture:evidence:smite-template"
+            ],
+            "text": "此為合成勘誤樣本：保留原文40秒，Source合成claim為35秒；尚未經人工內容審核，不代表遊戲事實。",
+            "reviewState": "pending"
+          }
+        ],
+        "detailSections": {
+          "effects": [
+            {
+              "itemId": "fixture-effect",
+              "text": "此合成項目僅驗證五節呈現，不代表已確認的遊戲效果。",
+              "claimRefs": []
+            }
+          ],
+          "conditions": [],
+          "calculation": [],
+          "notes": [],
+          "extra": [
+            {
+              "itemId": "fixture-term-reference",
+              "termRef": "fixture:term:smite"
+            }
+          ]
+        }
+      },
+      "reviewState": "pending"
+    },
+    {
+      "recordId": "web:presentation:fixture-blessing",
+      "owner": "web",
+      "kind": "presentation",
+      "gameReleaseId": "fixture-game-1",
+      "entityRef": "fixture:blessing:sample",
+      "locale": "zh-TW",
+      "sourceRefs": [],
+      "payload": {
+        "name": "合成祝福範例",
+        "detailSections": {
+          "effects": [
+            {
+              "itemId": "fixture-tier-note",
+              "text": "此樣本保留已定義階級資料；可取得階級仍為未知。",
+              "claimRefs": []
+            }
+          ],
+          "conditions": [],
+          "calculation": [],
+          "notes": [],
+          "extra": [
+            {
+              "itemId": "fixture-blessing-term",
+              "termRef": "fixture:term:smite"
+            }
+          ]
+        }
+      },
+      "reviewState": "pending"
+    },
+    {
+      "recordId": "web:presentation:fixture-weapon",
+      "owner": "web",
+      "kind": "presentation",
+      "gameReleaseId": "fixture-game-1",
+      "entityRef": "fixture:weapon:sample",
+      "locale": "zh-TW",
+      "sourceRefs": [],
+      "payload": {
+        "name": "合成武器範例",
+        "detailSections": {
+          "effects": [],
+          "conditions": [
+            {
+              "itemId": "fixture-range-note",
+              "text": "保留輸入範圍與單位；本預覽不計算結果。",
+              "claimRefs": []
+            }
+          ],
+          "calculation": [],
+          "notes": [],
+          "extra": [
+            {
+              "itemId": "fixture-weapon-term",
+              "termRef": "fixture:term:smite"
+            }
+          ]
+        }
+      },
+      "reviewState": "pending"
+    },
+    {
+      "recordId": "web:term-localization:fixture-smite",
+      "owner": "web",
+      "kind": "term-localization",
+      "gameReleaseId": "fixture-game-1",
+      "entityRef": "fixture:term:smite",
+      "locale": "zh-TW",
+      "sourceRefs": [],
+      "payload": {
+        "label": "合成詞條",
+        "definition": "只用於驗證共用術語與呈現的連結。"
+      },
+      "reviewState": "pending"
+    }
+  ],
+  "announcements": [
+    {
+      "recordId": "web:announcement:w01-fixture-preview",
+      "owner": "web",
+      "kind": "announcement",
+      "gameReleaseId": "fixture-game-1",
+      "locale": "zh-TW",
+      "sourceRefs": [],
+      "payload": {
+        "title": "隔離預覽範例",
+        "blocks": [
+          {
+            "blockId": "heading",
+            "type": "heading",
+            "text": "資料通路預覽"
+          },
+          {
+            "blockId": "paragraph",
+            "type": "paragraph",
+            "text": "這是 Web 專有的 fixture 公告，用來驗證 ordered blocks；不是正式遊戲公告。"
+          }
+        ]
+      },
+      "reviewState": "pending"
+    }
+  ]
+}
