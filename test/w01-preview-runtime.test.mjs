@@ -214,6 +214,10 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.equal(fixturePage.get('status').textContent, '資料已載入，內容仍待審核。');
   const fixturePreview = JSON.parse(await readFile(path.join(fixtureOutput, 'preview.json'), 'utf8'));
   assert.equal(Object.hasOwn(fixturePreview, 'candidatePreviewOnly'), false);
+  const fixtureHtml = await readFile(path.join(fixtureOutput, 'index.html'), 'utf8');
+  assert.doesNotMatch(fixtureHtml, /名詞說明|terms-heading|terms-content/);
+  assert.match(renderedText(fixturePage.get('content')), /合成詞條：只用於驗證共用術語與呈現的連結。/,
+    'term references still resolve inline from the verified terms domain');
 
   const candidateRepo = path.join(tempRoot, 'candidate-repo');
   const candidateOutput = path.join(tempRoot, 'candidate-output');
@@ -318,7 +322,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
     link.textContent === '圖示來源：Games Lantern' && !link.attributes.rel));
   const playerCopy = [
     candidatePage.get('package-warning'), candidatePage.get('status'), candidatePage.get('content'),
-    candidatePage.get('announcement-content'), candidatePage.get('changes-content'), candidatePage.get('terms-content'),
+    candidatePage.get('announcement-content'), candidatePage.get('changes-content'),
     candidatePage.get('revision')
   ].map(renderedText).join(' ');
   assert.doesNotMatch(playerCopy, /Source|claim|point|ratio|Steam Build|資料修訂|SYP-311|W01/);
@@ -497,6 +501,8 @@ test('UnitT10_domain-requests-start-together-before-first-response-and-hash-fail
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   const manifestUrl = new URL(release.manifest_path, 'http://w01.test/');
   const domainPaths = new Set(manifest.files.map(file => new URL(file.path, manifestUrl).pathname));
+  const termsFile = manifest.files.find(file => file.kind === 'terms');
+  assert.ok(termsFile, 'the shared manifest still includes terms');
   let notifyFirstDomainRequest;
   const firstDomainRequest = new Promise(resolve => { notifyFirstDomainRequest = resolve; });
   const requestedPaths = [];
@@ -535,11 +541,11 @@ test('UnitT10_domain-requests-start-together-before-first-response-and-hash-fail
   assert.equal(new Set(requestedPaths).size, 5);
   assert.equal(page.get('status').dataset.state, undefined, page.get('status').textContent);
 
-  const skillsPath = new URL(manifest.files.find(file => file.kind === 'skills').path, manifestUrl).pathname;
+  const termsPath = new URL(termsFile.path, manifestUrl).pathname;
   const badHashPage = await runPreviewModule(fixtureOutput, async (input, init, packageFetch) => {
     const response = await packageFetch(input, init);
     const url = new URL(input, 'http://w01.test');
-    if (url.pathname !== skillsPath) return response;
+    if (url.pathname !== termsPath) return response;
     const bytes = new Uint8Array(await response.arrayBuffer());
     bytes[bytes.length - 1] ^= 1;
     return new Response(bytes, { status: 200 });
@@ -547,7 +553,6 @@ test('UnitT10_domain-requests-start-together-before-first-response-and-hash-fail
   assert.equal(badHashPage.get('status').dataset.state, 'error');
   assert.match(badHashPage.get('status').textContent, /雜湊不符/);
   assert.equal(badHashPage.get('content')?.children.length ?? 0, 0);
-  assert.equal(badHashPage.get('terms-content')?.children.length ?? 0, 0);
   assert.equal(badHashPage.get('changes-content')?.children.length ?? 0, 0);
 });
 
@@ -601,7 +606,6 @@ test('UnitT11_runtime-selects-only-source-verified-tier-presentations', async t 
   assert.equal(rejectedPage.get('status').dataset.state, 'error');
   assert.match(rejectedPage.get('status').textContent, /階級資料與套件功能標記不一致/);
   assert.equal(rejectedPage.get('content')?.children.length ?? 0, 0);
-  assert.equal(rejectedPage.get('terms-content')?.children.length ?? 0, 0);
 });
 
 // Scenario: a verified tier-specific display claim resolves to zero percent.

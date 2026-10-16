@@ -29,10 +29,6 @@ export const previewAssets = {
       <h2 id="changes-heading">遊戲更新</h2>
       <div id="changes-content"></div>
     </section>
-    <section aria-labelledby="terms-heading">
-      <h2 id="terms-heading">名詞說明</h2>
-      <div id="terms-content"></div>
-    </section>
     <p id="revision" class="revision"></p>
   </main>
   <footer>目前顯示的內容尚待審核。</footer>
@@ -60,8 +56,8 @@ main { display: grid; gap: 1.4rem; padding-bottom: 2.5rem; }
 main > section { padding: 1.25rem; border: 1px solid #414749; border-radius: .5rem; background: #1c2123; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; }
 .cards > .card:has(.chainaxe-view) { grid-column: 1 / -1; }
-.card, .term, .announcement-card { padding: 1rem; border-radius: .4rem; background: #252c2e; }
-.card h3, .term h3, .announcement-card h3, .game-change h3 { margin-top: 0; color: #e5c18d; }
+.card, .announcement-card { padding: 1rem; border-radius: .4rem; background: #252c2e; }
+.card h3, .announcement-card h3, .game-change h3 { margin-top: 0; color: #e5c18d; }
 .official-label, .errata-label { color: #d8aa68; font-weight: 700; }
 .errata { padding: .8rem; border-inline-start: .25rem solid #d8aa68; background: #332a1e; white-space: pre-wrap; }
 .game-change { padding: 1rem; border-radius: .4rem; background: #252c2e; }
@@ -629,14 +625,6 @@ async function loadPreview() {
     if (terms.some(record => record.owner !== "web" || record.locale !== "zh-TW")) throw new Error("繁體中文術語記錄無效。");
     const termsById = new Map(terms.map(record => [record.entityRef, record.payload]));
     if (termsById.size === 0) throw new Error("沒有可顯示的繁體中文術語記錄。");
-    const termsContent = byId("terms-content");
-    for (const term of terms) {
-      const article = document.createElement("article");
-      article.className = "term";
-      appendText(article, "h3", "", term.payload.label);
-      appendText(article, "p", "", term.payload.definition);
-      termsContent.append(article);
-    }
     const content = byId("content");
     const chainaxeCandidates = presentationRecords.filter(record =>
       record.recordId === "web:presentation:chainaxe-p1-m1" || record.recordId === "web:presentation:chainaxe-p1-m2" || record.entityRef?.startsWith("darktide:weapon:chainaxe:p1-"));
