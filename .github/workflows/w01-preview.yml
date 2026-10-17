@@ -142,6 +142,13 @@ jobs:
           ref: b3836b0e4ed8698aefff2973ad77a507709a39a9
           path: prior-real-0-0-15
           persist-credentials: false
+      - name: Check out the exact published pending 0.0.16 candidate source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Web
+          ref: d0b39c44df0905783d24e1dd1aa5ab0306a18d55
+          path: prior-real-0-0-16
+          persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -351,13 +358,29 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/w01-real-r15"
           cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r15/"
-      - name: Build current pending 0.0.16 candidate preview
+      - name: Rebuild exact published pending 0.0.16 candidate into output
+        working-directory: prior-real-0-0-16
+        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
+      - name: Retain the pinned production baseline in exact published 0.0.16 candidate
+        working-directory: prior-real-0-0-16
+        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
+      - name: Verify exact published 0.0.16 and retained historical data URLs
+        working-directory: prior-real-0-0-16
+        run: npm run w01:verify -- ../web/dist-w01
+      - name: Freeze the verified published 0.0.16 package for lifecycle tests
+        working-directory: prior-real-0-0-16
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/w01-real-r16"
+          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r16/"
+      - name: Build current pending 0.0.17 candidate preview
         working-directory: web
         run: npm run w01:build -- --candidate-preview --output dist-w01
-      - name: Retain the pinned baseline in current 0.0.16 candidate
+      - name: Retain the pinned baseline in current 0.0.17 candidate
         working-directory: web
         run: npm run w01:retain -- --baseline-root ../baseline --output dist-w01
-      - name: Verify current 0.0.16 and retained historical data URLs
+      - name: Verify current 0.0.17 and retained historical data URLs
         working-directory: web
         run: npm run w01:verify -- dist-w01
       - name: Run Web tests against pinned lifecycle packages
@@ -375,6 +398,7 @@ jobs:
           W01_PRIOR_REAL_R13_ROOT: ${{ runner.temp }}/w01-real-r13
           W01_PRIOR_REAL_R14_ROOT: ${{ runner.temp }}/w01-real-r14
           W01_PRIOR_REAL_R15_ROOT: ${{ runner.temp }}/w01-real-r15
+          W01_PRIOR_REAL_R16_ROOT: ${{ runner.temp }}/w01-real-r16
         run: npm test
       - name: Upload only the isolated W01 preview artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -403,7 +427,7 @@ jobs:
         working-directory: web
         env:
           W01_DEPLOYMENT_RECEIPT: ${{ runner.temp }}/w01-preview-deployment-receipt.json
-          W01_PREVIOUS_PACKAGE_ROOT: ${{ runner.temp }}/w01-real-r15
+          W01_PREVIOUS_PACKAGE_ROOT: ${{ runner.temp }}/w01-real-r16
         run: node scripts/w01-preview-deployment-receipt.mjs --output "$W01_DEPLOYMENT_RECEIPT" --previous-package "$W01_PREVIOUS_PACKAGE_ROOT"
       - name: Upload the public preview deployment receipt
         if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'

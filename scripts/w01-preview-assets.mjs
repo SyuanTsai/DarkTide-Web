@@ -13,7 +13,6 @@ export const previewAssets = {
 <body>
   <header class="site-header">
     <h1>Darktide 繁體中文資料</h1>
-    <p id="package-warning" class="warning" role="note">此頁僅供資料預覽，內容尚未核准，不代表已確認的遊戲內容。</p>
   </header>
   <main id="main" aria-labelledby="content-heading">
     <section class="announcement" aria-labelledby="announcement-heading">
@@ -31,7 +30,7 @@ export const previewAssets = {
     </section>
     <p id="revision" class="revision"></p>
   </main>
-  <footer>目前顯示的內容尚待審核。</footer>
+  <footer>此頁為隔離預覽；尚未授權正式發布。</footer>
 </body>
 </html>
 `,
@@ -499,7 +498,7 @@ function renderPresentation(record, parent, termsById) {
             localized.segments.map(segment => segment.text).join("") !== localized.sourceText || /\\{[a-z][a-z0-9_]*:%s\\}/.test(localized.text)) {
           throw new Error("繁體中文官方原文身分或解析結果無效。");
         }
-        appendText(presentationBody, "p", "official-label", "繁體中文官方原文（待審）");
+        appendText(presentationBody, "p", "official-label", "繁體中文官方原文");
       } else {
         throw new Error("繁體中文官方文字來源類型無效。");
       }
@@ -661,7 +660,6 @@ async function loadPreview() {
     }
     if (isPendingPreview) {
       if (typeof preview.warningText !== "string" || preview.warningText.length === 0) throw new Error("待審候選缺少繁體中文風險提示。");
-      byId("package-warning").textContent = "說明文字與遊戲版本尚未核對，內容仍待審核。";
     }
     const announcementRoot = byId("announcement-content");
     for (const announcement of preview.announcements) {
@@ -678,7 +676,7 @@ async function loadPreview() {
       }
       announcementRoot.append(article);
     }
-    status.textContent = "資料已載入，內容仍待審核。";
+    status.textContent = "資料已載入。";
     byId("revision").textContent = "";
   } catch (error) {
     status.dataset.state = "error";

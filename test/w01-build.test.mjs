@@ -193,7 +193,7 @@ async function assertNewMkXIIChainaxePresentation(buildRoot, receipt) {
     readFile(path.join(repoRoot, 'content', 'w01', 'source', 'technical.json'), 'utf8').then(JSON.parse)
   ]);
   const presentation = weaponsDomain.records.find(record => record.recordId === 'web:presentation:chainaxe-p1-m2');
-  assert.ok(presentation, '0.0.16 adds the Mk XII chainaxe presentation');
+  assert.ok(presentation, 'the candidate contains the Mk XII chainaxe presentation');
   const rows = presentation.payload.weaponView.statSections.flatMap(section => section.rows);
   assert.equal(rows.length, 19, 'the Mk XII presentation contains all 19 comparison rows');
 
@@ -318,6 +318,7 @@ test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', a
     assert.equal(preview.announcements[0].payload.blocks[0].blockId, 'heading');
     assert.equal(preview.announcements[0].payload.blocks[1].blockId, 'paragraph');
     assert.equal(preview.announcements[0].reviewState, 'pending');
+    assert.equal(Object.hasOwn(preview, 'warningText'), false, 'synthetic fixture output keeps its separate fixture boundary');
 
     const previewJs = firstFiles.get('preview.js').toString('utf8');
     const versionPatternLiteral = previewJs.match(/const contentVersionPattern = (\/[^\n]+\/);/)?.[1];
@@ -332,7 +333,8 @@ test('UnitT00_deterministic-build-preserves-v17-contract-and-fixture-erratum', a
     assert.ok(previewJs.includes('announcement.payload.blocks'));
     assert.equal(firstFiles.get('index.html').toString('utf8').includes('name="robots" content="noindex, noarchive"'), true);
     assert.equal(firstFiles.get('index.html').toString('utf8').includes('nofollow'), false);
-    assert.equal(firstFiles.get('index.html').toString('utf8').includes('此頁僅供資料預覽'), true);
+    assert.equal(firstFiles.get('index.html').toString('utf8').includes('此頁為隔離預覽；尚未授權正式發布。'), true);
+    assert.equal(firstFiles.get('index.html').toString('utf8').includes('目前顯示的內容尚待審核'), false);
     assert.equal(firstFiles.get('_headers').toString('utf8').includes('X-Robots-Tag: noindex, noarchive'), true);
     assert.equal(firstFiles.get('_headers').toString('utf8').includes('nofollow'), false);
     assert.equal(firstFiles.has('dist/index.html'), false);
@@ -730,6 +732,40 @@ test('UnitT13_native-official-localization-rejects-dangling-locale-source', asyn
   });
 });
 
+// Scenario: required warning-owner paragraphs are missing, blank, or duplicated in a non-fixture candidate.
+// Purpose: reject a candidate that cannot produce one unambiguous nonempty status string from Web-owned authoring.
+test('UnitT39_candidate-preview-requires-one-nonempty-compatibility-warning-owner-paragraph', async () => {
+  await withTempDirectory(async tempRoot => {
+    const invalidCases = [
+      ['missing', authoring => {
+        authoring.announcements[0].payload.blocks = authoring.announcements[0].payload.blocks
+          .filter(block => block.blockId !== 'compatibility-warning');
+      }],
+      ['empty', authoring => {
+        authoring.announcements[0].payload.blocks.find(block => block.blockId === 'compatibility-warning').text = '   ';
+      }],
+      ['duplicate', authoring => {
+        authoring.announcements.push({
+          ...structuredClone(authoring.announcements[0]),
+          recordId: 'web:announcement:w01-duplicate-warning-test'
+        });
+      }]
+    ];
+    for (const [name, mutate] of invalidCases) {
+      const copiedRoot = path.join(tempRoot, name);
+      await copyCurrentInputs(copiedRoot);
+      const authoringPath = path.join(copiedRoot, 'content', 'w01', 'web-authoring.json');
+      const authoring = JSON.parse(await readFile(authoringPath, 'utf8'));
+      mutate(authoring);
+      await writeFile(authoringPath, jsonBytes(authoring));
+      await assert.rejects(
+        buildW01({ repoRoot: copiedRoot, outputRoot: path.join(tempRoot, name + '-out'), mode: 'candidate-preview' }),
+        /exactly one non-empty compatibility-warning paragraph/
+      );
+    }
+  });
+});
+
 // Scenario: a fixed public Source pin and official EN/TC strings compile into one pending shared package.
 // Purpose: real representative claims resolve only their matching native description parameters and all cross-domain references close.
 test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-references', async () => {
@@ -742,6 +778,7 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     const version = JSON.parse(await readFile(path.join(outputRoot, 'version.json'), 'utf8'));
     const manifest = JSON.parse(await readFile(path.join(outputRoot, result.manifestPath), 'utf8'));
     const receipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
+    const preview = JSON.parse(await readFile(path.join(outputRoot, 'preview.json'), 'utf8'));
     const domains = Object.fromEntries(await Promise.all(domainKinds.map(async kind => [
       kind,
       JSON.parse(await readFile(path.join(outputRoot, 'data', result.dataRevision, kind + '.json'), 'utf8'))
@@ -755,11 +792,13 @@ test('UnitT14_real-pending-candidate-renders-exact-locales-and-closes-domain-ref
     assert.equal(manifest.source.sourceRevision, '3af04f0212a88e6b29f91f397178dd6d22c0c27d40566088eca8f8f06d4845c1');
     assert.equal(manifest.source.manifestSha256, '3140d7c5f8f49b2cd9b8574819159079d8542cf165d870af96890ca8efe063d6');
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(version.game_releases[0].content_version, '0.0.16');
+    assert.equal(version.game_releases[0].content_version, '0.0.17');
     assert.equal(receipt.fixtureOnly, false);
     assert.equal(receipt.publicationEligible, false);
     assert.equal(receipt.formalPublishAllowed, false);
     assert.equal(receipt.candidatePreviewOnly, true);
+    assert.equal(preview.warningText, preview.announcements.flatMap(announcement => announcement.payload.blocks)
+      .find(block => block.blockId === 'compatibility-warning').text);
     assert.equal(domains['game-changes'].records.length, 0);
 
     assert.equal(skill.payload.official.sourceText, 'Charge up your Psychic Power and release it to deal immense Damage to a Single Enemy.\n\nThis is an augmented version of {talent_old:%s} dealing {damage:%s} Damage.');
@@ -1029,7 +1068,7 @@ test('UnitT18_pending-candidate-update-retains-prior-data-urls', async () => {
     const current = await buildW01({ repoRoot: copiedRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json')));
     assert.notEqual(current.dataRevision, prior.dataRevision);
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     for (const row of priorDataRows) {
       assert.ok(currentReceipt.files.some(currentRow => currentRow.path === row.path));
       assert.deepEqual(await readFile(path.join(outputRoot, ...row.path.split('/'))), priorDataBytes.get(row.path));
@@ -1072,9 +1111,9 @@ test('UnitT19_invalid-prior-candidate-flags-fail-before-output-mutation', async 
   });
 });
 
-// Scenario: the exact published 0.0.5 package is present in the 0.0.16 candidate's retained history.
+// Scenario: the exact published 0.0.5 package is present in the 0.0.17 candidate's retained history.
 // Purpose: preserve every published 0.0.5 immutable data URL and official text with identical receipt rows and bytes.
-test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-16', { skip: !publishedR5Root }, async () => {
+test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-17', { skip: !publishedR5Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR5Root, outputRoot, { recursive: true });
@@ -1086,8 +1125,8 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-16', { sk
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1123,9 +1162,9 @@ test('UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-16', { sk
   });
 });
 
-// Scenario: the exact published 0.0.6 package is present in the 0.0.16 candidate's retained history.
+// Scenario: the exact published 0.0.6 package is present in the 0.0.17 candidate's retained history.
 // Purpose: preserve every published 0.0.6 immutable data URL and the official text/errata while Source and Web details advance.
-test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-16', { skip: !publishedR6Root }, async () => {
+test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-17', { skip: !publishedR6Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     await cp(publishedR6Root, outputRoot, { recursive: true });
@@ -1137,8 +1176,8 @@ test('UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
 
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1444,7 +1483,7 @@ test('UnitT26_blessing-tier-effects-require-a-typed-selected-tier-binding', asyn
   });
 });
 
-// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.16 output.
+// Scenario: the exact published 0.0.7 package is rebuilt from its public source and retained in the 0.0.17 output.
 // Purpose: preserve every immutable .7 URL and byte while the four-tier selector advances the current candidate.
 test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { skip: !publishedR7Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1459,8 +1498,8 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { sk
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1477,7 +1516,7 @@ test('UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15', { sk
   });
 });
 
-// Scenario: the exact published 0.0.12 package is present in the 0.0.16 candidate's retained history.
+// Scenario: the exact published 0.0.12 package is present in the 0.0.17 candidate's retained history.
 // Purpose: preserve every published 0.0.12 immutable data URL and byte while only Web-owned copy advances.
 test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { skip: !publishedR12Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1491,8 +1530,8 @@ test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { s
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.fixtureOnly, false);
     assert.equal(currentReceipt.candidatePreviewOnly, true);
     assert.equal(currentReceipt.publicationEligible, false);
@@ -1511,8 +1550,8 @@ test('UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15', { s
 });
 
 // Scenario: the pinned Source package provides every paired Chainaxe stat row for both marks.
-// Purpose: the 0.0.16 player view must preserve Source values, display values, official names, and pending-preview isolation.
-test('UnitT29_chainaxe-comparison-rows-resolve-from-all-76-source-claims-in-0-0-16', async () => {
+// Purpose: the 0.0.17 player view must preserve Source values, display values, official names, and pending-preview isolation.
+test('UnitT29_chainaxe-comparison-rows-resolve-from-all-76-source-claims-in-0-0-17', async () => {
   await withTempDirectory(async tempRoot => {
     const copiedRoot = path.join(tempRoot, 'repo');
     const outputRoot = path.join(tempRoot, 'out');
@@ -1570,8 +1609,8 @@ test('UnitT29_chainaxe-comparison-rows-resolve-from-all-76-source-claims-in-0-0-
     }
 
     assert.equal(version.package_kind, 'pending-preview');
-    assert.equal(result.receipt.contentVersion, '0.0.16');
-    assert.equal(version.game_releases[0].content_version, '0.0.16');
+    assert.equal(result.receipt.contentVersion, '0.0.17');
+    assert.equal(version.game_releases[0].content_version, '0.0.17');
     assert.equal(weapon.payload.name, '突擊鏈斧');
     assert.deepEqual(weapon.payload.detailSections.effects, []);
     assert.equal(weapon.payload.weaponView.statSections.reduce((count, section) => count + section.rows.length, 0), 19);
@@ -1732,7 +1771,7 @@ test('UnitT35_source-display-value-must-match-raw-value-and-whitelisted-formatte
   });
 });
 
-// Scenario: the 0.0.16 candidate contains Source-bound weapon roles and all five stat families for both chainaxe marks.
+// Scenario: the 0.0.17 candidate contains Source-bound weapon roles and all five stat families for both chainaxe marks.
 // Purpose: only pinned 60/80 display values and per-segment target roles may reach the player preview.
 test('UnitT33_chainaxe-mk-iv-and-mk-xii-render-source-bound-attack-roles-and-five-stat-families', async () => {
   await withTempDirectory(async tempRoot => {
@@ -1825,7 +1864,7 @@ test('UnitT36_source-weapon-claimrefs-must-resolve-to-claims', async () => {
   });
 });
 
-// Scenario: the exact 0.0.13 package is supplied to the 0.0.16 release workflow.
+// Scenario: the exact 0.0.13 package is supplied to the 0.0.17 release workflow.
 // Purpose: retain every prior data file byte-for-byte while advancing the current preview candidate.
 test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { skip: !publishedR13Root }, async () => {
   await withTempDirectory(async tempRoot => {
@@ -1839,8 +1878,8 @@ test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { s
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.publicationEligible, false);
     assert.equal(currentReceipt.formalPublishAllowed, false);
     assert.ok(priorDataRows.length > 0);
@@ -1856,9 +1895,9 @@ test('UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15', { s
   });
 });
 
-// Scenario: the exact 0.0.15 package from its authoring commit is supplied to the 0.0.16 workflow.
+// Scenario: the exact 0.0.15 package from its authoring commit is supplied to the 0.0.17 workflow.
 // Purpose: pin the prior package identity and retain every immutable .15 data URL and byte.
-test('UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-16', { skip: !publishedR15Root }, async () => {
+test('UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-17', { skip: !publishedR15Root }, async () => {
   await withTempDirectory(async tempRoot => {
     const outputRoot = path.join(tempRoot, 'dist-w01');
     const priorReceipt = JSON.parse(await readFile(path.join(publishedR15Root, 'receipt.json'), 'utf8'));
@@ -1876,8 +1915,8 @@ test('UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-16', { skip
     const current = await buildW01({ repoRoot, outputRoot, mode: 'candidate-preview' });
     const currentReceipt = JSON.parse(await readFile(path.join(outputRoot, 'receipt.json'), 'utf8'));
     const currentRows = new Map(currentReceipt.files.map(row => [row.path, row]));
-    assert.equal(current.receipt.contentVersion, '0.0.16');
-    assert.equal(currentReceipt.contentVersion, '0.0.16');
+    assert.equal(current.receipt.contentVersion, '0.0.17');
+    assert.equal(currentReceipt.contentVersion, '0.0.17');
     assert.equal(currentReceipt.publicationEligible, false);
     assert.equal(currentReceipt.formalPublishAllowed, false);
     assert.ok(priorDataRows.length > 0);

@@ -1253,12 +1253,21 @@ function validateWebAuthoring(authoring, sourceIds, sourceKindById, sourceRefere
     if (seen.has(announcement.recordId)) fail('duplicate Web authoring recordId ' + announcement.recordId);
     seen.add(announcement.recordId);
   }
+  let warningText;
+  if (authoring.fixtureOnly === false) {
+    const warningBlocks = authoring.announcements.flatMap(announcement => announcement.payload.blocks)
+      .filter(block => block.blockId === 'compatibility-warning');
+    if (warningBlocks.length !== 1 || warningBlocks[0].type !== 'paragraph' || warningBlocks[0].text.trim().length === 0) {
+      fail('non-fixture Web authoring must contain exactly one non-empty compatibility-warning paragraph');
+    }
+    warningText = warningBlocks[0].text;
+  }
   if (Object.keys(CHAINAXE_MARKS).some(weaponId => sourceRecordById.has(weaponId))) {
     for (const presentationId of Object.values(CHAINAXE_PRESENTATION_IDS)) {
       if (!seen.has(presentationId)) fail('Web authoring is missing the Source-bound Chainaxe presentation ' + presentationId);
     }
   }
-  return { records: authoring.records, announcements: authoring.announcements, references, usesNativeOfficialLocalizations, usesBlessingTierPresentations };
+  return { records: authoring.records, announcements: authoring.announcements, warningText, references, usesNativeOfficialLocalizations, usesBlessingTierPresentations };
 }
 
 function validateSourceReferenceClosure(sourceRecords, sourceRefs, owner) {
@@ -1785,10 +1794,7 @@ export async function buildW01({ repoRoot = SCRIPT_ROOT, outputRoot = path.join(
   const previewBytes = jsonBytes({
     fixtureOnly,
     publicationEligible,
-    ...(mode === 'candidate-preview' ? {
-      candidatePreviewOnly: true,
-      warningText: '來源快照 ' + lock.gameVersion + ' 與 Steam Build 25681127 的相容性尚未核實；此候選仍待人工內容審核，不代表已核准的遊戲事實。'
-    } : {}),
+    ...(mode === 'candidate-preview' ? { candidatePreviewOnly: true, warningText: webInput.warningText } : {}),
     announcements: webInput.announcements
   });
   const baseFiles = new Map([

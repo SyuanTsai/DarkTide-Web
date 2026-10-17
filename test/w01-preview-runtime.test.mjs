@@ -211,7 +211,7 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
 
   const fixturePage = await runPreviewModule(fixtureOutput);
   assert.equal(fixturePage.get('status').dataset.state, undefined);
-  assert.equal(fixturePage.get('status').textContent, '資料已載入，內容仍待審核。');
+  assert.equal(fixturePage.get('status').textContent, '資料已載入。');
   const fixturePreview = JSON.parse(await readFile(path.join(fixtureOutput, 'preview.json'), 'utf8'));
   assert.equal(Object.hasOwn(fixturePreview, 'candidatePreviewOnly'), false);
   const fixtureHtml = await readFile(path.join(fixtureOutput, 'index.html'), 'utf8');
@@ -226,11 +226,18 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
 
   const candidatePage = await runPreviewModule(candidateOutput);
   assert.equal(candidatePage.get('status').dataset.state, undefined);
-  assert.equal(candidatePage.get('status').textContent, '資料已載入，內容仍待審核。');
-  assert.equal(candidatePage.get('package-warning').textContent, '說明文字與遊戲版本尚未核對，內容仍待審核。');
+  assert.equal(candidatePage.get('status').textContent, '資料已載入。');
+  assert.equal(candidatePage.get('package-warning'), undefined);
+  const candidatePreviewBytes = await readFile(path.join(candidateOutput, 'preview.json'));
+  const candidatePreview = JSON.parse(candidatePreviewBytes);
+  const warningBlock = candidatePreview.announcements.flatMap(announcement => announcement.payload.blocks)
+    .find(block => block.blockId === 'compatibility-warning');
+  assert.equal(candidatePreview.warningText, warningBlock.text);
   assert.equal(candidatePage.get('content').children.length, 3);
   const candidateText = renderedText(candidatePage.get('content'));
   assert.match(candidateText, /顱腦崩裂/);
+  assert.match(candidateText, /繁體中文官方原文/);
+  assert.doesNotMatch(candidateText, /繁體中文官方原文（待審）/);
   assert.match(candidateText, /以下數值不含其他加成或減免。/);
   assert.match(candidateText, /相較於顱腦爆裂，顱腦崩裂傷害提高 50%（1\.5 倍）；這項加成不適用於所有靈能攻擊。/);
   assert.match(candidateText, /顱腦崩裂蓄力時，你會累積反噬；造成傷害後再增加 25%。/);
@@ -253,6 +260,12 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
   assert.match(candidateText, /第 1 段・單體/);
   assert.match(candidateText, /第 1 段・群體（順劈）/);
   assert.match(candidateText, /輕攻擊第一個目標攻擊威力60%：113\.00 → 80%：119\.00/);
+  const announcementText = renderedText(candidatePage.get('announcement-content'));
+  assert.match(announcementText, /W01 最小範圍已完成驗收；其他候選內容尚待審核。/);
+  assert.match(announcementText, /人類核准僅限顱腦崩裂的傷害加成及對應說明/);
+  assert.match(announcementText, /完整武器攻擊資料尚未完成全面核對/);
+  assert.doesNotMatch(announcementText, /claim|Psyker|125|action\/profile|SYP-333|Steam Build/);
+  assert.doesNotMatch(announcementText, /說明文字與遊戲版本尚未核對/);
   assert.match(candidateText, /輕攻擊對防彈護甲的敵人傷害倍率60%：160\.23% → 80%：176\.04%/);
   assert.match(candidateText, /對不屈的敵人傷害倍率/);
   assert.match(candidateText, /衝刺體力消耗60%：0\.97 耐力／秒 → 80%：0\.93 耐力／秒/);
@@ -321,12 +334,18 @@ test('UnitT00_runtime-loads-fixture-and-native-candidate-and-rejects-mismatched-
     link.attributes['aria-label'] === '圖示來源：Games Lantern' && link.attributes.title === '圖示來源：Games Lantern' &&
     link.textContent === '圖示來源：Games Lantern' && !link.attributes.rel));
   const playerCopy = [
-    candidatePage.get('package-warning'), candidatePage.get('status'), candidatePage.get('content'),
+    candidatePage.get('status'), candidatePage.get('content'),
     candidatePage.get('announcement-content'), candidatePage.get('changes-content'),
     candidatePage.get('revision')
   ].map(renderedText).join(' ');
-  assert.doesNotMatch(playerCopy, /Source|claim|point|ratio|Steam Build|資料修訂|SYP-311|W01/);
+  assert.doesNotMatch(playerCopy, /Source|claim|point|ratio|Steam Build|資料修訂|SYP-311/);
   assert.equal(candidatePage.get('revision').textContent, '');
+
+  await writeFile(path.join(candidateOutput, 'preview.json'), jsonBytes({ ...candidatePreview, warningText: '' }));
+  const missingWarningPage = await runPreviewModule(candidateOutput);
+  assert.equal(missingWarningPage.get('status').dataset.state, 'error');
+  assert.equal(missingWarningPage.get('status').textContent, '待審候選缺少繁體中文風險提示。');
+  await writeFile(path.join(candidateOutput, 'preview.json'), candidatePreviewBytes);
 
   await writeFile(path.join(candidateOutput, 'preview.json'), jsonBytes({
     ...JSON.parse(await readFile(path.join(candidateOutput, 'preview.json'), 'utf8')),
