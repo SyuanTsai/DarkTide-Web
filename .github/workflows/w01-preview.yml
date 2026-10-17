@@ -154,6 +154,14 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Classify W01 deployment scope
+        id: deployment-scope
+        if: github.event_name == 'push'
+        working-directory: web
+        env:
+          W01_DEPLOYMENT_SCOPE_BASE: ${{ github.event.before }}
+          W01_DEPLOYMENT_SCOPE_HEAD: ${{ github.sha }}
+        run: node scripts/w01-preview-deploy-scope.mjs --base "$W01_DEPLOYMENT_SCOPE_BASE" --head "$W01_DEPLOYMENT_SCOPE_HEAD"
       - name: Install locked Web dependencies
         working-directory: web
         run: npm ci
@@ -408,7 +416,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Deploy only the fixed W01 preview worker
-        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01' && steps.deployment-scope.outputs.should_deploy == 'true'
         working-directory: web
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -423,14 +431,14 @@ jobs:
           npm run w01:verify
           ./node_modules/.bin/wrangler deploy --config wrangler.w01-preview.json
       - name: Verify the deployed preview and write a deployment receipt
-        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01' && steps.deployment-scope.outputs.should_deploy == 'true'
         working-directory: web
         env:
           W01_DEPLOYMENT_RECEIPT: ${{ runner.temp }}/w01-preview-deployment-receipt.json
           W01_PREVIOUS_PACKAGE_ROOT: ${{ runner.temp }}/w01-real-r16
         run: node scripts/w01-preview-deployment-receipt.mjs --output "$W01_DEPLOYMENT_RECEIPT" --previous-package "$W01_PREVIOUS_PACKAGE_ROOT"
       - name: Upload the public preview deployment receipt
-        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01'
+        if: github.event_name == 'push' && github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/codex/SYP-311-w01' && steps.deployment-scope.outputs.should_deploy == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: darktide-w01-preview-deployment-receipt

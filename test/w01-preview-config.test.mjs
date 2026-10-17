@@ -303,3 +303,38 @@ test('UnitT02_workflow-builds-pending-0-0-17-from-pinned-history', () => {
   assert.equal(steps.some(step => JSON.stringify(step).includes('w01:rollback-r1')), false);
   assert.ok(deploy < deploymentReceipt && deploymentReceipt < receiptUpload);
 });
+
+
+// Scenario: a push contains only contract/schema/fixture/docs/test and deploy-guard changes.
+// Purpose: keep the existing 0.0.17 preview build available while preventing deployment, receipt creation, and receipt upload.
+test('UnitT03_workflow-gates-deployment-and-receipts-on-runtime-paths', () => {
+  const steps = workflow.jobs['isolated-preview'].steps;
+  const scope = steps.find(step => step.name === 'Classify W01 deployment scope');
+  assert.ok(scope);
+  assert.equal(scope.id, 'deployment-scope');
+  assert.equal(scope.if, "github.event_name == 'push'");
+  assert.equal(scope['working-directory'], 'web');
+  assert.equal(scope.env.W01_DEPLOYMENT_SCOPE_BASE, '\${{ github.event.before }}');
+  assert.equal(scope.env.W01_DEPLOYMENT_SCOPE_HEAD, '\${{ github.sha }}');
+  assert.match(scope.run, /w01-preview-deploy-scope\.mjs/);
+
+  const deploymentSteps = [
+    steps.find(step => step.name === 'Deploy only the fixed W01 preview worker'),
+    steps.find(step => step.name === 'Verify the deployed preview and write a deployment receipt'),
+    steps.find(step => step.name === 'Upload the public preview deployment receipt'),
+  ];
+  assert.ok(deploymentSteps.every(Boolean));
+  assert.equal(new Set(deploymentSteps.map(step => step.if)).size, 1);
+  assert.match(deploymentSteps[0].if, /steps\.deployment-scope\.outputs\.should_deploy == 'true'/);
+  assert.ok(deploymentSteps.every(step => step.if.includes("github.event_name == 'push'")));
+  assert.ok(deploymentSteps.every(step => step.if.includes("github.repository == 'SyuanTsai/DarkTide-Web'")));
+  assert.ok(deploymentSteps.every(step => step.if.includes("github.ref == 'refs/heads/codex/SYP-311-w01'")));
+
+  const deploy = deploymentSteps[0];
+  assert.deepEqual(Object.keys(deploy.env), ['CLOUDFLARE_API_TOKEN']);
+  assert.match(deploy.run, /GITHUB_REPOSITORY/);
+  assert.match(deploy.run, /GITHUB_REF/);
+  assert.match(deploy.run, /git fetch/);
+  assert.match(deploy.run, /branch_head.*GITHUB_SHA/);
+  assert.match(deploy.run, /wrangler deploy --config wrangler\.w01-preview\.json/);
+});
