@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import test from 'node:test';
 import {
   classifyChangedPaths,
   formatGithubOutput,
+  isSafeContractGitattributesChange,
   isSafeContractPackageAddition,
   parseCliArguments,
   parseGitNameOnlyZ,
@@ -17,6 +19,16 @@ const basePackage = {
     build: 'node scripts/build.mjs',
   },
 };
+
+const CONTRACT_EOL_RULES = [
+  '/content/schema/v2/** text eol=lf',
+  '/content/fixtures/v2/** text eol=lf',
+  '/content/contracts/** text eol=lf',
+  '/scripts/content/contract*.mjs text eol=lf',
+  '/test/contract*.test.mjs text eol=lf',
+  '/docs/contracts/** text eol=lf',
+];
+const contractEolAttributes = CONTRACT_EOL_RULES.join('\n') + '\n';
 
 function withContractValidateScript() {
   const headPackage = structuredClone(basePackage);
@@ -127,6 +139,30 @@ test('UnitT50_missing-or-invalid-commit-shas-fail-closed', () => {
   assert.throws(() => resolveDeploymentScope({ base: sha, head: sha, cwd: process.cwd() }), /base commit SHA does not resolve/);
 });
 
+// Scenario: .gitattributes changes add or remove only the six exact contract-scope LF rules.
+// Purpose: make those EOL-only policy changes deployment-neutral while unknown patterns and attributes remain runtime changes.
+test('UnitT60_only-exact-contract-lf-rules-are-deployment-neutral', () => {
+  assert.equal(classifyChangedPaths(['.gitattributes']).shouldDeploy, true);
+  assert.equal(isSafeContractGitattributesChange(undefined, undefined), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, ''), false);
+  assert.equal(isSafeContractGitattributesChange(contractEolAttributes, contractEolAttributes), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, contractEolAttributes), true);
+  assert.equal(isSafeContractGitattributesChange(contractEolAttributes, undefined), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, contractEolAttributes + '* text eol=lf\n'), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, '*.json text eol=lf\n'), false);
+  assert.equal(isSafeContractGitattributesChange(contractEolAttributes, contractEolAttributes + '*.mjs text eol=crlf\n'), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, contractEolAttributes.replace('text eol=lf', 'binary')), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, contractEolAttributes.split('').reverse().join('')), false);
+  assert.deepEqual(classifyChangedPaths(['.gitattributes'], {
+    baseGitattributes: undefined,
+    headGitattributes: contractEolAttributes,
+  }), { shouldDeploy: false, reason: 'contract-only', changedPathCount: 1 });
+  assert.equal(classifyChangedPaths(['.gitattributes'], {
+    baseGitattributes: undefined,
+    headGitattributes: '*.json text eol=lf\n',
+  }).shouldDeploy, true);
+});
+
 // Scenario: Git reports a contract-only commit, a runtime commit, and a mixed commit between fixed object IDs.
 // Purpose: exercise the real NUL-delimited Git diff and CLI output used by CI, including visible failure for a missing head.
 test('InterT60_git-before-head-evidence-drives-cli-output-and-fails-on-missing-head', async () => {
@@ -202,5 +238,144 @@ test('InterT60_git-before-head-evidence-drives-cli-output-and-fails-on-missing-h
     await assert.rejects(fs.readFile(missingHeadOutput), { code: 'ENOENT' });
   } finally {
     await fs.rm(tempRoot, { recursive: true, force: true });
+  }
+});
+
+// Scenario: Git history changes .gitattributes from absent to the exact contract LF rules, then adds a wildcard rule.
+// Purpose: prove classification reads both committed blobs and treats only the bounded rule change as contract-only.
+test('InterT70_git-attribute-blobs-bound-contract-eol-scope', async t => {
+  const fs = await import('node:fs/promises');
+  const os = await import('node:os');
+  const path = await import('node:path');
+  const { execFileSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'w01-attribute-scope-'));
+  const repoRoot = fileURLToPath(new URL('../', import.meta.url));
+  t.after(() => fs.rm(tempRoot, { recursive: true, force: true }));
+  const git = args => execFileSync('git', args, { cwd: tempRoot, encoding: 'utf8', timeout: 30_000 });
+  const commit = message => {
+    git(['add', '--all']);
+    git(['commit', '--quiet', '-m', message]);
+    return git(['rev-parse', 'HEAD']).trim();
+  };
+
+  git(['init', '--quiet']);
+  git(['config', 'user.name', 'attribute-scope-test']);
+  git(['config', 'user.email', 'attribute-scope-test@example.invalid']);
+  git(['config', 'core.autocrlf', 'false']);
+  await fs.writeFile(path.join(tempRoot, 'base.txt'), 'base');
+  const base = commit('base');
+
+  const attributesPath = path.join(repoRoot, '.gitattributes');
+  const exactRules = await fs.readFile(attributesPath, 'utf8');
+  await fs.writeFile(path.join(tempRoot, '.gitattributes'), exactRules);
+  const boundedHead = commit('contract LF rules');
+  assert.deepEqual(resolveDeploymentScope({ base, head: boundedHead, cwd: tempRoot }), {
+    shouldDeploy: false,
+    reason: 'contract-only',
+    changedPathCount: 1,
+  });
+
+  await fs.appendFile(path.join(tempRoot, '.gitattributes'), '* text eol=lf\n');
+  const wildcardHead = commit('global wildcard rule');
+  assert.deepEqual(resolveDeploymentScope({ base: boundedHead, head: wildcardHead, cwd: tempRoot }), {
+    shouldDeploy: true,
+    reason: 'runtime-change',
+    changedPathCount: 1,
+  });
+
+  assert.equal(isSafeContractGitattributesChange(undefined, exactRules), true);
+});
+
+// Scenario: a temporary repository with core.autocrlf=true is checked out with the contract .gitattributes rules.
+// Purpose: ensure fixture bytes, manifest hashes, and the read-only CLI remain valid after a real Git checkout conversion.
+test('InterT80_core-autocrlf-checkout-preserves-fixture-bytes-and-cli-validation', async t => {
+  const fs = await import('node:fs/promises');
+  const os = await import('node:os');
+  const path = await import('node:path');
+  const { execFileSync, spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'w01-autocrlf-fixtures-'));
+  const repoRoot = fileURLToPath(new URL('../', import.meta.url));
+  const sourceRepo = path.join(tempRoot, 'source');
+  const checkout = path.join(tempRoot, 'checkout');
+  t.after(() => fs.rm(tempRoot, { recursive: true, force: true }));
+
+  const copyFile = async (source, destination) => {
+    await fs.mkdir(path.dirname(destination), { recursive: true });
+    await fs.copyFile(source, destination);
+  };
+  await fs.mkdir(sourceRepo, { recursive: true });
+  await copyFile(path.join(repoRoot, '.gitattributes'), path.join(sourceRepo, '.gitattributes'));
+  await fs.cp(
+    path.join(repoRoot, 'content', 'fixtures', 'v2', 'shared-release'),
+    path.join(sourceRepo, 'content', 'fixtures', 'v2', 'shared-release'),
+    { recursive: true },
+  );
+  await copyFile(
+    path.join(repoRoot, 'content', 'schema', 'v2', 'shared-release.schema.json'),
+    path.join(sourceRepo, 'content', 'schema', 'v2', 'shared-release.schema.json'),
+  );
+  await copyFile(
+    path.join(repoRoot, 'scripts', 'content', 'contract-release.mjs'),
+    path.join(sourceRepo, 'scripts', 'content', 'contract-release.mjs'),
+  );
+
+  const git = (cwd, args) => execFileSync('git', args, { cwd, encoding: 'utf8', timeout: 30_000 });
+  git(sourceRepo, ['init', '--quiet']);
+  git(sourceRepo, ['config', 'user.name', 'autocrlf-test']);
+  git(sourceRepo, ['config', 'user.email', 'autocrlf-test@example.invalid']);
+  git(sourceRepo, ['config', 'core.autocrlf', 'false']);
+  git(sourceRepo, ['add', '--all']);
+  git(sourceRepo, ['commit', '--quiet', '-m', 'fixture bytes']);
+  execFileSync('git', ['-c', 'core.autocrlf=true', 'clone', '--quiet', sourceRepo, checkout], {
+    encoding: 'utf8',
+    timeout: 30_000,
+  });
+  git(checkout, ['config', 'core.autocrlf', 'true']);
+  git(checkout, ['checkout-index', '--all', '--force']);
+  assert.equal(git(checkout, ['config', '--get', 'core.autocrlf']).trim(), 'true');
+  assert.match(
+    git(checkout, ['check-attr', 'eol', '--', 'content/fixtures/v2/shared-release/valid/version.json']),
+    /eol: lf/,
+  );
+
+  const fixturesPath = path.join(checkout, 'content', 'fixtures', 'v2', 'shared-release');
+  const listFiles = async (directory, prefix = '') => {
+    const files = [];
+    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+      const relative = prefix ? prefix + '/' + entry.name : entry.name;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isDirectory()) files.push(...await listFiles(absolute, relative));
+      else files.push(relative);
+    }
+    return files;
+  };
+  const fixtureFiles = await listFiles(path.join(repoRoot, 'content', 'fixtures', 'v2', 'shared-release'));
+  for (const relative of fixtureFiles) {
+    const sourceBytes = await fs.readFile(path.join(repoRoot, 'content', 'fixtures', 'v2', 'shared-release', relative));
+    const checkoutPath = path.join(fixturesPath, ...relative.split('/'));
+    const checkoutBytes = await fs.readFile(checkoutPath);
+    assert.deepEqual(checkoutBytes, sourceBytes, relative);
+    const blobBytes = execFileSync('git', ['show', 'HEAD:content/fixtures/v2/shared-release/' + relative], {
+      cwd: checkout,
+      timeout: 30_000,
+    });
+    assert.deepEqual(blobBytes, sourceBytes, relative + ' Git blob');
+    assert.equal(
+      createHash('sha256').update(checkoutBytes).digest('hex'),
+      createHash('sha256').update(sourceBytes).digest('hex'),
+      relative + ' SHA-256',
+    );
+  }
+
+  for (const name of ['valid', 'announcement-only']) {
+    const cli = spawnSync(process.execPath, [
+      path.join(checkout, 'scripts', 'content', 'contract-release.mjs'),
+      '--root',
+      path.join(fixturesPath, name),
+    ], { cwd: checkout, encoding: 'utf8', timeout: 10_000 });
+    assert.equal(cli.status, 0, cli.stderr);
+    assert.match(cli.stdout, /contract validation passed/);
   }
 });

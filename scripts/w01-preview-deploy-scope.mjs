@@ -20,6 +20,15 @@ const CONTRACT_ONLY_PATHS = [
   /^test\/w01-preview-deploy-scope\.test\.mjs$/,
   /^test\/w01-preview-config\.test\.mjs$/,
 ];
+const CONTRACT_EOL_RULES = Object.freeze([
+  '/content/schema/v2/** text eol=lf',
+  '/content/fixtures/v2/** text eol=lf',
+  '/content/contracts/** text eol=lf',
+  '/scripts/content/contract*.mjs text eol=lf',
+  '/test/contract*.test.mjs text eol=lf',
+  '/docs/contracts/** text eol=lf',
+]);
+const CONTRACT_EOL_RULE_SET = new Set(CONTRACT_EOL_RULES);
 
 export function validateCommitSha(value, label) {
   if (typeof value !== 'string' || value.length === 0) {
@@ -89,18 +98,72 @@ function isContractOnlyPath(path) {
   return CONTRACT_ONLY_PATHS.some(pattern => pattern.test(path));
 }
 
-export function classifyChangedPaths(paths, { basePackage, headPackage } = {}) {
+function parseAttributesLines(value) {
+  if (value === undefined) return [];
+  if (typeof value !== 'string' || value.includes('\0') || value.includes('\uFEFF')) return null;
+
+  const normalized = value.replace(/\r\n/g, '\n');
+  if (normalized.includes('\r')) return null;
+  if (normalized.length === 0) return [];
+  const lines = normalized.split('\n');
+  if (lines[lines.length - 1] === '') lines.pop();
+  const safeRules = lines.filter(line => CONTRACT_EOL_RULE_SET.has(line));
+  if (safeRules.length !== new Set(safeRules).size) return null;
+  return lines;
+}
+
+export function isSafeContractGitattributesChange(baseContent, headContent) {
+  if (baseContent === undefined && headContent === undefined) return false;
+  const before = parseAttributesLines(baseContent);
+  const after = parseAttributesLines(headContent);
+  if (!before || !after) return false;
+
+  const beforeOther = before.filter(line => !CONTRACT_EOL_RULE_SET.has(line));
+  const afterOther = after.filter(line => !CONTRACT_EOL_RULE_SET.has(line));
+  if (!isDeepStrictEqual(beforeOther, afterOther)) return false;
+
+  const beforeRules = new Set(before.filter(line => CONTRACT_EOL_RULE_SET.has(line)));
+  const afterRules = new Set(after.filter(line => CONTRACT_EOL_RULE_SET.has(line)));
+  if (
+    beforeRules.size === afterRules.size
+    && [...beforeRules].every(rule => afterRules.has(rule))
+  ) return false;
+
+  const sharedRules = new Set(before.filter(line => CONTRACT_EOL_RULE_SET.has(line) && afterRules.has(line)));
+  const beforeSharedOrder = before.filter(line => sharedRules.has(line));
+  const afterSharedOrder = after.filter(line => sharedRules.has(line));
+  if (!isDeepStrictEqual(beforeSharedOrder, afterSharedOrder)) return false;
+
+  for (const rule of sharedRules) {
+    const beforePosition = before.indexOf(rule);
+    const afterPosition = after.indexOf(rule);
+    const beforeOtherCount = before.slice(0, beforePosition).filter(line => !CONTRACT_EOL_RULE_SET.has(line)).length;
+    const afterOtherCount = after.slice(0, afterPosition).filter(line => !CONTRACT_EOL_RULE_SET.has(line)).length;
+    if (beforeOtherCount !== afterOtherCount) return false;
+  }
+  return true;
+}
+
+export function classifyChangedPaths(paths, options = {}) {
   if (!Array.isArray(paths) || paths.some(path => typeof path !== 'string' || path.length === 0)) {
     throw new TypeError('changed paths must be non-empty strings');
   }
+  if (!isRecord(options)) throw new TypeError('classification options must be an object');
   if (paths.length === 0) {
     return { shouldDeploy: false, reason: 'no-changes', changedPathCount: 0 };
   }
 
+  const { basePackage, headPackage } = options;
   const packageIsSafe = paths.includes('package.json')
     && isSafeContractPackageAddition(basePackage, headPackage);
+  const hasGitattributesEvidence = Object.hasOwn(options, 'baseGitattributes')
+    && Object.hasOwn(options, 'headGitattributes');
+  const gitattributesIsSafe = paths.includes('.gitattributes')
+    && hasGitattributesEvidence
+    && isSafeContractGitattributesChange(options.baseGitattributes, options.headGitattributes);
   const shouldDeploy = paths.some(path => {
     if (path === 'package.json' && packageIsSafe) return false;
+    if (path === '.gitattributes' && gitattributesIsSafe) return false;
     return !isContractOnlyPath(path);
   });
   return {
@@ -140,6 +203,43 @@ function readPackageJsonAt(sha, cwd) {
   }
 }
 
+function readGitattributesAt(sha, cwd) {
+  let treeEntry;
+  try {
+    treeEntry = execFileSync('git', ['ls-tree', '-z', sha, '--', '.gitattributes'], {
+      cwd,
+      maxBuffer: 1024 * 1024,
+    });
+  } catch {
+    throw new Error('unable to inspect .gitattributes in a validated commit');
+  }
+  if (treeEntry.length === 0) return undefined;
+
+  let entry;
+  try {
+    entry = new TextDecoder('utf-8', { fatal: true }).decode(treeEntry);
+  } catch {
+    return null;
+  }
+  const match = /^(100644) blob ([a-f0-9]{40})\t\.gitattributes\0$/.exec(entry);
+  if (!match) return null;
+
+  let bytes;
+  try {
+    bytes = execFileSync('git', ['cat-file', 'blob', match[2]], {
+      cwd,
+      maxBuffer: 1024 * 1024,
+    });
+  } catch {
+    throw new Error('unable to read .gitattributes blob from a validated commit');
+  }
+  try {
+    return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
+  } catch {
+    return null;
+  }
+}
+
 export function resolveDeploymentScope({ base, head, cwd = process.cwd() }) {
   const baseSha = validateCommitSha(base, 'base');
   const headSha = validateCommitSha(head, 'head');
@@ -165,11 +265,22 @@ export function resolveDeploymentScope({ base, head, cwd = process.cwd() }) {
   const paths = parseGitNameOnlyZ(diffOutput);
   let basePackage;
   let headPackage;
+  let baseGitattributes;
+  let headGitattributes;
   if (paths.includes('package.json')) {
     basePackage = readPackageJsonAt(baseSha, cwd);
     headPackage = readPackageJsonAt(headSha, cwd);
   }
-  return classifyChangedPaths(paths, { basePackage, headPackage });
+  if (paths.includes('.gitattributes')) {
+    baseGitattributes = readGitattributesAt(baseSha, cwd);
+    headGitattributes = readGitattributesAt(headSha, cwd);
+  }
+  return classifyChangedPaths(paths, {
+    basePackage,
+    headPackage,
+    baseGitattributes,
+    headGitattributes,
+  });
 }
 
 export function parseCliArguments(argv) {
