@@ -1299,6 +1299,11 @@ async function makePendingCandidateInputs(copiedRoot) {
   technical.publicationEligible = false;
   changes.publicationEligible = false;
   authoring.fixtureOnly = false;
+  authoring.announcements[0].payload.blocks.push({
+    blockId: 'compatibility-warning',
+    type: 'paragraph',
+    text: '此測試候選僅用於驗證待審預覽流程；不代表任何真實遊戲內容已完成核對或驗收。'
+  });
 
   for (const [name, value] of [['technical.json', technical], ['game-changes.json', changes]]) {
     const bytes = jsonBytes(value);
