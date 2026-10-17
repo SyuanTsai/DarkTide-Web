@@ -66,6 +66,39 @@ test('UnitT00_schema-defines-formal-version-manifest-and-fixture-contracts', asy
   assert.equal(fixtureMarker.properties.publicationEligible.const, false);
 });
 
+// Scenario: a shared manifest declares only compatibility features that the local Extension understands.
+// Purpose: preserve the v17-D snapshot field name and known native-localization / blessing-tier dependencies while rejecting unknown features.
+test('UnitT30_preserves-known-snapshot-and-native-tier-feature-contract', async () => {
+  const schema = JSON.parse(await readFile(schemaPath, 'utf8'));
+  const compatibility = schema.definitions.compatibility;
+  assert.ok(compatibility.required.includes('gameSnapshotRefs'));
+  assert.equal(compatibility.required.includes('gameSnapshots'), false);
+  assert.deepEqual(compatibility.properties.requiredFeatures.items.enum, [
+    'official-errata-details-v1',
+    'official-native-localizations-v1',
+    'blessing-tier-presentations-v1',
+  ]);
+
+  const { computeDataRevision, validateManifest } = await loadValidator();
+  const manifest = await readFixtureManifest('valid');
+  manifest.compatibility.requiredFeatures = [
+    'official-native-localizations-v1',
+    'blessing-tier-presentations-v1',
+  ];
+  manifest.dataRevision = computeDataRevision(manifest);
+  assert.doesNotThrow(() => validateManifest(manifest));
+
+  const missingNative = structuredClone(manifest);
+  missingNative.compatibility.requiredFeatures = ['blessing-tier-presentations-v1'];
+  missingNative.dataRevision = computeDataRevision(missingNative);
+  assert.throws(() => validateManifest(missingNative), /requires official-native-localizations-v1/);
+
+  const unknownFeature = structuredClone(manifest);
+  unknownFeature.compatibility.requiredFeatures.push('unknown-feature-v1');
+  unknownFeature.dataRevision = computeDataRevision(unknownFeature);
+  assert.throws(() => validateManifest(unknownFeature), /unknown required feature/);
+});
+
 // Scenario: a consumer requests only a subset of the published shared domains.
 // Purpose: resolve one exact patch pointer and include its declared dependencies without selecting a global maximum or a consumer-specific manifest.
 test('UnitT10_valid-release-preserves-exact-patch-and-consumer-dependency-closure', async () => {

@@ -14,7 +14,7 @@ Manifest paths follow the established same-origin shape `/data/{dataRevision}/ma
 
 ## Manifest and file metadata
 
-Each manifest pins the public Source repository, a 40-character Source commit, Source revision and Source manifest SHA-256 values, plus Web authoring and compiler commits. Compatibility metadata carries `dataContractMajor`, a closed set of required features, and game snapshot identifiers. The only currently known required feature is `official-errata-details-v1`; a new feature needs a contract and consumer change before this allowlist expands.
+Each manifest pins the public Source repository, a 40-character Source commit, Source revision and Source manifest SHA-256 values, plus Web authoring and compiler commits. Compatibility metadata carries `dataContractMajor`, a closed set of required features, and `gameSnapshotRefs` identifiers. The known required features are `official-errata-details-v1`, `official-native-localizations-v1`, and `blessing-tier-presentations-v1`. The blessing tier presentation feature requires native localizations; unknown features remain invalid until the contract and consumer support them.
 
 The manifest can represent these existing domains: `skills`, `blessings`, `weapons`, `terms`, `catalog`, `curios`, `perks`, `classifications`, `announcements`, and `game-changes`. A package contains only the domains it publishes; consumers pass their own `requiredKinds` and `supportedKinds` to `selectConsumerFiles`. The helper checks that required kinds are supported and returns their transitive file dependencies. Consumer requirements are not copied into the shared manifest.
 

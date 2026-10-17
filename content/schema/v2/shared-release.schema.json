@@ -124,15 +124,21 @@
     },
     "compatibility": {
       "type": "object",
-      "required": [ "dataContractMajor", "requiredFeatures", "gameSnapshots" ],
+      "required": [ "dataContractMajor", "requiredFeatures", "gameSnapshotRefs" ],
       "properties": {
         "dataContractMajor": { "const": 2 },
         "requiredFeatures": {
           "type": "array",
           "uniqueItems": true,
-          "items": { "enum": [ "official-errata-details-v1" ] }
+          "items": {
+            "enum": [
+              "official-errata-details-v1",
+              "official-native-localizations-v1",
+              "blessing-tier-presentations-v1"
+            ]
+          }
         },
-        "gameSnapshots": {
+        "gameSnapshotRefs": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,

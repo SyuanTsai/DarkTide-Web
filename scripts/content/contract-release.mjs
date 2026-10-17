@@ -17,7 +17,11 @@ export const DOMAIN_KINDS = Object.freeze([
   'game-changes',
 ]);
 
-export const REQUIRED_FEATURES = Object.freeze(['official-errata-details-v1']);
+export const REQUIRED_FEATURES = Object.freeze([
+  'official-errata-details-v1',
+  'official-native-localizations-v1',
+  'blessing-tier-presentations-v1',
+]);
 export const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
 export const CONTRACT_SCHEMA_PATH = fileURLToPath(
   new URL('../../content/schema/v2/shared-release.schema.json', import.meta.url),
@@ -195,7 +199,7 @@ function dataRevisionMaterial(manifest) {
     compatibility: {
       dataContractMajor: manifest.compatibility.dataContractMajor,
       requiredFeatures: [...manifest.compatibility.requiredFeatures].sort(compareUtf8),
-      gameSnapshots: [...manifest.compatibility.gameSnapshots].sort(compareUtf8),
+      gameSnapshotRefs: [...manifest.compatibility.gameSnapshotRefs].sort(compareUtf8),
     },
     files,
     changeIndexPath: manifest.changeIndexPath,
@@ -259,7 +263,7 @@ export function validateManifest(manifest) {
   requireSha1(manifest.web.authoringCommit, 'web.authoringCommit');
   requireSha1(manifest.web.compilerCommit, 'web.compilerCommit');
 
-  requireExactKeys(manifest.compatibility, ['dataContractMajor', 'requiredFeatures', 'gameSnapshots'], 'manifest.compatibility');
+  requireExactKeys(manifest.compatibility, ['dataContractMajor', 'requiredFeatures', 'gameSnapshotRefs'], 'manifest.compatibility');
   if (manifest.compatibility.dataContractMajor !== 2) {
     fail('compatibility.dataContractMajor must equal 2');
   }
@@ -271,14 +275,17 @@ export function validateManifest(manifest) {
       fail('compatibility.requiredFeatures contains unknown required feature: ' + String(feature));
     }
   }
-  const snapshots = manifest.compatibility.gameSnapshots;
-  if (!Array.isArray(snapshots) || snapshots.length === 0) {
-    fail('compatibility.gameSnapshots must contain at least one snapshot reference');
+  if (features.includes('blessing-tier-presentations-v1') && !features.includes('official-native-localizations-v1')) {
+    fail('compatibility.requiredFeatures blessing-tier-presentations-v1 requires official-native-localizations-v1');
   }
-  assertUniqueStrings(snapshots, 'compatibility.gameSnapshots');
+  const snapshots = manifest.compatibility.gameSnapshotRefs;
+  if (!Array.isArray(snapshots) || snapshots.length === 0) {
+    fail('compatibility.gameSnapshotRefs must contain at least one snapshot reference');
+  }
+  assertUniqueStrings(snapshots, 'compatibility.gameSnapshotRefs');
   for (const snapshot of snapshots) {
     if (typeof snapshot !== 'string' || !SNAPSHOT_ID_PATTERN.test(snapshot)) {
-      fail('compatibility.gameSnapshots contains an invalid snapshot reference');
+      fail('compatibility.gameSnapshotRefs contains an invalid snapshot reference');
     }
   }
 
