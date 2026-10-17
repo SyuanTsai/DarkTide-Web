@@ -1,0 +1,1774 @@
+{
+  "schemaVersion": "w03.coverage.v1",
+  "totalEntries": 1315656,
+  "byOwner": {
+    "extension": 256732,
+    "source": 890195,
+    "web": 168729
+  },
+  "byTargetStatus": {
+    "existing": 289992,
+    "not-generated": 1025664
+  },
+  "byReleaseScope": {
+    "current-snapshot-candidate": 7408,
+    "historical-game-release": 68955,
+    "historical-legacy-marker": 1200192,
+    "reference-document": 36748,
+    "registry-snapshot": 260,
+    "release-unspecified": 1082,
+    "synthetic-only": 1011
+  },
+  "sourcePathEntryCounts": {
+    "extension/data/v1/blessing-comparisons.json": 24460,
+    "extension/data/v1/blessing-mechanics.json": 1966,
+    "extension/data/v1/catalog.json": 66199,
+    "extension/data/v1/class-overview.json": 164,
+    "extension/data/v1/closure/abilities.json": 740,
+    "extension/data/v1/closure/blessings.json": 14926,
+    "extension/data/v1/closure/curios.json": 278,
+    "extension/data/v1/closure/weapon-actions.catalog.json": 9911,
+    "extension/data/v1/closure/weapons-derived-proposal.json": 2508,
+    "extension/data/v1/closure/weapons.json": 2508,
+    "extension/data/v1/domains/abilities.json": 116047,
+    "extension/data/v1/domains/blessings.json": 417661,
+    "extension/data/v1/domains/curios.json": 2310,
+    "extension/data/v1/domains/weapons.json": 98386,
+    "extension/data/v1/mechanics/abilities.json": 100036,
+    "extension/data/v1/mechanics/catalog-document-bindings.proposal.json": 905,
+    "extension/data/v1/mechanics/player-guides.json": 14517,
+    "extension/data/v1/mechanics/reviewed-abilities-a.json": 33583,
+    "extension/data/v1/mechanics/reviewed-abilities-b.json": 23556,
+    "extension/data/v1/mechanics/reviewed-abilities-corrections.json": 1628,
+    "extension/data/v1/mechanics/reviewed-abilities-d.json": 22641,
+    "extension/data/v1/mechanics/reviewed-abilities-focused.json": 617,
+    "extension/data/v1/mechanics/reviewed-abilities.json": 127126,
+    "extension/data/v1/release.json": 258,
+    "extension/data/v1/review-approvals.json": 10624,
+    "extension/data/v1/weapon-actions.json": 103930,
+    "extension/data/v1/website-display.json": 2223,
+    "extension/data/v1/website-token-corrections.json": 102,
+    "extension/docs/V1_ACTIONS_GAPS_REVIEW.json": 5980,
+    "extension/docs/V1_BLESSINGS_43_CANDIDATES_REVIEW.json": 14783,
+    "extension/docs/V1_BLESSINGS_43_CROSS_REVIEW.json": 2892,
+    "extension/docs/V1_BLESSING_MECHANICS_REVIEW.json": 2760,
+    "extension/docs/V1_CATALOG_DOCUMENT_BINDINGS_CROSS_REVIEW.json": 272,
+    "extension/docs/V1_NON_BLESSING_GAPS_CROSS_REVIEW.json": 2748,
+    "extension/docs/V1_NON_BLESSING_GAPS_REVIEW.json": 5064,
+    "extension/docs/V1_WEBSITE_DISPLAY_INDEPENDENT_REVIEW.json": 2249,
+    "extension/extension/adapters.js": 1,
+    "extension/extension/content.css": 1,
+    "extension/extension/content.js": 3,
+    "extension/extension/core.js": 4,
+    "extension/extension/data.js": 295,
+    "extension/extension/icon-128.png": 1,
+    "extension/extension/icon-16.png": 1,
+    "extension/extension/icon-32.png": 1,
+    "extension/extension/icon-48.png": 1,
+    "extension/extension/manifest.json": 18,
+    "extension/extension/provider.js": 589,
+    "extension/extension/runtime-data.js": 1,
+    "source-code/scripts/settings/equipment/weapon_templates/weapon_templates.lua": 260,
+    "source/content/authoring/w01-preview.json": 146,
+    "source/content/authoring/w01-real-claim-candidate.json": 60,
+    "source/content/authoring/w01-real-representative-candidate.json": 3378,
+    "source/content/fixtures/v2/representative-source.json": 865,
+    "source/content/legacy/mods/241ad76/psyker/README.md": 20,
+    "source/content/legacy/mods/241ad76/psyker/en/psyker_brain_burst_improved.md": 105,
+    "source/content/legacy/mods/241ad76/psyker/provenance.json": 181,
+    "source/content/legacy/mods/241ad76/psyker/psyker_brain_burst_improved.md": 76,
+    "source/content/reviews/w01-minimal-human-approval-20261017.json": 90,
+    "source/content/schema/v2/source-contract.schema.json": 905,
+    "source/docs/w01-real-claim-review.md": 57,
+    "web/content/contracts/source-v2-snapshot/content/fixtures/v2/representative-source.json": 1,
+    "web/content/contracts/source-v2-snapshot/content/schema/v2/source-contract.schema.json": 1,
+    "web/content/contracts/source-v2-snapshot/scripts/content/contract-validator.mjs": 1,
+    "web/content/published/content.json": 68039,
+    "web/content/w01/composition-receipt.json": 19,
+    "web/content/w01/release.json": 2,
+    "web/content/w01/rollback.json": 6,
+    "web/content/w01/source/game-changes.json": 5,
+    "web/content/w01/source/source-manifest.json": 18,
+    "web/content/w01/source/technical.json": 3379,
+    "web/content/w01/web-authoring.json": 559,
+    "web/source.lock.json": 9
+  },
+  "sourceArtifactEntries": [
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/closure/abilities.json",
+      "gitBlobOid": "d455eeb40546ec48121efdb8599e50562a4cd2a8",
+      "entryCount": 740
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/closure/blessings.json",
+      "gitBlobOid": "2e8cb3c1a4b914c3f94f14872c817de9a8007716",
+      "entryCount": 14926
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/closure/curios.json",
+      "gitBlobOid": "6094a2d9cda953174d070658d157ec285cb24f9b",
+      "entryCount": 278
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/closure/weapons-derived-proposal.json",
+      "gitBlobOid": "749d2ba9ae20c5c486b6162c82d427b555063ae5",
+      "entryCount": 2508
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/player-guides.json",
+      "gitBlobOid": "db6d44a3a43c5ca1f50c2f6f74ac5778d5c47288",
+      "entryCount": 14517
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/reviewed-abilities-a.json",
+      "gitBlobOid": "e1cffe43dd5e47f9e11ab0b82e3a3e540e0a0fd7",
+      "entryCount": 33583
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/reviewed-abilities-b.json",
+      "gitBlobOid": "a7793ce84aad684a65e9b1ead11331d04a8043d7",
+      "entryCount": 23556
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/reviewed-abilities-corrections.json",
+      "gitBlobOid": "5d9ebccab23b06d936bcb3c951729aa442a6d187",
+      "entryCount": 1628
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/reviewed-abilities-d.json",
+      "gitBlobOid": "8ff378c6ace6471f85073b6fd4614f5cd7c58cba",
+      "entryCount": 22641
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/mechanics/reviewed-abilities-focused.json",
+      "gitBlobOid": "8e7792913a8c03cebbda6e865b8c8ce792d1b9ca",
+      "entryCount": 617
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/release.json",
+      "gitBlobOid": "1e3be1f60bf69f338d9a7aeef909653d7ab6ad0b",
+      "entryCount": 258
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "data/v1/review-approvals.json",
+      "gitBlobOid": "d43fbb6bf416579210103136c9fa3c3f13b84605",
+      "entryCount": 10624
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/adapters.js",
+      "gitBlobOid": "ebb40c8ea296a5edbe4d4e57cc1f287b89d8a8f4",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/content.css",
+      "gitBlobOid": "6dd18d571754cf3653ccf8708ea1089b4305c71a",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/content.js",
+      "gitBlobOid": "43698eae0085d5ebdf9ecb4a987ec5fd4aec08fa",
+      "entryCount": 3
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/core.js",
+      "gitBlobOid": "a3fb64034a84ccd39f176717c6629869fa1cdf06",
+      "entryCount": 4
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/data.js",
+      "gitBlobOid": "9f580982b940bf47d5fdd751216317f43531a9b3",
+      "entryCount": 295
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/icon-128.png",
+      "gitBlobOid": "39865fd7f20e75fae2e9f53bba26d80f74f30c06",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/icon-16.png",
+      "gitBlobOid": "50373bc7b9d1b8637ca589da3d7fb591faaff48d",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/icon-32.png",
+      "gitBlobOid": "c010206454d9a3d02711fb59ca9d177ff5f29c9f",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/icon-48.png",
+      "gitBlobOid": "023a5cddd02ab812a36f7e686e74cee09823d0fe",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/manifest.json",
+      "gitBlobOid": "d22e6176652e97da967857643bf2907c20b2a3c1",
+      "entryCount": 18
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/provider.js",
+      "gitBlobOid": "4a42aea7d986289265a85bba582e8f462ff111fa",
+      "entryCount": 589
+    },
+    {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "path": "extension/runtime-data.js",
+      "gitBlobOid": "ff7c64be4fea673e353a877064d729ed8ac6b124",
+      "entryCount": 1
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/blessing-comparisons.json",
+      "gitBlobOid": "faf3302c3124e21bcaf6b64833b8328ac69a5a8a",
+      "entryCount": 24460
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/blessing-mechanics.json",
+      "gitBlobOid": "2aa1b33cae0ff6007ab083b5108651018ca53f87",
+      "entryCount": 1966
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/catalog.json",
+      "gitBlobOid": "b06465df9cba73b764fb9f85e3f5c3ad34b85686",
+      "entryCount": 66199
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/class-overview.json",
+      "gitBlobOid": "40b6f6a50ff24ae88612627607f311fc302dbecf",
+      "entryCount": 164
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/closure/weapon-actions.catalog.json",
+      "gitBlobOid": "dfffd6d5cb65f9890f56e2af103aac8440ed2bfc",
+      "entryCount": 9911
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/closure/weapons.json",
+      "gitBlobOid": "749d2ba9ae20c5c486b6162c82d427b555063ae5",
+      "entryCount": 2508
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/domains/abilities.json",
+      "gitBlobOid": "86c0e30dfa921a819c06c818daa06f98fe2270f8",
+      "entryCount": 116047
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/domains/blessings.json",
+      "gitBlobOid": "aa71d3b5cb89306177b870b4ed4e05a30bebfa0f",
+      "entryCount": 417661
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/domains/curios.json",
+      "gitBlobOid": "441a21994f06672388bb7e223a12de18efa68de7",
+      "entryCount": 2310
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/domains/weapons.json",
+      "gitBlobOid": "3b2ab8c42e871a53bd0d7d03679d522d452f5bf2",
+      "entryCount": 98386
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/mechanics/abilities.json",
+      "gitBlobOid": "0a9491a77af78d994129be05ee2bee23c0d90775",
+      "entryCount": 100036
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/mechanics/catalog-document-bindings.proposal.json",
+      "gitBlobOid": "cfa2ba08a4c46824254379aae62e77dfcdb1e0c3",
+      "entryCount": 905
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/mechanics/reviewed-abilities.json",
+      "gitBlobOid": "d7b17ad55cfb94c787b68312638ef63ec556ee53",
+      "entryCount": 127126
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/weapon-actions.json",
+      "gitBlobOid": "da223ac47ecfdeaa1c41d8faf9971ec92f8e9a4d",
+      "entryCount": 103930
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/website-display.json",
+      "gitBlobOid": "5aa03f4356100742a6397b6cdb719de545c91611",
+      "entryCount": 2223
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "data/v1/website-token-corrections.json",
+      "gitBlobOid": "e12b09f7366231c4e60e5a8744025e9093ec307c",
+      "entryCount": 102
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_ACTIONS_GAPS_REVIEW.json",
+      "gitBlobOid": "988ebc3ae0d064ea7138a50016c45ec06b673fec",
+      "entryCount": 5980
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_BLESSINGS_43_CANDIDATES_REVIEW.json",
+      "gitBlobOid": "4195f8da4e9ed7b1bf6ba69b6b99cfa1f0663a72",
+      "entryCount": 14783
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_BLESSINGS_43_CROSS_REVIEW.json",
+      "gitBlobOid": "c6d75b555dd9c8c9851f37a7aa7b0b25e0590e6b",
+      "entryCount": 2892
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_BLESSING_MECHANICS_REVIEW.json",
+      "gitBlobOid": "7c3e0bb0d9a402ce0f0ffe74fdf566020408049e",
+      "entryCount": 2760
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_CATALOG_DOCUMENT_BINDINGS_CROSS_REVIEW.json",
+      "gitBlobOid": "54b08048b93d8a0749082fb98c9873dd279c86ee",
+      "entryCount": 272
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_NON_BLESSING_GAPS_CROSS_REVIEW.json",
+      "gitBlobOid": "8f99ee180a73dd503e3e996511b5fec72c8d536c",
+      "entryCount": 2748
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_NON_BLESSING_GAPS_REVIEW.json",
+      "gitBlobOid": "aeb506cc13b219600a2975a757692dcf19ada745",
+      "entryCount": 5064
+    },
+    {
+      "repoId": "extension",
+      "commit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+      "path": "docs/V1_WEBSITE_DISPLAY_INDEPENDENT_REVIEW.json",
+      "gitBlobOid": "2746a51a861c72fa8357292f17007357df6b5349",
+      "entryCount": 2249
+    },
+    {
+      "repoId": "source",
+      "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+      "path": "content/fixtures/v2/representative-source.json",
+      "gitBlobOid": "e5b2bfc9fc4f53dcf12b8914b872ba02908c141e",
+      "entryCount": 865
+    },
+    {
+      "repoId": "source",
+      "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+      "path": "content/schema/v2/source-contract.schema.json",
+      "gitBlobOid": "81cfb75fa86040290ca26e074165e56e32a370e1",
+      "entryCount": 905
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/authoring/w01-preview.json",
+      "gitBlobOid": "a463cd6b79af064c4ebb3e4a94c2868973a942f0",
+      "entryCount": 146
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/authoring/w01-real-claim-candidate.json",
+      "gitBlobOid": "26a6c6fe1c893efab9858db01517562fd2aa26e0",
+      "entryCount": 60
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/authoring/w01-real-representative-candidate.json",
+      "gitBlobOid": "80a4fd467eb01ddbea9df474a39747c9d4f785ce",
+      "entryCount": 3378
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/legacy/mods/241ad76/psyker/README.md",
+      "gitBlobOid": "46907268fb90e25b74f76eb56d33cff133260c0a",
+      "entryCount": 20
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/legacy/mods/241ad76/psyker/en/psyker_brain_burst_improved.md",
+      "gitBlobOid": "e9b9fa2183b5310343f831f0dc55737d13c5a570",
+      "entryCount": 105
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/legacy/mods/241ad76/psyker/provenance.json",
+      "gitBlobOid": "a4c552105ae6eab73210cf2dc7e63bfd054ccde1",
+      "entryCount": 181
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/legacy/mods/241ad76/psyker/psyker_brain_burst_improved.md",
+      "gitBlobOid": "c79b6f1dc3873621f904cbd7e389fc15b1a2f7c0",
+      "entryCount": 76
+    },
+    {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "docs/w01-real-claim-review.md",
+      "gitBlobOid": "acbf87e2616b6112624f2e958835a732d05e6d5c",
+      "entryCount": 57
+    },
+    {
+      "repoId": "source",
+      "commit": "982a32dee96d15b895ffcc5fa8839c8d48a132c9",
+      "path": "content/reviews/w01-minimal-human-approval-20261017.json",
+      "gitBlobOid": "63134bebae02b0eb4d9fc1a861b84c152a1e79d3",
+      "entryCount": 90
+    },
+    {
+      "repoId": "source-code",
+      "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+      "path": "scripts/settings/equipment/weapon_templates/weapon_templates.lua",
+      "gitBlobOid": "b6bf7f855140e84803456f178c1cd23460ce90c4",
+      "entryCount": 260
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/contracts/source-v2-snapshot/content/fixtures/v2/representative-source.json",
+      "gitBlobOid": "e5b2bfc9fc4f53dcf12b8914b872ba02908c141e",
+      "entryCount": 1
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/contracts/source-v2-snapshot/content/schema/v2/source-contract.schema.json",
+      "gitBlobOid": "81cfb75fa86040290ca26e074165e56e32a370e1",
+      "entryCount": 1
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/contracts/source-v2-snapshot/scripts/content/contract-validator.mjs",
+      "gitBlobOid": "4ca4fc35a1d3ab28adb5669eb9d071805793b1e3",
+      "entryCount": 1
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/published/content.json",
+      "gitBlobOid": "37c4a2d52c3d186ff233ed35b15dcb21496faa60",
+      "entryCount": 68039
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/composition-receipt.json",
+      "gitBlobOid": "398d2ac76a8c97bb107e6626ad65f1968dfa5dfb",
+      "entryCount": 19
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/release.json",
+      "gitBlobOid": "dd4dab8edcb34862a56252908f96df8932ee9937",
+      "entryCount": 2
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/rollback.json",
+      "gitBlobOid": "8403bb1dd5970bfb023d30418372966370689e77",
+      "entryCount": 6
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/source/game-changes.json",
+      "gitBlobOid": "ca4b2349b976100679893db5f9e0f7145798637c",
+      "entryCount": 5
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/source/source-manifest.json",
+      "gitBlobOid": "9bfb7af651ff210e9eb547a1b2c0f6614fd44584",
+      "entryCount": 18
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/source/technical.json",
+      "gitBlobOid": "f7f9e89ab12570bec6e0c49a9de61e8396483f38",
+      "entryCount": 3379
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "content/w01/web-authoring.json",
+      "gitBlobOid": "abd12fff64c1f32c80f59ef6e0d2ecff9cb83593",
+      "entryCount": 559
+    },
+    {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "path": "source.lock.json",
+      "gitBlobOid": "d0bb6916788d359227b1000ba7788720b29c1a2f",
+      "entryCount": 9
+    }
+  ],
+  "groups": {
+    "extension-additional-data": {
+      "entryCount": 100477
+    },
+    "extension-hardcoded-content-candidates": {
+      "entryCount": 5
+    },
+    "extension-release-inputs": {
+      "entryCount": 1136081
+    },
+    "extension-runtime-code": {
+      "entryCount": 8
+    },
+    "extension-runtime-config": {
+      "entryCount": 18
+    },
+    "extension-runtime-generated": {
+      "entryCount": 1
+    },
+    "extension-runtime-native-rules": {
+      "entryCount": 589
+    },
+    "extension-runtime-static-data": {
+      "entryCount": 295
+    },
+    "source-code-registry": {
+      "entryCount": 260
+    },
+    "source-formal-contract": {
+      "entryCount": 1770
+    },
+    "source-legacy-psyker": {
+      "entryCount": 382
+    },
+    "source-w01-candidates": {
+      "entryCount": 3584
+    },
+    "source-w01-review": {
+      "entryCount": 147
+    },
+    "web-published": {
+      "entryCount": 68039
+    },
+    "web-source-cache": {
+      "entryCount": 3
+    },
+    "web-source-lock": {
+      "entryCount": 9
+    },
+    "web-w01-inputs": {
+      "entryCount": 3988
+    }
+  },
+  "sourceCandidateCounts": {
+    "realRepresentativeCandidateRecords": 125,
+    "previewFixtureRecords": 9,
+    "formalSyntheticFixtureRecords": 32,
+    "allCandidateRowsRemainPlanned": true,
+    "approvalCarryForward": "not-assumed"
+  },
+  "publishedCounts": {
+    "assets": 779,
+    "bindings": 1185,
+    "blessings": 167,
+    "marks": 135,
+    "routes": 2269,
+    "skills": 646,
+    "sources": 13,
+    "variants": 605,
+    "weapons": 70,
+    "talent_trees": 7
+  },
+  "uniqueSkillIds": 640,
+  "extensionInputVerification": {
+    "extensionManifestCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+    "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+    "verifiedInputCount": 26,
+    "declaredInputSha256Matches": 26,
+    "exactSourceCommitOverrides": [
+      {
+        "path": "data/v1/mechanics/player-guides.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "exactSourceCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+        "e24Sha256": "2995da7f854ae95420ff97b0890251797361e56153d6ad847ecea987a5a0526d",
+        "declaredSha256": "520c6407844cad1b124828d483d7c70b9f4580aee5f5d5a7d6645e89b2fc08a1",
+        "exactBlobOid": "db6d44a3a43c5ca1f50c2f6f74ac5778d5c47288"
+      },
+      {
+        "path": "data/v1/review-approvals.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "exactSourceCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+        "e24Sha256": "4d6dbd6edc50b2e8f54070ca6cb1f46b831086d525bd504b9f48efeee8bd0f25",
+        "declaredSha256": "bfcd3ba5c2eb6b93ad6433cb8842d7d6932c54d37eb3b3548bf435d6594e8952",
+        "exactBlobOid": "d43fbb6bf416579210103136c9fa3c3f13b84605"
+      }
+    ],
+    "verifiedInputs": [
+      {
+        "path": "data/v1/blessing-comparisons.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "46b7bc155c12ac1700b3e08a055f2dea51fe954ba9918b44108c0e310403e160",
+        "actualSha256": "46b7bc155c12ac1700b3e08a055f2dea51fe954ba9918b44108c0e310403e160",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "faf3302c3124e21bcaf6b64833b8328ac69a5a8a",
+        "byteLength": 1831829
+      },
+      {
+        "path": "data/v1/blessing-mechanics.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "4b06b82c451c7a5ee33b7aa60bf53e3429efb99aadb47b731611a649617b2f01",
+        "actualSha256": "4b06b82c451c7a5ee33b7aa60bf53e3429efb99aadb47b731611a649617b2f01",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "2aa1b33cae0ff6007ab083b5108651018ca53f87",
+        "byteLength": 124238
+      },
+      {
+        "path": "data/v1/catalog.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "f4e06f7e5e2bfa5422621634611f2362a88abf6f063a8f8f13704456b0b9b795",
+        "actualSha256": "f4e06f7e5e2bfa5422621634611f2362a88abf6f063a8f8f13704456b0b9b795",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "b06465df9cba73b764fb9f85e3f5c3ad34b85686",
+        "byteLength": 4280294
+      },
+      {
+        "path": "data/v1/class-overview.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "037dd24d8e8c7d14028b700d89965f35f46abfea0fdda5c71f7b91dc05f64ba6",
+        "actualSha256": "037dd24d8e8c7d14028b700d89965f35f46abfea0fdda5c71f7b91dc05f64ba6",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "40b6f6a50ff24ae88612627607f311fc302dbecf",
+        "byteLength": 11601
+      },
+      {
+        "path": "data/v1/closure/weapon-actions.catalog.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "0ae662bb67672811949bab49f4959bce1ce9ebd12ffb410b9396bd26e036c2b5",
+        "actualSha256": "0ae662bb67672811949bab49f4959bce1ce9ebd12ffb410b9396bd26e036c2b5",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "dfffd6d5cb65f9890f56e2af103aac8440ed2bfc",
+        "byteLength": 1287392
+      },
+      {
+        "path": "data/v1/closure/weapons.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "18d3d02e43c9e1af973dbc2d2db17c81d01e925b9a011fdb94ecc6654082ee59",
+        "actualSha256": "18d3d02e43c9e1af973dbc2d2db17c81d01e925b9a011fdb94ecc6654082ee59",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "749d2ba9ae20c5c486b6162c82d427b555063ae5",
+        "byteLength": 296439
+      },
+      {
+        "path": "data/v1/domains/abilities.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "b3836da3dd66adf0b4cbc27aa70182acc8ef7799996df7bb64becebda3edd6e3",
+        "actualSha256": "b3836da3dd66adf0b4cbc27aa70182acc8ef7799996df7bb64becebda3edd6e3",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "86c0e30dfa921a819c06c818daa06f98fe2270f8",
+        "byteLength": 8873191
+      },
+      {
+        "path": "data/v1/domains/blessings.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "18bf41aaa7e2ea7e68be5dc57e12c66db634dc3cf5803c3778e5abcd4fdf55b6",
+        "actualSha256": "18bf41aaa7e2ea7e68be5dc57e12c66db634dc3cf5803c3778e5abcd4fdf55b6",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "aa71d3b5cb89306177b870b4ed4e05a30bebfa0f",
+        "byteLength": 33313904
+      },
+      {
+        "path": "data/v1/domains/curios.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "80a439bfe03f841cfd53379592c03aa5cb1f11d74492ad6c7ecdc8b136d96fb8",
+        "actualSha256": "80a439bfe03f841cfd53379592c03aa5cb1f11d74492ad6c7ecdc8b136d96fb8",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "441a21994f06672388bb7e223a12de18efa68de7",
+        "byteLength": 155216
+      },
+      {
+        "path": "data/v1/domains/weapons.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "ad469b01caafe62ce7835725e684a2c64d527bb0df3c5d3b2340d8fdb6099341",
+        "actualSha256": "ad469b01caafe62ce7835725e684a2c64d527bb0df3c5d3b2340d8fdb6099341",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "3b2ab8c42e871a53bd0d7d03679d522d452f5bf2",
+        "byteLength": 7928428
+      },
+      {
+        "path": "data/v1/mechanics/abilities.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "b13f7beac5add5a5b6d5c89a8bc0b7b51b5254a858649615b6a61435113deb42",
+        "actualSha256": "b13f7beac5add5a5b6d5c89a8bc0b7b51b5254a858649615b6a61435113deb42",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "0a9491a77af78d994129be05ee2bee23c0d90775",
+        "byteLength": 10501482
+      },
+      {
+        "path": "data/v1/mechanics/catalog-document-bindings.proposal.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "900d9facb0d853b8bc17f086a2f29d0c8ea1f2d85856aa49db7b49ff4652f156",
+        "actualSha256": "900d9facb0d853b8bc17f086a2f29d0c8ea1f2d85856aa49db7b49ff4652f156",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "cfa2ba08a4c46824254379aae62e77dfcdb1e0c3",
+        "byteLength": 81572
+      },
+      {
+        "path": "data/v1/mechanics/player-guides.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "520c6407844cad1b124828d483d7c70b9f4580aee5f5d5a7d6645e89b2fc08a1",
+        "actualSha256": "520c6407844cad1b124828d483d7c70b9f4580aee5f5d5a7d6645e89b2fc08a1",
+        "exactSourceCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+        "gitBlobOid": "db6d44a3a43c5ca1f50c2f6f74ac5778d5c47288",
+        "byteLength": 1254515
+      },
+      {
+        "path": "data/v1/mechanics/reviewed-abilities.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "0627d999010b6d42e305f0d692c3535c5833515cee58bdfec166c8f574d95b50",
+        "actualSha256": "0627d999010b6d42e305f0d692c3535c5833515cee58bdfec166c8f574d95b50",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "d7b17ad55cfb94c787b68312638ef63ec556ee53",
+        "byteLength": 9310887
+      },
+      {
+        "path": "data/v1/review-approvals.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "bfcd3ba5c2eb6b93ad6433cb8842d7d6932c54d37eb3b3548bf435d6594e8952",
+        "actualSha256": "bfcd3ba5c2eb6b93ad6433cb8842d7d6932c54d37eb3b3548bf435d6594e8952",
+        "exactSourceCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+        "gitBlobOid": "d43fbb6bf416579210103136c9fa3c3f13b84605",
+        "byteLength": 462226
+      },
+      {
+        "path": "data/v1/weapon-actions.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "68fed6f3303ab8ad303cf14851bf8187c61dc76e6c88c94fbc489804f4a9340b",
+        "actualSha256": "68fed6f3303ab8ad303cf14851bf8187c61dc76e6c88c94fbc489804f4a9340b",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "da223ac47ecfdeaa1c41d8faf9971ec92f8e9a4d",
+        "byteLength": 9584384
+      },
+      {
+        "path": "data/v1/website-display.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "d1b444b873a5df8c274dfe8673007d48739e2b18a778fb5d8af6e0b9a1910e9b",
+        "actualSha256": "d1b444b873a5df8c274dfe8673007d48739e2b18a778fb5d8af6e0b9a1910e9b",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "5aa03f4356100742a6397b6cdb719de545c91611",
+        "byteLength": 121862
+      },
+      {
+        "path": "data/v1/website-token-corrections.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "raw",
+        "expectedSha256": "1fdf935b6afc75da769dac2611491f6d77a5fe8c7440a6c00b54cfdf4ba50555",
+        "actualSha256": "1fdf935b6afc75da769dac2611491f6d77a5fe8c7440a6c00b54cfdf4ba50555",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "e12b09f7366231c4e60e5a8744025e9093ec307c",
+        "byteLength": 7757
+      },
+      {
+        "path": "docs/V1_ACTIONS_GAPS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "3f685818c5ad079914b7dfeeec268d077d8c79a74632ece63734c22cb4390173",
+        "actualSha256": "3f685818c5ad079914b7dfeeec268d077d8c79a74632ece63734c22cb4390173",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "988ebc3ae0d064ea7138a50016c45ec06b673fec",
+        "byteLength": 463680
+      },
+      {
+        "path": "docs/V1_BLESSINGS_43_CANDIDATES_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "31c490d1844b215462e76a1e98a7a270a61f8cbb1a6b51460e26fafcf3808427",
+        "actualSha256": "31c490d1844b215462e76a1e98a7a270a61f8cbb1a6b51460e26fafcf3808427",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "4195f8da4e9ed7b1bf6ba69b6b99cfa1f0663a72",
+        "byteLength": 1410315
+      },
+      {
+        "path": "docs/V1_BLESSINGS_43_CROSS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "3d841aef3c96b1b5f4f7cc8174bd567ec7f69954b7eda8c476bf08aa744de7b1",
+        "actualSha256": "3d841aef3c96b1b5f4f7cc8174bd567ec7f69954b7eda8c476bf08aa744de7b1",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "c6d75b555dd9c8c9851f37a7aa7b0b25e0590e6b",
+        "byteLength": 214802
+      },
+      {
+        "path": "docs/V1_BLESSING_MECHANICS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "c75756be633517c1511b2796b4518d7416d9e45368a7a2e439bedc0926470f1d",
+        "actualSha256": "c75756be633517c1511b2796b4518d7416d9e45368a7a2e439bedc0926470f1d",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "7c3e0bb0d9a402ce0f0ffe74fdf566020408049e",
+        "byteLength": 476379
+      },
+      {
+        "path": "docs/V1_CATALOG_DOCUMENT_BINDINGS_CROSS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "33f8b67d2aece38c392621318bec05436b8967b9821dca84b0f481ffa9bc34d0",
+        "actualSha256": "33f8b67d2aece38c392621318bec05436b8967b9821dca84b0f481ffa9bc34d0",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "54b08048b93d8a0749082fb98c9873dd279c86ee",
+        "byteLength": 17474
+      },
+      {
+        "path": "docs/V1_NON_BLESSING_GAPS_CROSS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "67e12f71ca9bbb467fd8588bba795197e1491b73e67301204d9e651172956baa",
+        "actualSha256": "67e12f71ca9bbb467fd8588bba795197e1491b73e67301204d9e651172956baa",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "8f99ee180a73dd503e3e996511b5fec72c8d536c",
+        "byteLength": 208641
+      },
+      {
+        "path": "docs/V1_NON_BLESSING_GAPS_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "4d8961af47453220fe6ae50a40cc552099ee6c41e5da3be00cae430d21ed760b",
+        "actualSha256": "4d8961af47453220fe6ae50a40cc552099ee6c41e5da3be00cae430d21ed760b",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "aeb506cc13b219600a2975a757692dcf19ada745",
+        "byteLength": 403774
+      },
+      {
+        "path": "docs/V1_WEBSITE_DISPLAY_INDEPENDENT_REVIEW.json",
+        "declaredInputCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "normalization": "lf",
+        "expectedSha256": "dbf51d910940c05ae2ad984916270b62e55a8b0cc0135fecdfd791828322275a",
+        "actualSha256": "dbf51d910940c05ae2ad984916270b62e55a8b0cc0135fecdfd791828322275a",
+        "exactSourceCommit": "e24f8bd0501ddd901f8d7583f445bda60c4f80b0",
+        "gitBlobOid": "2746a51a861c72fa8357292f17007357df6b5349",
+        "byteLength": 126875
+      }
+    ],
+    "protectedLocalOverlays": [
+      {
+        "path": "docs/V1_BLESSINGS_43_CANDIDATES_REVIEW.json",
+        "status": "preserve-local-review-overlay",
+        "byteLength": 1410315,
+        "rawSha256": "31c490d1844b215462e76a1e98a7a270a61f8cbb1a6b51460e26fafcf3808427",
+        "normalizedLfSha256": "31c490d1844b215462e76a1e98a7a270a61f8cbb1a6b51460e26fafcf3808427"
+      },
+      {
+        "path": "docs/V1_BLESSINGS_43_CROSS_REVIEW.json",
+        "status": "preserve-local-review-overlay",
+        "byteLength": 214802,
+        "rawSha256": "3d841aef3c96b1b5f4f7cc8174bd567ec7f69954b7eda8c476bf08aa744de7b1",
+        "normalizedLfSha256": "3d841aef3c96b1b5f4f7cc8174bd567ec7f69954b7eda8c476bf08aa744de7b1"
+      },
+      {
+        "path": "docs/V1_NON_BLESSING_GAPS_CROSS_REVIEW.json",
+        "status": "preserve-local-review-overlay",
+        "byteLength": 208641,
+        "rawSha256": "67e12f71ca9bbb467fd8588bba795197e1491b73e67301204d9e651172956baa",
+        "normalizedLfSha256": "67e12f71ca9bbb467fd8588bba795197e1491b73e67301204d9e651172956baa"
+      },
+      {
+        "path": "docs/V1_NON_BLESSING_GAPS_REVIEW.json",
+        "status": "preserve-local-review-overlay",
+        "byteLength": 403774,
+        "rawSha256": "4d8961af47453220fe6ae50a40cc552099ee6c41e5da3be00cae430d21ed760b",
+        "normalizedLfSha256": "4d8961af47453220fe6ae50a40cc552099ee6c41e5da3be00cae430d21ed760b"
+      },
+      {
+        "path": "docs/V1_WEBSITE_DISPLAY_INDEPENDENT_REVIEW.json",
+        "status": "preserve-local-review-overlay",
+        "byteLength": 126875,
+        "rawSha256": "dbf51d910940c05ae2ad984916270b62e55a8b0cc0135fecdfd791828322275a",
+        "normalizedLfSha256": "dbf51d910940c05ae2ad984916270b62e55a8b0cc0135fecdfd791828322275a"
+      }
+    ]
+  },
+  "currentRepresentativeCoverage": {
+    "schemaVersion": "w03.current-representative-coverage.v1",
+    "candidate": {
+      "repoId": "source",
+      "commit": "285a06c8939ac505ac48e4d0e93b939a2b959211",
+      "path": "content/authoring/w01-real-representative-candidate.json",
+      "gitBlobOid": "80a4fd467eb01ddbea9df474a39747c9d4f785ce",
+      "byteLength": 210495,
+      "rawSha256": "5201134d9913af3e89b437046bb6cfdd96bac92ab1c49a86e296d3051abf77bf",
+      "gameReleaseId": "darktide:1.13.2",
+      "gameVersion": "1.13.2"
+    },
+    "recordIdentity": {
+      "recordCount": 125,
+      "recordIdPresent": 125,
+      "uniqueRecordIdCount": 125,
+      "missingRecordIndices": [],
+      "duplicateRecordIds": [],
+      "kindCounts": {
+        "blessing": 1,
+        "blessing-variant": 1,
+        "claim": 86,
+        "evidence": 29,
+        "skill": 1,
+        "stat-curve": 2,
+        "stat-definition": 2,
+        "term": 1,
+        "weapon": 2
+      }
+    },
+    "valueCoverage": {
+      "knownCount": 244,
+      "knownZeroCount": 4,
+      "unknownCount": 7,
+      "knownZeroFields": [
+        {
+          "fieldPath": "/records/106/payload/displayValue",
+          "decimal": "0.00",
+          "unit": "percent"
+        },
+        {
+          "fieldPath": "/records/107/payload/displayValue",
+          "decimal": "0.00",
+          "unit": "percent"
+        },
+        {
+          "fieldPath": "/records/120/payload/displayValue",
+          "decimal": "0.00",
+          "unit": "percent"
+        },
+        {
+          "fieldPath": "/records/121/payload/displayValue",
+          "decimal": "0.00",
+          "unit": "percent"
+        }
+      ],
+      "unknownFields": [
+        {
+          "fieldPath": "/records/10/payload/edgePolicy",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/10/payload/interpolation",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/5/payload/obtainableTiers",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/7/payload/obtainableInputRange",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/8/payload/edgePolicy",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/8/payload/interpolation",
+          "reasonCode": "NOT_VERIFIED"
+        },
+        {
+          "fieldPath": "/records/9/payload/obtainableInputRange",
+          "reasonCode": "NOT_VERIFIED"
+        }
+      ],
+      "partialRecordCount": 2,
+      "notImportedCount": 2,
+      "notImported": [
+        {
+          "recordIndex": 6,
+          "recordId": "darktide:weapon:chainaxe:p1-m1",
+          "field": "action/profile override resolution",
+          "reasonCode": "NOT_IMPORTED"
+        },
+        {
+          "recordIndex": 124,
+          "recordId": "darktide:weapon:chainaxe:p1-m2",
+          "field": "action/profile override resolution",
+          "reasonCode": "NOT_IMPORTED"
+        }
+      ]
+    },
+    "requiredFields": {
+      "recordId": {
+        "present": 125,
+        "missing": 0
+      },
+      "kind": {
+        "present": 125,
+        "missing": 0
+      },
+      "semanticRequiredFields": "not-revalidated-in-W03; the fixed Source v2 contract is referenced, but this inventory does not assert full candidate completeness"
+    },
+    "scope": "representative W01 candidate only; not full current-game catalog coverage"
+  },
+  "formalContractReferences": {
+    "source": {
+      "repoId": "source",
+      "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+      "ownerLockSource": "Extension W02 owner snapshot lock",
+      "files": [
+        {
+          "repoId": "source",
+          "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+          "path": "content/schema/v2/source-contract.schema.json",
+          "gitBlobOid": "81cfb75fa86040290ca26e074165e56e32a370e1",
+          "byteLength": 34139,
+          "rawSha256": "4e413bafdd7478dda7527b3824ec36509b966343dc9f2e5e838063f80d002737",
+          "owner": "source",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "source",
+          "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+          "path": "content/fixtures/v2/representative-source.json",
+          "gitBlobOid": "e5b2bfc9fc4f53dcf12b8914b872ba02908c141e",
+          "byteLength": 30954,
+          "rawSha256": "849aaa1adba8d73a8c3963de70b5af5e8d4aa9c4c55b9d69c0f74152c79b7b75",
+          "owner": "source",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "source",
+          "commit": "15f285ec3ad9314435141a18125cabfc1b3d1d19",
+          "path": "scripts/content/contract-validator.mjs",
+          "gitBlobOid": "4ca4fc35a1d3ab28adb5669eb9d071805793b1e3",
+          "byteLength": 61088,
+          "rawSha256": "7fbab2de7890e231a7c6e317f2997c1ca3939c17dc87483e927e91b6c6537aaa",
+          "owner": "source",
+          "role": "W02 owner-locked contract input"
+        }
+      ]
+    },
+    "web": {
+      "repoId": "web",
+      "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+      "ownerLockSource": "Extension W02 owner snapshot lock",
+      "files": [
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/source-v2-snapshot/content/fixtures/v2/representative-source.json",
+          "gitBlobOid": "e5b2bfc9fc4f53dcf12b8914b872ba02908c141e",
+          "byteLength": 30954,
+          "rawSha256": "849aaa1adba8d73a8c3963de70b5af5e8d4aa9c4c55b9d69c0f74152c79b7b75",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/source-v2-snapshot/content/schema/v2/source-contract.schema.json",
+          "gitBlobOid": "81cfb75fa86040290ca26e074165e56e32a370e1",
+          "byteLength": 34139,
+          "rawSha256": "4e413bafdd7478dda7527b3824ec36509b966343dc9f2e5e838063f80d002737",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/source-v2-snapshot/scripts/content/contract-validator.mjs",
+          "gitBlobOid": "4ca4fc35a1d3ab28adb5669eb9d071805793b1e3",
+          "byteLength": 61088,
+          "rawSha256": "7fbab2de7890e231a7c6e317f2997c1ca3939c17dc87483e927e91b6c6537aaa",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/source-v2.lock.json",
+          "gitBlobOid": "f5d4bd6f8fff6e99935eae3f87763ce2372a6e1c",
+          "byteLength": 791,
+          "rawSha256": "8a88874d65494491425d49b3663823862ea6de6e42ccd9f02bf85315a2fe4f2e",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/web-authoring.lock.json",
+          "gitBlobOid": "7fde06e655677759d618067f5e0946f29cc23c9f",
+          "byteLength": 209,
+          "rawSha256": "6d621d5356c176e1559773f79af4e68fd32b3c3f8eb51e1f5aba78a2696b3c59",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/announcement-only/data/45e65d1f2bddb96eaf8277213fd9cdbf40aa7cc20bedb1637373df88d5e836ed/announcements.json",
+          "gitBlobOid": "00a9bc3ea1cd6d52241c481f94a6814a5e9d7ee1",
+          "byteLength": 120,
+          "rawSha256": "c71e1f821d1e2ea877b61c4a7b7e65228ca9373f0077f25fecce6bbe4af031be",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/announcement-only/data/45e65d1f2bddb96eaf8277213fd9cdbf40aa7cc20bedb1637373df88d5e836ed/manifest.json",
+          "gitBlobOid": "ec8aab7574a93b8efce46123a01b3f07ad14fe11",
+          "byteLength": 1114,
+          "rawSha256": "f5034647db509a47e1af479766458c489b31cfd623317a40f782c3a076c2e447",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/announcement-only/fixture.json",
+          "gitBlobOid": "054317c9daeebeb34a7188f3f0134c6f2fb2b787",
+          "byteLength": 108,
+          "rawSha256": "a6622d7df4a1b952d10738b66acac4bf5b1281eb629d3954693ab27fb232bd7e",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/announcement-only/version.json",
+          "gitBlobOid": "78ff7b2f1ddefee07dedfbf4bf3fad4777945982",
+          "byteLength": 655,
+          "rawSha256": "cba64f827a43266a6662227e82b8e2edca022be5301cc115b4273645af946623",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/data/4e64931c542eb2558c8337a39b8866e8158cb53df92306a84ee1c04b8fbc8d0a/announcements.json",
+          "gitBlobOid": "dbb762d0e864d51510c47b7576f8fb3f1b881ba1",
+          "byteLength": 119,
+          "rawSha256": "f83901ed0c8152f1d1ed86fd0afaca2a946d80acffcc4ed70b48e5fbe8c74053",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/data/4e64931c542eb2558c8337a39b8866e8158cb53df92306a84ee1c04b8fbc8d0a/manifest.json",
+          "gitBlobOid": "8686b3d5be97a371c2bae08252d0271731366114",
+          "byteLength": 1531,
+          "rawSha256": "d56595f7a12d98ab9908bdbb998045cfe72d989af3dbdf961ccc92aa89d9b2a4",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/data/4e64931c542eb2558c8337a39b8866e8158cb53df92306a84ee1c04b8fbc8d0a/skills.json",
+          "gitBlobOid": "acb73bcb91683ee3b849ae2712e58cadf8f7859c",
+          "byteLength": 43,
+          "rawSha256": "3e063dc8ffb76eef294ba1685f7c9d45d94cf571cfbe02ef59bcba93ef332b13",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/data/4e64931c542eb2558c8337a39b8866e8158cb53df92306a84ee1c04b8fbc8d0a/terms.json",
+          "gitBlobOid": "2e74128c85edfd855355debbebd95623eb933857",
+          "byteLength": 62,
+          "rawSha256": "85262a8d13714bf407f92dfc9f0d577196e4b9c6dd79851d853f2968468c0fd8",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/fixture.json",
+          "gitBlobOid": "8108e550d7b4e6205b1a98dd9773579760a16a89",
+          "byteLength": 104,
+          "rawSha256": "67bb46173b9e4619da88fa59dc218e64aa3145be614074ec2f01bcc664aa8c3f",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/shared-release/valid/version.json",
+          "gitBlobOid": "fc09cf4009aa3957166aebb95cbca2c53fd31c53",
+          "byteLength": 655,
+          "rawSha256": "431200543a9ca80e262d500b72b7a6aa9d4b26597a70edfbdc9604b6d49268e8",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/web-authoring/official-inputs.json",
+          "gitBlobOid": "8147315041fa60158e47e3a89f54b6ad7e007d9b",
+          "byteLength": 9107,
+          "rawSha256": "07b1aaa0f2c60b73733b70a33527b7e4ac082e8905d670ddf96f5a80445b2669",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/web-authoring/representative.json",
+          "gitBlobOid": "965fe53abc51f2e176257659d1b218d17336447d",
+          "byteLength": 27558,
+          "rawSha256": "64e4f169421a7e2c56c0234a32c10df0ebf97e5aee4b34d0a6f3d1c74d96fa92",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/schema/v2/shared-release.schema.json",
+          "gitBlobOid": "352e1b5de74f10ac4a09981c1d1383192f2d8256",
+          "byteLength": 6639,
+          "rawSha256": "2dd1ccc4124e66c504ff6def8de4ec035b674d6e0ecbfe3eb3c4519cb8ecbd9d",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/schema/v2/web-authoring.schema.json",
+          "gitBlobOid": "838c681d3331d6faa7b65ab8cf442d72c73af0af",
+          "byteLength": 20335,
+          "rawSha256": "0936fb116acbd00d6e51e66138a82817fae35885f9572945fb1d01e135ad6eee",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "scripts/content/contract-authoring.mjs",
+          "gitBlobOid": "45b2d02e434b78ee3dc8ed1588eb561398b41b4d",
+          "byteLength": 55178,
+          "rawSha256": "57e488c1c12317a5c0a0826d089611e7bc3b9893d05dc8d228933e29b532a109",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "scripts/content/contract-release.mjs",
+          "gitBlobOid": "9ccf18c16cf290792c34cace253c945e173365e9",
+          "byteLength": 24311,
+          "rawSha256": "f2054ed33afdd6325450138202f7fbde9278f881de800959fb638db2794414d3",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        }
+      ],
+      "authoringAndReleaseContractFiles": [
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/contracts/web-authoring.lock.json",
+          "gitBlobOid": "7fde06e655677759d618067f5e0946f29cc23c9f",
+          "byteLength": 209,
+          "rawSha256": "6d621d5356c176e1559773f79af4e68fd32b3c3f8eb51e1f5aba78a2696b3c59",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/web-authoring/official-inputs.json",
+          "gitBlobOid": "8147315041fa60158e47e3a89f54b6ad7e007d9b",
+          "byteLength": 9107,
+          "rawSha256": "07b1aaa0f2c60b73733b70a33527b7e4ac082e8905d670ddf96f5a80445b2669",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/fixtures/v2/web-authoring/representative.json",
+          "gitBlobOid": "965fe53abc51f2e176257659d1b218d17336447d",
+          "byteLength": 27558,
+          "rawSha256": "64e4f169421a7e2c56c0234a32c10df0ebf97e5aee4b34d0a6f3d1c74d96fa92",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/schema/v2/shared-release.schema.json",
+          "gitBlobOid": "352e1b5de74f10ac4a09981c1d1383192f2d8256",
+          "byteLength": 6639,
+          "rawSha256": "2dd1ccc4124e66c504ff6def8de4ec035b674d6e0ecbfe3eb3c4519cb8ecbd9d",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "content/schema/v2/web-authoring.schema.json",
+          "gitBlobOid": "838c681d3331d6faa7b65ab8cf442d72c73af0af",
+          "byteLength": 20335,
+          "rawSha256": "0936fb116acbd00d6e51e66138a82817fae35885f9572945fb1d01e135ad6eee",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "scripts/content/contract-authoring.mjs",
+          "gitBlobOid": "45b2d02e434b78ee3dc8ed1588eb561398b41b4d",
+          "byteLength": 55178,
+          "rawSha256": "57e488c1c12317a5c0a0826d089611e7bc3b9893d05dc8d228933e29b532a109",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        },
+        {
+          "repoId": "web",
+          "commit": "2816042d4a7380288ac8e73d1058a8accfe5687b",
+          "path": "scripts/content/contract-release.mjs",
+          "gitBlobOid": "9ccf18c16cf290792c34cace253c945e173365e9",
+          "byteLength": 24311,
+          "rawSha256": "f2054ed33afdd6325450138202f7fbde9278f881de800959fb638db2794414d3",
+          "owner": "web",
+          "role": "W02 owner-locked contract input"
+        }
+      ]
+    },
+    "extensionFormal": {
+      "repoId": "extension",
+      "commit": "5a09f3628208550cca8696655f3012c23c53d5e5",
+      "scope": "formal W02 owner/C2 contracts",
+      "ownerSnapshotLock": {
+        "repoId": "extension",
+        "commit": "5a09f3628208550cca8696655f3012c23c53d5e5",
+        "path": "content/contracts/w02/owner-snapshot.lock.json",
+        "gitBlobOid": "2bd99bace6cdb0cdfa75e31279befb2eaeb8f815",
+        "byteLength": 6005,
+        "rawSha256": "90c13714911497e9c757e8402b3929a1c46c2527053842e83010cec279dcb0b9",
+        "owner": "extension",
+        "role": "W02 immutable owner snapshot lock"
+      },
+      "snapshotLockSha256": "90c13714911497e9c757e8402b3929a1c46c2527053842e83010cec279dcb0b9",
+      "capabilityLock": {
+        "repoId": "extension",
+        "commit": "5a09f3628208550cca8696655f3012c23c53d5e5",
+        "path": "content/contracts/w02/dev-capability.json",
+        "gitBlobOid": "df0ac8e9db0ad30e042ca7fafae72fe441eb411d",
+        "byteLength": 1680,
+        "rawSha256": "b2146f185c8be73ff35c4c5fc613df02f2b3ee36f74dca44206897872727cfcf",
+        "owner": "extension",
+        "role": "W02 C2 capability lock"
+      },
+      "conformanceTool": {
+        "repoId": "extension",
+        "commit": "5a09f3628208550cca8696655f3012c23c53d5e5",
+        "path": "scripts/w02/contract-conformance.mjs",
+        "gitBlobOid": "9eb068e6091cb6ade975c553bab1a67fdb7c2006",
+        "byteLength": 29234,
+        "rawSha256": "872e39dd82dcda3729fc3b378075aadc6513924063479b258276241c432cbb05",
+        "owner": "extension",
+        "role": "W02 C2 conformance tool"
+      },
+      "c2ReceiptEvidence": {
+        "path": ".tmp/w02-20261018/extension-final-conformance.json",
+        "sha256": "e75fca9cc2bdd93ab1c5c60e841d8b3013011fd4bca0946f5259b2bee6aed732",
+        "contractVersion": "1.0.0",
+        "packageVersion": "0.2.30",
+        "snapshotLockSha256": "90c13714911497e9c757e8402b3929a1c46c2527053842e83010cec279dcb0b9",
+        "runtimeIntegration": false,
+        "publicationEligible": false,
+        "contentCopied": false
+      }
+    },
+    "extensionLegacy": {
+      "repoId": "extension",
+      "commit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+      "scope": "historical release inputs and runtime snapshot only; not the formal W02 contract owner pin"
+    }
+  },
+  "legacyHardcodedContentReview": {
+    "legacyExtensionCommit": "b18f5ee2d7c9886b1d9ecb56f7ece8fca5d32c9a",
+    "formalW02ExtensionContractCommit": "5a09f3628208550cca8696655f3012c23c53d5e5",
+    "supplementalRows": [
+      {
+        "sourcePath": "extension/core.js",
+        "selector": {
+          "kind": "line-range",
+          "locator": "L31:blessing.tierValues",
+          "startByte": 1914,
+          "endByte": 1925
+        },
+        "owner": "source",
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "normalization": "raw",
+          "sha256": "efaac7873c59e1ce32c5157c5527fc7f83c535be8e012d974275174022fb5188"
+        },
+        "reviewState": "pending",
+        "targetStatus": "not-generated",
+        "linkDisposition": "historical Extension matcher literal; same legacy blessing identity binds to data.js /blessing/tierValues entries; Source candidate only, review pending, no current-release inference"
+      },
+      {
+        "sourcePath": "extension/core.js",
+        "selector": {
+          "kind": "line-range",
+          "locator": "L31:blessing.duration",
+          "startByte": 1948,
+          "endByte": 1950
+        },
+        "owner": "source",
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "normalization": "raw",
+          "sha256": "3fffd018d2223020be85670d93f565b63df54a9ce3ed2cdf6347a61df016938c"
+        },
+        "reviewState": "pending",
+        "targetStatus": "not-generated",
+        "linkDisposition": "historical Extension matcher literal; same legacy blessing identity binds to data.js /blessing/duration; Source candidate only, review pending, no current-release inference"
+      },
+      {
+        "sourcePath": "extension/core.js",
+        "selector": {
+          "kind": "line-range",
+          "locator": "L37:blessing.description",
+          "startByte": 2261,
+          "endByte": 2320
+        },
+        "owner": "web",
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "normalization": "raw",
+          "sha256": "fb4761cec081d853a6872c0af3e5709b7df30c0d458722df53de1bab6a313780"
+        },
+        "reviewState": "pending",
+        "targetStatus": "not-generated",
+        "linkDisposition": "historical Extension player-facing template; Web wording candidate only, review pending, interpolation and mechanics are not normalized or approved"
+      },
+      {
+        "sourcePath": "extension/content.js",
+        "selector": {
+          "kind": "line-range",
+          "locator": "L96:blessing.officialDescriptionSuffix",
+          "startByte": 5631,
+          "endByte": 5674
+        },
+        "owner": "web",
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "normalization": "raw",
+          "sha256": "1be9d1b20232708759f6b587be78cf3f6807a37119598d2977b4a105e1102c4e"
+        },
+        "reviewState": "pending",
+        "targetStatus": "not-generated",
+        "linkDisposition": "legacy UI fallback match text; Web-origin candidate only, not proof of an official source snapshot, review pending"
+      },
+      {
+        "sourcePath": "extension/content.js",
+        "selector": {
+          "kind": "line-range",
+          "locator": "L96:blessing.localizedDescriptionSuffix",
+          "startByte": 5678,
+          "endByte": 5720
+        },
+        "owner": "web",
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "normalization": "raw",
+          "sha256": "a9ef094051de74b0b80df6005b023da7fb612e64b63116cc72220d3457f126c3"
+        },
+        "reviewState": "pending",
+        "targetStatus": "not-generated",
+        "linkDisposition": "legacy player-facing Traditional Chinese fallback; Web wording candidate only, review pending"
+      }
+    ],
+    "sameLegacyBlessingStaticBindings": [
+      {
+        "sourcePath": "extension/data.js",
+        "selector": {
+          "kind": "js-literal-pointer",
+          "root": "data",
+          "locator": "/blessing/tierValues/0"
+        },
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "serialization": "js-value-json-stringify",
+          "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        },
+        "owner": "source",
+        "reviewState": "pending"
+      },
+      {
+        "sourcePath": "extension/data.js",
+        "selector": {
+          "kind": "js-literal-pointer",
+          "root": "data",
+          "locator": "/blessing/tierValues/1"
+        },
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "serialization": "js-value-json-stringify",
+          "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+        },
+        "owner": "source",
+        "reviewState": "pending"
+      },
+      {
+        "sourcePath": "extension/data.js",
+        "selector": {
+          "kind": "js-literal-pointer",
+          "root": "data",
+          "locator": "/blessing/tierValues/2"
+        },
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "serialization": "js-value-json-stringify",
+          "sha256": "8527a891e224136950ff32ca212b45bc93f69fbb801c3b1ebedac52775f99e61"
+        },
+        "owner": "source",
+        "reviewState": "pending"
+      },
+      {
+        "sourcePath": "extension/data.js",
+        "selector": {
+          "kind": "js-literal-pointer",
+          "root": "data",
+          "locator": "/blessing/tierValues/3"
+        },
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "serialization": "js-value-json-stringify",
+          "sha256": "b17ef6d19c7a5b1ee83b907c595526dcb1eb06db8227d650d5dda0a9f4ce8cd9"
+        },
+        "owner": "source",
+        "reviewState": "pending"
+      },
+      {
+        "sourcePath": "extension/data.js",
+        "selector": {
+          "kind": "js-literal-pointer",
+          "root": "data",
+          "locator": "/blessing/duration"
+        },
+        "sourceEntityKey": {
+          "kind": "legacy-id",
+          "value": "riposte-paired-transonic-blades",
+          "reason": null
+        },
+        "fragment": {
+          "serialization": "js-value-json-stringify",
+          "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+        },
+        "owner": "source",
+        "reviewState": "pending"
+      }
+    ],
+    "otherMatcherDisposition": [
+      {
+        "function": "resolveCurioEffect",
+        "lineRange": "L39-L44",
+        "remainsExtensionOwnedLogic": true,
+        "staticValues": "data.curioEffects fields are separately inventoried; no generic matcher is converted into a Source rule"
+      },
+      {
+        "function": "resolveWeaponPerk",
+        "lineRange": "L48-L52",
+        "remainsExtensionOwnedLogic": true,
+        "staticValues": "data.weaponPerks fields are separately inventoried; no current-game validity is inferred"
+      }
+    ],
+    "contentUiDisposition": {
+      "sourcePath": "extension/content.js",
+      "lines": "whole file (611 source lines); fallback fragments at L96 are separately inventoried",
+      "owner": "extension",
+      "note": "Overlay controls, status, labels, and local explanatory UI remain Extension-owned; only the explicit blessing fallback fragments above are Web wording candidates."
+    },
+    "limitations": [
+      "all supplemental rows remain pending and not-generated",
+      "legacy b18 snapshot is not the formal 5a09 W02 Extension contract pin",
+      "no matcher algorithm, tier resolution, full-build equivalence, or runtime behavior is promoted into a formal game record"
+    ]
+  },
+  "additionalExtensionDataCount": 9,
+  "codeRegistry": {
+    "path": "scripts/settings/equipment/weapon_templates/weapon_templates.lua",
+    "commit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+    "declaredGroups": 57,
+    "nonemptyGroups": 56,
+    "emptyGroups": [
+      "timed"
+    ],
+    "uniqueTemplateIds": 203,
+    "templateFilesFound": 203,
+    "currentCandidateTemplateKeyCrossCheck": [
+      {
+        "recordId": "darktide:weapon:chainaxe:p1-m1",
+        "templateKey": "chainaxe_p1_m1",
+        "registryMatch": true
+      },
+      {
+        "recordId": "darktide:weapon:chainaxe:p1-m2",
+        "templateKey": "chainaxe_p1_m2",
+        "registryMatch": true
+      }
+    ],
+    "limits": [
+      "registry membership is not player availability",
+      "code snapshot row does not prove all action/profile resolution",
+      "no full-game patch-label equivalence is inferred"
+    ]
+  },
+  "owners": [
+    "source",
+    "web",
+    "extension",
+    "mods",
+    "private"
+  ],
+  "notClaimed": [
+    "current-game completeness",
+    "build-wide code equivalence",
+    "mechanics re-analysis",
+    "approval inheritance",
+    "actual migration or restore"
+  ]
+}
