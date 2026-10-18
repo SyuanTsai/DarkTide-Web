@@ -30,9 +30,35 @@ const W06_TERM_SOURCE = Object.freeze({
   path: 'Referneces/Translation.md',
   fileSha256: 'fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0',
 });
+const W07_SOURCE_LOCK_PATH = 'content/contracts/w07/source-v2.lock.json';
+const W07_WEB_LOCK_PATH = 'content/contracts/w07/web-authoring.lock.json';
+const W07_AUTHORING_PATH = 'content/authoring/v2/w07-weapons.json';
+const W07_OFFICIAL_INPUT_PATH = 'content/contracts/w07/official-inputs.json';
+const W07_BASELINE_PATH = 'content/contracts/w07/baseline/w01-web-authoring.json';
+const W07_BASELINE_LOCK_PATH = 'content/contracts/w07/baseline/w01-baseline.lock.json';
+const W07_OFFICIAL_INPUT_SHA256 = 'f81406e85643fc0cdcf618d5a092b6dc6379404b0679d9b080a92b77510d504e';
+const W07_BASELINE = Object.freeze({
+  commit: '829eaee4b66b783463487749500b00f9736aab13',
+  path: 'content/w01/web-authoring.json',
+  blobOid: 'abd12fff64c1f32c80f59ef6e0d2ecff9cb83593',
+  cachePath: W07_BASELINE_PATH,
+  sha256: '038cecd27f151943b54b9cd8487de05cf293011e701580f87a9bd62b061d1513',
+});
+const W07_BASELINE_LOCK = Object.freeze({
+  schemaVersion: '1.0.0',
+  commit: W07_BASELINE.commit,
+  path: W07_BASELINE.path,
+  blobOid: W07_BASELINE.blobOid,
+  sha256: W07_BASELINE.sha256,
+});
 const W06_SOURCE_FILES = Object.freeze({
   schema: 'content/schema/v2/source-contract.schema.json',
   data: 'content/authoring/v2/w06-skills-blessings.json',
+  validator: 'scripts/content/contract-validator.mjs',
+});
+const W07_SOURCE_FILES = Object.freeze({
+  schema: 'content/schema/v2/source-contract.schema.json',
+  data: 'content/authoring/v2/w07-weapons.json',
   validator: 'scripts/content/contract-validator.mjs',
 });
 const SHA256_RE = /^[a-f0-9]{64}$/;
@@ -167,6 +193,7 @@ export function assertWebAuthoringSchemaParity(schema) {
   }
   const kinds = schema?.$defs?.presentationEntityRef?.properties?.kind?.enum ?? [];
   if (canonical([...kinds].sort(compareLexical)) !== canonical([...PRESENTATION_KINDS].sort(compareLexical))) errors.push('schema presentation kinds differ from the validated owner set');
+  if (!schema?.$defs?.weaponView || schema?.$defs?.presentation?.properties?.weaponView?.$ref !== '#/$defs/weaponView') errors.push('schema presentation weaponView must use the typed Source-reference model');
   if (schema?.$defs?.officialInputSnapshot?.additionalProperties !== false) errors.push('official input snapshot must be closed');
   if (errors.length) throw new Error('Web schema/validator parity failure: ' + errors.join('; '));
   return true;
@@ -186,21 +213,24 @@ function requireSha(value, label) {
 }
 
 function expectedSourcePin(lock, mode = 'fixture') {
+  const isFixture = mode === 'fixture';
   return {
     repository: lock.repository,
     commit: lock.commit,
     schemaId: lock.schemaId,
     schemaSha256: lock.files.schema.sha256,
-    [mode === 'w06' ? 'dataSha256' : 'fixtureSha256']: lock.files[mode === 'w06' ? 'data' : 'fixture'].sha256,
+    [isFixture ? 'fixtureSha256' : 'dataSha256']: lock.files[isFixture ? 'fixture' : 'data'].sha256,
     validatorSha256: lock.files.validator.sha256,
   };
 }
 
 async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = 'fixture' }) {
+  const isFixture = mode === 'fixture';
   const isW06 = mode === 'w06';
-  const lockPath = isW06 ? W06_SOURCE_LOCK_PATH : SOURCE_LOCK_PATH;
-  const files = isW06 ? W06_SOURCE_FILES : SOURCE_FILES;
-  const dataKey = isW06 ? 'data' : 'fixture';
+  const isW07 = mode === 'w07';
+  const lockPath = isW06 ? W06_SOURCE_LOCK_PATH : isW07 ? W07_SOURCE_LOCK_PATH : SOURCE_LOCK_PATH;
+  const files = isW06 ? W06_SOURCE_FILES : isW07 ? W07_SOURCE_FILES : SOURCE_FILES;
+  const dataKey = isFixture ? 'fixture' : 'data';
   const lock = (await readJson(repoRoot, lockPath)).value;
   if (!isObject(lock) || lock.schemaVersion !== '1.0.0' || lock.repository !== SOURCE_REPOSITORY || lock.schemaId !== SOURCE_SCHEMA_ID || !COMMIT_RE.test(lock.commit ?? '')) {
     throw new Error('pinned Source contract lock has an invalid identity');
@@ -224,7 +254,7 @@ async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = '
     catch (error) { throw new Error('cannot read Source checkout commit: ' + error.message); }
     if (actualCommit !== lock.commit) throw new Error('Source checkout commit differs from the pinned Source lock');
     for (const [name, relativePath] of Object.entries(files)) {
-      const bytes = isW06
+      const bytes = !isFixture
         ? execFileSync('git', ['-C', actualRoot, 'show', lock.commit + ':' + relativePath], { encoding: null })
         : await readFile(path.join(actualRoot, relativePath));
       if (createHash('sha256').update(bytes).digest('hex') !== lock.files[name].sha256) {
@@ -239,8 +269,8 @@ async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = '
   sourceValidator.assertSchemaValidatorParity(schema);
   const sourceValidation = sourceValidator.validateSourceContract(sourceContract, { schema });
   if (!sourceValidation.valid) throw new Error('pinned Source representative fixture is invalid: ' + sourceValidation.issues.map(item => item.message).join('; '));
-  if (sourceContract.fixtureOnly !== !isW06 || sourceContract.publicationEligible !== false) {
-    throw new Error(isW06 ? 'pinned Source data must remain non-fixture and non-publishable' : 'pinned Source fixture must remain synthetic and non-publishable');
+  if (sourceContract.fixtureOnly !== isFixture || sourceContract.publicationEligible !== false) {
+    throw new Error(isFixture ? 'pinned Source fixture must remain synthetic and non-publishable' : 'pinned Source data must remain non-fixture and non-publishable');
   }
   return {
     sourceLock: lock, sourceContract, sourceSchema: schema, sourceValidator, sourceValidation,
@@ -249,20 +279,25 @@ async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = '
 }
 
 export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnapshotRoot, sourceRoot, mode = 'fixture' } = {}) {
-  if (!['fixture', 'w06'].includes(mode)) throw new Error('Web authoring mode must be fixture or w06');
+  if (!['fixture', 'w06', 'w07'].includes(mode)) throw new Error('Web authoring mode must be fixture, w06, or w07');
+  const isW06 = mode === 'w06';
+  const isW07 = mode === 'w07';
   const absoluteRoot = await realpath(repoRoot);
   const snapshotRoot = sourceSnapshotRoot
     ? await realpath(sourceSnapshotRoot)
-    : path.join(absoluteRoot, mode === 'w06' ? 'content/contracts/w06/source-v2-snapshot' : 'content/contracts/source-v2-snapshot');
-  const authoringPath = mode === 'w06' ? W06_AUTHORING_PATH : WEB_FIXTURE_PATH;
-  const officialPath = mode === 'w06' ? W06_OFFICIAL_INPUT_PATH : OFFICIAL_INPUT_PATH;
-  const [schemaFile, authoringFile, officialFile, webLockFile, sourceInfo, termRulesFile] = await Promise.all([
+    : path.join(absoluteRoot, isW06 ? 'content/contracts/w06/source-v2-snapshot' : isW07 ? 'content/contracts/w07/source-v2-snapshot' : 'content/contracts/source-v2-snapshot');
+  const authoringPath = isW06 ? W06_AUTHORING_PATH : isW07 ? W07_AUTHORING_PATH : WEB_FIXTURE_PATH;
+  const officialPath = isW06 ? W06_OFFICIAL_INPUT_PATH : isW07 ? W07_OFFICIAL_INPUT_PATH : OFFICIAL_INPUT_PATH;
+  const webLockPath = isW06 ? W06_WEB_LOCK_PATH : isW07 ? W07_WEB_LOCK_PATH : WEB_LOCK_PATH;
+  const [schemaFile, authoringFile, officialFile, webLockFile, sourceInfo, termRulesFile, baselineFile, baselineLockFile] = await Promise.all([
     readJson(absoluteRoot, 'content/schema/v2/web-authoring.schema.json'),
     readJson(absoluteRoot, authoringPath),
     readJson(absoluteRoot, officialPath),
-    readJson(absoluteRoot, mode === 'w06' ? W06_WEB_LOCK_PATH : WEB_LOCK_PATH),
+    readJson(absoluteRoot, webLockPath),
     loadSourceContract({ repoRoot: absoluteRoot, snapshotRoot, sourceRoot, mode }),
-    mode === 'w06' ? readJson(absoluteRoot, W06_TERM_RULES_PATH) : Promise.resolve(null),
+    isW06 ? readJson(absoluteRoot, W06_TERM_RULES_PATH) : Promise.resolve(null),
+    isW07 ? readJson(absoluteRoot, W07_BASELINE_PATH) : Promise.resolve(null),
+    isW07 ? readJson(absoluteRoot, W07_BASELINE_LOCK_PATH) : Promise.resolve(null),
   ]);
   const schema = schemaFile.value;
   assertWebAuthoringSchemaParity(schema);
@@ -270,24 +305,37 @@ export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnaps
   const authoringLock = webLock;
   if (!isObject(webLock) || webLock.schemaVersion !== '1.0.0'
     || authoringLock?.officialInputs?.path !== officialPath
-    || (mode === 'w06' && (authoringLock?.authoring?.path !== W06_AUTHORING_PATH || authoringLock?.termRules?.path !== W06_TERM_RULES_PATH))) {
+    || (isW06 && (authoringLock?.authoring?.path !== W06_AUTHORING_PATH || authoringLock?.termRules?.path !== W06_TERM_RULES_PATH))
+    || (isW07 && (authoringLock?.authoring?.path !== W07_AUTHORING_PATH || canonical(authoringLock?.baseline) !== canonical(W07_BASELINE)))) {
     throw new Error('Web authoring lock has an invalid official-input identity');
+  }
+  if (isW07 && authoringLock.officialInputs.sha256 !== W07_OFFICIAL_INPUT_SHA256) {
+    throw new Error('W07 official input hash differs from the fixed reviewed snapshot');
   }
   requireSha(authoringLock.officialInputs.sha256, 'pinned official-input hash');
   const actualOfficialHash = createHash('sha256').update(officialFile.bytes).digest('hex');
   if (actualOfficialHash !== authoringLock.officialInputs.sha256) throw new Error('pinned official input snapshot hash mismatch');
-  if (mode === 'w06') {
+  if (isW06) {
     requireSha(authoringLock.authoring.sha256, 'pinned W06 authoring hash');
     if (createHash('sha256').update(authoringFile.bytes).digest('hex') !== authoringLock.authoring.sha256) throw new Error('pinned W06 authoring hash mismatch');
     requireSha(authoringLock.termRules.sha256, 'pinned W06 term-rules hash');
     if (createHash('sha256').update(termRulesFile.bytes).digest('hex') !== authoringLock.termRules.sha256) throw new Error('pinned W06 term-rules hash mismatch');
+  }
+  if (isW07) {
+    requireSha(authoringLock.authoring.sha256, 'pinned W07 authoring hash');
+    if (createHash('sha256').update(authoringFile.bytes).digest('hex') !== authoringLock.authoring.sha256) throw new Error('pinned W07 authoring hash mismatch');
+    const baselineSha256 = createHash('sha256').update(baselineFile.bytes).digest('hex');
+    if (baselineSha256 !== W07_BASELINE.sha256 || baselineFile.value?.schemaVersion !== '1.0.0' || !Array.isArray(baselineFile.value?.records)
+      || canonical(baselineLockFile.value) !== canonical(W07_BASELINE_LOCK)) {
+      throw new Error('pinned W01 baseline raw-blob cache differs from its fixed identity');
+    }
   }
   if (authoringFile.value.officialInputsSha256 !== authoringLock.officialInputs.sha256) throw new Error('authoring officialInputsSha256 differs from the pinned input snapshot');
   const officialIssues = [];
   validateSchemaValue(officialFile.value, schema, schema, '', officialIssues);
   if (officialIssues.length) throw new Error('pinned official input snapshot violates schema: ' + officialIssues.map(item => item.path + ' ' + item.message).join('; '));
   if (officialFile.value.fixtureOnly !== (mode === 'fixture')) throw new Error('official input snapshot fixtureOnly mode differs from the selected authoring mode');
-  if (mode === 'w06') {
+  if (isW06) {
     const rules = termRulesFile.value;
     if (!isObject(rules) || rules.schemaVersion !== '1.0.0' || rules.fixtureOnly !== false || rules.publicationEligible !== false || !Array.isArray(rules.rules)) {
       throw new Error('pinned W06 terminology rules have an invalid non-fixture identity');
@@ -309,7 +357,7 @@ export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnaps
   const sourcePin = expectedSourcePin(sourceInfo.sourceLock, mode);
   if (canonical(authoringFile.value.sourcePin) !== canonical(sourcePin)) throw new Error('authoring Source pin differs from the fixed Source lock');
   return {
-    repoRoot: absoluteRoot, mode, schema, authoring: authoringFile.value, officialInputs: officialFile.value,
+    repoRoot: absoluteRoot, mode, schema, authoring: authoringFile.value, officialInputs: officialFile.value, baseline: baselineFile?.value ?? null,
     officialInputsBytes: officialFile.bytes, webLock, sourcePin, termRules: termRulesFile?.value ?? null, ...sourceInfo,
     sourceRecordMap: new Map(sourceInfo.sourceContract.records.map(record => [keyOf(record), record])),
     sourceReleaseMap: new Map(sourceInfo.sourceContract.gameReleases.map(release => [release.gameReleaseId, release])),
@@ -448,6 +496,9 @@ function validateReceiptAndTargetShapes(contract, issues) {
       translation: target.ownerKind === 'presentation' && target.fieldPath === '/faithfulTranslation',
       content: (target.ownerKind === 'presentation' && (
         ['/name', '/detailSections', '/errata', '/tierApplicability'].includes(target.fieldPath)
+        || /^\/weaponView\/(?:markLabel|attackHeading|comparisonHeading|note)$/.test(target.fieldPath)
+        || /^\/weaponView\/statSections\/\d+$/.test(target.fieldPath)
+        || /^\/weaponView\/attackProfileRefs\/\d+$/.test(target.fieldPath)
         || /^\/detailSections\/\d+\/items\/\d+(?:\/text|\/parts\/\d+(?:\/text)?)?$/.test(target.fieldPath)
         || /^\/tierPresentations\/options\/\d+(?:\/detailSections(?:\/\d+\/items(?:\/\d+(?:\/text|\/parts(?:\/\d+(?:\/text)?)?)?)?)?)?$/.test(target.fieldPath)
         || /^\/errata\/\d+\/text$/.test(target.fieldPath)
@@ -523,6 +574,101 @@ function sameSourceOwner(left, right) {
   return left?.recordId === right?.recordId
     && left?.gameReleaseId === right?.gameReleaseId
     && left?.kind === right?.kind;
+}
+
+function sourceRefKey(ref) {
+  return String(ref?.gameReleaseId) + '\u0000' + String(ref?.recordId) + '\u0000' + String(ref?.kind);
+}
+
+function refsMatchSet(actual, expected) {
+  if (actual.length !== expected.length) return false;
+  const expectedKeys = new Set(expected.map(sourceRefKey));
+  return expectedKeys.size === expected.length && actual.every(ref => expectedKeys.has(sourceRefKey(ref)));
+}
+
+function refsMatchOrder(actual, expected) {
+  return actual.length === expected.length && actual.every((ref, index) => sourceRefKey(ref) === sourceRefKey(expected[index]));
+}
+
+function validateWeaponView(presentation, contract, inputs, issues, at) {
+  const view = presentation.weaponView;
+  if (!view) {
+    issue(issues, at + '/weaponView', 'W07 weapon presentation requires a Source-bound weapon view', 'weapon-view-required');
+    return;
+  }
+  const releaseId = presentation.entityRef.gameReleaseId;
+  if (presentation.entityRef.kind !== 'weapon') issue(issues, at + '/entityRef/kind', 'W07 weapon view owner must be a weapon', 'weapon-view-owner');
+  const weapon = resolveSourceRecord(view.sourceWeaponRef, 'weapon', releaseId, inputs, issues, at + '/weaponView/sourceWeaponRef');
+  if (!sameSourceOwner(view.sourceWeaponRef, presentation.entityRef)) issue(issues, at + '/weaponView/sourceWeaponRef', 'weapon view must follow the presentation weapon and release', 'weapon-view-owner');
+  if (!weapon) return;
+
+  const sourceBindings = weapon.payload.statBindings ?? [];
+  const sourceStatKeys = sourceBindings.map(binding => binding.statKey);
+  if (new Set(sourceStatKeys).size !== sourceStatKeys.length) issue(issues, at + '/weaponView/statSections', 'Source weapon stat bindings must have unique stat keys', 'weapon-stat-source');
+  const viewStatKeys = view.statSections.map(section => section.sourceStat);
+  if (new Set(viewStatKeys).size !== viewStatKeys.length) issue(issues, at + '/weaponView/statSections', 'weapon view stat groups must not duplicate a Source stat key', 'weapon-stat-duplicate');
+  if (canonical(viewStatKeys) !== canonical(sourceStatKeys)) issue(issues, at + '/weaponView/statSections', 'weapon view must retain the complete Source stat group set in source order', 'weapon-stat-coverage');
+
+  const sourceClaims = new Map((weapon.payload.claimRefs ?? []).map(ref => [String(ref.gameReleaseId) + '\u0000' + String(ref.recordId), inputs.sourceRecordMap.get(keyOf(ref))]));
+  const statDefinitionRecords = (weapon.payload.statRefs ?? []).map(ref => inputs.sourceRecordMap.get(keyOf({ ...ref, kind: 'stat-definition' }))).filter(Boolean);
+  const expectedReviewTargets = [];
+  for (const [sectionIndex, section] of view.statSections.entries()) {
+    const sectionAt = at + '/weaponView/statSections/' + sectionIndex;
+    const claimsForStat = [...sourceClaims.values()].filter(record => record?.kind === 'claim' && record.payload.context?.weaponStat === section.sourceStat);
+    const expectedClaimRefs = claimsForStat.map(record => ({ recordId: record.recordId, gameReleaseId: record.gameReleaseId, kind: 'claim' }));
+    const actualClaims = [];
+    for (const [refIndex, ref] of section.claimRefs.entries()) {
+      const claim = resolveSourceRecord(ref, 'claim', releaseId, inputs, issues, sectionAt + '/claimRefs/' + refIndex);
+      if (claim) {
+        actualClaims.push(ref);
+        if (claim.payload.context?.weaponStat !== section.sourceStat) issue(issues, sectionAt + '/claimRefs/' + refIndex, 'claim belongs to a different Source weapon stat group', 'weapon-stat-claim');
+        if (claim.payload.context?.weaponRef?.recordId !== weapon.recordId || claim.payload.context?.weaponRef?.gameReleaseId !== weapon.gameReleaseId) issue(issues, sectionAt + '/claimRefs/' + refIndex, 'claim context belongs to a different Source weapon', 'weapon-stat-claim');
+      }
+    }
+    if (!refsMatchSet(actualClaims, expectedClaimRefs)) issue(issues, sectionAt + '/claimRefs', 'stat group claim refs must exactly match the Source weapon claims for this stat', 'weapon-stat-coverage');
+
+    const claimKeys = new Set(expectedClaimRefs.map(sourceRefKey));
+    const expectedDefinitions = statDefinitionRecords.filter(record => (record.payload.claimRefs ?? []).some(ref => claimKeys.has(sourceRefKey({ ...ref, kind: 'claim' }))));
+    const expectedDefinitionRefs = expectedDefinitions.map(record => ({ recordId: record.recordId, gameReleaseId: record.gameReleaseId, kind: 'stat-definition' }));
+    const actualDefinitions = [];
+    for (const [refIndex, ref] of section.statDefinitionRefs.entries()) {
+      const definition = resolveSourceRecord(ref, 'stat-definition', releaseId, inputs, issues, sectionAt + '/statDefinitionRefs/' + refIndex);
+      if (definition) actualDefinitions.push(ref);
+    }
+    if (!refsMatchSet(actualDefinitions, expectedDefinitionRefs)) issue(issues, sectionAt + '/statDefinitionRefs', 'stat definitions must match the Source definitions linked to this stat group', 'weapon-stat-definition');
+
+    const expectedCurves = expectedDefinitions.map(record => record.payload.curveRef).filter(Boolean).map(ref => ({ ...ref, kind: 'stat-curve' }));
+    const actualCurves = [];
+    for (const [refIndex, ref] of section.curveRefs.entries()) {
+      const curve = resolveSourceRecord(ref, 'stat-curve', releaseId, inputs, issues, sectionAt + '/curveRefs/' + refIndex);
+      if (curve) actualCurves.push(ref);
+    }
+    if (!refsMatchSet(actualCurves, expectedCurves)) issue(issues, sectionAt + '/curveRefs', 'curve refs must match the curves of this Source stat group', 'weapon-stat-curve');
+    expectedReviewTargets.push('/weaponView/statSections/' + sectionIndex);
+  }
+
+  const expectedProfiles = (weapon.payload.attackProfileRefs ?? []).map(ref => ({ ...ref, kind: 'attack-profile' }));
+  const actualProfiles = [];
+  for (const [refIndex, ref] of view.attackProfileRefs.entries()) {
+    const profile = resolveSourceRecord(ref, 'attack-profile', releaseId, inputs, issues, at + '/weaponView/attackProfileRefs/' + refIndex);
+    if (profile) {
+      actualProfiles.push(ref);
+      if (profile.payload.weaponRef?.recordId !== weapon.recordId || profile.payload.weaponRef?.gameReleaseId !== weapon.gameReleaseId) issue(issues, at + '/weaponView/attackProfileRefs/' + refIndex, 'attack profile belongs to a different Source weapon mark', 'weapon-action-owner');
+      if (profile.payload.templateKey !== weapon.payload.templateKey) issue(issues, at + '/weaponView/attackProfileRefs/' + refIndex, 'attack profile template differs from the selected Source weapon template', 'weapon-action-template');
+    }
+    expectedReviewTargets.push('/weaponView/attackProfileRefs/' + refIndex);
+  }
+  if (!refsMatchOrder(actualProfiles, expectedProfiles)) issue(issues, at + '/weaponView/attackProfileRefs', 'weapon view must retain every Source action profile in source order for the selected mark', 'weapon-action-coverage');
+
+  for (const field of ['markLabel', 'attackHeading', 'comparisonHeading', 'note']) expectedReviewTargets.push('/weaponView/' + field);
+  for (const fieldPath of expectedReviewTargets) {
+    if (!contract.reviewTargets.some(target => target.ownerKind === 'presentation' && target.ownerId === presentation.authoringId && target.dimension === 'content' && target.fieldPath === fieldPath)) {
+      issue(issues, at + fieldPath, 'weapon view requires a separate review target for each stat group, action binding, and displayed label', 'weapon-review-target');
+    }
+  }
+  if (contract.reviewTargets.some(target => target.ownerKind === 'presentation' && target.ownerId === presentation.authoringId && target.fieldPath === '/weaponView')) {
+    issue(issues, at + '/weaponView', 'weapon mechanics review targets must be scoped to individual stat groups and action bindings', 'weapon-review-scope');
+  }
 }
 
 function validateOfficialLocaleRefs(refs, presentation, officialById, issues, at, expectedContext = null) {
@@ -720,35 +866,38 @@ function validateWebSemantic(contract, inputs, issues) {
     if (presentation.faithfulTranslation) {
       if (presentation.faithfulTranslation.sourceId !== presentation.official.officialSourceId) issue(issues, at + '/faithfulTranslation/sourceId', 'faithful translation must name its official source input', 'translation-source');
       if (!textHashMatches(presentation.faithfulTranslation.text, presentation.faithfulTranslation.textSha256)) issue(issues, at + '/faithfulTranslation/textSha256', 'faithful translation hash mismatch', 'hash-mismatch');
-    } else if (inputs.mode !== 'w06' || presentation.official.sourceLocale !== presentation.locale) {
+    } else if (!['w06', 'w07'].includes(inputs.mode) || presentation.official.sourceLocale !== presentation.locale) {
       issue(issues, at + '/faithfulTranslation', 'translation may be omitted only when the selected official input is already in the presentation locale', 'translation-required');
     }
-    if (inputs.mode === 'w06') {
-      if (presentation.official.sourceLocale !== presentation.locale) issue(issues, at + '/official/sourceLocale', 'W06 presentation must select its native official locale', 'official-locale');
-      if (!presentation.nameOfficialSourceId) issue(issues, at + '/nameOfficialSourceId', 'W06 presentation name must cite a native official name input', 'official-name-source');
+    if (['w06', 'w07'].includes(inputs.mode)) {
+      const selectedModeLabel = inputs.mode.toUpperCase();
+      if (presentation.official.sourceLocale !== presentation.locale) issue(issues, at + '/official/sourceLocale', selectedModeLabel + ' presentation must select its native official locale', 'official-locale');
+      if (!presentation.nameOfficialSourceId) issue(issues, at + '/nameOfficialSourceId', selectedModeLabel + ' presentation name must cite a native official name input', 'official-name-source');
       const nameSource = officialById.get(presentation.nameOfficialSourceId);
       if (!nameSource || nameSource.sourceLocale !== presentation.locale || nameSource.resolvedText !== presentation.name
         || !sameSourceOwner(nameSource.entityRef, presentation.entityRef)) {
         issue(issues, at + '/nameOfficialSourceId', 'presentation name differs from its fixed native official name input', 'official-name-source');
       }
-      if (!presentation.nameOfficialLocaleRefs) issue(issues, at + '/nameOfficialLocaleRefs', 'W06 presentation must retain both official locale name inputs', 'official-locales-required');
+      if (!presentation.nameOfficialLocaleRefs) issue(issues, at + '/nameOfficialLocaleRefs', selectedModeLabel + ' presentation must retain both official locale name inputs', 'official-locales-required');
       else {
         const nameLocales = validateOfficialLocaleRefs(presentation.nameOfficialLocaleRefs, presentation, officialById, issues, at + '/nameOfficialLocaleRefs');
         if (nameLocales.get('zh-TW') !== presentation.nameOfficialSourceId) issue(issues, at + '/nameOfficialSourceId', 'selected name source must be the fixed zh-TW official name input', 'official-name-source');
-        const entityRecord = inputs.sourceRecordMap.get(keyOf(presentation.entityRef));
-        const sourceNameKey = entityRecord?.payload?.nameKey;
-        for (const { sourceLocale, officialSourceId } of presentation.nameOfficialLocaleRefs) {
-          const fixedName = officialById.get(officialSourceId);
-          if (typeof sourceNameKey === 'string' && fixedName?.key !== sourceNameKey) {
-            issue(issues, at + '/nameOfficialLocaleRefs', 'official name locator differs from the verified Source nameKey', 'official-name-source');
+        if (inputs.mode === 'w06') {
+          const entityRecord = inputs.sourceRecordMap.get(keyOf(presentation.entityRef));
+          const sourceNameKey = entityRecord?.payload?.nameKey;
+          for (const { sourceLocale, officialSourceId } of presentation.nameOfficialLocaleRefs) {
+            const fixedName = officialById.get(officialSourceId);
+            if (typeof sourceNameKey === 'string' && fixedName?.key !== sourceNameKey) {
+              issue(issues, at + '/nameOfficialLocaleRefs', 'official name locator differs from the verified Source nameKey', 'official-name-source');
+            }
+            if (isObject(sourceNameKey) && sourceNameKey.status === 'unknown' && fixedName?.key !== null) {
+              issue(issues, at + '/nameOfficialLocaleRefs', 'unverified Source nameKey cannot be replaced with a claimed localization key', 'official-name-source');
+            }
+            if (fixedName && fixedName.sourceLocale !== sourceLocale) issue(issues, at + '/nameOfficialLocaleRefs', 'official name source locale differs from its fixed locale ref', 'official-name-locale');
           }
-          if (isObject(sourceNameKey) && sourceNameKey.status === 'unknown' && fixedName?.key !== null) {
-            issue(issues, at + '/nameOfficialLocaleRefs', 'unverified Source nameKey cannot be replaced with a claimed localization key', 'official-name-source');
-          }
-          if (fixedName && fixedName.sourceLocale !== sourceLocale) issue(issues, at + '/nameOfficialLocaleRefs', 'official name source locale differs from its fixed locale ref', 'official-name-locale');
         }
       }
-      if (!presentation.officialLocaleRefs) issue(issues, at + '/officialLocaleRefs', 'W06 presentation must retain both official locale inputs', 'official-locales-required');
+      if (!presentation.officialLocaleRefs) issue(issues, at + '/officialLocaleRefs', selectedModeLabel + ' presentation must retain both official locale inputs', 'official-locales-required');
       else {
         const defaultContext = presentation.tierPresentations
           ? { variantRef: presentation.tierPresentations.variantRef, tier: presentation.tierPresentations.defaultTier }
@@ -756,8 +905,10 @@ function validateWebSemantic(contract, inputs, issues) {
         const locales = validateOfficialLocaleRefs(presentation.officialLocaleRefs, presentation, officialById, issues, at + '/officialLocaleRefs', defaultContext);
         if (locales.get('zh-TW') !== presentation.official.officialSourceId) issue(issues, at + '/official', 'primary official input must use the fixed zh-TW locale ref', 'official-locale');
       }
-      for (const [ruleIndex, ruleId] of (presentation.nameTermRuleRefs ?? []).entries()) {
-        if (!inputs.termRuleMap.has(ruleId)) issue(issues, at + '/nameTermRuleRefs/' + ruleIndex, 'terminology rule reference is unresolved', 'term-rule-ref');
+      if (inputs.mode === 'w06') {
+        for (const [ruleIndex, ruleId] of (presentation.nameTermRuleRefs ?? []).entries()) {
+          if (!inputs.termRuleMap.has(ruleId)) issue(issues, at + '/nameTermRuleRefs/' + ruleIndex, 'terminology rule reference is unresolved', 'term-rule-ref');
+        }
       }
     }
     validateDetailSections(presentation.detailSections, presentation, inputs, officialById, issues, at + '/detailSections');
@@ -788,6 +939,7 @@ function validateWebSemantic(contract, inputs, issues) {
       }
     }
     if (inputs.mode === 'w06') validateTierPresentations(presentation, inputs, officialById, issues, at);
+    if (inputs.mode === 'w07') validateWeaponView(presentation, contract, inputs, issues, at);
   }
 
   uniqueBy(contract.termLocalizations, item => item.authoringId, 'term localization id', issues, '/termLocalizations');
@@ -883,7 +1035,7 @@ export function validateWebAuthoring(contract, inputs) {
   validateSchemaValue(contract, inputs.schema, inputs.schema, '', issues);
   if (issues.length) return { valid: false, issues, publicationEligible: false };
   if (contract.publicationEligible !== false) issue(issues, '/publicationEligible', 'contract validation never grants publication eligibility', 'publication-guard');
-  if (contract.fixtureOnly !== (inputs.mode !== 'w06')) issue(issues, '/fixtureOnly', 'Web fixtureOnly mode differs from the selected pinned inputs', 'fixture-mode');
+  if (contract.fixtureOnly !== (inputs.mode === 'fixture')) issue(issues, '/fixtureOnly', 'Web fixtureOnly mode differs from the selected pinned inputs', 'fixture-mode');
   if (inputs.sourceValidation?.valid !== true) issue(issues, '/sourcePin', 'fixed Source contract is not valid', 'source-contract');
   const pin = expectedSourcePin(inputs.sourceLock, inputs.mode);
   if (canonical(contract.sourcePin) !== canonical(pin)) issue(issues, '/sourcePin', 'Source technical owner pin differs from the verified lock', 'source-pin');

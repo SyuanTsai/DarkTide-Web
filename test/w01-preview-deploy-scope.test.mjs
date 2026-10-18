@@ -80,6 +80,32 @@ test('UnitT05_only-the-two-exact-W06-input-paths-are-deployment-neutral', () => 
   }
 });
 
+// Scenario: only the W07 weapon authoring input and its exact LF rule are added.
+// Purpose: keep the new contract input deployment-neutral without trusting neighboring paths or broad attributes.
+test('UnitT06_only-the-exact-W07-input-and-lf-rule-are-deployment-neutral', () => {
+  assert.deepEqual(classifyChangedPaths(['content/authoring/v2/w07-weapons.json']), {
+    shouldDeploy: false,
+    reason: 'contract-only',
+    changedPathCount: 1,
+  });
+  for (const path of [
+    'content/authoring/v2/w07-weapons-extra.json',
+    'content/authoring/v2/w07-other.json',
+    'content/authoring/v2/w07-weapons.json/child',
+  ]) assert.equal(classifyChangedPaths([path]).shouldDeploy, true, path);
+
+  const extended = [
+    ...CONTRACT_EOL_RULES,
+    '/content/authoring/v2/w06-skills-blessings.json text eol=lf',
+    '/content/terms/w06-rules.json text eol=lf',
+    '/content/authoring/v2/w07-weapons.json text eol=lf',
+  ].join('\n') + '\n';
+  assert.equal(isSafeContractGitattributesChange(contractEolAttributes, extended), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/authoring/v2/w07-weapons.json text eol=lf\n', '')), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/authoring/v2/w07-weapons.json text eol=lf', '/content/authoring/v2/w07-*.json text eol=lf')), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/authoring/v2/w07-weapons.json text eol=lf', '/content/authoring/v2/** text eol=lf')), false);
+});
+
 // Scenario: W01 content, pinned source, runtime/compiler/build assets, or preview deployment config changes.
 // Purpose: preserve the existing authorized deployment path for real preview changes.
 test('UnitT10_runtime-and-preview-input-paths-request-deployment', () => {

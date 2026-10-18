@@ -303,6 +303,32 @@
       },
       "additionalProperties": false
     },
+    "weaponStatSection": {
+      "type": "object",
+      "required": [ "sourceStat", "label", "claimRefs", "statDefinitionRefs", "curveRefs" ],
+      "properties": {
+        "sourceStat": { "$ref": "#/$defs/stableId" },
+        "label": { "$ref": "#/$defs/text" },
+        "claimRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/recordRef" } },
+        "statDefinitionRefs": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/recordRef" } },
+        "curveRefs": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/recordRef" } }
+      },
+      "additionalProperties": false
+    },
+    "weaponView": {
+      "type": "object",
+      "required": [ "markLabel", "attackHeading", "comparisonHeading", "note", "sourceWeaponRef", "statSections", "attackProfileRefs" ],
+      "properties": {
+        "markLabel": { "$ref": "#/$defs/text" },
+        "attackHeading": { "$ref": "#/$defs/text" },
+        "comparisonHeading": { "$ref": "#/$defs/text" },
+        "note": { "$ref": "#/$defs/text" },
+        "sourceWeaponRef": { "$ref": "#/$defs/recordRef" },
+        "statSections": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/weaponStatSection" } },
+        "attackProfileRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/recordRef" } }
+      },
+      "additionalProperties": false
+    },
     "presentationEntityRef": {
       "type": "object",
       "required": [ "recordId", "gameReleaseId", "kind" ],
@@ -333,7 +359,8 @@
         "errata": { "type": "array", "items": { "$ref": "#/$defs/errata" } },
         "detailSections": { "type": "array", "maxItems": 5, "items": { "$ref": "#/$defs/detailSection" } },
         "tierApplicability": { "type": "array", "items": { "$ref": "#/$defs/tierApplicability" } },
-        "tierPresentations": { "$ref": "#/$defs/tierPresentations" }
+        "tierPresentations": { "$ref": "#/$defs/tierPresentations" },
+        "weaponView": { "$ref": "#/$defs/weaponView" }
       },
       "additionalProperties": false
     },
