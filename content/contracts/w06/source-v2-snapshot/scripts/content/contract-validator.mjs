@@ -13,7 +13,7 @@ export const CONTRACT_RECORD_KINDS = Object.freeze([
 ]);
 export const CONTRACT_UNITS = Object.freeze([
   'ratio', 'percent', 's', 'm', 'damage', 'impact', 'point', 'rating',
-  'attack-power-point', 'stamina-point', 'stamina-point-per-second', 'dodge-count'
+  'attack-power-point', 'stamina-point', 'stamina-point-per-second', 'dodge-count', 'instance-count'
 ]);
 export const CONTRACT_UNKNOWN_REASONS = Object.freeze([
   'NOT_VERIFIED', 'SOURCE_UNAVAILABLE', 'CONFLICTING_EVIDENCE', 'NOT_EXPOSED_BY_SOURCE'
@@ -29,7 +29,7 @@ const KIND_PAYLOADS = Object.freeze({
   'release-compatibility': 'releaseCompatibilityPayload'
 });
 const REVIEW_DIMENSIONS = Object.freeze(['technical', 'evidence', 'context', 'identity', 'compatibility']);
-const BACKLINK_FIELDS = new Set(['claimRefs', 'targetRef', 'blessingRef', 'weaponRefs']);
+const BACKLINK_FIELDS = new Set(['claimRefs', 'targetRef', 'blessingRef', 'weaponRefs', 'weaponRef']);
 const DIGEST_BACKLINK_FIELDS = new Set(['claimRefs']);
 const IDENTITY_REFERENCE_FIELDS = new Set(['targetRef', 'blessingRef', 'weaponRef', 'weaponRefs', 'entityRef', 'predecessorRef', 'parentRef', 'classificationRef']);
 const IDENTITY_PAYLOAD_FIELDS = Object.freeze({
@@ -37,7 +37,7 @@ const IDENTITY_PAYLOAD_FIELDS = Object.freeze({
   blessing: ['nameKey'],
   'blessing-variant': ['blessingRef', 'weaponRefs', 'definedTiers', 'obtainableTiers'],
   weapon: ['familyId', 'markId', 'templateKey'],
-  'attack-profile': ['familyId', 'markId', 'itemKey', 'action', 'mode', 'charge', 'contexts'],
+  'attack-profile': ['familyId', 'markId', 'itemKey', 'templateKey', 'action', 'mode', 'charge', 'contexts'],
   'stat-definition': ['quantity', 'inputUnit', 'outputUnit'],
   'stat-curve': ['inputUnit', 'outputUnit', 'interpolation', 'edgePolicy'],
   'damage-profile': ['profileKey'],
@@ -63,6 +63,7 @@ const REF_EXPECTED_KINDS = Object.freeze({
   blessingRef: new Set(['blessing']), variantRefs: new Set(['blessing-variant']), perkRefs: new Set(['perk']),
   predecessorRef: new Set(['weapon']), supersedesChangeRef: new Set(['game-change']), parentRef: new Set(['classification']),
   weaponRef: new Set(['weapon']), attackProfileRef: new Set(['attack-profile']), targetProfileRef: new Set(['target-profile']),
+  damageProfileRef: new Set(['damage-profile']), profileRef: new Set(['damage-profile']), parentProfileRef: new Set(['damage-profile']),
   armorClassRef: new Set(['armor-class']), variantRef: new Set(['blessing-variant']), talentRefs: new Set(['skill']),
   blessingVariantRefs: new Set(['blessing-variant']), modifierRuleRefs: new Set(['modifier-rule']), statRef: new Set(['stat-definition'])
 });
@@ -278,6 +279,9 @@ function identityPayloadProjection(item) {
   if (item.kind === 'target-profile' && Array.isArray(payload.hitZones)) {
     projected.hitZones = payload.hitZones.map(({ zoneId, armorRef, weakspot, critEligible }) => ({ zoneId, armorRef, weakspot, critEligible }));
   }
+  if (item.kind === 'damage-profile' && payload.rawSourceDefinition?.parentProfileRef) {
+    projected.parentProfileRef = payload.rawSourceDefinition.parentProfileRef;
+  }
   if (item.kind === 'damage-profile' && Array.isArray(payload.segments)) {
     projected.segments = payload.segments.map(({ segmentId, quantity, hitZone, conditions }) => ({ segmentId, quantity, hitZone, conditions }));
   }
@@ -291,10 +295,49 @@ function releaseReviewProjection(release) {
   return projected;
 }
 
+function normalizeVerifiedPublicCodePermalink(source) {
+  if (source.sourceKind !== 'public-code'
+    || typeof source.repository !== 'string'
+    || typeof source.publicUrl !== 'string'
+    || typeof source.path !== 'string'
+    || !/^[a-f0-9]{40}$/iu.test(source.commit ?? '')
+    || source.snapshot?.commit !== source.commit
+    || source.path.startsWith('/')
+    || source.path.includes('\\')
+    || source.path.split('/').some((part) => part === '.' || part === '..')) return source.publicUrl;
+
+  try {
+    const repository = new URL(source.repository);
+    const permalink = new URL(source.publicUrl);
+    if (repository.protocol !== 'https:' || permalink.protocol !== 'https:'
+      || repository.username || repository.password || permalink.username || permalink.password
+      || repository.origin !== 'https://github.com'
+      || repository.pathname.replace(/\/+$/u, '') !== '/Aussiemon/Darktide-Source-Code'
+      || repository.origin !== permalink.origin || repository.search || repository.hash) return source.publicUrl;
+
+    const repositoryPath = repository.pathname.replace(/\/+$/u, '');
+    const prefix = `${repositoryPath}/blob/`;
+    if (!permalink.pathname.startsWith(prefix)) return source.publicUrl;
+    const commitStart = prefix.length;
+    const commitEnd = permalink.pathname.indexOf('/', commitStart);
+    if (commitEnd < 0 || permalink.pathname.slice(commitStart, commitEnd) !== source.commit) return source.publicUrl;
+    const permalinkPath = decodeURIComponent(permalink.pathname.slice(commitEnd + 1));
+    if (permalinkPath !== source.path) return source.publicUrl;
+
+    const pathStart = source.publicUrl.indexOf(permalink.pathname, source.publicUrl.indexOf('://') + 3);
+    if (pathStart < 0) return source.publicUrl;
+    const normalizedPath = `${permalink.pathname.slice(0, commitStart)}<source-commit>${permalink.pathname.slice(commitEnd)}`;
+    return `${source.publicUrl.slice(0, pathStart)}${normalizedPath}${source.publicUrl.slice(pathStart + permalink.pathname.length)}`;
+  } catch {
+    return source.publicUrl;
+  }
+}
+
 function sourceReviewProjection(source) {
   const projected = structuredClone(source);
   delete projected.commit;
   delete projected.snapshot.commit;
+  if (hasOwn(projected, 'publicUrl')) projected.publicUrl = normalizeVerifiedPublicCodePermalink(source);
   return projected;
 }
 
@@ -345,12 +388,16 @@ function dependencyClosure(contract, rootItem, recordMap, sourceMap, releaseMap)
       sourceRefs: sourceRefs.sort((a, b) => compareLexical(a.sourceId, b.sourceId))
     });
     for (const link of links) if (link.compatibilityRef) visit(recordMap.get(recordKey(link.compatibilityRef, item.gameReleaseId)), 'full');
-    if (!isTombstone) for (const { ref, field } of getAllRecordRefs(item)) {
+    const recordRefs = mode === 'identity'
+      ? getAllRecordRefs({ ...item, payload: identityPayloadProjection(item) })
+      : getAllRecordRefs(item);
+    if (!isTombstone) for (const { ref, field } of recordRefs) {
       const followsClaimDependency = expandsClaimRefs && DIGEST_BACKLINK_FIELDS.has(field);
       if (DIGEST_BACKLINK_FIELDS.has(field) && !followsClaimDependency) continue;
       const identityEdge = IDENTITY_REFERENCE_FIELDS.has(field);
       if (mode === 'identity' && identityEdge) {
         if (ref.compatibilityRef) visit(recordMap.get(recordKey(ref.compatibilityRef, item.gameReleaseId)), 'full');
+        visit(recordMap.get(recordKey(ref.recordId, ref.gameReleaseId)), 'identity', false);
         continue;
       }
       const targetMode = identityEdge ? 'identity' : 'full';
@@ -426,6 +473,27 @@ function deriveReviewState(item, receiptsByKey, contract, issues, itemPath) {
 }
 
 function validateProvenance(contract, releaseMap, issues) {
+  const sourceSnapshotsById = new Map();
+  const knownSnapshotIds = new Map();
+  for (const release of releaseMap.values()) {
+    knownSnapshotIds.set(release.snapshot.snapshotId, { gameReleaseId: release.gameReleaseId, snapshot: release.snapshot, kind: 'release' });
+  }
+  for (const [index, sourceSnapshot] of (contract.sourceSnapshots ?? []).entries()) {
+    const base = `/sourceSnapshots/${index}`;
+    const snapshotId = sourceSnapshot.snapshot?.snapshotId;
+    const release = releaseMap.get(sourceSnapshot.gameReleaseId);
+    if (!release) issues.push({ path: `${base}/gameReleaseId`, code: 'unknown-source-snapshot-release', message: 'Source snapshot refers to an undeclared game release' });
+    const previous = knownSnapshotIds.get(snapshotId);
+    if (previous) {
+      const sameMetadata = jsonEqual(previous.snapshot, sourceSnapshot.snapshot);
+      const code = sameMetadata ? 'duplicate-source-snapshot' : 'source-snapshot-id-conflict';
+      const message = sameMetadata ? 'Snapshot IDs must be unique across releases and source snapshots' : 'A snapshot ID cannot identify different metadata';
+      issues.push({ path: `${base}/snapshot/snapshotId`, code, message });
+      continue;
+    }
+    knownSnapshotIds.set(snapshotId, { gameReleaseId: sourceSnapshot.gameReleaseId, snapshot: sourceSnapshot.snapshot, kind: 'source' });
+    sourceSnapshotsById.set(snapshotId, sourceSnapshot);
+  }
   const sourceMap = new Map();
   for (const [index, source] of contract.sourceRefs.entries()) {
     const base = `/sourceRefs/${index}`;
@@ -436,7 +504,20 @@ function validateProvenance(contract, releaseMap, issues) {
     if (!release) issues.push({ path: `${base}/gameReleaseId`, code: 'unknown-release', message: 'Source refers to an undeclared game release' });
     else {
       if (source.gameBuild !== release.gameBuild) issues.push({ path: `${base}/gameBuild`, code: 'build-mismatch', message: 'Source build must match its declared game release' });
-      if (!jsonEqual(source.snapshot, release.snapshot)) issues.push({ path: `${base}/snapshot`, code: 'snapshot-mismatch', message: 'Source snapshot must match its declared game release snapshot' });
+      const sourceSnapshot = sourceSnapshotsById.get(source.snapshot?.snapshotId);
+      if (sourceSnapshot) {
+        if (sourceSnapshot.gameReleaseId !== source.gameReleaseId) {
+          issues.push({ path: `${base}/snapshot/snapshotId`, code: 'source-snapshot-release', message: 'Source snapshot must belong to the source game release' });
+        }
+        if (!jsonEqual(source.snapshot, sourceSnapshot.snapshot)) {
+          issues.push({ path: `${base}/snapshot`, code: 'source-snapshot-mismatch', message: 'Source snapshot metadata must exactly match the declared source snapshot' });
+        }
+        if (source.sourceKind === 'public-code' && (!source.commit || !source.snapshot?.commit)) {
+          issues.push({ path: `${base}/snapshot/commit`, code: 'source-snapshot-commit-required', message: 'Alternate public-code snapshots require both source and snapshot commits' });
+        }
+      } else if (!jsonEqual(source.snapshot, release.snapshot)) {
+        issues.push({ path: `${base}/snapshot`, code: 'snapshot-mismatch', message: 'Source snapshot must match its declared game release snapshot or an exact same-release source snapshot' });
+      }
     }
     if (source.sourceKind === 'private-derived' && ['repository', 'publicUrl', 'commit', 'path'].some((field) => hasOwn(source, field))) {
       issues.push({ path: base, code: 'private-locator', message: 'Private-derived provenance carries only safe IDs, digests, version/build, tool and summary; private locators are forbidden' });
@@ -450,7 +531,6 @@ function validateProvenance(contract, releaseMap, issues) {
   }
   return sourceMap;
 }
-
 function validateReleaseSet(contract, issues) {
   const releaseMap = new Map(); const orders = new Set(); const snapshots = new Set();
   for (const [index, release] of contract.gameReleases.entries()) {
@@ -650,6 +730,264 @@ function validateContextAndComparisonSemantics(contract, recordMap, issues) {
   }
 }
 
+function validateW07SourceLocators(record, sourceMap, issues) {
+  const visit = (value, pointer) => {
+    if (!value || typeof value !== "object") return;
+    if (Array.isArray(value)) { value.forEach((child, index) => visit(child, pointer + "/" + index)); return; }
+    const locator = value.sourceLocator;
+    if (locator && locator.sourceRef && locator.path) {
+      const key = locator.sourceRef.gameReleaseId + "\u0000" + locator.sourceRef.sourceId;
+      const source = sourceMap.get(key);
+      if (source && (locator.sourceRef.gameReleaseId !== record.gameReleaseId || source.sourceKind !== "public-code" || source.path !== locator.path)) {
+        issues.push({ path: pointer + "/sourceLocator", code: "w07-locator-provenance", message: "W07 source locators must match a same-release public-code source path" });
+      }
+      if (source && !record.sourceRefs.some((link) => link.sourceId === locator.sourceRef.sourceId && link.gameReleaseId === locator.sourceRef.gameReleaseId)) {
+        issues.push({ path: pointer + "/sourceLocator/sourceRef", code: "w07-locator-unlisted", message: "W07 source locator must also appear in the record sourceRefs" });
+      }
+    }
+    for (const [key, child] of Object.entries(value)) visit(child, pointer + "/" + pointerEscape(key));
+  };
+  visit(record.payload, "/records/" + record.recordId + "/payload");
+}
+function sourceProfileKeyFromLiteral(rawValue) {
+  let token = String(rawValue);
+  const quoted = token.match(/^(['"])(.*)\1$/);
+  if (quoted) token = quoted[2];
+  else if (/^['"]|['"]$/.test(token)) return undefined;
+  if (/^[A-Za-z0-9_]+$/.test(token)) return token;
+  return token.match(/^(?:DamageProfileTemplates|damage_profiles)\.([A-Za-z0-9_]+)$/)?.[1];
+}
+function validateRawDamageProfileProvenance(record, sourceMap, recordMap, issues, base) {
+  const raw = record.payload.rawSourceDefinition;
+  if (!raw) return;
+  const checkSource = (sourceRef, sourcePath, pointer) => {
+    const key = sourceRef && sourceRef.gameReleaseId + String.fromCharCode(0) + sourceRef.sourceId;
+    const source = key && sourceMap.get(key);
+    if (!source || sourceRef.gameReleaseId !== record.gameReleaseId || source.sourceKind !== 'public-code'
+      || source.path !== sourcePath
+      || !record.sourceRefs.some((link) => link.sourceId === sourceRef.sourceId && link.gameReleaseId === sourceRef.gameReleaseId)) {
+      issues.push({ path: pointer, code: 'damage-profile-source-provenance', message: 'Raw damage profile header and leaves must match declared same-release public-code sources and record sourceRefs' });
+    }
+  };
+  checkSource(raw.sourceRef, raw.path, base + '/rawSourceDefinition');
+  for (const [index, leaf] of raw.leaves.entries()) {
+    const hasSourceRef = Object.prototype.hasOwnProperty.call(leaf, 'sourceRef');
+    const hasPath = Object.prototype.hasOwnProperty.call(leaf, 'path');
+    if (hasSourceRef !== hasPath) {
+      issues.push({ path: base + '/rawSourceDefinition/leaves/' + index, code: 'damage-profile-source-provenance', message: 'A raw profile leaf source override must provide both sourceRef and path' });
+    } else if (hasSourceRef) {
+      checkSource(leaf.sourceRef, leaf.path, base + '/rawSourceDefinition/leaves/' + index);
+    }
+  }
+  const parentLeaf = raw.leaves.find((leaf) => leaf.fieldPath.endsWith('.parent_template_name'));
+  if (!parentLeaf) {
+    if (raw.parentProfileRef) issues.push({ path: base + '/rawSourceDefinition/parentProfileRef', code: 'damage-profile-parent-binding', message: 'A typed parent profile reference requires a raw parent_template_name declaration' });
+    return;
+  }
+  const parentKey = sourceProfileKeyFromLiteral(parentLeaf.rawValue);
+  const parentRef = raw.parentProfileRef;
+  const parent = parentRef && recordMap.get(recordKey(parentRef.recordId, parentRef.gameReleaseId));
+  if (!parentRef || !parent || parent.kind !== 'damage-profile' || parent.gameReleaseId !== record.gameReleaseId || parent.payload.profileKey !== parentKey) {
+    issues.push({ path: base + '/rawSourceDefinition/parentProfileRef', code: 'damage-profile-parent-binding', message: 'A raw parent_template_name requires a same-release typed damage-profile reference with the matching profile key' });
+  }
+}
+function validateW07WeaponSemantics(contract, issues) {
+  const sourceMap = new Map(contract.sourceRefs.map((source) => [`${source.gameReleaseId}\u0000${source.sourceId}`, source]));
+  const recordMap = new Map(contract.records.map((candidate) => [recordKey(candidate.recordId, candidate.gameReleaseId), candidate]));
+  for (const [index, record] of contract.records.entries()) {
+    const base = `/records/${index}/payload`;
+    if (['weapon', 'attack-profile', 'damage-profile'].includes(record.kind)) validateW07SourceLocators(record, sourceMap, issues);
+    if (record.kind === 'weapon' && Array.isArray(record.payload.statBindings)) {
+      const seenStatKeys = new Set();
+      for (const [statIndex, statBinding] of record.payload.statBindings.entries()) {
+        const statBase = `${base}/statBindings/${statIndex}`;
+        if (seenStatKeys.has(statBinding.statKey)) {
+          issues.push({ path: `${statBase}/statKey`, code: 'duplicate-weapon-stat-binding', message: 'A weapon stat key may have one source binding group only' });
+        }
+        seenStatKeys.add(statBinding.statKey);
+        const seenBindings = new Set();
+        for (const [bindingIndex, binding] of statBinding.bindings.entries()) {
+          const bindingBase = `${statBase}/bindings/${bindingIndex}`;
+          const bindingKey = `${binding.property}\u0000${binding.action ?? ''}\u0000${binding.profileKey ?? ''}\u0000${binding.armorClass ?? ''}`;
+          if (seenBindings.has(bindingKey)) {
+            issues.push({ path: bindingBase, code: 'duplicate-weapon-stat-property-binding', message: 'A weapon stat binding cannot repeat the same property/action/profile/armor context' });
+          }
+          seenBindings.add(bindingKey);
+          if (binding.traitParameterRange.status === 'known'
+            && compareDecimal(binding.traitParameterRange.min, binding.traitParameterRange.max) > 0) {
+            issues.push({ path: `${bindingBase}/traitParameterRange`, code: 'weapon-stat-range-inverted', message: 'Raw trait parameter minimum cannot exceed maximum' });
+          }
+          const statFieldPrefix = `weapon_template.base_stats.${statBinding.statKey}`;
+          if (binding.weaponLocator.fieldPath !== statFieldPrefix && !binding.weaponLocator.fieldPath.startsWith(`${statFieldPrefix}.`)) {
+            issues.push({ path: `${bindingBase}/weaponLocator/fieldPath`, code: 'weapon-stat-source-field', message: 'Weapon stat locator must address the declared weapon base stat' });
+          }
+          if (binding.action) {
+            const fieldSegments = binding.weaponLocator.fieldPath.split('.');
+            const statKeyIndex = fieldSegments.indexOf(statBinding.statKey);
+            const damageIndex = statKeyIndex >= 0 && fieldSegments[statKeyIndex + 1] === 'damage' ? statKeyIndex + 1 : -1;
+            const actionMatchesPath = damageIndex >= 0 && fieldSegments[damageIndex + 1] === binding.action;
+            const templateProfiles = (record.payload.attackProfileRefs ?? [])
+              .map((profileRef) => recordMap.get(recordKey(profileRef.recordId, profileRef.gameReleaseId)))
+              .filter((profile) => profile?.kind === 'attack-profile' && hasOwn(profile.payload, 'templateKey'));
+            const actionMatchesProfile = templateProfiles.length === 0 || templateProfiles.some((profile) =>
+              profile.gameReleaseId === record.gameReleaseId
+              && profile.payload.action === binding.action
+              && (binding.mode === undefined || profile.payload.mode === binding.mode));
+            if (!actionMatchesPath || !actionMatchesProfile) {
+              issues.push({ path: bindingBase + '/action', code: 'weapon-stat-action-binding', message: 'A stat action binding must address an exact supported action segment in the weapon template field path' });
+            }
+          }
+          const traitFieldPath = binding.traitLocator.fieldPath;
+          const traitRoot = binding.traitTemplateKey;
+          if (!traitFieldPath.endsWith('.' + binding.traitTemplateKey)
+            && traitFieldPath !== traitRoot && !traitFieldPath.startsWith(traitRoot + '.')) {
+            issues.push({ path: bindingBase + '/traitLocator/fieldPath', code: 'weapon-stat-trait-field', message: 'Trait locator must address the declared trait template key' });
+          }
+          for (const locatorField of ['weaponLocator', 'traitLocator']) {
+            const locator = binding[locatorField];
+            const source = sourceMap.get(`${locator.sourceRef.gameReleaseId}\u0000${locator.sourceRef.sourceId}`);
+            if (!source) continue;
+            if (locator.sourceRef.gameReleaseId !== record.gameReleaseId || source.sourceKind !== 'public-code' || source.path !== locator.path) {
+              issues.push({ path: `${bindingBase}/${locatorField}`, code: 'weapon-stat-locator-provenance', message: 'Stat mapping locators must match a same-release public-code source path' });
+            }
+            if (!record.sourceRefs.some((sourceLink) => sourceLink.sourceId === locator.sourceRef.sourceId && sourceLink.gameReleaseId === locator.sourceRef.gameReleaseId)) {
+              issues.push({ path: `${bindingBase}/${locatorField}/sourceRef`, code: 'weapon-stat-locator-unlisted', message: 'Stat mapping sources must also be declared by the weapon record' });
+            }
+          }
+          for (const [claimIndex, claimRef] of (binding.claimRefs ?? []).entries()) {
+            const claim = recordMap.get(recordKey(claimRef.recordId, claimRef.gameReleaseId));
+            if (!claim || claim.kind !== 'claim') continue;
+            const contextWeaponRef = claim.payload.context?.weaponRef;
+            if (claim.gameReleaseId !== record.gameReleaseId
+              || claim.payload.property !== binding.property
+              || claim.payload.context?.weaponStat !== statBinding.statKey
+              || (binding.mode !== undefined && claim.payload.context?.attackMode !== binding.mode)
+              || (binding.profileKey !== undefined && claim.payload.context?.profile !== binding.profileKey)
+              || (binding.armorClass !== undefined && claim.payload.context?.armorClass !== binding.armorClass)
+              || contextWeaponRef?.recordId !== record.recordId
+              || contextWeaponRef?.gameReleaseId !== record.gameReleaseId) {
+              issues.push({ path: `${bindingBase}/claimRefs/${claimIndex}`, code: 'weapon-stat-claim-binding', message: 'Mapped claims must match the stat key, property and owning weapon context' });
+            }
+          }
+        }
+      }
+    }
+    if (record.kind === 'claim' && record.payload.context?.damageProfileRef) {
+      const ref = record.payload.context.damageProfileRef;
+      const profile = recordMap.get(recordKey(ref.recordId, ref.gameReleaseId));
+      if (!profile || profile.kind !== 'damage-profile' || profile.payload.profileKey !== record.payload.context.profile) {
+        issues.push({ path: base + '/context/damageProfileRef', code: 'claim-damage-profile-binding', message: 'Claim damageProfileRef must identify the profile named by its existing context.profile' });
+      }
+    }
+    if (record.kind === 'damage-profile' && record.payload.rawSourceDefinition) validateRawDamageProfileProvenance(record, sourceMap, recordMap, issues, base);
+    if (record.kind === 'attack-profile') {
+      for (const [bindingIndex, sticky] of (record.payload.stickyBindings ?? []).entries()) {
+        if (sticky.state !== 'defined') continue;
+        const definition = sticky.definition;
+        if (definition.duration.unit !== 's') {
+          issues.push({ path: base + '/stickyBindings/' + bindingIndex + '/definition/duration/unit', code: 'sticky-duration-unit', message: 'Sticky duration is measured in seconds' });
+        }
+        if (definition.instances.unit !== 'instance-count') {
+          issues.push({ path: base + '/stickyBindings/' + bindingIndex + '/definition/instances/unit', code: 'sticky-instance-unit', message: 'Sticky instances are measured as an instance count' });
+        }
+        const curve = definition.movementCurve;
+        if (curve.startModifier.unit !== 'ratio') {
+          issues.push({ path: base + '/stickyBindings/' + bindingIndex + '/definition/movementCurve/startModifier/unit', code: 'sticky-curve-modifier-unit', message: 'Sticky movement start modifier must use ratio units' });
+        }
+        for (const [pointIndex, point] of curve.points.entries()) {
+          if (point.t.unit !== 's') {
+            issues.push({ path: base + '/stickyBindings/' + bindingIndex + '/definition/movementCurve/points/' + pointIndex + '/t/unit', code: 'sticky-curve-time-unit', message: 'Sticky movement curve t coordinates are measured in seconds' });
+          }
+          if (point.modifier.unit !== 'ratio') {
+            issues.push({ path: base + '/stickyBindings/' + bindingIndex + '/definition/movementCurve/points/' + pointIndex + '/modifier/unit', code: 'sticky-curve-modifier-unit', message: 'Sticky movement curve modifiers must use ratio units' });
+          }
+        }
+      }
+    }
+    if (record.kind === 'attack-profile' && Array.isArray(record.payload.sourceBindings)) {
+      const listedProfiles = record.payload.damageProfileRefs ?? [];
+      for (const [sourceBindingIndex, sourceBinding] of record.payload.sourceBindings.entries()) {
+        const expectedKey = sourceProfileKeyFromLiteral(sourceBinding.rawValue);
+        const typedProfile = recordMap.get(recordKey(sourceBinding.profileRef.recordId, sourceBinding.profileRef.gameReleaseId));
+        const isListed = listedProfiles.some((profileRef) =>
+          profileRef.recordId === sourceBinding.profileRef.recordId
+          && profileRef.gameReleaseId === sourceBinding.profileRef.gameReleaseId);
+        if (!typedProfile || typedProfile.kind !== 'damage-profile'
+          || typedProfile.gameReleaseId !== record.gameReleaseId
+          || !expectedKey
+          || typedProfile.payload.profileKey !== expectedKey
+          || !isListed) {
+          issues.push({ path: base + '/sourceBindings/' + sourceBindingIndex + '/profileRef', code: 'attack-source-binding-profile', message: 'An action source binding profileRef must match its pinned raw profile key and appear in damageProfileRefs' });
+        }
+      }
+    }
+    const isW07RawTableOwner = (record.kind === 'weapon' && Array.isArray(record.payload.statTables))
+      || (record.kind === 'damage-profile' && hasOwn(record.payload, 'rawSourceDefinition'));
+    if (isW07RawTableOwner) {
+      const tableCollections = record.kind === 'weapon'
+        ? (record.payload.statTables ?? []).flatMap((table, tableIndex) => (table.properties ?? []).map((property, propertyIndex) => ({
+          points: property.orderedValues ?? [],
+          path: base + '/statTables/' + tableIndex + '/properties/' + propertyIndex + '/orderedValues'
+        })))
+        : (record.payload.rawSourceDefinition?.tables ?? []).map((table, tableIndex) => ({
+          points: table.orderedValues ?? [],
+          path: base + '/rawSourceDefinition/tables/' + tableIndex + '/orderedValues'
+        }));
+      for (const collection of tableCollections) {
+        for (const [pointIndex, point] of collection.points.entries()) {
+          const rawValue = String(point.rawValue);
+          const hasDecimal = Object.prototype.hasOwnProperty.call(point, 'decimal');
+          const rawIsDecimal = /^-?\d+(?:\.\d+)?$/.test(rawValue);
+          if (hasDecimal && (!rawIsDecimal || compareDecimal(rawValue, point.decimal) !== 0)) {
+            issues.push({ path: collection.path + '/' + pointIndex + '/decimal', code: 'w07-raw-decimal-binding', message: 'A typed table decimal must match a numeric raw value and cannot decorate a nonnumeric token' });
+          }
+        }
+      }
+    }
+    if (record.kind === 'attack-profile' && hasOwn(record.payload, 'templateKey')) {
+      const linkedWeapons = contract.records.filter((weapon) => weapon.kind === 'weapon'
+        && weapon.gameReleaseId === record.gameReleaseId
+        && weapon.payload.familyId === record.payload.familyId
+        && weapon.payload.markId === record.payload.markId
+        && weapon.payload.templateKey === record.payload.templateKey
+        && weapon.payload.attackProfileRefs.some((ref) => ref.recordId === record.recordId && ref.gameReleaseId === record.gameReleaseId));
+      if (linkedWeapons.length !== 1) {
+        issues.push({ path: `${base}/templateKey`, code: 'attack-profile-template-binding', message: 'A templateKey attack profile must be referenced by exactly one same-release weapon with matching family, mark and template keys' });
+      }
+    }
+    if (record.kind !== 'claim' || !hasOwn(record.payload, 'displayValue')) continue;
+    const { value, displayValue, displayFormat } = record.payload;
+    if (value?.status !== 'known' || typeof value.decimal !== 'string' || !Number.isFinite(Number(value.decimal))) {
+      issues.push({ path: `${base}/displayValue`, code: 'display-value-source', message: 'A formatted display value requires a known finite numeric claim value' });
+      continue;
+    }
+    const numeric = Number(value.decimal);
+    let expectedDecimal;
+    let expectedUnit;
+    if (displayFormat === 'fixed-2' || displayFormat === 'fixed-2-signed') {
+      expectedDecimal = numeric.toFixed(2);
+      expectedUnit = value.unit;
+    } else if (displayFormat === 'percentage-fixed-2' && value.unit === 'ratio') {
+      expectedDecimal = (numeric * 100).toFixed(2);
+      expectedUnit = 'percent';
+    } else if (displayFormat === 'multiplier-percent-fixed-2-signed' && value.unit === 'ratio') {
+      expectedDecimal = ((numeric - 1) * 100).toFixed(2);
+      expectedUnit = 'percent';
+    } else if (displayFormat === 'floor-fixed-2') {
+      expectedDecimal = Math.floor(numeric).toFixed(2);
+      expectedUnit = value.unit;
+    } else {
+      issues.push({ path: `${base}/displayFormat`, code: 'display-format-unit', message: 'Display format is incompatible with the source value unit' });
+      continue;
+    }
+    if (displayValue.unit !== expectedUnit) {
+      issues.push({ path: `${base}/displayValue/unit`, code: 'display-unit-mismatch', message: `Display unit must be ${expectedUnit} for ${displayFormat}` });
+    }
+    if (displayValue.decimal !== expectedDecimal) {
+      issues.push({ path: `${base}/displayValue/decimal`, code: 'display-value-mismatch', message: `Display decimal must be ${expectedDecimal} for ${displayFormat}` });
+    }
+  }
+}
 function validateReferences(contract, releaseMap, recordMap, sourceMap, issues) {
   for (const [index, record] of contract.records.entries()) {
     const base = `/records/${index}`;
@@ -821,6 +1159,23 @@ function validateReceipts(contract, releaseMap, recordMap, issues) {
   return receiptsByKey;
 }
 
+function validateDeclaredReviewTargets(contract, issues) {
+  for (const [listName, items] of [['records', contract.records], ['tombstones', contract.tombstones]]) {
+    for (const [itemIndex, item] of (items ?? []).entries()) {
+      for (const [targetIndex, target] of (item.reviewTargets ?? []).entries()) {
+        const fieldPath = target?.fieldPath;
+        if (typeof fieldPath !== 'string' || !fieldPath.startsWith('/') || !pointerGet(item, fieldPath).exists) {
+          issues.push({
+            path: `/${listName}/${itemIndex}/reviewTargets/${targetIndex}/fieldPath`,
+            code: 'missing-review-field',
+            message: 'Every declared review target fieldPath must resolve within its record or tombstone'
+          });
+        }
+      }
+    }
+  }
+}
+
 export function validateSourceContract(contract, { schema, sourceRoot = REPO_ROOT } = {}) {
   const issues = [];
   let loadedSchema = schema;
@@ -845,9 +1200,11 @@ export function validateSourceContract(contract, { schema, sourceRoot = REPO_ROO
   const { recordMap } = validateRecordIdentityAndCoverage(contract, releaseMap, sourceMap, issues);
   validateReferences(contract, releaseMap, recordMap, sourceMap, issues);
   validateContextAndComparisonSemantics(contract, recordMap, issues);
+  validateW07WeaponSemantics(contract, issues);
   validateGameTestEvidence(contract, recordMap, sourceMap, issues);
   validateCompatibilityAndChanges(contract, releaseMap, recordMap, issues);
   validateCoverageAndEmptyCollections(contract, issues);
+  validateDeclaredReviewTargets(contract, issues);
   validateReceipts(contract, releaseMap, recordMap, issues);
   const derivedPublicationEligible = issues.length === 0 && !contract.fixtureOnly
     && contract.records.every((record) => record.reviewState === 'approved')

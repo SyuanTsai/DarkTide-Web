@@ -49,9 +49,9 @@ test('UnitT03_w07-rejects-a-claim-moved-to-another-stat-group', async () => {
   assert.ok(result.issues.some(item => item.code === 'weapon-stat-claim' || item.code === 'weapon-stat-coverage'));
 });
 
-test('UnitT04_w07-review-digests-stale-only-the-targeted-stat-and-ignore-commit-only-changes', async () => {
-  // Scenario: A reviewed Mk IV claim value changes while an unrelated Mk XII stat and an action source commit remain stable.
-  // Purpose: Preserve per-stat dependency scope and the Source digest rule that commit metadata alone is not content.
+test('UnitT04_w07-review-digests-stale-only-the-targeted-stat-and-ignore-consistent-source-permalink-moves', async () => {
+  // Scenario: A reviewed Mk IV claim value changes while an unrelated Mk XII stat and an action source permalink move together.
+  // Purpose: Preserve per-stat dependency scope when a pinned repository commit and its matching public URL change together.
   const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
   const contract = structuredClone(inputs.authoring);
   const m1Target = contract.reviewTargets.find(target => target.targetId === 'review:w07:p1-m1:stat-chainaxe_dps_stat');
@@ -74,8 +74,10 @@ test('UnitT04_w07-review-digests-stale-only-the-targeted-stat-and-ignore-commit-
   const profile = commitOnlyInputs.sourceContract.records.find(record => record.recordId === profileRef.recordId);
   const sourceIds = new Set(profile.sourceRefs.map(ref => ref.sourceId));
   const provenance = commitOnlyInputs.sourceContract.sourceRefs.find(ref => ref.gameReleaseId === profile.gameReleaseId && sourceIds.has(ref.sourceId));
+  const previousCommit = provenance.commit;
   provenance.commit = '1111111111111111111111111111111111111111';
   provenance.snapshot.commit = provenance.commit;
+  provenance.publicUrl = provenance.publicUrl.replace(`/blob/${previousCommit}/`, `/blob/${provenance.commit}/`);
   commitOnlyInputs.sourceRecordMap = new Map(commitOnlyInputs.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
   assert.equal(getReviewState(contract, actionTarget.targetId, commitOnlyInputs), 'approved');
 });
@@ -138,6 +140,20 @@ test('UnitT07_w07-matrix-preserves-complete-weapon-facts-and-readable-source-val
     assert.equal(item.licenseStatus, 'NOT_REVIEWED');
     assert.equal(item.imageStatus, 'MISSING_NO_VERIFIED_REUSABLE_REFERENCE');
   }
+});
+
+// Scenario: A W07 candidate keeps its weapons but removes both official-source and displayed-name review targets.
+// Purpose: Require review of each non-empty weapon identity and official presentation before candidate generation.
+test('UnitT08_w07-rejects-missing-official-and-name-review-coverage', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  inputs.authoring.reviewTargets = inputs.authoring.reviewTargets.filter(target => !['/official', '/name'].includes(target.fieldPath));
+
+  const result = validateWebAuthoring(inputs.authoring, inputs);
+
+  assert.equal(result.valid, false);
+  assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.endsWith('/official')));
+  assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.endsWith('/name')));
+  assert.throws(() => buildW07Candidate(inputs), /Web contract is invalid/);
 });
 
 test('InterT30_w07-writer-creates-only-a-new-explicit-output-directory', async t => {

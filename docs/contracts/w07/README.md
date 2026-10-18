@@ -1,8 +1,8 @@
 # W07 weapon authoring review
 
-Run `npm run contract:w07:validate` to validate the pinned W07 inputs. The command is read-only and does not write a review candidate.
+目前入口為 [candidate-r2/review-candidate.md](candidate-r2/review-candidate.md) 與 [完整矩陣](candidate-r2/review-matrix.json)。r2 修補 F12 無法解析 pointer、F13 缺少必需審核覆蓋、F14 commit／permalink 無謂失效；r1 候選與歷史 commit 保留。固定 Source `b9d6eb3d2f067772aee4613daecba0414cb11c0d`；W07 仍待人類驗收。完整差異、沿用證據、限制與回復見 [修補驗證報告](review-contract-repair.md)。
 
-To create the two review files, pass a new output directory explicitly:
+Run `npm run contract:w07:validate` to validate the pinned W07 inputs. The command is read-only and does not write a review candidate. To create the two review files, pass a new output directory explicitly:
 
 ```powershell
 node scripts/content/contract-w07.mjs --out-root .tmp/w07-review-draft

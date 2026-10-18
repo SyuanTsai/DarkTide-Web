@@ -86,7 +86,6 @@ test('UnitT00_schema-and-representative-fixture-cover-web-owned-authoring-shapes
   assert.equal(fixture.gameChanges[0].changeId, 'fixture:game-change:curve');
   assert.equal(fixture.announcements.some(item => item.scope === 'site' && !Object.hasOwn(item, 'gameReleaseId')), true);
 });
-
 // Scenario: an editor changes the official wording and recomputes all local hashes without changing the pinned input snapshot.
 // Purpose: prove hashes alone cannot authorize rewritten official source text and errata must remain anchored to exact source segments.
 test('UnitT10_rejects_rehashed-official-text-and-broken-errata-anchor', async () => {
@@ -454,10 +453,7 @@ test('UnitT63_name-and-term-text-reviews-are-field-scoped-and-context-bound', as
     targetId: 'fixture:review:weapon-r1-errata-context', ownerKind: 'presentation',
     ownerId: 'fixture:presentation:weapon-r1', fieldPath: '/errata/0/context/description', dimension: 'context',
   };
-  const termContextTarget = {
-    targetId: 'fixture:review:term-context', ownerKind: 'term-localization',
-    ownerId: 'fixture:term-localization:alpha-zh-tw', fieldPath: '/contextKey', dimension: 'context',
-  };
+  const termContextTarget = contract.reviewTargets.find(item => item.ownerKind === 'term-localization' && item.ownerId === 'fixture:term-localization:alpha-zh-tw' && item.fieldPath === '/contextKey');
   const gameChangeTarget = {
     targetId: 'fixture:review:game-change-summary', ownerKind: 'game-change',
     ownerId: 'fixture:game-change:curve', fieldPath: '/summary', dimension: 'game-change',
@@ -480,7 +476,7 @@ test('UnitT63_name-and-term-text-reviews-are-field-scoped-and-context-bound', as
     targetId: 'fixture:review:gameplay-announcement-blocks', ownerKind: 'announcement',
     ownerId: 'fixture:announcement:gameplay', fieldPath: '/blocks', dimension: 'announcement',
   };
-  contract.reviewTargets.push(itemTextTarget, errataContextTarget, termContextTarget, gameChangeTarget, officialChangeTarget, announcementTarget, gameplayAnnouncementTarget);
+  contract.reviewTargets.push(itemTextTarget, errataContextTarget, gameChangeTarget, officialChangeTarget, announcementTarget, gameplayAnnouncementTarget);
   assert.equal(validate(contract, inputs).valid, true);
   const targets = [nameTarget, labelTarget, definitionTarget, itemTextTarget, errataContextTarget, termContextTarget, gameChangeTarget, officialChangeTarget, announcementTarget, gameplayAnnouncementTarget];
   for (const target of targets) {
@@ -587,4 +583,60 @@ test('InterT65_authoring-loader-rejects-invalid-utf8-bytes', async t => {
     loadWebAuthoringInputs({ repoRoot: tempRoot }),
     /official-inputs\.json contains invalid UTF-8 byte sequence/i,
   );
+});
+
+// Scenario: A non-empty translated presentation loses its only translation review target.
+// Purpose: Require review coverage from actual authored content instead of accepting an unreviewed field.
+test('UnitT70_nonempty-presentation-content-requires-review-coverage', async () => {
+  const inputs = await loadInputs();
+  const candidate = structuredClone(inputs.authoring);
+  candidate.reviewTargets = candidate.reviewTargets.filter(target => target.targetId !== 'fixture:review:weapon-r1-translation');
+
+  const result = validate(candidate, inputs);
+
+  assert.equal(result.valid, false);
+  assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.includes('/faithfulTranslation')));
+});
+
+// Scenario: A second target repeats the same owner, field path, and dimension with a different targetId.
+// Purpose: Prevent duplicate targets from inflating coverage or hiding a missing independent review scope.
+test('UnitT71_review-coverage-rejects-duplicate-and-misowned-target-scopes', async () => {
+  const inputs = await loadInputs();
+  const translation = inputs.authoring.reviewTargets.find(target => target.fieldPath === '/faithfulTranslation');
+
+  const duplicate = structuredClone(inputs.authoring);
+  duplicate.reviewTargets.push({ ...structuredClone(translation), targetId: 'test:duplicate-translation-target' });
+  const duplicateResult = validate(duplicate, inputs);
+  assert.equal(duplicateResult.valid, false);
+  assert.ok(duplicateResult.issues.some(item => item.code === 'duplicate-review-scope'));
+
+  const wrongDimension = structuredClone(inputs.authoring);
+  const translationTarget = wrongDimension.reviewTargets.find(target => target.targetId === translation.targetId);
+  translationTarget.dimension = 'content';
+  const dimensionResult = validate(wrongDimension, inputs);
+  assert.equal(dimensionResult.valid, false);
+  assert.ok(dimensionResult.issues.some(item => item.code === 'review-dimension'));
+  assert.ok(dimensionResult.issues.some(item => item.code === 'review-coverage' && item.path.includes('/faithfulTranslation')));
+
+  const wrongOwner = structuredClone(inputs.authoring);
+  const movedTarget = wrongOwner.reviewTargets.find(target => target.targetId === translation.targetId);
+  movedTarget.ownerId = 'fixture:presentation:weapon-r2';
+  const ownerResult = validate(wrongOwner, inputs);
+  assert.equal(ownerResult.valid, false);
+  assert.ok(ownerResult.issues.some(item => item.code === 'review-coverage' && item.path.includes('/faithfulTranslation')));
+});
+
+// Scenario: the whole non-empty errata collection has a legal content-dimension target.
+// Purpose: preserve the existing broad errata target shape as equivalent review coverage.
+test('UnitT72_whole-errata-content-target-covers-nonempty-errata', async () => {
+  const inputs = await loadInputs();
+  const candidate = structuredClone(inputs.authoring);
+  const target = candidate.reviewTargets.find(item => item.ownerId === 'fixture:presentation:weapon-r1'
+    && item.fieldPath === '/errata' && item.dimension === 'errata');
+  assert.ok(target);
+  target.dimension = 'content';
+
+  const result = validate(candidate, inputs);
+
+  assert.equal(result.valid, true, JSON.stringify(result.issues));
 });

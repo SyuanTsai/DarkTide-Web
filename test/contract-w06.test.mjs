@@ -22,7 +22,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 test('UnitT70_w06-loads-real-source-pin-and-valid-nonfixture-candidate', async () => {
   const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
   assert.equal(inputs.mode, 'w06');
-  assert.equal(inputs.sourceLock.commit, '079c07c02c30e45a99cff805e7e05855031b163e');
+  assert.equal(inputs.sourceLock.commit, 'b9d6eb3d2f067772aee4613daecba0414cb11c0d');
   assert.equal(inputs.authoring.fixtureOnly, false);
   assert.equal(inputs.authoring.publicationEligible, false);
   assert.equal(inputs.authoring.sourcePin.dataSha256, inputs.sourceLock.files.data.sha256);
@@ -429,4 +429,99 @@ test('UnitT81_w06-baseline-locator-is-independent-of-current-head', async () => 
   } finally {
     await rm(tempRoot, { recursive: true, force: true });
   }
+});
+
+// Scenario: A W06 skill retains its non-empty detail text but loses one item-level review target.
+// Purpose: Require target coverage for each authored detail when no coarser section target replaces it.
+test('UnitT82_w06-rejects-missing-detail-item-review-coverage', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const candidate = structuredClone(inputs.authoring);
+  const skill = candidate.presentations.find(item => item.entityRef.kind === 'skill');
+  candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerId === skill.authoringId && target.fieldPath === '/detailSections/0/items/0'));
+
+  const result = validateWebAuthoring(candidate, inputs);
+
+  assert.equal(result.valid, false);
+  assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.includes('/detailSections/0/items/0')));
+});
+
+// Scenario: W06 detail text is reviewed once by section, while a typed tier sentence is reviewed by each part.
+// Purpose: Preserve equivalent whole-section and complete typed-part review granularity without requiring duplicate targets.
+test('UnitT83_w06-accepts-equivalent-section-and-complete-parts-review-coverage', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const skillContract = structuredClone(inputs.authoring);
+  const skill = skillContract.presentations.find(item => item.entityRef.kind === 'skill');
+  skillContract.reviewTargets = skillContract.reviewTargets.filter(target => !(target.ownerId === skill.authoringId && target.fieldPath.startsWith('/detailSections/')));
+  skillContract.reviewTargets.push({ targetId: 'test:w06:skill-details', ownerKind: 'presentation', ownerId: skill.authoringId, fieldPath: '/detailSections', dimension: 'content' });
+  assert.deepEqual(validateWebAuthoring(skillContract, inputs).issues, []);
+
+  const blessing = inputs.authoring.presentations.find(item => item.tierPresentations);
+  const replaceOptionDetailTargets = (contract, optionIndex, fieldPath, coveredPrefix = '/tierPresentations/options/' + optionIndex + '/detailSections/') => {
+    contract.reviewTargets = contract.reviewTargets.filter(target => !(target.ownerId === blessing.authoringId && target.fieldPath.startsWith(coveredPrefix)));
+    contract.reviewTargets.push({
+      targetId: 'test:w06:tier-container-' + optionIndex,
+      ownerKind: 'presentation',
+      ownerId: blessing.authoringId,
+      fieldPath,
+      dimension: 'content',
+    });
+  };
+
+  const wholeOptionContract = structuredClone(inputs.authoring);
+  replaceOptionDetailTargets(wholeOptionContract, 0, '/tierPresentations/options/0');
+  assert.deepEqual(validateWebAuthoring(wholeOptionContract, inputs).issues, []);
+
+  const wholeDetailsContract = structuredClone(inputs.authoring);
+  replaceOptionDetailTargets(wholeDetailsContract, 3, '/tierPresentations/options/3/detailSections');
+  assert.deepEqual(validateWebAuthoring(wholeDetailsContract, inputs).issues, []);
+
+  const itemCollectionContract = structuredClone(inputs.authoring);
+  replaceOptionDetailTargets(itemCollectionContract, 1, '/tierPresentations/options/1/detailSections/0/items', '/tierPresentations/options/1/detailSections/0/');
+  assert.deepEqual(validateWebAuthoring(itemCollectionContract, inputs).issues, []);
+
+  const partsCollectionContract = structuredClone(inputs.authoring);
+  const typedItem = blessing.tierPresentations.options[2].detailSections[0].items[0];
+  assert.ok(typedItem.parts?.length);
+  replaceOptionDetailTargets(partsCollectionContract, 2, '/tierPresentations/options/2/detailSections/0/items/0/parts', '/tierPresentations/options/2/detailSections/0/items/0');
+  assert.deepEqual(validateWebAuthoring(partsCollectionContract, inputs).issues, []);
+});
+
+// Scenario: A W06 skill gains a new non-empty detail item but no matching review target.
+// Purpose: Derive required coverage from current content so newly added text cannot inherit a neighboring item's target.
+test('UnitT84_w06-new-detail-item-requires-its-own-review-coverage', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const candidate = structuredClone(inputs.authoring);
+  const skill = candidate.presentations.find(item => item.entityRef.kind === 'skill');
+  skill.detailSections[0].items.push({ itemId: 'test:new-detail-item', text: '新增加的未審閱文字。', claimRefs: [], termRefs: [] });
+
+  const result = validateWebAuthoring(candidate, inputs);
+
+  assert.equal(result.valid, false);
+  assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.endsWith('/items/3')));
+});
+
+// Scenario: W06 loses one selected-tier official review target and its non-empty tier-context target.
+// Purpose: Require both official selection and tier applicability context independently of detail coverage.
+test('UnitT85_w06-requires-official-tier-and-applicability-context-coverage', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const baseline = inputs.authoring;
+  const blessing = baseline.presentations.find(item => item.tierPresentations);
+  const requiredTargets = [
+    target => target.ownerId === blessing.authoringId && target.fieldPath === '/tierPresentations/options/0' && target.dimension === 'official',
+    target => target.ownerId === blessing.authoringId && target.fieldPath === '/tierApplicability' && target.dimension === 'context',
+  ];
+  for (const missing of requiredTargets) {
+    const candidate = structuredClone(baseline);
+    candidate.reviewTargets = candidate.reviewTargets.filter(target => !missing(target));
+    const result = validateWebAuthoring(candidate, inputs);
+    assert.equal(result.valid, false);
+    assert.ok(result.issues.some(item => item.code === 'review-coverage' && item.path.includes('/tier')));
+  }
+
+  const withoutTermContext = structuredClone(baseline);
+  const term = withoutTermContext.termLocalizations[0];
+  withoutTermContext.reviewTargets = withoutTermContext.reviewTargets.filter(target => !(target.ownerId === term.authoringId && target.fieldPath === '/contextKey' && target.dimension === 'context'));
+  const termResult = validateWebAuthoring(withoutTermContext, inputs);
+  assert.equal(termResult.valid, false);
+  assert.ok(termResult.issues.some(item => item.code === 'review-coverage' && item.path.includes('/contextKey')));
 });

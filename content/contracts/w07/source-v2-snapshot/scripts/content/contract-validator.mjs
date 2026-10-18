@@ -295,10 +295,49 @@ function releaseReviewProjection(release) {
   return projected;
 }
 
+function normalizeVerifiedPublicCodePermalink(source) {
+  if (source.sourceKind !== 'public-code'
+    || typeof source.repository !== 'string'
+    || typeof source.publicUrl !== 'string'
+    || typeof source.path !== 'string'
+    || !/^[a-f0-9]{40}$/iu.test(source.commit ?? '')
+    || source.snapshot?.commit !== source.commit
+    || source.path.startsWith('/')
+    || source.path.includes('\\')
+    || source.path.split('/').some((part) => part === '.' || part === '..')) return source.publicUrl;
+
+  try {
+    const repository = new URL(source.repository);
+    const permalink = new URL(source.publicUrl);
+    if (repository.protocol !== 'https:' || permalink.protocol !== 'https:'
+      || repository.username || repository.password || permalink.username || permalink.password
+      || repository.origin !== 'https://github.com'
+      || repository.pathname.replace(/\/+$/u, '') !== '/Aussiemon/Darktide-Source-Code'
+      || repository.origin !== permalink.origin || repository.search || repository.hash) return source.publicUrl;
+
+    const repositoryPath = repository.pathname.replace(/\/+$/u, '');
+    const prefix = `${repositoryPath}/blob/`;
+    if (!permalink.pathname.startsWith(prefix)) return source.publicUrl;
+    const commitStart = prefix.length;
+    const commitEnd = permalink.pathname.indexOf('/', commitStart);
+    if (commitEnd < 0 || permalink.pathname.slice(commitStart, commitEnd) !== source.commit) return source.publicUrl;
+    const permalinkPath = decodeURIComponent(permalink.pathname.slice(commitEnd + 1));
+    if (permalinkPath !== source.path) return source.publicUrl;
+
+    const pathStart = source.publicUrl.indexOf(permalink.pathname, source.publicUrl.indexOf('://') + 3);
+    if (pathStart < 0) return source.publicUrl;
+    const normalizedPath = `${permalink.pathname.slice(0, commitStart)}<source-commit>${permalink.pathname.slice(commitEnd)}`;
+    return `${source.publicUrl.slice(0, pathStart)}${normalizedPath}${source.publicUrl.slice(pathStart + permalink.pathname.length)}`;
+  } catch {
+    return source.publicUrl;
+  }
+}
+
 function sourceReviewProjection(source) {
   const projected = structuredClone(source);
   delete projected.commit;
   delete projected.snapshot.commit;
+  if (hasOwn(projected, 'publicUrl')) projected.publicUrl = normalizeVerifiedPublicCodePermalink(source);
   return projected;
 }
 
@@ -1120,6 +1159,23 @@ function validateReceipts(contract, releaseMap, recordMap, issues) {
   return receiptsByKey;
 }
 
+function validateDeclaredReviewTargets(contract, issues) {
+  for (const [listName, items] of [['records', contract.records], ['tombstones', contract.tombstones]]) {
+    for (const [itemIndex, item] of (items ?? []).entries()) {
+      for (const [targetIndex, target] of (item.reviewTargets ?? []).entries()) {
+        const fieldPath = target?.fieldPath;
+        if (typeof fieldPath !== 'string' || !fieldPath.startsWith('/') || !pointerGet(item, fieldPath).exists) {
+          issues.push({
+            path: `/${listName}/${itemIndex}/reviewTargets/${targetIndex}/fieldPath`,
+            code: 'missing-review-field',
+            message: 'Every declared review target fieldPath must resolve within its record or tombstone'
+          });
+        }
+      }
+    }
+  }
+}
+
 export function validateSourceContract(contract, { schema, sourceRoot = REPO_ROOT } = {}) {
   const issues = [];
   let loadedSchema = schema;
@@ -1148,6 +1204,7 @@ export function validateSourceContract(contract, { schema, sourceRoot = REPO_ROO
   validateGameTestEvidence(contract, recordMap, sourceMap, issues);
   validateCompatibilityAndChanges(contract, releaseMap, recordMap, issues);
   validateCoverageAndEmptyCollections(contract, issues);
+  validateDeclaredReviewTargets(contract, issues);
   validateReceipts(contract, releaseMap, recordMap, issues);
   const derivedPublicationEligible = issues.length === 0 && !contract.fixtureOnly
     && contract.records.every((record) => record.reviewState === 'approved')

@@ -479,8 +479,12 @@ function ownerObject(contract, target) {
 function validateReceiptAndTargetShapes(contract, issues) {
   uniqueBy(contract.reviewTargets, item => item.targetId, 'review target id', issues, '/reviewTargets');
   const targets = new Map(contract.reviewTargets.map(target => [target.targetId, target]));
+  const targetScopes = new Set();
   for (const [index, target] of contract.reviewTargets.entries()) {
     const at = '/reviewTargets/' + index;
+    const scopeKey = [target.ownerKind, target.ownerId, target.fieldPath, target.dimension].join('\u0000');
+    if (targetScopes.has(scopeKey)) issue(issues, at, 'duplicate review target scope for the same owner, field path, and dimension', 'duplicate-review-scope');
+    targetScopes.add(scopeKey);
     const owner = ownerObject(contract, target);
     if (!owner) {
       issue(issues, at + '/ownerId', 'review target owner does not exist', 'dangling-owner');
@@ -590,6 +594,144 @@ function refsMatchOrder(actual, expected) {
   return actual.length === expected.length && actual.every((ref, index) => sourceRefKey(ref) === sourceRefKey(expected[index]));
 }
 
+function hasNonemptyText(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function reviewTargetCount(contract, ownerKind, ownerId, fieldPath, dimension) {
+  return contract.reviewTargets.filter(target => target.ownerKind === ownerKind
+    && target.ownerId === ownerId && target.fieldPath === fieldPath && target.dimension === dimension).length;
+}
+
+function hasUniqueReviewTarget(contract, ownerKind, ownerId, fieldPath, dimension) {
+  return reviewTargetCount(contract, ownerKind, ownerId, fieldPath, dimension) === 1;
+}
+
+function hasAnyUniqueReviewTarget(contract, ownerKind, ownerId, fieldPaths, dimension) {
+  return fieldPaths.some(fieldPath => hasUniqueReviewTarget(contract, ownerKind, ownerId, fieldPath, dimension));
+}
+
+function detailItemHasContent(item) {
+  if (hasNonemptyText(item.text)) return true;
+  return (item.parts ?? []).some(part => part.kind !== 'literal' || hasNonemptyText(part.text));
+}
+
+function detailItemHasReviewCoverage(contract, ownerId, item, itemPath) {
+  const acceptedScopes = [itemPath];
+  const tierItemPath = itemPath.match(/^(\/tierPresentations\/options\/\d+)\/detailSections\/(\d+)\/items\/(\d+)$/);
+  if (tierItemPath) acceptedScopes.push(
+    tierItemPath[1],
+    tierItemPath[1] + '/detailSections/' + tierItemPath[2] + '/items',
+  );
+  if ((item.parts ?? []).length > 0) acceptedScopes.push(itemPath + '/parts');
+  if (acceptedScopes.some(fieldPath => hasUniqueReviewTarget(contract, 'presentation', ownerId, fieldPath, 'content'))) return true;
+  if (hasNonemptyText(item.text)) {
+    return hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/text', 'content');
+  }
+  const parts = (item.parts ?? []).map((part, index) => ({ part, index }))
+    .filter(({ part }) => part.kind !== 'literal' || hasNonemptyText(part.text));
+  return parts.length > 0 && parts.every(({ part, index }) => hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/parts/' + index, 'content')
+    || (part.kind === 'literal' && hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/parts/' + index + '/text', 'content')));
+}
+
+function detailSectionsHaveReviewCoverage(contract, ownerId, sections, basePath) {
+  const contentItems = [];
+  for (const [sectionIndex, section] of sections.entries()) {
+    for (const [itemIndex, item] of section.items.entries()) if (detailItemHasContent(item)) {
+      contentItems.push({ item, itemPath: basePath + '/' + sectionIndex + '/items/' + itemIndex });
+    }
+  }
+  if (contentItems.length === 0) return true;
+  if (hasUniqueReviewTarget(contract, 'presentation', ownerId, basePath, 'content')) return true;
+  const tierBasePath = basePath.match(/^(\/tierPresentations\/options\/\d+)\/detailSections$/);
+  if (tierBasePath && hasUniqueReviewTarget(contract, 'presentation', ownerId, tierBasePath[1], 'content')) return true;
+  return contentItems.every(({ item, itemPath }) => detailItemHasReviewCoverage(contract, ownerId, item, itemPath));
+}
+
+function validateRequiredReviewCoverage(contract, issues) {
+  const requireTarget = (ownerKind, ownerId, fieldPaths, dimension, issuePath, description) => {
+    if (!hasAnyUniqueReviewTarget(contract, ownerKind, ownerId, fieldPaths, dimension)) {
+      issue(issues, issuePath, description, 'review-coverage');
+    }
+  };
+
+  for (const [index, presentation] of contract.presentations.entries()) {
+    const at = '/presentations/' + index;
+    const ownerId = presentation.authoringId;
+    if (hasNonemptyText(presentation.official?.resolvedText)) {
+      if (presentation.tierPresentations?.options?.length) {
+        for (const [optionIndex] of presentation.tierPresentations.options.entries()) {
+          const base = '/tierPresentations/options/' + optionIndex;
+          requireTarget('presentation', ownerId, [base, base + '/officialLocaleRefs'], 'official', at + base, 'each non-empty tier official presentation requires a matching review target');
+        }
+      } else {
+        requireTarget('presentation', ownerId, ['/official', '/officialLocaleRefs'], 'official', at + '/official', 'non-empty official content requires an official review target');
+      }
+    }
+    if (hasNonemptyText(presentation.name)) {
+      requireTarget('presentation', ownerId, ['/name'], 'content', at + '/name', 'non-empty presentation names require a content review target');
+    }
+    if (hasNonemptyText(presentation.faithfulTranslation?.text)) {
+      requireTarget('presentation', ownerId, ['/faithfulTranslation'], 'translation', at + '/faithfulTranslation', 'non-empty faithful translations require a translation review target');
+    }
+
+    const tierModel = presentation.tierPresentations;
+    const tierDefaultIndex = tierModel?.options?.findIndex(option => option.tier === tierModel.defaultTier) ?? -1;
+    const tierDefault = tierDefaultIndex >= 0 ? tierModel.options[tierDefaultIndex] : null;
+    const defaultDetailsAlias = tierDefault
+      && canonical(presentation.detailSections) === canonical(tierDefault.detailSections)
+      && detailSectionsHaveReviewCoverage(contract, ownerId, tierDefault.detailSections, '/tierPresentations/options/' + tierDefaultIndex + '/detailSections');
+    if (!defaultDetailsAlias && !detailSectionsHaveReviewCoverage(contract, ownerId, presentation.detailSections, '/detailSections')) {
+      const missing = presentation.detailSections.flatMap((section, sectionIndex) => section.items.map((item, itemIndex) => ({ item, itemPath: '/detailSections/' + sectionIndex + '/items/' + itemIndex })))
+        .find(({ item, itemPath }) => detailItemHasContent(item) && !detailItemHasReviewCoverage(contract, ownerId, item, itemPath));
+      issue(issues, at + (missing?.itemPath ?? '/detailSections'), 'non-empty detail content requires a whole-section, item, text, or complete-parts review target', 'review-coverage');
+    }
+
+    for (const [optionIndex, option] of (tierModel?.options ?? []).entries()) {
+      const base = '/tierPresentations/options/' + optionIndex + '/detailSections';
+      if (!detailSectionsHaveReviewCoverage(contract, ownerId, option.detailSections, base)) {
+        const missing = option.detailSections.flatMap((section, sectionIndex) => section.items.map((item, itemIndex) => ({ item, itemPath: base + '/' + sectionIndex + '/items/' + itemIndex })))
+          .find(({ item, itemPath }) => detailItemHasContent(item) && !detailItemHasReviewCoverage(contract, ownerId, item, itemPath));
+        issue(issues, at + (missing?.itemPath ?? base), 'non-empty tier detail content requires a whole-section, item, text, or complete-parts review target', 'review-coverage');
+      }
+    }
+
+    const wholeErrataHasReviewCoverage = ['errata', 'content'].some(dimension =>
+      hasUniqueReviewTarget(contract, 'presentation', ownerId, '/errata', dimension));
+    if (presentation.errata.length > 0 && !wholeErrataHasReviewCoverage) {
+      for (const [errataIndex, erratum] of presentation.errata.entries()) {
+        const errataPath = '/errata/' + errataIndex;
+        if (hasNonemptyText(erratum.text)) requireTarget('presentation', ownerId, [errataPath + '/text'], 'content', at + errataPath + '/text', 'non-empty errata text requires a content review target');
+        if (hasNonemptyText(erratum.context?.description)) requireTarget('presentation', ownerId, [errataPath + '/context', errataPath + '/context/description'], 'context', at + errataPath + '/context', 'non-empty errata context requires a context review target');
+        else if (erratum.context?.refs?.length) requireTarget('presentation', ownerId, [errataPath + '/context'], 'context', at + errataPath + '/context', 'non-empty errata context references require a context review target');
+      }
+    }
+    if (presentation.tierApplicability.length > 0) {
+      requireTarget('presentation', ownerId, ['/tierApplicability'], 'context', at + '/tierApplicability', 'non-empty tier applicability requires a context review target');
+    }
+
+    const view = presentation.weaponView;
+    if (view) {
+      for (const field of ['markLabel', 'attackHeading', 'comparisonHeading', 'note']) if (hasNonemptyText(view[field])) {
+        requireTarget('presentation', ownerId, ['/weaponView/' + field], 'content', at + '/weaponView/' + field, 'non-empty weapon view text requires a content review target');
+      }
+      for (const [sectionIndex, section] of (view.statSections ?? []).entries()) if (section) {
+        requireTarget('presentation', ownerId, ['/weaponView/statSections/' + sectionIndex], 'content', at + '/weaponView/statSections/' + sectionIndex, 'non-empty weapon stat sections require an individual content review target');
+      }
+      for (const [profileIndex, profile] of (view.attackProfileRefs ?? []).entries()) if (profile) {
+        requireTarget('presentation', ownerId, ['/weaponView/attackProfileRefs/' + profileIndex], 'content', at + '/weaponView/attackProfileRefs/' + profileIndex, 'weapon action bindings require individual content review targets');
+      }
+    }
+  }
+
+  for (const [index, localization] of contract.termLocalizations.entries()) {
+    const at = '/termLocalizations/' + index;
+    if (hasNonemptyText(localization.label)) requireTarget('term-localization', localization.authoringId, ['/label'], 'content', at + '/label', 'non-empty term labels require a content review target');
+    if (hasNonemptyText(localization.definition)) requireTarget('term-localization', localization.authoringId, ['/definition'], 'content', at + '/definition', 'non-empty term definitions require a content review target');
+    if (hasNonemptyText(localization.contextKey)) requireTarget('term-localization', localization.authoringId, ['/contextKey'], 'context', at + '/contextKey', 'non-empty term contexts require a context review target');
+  }
+}
+
 function validateWeaponView(presentation, contract, inputs, issues, at) {
   const view = presentation.weaponView;
   if (!view) {
@@ -660,7 +802,7 @@ function validateWeaponView(presentation, contract, inputs, issues, at) {
   }
   if (!refsMatchOrder(actualProfiles, expectedProfiles)) issue(issues, at + '/weaponView/attackProfileRefs', 'weapon view must retain every Source action profile in source order for the selected mark', 'weapon-action-coverage');
 
-  for (const field of ['markLabel', 'attackHeading', 'comparisonHeading', 'note']) expectedReviewTargets.push('/weaponView/' + field);
+  for (const field of ['markLabel', 'attackHeading', 'comparisonHeading', 'note']) if (hasNonemptyText(view[field])) expectedReviewTargets.push('/weaponView/' + field);
   for (const fieldPath of expectedReviewTargets) {
     if (!contract.reviewTargets.some(target => target.ownerKind === 'presentation' && target.ownerId === presentation.authoringId && target.dimension === 'content' && target.fieldPath === fieldPath)) {
       issue(issues, at + fieldPath, 'weapon view requires a separate review target for each stat group, action binding, and displayed label', 'weapon-review-target');
@@ -1023,6 +1165,7 @@ function validateWebSemantic(contract, inputs, issues) {
     }
   }
 
+  validateRequiredReviewCoverage(contract, issues);
   validateReceiptAndTargetShapes(contract, issues);
   isForbiddenRemoteKey(contract, '', issues);
 }
