@@ -19,6 +19,8 @@ const CONTRACT_ONLY_PATHS = [
   /^scripts\/w01-preview-deploy-scope\.mjs$/,
   /^test\/w01-preview-deploy-scope\.test\.mjs$/,
   /^test\/w01-preview-config\.test\.mjs$/,
+  /^content\/authoring\/v2\/w06-skills-blessings\.json$/,
+  /^content\/terms\/w06-rules\.json$/,
 ];
 const CONTRACT_EOL_RULES = Object.freeze([
   '/content/schema/v2/** text eol=lf',
@@ -27,6 +29,8 @@ const CONTRACT_EOL_RULES = Object.freeze([
   '/scripts/content/contract*.mjs text eol=lf',
   '/test/contract*.test.mjs text eol=lf',
   '/docs/contracts/** text eol=lf',
+  '/content/authoring/v2/w06-skills-blessings.json text eol=lf',
+  '/content/terms/w06-rules.json text eol=lf',
 ]);
 const CONTRACT_EOL_RULE_SET = new Set(CONTRACT_EOL_RULES);
 

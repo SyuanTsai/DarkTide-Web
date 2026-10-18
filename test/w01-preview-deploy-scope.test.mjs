@@ -58,6 +58,28 @@ test('UnitT00_contract-only-paths-do-not-request-deployment', () => {
   });
 });
 
+// Scenario: only the two fixed W06 data inputs change.
+// Purpose: keep this input-only contract work out of the active 0.0.17 preview deploy while rejecting nearby paths.
+test('UnitT05_only-the-two-exact-W06-input-paths-are-deployment-neutral', () => {
+  const paths = [
+    'content/authoring/v2/w06-skills-blessings.json',
+    'content/terms/w06-rules.json',
+  ];
+  assert.deepEqual(classifyChangedPaths(paths), {
+    shouldDeploy: false,
+    reason: 'contract-only',
+    changedPathCount: 2,
+  });
+  for (const path of [
+    'content/authoring/v2/w06-skills-blessings-extra.json',
+    'content/authoring/v2/other.json',
+    'content/terms/w06-other.json',
+    'content/terms/w06-rules.json/child',
+  ]) {
+    assert.equal(classifyChangedPaths([path]).shouldDeploy, true, path);
+  }
+});
+
 // Scenario: W01 content, pinned source, runtime/compiler/build assets, or preview deployment config changes.
 // Purpose: preserve the existing authorized deployment path for real preview changes.
 test('UnitT10_runtime-and-preview-input-paths-request-deployment', () => {
@@ -161,6 +183,19 @@ test('UnitT60_only-exact-contract-lf-rules-are-deployment-neutral', () => {
     baseGitattributes: undefined,
     headGitattributes: '*.json text eol=lf\n',
   }).shouldDeploy, true);
+});
+
+// Scenario: the W06 data files receive only exact LF attributes.
+// Purpose: let those two bytes-stable contract inputs remain deployment-neutral without broadening attribute trust.
+test('UnitT65_W06-gitattributes-add-only-the-two-exact-lf-rules', () => {
+  const extended = [
+    ...CONTRACT_EOL_RULES,
+    '/content/authoring/v2/w06-skills-blessings.json text eol=lf',
+    '/content/terms/w06-rules.json text eol=lf',
+  ].join('\n') + '\n';
+  assert.equal(isSafeContractGitattributesChange(contractEolAttributes, extended), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/terms/w06-rules.json text eol=lf\n', '')), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/terms/w06-rules.json text eol=lf', '/content/terms/** text eol=lf')), false);
 });
 
 // Scenario: Git reports a contract-only commit, a runtime commit, and a mixed commit between fixed object IDs.
