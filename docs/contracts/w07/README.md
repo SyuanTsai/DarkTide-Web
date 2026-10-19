@@ -1,5 +1,7 @@
 # W07 weapon authoring review
 
+最新 r6 靜態補件：[中文候選](candidate-r6/review-candidate.md)、[完整矩陣](candidate-r6/review-matrix.json)。Source 固定 `f22b4ae2e1d3b4887f3741464e3c9bf507399db6`；[逐項缺口、證據、驗收與精確回復](r6-static-supplement-review.md)。W06 已驗收；W07 的可取得範圍完成條件仍未證實，等待重新驗收。下列 r1–r5 入口為保留的歷史紀錄。
+
 最新 r5 修補 F20：逐欄摘要改綁欄位必須使舊審核 stale，相鄰欄位保持獨立；[驗證、局部 digest 相容性與只回復本輪方式](review-field-binding-repair.md)。Source f5514e4 與所有真資料不變，沿用 candidate-r4 兩產物；原113 targets digest／states保持，W06已驗收、W07待人類驗收，停W07。
 
 前次 r4 入口為 [review candidate](candidate-r4/review-candidate.md) 與 [完整矩陣](candidate-r4/review-matrix.json)。四項 Review 修補：審核時間排序、公告／變更紀錄覆蓋、sourceSnapshots 三方合併與修訂紀錄、非階級技能 parts 集合路徑。固定 Source `f5514e4361d09361d9621e885082b7b5c51d1c95`；文案、mechanics、原審核 digests 保留，候選只更新固定來源 metadata。新增驗證、相容性、驗收與只回復本輪方式見 [r4 報告](review-four-findings-repair.md)。W06 已驗收／W07 待人類驗收；停 W07。

@@ -6,12 +6,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
+  computeReviewDigests,
   createReviewReceipt,
   getReviewState,
   loadWebAuthoringInputs,
   validateWebAuthoring,
 } from '../scripts/content/contract-authoring.mjs';
-import { buildW07Candidate, writeW07Candidate } from '../scripts/content/contract-w07.mjs';
+import { buildW07Candidate, renderW07BoostCurveSection, writeW07Candidate } from '../scripts/content/contract-w07.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -116,6 +117,16 @@ test('UnitT07_w07-matrix-preserves-complete-weapon-facts-and-readable-source-val
     const sourceWeapon = inputs.sourceRecordMap.get(presentation.sourceWeaponRef.gameReleaseId + '\u0000' + presentation.sourceWeaponRef.recordId);
     assert.deepEqual(presentation.sourceWeapon.sourceFact.payload, sourceWeapon.payload);
     for (const key of ['sourceRows', 'statTables', 'emptyTables', 'actionContinuations']) assert.ok(Object.hasOwn(presentation.sourceWeapon.sourceFact.payload, key), key);
+    assert.ok(presentation.sourceWeapon.actionProfileResolution);
+    assert.deepEqual(presentation.actionProfileResolution, sourceWeapon.payload.actionProfileResolution);
+    for (const section of presentation.statSections) for (const { definition, curve } of section.statDefinitions) {
+      if (!curve) continue;
+      assert.equal(curve.payload.inputUnit, 'ratio');
+      assert.deepEqual(curve.payload.knots.map(point => [point.input, point.sourceOrdinal]), [['0', 1], ['1', 2]]);
+      assert.equal(curve.payload.interpolation.value, 'linear');
+      assert.equal(curve.payload.edgePolicy.value, 'extrapolate');
+      assert.ok(definition.payload.rangeEvidence.checkedSources.length > 0);
+    }
   }
   assert.equal(first.matrix.sourceOwnedEvidence.length, 12);
   assert.ok(first.matrix.sourceOwnedEvidence.some(fact => fact.recordId === 'darktide:evidence:chainaxe:p1-m1-displayed-attack-role-summary-code'));
@@ -126,11 +137,16 @@ test('UnitT07_w07-matrix-preserves-complete-weapon-facts-and-readable-source-val
   assert.match(first.markdownBytes.toString('utf8'), /Panel range/);
   assert.match(first.markdownBytes.toString('utf8'), /theoretical range/);
   assert.match(first.markdownBytes.toString('utf8'), /obtainable range/);
-  assert.match(first.markdownBytes.toString('utf8'), /1 point → 80 attack-power-point；2 point → 140 attack-power-point/);
+  assert.match(first.markdownBytes.toString('utf8'), /Source slot 1 .* normalized t=0 ratio/);
+  assert.match(first.markdownBytes.toString('utf8'), /Interpolation：linear；edge policy：extrapolate/);
+  assert.match(first.markdownBytes.toString('utf8'), /attainable item-rating range/);
+  assert.match(first.markdownBytes.toString('utf8'), /Static facts are Source-owned/);
   assert.match(first.markdownBytes.toString('utf8'), /74 個 distinct weapon stat locator fields/);
   assert.match(first.markdownBytes.toString('utf8'), /0\.25–0\.75 ratio/);
   assert.match(first.markdownBytes.toString('utf8'), /multi-target-cleave（群體（順劈））/);
   assert.match(first.markdownBytes.toString('utf8'), /保留來源參數，不代表總命中次數/);
+  assert.doesNotMatch(first.markdownBytes.toString('utf8'), /敵人專屬 hit-zone 與 critical\/weakspot 組合：NOT_IMPORTED/u);
+  assert.match(first.markdownBytes.toString('utf8'), /敵人靜態 hit-zone、armor\/weakspot 對照及 critical\/finesse Source 關係已匯入；不執行 runtime 規則，也不計算 critical\/weakspot 結果或 final damage/u);
   assert.match(first.markdownBytes.toString('utf8'), /special-active/);
   assert.match(first.markdownBytes.toString('utf8'), /chain_time=0\.54/);
   assert.match(first.markdownBytes.toString('utf8'), /以下是獨立的顯示摘要，不表示可達連段/);
@@ -140,6 +156,463 @@ test('UnitT07_w07-matrix-preserves-complete-weapon-facts-and-readable-source-val
     assert.equal(item.licenseStatus, 'NOT_REVIEWED');
     assert.equal(item.imageStatus, 'MISSING_NO_VERIFIED_REUSABLE_REFERENCE');
   }
+});
+
+test('UnitT09_w07-matrix-projects-source-action-resolution-and-target-armor-closure-per-action', async () => {
+  // Scenario: Each selected weapon has a Source action-resolution graph whose action profiles bind the static target and armor closure.
+  // Purpose: Preserve the real per-action Source relationships in the review matrix without inventing Web-owned mechanics facts.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const candidate = buildW07Candidate(inputs);
+  const armorAndTargetFacts = new Map(candidate.matrix.sourceOwnedArmorAndTargetProfiles.map(fact => [fact.gameReleaseId + '\u0000' + fact.recordId, fact]));
+  const modifierRuleFacts = new Map(candidate.matrix.sourceOwnedModifierRules.map(fact => [fact.gameReleaseId + '\u0000' + fact.recordId, fact]));
+
+  for (const presentation of candidate.matrix.presentations) {
+    const weapon = inputs.sourceRecordMap.get(presentation.sourceWeaponRef.gameReleaseId + '\u0000' + presentation.sourceWeaponRef.recordId);
+    assert.ok(weapon.payload.actionProfileResolution, 'weapon must retain the Source-owned actionProfileResolution');
+    assert.deepEqual(presentation.sourceWeapon.sourceFact.payload.actionProfileResolution, weapon.payload.actionProfileResolution);
+    assert.deepEqual(presentation.actionProfileResolution, weapon.payload.actionProfileResolution);
+    assert.equal(presentation.actionBindings.length, weapon.payload.attackProfileRefs.length);
+    const expectedTargetCount = inputs.sourceContract.records.filter(record => record.kind === 'target-profile'
+      && record.gameReleaseId === presentation.sourceWeaponRef.gameReleaseId
+      && record.payload.sourceStatic?.breedType === 'minion').length;
+
+    for (const action of presentation.actionBindings) {
+      const profile = inputs.sourceRecordMap.get(action.sourceRef.gameReleaseId + '\u0000' + action.sourceRef.recordId);
+      assert.ok(profile.payload.actionResolution, action.sourceRef.recordId);
+      assert.deepEqual(action.actionResolution, profile.payload.actionResolution);
+      assert.deepEqual(action.targetProfileRefs, profile.payload.targetProfileRefs);
+      assert.deepEqual(action.armorClassRefs, profile.payload.armorClassRefs);
+      assert.deepEqual(action.modifierRuleRefs, profile.payload.modifierRuleRefs);
+      assert.deepEqual(action.actionResolution.branchBindings, profile.payload.sourceBindings);
+      assert.equal(action.targetProfileRefs.length, expectedTargetCount, action.sourceRef.recordId);
+
+      for (const ref of action.targetProfileRefs) {
+        const fact = armorAndTargetFacts.get(ref.gameReleaseId + '\u0000' + ref.recordId);
+        assert.ok(fact, 'Source-owned target fact must be present in the matrix: ' + ref.recordId);
+        assert.equal(fact.kind, 'target-profile');
+        assert.ok(fact.payload.sourceStatic.rawHitZones.rawValue);
+        assert.ok(fact.payload.sourceStatic.hitZones.length > 0);
+        assert.ok(Array.isArray(fact.payload.sourceStatic.unresolvedZoneReferences));
+        for (const zone of fact.payload.sourceStatic.hitZones) assert.equal(typeof zone.actorsRawValue, 'string');
+        const toughness = fact.payload.sourceStatic.toughnessArmorClassRef;
+        if (toughness) {
+          assert.ok(fact.payload.sourceStatic.toughnessArmorLocator);
+          assert.equal(typeof fact.payload.sourceStatic.toughnessArmorRawValue, 'string');
+          assert.ok(action.armorClassRefs.some(ref => ref.recordId === toughness.recordId && ref.gameReleaseId === toughness.gameReleaseId),
+            'action armor closure must include the target’s toughness armor identity');
+        }
+      }
+      for (const ref of action.armorClassRefs) {
+        const fact = armorAndTargetFacts.get(ref.gameReleaseId + '\u0000' + ref.recordId);
+        assert.ok(fact, 'Source-owned armor fact must be present in the matrix: ' + ref.recordId);
+        assert.equal(fact.kind, 'armor-class');
+      }
+      for (const ref of action.modifierRuleRefs) {
+        const fact = modifierRuleFacts.get(ref.gameReleaseId + '\u0000' + ref.recordId);
+        assert.ok(fact, 'Source-owned modifier-rule fact must be present in the matrix: ' + ref.recordId);
+        assert.equal(fact.kind, 'modifier-rule');
+      }
+    }
+  }
+});
+
+test('UnitT10_w07-stat-review-digest-is-scoped-to-the-selected-stat-binding-group', async () => {
+  // Scenario: One Mk IV Source trait parameter range changes while the other Mk IV and Mk XII stat groups remain fixed.
+  // Purpose: Make each stat review depend on its own Source mapping row without staling sibling stats or the other mark.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const contract = structuredClone(inputs.authoring);
+  const m1Presentation = contract.presentations[0];
+  const m2Presentation = contract.presentations[1];
+  const m1Target = contract.reviewTargets.find(target => target.ownerId === m1Presentation.authoringId
+    && target.fieldPath === '/weaponView/statSections/0');
+  const m1SiblingTarget = contract.reviewTargets.find(target => target.ownerId === m1Presentation.authoringId
+    && target.fieldPath === '/weaponView/statSections/1');
+  const m2Target = contract.reviewTargets.find(target => target.ownerId === m2Presentation.authoringId
+    && target.fieldPath === '/weaponView/statSections/0');
+  contract.reviewReceipts = [m1Target, m1SiblingTarget, m2Target].map(target => createReviewReceipt(contract, target, {
+    ...inputs,
+    reviewer: { kind: 'human', id: 'test-only' },
+    reviewedAt: '2026-10-19T00:00:00Z',
+  }));
+
+  const changedInputs = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const weaponRef = m1Presentation.weaponView.sourceWeaponRef;
+  const weapon = changedInputs.sourceContract.records.find(record => record.recordId === weaponRef.recordId
+    && record.gameReleaseId === weaponRef.gameReleaseId);
+  const selectedSection = m1Presentation.weaponView.statSections[0];
+  const mappingRef = selectedSection.statDefinitionRefs.find(ref => {
+    const definition = inputs.sourceRecordMap.get(ref.gameReleaseId + '\u0000' + ref.recordId);
+    return Boolean(definition?.payload.curveMapping);
+  });
+  assert.ok(mappingRef, 'the real pinned Source input must contain a curve mapping definition for the selected stat');
+  const mappingDefinition = changedInputs.sourceContract.records.find(record => record.recordId === mappingRef.recordId
+    && record.gameReleaseId === mappingRef.gameReleaseId);
+  mappingDefinition.payload.curveMapping.traitParameter.range.max = '0.76';
+  changedInputs.sourceRecordMap = new Map(changedInputs.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+
+  assert.equal(getReviewState(contract, m1Target.targetId, changedInputs), 'stale');
+  assert.equal(getReviewState(contract, m1SiblingTarget.targetId, changedInputs), 'approved');
+  assert.equal(getReviewState(contract, m2Target.targetId, changedInputs), 'approved');
+});
+
+test('UnitT11_w07-rejects-duplicate-wrong-kind-and-missing-source-resolution-refs', async () => {
+  // Scenario: A pinned W07 Source profile duplicates a target, substitutes an armor ref, or loses target/action facts.
+  // Purpose: Require exact same-release typed closure and preserve toughness/raw-actor source evidence from real pinned data.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const presentation = inputs.authoring.presentations[0];
+  const weaponRef = presentation.weaponView.sourceWeaponRef;
+  const profileRef = presentation.weaponView.attackProfileRefs[0];
+  const duplicate = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const duplicateProfile = duplicate.sourceContract.records.find(record => record.recordId === profileRef.recordId && record.gameReleaseId === profileRef.gameReleaseId);
+  assert.ok(duplicateProfile.payload.actionResolution);
+  assert.ok(duplicateProfile.payload.targetProfileRefs.length > 1);
+  duplicateProfile.payload.targetProfileRefs[1] = structuredClone(duplicateProfile.payload.targetProfileRefs[0]);
+  duplicate.sourceRecordMap = new Map(duplicate.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, duplicate).issues.some(item => item.code === 'weapon-target-coverage'));
+
+  const wrongKind = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const wrongKindProfile = wrongKind.sourceContract.records.find(record => record.recordId === profileRef.recordId && record.gameReleaseId === profileRef.gameReleaseId);
+  wrongKindProfile.payload.targetProfileRefs[0] = structuredClone(wrongKindProfile.payload.armorClassRefs[0]);
+  wrongKind.sourceRecordMap = new Map(wrongKind.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, wrongKind).issues.some(item => ['wrong-kind-ref', 'weapon-target-coverage'].includes(item.code)));
+
+  const foreignRelease = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const currentTarget = foreignRelease.sourceContract.records.find(record => record.kind === 'target-profile'
+    && record.gameReleaseId === weaponRef.gameReleaseId);
+  assert.ok(currentTarget, 'the fixed Source pin must contain the current-release static target registry');
+  const unrelatedTarget = structuredClone(currentTarget);
+  unrelatedTarget.recordId += ':other-release-sentinel';
+  unrelatedTarget.gameReleaseId = foreignRelease.sourceContract.gameReleases.find(release => release.gameReleaseId !== weaponRef.gameReleaseId).gameReleaseId;
+  foreignRelease.sourceContract.records.push(unrelatedTarget);
+  foreignRelease.sourceRecordMap = new Map(foreignRelease.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(!validateWebAuthoring(inputs.authoring, foreignRelease).issues.some(item => item.code === 'weapon-target-coverage'),
+    'unrelated target facts from another release must not be added to this weapon’s required closure');
+
+  const missingToughness = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const toughnessTarget = missingToughness.sourceContract.records.find(record => record.kind === 'target-profile'
+    && record.gameReleaseId === weaponRef.gameReleaseId && record.payload.sourceStatic?.toughnessArmorClassRef);
+  assert.ok(toughnessTarget, 'the fixed static registry must include a breed with a Source-owned toughness armor identity');
+  delete toughnessTarget.payload.sourceStatic.toughnessArmorClassRef;
+  missingToughness.sourceRecordMap = new Map(missingToughness.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, missingToughness).issues.some(item => item.code === 'weapon-target-static-facts'),
+    'toughness armor identity cannot be dropped while its raw token and locator remain');
+
+  const wrongToughness = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const wrongToughnessTarget = wrongToughness.sourceContract.records.find(record => record.recordId === toughnessTarget.recordId
+    && record.gameReleaseId === toughnessTarget.gameReleaseId);
+  wrongToughnessTarget.payload.sourceStatic.toughnessArmorRawValue = 'armor_types.armored';
+  wrongToughness.sourceRecordMap = new Map(wrongToughness.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, wrongToughness).issues.some(item => item.code === 'weapon-target-static-facts'),
+    'the toughness raw enum access must resolve to its exact armor-class ref');
+
+  const missingRawActors = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const actorsTarget = missingRawActors.sourceContract.records.find(record => record.kind === 'target-profile'
+    && record.gameReleaseId === weaponRef.gameReleaseId && record.payload.sourceStatic?.hitZones?.some(zone => typeof zone.actorsRawValue === 'string'));
+  assert.ok(actorsTarget, 'the fixed registry must retain a raw actors token for at least one hit zone');
+  delete actorsTarget.payload.sourceStatic.hitZones.find(zone => typeof zone.actorsRawValue === 'string').actorsRawValue;
+  missingRawActors.sourceRecordMap = new Map(missingRawActors.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, missingRawActors).issues.some(item => item.code === 'weapon-target-static-facts'),
+    'resolved actors must not replace the original raw actors token');
+
+  const missingResolution = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const missingWeapon = missingResolution.sourceContract.records.find(record => record.recordId === weaponRef.recordId && record.gameReleaseId === weaponRef.gameReleaseId);
+  delete missingWeapon.payload.actionProfileResolution;
+  missingResolution.sourceRecordMap = new Map(missingResolution.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, missingResolution).issues.some(item => item.code === 'weapon-resolution-required'));
+});
+
+test('UnitT12_w07-action-review-digest-is-scoped-to-one-action-and-shared-target-dependencies', async () => {
+  // Scenario: One action locator changes, then a shared target profile changes across two marks.
+  // Purpose: Stale only the action rows that depend on the changed Source action or shared target, leaving stat reviews isolated.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const contract = structuredClone(inputs.authoring);
+  const target = (presentationIndex, actionIndex) => contract.reviewTargets.find(item => item.ownerId === contract.presentations[presentationIndex].authoringId
+    && item.fieldPath === '/weaponView/attackProfileRefs/' + actionIndex);
+  const m1Action0 = target(0, 0);
+  const m1Action1 = target(0, 1);
+  const m2Action0 = target(1, 0);
+  const m1Stat0 = contract.reviewTargets.find(item => item.ownerId === contract.presentations[0].authoringId && item.fieldPath === '/weaponView/statSections/0');
+  contract.reviewReceipts = [m1Action0, m1Action1, m2Action0, m1Stat0].map(item => createReviewReceipt(contract, item, {
+    ...inputs,
+    reviewer: { kind: 'human', id: 'test-only' },
+    reviewedAt: '2026-10-19T00:00:00Z',
+  }));
+
+  const actionChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const actionRef = contract.presentations[0].weaponView.attackProfileRefs[0];
+  const actionProfile = actionChanged.sourceContract.records.find(record => record.recordId === actionRef.recordId && record.gameReleaseId === actionRef.gameReleaseId);
+  assert.ok(actionProfile.payload.actionResolution.inputBindings.length > 0);
+  actionProfile.payload.actionResolution.inputBindings[0].sourceLocator.line += 1;
+  actionChanged.sourceRecordMap = new Map(actionChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.equal(getReviewState(contract, m1Action0.targetId, actionChanged), 'stale');
+  assert.equal(getReviewState(contract, m1Action1.targetId, actionChanged), 'approved');
+  assert.equal(getReviewState(contract, m2Action0.targetId, actionChanged), 'approved');
+  assert.equal(getReviewState(contract, m1Stat0.targetId, actionChanged), 'approved');
+
+  const firstTargetRef = actionProfile.payload.targetProfileRefs[0];
+  const m2ProfileRef = contract.presentations[1].weaponView.attackProfileRefs[0];
+  const m2Profile = actionChanged.sourceRecordMap.get(m2ProfileRef.gameReleaseId + '\u0000' + m2ProfileRef.recordId);
+  assert.ok(m2Profile.payload.targetProfileRefs.some(ref => ref.recordId === firstTargetRef.recordId && ref.gameReleaseId === firstTargetRef.gameReleaseId));
+  const targetChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const targetProfile = targetChanged.sourceContract.records.find(record => record.recordId === firstTargetRef.recordId && record.gameReleaseId === firstTargetRef.gameReleaseId);
+  targetProfile.payload.sourceStatic.hitZones[0].rawSource.rawValue += ' changed-for-digest-test';
+  targetChanged.sourceRecordMap = new Map(targetChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.equal(getReviewState(contract, m1Action0.targetId, targetChanged), 'stale');
+  assert.equal(getReviewState(contract, m2Action0.targetId, targetChanged), 'stale');
+  assert.equal(getReviewState(contract, m1Stat0.targetId, targetChanged), 'approved');
+});
+
+test('UnitT14_w07-action-digest-includes-only-the-selected-action-generator-definition', async () => {
+  // Scenario: Two attack actions share a weapon but only one action owns a generator callsite.
+  // Purpose: Make its effective shared definition and incoming edge stale only that action review.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const contract = structuredClone(inputs.authoring);
+  const presentation = contract.presentations[0];
+  const target = contract.reviewTargets.find(item => item.ownerId === presentation.authoringId
+    && item.fieldPath === '/weaponView/attackProfileRefs/0');
+  const profileRef = presentation.weaponView.attackProfileRefs[0];
+  const profile = inputs.sourceRecordMap.get(profileRef.gameReleaseId + '\u0000' + profileRef.recordId);
+  const weaponRef = presentation.weaponView.sourceWeaponRef;
+  const weapon = inputs.sourceRecordMap.get(weaponRef.gameReleaseId + '\u0000' + weaponRef.recordId);
+  const action = profile.payload.action;
+  const locator = { sourceRef: { sourceId: 'synthetic-w07-code', gameReleaseId: profile.gameReleaseId }, path: 'scripts/synthetic.lua', line: 20, fieldPath: 'actions.' + action };
+  weapon.payload.actionProfileResolution = {
+    inputSetup: {
+      setupKey: 'synthetic-setup', inheritedSetupKey: 'synthetic-default',
+      inputEntries: [{ inputKey: 'start_attack', origin: 'weapon-mid-setup', rawValue: 'start_attack = true', sourceLocator: locator }],
+    },
+    localActions: [{ action, startInput: null, rawSource: { rawValue: 'action row', sourceLocator: locator }, sourceRange: { ...locator, endLine: 24 } }],
+    fallbackActions: [],
+    generatorBindings: [{
+      generatorKey: 'generate_wield_chain_actions', ownerAction: action,
+      callsite: { sourceLocator: { ...locator, line: 22 }, rawValue: 'generate_wield_chain_actions({ chain_time = 0.35 })' },
+    }],
+    actionGenerators: [
+      { generatorKey: 'generate_wield_chain_actions', effectiveDefinitionIndex: 2, definitions: [
+        { definitionIndex: 1, rawValue: 'old definition' },
+        { definitionIndex: 2, rawValue: 'effective definition' },
+      ] },
+      { generatorKey: 'generate_inspect_action', effectiveDefinitionIndex: 1, definitions: [
+        { definitionIndex: 1, rawValue: 'unrelated definition' },
+      ] },
+    ],
+  };
+  profile.payload.actionResolution = {
+    origin: 'weapon-template', startInput: null, inputBindings: [],
+    entryBindings: [{ fromAction: 'action_windup', inputKey: 'start_attack.[]', toAction: action, sourceLocator: locator, conditions: [{ fieldPath: 'chain_time', rawValue: '0.35', sourceLocator: locator }] }],
+    branchBindings: [], runtimeConditions: [],
+    targetApplicability: 'all-static-registry-minion-hit-schemas',
+  };
+  const digest = subjectInputs => computeReviewDigests(contract, target, subjectInputs).dependenciesDigest;
+  const original = digest(inputs);
+
+  const usedDefinitionChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const usedWeapon = usedDefinitionChanged.sourceContract.records.find(record => record.recordId === weapon.recordId && record.gameReleaseId === weapon.gameReleaseId);
+  usedWeapon.payload.actionProfileResolution.actionGenerators[0].definitions[1].rawValue += ' changed';
+  usedDefinitionChanged.sourceRecordMap = new Map(usedDefinitionChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.notEqual(digest(usedDefinitionChanged), original);
+
+  const unrelatedDefinitionChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const unrelatedWeapon = unrelatedDefinitionChanged.sourceContract.records.find(record => record.recordId === weapon.recordId && record.gameReleaseId === weapon.gameReleaseId);
+  unrelatedWeapon.payload.actionProfileResolution.actionGenerators[1].definitions[0].rawValue += ' changed';
+  unrelatedDefinitionChanged.sourceRecordMap = new Map(unrelatedDefinitionChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.equal(digest(unrelatedDefinitionChanged), original);
+
+  const incomingEdgeChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const incomingProfile = incomingEdgeChanged.sourceContract.records.find(record => record.recordId === profile.recordId && record.gameReleaseId === profile.gameReleaseId);
+  incomingProfile.payload.actionResolution.entryBindings[0].conditions[0].rawValue = '0.99';
+  incomingEdgeChanged.sourceRecordMap = new Map(incomingEdgeChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.notEqual(digest(incomingEdgeChanged), original);
+});
+
+test('UnitT15_w07-action-digest-ignores-unselected-input-setup-source-rows', async () => {
+  // Scenario: A weapon setup source includes multiple inputs, while one action consumes only one input key.
+  // Purpose: Keep per-action review dependencies scoped to its selected merged input entries, not the entire setup source tables.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const contract = structuredClone(inputs.authoring);
+  const presentation = contract.presentations[0];
+  const target = contract.reviewTargets.find(item => item.ownerId === presentation.authoringId
+    && item.fieldPath === '/weaponView/attackProfileRefs/0');
+  const profileRef = presentation.weaponView.attackProfileRefs[0];
+  const profile = inputs.sourceRecordMap.get(profileRef.gameReleaseId + '\u0000' + profileRef.recordId);
+  const weaponRef = presentation.weaponView.sourceWeaponRef;
+  const weapon = inputs.sourceRecordMap.get(weaponRef.gameReleaseId + '\u0000' + weaponRef.recordId);
+  const action = profile.payload.action;
+  const locator = { sourceRef: { sourceId: 'synthetic-w07-code', gameReleaseId: profile.gameReleaseId }, path: 'scripts/synthetic.lua', line: 20, fieldPath: 'action_input_setup' };
+  weapon.payload.actionProfileResolution = {
+    inputSetup: {
+      setupKey: 'synthetic-setup', inheritedSetupKey: 'synthetic-default',
+      hierarchyRaw: { rawValue: 'synthetic hierarchy', sourceLocator: locator },
+      setupSources: [
+        { rawValue: 'start_attack = { ... }', sourceLocator: { ...locator, line: 21, fieldPath: 'start_attack' } },
+        { rawValue: 'heavy_attack = { ... }', sourceLocator: { ...locator, line: 22, fieldPath: 'heavy_attack' } },
+      ],
+      inputEntries: [
+        { inputKey: 'start_attack', origin: 'default-setup', rawValue: 'start_attack = true', sourceLocator: { ...locator, line: 21, fieldPath: 'start_attack' } },
+        { inputKey: 'heavy_attack', origin: 'default-setup', rawValue: 'heavy_attack = true', sourceLocator: { ...locator, line: 22, fieldPath: 'heavy_attack' } },
+      ],
+    },
+    localActions: [{ action, startInput: null, rawSource: { rawValue: 'action row', sourceLocator: locator }, sourceRange: { ...locator, endLine: 24 } }],
+    fallbackActions: [],
+    generatorBindings: [],
+    actionGenerators: [],
+  };
+  profile.payload.actionResolution = {
+    origin: 'weapon-template', startInput: null, inputBindings: [],
+    entryBindings: [{ fromAction: 'action_windup', inputKey: 'start_attack.[]', toAction: action, sourceLocator: locator, conditions: [] }],
+  };
+  const digest = subjectInputs => computeReviewDigests(contract, target, subjectInputs).dependenciesDigest;
+  const original = digest(inputs);
+
+  const unrelatedSetupSourceChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const changedWeapon = unrelatedSetupSourceChanged.sourceContract.records.find(record => record.recordId === weapon.recordId && record.gameReleaseId === weapon.gameReleaseId);
+  changedWeapon.payload.actionProfileResolution.inputSetup.setupSources[1].rawValue = 'heavy_attack = { unrelated changed setting }';
+  unrelatedSetupSourceChanged.sourceRecordMap = new Map(unrelatedSetupSourceChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.equal(digest(unrelatedSetupSourceChanged), original);
+
+  const selectedInputChanged = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const selectedWeapon = selectedInputChanged.sourceContract.records.find(record => record.recordId === weapon.recordId && record.gameReleaseId === weapon.gameReleaseId);
+  selectedWeapon.payload.actionProfileResolution.inputSetup.inputEntries[0].rawValue = 'start_attack = false';
+  selectedInputChanged.sourceRecordMap = new Map(selectedInputChanged.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.notEqual(digest(selectedInputChanged), original);
+});
+
+test('UnitT16_w07-stat-semantics-cover-every-source-binding-property', async () => {
+  // Scenario: W07 source trait bindings and semantic table rows are separately projected into the review candidate.
+  // Purpose: Reject omitted, duplicated, or orphan semantic rows instead of silently losing a source-bound property.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const presentation = inputs.authoring.presentations[0];
+  const weaponRef = presentation.weaponView.sourceWeaponRef;
+  const sourceLocator = locator => structuredClone(locator);
+
+  const evaluate = (mutateSemantics = () => {}) => {
+    const subjectInputs = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+    const weapon = subjectInputs.sourceContract.records.find(record => record.recordId === weaponRef.recordId
+      && record.gameReleaseId === weaponRef.gameReleaseId);
+    const semantics = (weapon.payload.statBindings ?? []).map(group => ({
+      statKey: group.statKey,
+      groupKey: group.statKey.replace(/^chainaxe_/u, '').replace(/_stat$/u, ''),
+      bindings: [...new Set((group.bindings ?? []).map(binding => binding.property))].map(property => {
+        const owner = group.bindings.find(binding => binding.property === property);
+        return {
+          property,
+          quantityKind: 'stamina-capacity-addition',
+          unit: 'point',
+          consumerEvidence: [{ sourceLocator: sourceLocator(owner.weaponLocator), rawValue: 'synthetic test evidence', summary: 'Synthetic coverage-only row.' }],
+          theoreticalInputRange: { status: 'unknown', reasonCode: 'NOT_EXPOSED_BY_SOURCE' },
+          obtainableInputRange: { status: 'unknown', reasonCode: 'NOT_EXPOSED_BY_SOURCE' },
+        };
+      }),
+    }));
+    weapon.payload.statTableSemantics = semantics;
+    weapon.payload.actionProfileResolution = { executionPolicy: 'static-only; functions not executed' };
+    mutateSemantics(weapon.payload.statTableSemantics);
+    subjectInputs.sourceRecordMap = new Map(subjectInputs.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+    const result = validateWebAuthoring(subjectInputs.authoring, subjectInputs);
+    return result.issues.filter(item => item.code === 'weapon-stat-semantics-coverage');
+  };
+
+  assert.deepEqual(evaluate(), []);
+  assert.ok(evaluate(semantics => { semantics[0].bindings.pop(); }).length > 0, 'missing property semantics must be rejected');
+  assert.ok(evaluate(semantics => { semantics[0].bindings.push(structuredClone(semantics[0].bindings[0])); }).length > 0, 'duplicate property semantics must be rejected');
+  assert.ok(evaluate(semantics => { semantics[0].bindings.push({ ...structuredClone(semantics[0].bindings[0]), property: 'unowned.synthetic.selector' }); }).length > 0,
+    'orphan semantic properties must be rejected');
+});
+
+test('UnitT17_w07-markdown-renders-the-complete-typed-profile-boost-curve', () => {
+  // Scenario: Two selected action profiles point to the same Source-owned five-point boost table.
+  // Purpose: Make every output, normalized input knot, caller interval, and evidence locator readable without executing the curve.
+  const table = {
+    tableKey: 'PowerLevelSettings.boost_curves.default',
+    quantity: 'damage-boost-curve',
+    unit: 'ratio',
+    sourceLocator: { path: 'scripts/settings/damage/power_level_settings.lua', line: 125, fieldPath: 'power_level_settings.boost_curves.default.1' },
+    orderedValues: ['0', '0.3', '0.6', '0.8', '1'].map((rawValue, index) => ({ ordinal: index + 1, rawValue, decimal: rawValue })),
+    curveSemantics: {
+      schemaVersion: 'w07-boost-curve-semantics/1.0.0',
+      referenceAxis: {
+        min: '0', max: '1', minInclusive: true, maxInclusive: true, unit: 'ratio',
+        sourceLocators: [{ path: 'scripts/utilities/attack/damage_calculation.lua', line: 208, endLine: 217, fieldPath: 'source.five_point_damage_boost_curve_indexing_and_interpolation' }],
+      },
+      knots: ['0', '0.25', '0.5', '0.75', '1'].map((input, index) => ({ sourceOrdinal: index + 1, input })),
+      interpolation: {
+        value: 'piecewise-linear',
+        sourceLocator: { path: 'scripts/utilities/attack/damage_calculation.lua', line: 208, endLine: 217, fieldPath: 'source.five_point_damage_boost_curve_indexing_and_interpolation' },
+      },
+      callerInput: {
+        min: '0', minInclusive: false, max: '1', maxInclusive: true, unit: 'ratio',
+        predicate: 'finesse_boost_amount > 0',
+        transform: 'math.min(finesse_boost_amount, 1)',
+        sourceLocators: [{ path: 'scripts/utilities/attack/damage_calculation.lua', line: 700, endLine: 704, fieldPath: 'source.finesse_boost_amount_cap_and_positive_amount_gate' }],
+      },
+    },
+  };
+  const profile = (recordId, profileTable = table) => ({
+    recordId, gameReleaseId: 'fixture-release',
+    payload: { rawSourceDefinition: { tables: [structuredClone(profileTable)] } },
+  });
+  const presentation = {
+    actionBindings: [
+      { damageProfileRefs: [{ recordId: 'damage:one', gameReleaseId: 'fixture-release' }] },
+      { damageProfileRefs: [{ recordId: 'damage:two', gameReleaseId: 'fixture-release' }] },
+    ],
+  };
+  const lines = renderW07BoostCurveSection(presentation, [profile('damage:one'), profile('damage:two'), profile('unselected')]);
+  const rendered = lines.join('\n');
+  assert.equal(rendered.split('\n').filter(line => line.includes('PowerLevelSettings.boost_curves.default')).length, 1);
+  assert.match(rendered, /1:0 ratio；2:0\.3 ratio；3:0\.6 ratio；4:0\.8 ratio；5:1 ratio/u);
+  assert.match(rendered, /\[0, 1\] ratio；knots 1:0；2:0\.25；3:0\.5；4:0\.75；5:1/u);
+  assert.match(rendered, /piecewise-linear/u);
+  assert.match(rendered, /\(0, 1\] ratio；finesse_boost_amount > 0；math\.min\(finesse_boost_amount, 1\)/u);
+  assert.match(rendered, /damage_calculation\.lua:208–217/u);
+  assert.match(rendered, /damage_calculation\.lua:700–704/u);
+  assert.doesNotMatch(rendered, /unselected/u);
+});
+
+test('UnitT18_w07-action-input-bindings-deduplicate-keys-but-preserve-all-outgoing-edges', async () => {
+  // Scenario: One action has four literal outgoing edges, with two destinations sharing start_attack.[] input.
+  // Purpose: Keep the action-level input summary unique while preserving every edge and its conditions in the weapon graph.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const presentation = inputs.authoring.presentations[0];
+  const weaponRef = presentation.weaponView.sourceWeaponRef;
+  const weapon = inputs.sourceRecordMap.get(weaponRef.gameReleaseId + '\u0000' + weaponRef.recordId);
+  const profileRef = presentation.weaponView.attackProfileRefs.find(ref =>
+    inputs.sourceRecordMap.get(ref.gameReleaseId + '\u0000' + ref.recordId)?.payload.action === 'action_right_heavy');
+  assert.ok(profileRef, 'the fixed W07 input must retain the m1 right-heavy action profile');
+  const profile = inputs.sourceRecordMap.get(profileRef.gameReleaseId + '\u0000' + profileRef.recordId);
+  const outgoing = weapon.payload.actionContinuations.filter(edge => edge.fromAction === 'action_right_heavy');
+  const uniqueInputs = new Map();
+  for (const edge of outgoing) if (!uniqueInputs.has(edge.inputKey)) uniqueInputs.set(edge.inputKey, edge);
+  const expectedBindings = [...uniqueInputs.values()].map(edge => ({
+    inputKey: edge.inputKey,
+    role: 'continuation',
+    sourceLocator: edge.sourceLocator,
+  }));
+  assert.equal(outgoing.length, 4);
+  assert.equal(expectedBindings.length, 3);
+  assert.equal(expectedBindings[0].sourceLocator.line, 872);
+  assert.deepEqual(profile.payload.actionResolution.inputBindings, expectedBindings);
+  assert.deepEqual(validateWebAuthoring(inputs.authoring, inputs).issues, []);
+
+  const missing = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const missingProfile = missing.sourceContract.records.find(record => record.recordId === profileRef.recordId
+    && record.gameReleaseId === profileRef.gameReleaseId);
+  missingProfile.payload.actionResolution.inputBindings.pop();
+  missing.sourceRecordMap = new Map(missing.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  assert.ok(validateWebAuthoring(inputs.authoring, missing).issues.some(issue => issue.code === 'weapon-action-resolution-input'));
+});
+
+test('UnitT13_w07-rejects-a-source-curve-that-reuses-array-slot-as-the-t-axis', async () => {
+  // Scenario: A real Source curve keeps its raw endpoints but changes the normalized reference knot back to ordinal input.
+  // Purpose: Prevent the Web contract from presenting array positions 1/2 as the input axis or implying a damage calculation.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const changed = { ...inputs, sourceContract: structuredClone(inputs.sourceContract) };
+  const curve = changed.sourceContract.records.find(record => record.kind === 'stat-curve');
+  assert.ok(curve.payload.knots[0].sourceOrdinal);
+  curve.payload.knots[0].input = String(curve.payload.knots[0].sourceOrdinal);
+  changed.sourceRecordMap = new Map(changed.sourceContract.records.map(record => [record.gameReleaseId + '\u0000' + record.recordId, record]));
+  const result = validateWebAuthoring(inputs.authoring, changed);
+  assert.ok(result.issues.some(item => item.code === 'weapon-curve-normalized-endpoints'));
 });
 
 // Scenario: A W07 candidate keeps its weapons but removes both official-source and displayed-name review targets.

@@ -97,7 +97,11 @@
         "stamina-point",
         "stamina-point-per-second",
         "dodge-count",
-        "instance-count"
+        "instance-count",
+        "normalized-speed-per-second",
+        "item-stat-rating",
+        "expertise-level",
+        "expertise-level-per-rank"
       ]
     },
     "gameReleaseId": {
@@ -365,6 +369,40 @@
         }
       }
     },
+    "weaponCodeRangeLocator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceRef",
+        "path",
+        "line",
+        "endLine",
+        "fieldPath"
+      ],
+      "properties": {
+        "sourceRef": {
+          "$ref": "#/$defs/sourceRefLink"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._/-]+$"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fieldPath": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_.\\[\\]-]+$"
+        }
+      }
+    },
     "weaponTraitParameterRange": {
       "oneOf": [
         {
@@ -458,6 +496,9 @@
               "traitParameterRange": {
                 "$ref": "#/$defs/weaponTraitParameterRange"
               },
+        "curveMapping": {
+          "$ref": "#/$defs/w07CurveMapping"
+        },
               "claimRefs": {
                 "type": "array",
                 "items": {
@@ -617,7 +658,8 @@
             "NOT_VERIFIED",
             "SOURCE_UNAVAILABLE",
             "CONFLICTING_EVIDENCE",
-            "NOT_EXPOSED_BY_SOURCE"
+            "NOT_EXPOSED_BY_SOURCE",
+            "CALLER_DOMAIN_NOT_PROVEN"
           ]
         }
       }
@@ -1018,6 +1060,1589 @@
         }
       }
     },
+    "w07SourceEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceLocator",
+        "rawValue",
+        "summary"
+      ],
+      "properties": {
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        },
+        "rawValue": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "w07SourceLocators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/weaponCodeLocator"
+      }
+    },
+    "w07RawSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rawValue",
+        "sourceLocator"
+      ],
+      "properties": {
+        "rawValue": {
+          "type": "string"
+        },
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        }
+      }
+    },
+    "w07SourceRangeEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rawValue",
+        "summary",
+        "sourceLocator"
+      ],
+      "properties": {
+        "rawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeRangeLocator"
+        }
+      }
+    },
+    "w07RangeEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkedSources",
+        "serverBoundary",
+        "impact"
+      ],
+      "properties": {
+        "checkedSources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sourceLocator",
+              "summary"
+            ],
+            "properties": {
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "serverBoundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impact": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "w07PanelPreviewRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "scope",
+        "perStatIncrementCap",
+        "itemBudget",
+        "expertiseBudget",
+        "displayCap",
+        "rounding",
+        "conditionalBranches",
+        "storedExpertiseOverride",
+        "obtainableRange"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "w07-panel-preview-rules/1.0.0" },
+        "scope": { "const": "client-preview-defaults-only" },
+        "perStatIncrementCap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decimal", "unit", "sourceLocators", "override"],
+          "properties": {
+            "decimal": { "const": "0.8" },
+            "unit": { "const": "ratio" },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" },
+            "override": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["fieldPath", "rawValue", "panelCaller"],
+              "properties": {
+                "fieldPath": { "const": "Items.preview_stats_change.max_stat_value" },
+                "rawValue": { "type": "string", "minLength": 1 },
+                "panelCaller": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["sourceLocators"],
+                  "properties": {
+                    "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "itemBudget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decimal", "unit", "sourceLocators"],
+          "properties": {
+            "decimal": { "const": "380" },
+            "unit": { "const": "item-stat-rating" },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        },
+        "expertiseBudget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["formula", "expertiseMultiplier", "maxExpertise", "capByRemainingItemBudget", "lowerBound", "sourceLocators"],
+          "properties": {
+            "formula": { "const": "expertise_increase / expertise_multiplier * 6" },
+            "expertiseMultiplier": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["decimal", "unit", "sourceLocators"],
+              "properties": {
+                "decimal": { "const": "10" },
+                "unit": { "const": "expertise-level-per-rank" },
+                "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+              }
+            },
+            "maxExpertise": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["decimal", "unit", "sourceLocators"],
+              "properties": {
+                "decimal": { "const": "500" },
+                "unit": { "const": "expertise-level" },
+                "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+              }
+            },
+            "capByRemainingItemBudget": { "const": true },
+            "lowerBound": { "const": "0" },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        },
+        "displayCap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decimal", "unit", "formula", "sourceLocators"],
+          "properties": {
+            "decimal": { "const": "100" },
+            "unit": { "const": "percent" },
+            "formula": { "type": "string", "minLength": 1 },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        },
+        "rounding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rawValue", "sourceLocators"],
+          "properties": {
+            "rawValue": { "type": "string", "minLength": 1 },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        },
+        "conditionalBranches": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "rawValue", "behavior", "sourceLocators"],
+            "properties": {
+              "key": { "type": "string", "enum": ["no-current-item-total", "current-item-total-present"] },
+              "rawValue": { "type": "string", "minLength": 1 },
+              "behavior": { "type": "string", "minLength": 1 },
+              "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+            }
+          }
+        },
+        "storedExpertiseOverride": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rawValue", "behavior", "sourceLocators"],
+          "properties": {
+            "rawValue": { "type": "string", "minLength": 1 },
+            "behavior": { "type": "string", "minLength": 1 },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        },
+        "obtainableRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reasonCode", "sourceLocators"],
+          "properties": {
+            "status": { "const": "unknown" },
+            "reasonCode": { "const": "NOT_EXPOSED_BY_SOURCE" },
+            "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+          }
+        }
+      }
+    },
+    "w07SourceRangeEvidenceList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/w07SourceRangeEvidence"
+      }
+    },
+    "w07TraitRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "min",
+        "max",
+        "unit",
+        "inclusive"
+      ],
+      "properties": {
+        "status": {
+          "const": "known"
+        },
+        "min": {
+          "$ref": "#/$defs/decimal"
+        },
+        "max": {
+          "$ref": "#/$defs/decimal"
+        },
+        "unit": {
+          "const": "ratio"
+        },
+        "inclusive": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ],
+          "properties": {
+            "min": {
+              "type": "boolean"
+            },
+            "max": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "w07CurveMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "outerItemRating",
+        "traitParameter",
+        "rawProfileParameter"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "w07-stat-curve-mapping/1.0.0"
+        },
+        "outerItemRating": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "quantityKind",
+            "unit",
+            "panelComparisonRange",
+            "obtainableRange",
+            "sourceLocators"
+          ],
+          "properties": {
+            "quantityKind": {
+              "const": "normalized-item-stat-value"
+            },
+            "unit": {
+              "const": "ratio"
+            },
+            "panelComparisonRange": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "min", "max", "unit", "inclusive", "scope"],
+              "properties": {
+                "status": { "const": "known" },
+                "min": { "const": "0" },
+                "max": { "const": "1" },
+                "unit": { "const": "ratio" },
+                "inclusive": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["min", "max"],
+                  "properties": { "min": { "const": true }, "max": { "const": true } }
+                },
+                "scope": { "const": "comparison-metadata-only" }
+              }
+            },
+            "obtainableRange": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "reasonCode"],
+              "properties": {
+                "status": { "const": "unknown" },
+                "reasonCode": { "const": "NOT_EXPOSED_BY_SOURCE" }
+              }
+            },
+            "sourceLocators": {
+              "$ref": "#/$defs/w07SourceRangeEvidenceList"
+            }
+          }
+        },
+        "traitParameter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "quantityKind",
+            "unit",
+            "range",
+            "sourceLocators"
+          ],
+          "properties": {
+            "quantityKind": {
+              "const": "trait-template-t"
+            },
+            "unit": {
+              "const": "ratio"
+            },
+            "range": {
+              "$ref": "#/$defs/w07TraitRange"
+            },
+            "sourceLocators": {
+              "$ref": "#/$defs/w07SourceLocators"
+            }
+          }
+        },
+        "rawProfileParameter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "quantityKind",
+            "unit",
+            "referenceEndpoints",
+            "callerDomain",
+            "selectedWeaponTweakPath",
+            "sourceLocators"
+          ],
+          "properties": {
+            "quantityKind": {
+              "const": "normalized-profile-t"
+            },
+            "unit": {
+              "const": "ratio"
+            },
+            "referenceEndpoints": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min",
+                "max",
+                "inclusive",
+                "scope"
+              ],
+              "properties": {
+                "min": {
+                  "const": "0"
+                },
+                "max": {
+                  "const": "1"
+                },
+                "inclusive": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "min",
+                    "max"
+                  ],
+                  "properties": {
+                    "min": {
+                      "const": true
+                    },
+                    "max": {
+                      "const": true
+                    }
+                  }
+                },
+                "scope": {
+                  "const": "reference-endpoints-only"
+                }
+              }
+            },
+            "callerDomain": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "status",
+                "reasonCode"
+              ],
+              "properties": {
+                "status": {
+                  "const": "unknown"
+                },
+                "reasonCode": {
+                  "const": "CALLER_DOMAIN_NOT_PROVEN"
+                }
+              }
+            },
+            "selectedWeaponTweakPath": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "accumulatorRange", "fallbacks", "sourceLocators"],
+              "properties": {
+                "status": { "const": "known" },
+                "accumulatorRange": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["min", "max", "unit", "inclusive"],
+                  "properties": {
+                    "min": { "const": "0" },
+                    "max": { "const": "1" },
+                    "unit": { "const": "ratio" },
+                    "inclusive": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["min", "max"],
+                      "properties": { "min": { "const": true }, "max": { "const": true } }
+                    }
+                  }
+                },
+                "fallbacks": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["emptyPath", "defaultTraitValue", "defaultProfileLerpValue"],
+                  "properties": {
+                    "emptyPath": { "const": "0" },
+                    "defaultTraitValue": { "const": "0.5" },
+                    "defaultProfileLerpValue": { "const": "0.5" }
+                  }
+                },
+                "sourceLocators": { "$ref": "#/$defs/w07SourceRangeEvidenceList" }
+              }
+            },
+            "sourceLocators": {
+              "$ref": "#/$defs/w07SourceLocators"
+            }
+          }
+        }
+      }
+    },
+    "w07ActionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inputKey",
+        "sourceLocator"
+      ],
+      "properties": {
+        "inputKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        }
+      }
+    },
+    "w07GeneratedAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actionKey",
+        "continuationEdges"
+      ],
+      "properties": {
+        "actionKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startInput": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stopInput": {
+          "type": "string",
+          "minLength": 1
+        },
+        "continuationEdges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "inputKey",
+              "actionKey",
+              "sourceLocator"
+            ],
+            "properties": {
+              "inputKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actionKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "chainTimeRawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        }
+      }
+    },
+    "w07ActionGenerator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatorKey",
+        "definitions",
+        "effectiveDefinitionIndex"
+      ],
+      "properties": {
+        "generatorKey": {
+          "type": "string",
+          "enum": [
+            "generate_unwield_action",
+            "generate_wield_chain_actions",
+            "generate_inspect_action",
+            "generate_inspect_3p_action"
+          ]
+        },
+        "definitions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "generatorKey",
+              "definitionIndex",
+              "endLine",
+              "sourceLocator",
+              "rawValue",
+              "returnKind",
+              "generatedActions",
+              "generatedContinuations"
+            ],
+            "properties": {
+              "generatorKey": {
+                "type": "string",
+                "enum": [
+                  "generate_unwield_action",
+                  "generate_wield_chain_actions",
+                  "generate_inspect_action",
+                  "generate_inspect_3p_action"
+                ]
+              },
+              "definitionIndex": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "endLine": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "returnKind": {
+                "type": "string",
+                "enum": [
+                  "action-settings",
+                  "continuation-list"
+                ]
+              },
+              "generatedActions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/w07GeneratedAction"
+                }
+              },
+              "generatedContinuations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "actionKey",
+                    "chainTimeRawValue",
+                    "sourceLocator"
+                  ],
+                  "properties": {
+                    "actionKey": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "inputKey": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "chainTimeRawValue": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sourceLocator": {
+                      "$ref": "#/$defs/weaponCodeLocator"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "effectiveDefinitionIndex": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "w07GeneratorBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generatorKey",
+          "callsite",
+          "ownerAction",
+          "ownerActionRange",
+          "assignedActionKey",
+          "returnKind"
+      ],
+      "properties": {
+        "generatorKey": {
+          "type": "string",
+          "enum": [
+            "generate_unwield_action",
+            "generate_wield_chain_actions",
+            "generate_inspect_action",
+            "generate_inspect_3p_action"
+          ]
+        },
+        "callsite": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceLocator",
+            "rawValue"
+          ],
+          "properties": {
+            "sourceLocator": {
+              "$ref": "#/$defs/weaponCodeLocator"
+            },
+            "rawValue": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "ownerAction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownerActionRange": {
+          "$ref": "#/$defs/weaponCodeRangeLocator"
+        },
+        "assignedActionKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "returnKind": {
+          "type": "string",
+          "enum": [
+            "action-settings",
+            "continuation-list"
+          ]
+        },
+        "additionalSettingsRawValue": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "w07ActionProfileResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inputSetup",
+        "localActions",
+        "fallbackActions",
+        "actionGenerators",
+        "generatorBindings",
+        "staticClosure",
+        "executionPolicy"
+      ],
+      "properties": {
+        "inputSetup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "setupKey",
+            "inheritedSetupKey",
+            "inputEntries",
+            "hierarchyRaw",
+            "setupSources"
+          ],
+          "properties": {
+            "setupKey": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inheritedSetupKey": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputEntries": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "inputKey",
+                  "origin",
+                  "rawValue",
+                  "sourceLocator"
+                ],
+                "properties": {
+                  "inputKey": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "origin": {
+                    "type": "string",
+                    "enum": [
+                      "base-template",
+                      "default-setup",
+                      "weapon-mid-setup"
+                    ]
+                  },
+                  "rawValue": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceLocator": {
+                    "$ref": "#/$defs/weaponCodeLocator"
+                  },
+                  "inheritedDefinition": {
+                    "$ref": "#/$defs/w07RawSource"
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "origin": {
+                          "const": "weapon-mid-setup"
+                        }
+                      },
+                      "required": [
+                        "origin"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "inheritedDefinition"
+                      ]
+                    }
+                  },
+                  {
+                    "if": {
+                      "properties": {
+                        "origin": {
+                          "not": {
+                            "const": "weapon-mid-setup"
+                          }
+                        }
+                      },
+                      "required": [
+                        "origin"
+                      ]
+                    },
+                    "then": {
+                      "not": {
+                        "required": [
+                          "inheritedDefinition"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "hierarchyRaw": {
+              "$ref": "#/$defs/w07RawSource"
+            },
+            "setupSources": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/w07RawSource"
+              }
+            }
+          }
+        },
+        "localActions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "action",
+              "startInput",
+              "rawSource",
+              "sourceRange"
+            ],
+            "properties": {
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "startInput": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/w07ActionInput"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "rawSource": {
+                "$ref": "#/$defs/w07RawSource"
+              },
+              "sourceRange": {
+                "$ref": "#/$defs/weaponCodeRangeLocator"
+              }
+            }
+          }
+        },
+        "fallbackActions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "action",
+              "origin",
+              "rawSource",
+              "sourceRange"
+            ],
+            "properties": {
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "const": "base-template-settings"
+              },
+              "rawSource": {
+                "$ref": "#/$defs/w07RawSource"
+              },
+              "sourceRange": {
+                "$ref": "#/$defs/weaponCodeRangeLocator"
+              }
+            }
+          }
+        },
+        "actionGenerators": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/w07ActionGenerator"
+          }
+        },
+        "generatorBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/w07GeneratorBinding"
+          }
+        },
+        "staticClosure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "localActionCount",
+            "fallbackActionCount",
+            "profileBindingCount",
+            "literalContinuationEdgeCount",
+            "generatedActionSettingsCount",
+            "generatedContinuationEdgeCount",
+            "inputEntryCount"
+          ],
+          "properties": {
+            "localActionCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "fallbackActionCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "profileBindingCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "literalContinuationEdgeCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "generatedActionSettingsCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "generatedContinuationEdgeCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "inputEntryCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "executionPolicy": {
+          "const": "static-only; functions not executed"
+        }
+      }
+    },
+    "w07ActionResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "startInput",
+        "inputBindings",
+        "entryBindings",
+        "branchBindings",
+        "runtimeConditions",
+        "targetApplicability"
+      ],
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": [
+            "weapon-template",
+            "base-template-settings"
+          ]
+        },
+        "startInput": {
+          "oneOf": [
+            { "$ref": "#/$defs/w07ActionInput" },
+            { "type": "null" }
+          ]
+        },
+        "inputBindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "inputKey",
+              "role",
+              "sourceLocator"
+            ],
+            "properties": {
+              "inputKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "start-input",
+                  "continuation"
+                ]
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        },
+        "entryBindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/actionContinuation"
+          }
+        },
+        "branchBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/attackProfileSourceBinding"
+          }
+        },
+        "runtimeConditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fieldPath",
+              "rawValue",
+              "sourceLocator",
+              "execution"
+            ],
+            "properties": {
+              "fieldPath": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              },
+              "execution": {
+                "const": "not-evaluated"
+              }
+            }
+          }
+        },
+        "targetApplicability": {
+          "const": "all-static-registry-minion-hit-schemas"
+        }
+      }
+    },
+    "w07StatTableSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statKey",
+        "groupKey",
+        "bindings"
+      ],
+      "properties": {
+        "statKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "groupKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "property",
+              "quantityKind",
+              "unit",
+              "consumerEvidence",
+              "theoreticalInputRange",
+              "obtainableInputRange"
+            ],
+            "properties": {
+              "property": {
+                "type": "string",
+                "minLength": 1
+              },
+              "quantityKind": {
+                "type": "string",
+                "enum": [
+                  "attack-power-distribution",
+                  "armor-damage-modifier",
+                  "stamina-capacity-addition",
+                  "stamina-cost-rate",
+                  "block-stamina-cost",
+                  "push-stamina-cost",
+                  "dodge-distance-scale",
+                  "dodge-distance-diminishing-return",
+                  "dodge-count-parameter",
+                  "dodge-speed-scale",
+                  "dodge-cooldown-seconds",
+                  "sprint-speed-addend",
+                  "normalized-speed-rate",
+                  "movement-curve-modifier",
+                  "finesse-boost-curve"
+                ]
+              },
+              "unit": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/unit"
+                  },
+                  {
+                    "$ref": "#/$defs/unknownValue"
+                  },
+                  {
+                    "$ref": "#/$defs/notApplicableValue"
+                  }
+                ]
+              },
+              "consumerEvidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/w07SourceEvidence"
+                }
+              },
+              "theoreticalInputRange": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/decimalRange"
+                  },
+                  {
+                    "$ref": "#/$defs/w07TraitRange"
+                  }
+                ]
+              },
+              "obtainableInputRange": {
+                "$ref": "#/$defs/decimalRange"
+              },
+              "curveMapping": {
+                "$ref": "#/$defs/w07CurveMapping"
+              }
+            }
+          }
+        }
+      }
+    },
+    "w07ArmorClassStatic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "classKey",
+        "enumRawValue",
+        "sourceLocator"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "armor-class-static/1"
+        },
+        "classKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enumRawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        }
+      }
+    },
+    "w07TargetStatic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "breedKey",
+        "breedType",
+        "registryLocator",
+        "registryRawValue",
+        "breedLocator",
+        "baseArmorClassRef",
+        "baseArmorRawValue",
+        "baseArmorLocator",
+        "rawHitZones",
+        "hitZones",
+        "weakspotTypes",
+        "armorOverrides",
+        "damageMultipliers",
+        "unresolvedZoneReferences"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "minion-hit-schema/1.0.0"
+        },
+        "breedKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "breedType": {
+          "const": "minion"
+        },
+        "registryLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        },
+        "registryRawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "breedLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        },
+        "baseArmorClassRef": {
+          "$ref": "#/$defs/recordRef"
+        },
+        "baseArmorRawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseArmorLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        },
+        "toughnessArmorClassRef": {
+          "$ref": "#/$defs/recordRef"
+        },
+        "toughnessArmorRawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "toughnessArmorLocator": {
+          "$ref": "#/$defs/weaponCodeLocator"
+        },
+        "rawHitZones": {
+          "$ref": "#/$defs/w07RawSource"
+        },
+        "hitZones": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "zoneId",
+              "rawSource",
+              "actors",
+              "actorsRawValue",
+              "actorsLocator",
+              "otherRawFields"
+            ],
+            "properties": {
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rawSource": {
+                "$ref": "#/$defs/w07RawSource"
+              },
+              "actors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "actorsRawValue": {
+                "type": "string"
+              },
+              "actorsLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              },
+              "otherRawFields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "fieldPath",
+                    "rawValue",
+                    "sourceLocator"
+                  ],
+                  "properties": {
+                    "fieldPath": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "rawValue": {
+                      "type": "string"
+                    },
+                    "sourceLocator": {
+                      "$ref": "#/$defs/weaponCodeLocator"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "weakspotTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "zoneId",
+              "weakspotType",
+              "rawValue",
+              "sourceLocator"
+            ],
+            "properties": {
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "weakspotType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        },
+        "armorOverrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "zoneId",
+              "armorClassRef",
+              "rawValue",
+              "sourceLocator"
+            ],
+            "properties": {
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "armorClassRef": {
+                "$ref": "#/$defs/recordRef"
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        },
+        "damageMultipliers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "attackType",
+              "zoneId",
+              "decimal",
+              "rawValue",
+              "sourceLocator"
+            ],
+            "properties": {
+              "attackType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "decimal": {
+                "$ref": "#/$defs/decimal"
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              },
+              "resolvedConstant": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "symbol",
+                  "decimal",
+                  "rawValue",
+                  "sourceLocator"
+                ],
+                "properties": {
+                  "symbol": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                  },
+                  "decimal": {
+                    "$ref": "#/$defs/decimal"
+                  },
+                  "rawValue": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceLocator": {
+                    "$ref": "#/$defs/weaponCodeLocator"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "unresolvedZoneReferences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fieldPath",
+              "zoneId",
+              "rawValue",
+              "sourceLocator"
+            ],
+            "properties": {
+              "fieldPath": {
+                "type": "string",
+                "enum": [
+                  "hit_zone_weakspot_types",
+                  "hitzone_armor_override",
+                  "hitzone_damage_multiplier"
+                ]
+              },
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        }
+      }
+    },
+    "w07ModifierSourceBranchModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "relationKey",
+        "sourceFunction",
+        "conditionRows",
+        "rawDependencies",
+        "havocOverrides",
+        "executionPolicy"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "static-combat-relations/1"
+        },
+        "relationKey": {
+          "type": "string",
+          "enum": [
+            "armor-type-resolution",
+            "weakspot-type-resolution",
+            "finesse-crit-boost"
+          ]
+        },
+        "sourceFunction": {
+          "$ref": "#/$defs/w07RawSource"
+        },
+        "conditionRows": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/w07RawSource"
+          }
+        },
+        "rawDependencies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/w07RawDependency"
+          }
+        },
+        "havocOverrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "zoneId",
+              "armorClassRef",
+              "rawValue",
+              "sourceLocator"
+            ],
+            "properties": {
+              "zoneId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "armorClassRef": {
+                "$ref": "#/$defs/recordRef"
+              },
+              "rawValue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
+              }
+            }
+          }
+        },
+        "executionPolicy": {
+          "const": "static-only"
+        }
+      }
+    },
+    "w07RawDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rawValue",
+        "sourceLocator"
+      ],
+      "properties": {
+        "rawValue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceLocator": {
+          "$ref": "#/$defs/weaponCodeRangeLocator"
+        }
+      }
+    },
     "weaponPayload": {
       "type": "object",
       "additionalProperties": false,
@@ -1060,6 +2685,19 @@
           "minItems": 1,
           "items": {
             "$ref": "#/$defs/weaponStatBinding"
+          }
+        },
+        "actionProfileResolution": {
+          "$ref": "#/$defs/w07ActionProfileResolution"
+        },
+        "panelPreviewRules": {
+          "$ref": "#/$defs/w07PanelPreviewRules"
+        },
+        "statTableSemantics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/w07StatTableSemantics"
           }
         },
         "displayedAttacks": {
@@ -1259,6 +2897,23 @@
             "$ref": "#/$defs/recordRef"
           }
         },
+        "armorClassRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/recordRef"
+          }
+        },
+        "modifierRuleRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/recordRef"
+          }
+        },
+        "actionResolution": {
+          "$ref": "#/$defs/w07ActionResolution"
+        },
         "weaponRef": {
           "$ref": "#/$defs/recordRef"
         },
@@ -1311,10 +2966,23 @@
           "$ref": "#/$defs/decimalRange"
         },
         "theoreticalInputRange": {
-          "$ref": "#/$defs/decimalRange"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/decimalRange"
+            },
+            {
+              "$ref": "#/$defs/w07TraitRange"
+            }
+          ]
         },
         "obtainableInputRange": {
           "$ref": "#/$defs/decimalRange"
+        },
+        "rangeEvidence": {
+          "$ref": "#/$defs/w07RangeEvidence"
+        },
+        "curveMapping": {
+          "$ref": "#/$defs/w07CurveMapping"
         },
         "curveRef": {
           "$ref": "#/$defs/recordRef"
@@ -1360,15 +3028,80 @@
               },
               "output": {
                 "$ref": "#/$defs/decimal"
+              },
+              "sourceOrdinal": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "rawEndpoint": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sourceLocator": {
+                "$ref": "#/$defs/weaponCodeLocator"
               }
             }
           }
         },
         "interpolation": {
-          "$ref": "#/$defs/policyValue"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/policyValue"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "sourceLocator"
+              ],
+              "properties": {
+                "value": {
+                  "const": "linear"
+                },
+                "sourceLocator": {
+                  "$ref": "#/$defs/weaponCodeLocator"
+                }
+              }
+            }
+          ]
         },
         "edgePolicy": {
-          "$ref": "#/$defs/policyValue"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/policyValue"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "scope",
+                "sourceLocator"
+              ],
+              "properties": {
+                "value": {
+                  "const": "extrapolate"
+                },
+                "scope": {
+                  "const": "math.lerp function only"
+                },
+                "sourceLocator": {
+                  "$ref": "#/$defs/weaponCodeLocator"
+                }
+              }
+            }
+          ]
+        },
+        "panelInputRange": {
+          "$ref": "#/$defs/notApplicableValue"
+        },
+        "callsiteLocators": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/weaponCodeLocator"
+          }
         }
       }
     },
@@ -1507,9 +3240,30 @@
     "armorClassPayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "classKey",
-        "damageTypes"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classKey",
+            "damageTypes"
+          ],
+          "properties": {
+            "classKey": { "type": "string", "minLength": 1 },
+            "classificationRef": { "$ref": "#/$defs/recordRef" },
+            "damageTypes": { "$ref": "#/$defs/armorClassPayload/properties/damageTypes" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceStatic"
+          ],
+          "properties": {
+            "sourceStatic": { "$ref": "#/$defs/w07ArmorClassStatic" }
+          }
+        }
       ],
       "properties": {
         "classKey": {
@@ -1539,15 +3293,38 @@
               }
             }
           }
+        },
+        "sourceStatic": {
+          "$ref": "#/$defs/w07ArmorClassStatic"
         }
       }
     },
     "targetProfilePayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "profileKey",
-        "hitZones"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profileKey",
+            "hitZones"
+          ],
+          "properties": {
+            "profileKey": { "type": "string", "minLength": 1 },
+            "hitZones": { "$ref": "#/$defs/targetProfilePayload/properties/hitZones" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceStatic"
+          ],
+          "properties": {
+            "sourceStatic": { "$ref": "#/$defs/w07TargetStatic" }
+          }
+        }
       ],
       "properties": {
         "profileKey": {
@@ -1607,18 +3384,50 @@
               }
             }
           }
+        },
+        "sourceStatic": {
+          "$ref": "#/$defs/w07TargetStatic"
         }
       }
     },
     "modifierRulePayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "ruleKey",
-        "triggerText",
-        "operation",
-        "stackingGroup",
-        "evidenceRefs"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ruleKey",
+            "triggerText",
+            "operation",
+            "stackingGroup",
+            "evidenceRefs"
+          ],
+          "properties": {
+            "ruleKey": { "type": "string", "minLength": 1 },
+            "triggerText": { "type": "string", "minLength": 1 },
+            "operation": { "type": "string", "enum": ["add", "multiply", "override", "conditional", "unknown"] },
+            "exclusions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+            "stackingGroup": { "type": "string", "minLength": 1 },
+            "cap": { "$ref": "#/$defs/typedValue" },
+            "duration": { "$ref": "#/$defs/typedValue" },
+            "expiryText": { "type": "string", "minLength": 1 },
+            "roundingText": { "type": "string", "minLength": 1 },
+            "clampText": { "type": "string", "minLength": 1 },
+            "evidenceRefs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/recordRef" } }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sourceBranchModel"
+          ],
+          "properties": {
+            "sourceBranchModel": { "$ref": "#/$defs/w07ModifierSourceBranchModel" }
+          }
+        }
       ],
       "properties": {
         "ruleKey": {
@@ -1674,6 +3483,9 @@
           "items": {
             "$ref": "#/$defs/recordRef"
           }
+        },
+        "sourceBranchModel": {
+          "$ref": "#/$defs/w07ModifierSourceBranchModel"
         }
       }
     },
@@ -2815,6 +4627,97 @@
         }
       }
     },
+    "w07BoostCurveSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "referenceAxis",
+        "knots",
+        "interpolation",
+        "callerInput"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "w07-boost-curve-semantics/1.0.0"
+        },
+        "referenceAxis": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max",
+            "minInclusive",
+            "maxInclusive",
+            "unit",
+            "sourceLocators"
+          ],
+          "properties": {
+            "min": { "type": "string", "pattern": "^-?\\d+(?:\\.\\d+)?$" },
+            "max": { "type": "string", "pattern": "^-?\\d+(?:\\.\\d+)?$" },
+            "minInclusive": { "type": "boolean" },
+            "maxInclusive": { "type": "boolean" },
+            "unit": { "const": "ratio" },
+            "sourceLocators": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/weaponCodeRangeLocator" }
+            }
+          }
+        },
+        "knots": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceOrdinal", "input"],
+            "properties": {
+              "sourceOrdinal": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "input": { "type": "string", "pattern": "^-?\\d+(?:\\.\\d+)?$" }
+            }
+          }
+        },
+        "interpolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "sourceLocator"],
+          "properties": {
+            "value": { "type": "string", "minLength": 1 },
+            "sourceLocator": { "$ref": "#/$defs/weaponCodeRangeLocator" }
+          }
+        },
+        "callerInput": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "minInclusive",
+            "max",
+            "maxInclusive",
+            "unit",
+            "predicate",
+            "transform",
+            "sourceLocators"
+          ],
+          "properties": {
+            "min": { "type": "string", "pattern": "^-?\\d+(?:\\.\\d+)?$" },
+            "minInclusive": { "type": "boolean" },
+            "max": { "type": "string", "pattern": "^-?\\d+(?:\\.\\d+)?$" },
+            "maxInclusive": { "type": "boolean" },
+            "unit": { "const": "ratio" },
+            "predicate": { "type": "string", "minLength": 1 },
+            "transform": { "type": "string", "minLength": 1 },
+            "sourceLocators": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/weaponCodeRangeLocator" }
+            }
+          }
+        }
+      }
+    },
     "rawFactTable": {
       "type": "object",
       "additionalProperties": false,
@@ -2853,6 +4756,9 @@
           "items": {
             "$ref": "#/$defs/rawTablePoint"
           }
+        },
+        "curveSemantics": {
+          "$ref": "#/$defs/w07BoostCurveSemantics"
         }
       }
     },
@@ -2877,6 +4783,9 @@
             },
             {
               "$ref": "#/$defs/unknownValue"
+            },
+            {
+              "$ref": "#/$defs/notApplicableValue"
             }
           ]
         },

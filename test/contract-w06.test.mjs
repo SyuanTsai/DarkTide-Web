@@ -22,7 +22,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 test('UnitT70_w06-loads-real-source-pin-and-valid-nonfixture-candidate', async () => {
   const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
   assert.equal(inputs.mode, 'w06');
-  assert.equal(inputs.sourceLock.commit, 'f5514e4361d09361d9621e885082b7b5c51d1c95');
+  assert.equal(inputs.sourceLock.commit, 'f22b4ae2e1d3b4887f3741464e3c9bf507399db6');
   assert.equal(inputs.authoring.fixtureOnly, false);
   assert.equal(inputs.authoring.publicationEligible, false);
   assert.equal(inputs.authoring.sourcePin.dataSha256, inputs.sourceLock.files.data.sha256);

@@ -13,10 +13,11 @@ export const CONTRACT_RECORD_KINDS = Object.freeze([
 ]);
 export const CONTRACT_UNITS = Object.freeze([
   'ratio', 'percent', 's', 'm', 'damage', 'impact', 'point', 'rating',
-  'attack-power-point', 'stamina-point', 'stamina-point-per-second', 'dodge-count', 'instance-count'
+  'attack-power-point', 'stamina-point', 'stamina-point-per-second', 'dodge-count', 'instance-count',
+  'normalized-speed-per-second', 'item-stat-rating', 'expertise-level', 'expertise-level-per-rank'
 ]);
 export const CONTRACT_UNKNOWN_REASONS = Object.freeze([
-  'NOT_VERIFIED', 'SOURCE_UNAVAILABLE', 'CONFLICTING_EVIDENCE', 'NOT_EXPOSED_BY_SOURCE'
+  'NOT_VERIFIED', 'SOURCE_UNAVAILABLE', 'CONFLICTING_EVIDENCE', 'NOT_EXPOSED_BY_SOURCE', 'CALLER_DOMAIN_NOT_PROVEN'
 ]);
 
 const KIND_PAYLOADS = Object.freeze({
@@ -64,7 +65,10 @@ const REF_EXPECTED_KINDS = Object.freeze({
   predecessorRef: new Set(['weapon']), supersedesChangeRef: new Set(['game-change']), parentRef: new Set(['classification']),
   weaponRef: new Set(['weapon']), attackProfileRef: new Set(['attack-profile']), targetProfileRef: new Set(['target-profile']),
   damageProfileRef: new Set(['damage-profile']), profileRef: new Set(['damage-profile']), parentProfileRef: new Set(['damage-profile']),
-  armorClassRef: new Set(['armor-class']), variantRef: new Set(['blessing-variant']), talentRefs: new Set(['skill']),
+  armorClassRef: new Set(['armor-class']), armorClassRefs: new Set(['armor-class']),
+  baseArmorClassRef: new Set(['armor-class']), toughnessArmorClassRef: new Set(['armor-class']),
+  armorRuleRefs: new Set(['modifier-rule']), weakspotRuleRefs: new Set(['modifier-rule']),
+  critFinesseRuleRefs: new Set(['modifier-rule']), variantRef: new Set(['blessing-variant']), talentRefs: new Set(['skill']),
   blessingVariantRefs: new Set(['blessing-variant']), modifierRuleRefs: new Set(['modifier-rule']), statRef: new Set(['stat-definition'])
 });
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -659,9 +663,9 @@ function validateNumericPayload(record, base, issues, recordMap) {
     if (curve && curve.kind === 'stat-curve' && (curve.payload.inputUnit !== payload.inputUnit || curve.payload.outputUnit !== payload.outputUnit)) issues.push({ path: `${base}/payload/curveRef`, code: 'curve-unit-mismatch', message: 'Stat definition and referenced curve units must agree' });
   }
   if (record.kind === 'armor-class') {
-    payload.damageTypes.forEach((entry, index) => {
+    for (const [index, entry] of (payload.damageTypes ?? []).entries()) {
       if (entry.multiplier.status === 'known' && !['ratio', 'percent'].includes(entry.multiplier.unit)) issues.push({ path: `${base}/payload/damageTypes/${index}/multiplier/unit`, code: 'armor-multiplier-unit', message: 'Armor multipliers must use ratio or percent' });
-    });
+    }
   }
   if (record.kind === 'blessing-variant') {
     const defined = new Set(payload.definedTiers);
@@ -675,7 +679,7 @@ function validateNumericPayload(record, base, issues, recordMap) {
       values.add(tierValue.tier);
     }
   }
-  if (record.kind === 'target-profile') {
+  if (record.kind === 'target-profile' && Array.isArray(payload.hitZones)) {
     for (const [zoneIndex, zone] of payload.hitZones.entries()) {
       const pairs = new Set();
       for (const [multiplierIndex, multiplier] of zone.damageMultipliers.entries()) {
@@ -734,20 +738,641 @@ function validateW07SourceLocators(record, sourceMap, issues) {
   const visit = (value, pointer) => {
     if (!value || typeof value !== "object") return;
     if (Array.isArray(value)) { value.forEach((child, index) => visit(child, pointer + "/" + index)); return; }
-    const locator = value.sourceLocator;
-    if (locator && locator.sourceRef && locator.path) {
+    if (value.sourceRef && typeof value.path === 'string' && Number.isInteger(value.line)) {
+      const locator = value;
       const key = locator.sourceRef.gameReleaseId + "\u0000" + locator.sourceRef.sourceId;
       const source = sourceMap.get(key);
-      if (source && (locator.sourceRef.gameReleaseId !== record.gameReleaseId || source.sourceKind !== "public-code" || source.path !== locator.path)) {
-        issues.push({ path: pointer + "/sourceLocator", code: "w07-locator-provenance", message: "W07 source locators must match a same-release public-code source path" });
+      if (!source || locator.sourceRef.gameReleaseId !== record.gameReleaseId || source.sourceKind !== "public-code" || source.path !== locator.path) {
+        issues.push({ path: pointer, code: "w07-locator-provenance", message: "W07 source locators must match a same-release public-code source path" });
       }
-      if (source && !record.sourceRefs.some((link) => link.sourceId === locator.sourceRef.sourceId && link.gameReleaseId === locator.sourceRef.gameReleaseId)) {
-        issues.push({ path: pointer + "/sourceLocator/sourceRef", code: "w07-locator-unlisted", message: "W07 source locator must also appear in the record sourceRefs" });
+      if (!record.sourceRefs.some((link) => link.sourceId === locator.sourceRef.sourceId && link.gameReleaseId === locator.sourceRef.gameReleaseId)) {
+        issues.push({ path: pointer + "/sourceRef", code: "w07-locator-unlisted", message: "W07 source locator must also appear in the record sourceRefs" });
+      }
+      if (locator.endLine !== undefined && locator.endLine < locator.line) {
+        issues.push({ path: pointer + "/endLine", code: "w07-locator-line-range", message: "A source locator endLine cannot precede its line" });
       }
     }
     for (const [key, child] of Object.entries(value)) visit(child, pointer + "/" + pointerEscape(key));
   };
   visit(record.payload, "/records/" + record.recordId + "/payload");
+}
+function validateW07CurveMapping(mapping, pointer, issues, expectedTraitRange) {
+  if (!mapping) return;
+  const outerItemRating = mapping.outerItemRating;
+  if (outerItemRating.quantityKind !== "normalized-item-stat-value" || outerItemRating.unit !== "ratio"
+    || outerItemRating.panelComparisonRange?.min !== "0" || outerItemRating.panelComparisonRange?.max !== "1"
+    || outerItemRating.panelComparisonRange?.scope !== "comparison-metadata-only"
+    || outerItemRating.obtainableRange?.status !== "unknown"
+    || outerItemRating.obtainableRange?.reasonCode !== "NOT_EXPOSED_BY_SOURCE") {
+    issues.push({ path: pointer + "/outerItemRating", code: "w07-item-rating-range", message: "The normalized item value, comparison metadata and unexposed server range must remain distinct" });
+  }
+  const traitRange = mapping.traitParameter.range;
+  if (traitRange.unit !== "ratio" || traitRange.inclusive?.min !== true || traitRange.inclusive?.max !== true
+    || compareDecimal(traitRange.min, traitRange.max) > 0) {
+    issues.push({ path: pointer + "/traitParameter/range", code: "w07-trait-parameter-range", message: "Trait parameter t must retain an ordered inclusive ratio interval" });
+  }
+  if (expectedTraitRange && !jsonEqual(traitRange, expectedTraitRange)) {
+    issues.push({ path: pointer + "/traitParameter/range", code: "w07-trait-parameter-binding", message: "Curve mapping trait t range must match its owning Source trait binding" });
+  }
+  const profile = mapping.rawProfileParameter;
+  if (profile.callerDomain.status !== "unknown" || profile.callerDomain.reasonCode !== "CALLER_DOMAIN_NOT_PROVEN") {
+    issues.push({ path: pointer + "/rawProfileParameter/callerDomain", code: "w07-profile-caller-domain", message: "The call-site domain must remain explicitly unproven" });
+  }
+  const selectedPath = profile.selectedWeaponTweakPath;
+  if (selectedPath?.status !== 'known' || selectedPath.accumulatorRange?.min !== '0'
+    || selectedPath.accumulatorRange?.max !== '1' || selectedPath.accumulatorRange?.unit !== 'ratio'
+    || selectedPath.accumulatorRange?.inclusive?.min !== true || selectedPath.accumulatorRange?.inclusive?.max !== true
+    || selectedPath.fallbacks?.emptyPath !== '0' || selectedPath.fallbacks?.defaultTraitValue !== '0.5'
+    || selectedPath.fallbacks?.defaultProfileLerpValue !== '0.5') {
+    issues.push({ path: pointer + '/rawProfileParameter/selectedWeaponTweakPath', code: 'w07-selected-tweak-domain', message: 'Only the selected-weapon tweak accumulation path has the proven clamped normalized t interval and fixed fallback values' });
+  }
+}
+
+function validateW07StaticTarget(record, base, recordMap, issues) {
+  const sourceStatic = record.payload.sourceStatic;
+  if (!sourceStatic) return;
+  const zoneIds = new Set();
+  for (const [zoneIndex, zone] of (sourceStatic.hitZones ?? []).entries()) {
+    if (zoneIds.has(zone.zoneId)) {
+      issues.push({ path: `${base}/sourceStatic/hitZones/${zoneIndex}/zoneId`, code: "w07-target-zone-duplicate", message: "W07 static hit-zone identities must be unique within a target profile" });
+    }
+    zoneIds.add(zone.zoneId);
+  }
+  const armorRef = sourceStatic.baseArmorClassRef;
+  const armor = armorRef && recordMap.get(recordKey(armorRef.recordId, armorRef.gameReleaseId));
+  if (!armor || armor.kind !== "armor-class" || armor.gameReleaseId !== record.gameReleaseId) {
+    issues.push({ path: `${base}/sourceStatic/baseArmorClassRef`, code: "w07-target-base-armor-binding", message: "A W07 target base armor reference must resolve to a same-release typed armor-class record" });
+  } else if (sourceStatic.baseArmorRawValue !== `armor_types.${armor.payload.sourceStatic?.classKey}`) {
+    issues.push({ path: `${base}/sourceStatic/baseArmorRawValue`, code: "w07-target-base-armor-value", message: "The target base armor raw value must match the exact armor_types access token for its typed armor identity" });
+  }
+  const toughnessFields = ["toughnessArmorClassRef", "toughnessArmorRawValue", "toughnessArmorLocator"].filter((field) => hasOwn(sourceStatic, field));
+  if (toughnessFields.length !== 0 && toughnessFields.length !== 3) {
+    issues.push({ path: `${base}/sourceStatic`, code: "w07-target-toughness-armor-pair", message: "Toughness armor reference, raw value and locator must be supplied together" });
+  }
+  if (sourceStatic.toughnessArmorClassRef) {
+    validateW07StaticArmorReference(sourceStatic.toughnessArmorClassRef, sourceStatic.toughnessArmorRawValue, record,
+      recordMap, `${base}/sourceStatic/toughnessArmorClassRef`, issues);
+  }
+  const unresolvedRows = sourceStatic.unresolvedZoneReferences ?? [];
+  const mappingRows = [
+    ['hit_zone_weakspot_types', sourceStatic.weakspotTypes ?? []],
+    ['hitzone_armor_override', sourceStatic.armorOverrides ?? []],
+    ['hitzone_damage_multiplier', sourceStatic.damageMultipliers ?? []]
+  ].flatMap(([fieldPath, rows]) => rows.map((row) => ({ fieldPath, row })));
+  const unresolvedIdentity = (fieldPath, row) => ({
+    fieldPath,
+    zoneId: row.zoneId,
+    rawValue: row.rawValue,
+    sourceLocator: row.sourceLocator
+  });
+  for (const [listName, rows] of [["weakspotTypes", sourceStatic.weakspotTypes ?? []], ["armorOverrides", sourceStatic.armorOverrides ?? []], ["damageMultipliers", sourceStatic.damageMultipliers ?? []]]) {
+    for (const [rowIndex, row] of rows.entries()) {
+      if (listName === 'armorOverrides') {
+        validateW07StaticArmorReference(row.armorClassRef, row.rawValue, record, recordMap,
+          `${base}/sourceStatic/${listName}/${rowIndex}/armorClassRef`, issues);
+      }
+      if (listName === 'damageMultipliers' && /^-?\d+(?:\.\d+)?$/u.test(row.rawValue)
+        && compareDecimal(row.rawValue, row.decimal) !== 0) {
+        issues.push({ path: `${base}/sourceStatic/${listName}/${rowIndex}/decimal`, code: 'w07-target-multiplier-value', message: 'A typed hit-zone multiplier must preserve its exact numeric source value' });
+      }
+      if (listName === 'damageMultipliers') {
+        const numericRawValue = /^-?\d+(?:\.\d+)?$/u.test(row.rawValue);
+        if (numericRawValue && row.resolvedConstant !== undefined) {
+          issues.push({ path: `${base}/sourceStatic/${listName}/${rowIndex}/resolvedConstant`, code: 'w07-target-multiplier-constant-shape', message: 'A numeric multiplier use must not carry a local-constant resolution' });
+        }
+        if (!numericRawValue) {
+          const resolved = row.resolvedConstant;
+          const declaration = typeof resolved?.rawValue === 'string'
+            ? resolved.rawValue.match(/^\s*local\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/u)
+            : null;
+          const useLocator = row.sourceLocator;
+          const declarationLocator = resolved?.sourceLocator;
+          const sameSourceFile = useLocator && declarationLocator
+            && useLocator.path === declarationLocator.path
+            && useLocator.sourceRef?.sourceId === declarationLocator.sourceRef?.sourceId
+            && useLocator.sourceRef?.gameReleaseId === declarationLocator.sourceRef?.gameReleaseId;
+          if (!/^[A-Za-z_][A-Za-z0-9_]*$/u.test(row.rawValue)
+            || !resolved || resolved.symbol !== row.rawValue
+            || !declaration || declaration[1] !== row.rawValue
+            || compareDecimal(declaration[2], resolved.decimal) !== 0
+            || compareDecimal(resolved.decimal, row.decimal) !== 0
+            || !sameSourceFile) {
+            issues.push({ path: `${base}/sourceStatic/${listName}/${rowIndex}/resolvedConstant`, code: 'w07-target-multiplier-constant', message: 'A symbolic multiplier must retain the exact same-file local decimal declaration and typed value' });
+          }
+        }
+      }
+      if (!zoneIds.has(row.zoneId)) {
+        const sourceField = listName === "weakspotTypes" ? "hit_zone_weakspot_types"
+          : listName === "armorOverrides" ? "hitzone_armor_override" : "hitzone_damage_multiplier";
+        const expected = unresolvedIdentity(sourceField, row);
+        const matches = unresolvedRows.filter((unresolved) => jsonEqual(unresolved, expected));
+        if (matches.length !== 1) {
+          issues.push({ path: `${base}/sourceStatic/${listName}/${rowIndex}`, code: "w07-target-zone-binding", message: "Every orphan mapping must have exactly one unresolved row matching its field, zone, raw value and complete source locator" });
+        }
+      }
+    }
+  }
+  const seenUnresolved = new Set();
+  for (const [index, unresolved] of unresolvedRows.entries()) {
+    if (zoneIds.has(unresolved.zoneId)) {
+      issues.push({ path: `${base}/sourceStatic/unresolvedZoneReferences/${index}/zoneId`, code: "w07-target-unresolved-zone", message: "A declared hit-zone must not also be marked unresolved" });
+    }
+    const identity = JSON.stringify(canonical(unresolved));
+    if (seenUnresolved.has(identity)) {
+      issues.push({ path: `${base}/sourceStatic/unresolvedZoneReferences/${index}`, code: 'w07-target-unresolved-duplicate', message: 'Unresolved zone references must be unique by exact raw row identity' });
+    }
+    seenUnresolved.add(identity);
+    const matches = mappingRows.filter(({ fieldPath, row }) => jsonEqual(unresolved, unresolvedIdentity(fieldPath, row)));
+    if (matches.length !== 1) {
+      issues.push({ path: `${base}/sourceStatic/unresolvedZoneReferences/${index}`, code: 'w07-target-unresolved-map-binding', message: 'Each unresolved zone row must match exactly one typed raw mapping row' });
+    }
+  }
+}
+
+function typedRefKey(ref) {
+  return ref && typeof ref.recordId === 'string' && typeof ref.gameReleaseId === 'string'
+    ? recordKey(ref.recordId, ref.gameReleaseId)
+    : '';
+}
+
+function canonicalActionInputKey(inputKey) {
+  return typeof inputKey === 'string' ? inputKey.split('.', 1)[0] : '';
+}
+
+function validateW07RefClosure(actualRefs, expectedRefs, pointer, codePrefix, releaseId, issues) {
+  const refs = Array.isArray(actualRefs) ? actualRefs : [];
+  const keys = refs.map(typedRefKey);
+  if (keys.some((key) => !key) || refs.some((ref) => ref.gameReleaseId !== releaseId) || new Set(keys).size !== keys.length) {
+    issues.push({ path: pointer, code: `${codePrefix}-duplicate`, message: 'W07 closure references must be valid, same-release and unique before set comparison' });
+  }
+  const expectedKeys = [...new Set(expectedRefs.map(typedRefKey))].sort();
+  if (JSON.stringify([...new Set(keys)].sort()) !== JSON.stringify(expectedKeys)) {
+    issues.push({ path: pointer, code: `${codePrefix}-closure`, message: 'Same-release W07 references must match the complete source-static closure' });
+  }
+}
+
+function validateW07StaticArmorReference(ref, rawValue, record, recordMap, pointer, issues, tokenStyle = 'armor-types') {
+  const target = ref && recordMap.get(typedRefKey(ref));
+  const expectedRaw = target?.payload?.sourceStatic?.classKey;
+  const rawMatches = tokenStyle === 'quoted-class'
+    ? rawValue === JSON.stringify(expectedRaw)
+    : rawValue === `armor_types.${expectedRaw}`;
+  if (!target || target.kind !== 'armor-class' || target.gameReleaseId !== record.gameReleaseId
+    || !expectedRaw || !rawMatches) {
+    issues.push({ path: pointer, code: 'w07-static-armor-reference', message: tokenStyle === 'quoted-class'
+      ? 'A Havoc override must resolve to a same-release armor-class record and preserve its exact quoted class-key token'
+      : 'A static armor reference must resolve to a same-release armor-class record and preserve its exact armor_types access token' });
+  }
+}
+
+function validateW07ModifierRule(record, base, recordMap, issues) {
+  const model = record.payload.sourceBranchModel;
+  if (!model) return;
+  const requiredDependencies = {
+    'armor-type-resolution': [
+      ['scripts/utilities/attack/armor.lua', 25, 74],
+      ['scripts/settings/havoc/havoc_mutator_local_settings.lua', 514, 525]
+    ],
+    'weakspot-type-resolution': [
+      ['scripts/utilities/attack/weakspot.lua', 9, 44],
+      ['scripts/settings/damage/weakspot_settings.lua', 4, 27]
+    ],
+    'finesse-crit-boost': [
+      ['scripts/utilities/attack/damage_calculation.lua', 672, 785],
+      ['scripts/settings/damage/weakspot_settings.lua', 4, 27],
+      ['scripts/settings/damage/power_level_settings.lua', 142, 151],
+      ['scripts/settings/damage/power_level_settings.lua', 172, 194],
+      ['scripts/settings/damage/power_level_settings.lua', 123, 137],
+      ['scripts/utilities/attack/damage_calculation.lua', 208, 217],
+      ['scripts/utilities/attack/damage_calculation.lua', 700, 704],
+      ['scripts/utilities/attack/damage_calculation.lua', 795, 834]
+    ]
+  }[model.relationKey] ?? [];
+  const dependencies = model.rawDependencies ?? [];
+  const coversLines = (path, firstLine, lastLine) => {
+    const spans = dependencies
+      .filter(({ sourceLocator }) => sourceLocator.path === path)
+      .map(({ sourceLocator }) => ({ start: sourceLocator.line, end: sourceLocator.endLine }))
+      .sort((left, right) => left.start - right.start || left.end - right.end);
+    let nextLine = firstLine;
+    for (const span of spans) {
+      if (span.end < nextLine) continue;
+      if (span.start > nextLine) break;
+      nextLine = Math.max(nextLine, span.end + 1);
+      if (nextLine > lastLine) return true;
+    }
+    return false;
+  };
+  for (const [path, firstLine, lastLine] of requiredDependencies) {
+    if (!coversLines(path, firstLine, lastLine)) {
+      issues.push({ path: base + '/sourceBranchModel/rawDependencies', code: 'w07-modifier-dependency-coverage', message: 'The ' + model.relationKey + ' relation must retain complete raw line coverage for ' + path + ':' + firstLine + '-' + lastLine });
+    }
+  }
+  const expectedHavocOverrides = model.relationKey === 'armor-type-resolution' ? 10 : 0;
+  if ((model.havocOverrides ?? []).length !== expectedHavocOverrides) {
+    issues.push({ path: `${base}/sourceBranchModel/havocOverrides`, code: 'w07-modifier-havoc-coverage', message: `The ${model.relationKey} relation must retain exactly ${expectedHavocOverrides} pinned Havoc override rows` });
+  }
+  const seenDependencies = new Set();
+  for (const [index, dependency] of dependencies.entries()) {
+    const identity = JSON.stringify(canonical(dependency));
+    if (seenDependencies.has(identity)) {
+      issues.push({ path: `${base}/sourceBranchModel/rawDependencies/${index}`, code: 'w07-modifier-dependency-duplicate', message: 'Raw dependencies must be unique by exact source locator and raw value' });
+    }
+    seenDependencies.add(identity);
+  }
+  const seen = new Set();
+  for (const [index, override] of (model.havocOverrides ?? []).entries()) {
+    const key = `${override.zoneId}\u0000${typedRefKey(override.armorClassRef)}`;
+    if (seen.has(key)) {
+      issues.push({ path: `${base}/sourceBranchModel/havocOverrides/${index}`, code: 'w07-modifier-override-duplicate', message: 'Static havoc overrides must be unique by zone and armor class' });
+    }
+    seen.add(key);
+    validateW07StaticArmorReference(override.armorClassRef, override.rawValue, record, recordMap,
+      `${base}/sourceBranchModel/havocOverrides/${index}/armorClassRef`, issues, 'quoted-class');
+  }
+}
+
+function validateW07PanelPreviewRules(record, base, issues) {
+  const rules = record.payload.panelPreviewRules;
+  if (!rules) return;
+  const expected = [
+    ['perStatIncrementCap', '0.8', 'ratio'],
+    ['itemBudget', '380', 'item-stat-rating'],
+    ['expertiseBudget.expertiseMultiplier', '10', 'expertise-level-per-rank'],
+    ['expertiseBudget.maxExpertise', '500', 'expertise-level'],
+    ['displayCap', '100', 'percent']
+  ];
+  for (const [fieldPath, decimal, unit] of expected) {
+    const value = fieldPath.split('.').reduce((current, key) => current?.[key], rules);
+    if (value?.decimal !== decimal || value?.unit !== unit) {
+      issues.push({ path: base + '/panelPreviewRules/' + fieldPath.replaceAll('.', '/'), code: 'w07-panel-preview-value', message: 'The client preview ' + fieldPath + ' must retain its pinned value and unit' });
+    }
+  }
+  const branchKeys = (rules.conditionalBranches ?? []).map((branch) => branch.key);
+  if (new Set(branchKeys).size !== 2 || !branchKeys.includes('no-current-item-total') || !branchKeys.includes('current-item-total-present')) {
+    issues.push({ path: base + '/panelPreviewRules/conditionalBranches', code: 'w07-panel-preview-branches', message: 'Both mutually distinct preview allocation branches must be represented' });
+  }
+  if (rules.expertiseBudget?.formula !== 'expertise_increase / expertise_multiplier * 6'
+    || rules.expertiseBudget?.capByRemainingItemBudget !== true || rules.expertiseBudget?.lowerBound !== '0'
+    || !rules.perStatIncrementCap?.override?.panelCaller
+    || rules.perStatIncrementCap.override.fieldPath !== 'Items.preview_stats_change.max_stat_value') {
+    issues.push({ path: base + '/panelPreviewRules', code: 'w07-panel-preview-allocation', message: 'Conditional preview defaults and caller override must remain explicit' });
+  }
+  if (rules.obtainableRange?.status !== 'unknown' || rules.obtainableRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE') {
+    issues.push({ path: `${base}/panelPreviewRules/obtainableRange`, code: 'w07-panel-preview-obtainable-range', message: 'Client preview defaults do not establish an obtainable game-side range' });
+  }
+}
+
+function validateW07ActionResolution(record, base, recordMap, contract, issues) {
+  const payload = record.payload;
+  const resolution = payload.actionResolution;
+  if (!resolution) return;
+  if (!jsonEqual(resolution.branchBindings, payload.sourceBindings ?? [])) {
+    issues.push({ path: `${base}/actionResolution/branchBindings`, code: 'w07-action-branch-binding', message: 'Static action branches must exactly preserve their typed sourceBindings' });
+  }
+  const weapon = payload.weaponRef && recordMap.get(typedRefKey(payload.weaponRef));
+  const weaponResolution = weapon?.payload?.actionProfileResolution;
+  if (!weapon || weapon.kind !== 'weapon' || weapon.gameReleaseId !== record.gameReleaseId || !weaponResolution) {
+    issues.push({ path: `${base}/weaponRef`, code: 'w07-action-weapon-resolution', message: 'A W07 action resolution must resolve to its same-release weapon resolution record' });
+    return;
+  }
+  const local = (weaponResolution.localActions ?? []).find((item) => item.action === payload.action);
+  const fallback = (weaponResolution.fallbackActions ?? []).find((item) => item.action === payload.action);
+  const actionRow = local ?? fallback;
+  const expectedOrigin = local ? 'weapon-template' : fallback ? 'base-template-settings' : undefined;
+  const expectedStartInput = actionRow?.startInput ?? null;
+  if (!actionRow || resolution.origin !== expectedOrigin
+    || !jsonEqual(resolution.startInput, expectedStartInput)) {
+    issues.push({ path: `${base}/actionResolution/startInput`, code: 'w07-action-start-input-binding', message: 'The action start input and origin must match the owning weapon static action row' });
+    return;
+  }
+  const declaredInputs = new Set((weaponResolution.inputSetup?.inputEntries ?? [])
+    .map((entry) => canonicalActionInputKey(entry.inputKey)));
+  const checkInput = (inputKey, pointer) => {
+    if (!declaredInputs.has(canonicalActionInputKey(inputKey))) {
+      issues.push({ path: pointer, code: 'w07-action-input-unknown', message: 'Every action input key must resolve to an entry in the owning weapon input setup' });
+    }
+  };
+  if (resolution.startInput) checkInput(resolution.startInput.inputKey, `${base}/actionResolution/startInput/inputKey`);
+  const startInputs = (resolution.inputBindings ?? []).filter((binding) => binding.role === 'start-input');
+  const expectedStartBindingCount = resolution.startInput ? 1 : 0;
+  if (startInputs.length !== expectedStartBindingCount
+    || (resolution.startInput && startInputs[0]?.inputKey !== resolution.startInput.inputKey)) {
+    issues.push({ path: `${base}/actionResolution/inputBindings`, code: 'w07-action-input-binding', message: 'Exactly one input binding must identify the resolved start input' });
+  }
+  const continuationKeys = new Set((payload.continuations ?? []).map((item) => item.inputKey));
+  const resolvedContinuationKeys = (resolution.inputBindings ?? []).filter((binding) => binding.role === 'continuation').map((binding) => binding.inputKey);
+  if (new Set(resolvedContinuationKeys).size !== resolvedContinuationKeys.length
+    || continuationKeys.size !== resolvedContinuationKeys.length
+    || [...continuationKeys].some((key) => !resolvedContinuationKeys.includes(key))) {
+    issues.push({ path: `${base}/actionResolution/inputBindings`, code: 'w07-action-continuation-binding', message: 'Continuation inputs must match the action continuation rows without duplicates' });
+  }
+  for (const [index, binding] of (resolution.inputBindings ?? []).entries()) {
+    checkInput(binding.inputKey, `${base}/actionResolution/inputBindings/${index}/inputKey`);
+  }
+  const expectedEntryBindings = (weapon.payload.actionContinuations ?? []).filter((edge) => edge.toAction === payload.action);
+  if (!jsonEqual(resolution.entryBindings, expectedEntryBindings)) {
+    issues.push({ path: `${base}/actionResolution/entryBindings`, code: 'w07-action-entry-binding', message: 'Action entry bindings must preserve every exact ordered incoming weapon continuation row' });
+  }
+  for (const [index, binding] of (resolution.entryBindings ?? []).entries()) {
+    checkInput(binding.inputKey, `${base}/actionResolution/entryBindings/${index}/inputKey`);
+  }
+
+  const staticTargets = contract.records.filter((item) => item.kind === 'target-profile'
+    && item.gameReleaseId === record.gameReleaseId && item.payload.sourceStatic?.breedType === 'minion');
+  validateW07RefClosure(payload.targetProfileRefs, staticTargets.map((item) => ({ recordId: item.recordId, gameReleaseId: item.gameReleaseId })),
+    `${base}/targetProfileRefs`, 'w07-action-target', record.gameReleaseId, issues);
+
+  const expectedArmorRefs = [];
+  for (const targetProfile of staticTargets) {
+    const sourceStatic = targetProfile.payload.sourceStatic;
+    expectedArmorRefs.push(sourceStatic.baseArmorClassRef);
+    if (sourceStatic.toughnessArmorClassRef) expectedArmorRefs.push(sourceStatic.toughnessArmorClassRef);
+    for (const override of sourceStatic.armorOverrides ?? []) expectedArmorRefs.push(override.armorClassRef);
+  }
+  validateW07RefClosure(payload.armorClassRefs, expectedArmorRefs, `${base}/armorClassRefs`, 'w07-action-armor', record.gameReleaseId, issues);
+  const expectedRuleRefs = contract.records.filter((item) => item.kind === 'modifier-rule'
+    && item.gameReleaseId === record.gameReleaseId && item.payload.sourceBranchModel)
+    .map((item) => ({ recordId: item.recordId, gameReleaseId: item.gameReleaseId }));
+  validateW07RefClosure(payload.modifierRuleRefs, expectedRuleRefs, `${base}/modifierRuleRefs`, 'w07-action-rule', record.gameReleaseId, issues);
+}
+
+function validateW07WeaponActionClosure(record, base, contract, recordMap, issues) {
+  const resolution = record.payload.actionProfileResolution;
+  if (!resolution) return;
+  if (!record.payload.panelPreviewRules) {
+    issues.push({ path: `${base}/panelPreviewRules`, code: 'w07-panel-preview-required', message: 'A W07 weapon resolution must retain the separate client preview bounds and unknown game-side obtainable range' });
+  }
+  const counts = resolution.staticClosure;
+  if (!counts) return;
+  const inputEntries = resolution.inputSetup?.inputEntries ?? [];
+  const inputKeys = inputEntries.map((entry) => canonicalActionInputKey(entry.inputKey));
+  const declaredInputKeys = new Set(inputKeys);
+  const setupSources = resolution.inputSetup?.setupSources ?? [];
+  const sameLocatorSource = (left, right) => left?.path === right?.path
+    && left?.sourceRef?.sourceId === right?.sourceRef?.sourceId
+    && left?.sourceRef?.gameReleaseId === right?.sourceRef?.gameReleaseId;
+  const hasSetupSource = (locator, predicate) => setupSources.some((source) => sameLocatorSource(source.sourceLocator, locator)
+    && predicate(source.sourceLocator?.fieldPath ?? '', source.rawValue ?? ''));
+  for (const [index, inputKey] of inputKeys.entries()) {
+    if (!inputKey || inputKeys.indexOf(inputKey) !== index) {
+      issues.push({ path: `${base}/actionProfileResolution/inputSetup/inputEntries/${index}/inputKey`, code: 'w07-action-input-duplicate', message: 'Weapon input setup entries must have unique non-empty canonical input keys' });
+    }
+    const entry = inputEntries[index];
+    const entryAt = `${base}/actionProfileResolution/inputSetup/inputEntries/${index}`;
+    if (entry.origin === 'weapon-mid-setup') {
+      const inherited = entry.inheritedDefinition;
+      const inheritedLocator = inherited?.sourceLocator;
+      const entryLocator = entry.sourceLocator;
+      const inheritedField = inheritedLocator?.fieldPath ?? '';
+      const overrideField = entryLocator?.fieldPath ?? '';
+      const inheritedPrefixes = [
+        `${resolution.inputSetup?.inheritedSetupKey}.action_inputs.${inputKey}`,
+        `base_template_settings.action_inputs.${inputKey}`
+      ];
+      const matchesInheritedPath = inheritedPrefixes.some((prefix) => inheritedField === prefix || inheritedField.startsWith(prefix + '.'));
+      const parentTablePrefix = inheritedPrefixes.map((prefix) => prefix.slice(0, prefix.lastIndexOf('.')));
+      const hasParentSetup = hasSetupSource(inheritedLocator, (fieldPath, rawValue) =>
+        parentTablePrefix.includes(fieldPath) && typeof inherited?.rawValue === 'string' && rawValue.includes(inherited.rawValue));
+      const expectedOverrideField = `weapon_template.action_inputs.${inputKey}.buffer_time`;
+      const hasOverrideSetupRow = hasSetupSource(entryLocator, (fieldPath, rawValue) => fieldPath === expectedOverrideField && rawValue === entry.rawValue);
+      if (!inherited || !matchesInheritedPath || !hasParentSetup || overrideField !== expectedOverrideField
+        || !hasOverrideSetupRow || sameLocatorSource(inheritedLocator, entryLocator) && inheritedField === overrideField) {
+        issues.push({ path: entryAt, code: 'w07-action-input-override-provenance', message: 'A weapon-mid input override must preserve the inherited same-key base/default definition and bind a distinct buffer_time override source row' });
+      }
+    } else if (entry.inheritedDefinition !== undefined) {
+      issues.push({ path: entryAt + '/inheritedDefinition', code: 'w07-action-input-override-provenance', message: 'Only a weapon-mid-setup input override may carry inheritedDefinition' });
+    }
+  }
+  const checkDeclaredInput = (inputKey, pointer) => {
+    if (!declaredInputKeys.has(canonicalActionInputKey(inputKey))) {
+      issues.push({ path: pointer, code: 'w07-action-input-unknown', message: 'Every static action input must resolve to an entry in this weapon input setup' });
+    }
+  };
+  for (const [index, action] of (resolution.localActions ?? []).entries()) {
+    if (action.startInput) checkDeclaredInput(action.startInput.inputKey, `${base}/actionProfileResolution/localActions/${index}/startInput/inputKey`);
+  }
+  const attackProfileRefs = record.payload.attackProfileRefs ?? [];
+  const seenAttackProfileRefs = new Set();
+  for (const [index, ref] of attackProfileRefs.entries()) {
+    const key = typedRefKey(ref);
+    if (ref.gameReleaseId !== record.gameReleaseId) {
+      issues.push({ path: `${base}/attackProfileRefs/${index}`, code: 'w07-action-profile-ref-release', message: 'W07 weapon action-profile bindings must point into the same game release' });
+    }
+    if (seenAttackProfileRefs.has(key)) {
+      issues.push({ path: `${base}/attackProfileRefs/${index}`, code: 'w07-action-profile-ref-duplicate', message: 'W07 weapon action-profile bindings must be unique by typed record reference' });
+    }
+    seenAttackProfileRefs.add(key);
+  }
+  const boundProfiles = (record.payload.attackProfileRefs ?? [])
+    .filter((ref) => ref.gameReleaseId === record.gameReleaseId)
+    .map((ref) => recordMap.get(typedRefKey(ref)))
+    .filter((profile) => profile?.kind === 'attack-profile' && profile.gameReleaseId === record.gameReleaseId);
+  const expectedReturnKind = (key) => key === 'generate_wield_chain_actions' ? 'continuation-list' : 'action-settings';
+  const assignedKeys = {
+    generate_unwield_action: 'action_unwield',
+    generate_wield_chain_actions: 'wield',
+    generate_inspect_action: 'action_inspect',
+    generate_inspect_3p_action: 'action_inspect_3p'
+  };
+  const effectiveDefinitions = new Map();
+  const seenGeneratorKeys = new Set();
+  for (const [generatorIndex, generator] of (resolution.actionGenerators ?? []).entries()) {
+    const definitions = generator.definitions ?? [];
+    let previousIndex = 0;
+    let previousEndLine = 0;
+    const indices = new Set();
+    if (seenGeneratorKeys.has(generator.generatorKey)) {
+      issues.push({ path: base + '/actionProfileResolution/actionGenerators/' + generatorIndex, code: 'w07-generator-definition-identity', message: 'Each generator key must have one ordered definition group' });
+    }
+    seenGeneratorKeys.add(generator.generatorKey);
+    for (const [definitionIndex, definition] of definitions.entries()) {
+      const expectedKind = expectedReturnKind(generator.generatorKey);
+      if (definition.generatorKey !== generator.generatorKey || indices.has(definition.definitionIndex)
+        || definition.definitionIndex <= previousIndex || definition.sourceLocator.line <= previousEndLine
+        || definition.endLine < definition.sourceLocator.line || definition.returnKind !== expectedKind) {
+        issues.push({ path: base + '/actionProfileResolution/actionGenerators/' + generatorIndex + '/definitions/' + definitionIndex, code: 'w07-generator-definition-identity', message: 'Generator definitions must retain ordered non-overlapping source ranges and the source-declared return kind' });
+      }
+      if ((expectedKind === 'continuation-list' && (definition.generatedActions.length !== 0 || definition.generatedContinuations.length === 0))
+        || (expectedKind === 'action-settings' && (definition.generatedContinuations.length !== 0 || definition.generatedActions.length === 0))) {
+        issues.push({ path: base + '/actionProfileResolution/actionGenerators/' + generatorIndex + '/definitions/' + definitionIndex, code: 'w07-generator-return-shape', message: 'Generated rows must preserve whether the function returns a continuation list or action settings' });
+      }
+      for (const [actionIndex, action] of definition.generatedActions.entries()) {
+        if (action.startInput) checkDeclaredInput(action.startInput, `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedActions/${actionIndex}/startInput`);
+        if (action.stopInput) checkDeclaredInput(action.stopInput, `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedActions/${actionIndex}/stopInput`);
+        for (const [edgeIndex, edge] of action.continuationEdges.entries()) {
+          if (edge.inputKey) checkDeclaredInput(edge.inputKey, `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedActions/${actionIndex}/continuationEdges/${edgeIndex}/inputKey`);
+        }
+      }
+      for (const [edgeIndex, edge] of definition.generatedContinuations.entries()) {
+        if (edge.inputKey) checkDeclaredInput(edge.inputKey, `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedContinuations/${edgeIndex}/inputKey`);
+      }
+      indices.add(definition.definitionIndex);
+      previousIndex = definition.definitionIndex;
+      previousEndLine = definition.endLine;
+    }
+    const lastDefinition = definitions.at(-1);
+    if (!lastDefinition || generator.effectiveDefinitionIndex !== lastDefinition.definitionIndex) {
+      issues.push({ path: base + '/actionProfileResolution/actionGenerators/' + generatorIndex + '/effectiveDefinitionIndex', code: 'w07-generator-effective-definition', message: 'The effective generator definition must be the final ordered source definition' });
+    } else {
+      effectiveDefinitions.set(generator.generatorKey, lastDefinition);
+    }
+  }
+  let generatedActionSettingsCount = 0;
+  let generatedContinuationEdgeCount = 0;
+  const actionRows = [
+    ...(resolution.localActions ?? []),
+    ...(resolution.fallbackActions ?? [])
+  ];
+  const actionRowsByName = new Map();
+  for (const [index, action] of actionRows.entries()) {
+    const rows = actionRowsByName.get(action.action) ?? [];
+    rows.push(action);
+    actionRowsByName.set(action.action, rows);
+    if (!action.sourceRange || !action.rawSource?.sourceLocator
+      || action.sourceRange.path !== action.rawSource.sourceLocator.path
+      || action.rawSource.sourceLocator.line < action.sourceRange.line
+      || action.rawSource.sourceLocator.line > action.sourceRange.endLine) {
+      issues.push({ path: `${base}/actionProfileResolution/${index < resolution.localActions.length ? 'localActions' : 'fallbackActions'}/${index < resolution.localActions.length ? index : index - resolution.localActions.length}/sourceRange`, code: 'w07-action-owner-range', message: 'Each declared action row must retain a source range containing its raw action locator' });
+    }
+  }
+  const actionKeys = new Set(actionRowsByName.keys());
+  const seenCallsites = new Set();
+  for (const [bindingIndex, binding] of (resolution.generatorBindings ?? []).entries()) {
+    const definition = effectiveDefinitions.get(binding.generatorKey);
+    const expectedKind = expectedReturnKind(binding.generatorKey);
+    const callsiteKey = [binding.generatorKey, binding.callsite.sourceLocator.path, binding.callsite.sourceLocator.line, binding.callsite.sourceLocator.fieldPath].join('\u0000');
+    if (seenCallsites.has(callsiteKey)) {
+      issues.push({ path: base + '/actionProfileResolution/generatorBindings/' + bindingIndex, code: 'w07-generator-binding-duplicate', message: 'Generator callsite bindings must be unique by source location and function' });
+    }
+    seenCallsites.add(callsiteKey);
+    if (!definition || binding.returnKind !== expectedKind || definition.returnKind !== expectedKind
+      || !actionKeys.has(binding.ownerAction)) {
+      issues.push({ path: base + '/actionProfileResolution/generatorBindings/' + bindingIndex, code: 'w07-generator-definition-binding', message: 'Each generator callsite must bind the effective definition, return kind and a declared owner action' });
+      continue;
+    }
+    const ownerRows = actionRowsByName.get(binding.ownerAction) ?? [];
+    const ownerRange = ownerRows.length === 1 ? ownerRows[0].sourceRange : undefined;
+    const callsite = binding.callsite.sourceLocator;
+    const ownerRangeContainsCallsite = ownerRange
+      && jsonEqual(binding.ownerActionRange, ownerRange)
+      && ownerRange.sourceRef?.sourceId === callsite.sourceRef?.sourceId
+      && ownerRange.sourceRef?.gameReleaseId === callsite.sourceRef?.gameReleaseId
+      && ownerRange.path === callsite.path
+      && callsite.line >= ownerRange.line
+      && callsite.line <= ownerRange.endLine;
+    if (!ownerRangeContainsCallsite) {
+      issues.push({ path: base + '/actionProfileResolution/generatorBindings/' + bindingIndex + '/ownerActionRange', code: 'w07-generator-owner-range', message: 'A generator callsite must fall within the exact same-release source range of its declared owner action' });
+    }
+    if (binding.assignedActionKey !== assignedKeys[binding.generatorKey]) {
+      issues.push({ path: base + '/actionProfileResolution/generatorBindings/' + bindingIndex + '/assignedActionKey', code: 'w07-generator-assigned-action', message: 'The generator assignment must preserve the source-declared action or continuation slot identity' });
+    }
+    if (expectedKind === 'continuation-list') {
+      generatedContinuationEdgeCount += definition.generatedContinuations.length;
+    } else {
+      if (!definition.generatedActions.some((action) => action.actionKey === binding.assignedActionKey)
+        || !actionKeys.has(binding.assignedActionKey)) {
+        issues.push({ path: base + '/actionProfileResolution/generatorBindings/' + bindingIndex + '/assignedActionKey', code: 'w07-generator-assigned-action', message: 'An action-settings generator assignment must match its declared generated action' });
+      }
+      generatedActionSettingsCount += definition.generatedActions.length;
+      generatedContinuationEdgeCount += definition.generatedActions.reduce((total, action) => total + action.continuationEdges.length, 0);
+    }
+  }
+  for (const [index, edge] of (record.payload.actionContinuations ?? []).entries()) {
+    checkDeclaredInput(edge.inputKey, `${base}/actionContinuations/${index}/inputKey`);
+    if (!actionKeys.has(edge.fromAction) || !actionKeys.has(edge.toAction)) {
+      issues.push({ path: `${base}/actionContinuations/${index}`, code: 'w07-action-target-resolution', message: 'Literal continuation endpoints must resolve to declared actions in this weapon' });
+    }
+  }
+  for (const [generatorIndex, generator] of (resolution.actionGenerators ?? []).entries()) {
+    for (const [definitionIndex, definition] of (generator.definitions ?? []).entries()) {
+      for (const [actionIndex, action] of definition.generatedActions.entries()) {
+        if (!actionKeys.has(action.actionKey)) {
+          issues.push({ path: `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedActions/${actionIndex}/actionKey`, code: 'w07-action-target-resolution', message: 'Generated action settings must bind to a declared weapon action slot' });
+        }
+        for (const [edgeIndex, edge] of action.continuationEdges.entries()) {
+          if (!actionKeys.has(edge.actionKey)) {
+            issues.push({ path: `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedActions/${actionIndex}/continuationEdges/${edgeIndex}/actionKey`, code: 'w07-action-target-resolution', message: 'Generated continuation targets must resolve to declared actions in this weapon' });
+          }
+        }
+      }
+      for (const [edgeIndex, edge] of definition.generatedContinuations.entries()) {
+        if (!actionKeys.has(edge.actionKey)) {
+          issues.push({ path: `${base}/actionProfileResolution/actionGenerators/${generatorIndex}/definitions/${definitionIndex}/generatedContinuations/${edgeIndex}/actionKey`, code: 'w07-action-target-resolution', message: 'Generated continuation targets must resolve to declared actions in this weapon' });
+        }
+      }
+    }
+  }
+  const expectedCounts = {
+    localActionCount: resolution.localActions.length,
+    fallbackActionCount: resolution.fallbackActions.length,
+    profileBindingCount: boundProfiles.reduce((total, profile) => total + (profile.payload.sourceBindings?.length ?? 0), 0),
+    literalContinuationEdgeCount: (record.payload.actionContinuations ?? []).length,
+    generatedActionSettingsCount,
+    generatedContinuationEdgeCount,
+    inputEntryCount: resolution.inputSetup.inputEntries.length
+  };
+  for (const [field, expected] of Object.entries(expectedCounts)) {
+    if (counts[field] !== expected) {
+      issues.push({ path: `${base}/actionProfileResolution/staticClosure/${field}`, code: 'w07-action-closure-count', message: `Static closure count must match its declared source rows (${expected})` });
+    }
+  }
+}
+
+function validateW07ArmorClass(record, base, issues) {
+  const sourceStatic = record.payload.sourceStatic;
+  if (sourceStatic && record.payload.classKey !== undefined && sourceStatic.classKey !== record.payload.classKey) {
+    issues.push({ path: `${base}/sourceStatic/classKey`, code: "w07-armor-class-identity", message: "The static enum identity must match the armor-class record key" });
+  }
+  if (sourceStatic) {
+    const rawKey = sourceStatic.enumRawValue.match(/^(['"])([A-Za-z0-9_]+)\1$/u)?.[2];
+    if (!rawKey || rawKey !== sourceStatic.classKey) {
+      issues.push({ path: `${base}/sourceStatic/enumRawValue`, code: 'w07-armor-class-enum-binding', message: 'Static armor identity must preserve the exact quoted class declaration matching classKey' });
+    }
+  }
+}
+
+function validateW07StatCurve(record, base, issues) {
+  const payload = record.payload;
+  if (!hasOwn(payload, "callsiteLocators")) return;
+  if (payload.inputUnit !== "ratio" || payload.panelInputRange?.status !== "not-applicable") {
+    issues.push({ path: base, code: "w07-curve-input-axis", message: "W07 profile curves use normalized internal t and have no direct panel input range" });
+  }
+  if (payload.knots.length !== 2) {
+    issues.push({ path: `${base}/knots`, code: "w07-curve-endpoints", message: "W07 raw profile projection retains exactly the two proven source endpoints" });
+  } else {
+    for (const [index, expectedInput] of ["0", "1"].entries()) {
+      const knot = payload.knots[index];
+      if (knot.input !== expectedInput || knot.sourceOrdinal !== index + 1 || knot.rawEndpoint !== knot.output
+        || (index > 0 && compareDecimal(payload.knots[index - 1].output, knot.output) === 0 && payload.knots[index - 1].rawEndpoint !== knot.rawEndpoint)) {
+        issues.push({ path: `${base}/knots/${index}`, code: "w07-curve-endpoint-binding", message: "Each normalized endpoint must preserve its matching ordinal raw value" });
+      }
+    }
+  }
+  if (payload.interpolation.value !== "linear" || payload.edgePolicy.value !== "extrapolate"
+    || payload.edgePolicy.scope !== "math.lerp function only") {
+    issues.push({ path: base, code: "w07-curve-interpolation-policy", message: "Only the pinned linear interpolation and local math.lerp extrapolation behavior are represented" });
+  }
+}
+
+function validateW07StatDefinition(record, base, recordMap, issues) {
+  const payload = record.payload;
+  if (!payload.curveMapping) return;
+  validateW07CurveMapping(payload.curveMapping, `${base}/curveMapping`, issues, payload.theoreticalInputRange);
+  if (payload.panelInputRange.status !== "not-applicable") {
+    issues.push({ path: `${base}/panelInputRange`, code: "w07-stat-panel-range", message: "The W07 curve parameter is internal and is not a player panel range" });
+  }
+  if (payload.obtainableInputRange.status !== "unknown" || payload.obtainableInputRange.reasonCode !== "NOT_EXPOSED_BY_SOURCE") {
+    issues.push({ path: `${base}/obtainableInputRange`, code: "w07-stat-obtainable-range", message: "The backend item-rating range is not exposed by the selected Source paths" });
+  }
+  if (!payload.rangeEvidence) {
+    issues.push({ path: `${base}/rangeEvidence`, code: "w07-stat-range-evidence", message: "Checked Source paths and the server-side boundary must accompany an unexposed item range" });
+  }
+  const curve = recordMap.get(recordKey(payload.curveRef.recordId, payload.curveRef.gameReleaseId));
+  if (!curve || curve.kind !== "stat-curve" || curve.gameReleaseId !== record.gameReleaseId
+    || curve.payload.inputUnit !== "ratio") {
+    issues.push({ path: `${base}/curveRef`, code: "w07-stat-curve-binding", message: "A W07 normalized profile mapping must reference a same-release ratio-axis stat curve" });
+  }
 }
 function sourceProfileKeyFromLiteral(rawValue) {
   let token = String(rawValue);
@@ -791,12 +1416,166 @@ function validateRawDamageProfileProvenance(record, sourceMap, recordMap, issues
     issues.push({ path: base + '/rawSourceDefinition/parentProfileRef', code: 'damage-profile-parent-binding', message: 'A raw parent_template_name requires a same-release typed damage-profile reference with the matching profile key' });
   }
 }
+function validateW07BoostCurveSemantics(record, base, issues) {
+  const raw = record.payload.rawSourceDefinition;
+  if (!raw) return;
+  const tableKey = 'PowerLevelSettings.boost_curves.default';
+  const tableRows = Array.isArray(raw.tables) ? raw.tables : [];
+  const boostTables = tableRows
+    .map((table, index) => ({ table, index }))
+    .filter(({ table }) => table?.tableKey === tableKey);
+  const boostLeaves = (Array.isArray(raw.leaves) ? raw.leaves : []).filter((leaf) =>
+    leaf.fieldPath?.endsWith('.boost_curve') && String(leaf.rawValue).replace(/^(['"])(.*)\1$/u, '$2') === tableKey);
+  const pointer = `${base}/rawSourceDefinition/tables`;
+  const report = (path, message) => issues.push({
+    path,
+    code: 'w07-boost-curve-semantics',
+    message
+  });
+
+  for (const [index, table] of tableRows.entries()) {
+    if (table?.curveSemantics !== undefined && table.tableKey !== tableKey) {
+      report(`${pointer}/${index}/curveSemantics`, 'Only the pinned five-point damage boost table may carry W07 boost-curve semantics');
+    }
+  }
+  if (boostLeaves.length > 0 && boostTables.length !== 1) {
+    report(pointer, 'A raw reference to the default damage boost curve requires exactly one typed table projection');
+  }
+  if (boostTables.length > 1) {
+    report(pointer, 'The pinned default damage boost curve may be projected only once per damage profile');
+  }
+
+  for (const { table, index } of boostTables) {
+    const tablePointer = `${pointer}/${index}`;
+    const semantics = table.curveSemantics;
+    if (!semantics) {
+      report(`${tablePointer}/curveSemantics`, 'The five-point default damage boost table requires its normalized axis, interpolation and caller bounds');
+      continue;
+    }
+    const expectedInputs = ['0', '0.25', '0.5', '0.75', '1'];
+    const axis = semantics.referenceAxis ?? {};
+    const caller = semantics.callerInput ?? {};
+    const interpolation = semantics.interpolation ?? {};
+    const knots = Array.isArray(semantics.knots) ? semantics.knots : [];
+    const orderedValues = Array.isArray(table.orderedValues) ? table.orderedValues : [];
+    const knotMatches = knots.length === expectedInputs.length
+      && knots.every((knot, knotIndex) => knot.sourceOrdinal === knotIndex + 1
+        && knot.input === expectedInputs[knotIndex]
+        && orderedValues[knotIndex]?.ordinal === knotIndex + 1);
+    const referenceAxisMatches = axis.min === '0' && axis.max === '1'
+      && axis.minInclusive === true && axis.maxInclusive === true && axis.unit === 'ratio';
+    const callerMatches = caller.min === '0' && caller.minInclusive === false
+      && caller.max === '1' && caller.maxInclusive === true && caller.unit === 'ratio'
+      && caller.predicate === 'finesse_boost_amount > 0'
+      && caller.transform === 'math.min(finesse_boost_amount, 1)';
+    const expectedLocator = (locator, line, endLine, fieldPath) => locator
+      && locator.path === 'scripts/utilities/attack/damage_calculation.lua'
+      && locator.line === line && locator.endLine === endLine && locator.fieldPath === fieldPath
+      && locator.sourceRef?.gameReleaseId === record.gameReleaseId;
+    const axisLocators = Array.isArray(axis.sourceLocators) ? axis.sourceLocators : [];
+    const callerLocators = Array.isArray(caller.sourceLocators) ? caller.sourceLocators : [];
+    const axisLocatorMatches = axisLocators.length === 1
+      && expectedLocator(axisLocators[0], 208, 217, 'source.five_point_damage_boost_curve_indexing_and_interpolation');
+    const interpolationLocatorMatches = interpolation.value === 'piecewise-linear'
+      && expectedLocator(interpolation.sourceLocator, 208, 217, 'source.five_point_damage_boost_curve_indexing_and_interpolation');
+    const callerLocatorMatches = callerLocators.length === 1
+      && expectedLocator(callerLocators[0], 700, 704, 'source.finesse_boost_amount_cap_and_positive_amount_gate');
+    const outputTableMatches = table.unit === 'ratio'
+      && orderedValues.length === expectedInputs.length
+      && orderedValues.every((point, pointIndex) => point.ordinal === pointIndex + 1
+        && /^-?\d+(?:\.\d+)?$/u.test(String(point.rawValue))
+        && typeof point.decimal === 'string'
+        && /^-?\d+(?:\.\d+)?$/u.test(point.decimal)
+        && compareDecimal(String(point.rawValue), point.decimal) === 0);
+    if (!referenceAxisMatches || !callerMatches || !knotMatches
+      || !axisLocatorMatches || !interpolationLocatorMatches || !callerLocatorMatches
+      || !outputTableMatches) {
+      report(`${tablePointer}/curveSemantics`, 'The boost curve must preserve five ordered ratio outputs, the exact normalized reference axis, linear interpolation, and the separately evidenced (0,1] caller gate');
+    }
+    if (table.sourceLocator?.path !== 'scripts/settings/damage/power_level_settings.lua'
+      || !table.sourceLocator.fieldPath?.startsWith('power_level_settings.boost_curves.default.')) {
+      report(`${tablePointer}/sourceLocator`, 'The default boost table must retain its pinned PowerLevelSettings source locator');
+    }
+  }
+}
+function validateW07StatSemanticsCoverage(record, base, issues) {
+  const sourceGroups = record.payload.statBindings ?? [];
+  const semanticGroups = record.payload.statTableSemantics;
+  const sourceByStat = new Map();
+  const semanticsByStat = new Map();
+  for (const [index, group] of sourceGroups.entries()) {
+    const existing = sourceByStat.get(group.statKey) ?? [];
+    existing.push({ group, index });
+    sourceByStat.set(group.statKey, existing);
+  }
+  if (!Array.isArray(semanticGroups)) {
+    issues.push({ path: `${base}/statTableSemantics`, code: 'w07-stat-semantics-coverage', message: 'A weapon with source stat bindings must type every stat-property binding in statTableSemantics' });
+    return;
+  }
+  for (const [index, group] of semanticGroups.entries()) {
+    const existing = semanticsByStat.get(group.statKey) ?? [];
+    existing.push({ group, index });
+    semanticsByStat.set(group.statKey, existing);
+  }
+  const statKeys = new Set([...sourceByStat.keys(), ...semanticsByStat.keys()]);
+  for (const statKey of statKeys) {
+    const sourceMatches = sourceByStat.get(statKey) ?? [];
+    const semanticMatches = semanticsByStat.get(statKey) ?? [];
+    const pointer = semanticMatches.length === 1
+      ? `${base}/statTableSemantics/${semanticMatches[0].index}/bindings`
+      : `${base}/statTableSemantics`;
+    const expectedProperties = new Set(sourceMatches.flatMap(({ group }) => group.bindings.map((binding) => binding.property)));
+    const semanticRows = semanticMatches.flatMap(({ group }) => group.bindings.map((binding) => binding.property));
+    const actualProperties = new Set(semanticRows);
+    const hasDuplicateProperties = actualProperties.size !== semanticRows.length;
+    const isExact = sourceMatches.length === 1 && semanticMatches.length === 1
+      && !hasDuplicateProperties
+      && expectedProperties.size === actualProperties.size
+      && [...expectedProperties].every((property) => actualProperties.has(property));
+    if (!isExact) {
+      issues.push({ path: pointer, code: 'w07-stat-semantics-coverage', message: 'Each W07 stat key must have exactly one semantic group covering every distinct source binding property exactly once, with no extra properties' });
+    }
+  }
+}
 function validateW07WeaponSemantics(contract, issues) {
   const sourceMap = new Map(contract.sourceRefs.map((source) => [`${source.gameReleaseId}\u0000${source.sourceId}`, source]));
   const recordMap = new Map(contract.records.map((candidate) => [recordKey(candidate.recordId, candidate.gameReleaseId), candidate]));
   for (const [index, record] of contract.records.entries()) {
     const base = `/records/${index}/payload`;
-    if (['weapon', 'attack-profile', 'damage-profile'].includes(record.kind)) validateW07SourceLocators(record, sourceMap, issues);
+    const hasW07SourceLocators = ['weapon', 'attack-profile', 'damage-profile'].includes(record.kind)
+      || (record.kind === 'stat-curve' && hasOwn(record.payload, 'callsiteLocators'))
+      || (record.kind === 'stat-definition' && hasOwn(record.payload, 'curveMapping'))
+      || (record.kind === 'armor-class' && hasOwn(record.payload, 'sourceStatic'))
+      || (record.kind === 'target-profile' && hasOwn(record.payload, 'sourceStatic'))
+      || (record.kind === 'modifier-rule' && hasOwn(record.payload, 'sourceBranchModel'));
+    if (hasW07SourceLocators) validateW07SourceLocators(record, sourceMap, issues);
+    if (record.kind === 'weapon') validateW07WeaponActionClosure(record, base, contract, recordMap, issues);
+    if (record.kind === 'weapon' && hasOwn(record.payload, 'panelPreviewRules')) validateW07PanelPreviewRules(record, base, issues);
+    if (record.kind === 'attack-profile') validateW07ActionResolution(record, base, recordMap, contract, issues);
+    if (record.kind === 'armor-class' && record.payload.sourceStatic) validateW07ArmorClass(record, base, issues);
+    if (record.kind === 'target-profile' && record.payload.sourceStatic) validateW07StaticTarget(record, base, recordMap, issues);
+    if (record.kind === 'modifier-rule' && record.payload.sourceBranchModel) validateW07ModifierRule(record, base, recordMap, issues);
+    if (record.kind === 'stat-curve' && hasOwn(record.payload, 'callsiteLocators')) validateW07StatCurve(record, base, issues);
+    if (record.kind === 'stat-definition' && hasOwn(record.payload, 'curveMapping')) validateW07StatDefinition(record, base, recordMap, issues);
+    if (record.kind === 'weapon' && Array.isArray(record.payload.statTableSemantics)) {
+      for (const [statIndex, stat] of record.payload.statTableSemantics.entries()) {
+        for (const [bindingIndex, binding] of stat.bindings.entries()) {
+          if (binding.quantityKind === 'movement-curve-modifier' && binding.unit?.status !== 'not-applicable') {
+            issues.push({
+              path: `${base}/statTableSemantics/${statIndex}/bindings/${bindingIndex}/unit`,
+              code: 'w07-stat-semantic-unit',
+              message: 'A movement-curve property name is a selector, so its table-value unit must be not-applicable; the bound trait t range remains separately typed'
+            });
+          }
+        }
+      }
+    }
+    const hasW07WeaponSemantics = record.kind === 'weapon'
+      && (hasOwn(record.payload, 'panelPreviewRules')
+        || Array.isArray(record.payload.actionProfileResolution?.actionGenerators));
+    if (hasW07WeaponSemantics && Array.isArray(record.payload.statBindings)) {
+      validateW07StatSemanticsCoverage(record, base, issues);
+    }
     if (record.kind === 'weapon' && Array.isArray(record.payload.statBindings)) {
       const seenStatKeys = new Set();
       for (const [statIndex, statBinding] of record.payload.statBindings.entries()) {
@@ -816,6 +1595,13 @@ function validateW07WeaponSemantics(contract, issues) {
           if (binding.traitParameterRange.status === 'known'
             && compareDecimal(binding.traitParameterRange.min, binding.traitParameterRange.max) > 0) {
             issues.push({ path: `${bindingBase}/traitParameterRange`, code: 'weapon-stat-range-inverted', message: 'Raw trait parameter minimum cannot exceed maximum' });
+          }
+          if (binding.curveMapping) {
+            const expectedRange = binding.traitParameterRange.status === 'known'
+              ? { status: 'known', min: binding.traitParameterRange.min, max: binding.traitParameterRange.max, unit: binding.traitParameterRange.unit,
+                inclusive: { min: true, max: true } }
+              : binding.traitParameterRange;
+            validateW07CurveMapping(binding.curveMapping, `${bindingBase}/curveMapping`, issues, expectedRange);
           }
           const statFieldPrefix = `weapon_template.base_stats.${statBinding.statKey}`;
           if (binding.weaponLocator.fieldPath !== statFieldPrefix && !binding.weaponLocator.fieldPath.startsWith(`${statFieldPrefix}.`)) {
@@ -879,7 +1665,10 @@ function validateW07WeaponSemantics(contract, issues) {
         issues.push({ path: base + '/context/damageProfileRef', code: 'claim-damage-profile-binding', message: 'Claim damageProfileRef must identify the profile named by its existing context.profile' });
       }
     }
-    if (record.kind === 'damage-profile' && record.payload.rawSourceDefinition) validateRawDamageProfileProvenance(record, sourceMap, recordMap, issues, base);
+    if (record.kind === 'damage-profile' && record.payload.rawSourceDefinition) {
+      validateRawDamageProfileProvenance(record, sourceMap, recordMap, issues, base);
+      validateW07BoostCurveSemantics(record, base, issues);
+    }
     if (record.kind === 'attack-profile') {
       for (const [bindingIndex, sticky] of (record.payload.stickyBindings ?? []).entries()) {
         if (sticky.state !== 'defined') continue;

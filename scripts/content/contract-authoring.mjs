@@ -611,6 +611,686 @@ function hasAnyUniqueReviewTarget(contract, ownerKind, ownerId, fieldPaths, dime
   return fieldPaths.some(fieldPath => hasUniqueReviewTarget(contract, ownerKind, ownerId, fieldPath, dimension));
 }
 
+function typedSourceRef(ref, kind) {
+  return ref && typeof ref === 'object' ? { ...ref, kind: ref.kind ?? kind } : ref;
+}
+
+function uniqueTypedRefs(refs, kind) {
+  return [...new Map(refs.filter(Boolean).map(ref => {
+    const typed = typedSourceRef(ref, kind);
+    return [sourceRefKey(typed), typed];
+  })).values()];
+}
+
+function validateW07CurveRecord(definition, curve, issues, at) {
+  const curvePayload = curve.payload;
+  const knots = curvePayload.knots ?? [];
+  if (definition.payload.curveMapping?.schemaVersion === 'w07-stat-curve-mapping/1.0.0') {
+    const mapping = definition.payload.curveMapping;
+    const normalizedKnots = curvePayload.inputUnit === 'ratio'
+      && knots.length === 2
+      && knots[0].input === '0' && knots[0].sourceOrdinal === 1
+      && knots[1].input === '1' && knots[1].sourceOrdinal === 2
+      && knots.every(point => point.rawEndpoint !== undefined && point.rawEndpoint !== null && point.sourceLocator);
+    if (!normalizedKnots) issue(issues, at + '/payload/knots', 'weapon stat curves must preserve raw ordinal endpoints while exposing normalized ratio t=0 and t=1', 'weapon-curve-normalized-endpoints');
+    if (curvePayload.panelInputRange?.status !== 'not-applicable') issue(issues, at + '/payload/panelInputRange', 'profile curve t is not a panel input range', 'weapon-curve-range-scope');
+    if (mapping.rawProfileParameter?.referenceEndpoints?.min !== '0'
+      || mapping.rawProfileParameter?.referenceEndpoints?.max !== '1'
+      || mapping.rawProfileParameter?.referenceEndpoints?.scope !== 'reference-endpoints-only') {
+      issue(issues, '/records/' + definition.recordId + '/payload/curveMapping/rawProfileParameter/referenceEndpoints', 'raw profile knots define reference endpoints only', 'weapon-curve-domain');
+    }
+    if (curvePayload.interpolation?.value !== 'linear' || !curvePayload.interpolation?.sourceLocator) {
+      issue(issues, at + '/payload/interpolation', 'pinned Source math callsite establishes linear interpolation', 'weapon-curve-interpolation');
+    }
+    if (curvePayload.edgePolicy?.value !== 'extrapolate'
+      || curvePayload.edgePolicy?.scope !== 'math.lerp function only'
+      || !curvePayload.edgePolicy?.sourceLocator
+      || !Array.isArray(curvePayload.callsiteLocators) || curvePayload.callsiteLocators.length === 0) {
+      issue(issues, at + '/payload/edgePolicy', 'math.lerp extrapolation must be scoped to the function and backed by its callsite locators', 'weapon-curve-edge-policy');
+    }
+    const traitRange = mapping.traitParameter?.range;
+    if (definition.payload.panelInputRange?.status !== 'not-applicable'
+      || !traitRange || canonical(definition.payload.theoreticalInputRange) !== canonical(traitRange)) {
+      issue(issues, '/records/' + definition.recordId + '/payload/theoreticalInputRange', 'stat definition theoretical range must preserve the selected trait-template t interval, separately from raw profile t endpoints', 'weapon-curve-range-scope');
+    }
+    if (definition.payload.obtainableInputRange?.status !== 'unknown'
+      || definition.payload.obtainableInputRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE') {
+      issue(issues, '/records/' + definition.recordId + '/payload/obtainableInputRange', 'Source does not expose the attainable item-stat range', 'weapon-curve-range-scope');
+    }
+    const evidence = definition.payload.rangeEvidence;
+    if (!Array.isArray(evidence?.checkedSources) || evidence.checkedSources.length === 0
+      || !evidence.serverBoundary || !evidence.impact) {
+      issue(issues, '/records/' + definition.recordId + '/payload/rangeEvidence', 'unexposed attainable range must retain its checked-source and server-boundary evidence', 'weapon-curve-range-evidence');
+    }
+    if (mapping.outerItemRating?.panelComparisonRange?.scope !== 'comparison-metadata-only'
+      || mapping.outerItemRating?.panelComparisonRange?.min !== '0'
+      || mapping.outerItemRating?.panelComparisonRange?.max !== '1'
+      || mapping.outerItemRating?.obtainableRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE'
+      || mapping.rawProfileParameter?.callerDomain?.reasonCode !== 'CALLER_DOMAIN_NOT_PROVEN'
+      || mapping.rawProfileParameter?.selectedWeaponTweakPath?.status !== 'known') {
+      issue(issues, '/records/' + definition.recordId + '/payload/curveMapping', 'outer comparison metadata, selected weapon tweak clamp, and arbitrary caller domain must remain distinct', 'weapon-curve-mapping-scope');
+    }
+    return;
+  }
+  const validKnots = curvePayload.inputUnit === 'ratio'
+    && knots.length === 2
+    && knots[0].input === '0' && knots[0].sourceOrdinal === 1
+    && knots[1].input === '1' && knots[1].sourceOrdinal === 2
+    && knots.every(point => point.rawEndpoint !== undefined && point.rawEndpoint !== null && point.sourceLocator);
+  if (!validKnots) issue(issues, at + '/payload/knots', 'weapon stat curves must preserve raw ordinal endpoints while exposing normalized ratio t=0 and t=1', 'weapon-curve-normalized-endpoints');
+  const domain = curvePayload.nominalInputDomain;
+  if (domain?.min !== '0' || domain?.max !== '1' || domain?.unit !== 'ratio' || domain?.meaning !== 'normalized-reference-endpoints-only') {
+    issue(issues, at + '/payload/nominalInputDomain', 'curve nominal domain must describe normalized reference endpoints only', 'weapon-curve-domain');
+  }
+  if (curvePayload.interpolation?.status !== 'known' || curvePayload.interpolation?.value !== 'linear') {
+    issue(issues, at + '/payload/interpolation', 'pinned Source math callsite establishes linear interpolation', 'weapon-curve-interpolation');
+  }
+  if (curvePayload.edgePolicy?.status !== 'known' || curvePayload.edgePolicy?.value !== 'extrapolate'
+    || !curvePayload.edgePolicyScope || !Array.isArray(curvePayload.callsiteLocators) || curvePayload.callsiteLocators.length === 0) {
+    issue(issues, at + '/payload/edgePolicy', 'math.lerp extrapolation must be scoped to the function and backed by its callsite locators', 'weapon-curve-edge-policy');
+  }
+
+  const definitionPayload = definition.payload;
+  if (definitionPayload.panelInputRange?.status !== 'not-applicable') {
+    issue(issues, '/records/' + definition.recordId + '/payload/panelInputRange', 'raw table endpoints are not a panel range', 'weapon-curve-range-scope');
+  }
+  const theoretical = definitionPayload.theoreticalInputRange;
+  if (theoretical?.min !== '0' || theoretical?.max !== '1' || theoretical?.unit !== 'ratio') {
+    issue(issues, '/records/' + definition.recordId + '/payload/theoreticalInputRange', 'theoretical range must retain the normalized curve reference domain', 'weapon-curve-range-scope');
+  }
+  if (definitionPayload.obtainableInputRange?.status !== 'unknown'
+    || definitionPayload.obtainableInputRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE') {
+    issue(issues, '/records/' + definition.recordId + '/payload/obtainableInputRange', 'Source does not expose the attainable item-rating range', 'weapon-curve-range-scope');
+  }
+  const evidence = definitionPayload.rangeEvidence;
+  if (!Array.isArray(evidence?.checkedSources) || evidence.checkedSources.length === 0
+    || evidence.serverBoundary === undefined || evidence.serverBoundary === null
+    || evidence.impact === undefined || evidence.impact === null) {
+    issue(issues, '/records/' + definition.recordId + '/payload/rangeEvidence', 'unexposed attainable range must retain its checked-source and server-boundary evidence', 'weapon-curve-range-evidence');
+  }
+}
+
+function validateW07CurveMappings(weapon, statDefinitionRecords, releaseId, inputs, issues, at) {
+  const definitions = new Map(statDefinitionRecords.map(record => [keyOf(record), record]));
+  for (const [groupIndex, group] of (weapon.payload.statBindings ?? []).entries()) {
+    for (const [bindingIndex, binding] of (group.bindings ?? []).entries()) {
+      const mapping = binding.curveMapping;
+      if (!mapping) continue;
+      const mappingAt = at + '/payload/statBindings/' + groupIndex + '/bindings/' + bindingIndex + '/curveMapping';
+      if (mapping.schemaVersion === 'w07-stat-curve-mapping/1.0.0') {
+        const statDefinition = [...definitions.values()].find(definition => definition.payload.curveMapping
+          && canonical(definition.payload.curveMapping) === canonical(mapping));
+        if (!statDefinition) {
+          issue(issues, mappingAt, 'curve mapping must match a pinned stat definition owned by this weapon and claim closure', 'weapon-curve-mapping-owner');
+        }
+        const outer = mapping.outerItemRating;
+        const trait = mapping.traitParameter;
+        const profile = mapping.rawProfileParameter;
+        const knownRange = range => range?.status === 'known' && range.unit === 'ratio'
+          && typeof range.min === 'string' && typeof range.max === 'string'
+          && range.inclusive?.min === true && range.inclusive?.max === true;
+        if (mapping.schemaVersion !== 'w07-stat-curve-mapping/1.0.0'
+          || outer?.quantityKind !== 'normalized-item-stat-value' || outer.unit !== 'ratio'
+          || outer.panelComparisonRange?.min !== '0' || outer.panelComparisonRange?.max !== '1'
+          || outer.panelComparisonRange?.scope !== 'comparison-metadata-only'
+          || outer.obtainableRange?.status !== 'unknown' || outer.obtainableRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE'
+          || !Array.isArray(outer.sourceLocators) || outer.sourceLocators.length === 0
+          || trait?.quantityKind !== 'trait-template-t' || trait.unit !== 'ratio' || !knownRange(trait.range)
+          || !Array.isArray(trait.sourceLocators) || trait.sourceLocators.length === 0
+          || profile?.quantityKind !== 'normalized-profile-t' || profile.unit !== 'ratio'
+          || profile.referenceEndpoints?.min !== '0' || profile.referenceEndpoints?.max !== '1'
+          || profile.callerDomain?.status !== 'unknown' || profile.callerDomain?.reasonCode !== 'CALLER_DOMAIN_NOT_PROVEN'
+          || profile.selectedWeaponTweakPath?.status !== 'known'
+          || profile.selectedWeaponTweakPath?.accumulatorRange?.min !== '0'
+          || profile.selectedWeaponTweakPath?.accumulatorRange?.max !== '1'
+          || profile.selectedWeaponTweakPath?.accumulatorRange?.unit !== 'ratio'
+          || profile.selectedWeaponTweakPath?.fallbacks?.emptyPath !== '0'
+          || profile.selectedWeaponTweakPath?.fallbacks?.defaultTraitValue !== '0.5'
+          || profile.selectedWeaponTweakPath?.fallbacks?.defaultProfileLerpValue !== '0.5'
+          || !Array.isArray(profile.selectedWeaponTweakPath?.sourceLocators)
+          || profile.selectedWeaponTweakPath.sourceLocators.length === 0
+          || !Array.isArray(profile.sourceLocators) || profile.sourceLocators.length === 0) {
+          issue(issues, mappingAt, 'curve mapping must preserve the three distinct item, trait, and raw-profile coordinates with their evidence', 'weapon-curve-mapping-scope');
+        }
+        continue;
+      }
+      const statRef = typedSourceRef(mapping.statRef, 'stat-definition');
+      const curveRef = typedSourceRef(mapping.curveRef, 'stat-curve');
+      const stat = resolveSourceRecord(statRef, 'stat-definition', releaseId, inputs, issues, mappingAt + '/statRef');
+      const curve = resolveSourceRecord(curveRef, 'stat-curve', releaseId, inputs, issues, mappingAt + '/curveRef');
+      const ownedDefinition = definitions.get(keyOf(statRef));
+      if (!stat || !ownedDefinition || stat.recordId !== ownedDefinition.recordId || stat.gameReleaseId !== ownedDefinition.gameReleaseId) {
+        issue(issues, mappingAt + '/statRef', 'curve mapping must identify a stat definition owned by this weapon', 'weapon-curve-mapping-owner');
+      }
+      if (stat?.payload.curveRef && sourceRefKey({ ...stat.payload.curveRef, kind: 'stat-curve' }) !== sourceRefKey(curveRef)) {
+        issue(issues, mappingAt + '/curveRef', 'curve mapping must retain the curve linked by its stat definition', 'weapon-curve-mapping-owner');
+      }
+      if (typeof mapping.baseStatKey !== 'string' || mapping.baseStatKey.trim() === '') {
+        issue(issues, mappingAt + '/baseStatKey', 'curve mapping requires the Source base-stat identity', 'weapon-curve-mapping-owner');
+      }
+      if (mapping.itemRatingRange?.status !== 'unknown' || mapping.itemRatingRange?.reasonCode !== 'NOT_EXPOSED_BY_SOURCE') {
+        issue(issues, mappingAt + '/itemRatingRange', 'attainable item-rating range must remain unknown where Source does not expose it', 'weapon-curve-range-scope');
+      }
+      if (canonical(mapping.traitParameterRange) !== canonical(binding.traitParameterRange)) {
+        issue(issues, mappingAt + '/traitParameterRange', 'curve mapping must retain this trait binding’s exact parameter range', 'weapon-curve-mapping-owner');
+      }
+      if (!Array.isArray(mapping.mappingLocators) || mapping.mappingLocators.length === 0) {
+        issue(issues, mappingAt + '/mappingLocators', 'outer item-rating to trait-parameter mapping requires source locators', 'weapon-curve-mapping-locator');
+      }
+    }
+  }
+}
+
+function canonicalActionInputKey(value) {
+  return typeof value === 'string' ? value.split('.', 1)[0] : null;
+}
+
+function validateW07StatSemanticsCoverage(weapon, issues, at) {
+  const sourceGroups = weapon.payload.statBindings ?? [];
+  const semanticGroups = Array.isArray(weapon.payload.statTableSemantics) ? weapon.payload.statTableSemantics : [];
+  const sourceStatKeys = new Set(sourceGroups.map(group => group.statKey));
+  const semanticStatKeys = new Set();
+  for (const [groupIndex, semanticGroup] of semanticGroups.entries()) {
+    const groupAt = at + '/statTableSemantics/' + groupIndex;
+    if (semanticStatKeys.has(semanticGroup.statKey)) {
+      issue(issues, groupAt + '/statKey', 'each Source stat group must have one semantic group', 'weapon-stat-semantics-coverage');
+    }
+    semanticStatKeys.add(semanticGroup.statKey);
+    if (!sourceStatKeys.has(semanticGroup.statKey)) {
+      issue(issues, groupAt + '/statKey', 'semantic groups cannot introduce a property group absent from Source statBindings', 'weapon-stat-semantics-coverage');
+      continue;
+    }
+    const expectedProperties = new Set(sourceGroups.find(group => group.statKey === semanticGroup.statKey).bindings.map(binding => binding.property));
+    const semanticRows = Array.isArray(semanticGroup.bindings) ? semanticGroup.bindings : [];
+    const counts = new Map();
+    for (const row of semanticRows) counts.set(row.property, (counts.get(row.property) ?? 0) + 1);
+    for (const property of expectedProperties) {
+      if (counts.get(property) !== 1) {
+        issue(issues, groupAt + '/bindings', 'each unique Source stat-binding property must have exactly one semantic or explicit checked row: ' + property, 'weapon-stat-semantics-coverage');
+      }
+    }
+    for (const property of counts.keys()) {
+      if (!expectedProperties.has(property)) {
+        issue(issues, groupAt + '/bindings', 'semantic rows cannot introduce a property absent from Source statBindings: ' + property, 'weapon-stat-semantics-coverage');
+      }
+    }
+  }
+  for (const group of sourceGroups) {
+    if (!semanticStatKeys.has(group.statKey)) {
+      issue(issues, at + '/statTableSemantics', 'every Source stat group requires a semantic group that accounts for its properties: ' + group.statKey, 'weapon-stat-semantics-coverage');
+    }
+  }
+}
+
+function validateW07R6ActionProfileClosure(weapon, profiles, releaseId, inputs, issues, at) {
+  validateW07StatSemanticsCoverage(weapon, issues, at + '/payload');
+  const resolution = weapon.payload.actionProfileResolution;
+  const base = at + '/actionProfileResolution';
+  const inputSetup = resolution.inputSetup;
+  const inputEntries = Array.isArray(inputSetup?.inputEntries) ? inputSetup.inputEntries : [];
+  const declaredInputs = new Set(inputEntries.map(entry => canonicalActionInputKey(entry.inputKey)).filter(Boolean));
+  const inputRows = [
+    ...inputEntries.map(entry => [entry.inputKey, entry.sourceLocator]),
+    ...(weapon.payload.actionContinuations ?? []).map(edge => [edge.inputKey, edge.sourceLocator]),
+  ];
+  const validateInput = (key, locator, path) => {
+    if (!declaredInputs.has(canonicalActionInputKey(key)) || !locator) {
+      issue(issues, path, 'action input must resolve through the selected setup while preserving its full source key and locator', 'weapon-action-resolution-input');
+    }
+  };
+  if (!inputSetup || typeof inputSetup.setupKey !== 'string' || typeof inputSetup.inheritedSetupKey !== 'string'
+    || !inputSetup.hierarchyRaw || !Array.isArray(inputSetup.setupSources) || inputSetup.setupSources.length === 0
+    || !Array.isArray(inputSetup.inputEntries)) {
+    issue(issues, base + '/inputSetup', 'weapon action resolution must preserve the selected and inherited setups, hierarchy, source rows, and merged inputs', 'weapon-resolution-input-setup');
+  }
+  for (const [index, entry] of inputEntries.entries()) {
+    if (!entry || typeof entry.inputKey !== 'string' || typeof entry.rawValue !== 'string'
+      || !['base-template', 'default-setup', 'weapon-mid-setup'].includes(entry.origin) || !entry.sourceLocator) {
+      issue(issues, base + '/inputSetup/inputEntries/' + index, 'input rows must retain a declared origin, raw value, and source locator', 'weapon-resolution-input-setup');
+    }
+  }
+  if (new Set(inputEntries.map(entry => canonicalActionInputKey(entry.inputKey))).size !== inputEntries.length) {
+    issue(issues, base + '/inputSetup/inputEntries', 'canonical input setup keys must be unique', 'weapon-resolution-input-setup');
+  }
+
+  const localActions = Array.isArray(resolution.localActions) ? resolution.localActions : [];
+  const fallbackActions = Array.isArray(resolution.fallbackActions) ? resolution.fallbackActions : [];
+  const allActions = [...localActions, ...fallbackActions];
+  const actionKeys = new Set(allActions.map(row => row.action));
+  if (!Array.isArray(resolution.localActions) || !Array.isArray(resolution.fallbackActions)) {
+    issue(issues, base, 'weapon resolution requires both local and fallback action rows', 'weapon-resolution-actions');
+  }
+  if (resolution.executionPolicy !== 'static-only; functions not executed') {
+    issue(issues, base + '/executionPolicy', 'generator facts must remain static and must not execute functions', 'weapon-resolution-condition');
+  }
+  for (const [name, rows] of [['localActions', localActions], ['fallbackActions', fallbackActions]]) {
+    if (new Set(rows.map(row => row.action)).size !== rows.length) issue(issues, base + '/' + name, 'action identities must be unique within each origin', 'weapon-resolution-action-duplicate');
+    for (const [index, row] of rows.entries()) {
+      const rowAt = base + '/' + name + '/' + index;
+      if (typeof row.action !== 'string' || !row.rawSource || typeof row.rawSource.rawValue !== 'string'
+        || !row.rawSource.sourceLocator || !row.sourceRange || row.sourceRange.path !== row.rawSource.sourceLocator.path
+        || row.sourceRange.line > row.sourceRange.endLine) {
+        issue(issues, rowAt, 'action rows must preserve their raw source and complete containing source range', 'weapon-resolution-actions');
+      }
+      if (row.startInput !== null && row.startInput !== undefined) {
+        if (typeof row.startInput.inputKey !== 'string' || !row.startInput.sourceLocator) {
+          issue(issues, rowAt + '/startInput', 'direct start input must be an exact source-backed object or null', 'weapon-resolution-input');
+        } else validateInput(row.startInput.inputKey, row.startInput.sourceLocator, rowAt + '/startInput');
+      }
+    }
+  }
+
+  const edges = Array.isArray(weapon.payload.actionContinuations) ? weapon.payload.actionContinuations : [];
+  for (const [index, edge] of edges.entries()) {
+    if (!actionKeys.has(edge.fromAction) || !actionKeys.has(edge.toAction)) {
+      issue(issues, at + '/payload/actionContinuations/' + index, 'literal continuation endpoints must resolve to declared actions', 'weapon-action-target-resolution');
+    }
+    validateInput(edge.inputKey, edge.sourceLocator, at + '/payload/actionContinuations/' + index + '/inputKey');
+  }
+
+  const profileActionNames = new Set(profiles.map(profile => profile.payload.action));
+  for (const action of profileActionNames) {
+    if (localActions.filter(row => row.action === action).length + fallbackActions.filter(row => row.action === action).length !== 1) {
+      issue(issues, base, 'each attack profile must resolve to exactly one local or fallback action: ' + action, 'weapon-resolution-action-missing');
+    }
+  }
+
+  const generatorGroups = Array.isArray(resolution.actionGenerators) ? resolution.actionGenerators : [];
+  const generatorByKey = new Map();
+  for (const [groupIndex, group] of generatorGroups.entries()) {
+    const groupAt = base + '/actionGenerators/' + groupIndex;
+    const definitions = Array.isArray(group.definitions) ? group.definitions : [];
+    if (typeof group.generatorKey !== 'string' || definitions.length === 0
+      || definitions.some(definition => definition.generatorKey !== group.generatorKey)
+      || definitions.some((definition, index) => index > 0 && definition.definitionIndex <= definitions[index - 1].definitionIndex)
+      || definitions.at(-1)?.definitionIndex !== group.effectiveDefinitionIndex) {
+      issue(issues, groupAt, 'generator definitions must retain source order and select the last definition as effective', 'weapon-generator-effective-definition');
+    }
+    generatorByKey.set(group.generatorKey, group);
+    for (const [definitionIndex, definition] of definitions.entries()) {
+      const definitionAt = groupAt + '/definitions/' + definitionIndex;
+      if (!Number.isInteger(definition.definitionIndex) || !Number.isInteger(definition.endLine)
+        || definition.endLine < definition.sourceLocator?.line || typeof definition.rawValue !== 'string'
+        || !definition.sourceLocator || !['action-settings', 'continuation-list'].includes(definition.returnKind)
+        || !Array.isArray(definition.generatedActions) || !Array.isArray(definition.generatedContinuations)) {
+        issue(issues, definitionAt, 'generator definition must preserve its complete source span and closed return shape', 'weapon-generator-definition');
+      }
+      for (const [actionIndex, generated] of (definition.generatedActions ?? []).entries()) {
+        if (!actionKeys.has(generated.actionKey)) issue(issues, definitionAt + '/generatedActions/' + actionIndex + '/actionKey', 'generated action settings must bind an already-declared action node', 'weapon-action-target-resolution');
+        for (const input of [generated.startInput, generated.stopInput]) if (input) validateInput(input, definition.sourceLocator, definitionAt + '/generatedActions/' + actionIndex);
+        for (const [edgeIndex, edge] of (generated.continuationEdges ?? []).entries()) {
+          if (!actionKeys.has(edge.actionKey)) issue(issues, definitionAt + '/generatedActions/' + actionIndex + '/continuationEdges/' + edgeIndex, 'generated continuation must resolve to a declared action node', 'weapon-action-target-resolution');
+          if (edge.inputKey) validateInput(edge.inputKey, edge.sourceLocator, definitionAt + '/generatedActions/' + actionIndex + '/continuationEdges/' + edgeIndex + '/inputKey');
+        }
+      }
+      for (const [edgeIndex, edge] of (definition.generatedContinuations ?? []).entries()) {
+        if (!actionKeys.has(edge.actionKey)) issue(issues, definitionAt + '/generatedContinuations/' + edgeIndex + '/actionKey', 'generated continuation must resolve to a declared action node', 'weapon-action-target-resolution');
+        if (edge.inputKey) validateInput(edge.inputKey, edge.sourceLocator, definitionAt + '/generatedContinuations/' + edgeIndex + '/inputKey');
+      }
+    }
+  }
+
+  const bindings = Array.isArray(resolution.generatorBindings) ? resolution.generatorBindings : [];
+  for (const [bindingIndex, binding] of bindings.entries()) {
+    const bindingAt = base + '/generatorBindings/' + bindingIndex;
+    const group = generatorByKey.get(binding.generatorKey);
+    const row = allActions.find(action => action.action === binding.ownerAction);
+    const ownerRange = binding.ownerActionRange;
+    const callsite = binding.callsite?.sourceLocator;
+    if (!group || !row || !ownerRange || !callsite || ownerRange.path !== callsite.path
+      || ownerRange.path !== row.sourceRange?.path
+      || ownerRange.line !== row.sourceRange?.line || ownerRange.endLine !== row.sourceRange?.endLine
+      || callsite.line < ownerRange.line || callsite.line > ownerRange.endLine
+      || typeof binding.callsite.rawValue !== 'string') {
+      issue(issues, bindingAt, 'generator callsite must be bound to the exact containing action source range', 'weapon-generator-owner-range');
+      continue;
+    }
+    const effective = group.definitions.find(definition => definition.definitionIndex === group.effectiveDefinitionIndex);
+    if (!effective || binding.returnKind !== effective.returnKind) {
+      issue(issues, bindingAt + '/returnKind', 'generator binding return kind must match its effective source definition', 'weapon-generator-return-kind');
+    }
+    if (binding.returnKind === 'continuation-list') {
+      if (binding.assignedActionKey !== 'wield') issue(issues, bindingAt + '/assignedActionKey', 'continuation-list generators bind the wield slot', 'weapon-generator-assigned-action');
+    } else if (!actionKeys.has(binding.assignedActionKey)) {
+      issue(issues, bindingAt + '/assignedActionKey', 'action-settings generator must resolve to a declared action node', 'weapon-generator-assigned-action');
+    }
+  }
+
+  const currentTargets = inputs.sourceContract.records.filter(record => record.gameReleaseId === releaseId
+    && record.kind === 'target-profile' && record.payload.sourceStatic?.breedType === 'minion');
+  const expectedTargets = currentTargets.map(record => ({ recordId: record.recordId, gameReleaseId: record.gameReleaseId, kind: 'target-profile' }));
+  const expectedArmor = new Map();
+  const validateArmorIdentity = (ref, rawValue, sourceLocator, targetAt, fieldName) => {
+    const armorAt = targetAt + '/' + fieldName;
+    if (!ref || typeof rawValue !== 'string' || !sourceLocator) {
+      issue(issues, armorAt, 'armor identity, exact raw enum access, and locator must be preserved together', 'weapon-target-static-facts');
+      return;
+    }
+    const rawKey = /^armor_types\.([A-Za-z0-9_]+)$/u.exec(rawValue)?.[1];
+    const armor = resolveSourceRecord(typedSourceRef(ref, 'armor-class'), 'armor-class', releaseId, inputs, issues, armorAt + 'Ref');
+    if (!rawKey || armor?.payload.sourceStatic?.classKey !== rawKey) {
+      issue(issues, armorAt, 'armor enum access must resolve to the exact referenced armor-class identity', 'weapon-target-static-facts');
+    }
+  };
+  for (const [targetIndex, target] of currentTargets.entries()) {
+    const staticFacts = target.payload.sourceStatic;
+    const targetAt = base + '/targetProfiles/' + target.recordId;
+    if (!staticFacts || staticFacts.schemaVersion !== 'minion-hit-schema/1.0.0'
+      || !staticFacts.registryLocator || !staticFacts.breedLocator || !staticFacts.baseArmorLocator
+      || typeof staticFacts.baseArmorRawValue !== 'string' || !staticFacts.baseArmorClassRef
+      || !staticFacts.rawHitZones || typeof staticFacts.rawHitZones.rawValue !== 'string'
+      || !Array.isArray(staticFacts.hitZones) || !Array.isArray(staticFacts.weakspotTypes)
+      || !Array.isArray(staticFacts.armorOverrides) || !Array.isArray(staticFacts.damageMultipliers)
+      || !Array.isArray(staticFacts.unresolvedZoneReferences)) {
+      issue(issues, targetAt, 'target profiles must preserve raw static registry, armor, hit-zone, and relationship facts', 'weapon-target-static-facts');
+      continue;
+    }
+    validateArmorIdentity(staticFacts.baseArmorClassRef, staticFacts.baseArmorRawValue, staticFacts.baseArmorLocator, targetAt, 'baseArmorClass');
+    const toughnessFields = [staticFacts.toughnessArmorClassRef, staticFacts.toughnessArmorRawValue, staticFacts.toughnessArmorLocator];
+    if (toughnessFields.some(value => value !== undefined && value !== null)) {
+      validateArmorIdentity(staticFacts.toughnessArmorClassRef, staticFacts.toughnessArmorRawValue, staticFacts.toughnessArmorLocator, targetAt, 'toughnessArmorClass');
+    }
+    const armorRefs = [staticFacts.baseArmorClassRef, staticFacts.toughnessArmorClassRef,
+      ...staticFacts.armorOverrides.map(row => row.armorClassRef)].filter(Boolean);
+    for (const ref of armorRefs) expectedArmor.set(keyOf(ref), typedSourceRef(ref, 'armor-class'));
+    const zones = new Set(staticFacts.hitZones.map(zone => zone.zoneId));
+    if (new Set(staticFacts.hitZones.map(zone => zone.zoneId)).size !== staticFacts.hitZones.length) {
+      issue(issues, targetAt + '/hitZones', 'hit-zone identities must be unique within a target profile', 'weapon-target-static-facts');
+    }
+    for (const [zoneIndex, zone] of staticFacts.hitZones.entries()) {
+      if (typeof zone.zoneId !== 'string' || !zone.rawSource?.sourceLocator || typeof zone.rawSource.rawValue !== 'string'
+        || !Array.isArray(zone.actors) || typeof zone.actorsRawValue !== 'string' || !zone.actorsLocator
+        || !Array.isArray(zone.otherRawFields)) {
+        issue(issues, targetAt + '/hitZones/' + zoneIndex, 'hit-zone rows must preserve actors and the complete raw fragment', 'weapon-target-static-facts');
+      }
+    }
+    for (const relationship of [...staticFacts.weakspotTypes, ...staticFacts.armorOverrides, ...staticFacts.damageMultipliers]) {
+      if (!zones.has(relationship.zoneId) && !staticFacts.unresolvedZoneReferences.some(row => row.zoneId === relationship.zoneId)) {
+        issue(issues, targetAt, 'zone relationships must resolve to an imported zone or retain an explicit unresolved reference', 'weapon-target-static-facts');
+      }
+    }
+    for (const reference of staticFacts.unresolvedZoneReferences) if (!reference.sourceLocator || !reference.fieldPath || !reference.zoneId || !reference.rawValue) {
+      issue(issues, targetAt + '/unresolvedZoneReferences', 'unresolved relationship rows must retain their exact field, raw token, and source locator', 'weapon-target-static-facts');
+    }
+  }
+  if (currentTargets.length === 0) issue(issues, base, 'action profiles must bind the pinned static minion registry', 'weapon-target-registry-missing');
+  const expectedRules = inputs.sourceContract.records.filter(record => record.gameReleaseId === releaseId
+    && record.kind === 'modifier-rule' && record.payload.sourceBranchModel?.schemaVersion === 'static-combat-relations/1');
+  const expectedRuleRefs = expectedRules.map(record => ({ recordId: record.recordId, gameReleaseId: record.gameReleaseId, kind: 'modifier-rule' }));
+
+  const verifyClosureRefs = (actual, expected, kind, refAt, code, message) => {
+    if (!Array.isArray(actual)) {
+      issue(issues, refAt, message, code);
+      return;
+    }
+    const typed = actual.map(ref => typedSourceRef(ref, kind));
+    const keys = typed.map(keyOf);
+    if (new Set(keys).size !== typed.length || typed.some(ref => ref.gameReleaseId !== releaseId)
+      || !refsMatchSet(typed, expected)) issue(issues, refAt, message, code);
+    typed.forEach((ref, index) => resolveSourceRecord(ref, kind, releaseId, inputs, issues, refAt + '/' + index));
+  };
+
+  for (const [index, profile] of profiles.entries()) {
+    const profileAt = at + '/attackProfileRefs/' + index;
+    const action = profile.payload.action;
+    const actionResolution = profile.payload.actionResolution;
+    const origin = actionResolution?.origin;
+    const ownerRows = origin === 'weapon-template' ? localActions : origin === 'base-template-settings' ? fallbackActions : [];
+    const matchingRows = ownerRows.filter(row => row.action === action);
+    const owner = matchingRows.length === 1 ? matchingRows[0] : null;
+    if (!actionResolution || !owner) {
+      issue(issues, profileAt + '/actionResolution', 'each action profile must bind exactly one Source action row', 'weapon-action-resolution-required');
+      continue;
+    }
+    if (canonical(actionResolution.startInput ?? null) !== canonical(owner.startInput ?? null)) {
+      issue(issues, profileAt + '/actionResolution/startInput', 'direct start input must match the exact owning action row, including an explicitly absent input', 'weapon-action-resolution-input');
+    }
+    if (actionResolution.startInput) validateInput(actionResolution.startInput.inputKey, actionResolution.startInput.sourceLocator, profileAt + '/actionResolution/startInput');
+    const incoming = edges.filter(edge => edge.toAction === action);
+    if (!Array.isArray(actionResolution.entryBindings) || canonical(actionResolution.entryBindings) !== canonical(incoming)) {
+      issue(issues, profileAt + '/actionResolution/entryBindings', 'incoming entry bindings must preserve every full literal continuation row in source order', 'weapon-action-entry-binding');
+    }
+    const outgoingInputsByKey = new Map();
+    for (const edge of edges.filter(edge => edge.fromAction === action)) {
+      if (!outgoingInputsByKey.has(edge.inputKey)) {
+        outgoingInputsByKey.set(edge.inputKey, { inputKey: edge.inputKey, role: 'continuation', sourceLocator: edge.sourceLocator });
+      }
+    }
+    const expectedBindings = [
+      ...(actionResolution.startInput ? [{ inputKey: actionResolution.startInput.inputKey, role: 'start-input', sourceLocator: actionResolution.startInput.sourceLocator }] : []),
+      ...outgoingInputsByKey.values(),
+    ];
+    if (!Array.isArray(actionResolution.inputBindings) || canonical(actionResolution.inputBindings) !== canonical(expectedBindings)) {
+      issue(issues, profileAt + '/actionResolution/inputBindings', 'action input bindings must exactly represent its direct start input and outgoing literal continuation inputs', 'weapon-action-resolution-input');
+    }
+    for (const [bindingIndex, binding] of (actionResolution.inputBindings ?? []).entries()) validateInput(binding.inputKey, binding.sourceLocator, profileAt + '/actionResolution/inputBindings/' + bindingIndex);
+    if (actionResolution.targetApplicability !== 'all-static-registry-minion-hit-schemas') issue(issues, profileAt + '/actionResolution/targetApplicability', 'action applicability must retain the static minion hit-schema scope', 'weapon-target-applicability');
+    if (canonical(actionResolution.branchBindings ?? []) !== canonical(profile.payload.sourceBindings ?? [])) issue(issues, profileAt + '/actionResolution/branchBindings', 'profile branch bindings must match Source profile refs exactly', 'weapon-action-branch-coverage');
+    for (const [branchIndex, branch] of (actionResolution.branchBindings ?? []).entries()) resolveSourceRecord(typedSourceRef(branch.profileRef, 'damage-profile'), 'damage-profile', releaseId, inputs, issues, profileAt + '/actionResolution/branchBindings/' + branchIndex + '/profileRef');
+    for (const [conditionIndex, condition] of (actionResolution.runtimeConditions ?? []).entries()) {
+      if (condition.execution !== 'not-evaluated' || typeof condition.rawValue !== 'string' || !condition.sourceLocator || !condition.fieldPath) {
+        issue(issues, profileAt + '/actionResolution/runtimeConditions/' + conditionIndex, 'runtime conditions must remain raw descriptive Source facts', 'weapon-action-runtime-condition');
+      }
+    }
+    verifyClosureRefs(profile.payload.targetProfileRefs, expectedTargets, 'target-profile', profileAt + '/targetProfileRefs', 'weapon-target-coverage', 'attack profile must bind every current-release static minion target exactly once');
+    verifyClosureRefs(profile.payload.armorClassRefs, [...expectedArmor.values()], 'armor-class', profileAt + '/armorClassRefs', 'weapon-armor-coverage', 'attack profile armor refs must exactly match base, toughness, and hit-zone override closure');
+    verifyClosureRefs(profile.payload.modifierRuleRefs, expectedRuleRefs, 'modifier-rule', profileAt + '/modifierRuleRefs', 'weapon-modifier-rule-coverage', 'attack profile modifier refs must exactly match the current-release static relation records');
+  }
+
+  const closure = resolution.staticClosure ?? {};
+  const actionSettings = bindings.filter(binding => binding.returnKind === 'action-settings').length;
+  const generatedEdges = bindings.reduce((count, binding) => {
+    const definition = generatorByKey.get(binding.generatorKey)?.definitions?.find(row => row.definitionIndex === generatorByKey.get(binding.generatorKey)?.effectiveDefinitionIndex);
+    return count + (definition?.generatedContinuations?.length ?? 0)
+      + (definition?.generatedActions ?? []).reduce((sum, row) => sum + (row.continuationEdges?.length ?? 0), 0);
+  }, 0);
+  const expectedProfiles = profiles.reduce((count, profile) => count + (profile.payload.actionResolution?.branchBindings?.length ?? 0), 0);
+  if (closure.localActionCount !== localActions.length || closure.fallbackActionCount !== fallbackActions.length
+    || closure.profileBindingCount !== expectedProfiles || closure.literalContinuationEdgeCount !== edges.length
+    || closure.generatedActionSettingsCount !== actionSettings || closure.generatedContinuationEdgeCount !== generatedEdges
+    || closure.inputEntryCount !== inputEntries.length) {
+    issue(issues, base + '/staticClosure', 'static closure counts must match the preserved actions, literal and generated edges, profile bindings, and merged inputs', 'weapon-resolution-closure-count');
+  }
+}
+
+function validateW07ActionProfileClosure(weapon, profiles, releaseId, inputs, issues, at) {
+  const resolution = weapon.payload.actionProfileResolution;
+  if (!resolution) {
+    issue(issues, at + '/actionProfileResolution', 'W07 weapon facts require the pinned Source action-resolution closure', 'weapon-resolution-required');
+    return;
+  }
+  if (resolution.executionPolicy === 'static-only; functions not executed') {
+    validateW07R6ActionProfileClosure(weapon, profiles, releaseId, inputs, issues, at);
+    return;
+  }
+
+  const inputSetup = resolution.inputSetup;
+  const inputEntries = inputSetup?.inputEntries ?? [];
+  const inputKeys = new Set(inputEntries.map(entry => entry.inputKey));
+  if (!inputSetup || typeof inputSetup.setupKey !== 'string' || typeof inputSetup.inheritedSetupKey !== 'string'
+    || !Array.isArray(inputSetup.sourceLocators) || !inputSetup.hierarchyRaw || !Array.isArray(inputSetup.inputEntries)) {
+    issue(issues, at + '/actionProfileResolution/inputSetup', 'weapon action resolution requires the fixed input setup and its source entries', 'weapon-resolution-input-setup');
+  }
+  for (const [index, entry] of inputEntries.entries()) {
+    if (typeof entry.inputKey !== 'string' || typeof entry.rawValue !== 'string' || !entry.sourceLocator) {
+      issue(issues, at + '/actionProfileResolution/inputSetup/inputEntries/' + index, 'input entries must preserve their key, raw value, and source locator', 'weapon-resolution-input-setup');
+    }
+  }
+  if (new Set(inputEntries.map(entry => entry.inputKey)).size !== inputEntries.length) {
+    issue(issues, at + '/actionProfileResolution/inputSetup/inputEntries', 'input setup keys must be unique', 'weapon-resolution-input-setup');
+  }
+  if (!Array.isArray(resolution.localActions) || !Array.isArray(resolution.fallbackActions)) {
+    issue(issues, at + '/actionProfileResolution', 'weapon action resolution requires both local and base-template fallback action lists', 'weapon-resolution-actions');
+  }
+  if (resolution.conditionExecution !== 'not-evaluated') {
+    issue(issues, at + '/actionProfileResolution/conditionExecution', 'runtime conditions must remain descriptive and not evaluated', 'weapon-resolution-condition');
+  }
+
+  const localActions = resolution.localActions ?? [];
+  const fallbackActions = resolution.fallbackActions ?? [];
+  const allActions = [...localActions, ...fallbackActions];
+  for (const [name, entries] of [['localActions', localActions], ['fallbackActions', fallbackActions]]) {
+    for (const [index, entry] of entries.entries()) {
+      if (typeof entry.action !== 'string' || !entry.sourceLocator
+        || (entry.startInput !== undefined && (typeof entry.startInput !== 'string' || !entry.startInputSourceLocator))) {
+        issue(issues, at + '/actionProfileResolution/' + name + '/' + index, 'action rows must preserve their identity, optional start input, and source locators', 'weapon-resolution-actions');
+      }
+    }
+  }
+  const profileActionNames = new Set(profiles.map(profile => profile.payload.action));
+  for (const action of profileActionNames) {
+    if (localActions.filter(entry => entry.action === action).length + fallbackActions.filter(entry => entry.action === action).length === 0) {
+      issue(issues, at + '/actionProfileResolution', 'every Source attack profile must resolve to a local or fallback action: ' + action, 'weapon-resolution-action-missing');
+    }
+  }
+  for (const [name, entries] of [['localActions', localActions], ['fallbackActions', fallbackActions]]) {
+    if (new Set(entries.map(entry => entry.action)).size !== entries.length) {
+      issue(issues, at + '/actionProfileResolution/' + name, 'each action origin list must have unique action keys', 'weapon-resolution-action-duplicate');
+    }
+  }
+
+  const expectedTargetProfiles = inputs.sourceContract.records
+    .filter(record => record.gameReleaseId === releaseId && record.kind === 'target-profile' && record.payload.sourceStatic?.breedType === 'minion')
+    .map(record => ({ recordId: record.recordId, gameReleaseId: record.gameReleaseId, kind: 'target-profile' }));
+  const expectedArmorClasses = new Map();
+  const expectedModifierRules = new Map();
+  for (const targetRef of expectedTargetProfiles) {
+    const target = inputs.sourceRecordMap.get(keyOf(targetRef));
+    const sourceStatic = target?.payload.sourceStatic;
+    if (!sourceStatic || !sourceStatic.rawHitZones || typeof sourceStatic.rawHitZones.rawValue !== 'string'
+      || !Array.isArray(sourceStatic.hitZones) || sourceStatic.hitZones.length === 0
+      || !Array.isArray(sourceStatic.unresolvedZoneReferences)) {
+      issue(issues, at + '/actionProfileResolution', 'each imported minion target profile requires its Source static hit-zone facts', 'weapon-target-static-facts');
+      continue;
+    }
+    const armorRefs = [sourceStatic.baseArmorClassRef,
+      sourceStatic.toughnessArmorClassRef,
+      ...sourceStatic.hitZones.map(zone => zone.armorOverrideRef).filter(Boolean)];
+    for (const ref of uniqueTypedRefs(armorRefs, 'armor-class')) expectedArmorClasses.set(sourceRefKey(ref), ref);
+    const ruleRefs = [
+      ...(sourceStatic.armorRuleRefs ?? []),
+      ...(sourceStatic.weakspotRuleRefs ?? []),
+      ...(sourceStatic.critFinesseRuleRefs ?? []),
+    ];
+    for (const ref of uniqueTypedRefs(ruleRefs, 'modifier-rule')) expectedModifierRules.set(sourceRefKey(ref), ref);
+
+    for (const [zoneIndex, zone] of sourceStatic.hitZones.entries()) {
+      const zoneAt = at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/hitZones/' + zoneIndex;
+      if (typeof zone.zoneId !== 'string' || !zone.zoneId || !Array.isArray(zone.actors)
+        || typeof zone.actorsRawValue !== 'string'
+        || !zone.rawSource || typeof zone.rawSource.rawValue !== 'string'
+        || !Array.isArray(zone.hitZoneDamageMultiplierRows)) {
+        issue(issues, zoneAt, 'hit-zone facts must preserve the zone identity, resolved and raw actors, raw source fragment, and damage-multiplier rows', 'weapon-target-static-facts');
+      }
+      if (zone.baseArmorClassRef) issue(issues, zoneAt + '/baseArmorClassRef', 'base armor identity belongs to the target profile; a hit-zone may only declare an override', 'weapon-target-armor-binding');
+      if (zone.armorOverrideRef) resolveSourceRecord(typedSourceRef(zone.armorOverrideRef, 'armor-class'), 'armor-class', releaseId, inputs, issues, zoneAt + '/armorOverrideRef');
+    }
+    resolveSourceRecord(typedSourceRef(sourceStatic.baseArmorClassRef, 'armor-class'), 'armor-class', releaseId, inputs, issues, at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/baseArmorClassRef');
+    const toughnessFields = [sourceStatic.toughnessArmorClassRef, sourceStatic.toughnessArmorLocator, sourceStatic.toughnessArmorRawValue];
+    if (toughnessFields.some(value => value !== undefined && value !== null)) {
+      if (!sourceStatic.toughnessArmorClassRef || !sourceStatic.toughnessArmorLocator || typeof sourceStatic.toughnessArmorRawValue !== 'string') {
+        issue(issues, at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/toughnessArmorClassRef', 'toughness armor identity, raw value, and locator must be preserved together', 'weapon-target-static-facts');
+      } else {
+        resolveSourceRecord(typedSourceRef(sourceStatic.toughnessArmorClassRef, 'armor-class'), 'armor-class', releaseId, inputs, issues, at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/toughnessArmorClassRef');
+      }
+    }
+    for (const [referenceIndex, reference] of sourceStatic.unresolvedZoneReferences.entries()) {
+      if (!reference || !reference.sourceLocator) {
+        issue(issues, at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/unresolvedZoneReferences/' + referenceIndex, 'unresolved zone references must retain their Source locator', 'weapon-target-static-facts');
+      }
+    }
+    for (const [name, refs] of [['armorRuleRefs', sourceStatic.armorRuleRefs], ['weakspotRuleRefs', sourceStatic.weakspotRuleRefs], ['critFinesseRuleRefs', sourceStatic.critFinesseRuleRefs]]) {
+      for (const [refIndex, ref] of (refs ?? []).entries()) resolveSourceRecord(typedSourceRef(ref, 'modifier-rule'), 'modifier-rule', releaseId, inputs, issues, at + '/actionProfileResolution/targetProfiles/' + target.recordId + '/' + name + '/' + refIndex);
+    }
+  }
+  if (expectedTargetProfiles.length === 0) {
+    issue(issues, at + '/actionProfileResolution', 'action profiles must resolve to the pinned static minion hit-zone registry', 'weapon-target-registry-missing');
+  }
+
+  for (const [index, profile] of profiles.entries()) {
+    const profileAt = at + '/attackProfileRefs/' + index;
+    const action = profile.payload.action;
+    const actionResolution = profile.payload.actionResolution;
+    if (!actionResolution) {
+      issue(issues, profileAt + '/actionResolution', 'each Source attack profile requires a narrow action-specific resolution', 'weapon-action-resolution-required');
+      continue;
+    }
+    if (!['weapon-template', 'base-template-settings'].includes(actionResolution.origin)) {
+      issue(issues, profileAt + '/actionResolution/origin', 'action origin must identify a weapon-local or base-template action', 'weapon-action-resolution-origin');
+    }
+    const ownerActions = actionResolution.origin === 'weapon-template' ? localActions : fallbackActions;
+    const matchingOwnerActions = ownerActions.filter(entry => entry.action === action);
+    if (matchingOwnerActions.length !== 1) {
+      issue(issues, profileAt + '/actionResolution/origin', 'action must resolve to exactly one matching local or fallback action', 'weapon-action-resolution-origin');
+    } else if (matchingOwnerActions[0].startInput && matchingOwnerActions[0].startInput !== actionResolution.startInput?.inputKey) {
+      issue(issues, profileAt + '/actionResolution/startInput', 'action start input differs from its fixed local or fallback action row', 'weapon-action-resolution-input');
+    }
+    const startInputKey = actionResolution.startInput?.inputKey;
+    if (typeof startInputKey !== 'string' || !inputKeys.has(startInputKey) || !actionResolution.startInput?.sourceLocator) {
+      issue(issues, profileAt + '/actionResolution/startInput', 'action start input must resolve in the selected input setup', 'weapon-action-resolution-input');
+    }
+    const bindings = actionResolution.inputBindings ?? [];
+    if (!Array.isArray(actionResolution.inputBindings)) issue(issues, profileAt + '/actionResolution/inputBindings', 'action input bindings must be present, including an empty array when none apply', 'weapon-action-resolution-input');
+    for (const [bindingIndex, binding] of bindings.entries()) {
+      if (!inputKeys.has(binding.inputKey) || !binding.sourceLocator) issue(issues, profileAt + '/actionResolution/inputBindings/' + bindingIndex + '/inputKey', 'action input binding must resolve in the selected input setup and retain its source locator', 'weapon-action-resolution-input');
+      if (!['start-input', 'continuation'].includes(binding.role)) issue(issues, profileAt + '/actionResolution/inputBindings/' + bindingIndex + '/role', 'input binding role is unsupported', 'weapon-action-resolution-input');
+    }
+    if (!bindings.some(binding => binding.inputKey === startInputKey && binding.role === 'start-input')) {
+      issue(issues, profileAt + '/actionResolution/inputBindings', 'the start input must be represented by a start-input binding', 'weapon-action-resolution-input');
+    }
+    if (actionResolution.targetApplicability !== 'all-static-registry-minion-hit-schemas') {
+      issue(issues, profileAt + '/actionResolution/targetApplicability', 'attack target applicability must identify the imported static minion registry', 'weapon-target-applicability');
+    }
+
+    const expectedTargets = expectedTargetProfiles;
+    const sourceTargetRefs = profile.payload.targetProfileRefs ?? [];
+    const actualTargets = uniqueTypedRefs(sourceTargetRefs, 'target-profile');
+    if (actualTargets.length !== sourceTargetRefs.length || !refsMatchSet(actualTargets, expectedTargets)) {
+      issue(issues, profileAt + '/targetProfileRefs', 'every attack profile must bind the complete pinned minion target-profile registry exactly once', 'weapon-target-coverage');
+    }
+    const expectedArmorRefs = [...expectedArmorClasses.values()];
+    const sourceArmorRefs = profile.payload.armorClassRefs ?? [];
+    const actualArmorRefs = uniqueTypedRefs(sourceArmorRefs, 'armor-class');
+    if (actualArmorRefs.length !== sourceArmorRefs.length || !refsMatchSet(actualArmorRefs, expectedArmorRefs)) {
+      issue(issues, profileAt + '/armorClassRefs', 'attack profile armor-class refs must exactly match its target-profile closure', 'weapon-armor-coverage');
+    }
+    const expectedRuleRefs = [...expectedModifierRules.values()];
+    const sourceRuleRefs = profile.payload.modifierRuleRefs ?? [];
+    const actualRuleRefs = uniqueTypedRefs(sourceRuleRefs, 'modifier-rule');
+    if (actualRuleRefs.length !== sourceRuleRefs.length || !refsMatchSet(actualRuleRefs, expectedRuleRefs)) {
+      issue(issues, profileAt + '/modifierRuleRefs', 'attack profile modifier-rule refs must exactly match its target-profile closure', 'weapon-modifier-rule-coverage');
+    }
+    for (const [refIndex, ref] of (profile.payload.targetProfileRefs ?? []).entries()) resolveSourceRecord(typedSourceRef(ref, 'target-profile'), 'target-profile', releaseId, inputs, issues, profileAt + '/targetProfileRefs/' + refIndex);
+    for (const [refIndex, ref] of (profile.payload.armorClassRefs ?? []).entries()) resolveSourceRecord(typedSourceRef(ref, 'armor-class'), 'armor-class', releaseId, inputs, issues, profileAt + '/armorClassRefs/' + refIndex);
+    for (const [refIndex, ref] of (profile.payload.modifierRuleRefs ?? []).entries()) resolveSourceRecord(typedSourceRef(ref, 'modifier-rule'), 'modifier-rule', releaseId, inputs, issues, profileAt + '/modifierRuleRefs/' + refIndex);
+
+    const branches = actionResolution.branchBindings ?? [];
+    if (!Array.isArray(actionResolution.branchBindings)) issue(issues, profileAt + '/actionResolution/branchBindings', 'action branch bindings must be present, including an empty array when none apply', 'weapon-action-branch-coverage');
+    if (canonical(branches) !== canonical(profile.payload.sourceBindings ?? [])) {
+      issue(issues, profileAt + '/actionResolution/branchBindings', 'action-resolution branches must match the Source profile bindings exactly', 'weapon-action-branch-coverage');
+    }
+    for (const [branchIndex, branch] of branches.entries()) {
+      resolveSourceRecord(typedSourceRef(branch.profileRef, 'damage-profile'), 'damage-profile', releaseId, inputs, issues, profileAt + '/actionResolution/branchBindings/' + branchIndex + '/profileRef');
+    }
+    if (!Array.isArray(actionResolution.runtimeConditions)) issue(issues, profileAt + '/actionResolution/runtimeConditions', 'runtime condition facts must be present, including an empty array when none apply', 'weapon-action-runtime-condition');
+    for (const [conditionIndex, condition] of (actionResolution.runtimeConditions ?? []).entries()) {
+      if (condition.execution !== 'not-evaluated' || typeof condition.rawValue !== 'string' || typeof condition.fieldPath !== 'string' || !condition.sourceLocator) {
+        issue(issues, profileAt + '/actionResolution/runtimeConditions/' + conditionIndex, 'runtime conditions must preserve their source predicate without evaluation', 'weapon-action-runtime-condition');
+      }
+    }
+  }
+
+  const expectedActionCount = new Set(allActions.map(entry => entry.action)).size;
+  const expectedProfileBindings = profiles.reduce((count, profile) => count + (profile.payload.actionResolution?.branchBindings?.length ?? 0), 0);
+  const closure = resolution.staticClosure ?? {};
+  if (closure.actionCount !== expectedActionCount
+    || closure.profileBindingCount !== expectedProfileBindings
+    || closure.continuationEdgeCount !== (weapon.payload.actionContinuations ?? []).length
+    || closure.inputEntryCount !== inputEntries.length) {
+    issue(issues, at + '/actionProfileResolution/staticClosure', 'static closure counts must match the imported action, profile, continuation, and input-entry facts', 'weapon-resolution-closure-count');
+  }
+}
+
 function detailItemHasContent(item) {
   if (hasNonemptyText(item.text)) return true;
   return (item.parts ?? []).some(part => part.kind !== 'literal' || hasNonemptyText(part.text));
@@ -835,24 +1515,37 @@ function validateWeaponView(presentation, contract, inputs, issues, at) {
     const actualCurves = [];
     for (const [refIndex, ref] of section.curveRefs.entries()) {
       const curve = resolveSourceRecord(ref, 'stat-curve', releaseId, inputs, issues, sectionAt + '/curveRefs/' + refIndex);
-      if (curve) actualCurves.push(ref);
+      if (curve) {
+        actualCurves.push(ref);
+        if (weapon.payload.actionProfileResolution) {
+          const linkedDefinition = expectedDefinitions.find(definition => sourceRefKey({ ...definition.payload.curveRef, kind: 'stat-curve' }) === sourceRefKey(ref));
+          if (linkedDefinition) validateW07CurveRecord(linkedDefinition, curve, issues, '/records/' + curve.recordId);
+        }
+      }
     }
     if (!refsMatchSet(actualCurves, expectedCurves)) issue(issues, sectionAt + '/curveRefs', 'curve refs must match the curves of this Source stat group', 'weapon-stat-curve');
     expectedReviewTargets.push('/weaponView/statSections/' + sectionIndex);
   }
 
+  if (weapon.payload.actionProfileResolution) {
+    validateW07CurveMappings(weapon, statDefinitionRecords, releaseId, inputs, issues, '/records/' + weapon.recordId);
+  }
+
   const expectedProfiles = (weapon.payload.attackProfileRefs ?? []).map(ref => ({ ...ref, kind: 'attack-profile' }));
   const actualProfiles = [];
+  const resolvedProfiles = [];
   for (const [refIndex, ref] of view.attackProfileRefs.entries()) {
     const profile = resolveSourceRecord(ref, 'attack-profile', releaseId, inputs, issues, at + '/weaponView/attackProfileRefs/' + refIndex);
     if (profile) {
       actualProfiles.push(ref);
+      resolvedProfiles.push(profile);
       if (profile.payload.weaponRef?.recordId !== weapon.recordId || profile.payload.weaponRef?.gameReleaseId !== weapon.gameReleaseId) issue(issues, at + '/weaponView/attackProfileRefs/' + refIndex, 'attack profile belongs to a different Source weapon mark', 'weapon-action-owner');
       if (profile.payload.templateKey !== weapon.payload.templateKey) issue(issues, at + '/weaponView/attackProfileRefs/' + refIndex, 'attack profile template differs from the selected Source weapon template', 'weapon-action-template');
     }
     expectedReviewTargets.push('/weaponView/attackProfileRefs/' + refIndex);
   }
   if (!refsMatchOrder(actualProfiles, expectedProfiles)) issue(issues, at + '/weaponView/attackProfileRefs', 'weapon view must retain every Source action profile in source order for the selected mark', 'weapon-action-coverage');
+  validateW07ActionProfileClosure(weapon, resolvedProfiles, releaseId, inputs, issues, at + '/weaponView');
 
   for (const field of ['markLabel', 'attackHeading', 'comparisonHeading', 'note']) if (hasNonemptyText(view[field])) expectedReviewTargets.push('/weaponView/' + field);
   for (const fieldPath of expectedReviewTargets) {
@@ -1267,12 +1960,121 @@ function reviewSourceValue(target, owner, value) {
   return value;
 }
 
-function reviewDependencyRefs(target, owner, value) {
+function w07ActionTargetProjection(target, owner, inputs) {
+  if (inputs.mode !== 'w07' || target.ownerKind !== 'presentation') return null;
+  const match = target.fieldPath.match(/^\/weaponView\/attackProfileRefs\/(\d+)$/);
+  if (!match) return null;
+  const profileRef = owner.weaponView?.attackProfileRefs?.[Number(match[1])];
+  const profile = profileRef && inputs.sourceRecordMap.get(keyOf(profileRef));
+  const weaponRef = owner.weaponView?.sourceWeaponRef;
+  const weapon = weaponRef && inputs.sourceRecordMap.get(keyOf(weaponRef));
+  const actionResolution = profile?.payload.actionResolution;
+  const weaponResolution = weapon?.payload.actionProfileResolution;
+  if (!profile || !weapon || !actionResolution || !weaponResolution) return null;
+
+  const inputKeys = new Set([
+    actionResolution.startInput?.inputKey,
+    ...(actionResolution.inputBindings ?? []).map(binding => binding.inputKey),
+    ...(actionResolution.entryBindings ?? []).map(binding => binding.inputKey),
+  ].filter(value => typeof value === 'string'));
+  const inputSetup = weaponResolution.inputSetup ?? {};
+  const canonicalInputKeys = new Set([...inputKeys].map(canonicalActionInputKey));
+  const selectedInputEntries = (inputSetup.inputEntries ?? []).filter(entry => canonicalInputKeys.has(canonicalActionInputKey(entry.inputKey)));
+  const actionRows = actionResolution.origin === 'weapon-template'
+    ? weaponResolution.localActions ?? []
+    : weaponResolution.fallbackActions ?? [];
+  const selectedOriginRows = actionRows.filter(entry => entry.action === profile.payload.action
+    && (!entry.origin || entry.origin === actionResolution.origin));
+  const selectedGeneratorBindings = (weaponResolution.generatorBindings ?? [])
+    .filter(binding => binding.ownerAction === profile.payload.action);
+  const selectedGeneratorKeys = new Set(selectedGeneratorBindings.map(binding => binding.generatorKey));
+  const selectedGenerators = (weaponResolution.actionGenerators ?? []).filter(group => selectedGeneratorKeys.has(group.generatorKey))
+    .map(group => ({
+      generatorKey: group.generatorKey,
+      effectiveDefinitionIndex: group.effectiveDefinitionIndex,
+      definition: group.definitions?.find(definition => definition.definitionIndex === group.effectiveDefinitionIndex) ?? null,
+    }));
+  return {
+    profile,
+    value: {
+      sourceActionProfileRef: { recordId: profile.recordId, gameReleaseId: profile.gameReleaseId, kind: profile.kind },
+      actionResolution,
+      inputSetup: {
+        setupKey: inputSetup.setupKey ?? null,
+        inheritedSetupKey: inputSetup.inheritedSetupKey ?? null,
+        hierarchyRaw: inputSetup.hierarchyRaw ?? null,
+        inputEntries: selectedInputEntries,
+      },
+      originRows: selectedOriginRows,
+      generatorBindings: selectedGeneratorBindings,
+      effectiveGenerators: selectedGenerators,
+    },
+  };
+}
+
+function w07StatTargetProjection(target, owner, inputs) {
+  if (inputs.mode !== 'w07' || target.ownerKind !== 'presentation') return null;
+  const match = target.fieldPath.match(/^\/weaponView\/statSections\/(\d+)$/);
+  if (!match) return null;
+  const section = owner.weaponView?.statSections?.[Number(match[1])];
+  const weaponRef = owner.weaponView?.sourceWeaponRef;
+  const weapon = weaponRef && inputs.sourceRecordMap.get(keyOf(weaponRef));
+  if (!section || !weapon) return null;
+  const sourceGroup = weapon.payload.statBindings?.find(binding => binding.statKey === section.sourceStat);
+  if (!sourceGroup) return null;
+  const sourceRows = (weapon.payload.sourceRows ?? []).filter(row => {
+    const fieldPath = row.sourceLocator?.fieldPath;
+    const prefix = 'weapon_template.base_stats.' + section.sourceStat;
+    return typeof fieldPath === 'string' && (fieldPath === prefix || fieldPath.startsWith(prefix + '.'));
+  });
+  const statTables = (weapon.payload.statTables ?? []).filter(table => table.statKey === section.sourceStat);
+  const statTableSemantics = (weapon.payload.statTableSemantics ?? []).filter(item => item.statKey === section.sourceStat);
+  const bindings = (sourceGroup.bindings ?? []).map(binding => ({
+    property: binding.property,
+    action: binding.action ?? null,
+    mode: binding.mode ?? null,
+    traitTemplateKey: binding.traitTemplateKey ?? null,
+    traitParameterRange: binding.traitParameterRange ?? null,
+    weaponLocator: binding.weaponLocator,
+    traitLocator: binding.traitLocator,
+    curveMapping: binding.curveMapping ?? null,
+  }));
+  return {
+    bindings,
+    value: {
+      sourceWeaponRef: { recordId: weapon.recordId, gameReleaseId: weapon.gameReleaseId, kind: weapon.kind },
+      statKey: sourceGroup.statKey,
+      bindings,
+      sourceRows,
+      statTables,
+      statTableSemantics,
+    },
+  };
+}
+
+function reviewDependencyRefs(target, owner, value, inputs) {
   const refs = collectRecordRefs(reviewSourceValue(target, owner, value), []);
   if (target.ownerKind === 'game-change') refs.push(owner.sourceRef);
   if (target.ownerKind === 'presentation') {
     const ownerKey = keyOf(owner.entityRef);
     for (let index = refs.length - 1; index >= 0; index -= 1) if (keyOf(refs[index]) === ownerKey) refs.splice(index, 1);
+  }
+  const actionProjection = w07ActionTargetProjection(target, owner, inputs);
+  if (actionProjection) {
+    const payload = actionProjection.profile.payload;
+    refs.push(...collectRecordRefs(actionProjection.value.actionResolution, []));
+    refs.push(...(payload.actionResolution?.branchBindings ?? []).map(binding => typedSourceRef(binding.profileRef, 'damage-profile')));
+    refs.push(...uniqueTypedRefs(payload.targetProfileRefs ?? [], 'target-profile'));
+    refs.push(...uniqueTypedRefs(payload.armorClassRefs ?? [], 'armor-class'));
+    refs.push(...uniqueTypedRefs(payload.modifierRuleRefs ?? [], 'modifier-rule'));
+  }
+  const statProjection = w07StatTargetProjection(target, owner, inputs);
+  if (statProjection) {
+    for (const binding of statProjection.bindings) {
+      if (!binding.curveMapping) continue;
+      if (binding.curveMapping.statRef) refs.push(typedSourceRef(binding.curveMapping.statRef, 'stat-definition'));
+      if (binding.curveMapping.curveRef) refs.push(typedSourceRef(binding.curveMapping.curveRef, 'stat-curve'));
+    }
   }
   const unique = new Map();
   for (const ref of refs) unique.set(keyOf(ref), ref);
@@ -1437,7 +2239,11 @@ export function computeReviewDigests(contract, target, inputs) {
     dependencies.push({ kind: 'game-release', side: 'from', value: releaseReviewProjection(sourceContract, owner.fromGameReleaseId) });
     dependencies.push({ kind: 'game-release', side: 'to', value: releaseReviewProjection(sourceContract, owner.toGameReleaseId) });
   }
-  const refs = reviewDependencyRefs(target, owner, value);
+  const actionProjection = w07ActionTargetProjection(target, owner, inputs);
+  if (actionProjection) dependencies.push({ kind: 'weapon-action-resolution-row', value: actionProjection.value });
+  const statProjection = w07StatTargetProjection(target, owner, inputs);
+  if (statProjection) dependencies.push({ kind: 'weapon-stat-curve-mapping-row', value: statProjection.value });
+  const refs = reviewDependencyRefs(target, owner, value, inputs);
   refs.push(...officialSourceClaimRefs(target, owner, inputs, sourceRecordMap));
   const uniqueRefs = new Map(refs.map(ref => [keyOf(ref), ref]));
   for (const ref of [...uniqueRefs.values()].sort((left, right) => compareLexical(keyOf(left), keyOf(right)))) {
