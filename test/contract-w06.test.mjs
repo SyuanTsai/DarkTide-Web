@@ -22,7 +22,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 test('UnitT70_w06-loads-real-source-pin-and-valid-nonfixture-candidate', async () => {
   const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
   assert.equal(inputs.mode, 'w06');
-  assert.equal(inputs.sourceLock.commit, 'b9d6eb3d2f067772aee4613daecba0414cb11c0d');
+  assert.equal(inputs.sourceLock.commit, 'f5514e4361d09361d9621e885082b7b5c51d1c95');
   assert.equal(inputs.authoring.fixtureOnly, false);
   assert.equal(inputs.authoring.publicationEligible, false);
   assert.equal(inputs.authoring.sourcePin.dataSha256, inputs.sourceLock.files.data.sha256);
@@ -833,4 +833,85 @@ test('UnitT90_w06-builder-retains-declared-targets-for-empty-content', async () 
     ...declaredParts.map((_, index) => index === emptyPartIndex ? 'pending' : 'approved'),
   ]);
   assert.equal(row.reviewState, 'pending');
+});
+
+// Scenario: A non-tier skill's text is represented as one literal part with a review target on the parts collection.
+// Purpose: Keep the public W06 builder aligned with validator-supported collection, per-part, and literal-text scopes.
+test('UnitT91_w06-builder-accepts-non-tier-parts-collection-review-target', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const skill = inputs.authoring.presentations.find(item => item.entityRef.kind === 'skill');
+  const originalItem = skill.detailSections[0].items[0];
+  const itemPath = '/detailSections/0/items/0';
+  const targetScopes = [
+    ['parts collection', '/parts'],
+    ['per-part', '/parts/0'],
+    ['literal text', '/parts/0/text'],
+  ];
+
+  for (const [label, suffix] of targetScopes) {
+    const candidate = structuredClone(inputs.authoring);
+    const presentation = candidate.presentations.find(item => item.authoringId === skill.authoringId);
+    const item = presentation.detailSections[0].items[0];
+    item.parts = [{ kind: 'literal', text: originalItem.text }];
+    delete item.text;
+    candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerKind === 'presentation'
+      && target.ownerId === presentation.authoringId && target.fieldPath.startsWith(itemPath)));
+    const targetId = 'test:w06:non-tier-parts-' + suffix.replaceAll('/', '-') + '-' + label.replaceAll(' ', '-');
+    candidate.reviewTargets.push({
+      targetId,
+      ownerKind: 'presentation',
+      ownerId: presentation.authoringId,
+      fieldPath: itemPath + suffix,
+      dimension: 'content',
+    });
+    const caseInputs = { ...inputs, authoring: candidate };
+    const validation = validateWebAuthoring(candidate, caseInputs);
+    assert.equal(validation.valid, true, label + ': ' + JSON.stringify(validation.issues));
+    const built = buildW06Candidate(caseInputs, committedW01(repoRoot));
+    const row = built.matrix.detailRows.find(entry => entry.presentationId === presentation.authoringId
+      && entry.tier === null && entry.itemId === item.itemId);
+    assert.deepEqual(row.reviewTargetIds, [targetId], label);
+    assert.equal(row.reviewTargets[0].reviewState, 'pending', label);
+  }
+
+  const incomplete = structuredClone(inputs.authoring);
+  const incompletePresentation = incomplete.presentations.find(item => item.authoringId === skill.authoringId);
+  const incompleteItem = incompletePresentation.detailSections[0].items[0];
+  incompleteItem.parts = [{ kind: 'literal', text: '第一段。' }, { kind: 'literal', text: '第二段。' }];
+  delete incompleteItem.text;
+  incomplete.reviewTargets = incomplete.reviewTargets.filter(target => !(target.ownerKind === 'presentation'
+    && target.ownerId === incompletePresentation.authoringId && target.fieldPath.startsWith(itemPath)));
+  incomplete.reviewTargets.push({
+    targetId: 'test:w06:non-tier-first-part-only', ownerKind: 'presentation', ownerId: incompletePresentation.authoringId,
+    fieldPath: itemPath + '/parts/0', dimension: 'content',
+  });
+  const incompleteInputs = { ...inputs, authoring: incomplete };
+  assert.equal(validateWebAuthoring(incomplete, incompleteInputs).valid, false);
+  assert.throws(() => buildW06Candidate(incompleteInputs, committedW01(repoRoot)));
+  incomplete.reviewTargets.push({
+    targetId: 'test:w06:non-tier-second-part', ownerKind: 'presentation', ownerId: incompletePresentation.authoringId,
+    fieldPath: itemPath + '/parts/1', dimension: 'content',
+  });
+  assert.equal(validateWebAuthoring(incomplete, incompleteInputs).valid, true);
+  assert.doesNotThrow(() => buildW06Candidate(incompleteInputs, committedW01(repoRoot)));
+
+  for (const [label, fieldPath, dimension] of [
+    ['wrong dimension', itemPath + '/parts', 'context'],
+    ['unsafe trailing path', itemPath + '/parts/0/text/extra', 'content'],
+  ]) {
+    const candidate = structuredClone(inputs.authoring);
+    const presentation = candidate.presentations.find(item => item.authoringId === skill.authoringId);
+    const item = presentation.detailSections[0].items[0];
+    item.parts = [{ kind: 'literal', text: originalItem.text }];
+    delete item.text;
+    candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerKind === 'presentation'
+      && target.ownerId === presentation.authoringId && target.fieldPath.startsWith(itemPath)));
+    candidate.reviewTargets.push({
+      targetId: 'test:w06:non-tier-invalid-' + label.replaceAll(' ', '-'),
+      ownerKind: 'presentation', ownerId: presentation.authoringId, fieldPath, dimension,
+    });
+    const caseInputs = { ...inputs, authoring: candidate };
+    assert.equal(validateWebAuthoring(candidate, caseInputs).valid, false, label);
+    assert.throws(() => buildW06Candidate(caseInputs, committedW01(repoRoot)), undefined, label);
+  }
 });

@@ -503,7 +503,7 @@ function validateReceiptAndTargetShapes(contract, issues) {
         || /^\/weaponView\/(?:markLabel|attackHeading|comparisonHeading|note)$/.test(target.fieldPath)
         || /^\/weaponView\/statSections\/\d+$/.test(target.fieldPath)
         || /^\/weaponView\/attackProfileRefs\/\d+$/.test(target.fieldPath)
-        || /^\/detailSections\/\d+\/items\/\d+(?:\/text|\/parts\/\d+(?:\/text)?)?$/.test(target.fieldPath)
+        || /^\/detailSections\/\d+\/items\/\d+(?:\/text|\/parts(?:\/\d+(?:\/text)?)?)?$/.test(target.fieldPath)
         || /^\/tierPresentations\/options\/\d+(?:\/detailSections(?:\/\d+\/items(?:\/\d+(?:\/text|\/parts(?:\/\d+(?:\/text)?)?)?)?)?)?$/.test(target.fieldPath)
         || /^\/errata\/\d+\/text$/.test(target.fieldPath)
       )) || (target.ownerKind === 'term-localization' && ['/label', '/definition'].includes(target.fieldPath))
@@ -753,6 +753,34 @@ function validateRequiredReviewCoverage(contract, issues) {
     if (hasNonemptyText(localization.label)) requireTarget('term-localization', localization.authoringId, ['/label'], 'content', at + '/label', 'non-empty term labels require a content review target');
     if (hasNonemptyText(localization.definition)) requireTarget('term-localization', localization.authoringId, ['/definition'], 'content', at + '/definition', 'non-empty term definitions require a content review target');
     if (hasNonemptyText(localization.contextKey)) requireTarget('term-localization', localization.authoringId, ['/contextKey'], 'context', at + '/contextKey', 'non-empty term contexts require a context review target');
+  }
+
+  for (const [index, announcement] of contract.announcements.entries()) {
+    if (announcement.blocks?.length > 0) {
+      requireTarget('announcement', announcement.announcementId, ['/blocks'], 'announcement', '/announcements/' + index + '/blocks', 'non-empty announcements require a blocks review target');
+    }
+  }
+
+  for (const [index, change] of contract.gameChanges.entries()) {
+    const at = '/gameChanges/' + index;
+    if (hasNonemptyText(change.summary?.text)) {
+      requireTarget('game-change', change.changeId, ['/summary'], 'game-change', at + '/summary', 'non-empty game-change summaries require a matching review target');
+    }
+    if (change.fieldSummaries?.length > 0) {
+      const wholeCollection = hasUniqueReviewTarget(contract, 'game-change', change.changeId, '/fieldSummaries', 'content');
+      const everyField = change.fieldSummaries.every((_, fieldIndex) => hasUniqueReviewTarget(
+        contract, 'game-change', change.changeId, '/fieldSummaries/' + fieldIndex + '/summary', 'content',
+      ));
+      if (!wholeCollection && !everyField) {
+        issue(issues, at + '/fieldSummaries', 'non-empty game-change field summaries require a whole-collection or complete per-field review target set', 'review-coverage');
+      }
+    }
+  }
+
+  for (const [index, change] of contract.officialTextChanges.entries()) {
+    if (hasNonemptyText(change.summary?.text)) {
+      requireTarget('official-text-change', change.changeId, ['/summary'], 'game-change', '/officialTextChanges/' + index + '/summary', 'non-empty official-text-change summaries require a matching review target');
+    }
   }
 }
 
@@ -1449,10 +1477,41 @@ export function getReviewState(contract, targetId, inputs) {
   const current = computeReviewDigests(contract, target, inputs);
   const receipts = contract.reviewReceipts.filter(item => item.targetId === targetId);
   if (!receipts.length) return 'pending';
-  const matching = receipts.filter(item => item.targetDigest === current.targetDigest && item.dependenciesDigest === current.dependenciesDigest)
-    .sort((left, right) => compareLexical(left.reviewedAt, right.reviewedAt));
+  const matching = receipts.filter(item => item.targetDigest === current.targetDigest && item.dependenciesDigest === current.dependenciesDigest);
   if (!matching.length) return 'stale';
-  return matching.at(-1).decision;
+  let latestInstant = [];
+  for (const receipt of matching) {
+    if (latestInstant.length === 0) {
+      latestInstant = [receipt];
+      continue;
+    }
+    const order = compareUtcInstants(receipt.reviewedAt, latestInstant[0].reviewedAt);
+    if (order > 0) latestInstant = [receipt];
+    else if (order === 0) latestInstant.push(receipt);
+  }
+  const decisions = new Set(latestInstant.map(receipt => receipt.decision));
+  if (decisions.has('rejected') || decisions.size !== 1) return 'rejected';
+  return latestInstant[0].decision;
+}
+
+function compareUtcInstants(left, right) {
+  const leftParts = left.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.([0-9]+))?Z$/);
+  const rightParts = right.match(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.([0-9]+))?Z$/);
+  if (!leftParts || !rightParts) return compareLexical(left, right);
+  const leftWholeSecond = Date.parse(leftParts[1] + 'Z');
+  const rightWholeSecond = Date.parse(rightParts[1] + 'Z');
+  if (!Number.isFinite(leftWholeSecond) || !Number.isFinite(rightWholeSecond)) return compareLexical(left, right);
+  const wholeSecondsOrder = leftWholeSecond === rightWholeSecond ? 0 : leftWholeSecond < rightWholeSecond ? -1 : 1;
+  if (wholeSecondsOrder !== 0) return wholeSecondsOrder;
+  const leftFraction = (leftParts[2] ?? '').replace(/0+$/, '');
+  const rightFraction = (rightParts[2] ?? '').replace(/0+$/, '');
+  const length = Math.max(leftFraction.length, rightFraction.length);
+  for (let index = 0; index < length; index += 1) {
+    const leftDigit = leftFraction[index] ?? '0';
+    const rightDigit = rightFraction[index] ?? '0';
+    if (leftDigit !== rightDigit) return leftDigit < rightDigit ? -1 : 1;
+  }
+  return 0;
 }
 
 async function main() {

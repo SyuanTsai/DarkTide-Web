@@ -259,6 +259,7 @@ test('UnitT30_game-change-owner-comparison-and-id-rules-reject-false-updates', a
   const empty = structuredClone(inputs.authoring);
   empty.gameChanges = [];
   empty.officialTextChanges = [];
+  empty.reviewTargets = empty.reviewTargets.filter(target => !['game-change', 'official-text-change'].includes(target.ownerKind));
   assert.equal(validate(empty, inputs).valid, true);
 });
 
@@ -454,18 +455,12 @@ test('UnitT63_name-and-term-text-reviews-are-field-scoped-and-context-bound', as
     ownerId: 'fixture:presentation:weapon-r1', fieldPath: '/errata/0/context/description', dimension: 'context',
   };
   const termContextTarget = contract.reviewTargets.find(item => item.ownerKind === 'term-localization' && item.ownerId === 'fixture:term-localization:alpha-zh-tw' && item.fieldPath === '/contextKey');
-  const gameChangeTarget = {
-    targetId: 'fixture:review:game-change-summary', ownerKind: 'game-change',
-    ownerId: 'fixture:game-change:curve', fieldPath: '/summary', dimension: 'game-change',
-  };
-  const officialChangeTarget = {
-    targetId: 'fixture:review:official-text-change-summary', ownerKind: 'official-text-change',
-    ownerId: 'fixture:official-text-change:weapon', fieldPath: '/summary', dimension: 'game-change',
-  };
-  const announcementTarget = {
-    targetId: 'fixture:review:site-announcement-blocks', ownerKind: 'announcement',
-    ownerId: 'fixture:announcement:site', fieldPath: '/blocks', dimension: 'announcement',
-  };
+  const gameChangeTarget = contract.reviewTargets.find(target => target.ownerKind === 'game-change'
+    && target.ownerId === 'fixture:game-change:curve' && target.fieldPath === '/summary' && target.dimension === 'game-change');
+  const officialChangeTarget = contract.reviewTargets.find(target => target.ownerKind === 'official-text-change'
+    && target.ownerId === 'fixture:official-text-change:weapon' && target.fieldPath === '/summary' && target.dimension === 'game-change');
+  const announcementTarget = contract.reviewTargets.find(target => target.ownerKind === 'announcement'
+    && target.ownerId === 'fixture:announcement:site' && target.fieldPath === '/blocks' && target.dimension === 'announcement');
   const gameplayAnnouncement = structuredClone(contract.announcements[0]);
   gameplayAnnouncement.announcementId = 'fixture:announcement:gameplay';
   gameplayAnnouncement.scope = 'gameplay';
@@ -476,7 +471,7 @@ test('UnitT63_name-and-term-text-reviews-are-field-scoped-and-context-bound', as
     targetId: 'fixture:review:gameplay-announcement-blocks', ownerKind: 'announcement',
     ownerId: 'fixture:announcement:gameplay', fieldPath: '/blocks', dimension: 'announcement',
   };
-  contract.reviewTargets.push(itemTextTarget, errataContextTarget, gameChangeTarget, officialChangeTarget, announcementTarget, gameplayAnnouncementTarget);
+  contract.reviewTargets.push(itemTextTarget, errataContextTarget, gameplayAnnouncementTarget);
   assert.equal(validate(contract, inputs).valid, true);
   const targets = [nameTarget, labelTarget, definitionTarget, itemTextTarget, errataContextTarget, termContextTarget, gameChangeTarget, officialChangeTarget, announcementTarget, gameplayAnnouncementTarget];
   for (const target of targets) {
@@ -639,4 +634,148 @@ test('UnitT72_whole-errata-content-target-covers-nonempty-errata', async () => {
   const result = validate(candidate, inputs);
 
   assert.equal(result.valid, true, JSON.stringify(result.issues));
+});
+
+// Scenario: Matching receipts carry UTC timestamps with no fraction, sub-second fractions, and arbitrary precision.
+// Purpose: Derive review state from the actual instant, keep equal-instant conflicts rejected, and ignore array order.
+test('UnitT73_review-state-orders-UTC-instants-at-arbitrary-fraction-precision', async () => {
+  const inputs = await loadInputs();
+  const target = inputs.authoring.reviewTargets.find(item => item.targetId === 'fixture:review:weapon-r1-name');
+  assert.equal(Date.parse('2026-10-18T24:00:00Z'), Date.parse('2026-10-19T00:00:00Z'));
+  const makeState = entries => {
+    const contract = structuredClone(inputs.authoring);
+    contract.reviewReceipts = [];
+    for (const [reviewedAt, decision] of entries) {
+      const receipt = createReviewReceipt(contract, target, {
+        ...inputs,
+        reviewer: { kind: 'human', id: 'synthetic-time-reviewer' },
+        reviewedAt,
+      });
+      receipt.decision = decision;
+      contract.reviewReceipts.push(receipt);
+    }
+    const result = validate(contract, inputs);
+    assert.equal(result.valid, true, JSON.stringify(result.issues));
+    return getReviewState(contract, target.targetId, inputs);
+  };
+
+  const cases = [
+    [[['2026-10-18T01:00:00Z', 'approved'], ['2026-10-18T01:00:00.1Z', 'rejected']], 'rejected'],
+    [[['2026-10-18T01:00:00.1Z', 'rejected'], ['2026-10-18T01:00:00Z', 'approved']], 'rejected'],
+    [[['2026-10-18T01:00:00Z', 'rejected'], ['2026-10-18T01:00:00.1Z', 'approved']], 'approved'],
+    [[['2026-10-18T01:00:00.999999999999999999Z', 'rejected'], ['2026-10-18T01:00:01Z', 'approved']], 'approved'],
+    [[['2026-10-18T01:00:00.1234000001Z', 'rejected'], ['2026-10-18T01:00:00.1234000002Z', 'approved']], 'approved'],
+    [[['2026-10-18T01:00:00.1234000002Z', 'approved'], ['2026-10-18T01:00:00.1234000001Z', 'rejected']], 'approved'],
+    [[['2026-10-18T01:00:00.1Z', 'approved'], ['2026-10-18T01:00:00.100Z', 'rejected']], 'rejected'],
+    [[['2026-10-18T01:00:00.100Z', 'rejected'], ['2026-10-18T01:00:00.1Z', 'approved']], 'rejected'],
+    [[['2026-10-18T01:00:00.1Z', 'approved'], ['2026-10-18T01:00:00.100Z', 'approved']], 'approved'],
+    [[['2026-10-18T24:00:00Z', 'rejected'], ['2026-10-19T00:00:00Z', 'approved']], 'rejected'],
+    [[['2026-10-19T00:00:00Z', 'approved'], ['2026-10-18T24:00:00Z', 'rejected']], 'rejected'],
+    [[['2026-10-18T24:00:00.000Z', 'rejected'], ['2026-10-19T00:00:00Z', 'approved']], 'rejected'],
+  ];
+  for (const [entries, expected] of cases) assert.equal(makeState(entries), expected, JSON.stringify(entries));
+
+  const invalidShape = structuredClone(inputs.authoring);
+  const validReceipt = createReviewReceipt(invalidShape, target, {
+    ...inputs,
+    reviewer: { kind: 'human', id: 'synthetic-time-reviewer' },
+    reviewedAt: '2026-10-18T01:00:00Z',
+  });
+  invalidShape.reviewReceipts.push({ ...validReceipt, reviewedAt: '2026-10-18T01:00:00+00:00' });
+  const invalidResult = validate(invalidShape, inputs);
+  assert.equal(invalidResult.valid, false);
+  assert.ok(invalidResult.issues.length > 0);
+});
+
+// Scenario: The fixture has non-empty announcement blocks, two change summaries, and a localized field summary.
+// Purpose: Require exact content-driven coverage while preserving whole-collection and complete per-field review scopes.
+test('UnitT74_content-driven-announcement-and-change-coverage-is-owner-bound', async () => {
+  const inputs = await loadInputs();
+  const base = structuredClone(inputs.authoring);
+  const announcement = base.announcements[0];
+  const gameChange = base.gameChanges[0];
+  const officialChange = base.officialTextChanges[0];
+  const requiredTargets = [
+    { targetId: 'fixture:review:coverage:announcement-blocks', ownerKind: 'announcement', ownerId: announcement.announcementId, fieldPath: '/blocks', dimension: 'announcement' },
+    { targetId: 'fixture:review:coverage:game-change-summary', ownerKind: 'game-change', ownerId: gameChange.changeId, fieldPath: '/summary', dimension: 'game-change' },
+    { targetId: 'fixture:review:coverage:official-change-summary', ownerKind: 'official-text-change', ownerId: officialChange.changeId, fieldPath: '/summary', dimension: 'game-change' },
+    { targetId: 'fixture:review:coverage:game-change-fields', ownerKind: 'game-change', ownerId: gameChange.changeId, fieldPath: '/fieldSummaries', dimension: 'content' },
+  ];
+  const stripTargets = contract => {
+    contract.reviewTargets = contract.reviewTargets.filter(target => !requiredTargets.some(required =>
+      target.ownerKind === required.ownerKind && target.ownerId === required.ownerId
+      && (target.fieldPath === required.fieldPath || required.fieldPath === '/fieldSummaries' && /^\/fieldSummaries\/\d+\/summary$/.test(target.fieldPath))
+      && target.dimension === required.dimension));
+    return contract;
+  };
+  const incomplete = stripTargets(structuredClone(base));
+  const incompleteResult = validate(incomplete, inputs);
+  assert.equal(incompleteResult.valid, false);
+  assert.ok(incompleteResult.issues.some(item => item.code === 'review-coverage'));
+
+  const covered = structuredClone(incomplete);
+  covered.reviewTargets.push(...requiredTargets);
+  const coveredResult = validate(covered, inputs);
+  assert.equal(coveredResult.valid, true, JSON.stringify(coveredResult.issues));
+  for (const target of requiredTargets) {
+    const missing = structuredClone(covered);
+    missing.reviewTargets = missing.reviewTargets.filter(item => item.targetId !== target.targetId);
+    const result = validate(missing, inputs);
+    assert.equal(result.valid, false, target.targetId);
+    assert.ok(result.issues.some(item => item.code === 'review-coverage'), target.targetId);
+  }
+
+  const perField = structuredClone(covered);
+  perField.reviewTargets = perField.reviewTargets.filter(target => target.targetId !== requiredTargets[3].targetId);
+  perField.reviewTargets.push({
+    ...requiredTargets[3], targetId: 'fixture:review:coverage:game-change-field-0', fieldPath: '/fieldSummaries/0/summary',
+  });
+  assert.equal(validate(perField, inputs).valid, true, JSON.stringify(validate(perField, inputs).issues));
+
+  const wrongOwnerKind = structuredClone(covered);
+  const announcementTarget = wrongOwnerKind.reviewTargets.find(target => target.targetId === requiredTargets[0].targetId);
+  announcementTarget.ownerKind = 'presentation';
+  announcementTarget.ownerId = 'fixture:presentation:skill-r1';
+  assert.equal(validate(wrongOwnerKind, inputs).valid, false);
+  const wrongOwnerId = structuredClone(covered);
+  wrongOwnerId.reviewTargets.find(target => target.targetId === requiredTargets[1].targetId).ownerId = 'fixture:game-change:missing';
+  assert.equal(validate(wrongOwnerId, inputs).valid, false);
+  const wrongDimension = structuredClone(covered);
+  wrongDimension.reviewTargets.find(target => target.targetId === requiredTargets[2].targetId).dimension = 'content';
+  assert.equal(validate(wrongDimension, inputs).valid, false);
+  const duplicate = structuredClone(covered);
+  duplicate.reviewTargets.push({ ...requiredTargets[0], targetId: 'fixture:review:coverage:duplicate-announcement' });
+  assert.equal(validate(duplicate, inputs).valid, false);
+
+  const addedField = structuredClone(perField);
+  addedField.gameChanges[0].fieldSummaries.push({ field: 'synthetic-secondary', summary: '新增欄位摘要。' });
+  const sourceWithSecondField = structuredClone(inputs.sourceContract);
+  const sourceChange = sourceWithSecondField.records.find(item => item.kind === 'game-change' && item.recordId === gameChange.changeId);
+  const secondField = structuredClone(sourceChange.payload.changedFields[0]);
+  secondField.field = 'synthetic-secondary';
+  secondField.before.decimal = '2';
+  secondField.after.decimal = '3';
+  sourceChange.payload.changedFields.push(secondField);
+  const sourceValidation = inputs.sourceValidator.validateSourceContract(sourceWithSecondField, { schema: inputs.sourceSchema });
+  const subsetInputs = {
+    ...inputs,
+    sourceContract: sourceWithSecondField,
+    sourceValidation,
+    sourceRecordMap: new Map(sourceWithSecondField.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item])),
+  };
+  assert.equal(validate(addedField, subsetInputs).valid, false);
+  addedField.reviewTargets.push({
+    ...requiredTargets[3], targetId: 'fixture:review:coverage:game-change-field-1', fieldPath: '/fieldSummaries/1/summary',
+  });
+  assert.equal(validate(addedField, subsetInputs).valid, true, JSON.stringify(validate(addedField, subsetInputs).issues));
+
+  const addedAnnouncement = structuredClone(covered);
+  addedAnnouncement.announcements.push({
+    ...structuredClone(announcement), announcementId: 'fixture:announcement:additional', revision: announcement.revision + 1,
+  });
+  assert.equal(validate(addedAnnouncement, inputs).valid, false);
+  addedAnnouncement.reviewTargets.push({
+    ...requiredTargets[0], targetId: 'fixture:review:coverage:announcement-additional', ownerId: 'fixture:announcement:additional',
+  });
+  assert.equal(validate(addedAnnouncement, inputs).valid, true, JSON.stringify(validate(addedAnnouncement, inputs).issues));
 });
