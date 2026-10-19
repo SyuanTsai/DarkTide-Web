@@ -13,7 +13,7 @@ import {
   loadWebAuthoringInputs,
   validateWebAuthoring,
 } from '../scripts/content/contract-authoring.mjs';
-import { committedW01 } from '../scripts/content/contract-w06.mjs';
+import { buildW06Candidate, committedW01 } from '../scripts/content/contract-w06.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -524,4 +524,313 @@ test('UnitT85_w06-requires-official-tier-and-applicability-context-coverage', as
   const termResult = validateWebAuthoring(withoutTermContext, inputs);
   assert.equal(termResult.valid, false);
   assert.ok(termResult.issues.some(item => item.code === 'review-coverage' && item.path.includes('/contextKey')));
+});
+
+// Scenario: W06 details use valid whole-section, whole-tier-option, parts-collection, or complete per-part review targets.
+// Purpose: Ensure the public candidate builder resolves every validator-approved detail coverage granularity.
+test('UnitT86_w06-builder-resolves-all-valid-detail-review-granularities', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const skill = inputs.authoring.presentations.find(item => item.entityRef.kind === 'skill');
+  const blessing = inputs.authoring.presentations.find(item => item.tierPresentations);
+  const originalPath = '/detailSections/0/items/0';
+  const originalTarget = inputs.authoring.reviewTargets.find(target => target.ownerId === skill.authoringId && target.fieldPath === originalPath && target.dimension === 'content');
+  const baselineMatrix = buildW06Candidate(inputs, committedW01(repoRoot)).matrix;
+  const baselineRow = baselineMatrix.detailRows.find(item => item.presentationId === skill.authoringId && item.tier === null && item.itemId === skill.detailSections[0].items[0].itemId);
+  assert.equal(baselineMatrix.schemaVersion, '1.1.0');
+  assert.deepEqual(baselineRow.reviewTargetIds, [originalTarget.targetId]);
+  assert.equal(baselineRow.reviewTargetId, originalTarget.targetId);
+  assert.equal(baselineRow.reviewState, 'pending');
+
+  const partOptionIndex = blessing.tierPresentations.options.findIndex(option =>
+    option.detailSections.some(section => section.items.some(item => item.parts?.length > 0)));
+  const partOption = blessing.tierPresentations.options[partOptionIndex];
+  const partSectionIndex = partOption.detailSections.findIndex(section => section.items.some(item => item.parts?.length > 0));
+  const partItemIndex = partOption.detailSections[partSectionIndex].items.findIndex(item => item.parts?.length > 0);
+  const partItemPath = '/tierPresentations/options/' + partOptionIndex + '/detailSections/' + partSectionIndex + '/items/' + partItemIndex;
+  const partItem = partOption.detailSections[partSectionIndex].items[partItemIndex];
+  const removeTargets = (candidate, ownerId, predicate) => {
+    candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerId === ownerId && predicate(target)));
+  };
+  const target = (ownerId, fieldPath, targetId) => ({ targetId, ownerKind: 'presentation', ownerId, fieldPath, dimension: 'content' });
+  const cases = [
+    ['whole skill details', () => {
+      const candidate = structuredClone(inputs.authoring);
+      removeTargets(candidate, skill.authoringId, item => item.dimension === 'content' && (item.fieldPath === '/detailSections' || item.fieldPath.startsWith('/detailSections/')));
+      candidate.reviewTargets.push(target(skill.authoringId, '/detailSections', 'test:w06:whole-skill-details'));
+      return { candidate, ownerId: skill.authoringId, tier: null, itemId: skill.detailSections[0].items[0].itemId, targetIds: ['test:w06:whole-skill-details'] };
+    }],
+    ['whole tier option', () => {
+      const optionIndex = 0;
+      const candidate = structuredClone(inputs.authoring);
+      const base = '/tierPresentations/options/' + optionIndex;
+      removeTargets(candidate, blessing.authoringId, item => item.dimension === 'content' && (item.fieldPath === base || item.fieldPath.startsWith(base + '/detailSections')));
+      candidate.reviewTargets.push(target(blessing.authoringId, base, 'test:w06:whole-tier-option'));
+      return { candidate, ownerId: blessing.authoringId, tier: blessing.tierPresentations.options[optionIndex].tier, itemId: blessing.tierPresentations.options[optionIndex].detailSections[0].items[0].itemId, targetIds: ['test:w06:whole-tier-option'] };
+    }],
+    ['parts collection', () => {
+      const candidate = structuredClone(inputs.authoring);
+      removeTargets(candidate, blessing.authoringId, item => item.fieldPath === partItemPath && item.dimension === 'content');
+      candidate.reviewTargets.push(target(blessing.authoringId, partItemPath + '/parts', 'test:w06:parts-collection'));
+      return { candidate, ownerId: blessing.authoringId, tier: partOption.tier, itemId: partOption.detailSections[partSectionIndex].items[partItemIndex].itemId, targetIds: ['test:w06:parts-collection'] };
+    }],
+    ['complete per-part coverage', () => {
+      const candidate = structuredClone(inputs.authoring);
+      removeTargets(candidate, blessing.authoringId, item => item.fieldPath === partItemPath && item.dimension === 'content');
+      for (const [index] of partItem.parts.entries()) {
+        candidate.reviewTargets.push(target(blessing.authoringId, partItemPath + '/parts/' + index, 'test:w06:part-' + index));
+      }
+      return { candidate, ownerId: blessing.authoringId, tier: partOption.tier, itemId: partItem.itemId, targetIds: partItem.parts.map((_, index) => 'test:w06:part-' + index) };
+    }],
+  ];
+
+  for (const [label, makeCase] of cases) {
+    const { candidate, ownerId, tier, itemId, targetIds } = makeCase();
+    const caseInputs = { ...inputs, authoring: candidate };
+    assert.equal(validateWebAuthoring(candidate, caseInputs).valid, true, label);
+    const built = buildW06Candidate(caseInputs, committedW01(repoRoot));
+    const row = built.matrix.detailRows.find(item => item.presentationId === ownerId && item.tier === tier && item.itemId === itemId);
+    assert.ok(row, label);
+    assert.deepEqual(row.reviewTargetIds, targetIds, label);
+    assert.equal(row.reviewTargetId, row.reviewTargetIds.length === 1 ? row.reviewTargetIds[0] : null, label);
+  }
+});
+
+// Scenario: A typed tier item has per-part review targets for all but one non-empty part.
+// Purpose: Refuse incomplete coverage in both validation and candidate building instead of treating any part as sufficient.
+test('UnitT87_w06-builder-rejects-incomplete-parts-and-invalid-scopes', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const blessing = inputs.authoring.presentations.find(item => item.tierPresentations);
+  const optionIndex = blessing.tierPresentations.options.findIndex(option =>
+    option.detailSections.some(section => section.items.some(item => item.parts?.length > 1)));
+  const option = blessing.tierPresentations.options[optionIndex];
+  const sectionIndex = option.detailSections.findIndex(section => section.items.some(item => item.parts?.length > 1));
+  const itemIndex = option.detailSections[sectionIndex].items.findIndex(item => item.parts?.length > 1);
+  const itemPath = '/tierPresentations/options/' + optionIndex + '/detailSections/' + sectionIndex + '/items/' + itemIndex;
+  const item = option.detailSections[sectionIndex].items[itemIndex];
+  const incomplete = structuredClone(inputs.authoring);
+  incomplete.reviewTargets = incomplete.reviewTargets.filter(target => !(target.ownerId === blessing.authoringId && target.fieldPath === itemPath && target.dimension === 'content'));
+  for (const [index] of item.parts.slice(0, -1).entries()) incomplete.reviewTargets.push({
+    targetId: 'test:w06:incomplete-part-' + index,
+    ownerKind: 'presentation',
+    ownerId: blessing.authoringId,
+    fieldPath: itemPath + '/parts/' + index,
+    dimension: 'content',
+  });
+  const incompleteInputs = { ...inputs, authoring: incomplete };
+  const incompleteResult = validateWebAuthoring(incomplete, incompleteInputs);
+  assert.equal(incompleteResult.valid, false);
+  assert.ok(incompleteResult.issues.some(issue => issue.code === 'review-coverage'));
+  assert.throws(() => buildW06Candidate(incompleteInputs, committedW01(repoRoot)), /non-empty tier detail content requires/);
+
+  const invalidScopes = [
+    candidate => {
+      const target = candidate.reviewTargets.find(item => item.ownerId === blessing.authoringId && item.fieldPath === itemPath && item.dimension === 'content');
+      target.dimension = 'context';
+    },
+    candidate => {
+      const target = candidate.reviewTargets.find(item => item.ownerId === blessing.authoringId && item.fieldPath === itemPath && item.dimension === 'content');
+      target.ownerKind = 'term-localization';
+    },
+    candidate => {
+      const target = candidate.reviewTargets.find(item => item.ownerId === blessing.authoringId && item.fieldPath === itemPath && item.dimension === 'content');
+      candidate.reviewTargets.push({ ...target, targetId: 'test:w06:duplicate-item-scope' });
+    },
+  ];
+  for (const mutate of invalidScopes) {
+    const candidate = structuredClone(inputs.authoring);
+    mutate(candidate);
+    const caseInputs = { ...inputs, authoring: candidate };
+    assert.equal(validateWebAuthoring(candidate, caseInputs).valid, false);
+    assert.throws(() => buildW06Candidate(caseInputs, committedW01(repoRoot)));
+  }
+});
+
+// Scenario: A W06 row is covered by a whole option, a specific item, and a typed-parts collection target.
+// Purpose: Include every overlapping target and aggregate states conservatively without hiding pending, stale, or rejected reviews.
+test('UnitT88_w06-matrix-retains-overlapping-targets-and-aggregates-review-states', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const blessing = inputs.authoring.presentations.find(item => item.tierPresentations);
+  const optionIndex = blessing.tierPresentations.options.findIndex(option =>
+    option.detailSections.some(section => section.items.some(item => item.parts?.length > 0)));
+  const option = blessing.tierPresentations.options[optionIndex];
+  const sectionIndex = option.detailSections.findIndex(section => section.items.some(item => item.parts?.length > 0));
+  const itemIndex = option.detailSections[sectionIndex].items.findIndex(item => item.parts?.length > 0);
+  const item = option.detailSections[sectionIndex].items[itemIndex];
+  const itemPath = '/tierPresentations/options/' + optionIndex + '/detailSections/' + sectionIndex + '/items/' + itemIndex;
+  const base = structuredClone(inputs.authoring);
+  const wholeOption = { targetId: 'test:w06:overlap-whole-option', ownerKind: 'presentation', ownerId: blessing.authoringId, fieldPath: '/tierPresentations/options/' + optionIndex, dimension: 'content' };
+  const partsCollection = { targetId: 'test:w06:overlap-parts-collection', ownerKind: 'presentation', ownerId: blessing.authoringId, fieldPath: itemPath + '/parts', dimension: 'content' };
+  base.reviewTargets.push(wholeOption, partsCollection);
+  const caseTargets = [
+    ...base.reviewTargets.filter(target => target.ownerId === blessing.authoringId && target.fieldPath === itemPath && target.dimension === 'content'),
+    wholeOption,
+    partsCollection,
+  ];
+  assert.equal(caseTargets.length, 3);
+
+  const statesFor = labels => {
+    const candidate = structuredClone(base);
+    candidate.reviewReceipts = [];
+    for (const [index, label] of labels.entries()) {
+      if (label === 'pending') continue;
+      const receipt = createReviewReceipt(candidate, caseTargets[index], {
+        ...inputs,
+        reviewer: { kind: 'human', id: 'test-w06-reviewer' },
+        reviewedAt: '2026-10-19T00:00:00Z',
+      });
+      if (label === 'stale') receipt.targetDigest = 'f'.repeat(64);
+      if (label === 'rejected') receipt.decision = 'rejected';
+      candidate.reviewReceipts.push(receipt);
+    }
+    const built = buildW06Candidate({ ...inputs, authoring: candidate }, committedW01(repoRoot));
+    const row = built.matrix.detailRows.find(entry => entry.presentationId === blessing.authoringId && entry.itemId === item.itemId && entry.tier === option.tier);
+    assert.ok(row);
+    assert.deepEqual(row.reviewTargetIds, caseTargets.map(target => target.targetId));
+    assert.equal(row.reviewTargetId, null);
+    assert.deepEqual(row.reviewTargets, caseTargets.map(target => ({
+      targetId: target.targetId,
+      fieldPath: target.fieldPath,
+      dimension: target.dimension,
+      reviewState: labels[caseTargets.indexOf(target)],
+    })));
+    return { built, row };
+  };
+
+  for (const [labels, expected] of [
+    [['approved', 'approved', 'approved'], 'approved'],
+    [['approved', 'pending', 'approved'], 'pending'],
+    [['approved', 'stale', 'approved'], 'stale'],
+    [['approved', 'approved', 'rejected'], 'rejected'],
+    [['stale', 'pending', 'approved'], 'stale'],
+    [['stale', 'approved', 'rejected'], 'rejected'],
+  ]) {
+    const { built, row } = statesFor(labels);
+    assert.equal(built.matrix.schemaVersion, '1.1.0');
+    assert.equal(row.reviewState, expected);
+    for (const target of row.reviewTargets) {
+      assert.ok(built.markdown.includes(target.targetId + ' (' + target.fieldPath + '; ' + target.dimension + '; ' + target.reviewState + ')'));
+    }
+  }
+});
+
+// Scenario: A detail item contains only whitespace text or empty/whitespace literal parts.
+// Purpose: Preserve the validator's no-content rule in the builder without inventing an approved review target.
+test('UnitT89_w06-builder-marks-empty-detail-rows-not-required', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const skill = inputs.authoring.presentations.find(item => item.entityRef.kind === 'skill');
+  const emptyVariants = [
+    ['whitespace text', item => { item.text = '   '; }],
+    ['all-empty literal parts', item => {
+      delete item.text;
+      item.parts = [{ kind: 'literal', text: '' }, { kind: 'literal', text: ' \t ' }];
+    }],
+  ];
+
+  for (const [label, makeEmpty] of emptyVariants) {
+    const candidate = structuredClone(inputs.authoring);
+    const presentation = candidate.presentations.find(item => item.authoringId === skill.authoringId);
+    const item = presentation.detailSections[0].items[0];
+    const itemPath = '/detailSections/0/items/0';
+    makeEmpty(item);
+    candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerKind === 'presentation'
+      && target.ownerId === presentation.authoringId && target.fieldPath.startsWith(itemPath)));
+    const caseInputs = { ...inputs, authoring: candidate };
+    assert.equal(validateWebAuthoring(candidate, caseInputs).valid, true, label);
+
+    const built = buildW06Candidate(caseInputs, committedW01(repoRoot));
+    const row = built.matrix.detailRows.find(entry => entry.presentationId === presentation.authoringId
+      && entry.tier === null && entry.itemId === item.itemId);
+    assert.ok(row, label);
+    assert.deepEqual(row.reviewTargetIds, [], label);
+    assert.deepEqual(row.reviewTargets, [], label);
+    assert.equal(row.reviewTargetId, null, label);
+    assert.equal(row.reviewState, 'not-required', label);
+  }
+});
+
+// Scenario: An item becomes empty after an approved receipt, or contains an empty literal beside reviewed content.
+// Purpose: Keep declared review targets and their current states visible even when empty content creates no coverage obligation.
+test('UnitT90_w06-builder-retains-declared-targets-for-empty-content', async () => {
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w06' });
+  const skill = inputs.authoring.presentations.find(item => item.entityRef.kind === 'skill');
+  const emptyCandidate = structuredClone(inputs.authoring);
+  const emptyPresentation = emptyCandidate.presentations.find(item => item.authoringId === skill.authoringId);
+  const emptyItem = emptyPresentation.detailSections[0].items[0];
+  const emptyItemPath = '/detailSections/0/items/0';
+  const declaredTarget = emptyCandidate.reviewTargets.find(target => target.ownerKind === 'presentation'
+    && target.ownerId === emptyPresentation.authoringId && target.fieldPath === emptyItemPath && target.dimension === 'content');
+  assert.ok(declaredTarget);
+  emptyCandidate.reviewReceipts.push(createReviewReceipt(emptyCandidate, declaredTarget, {
+    ...inputs,
+    reviewer: { kind: 'human', id: 'test-w06-empty-content-reviewer' },
+    reviewedAt: '2026-10-19T00:00:00Z',
+  }));
+  emptyItem.text = '  ';
+  const emptyInputs = { ...inputs, authoring: emptyCandidate };
+  assert.equal(validateWebAuthoring(emptyCandidate, emptyInputs).valid, true);
+  assert.equal(getReviewState(emptyCandidate, declaredTarget.targetId, emptyInputs), 'stale');
+  const emptyBuilt = buildW06Candidate(emptyInputs, committedW01(repoRoot));
+  const emptyRow = emptyBuilt.matrix.detailRows.find(row => row.presentationId === emptyPresentation.authoringId
+    && row.tier === null && row.itemId === emptyItem.itemId);
+  assert.deepEqual(emptyRow.reviewTargetIds, [declaredTarget.targetId]);
+  assert.deepEqual(emptyRow.reviewTargets, [{
+    targetId: declaredTarget.targetId,
+    fieldPath: declaredTarget.fieldPath,
+    dimension: declaredTarget.dimension,
+    reviewState: 'stale',
+  }]);
+  assert.equal(emptyRow.reviewState, 'stale');
+
+  const candidate = structuredClone(inputs.authoring);
+  const blessing = candidate.presentations.find(item => item.tierPresentations);
+  const optionIndex = blessing.tierPresentations.options.findIndex(option =>
+    option.detailSections.some(section => section.items.some(item => item.parts?.length > 1)));
+  const option = blessing.tierPresentations.options[optionIndex];
+  const sectionIndex = option.detailSections.findIndex(section => section.items.some(item => item.parts?.length > 1));
+  const itemIndex = option.detailSections[sectionIndex].items.findIndex(item => item.parts?.length > 1);
+  const item = option.detailSections[sectionIndex].items[itemIndex];
+  const itemPath = '/tierPresentations/options/' + optionIndex + '/detailSections/' + sectionIndex + '/items/' + itemIndex;
+  const emptyPartIndex = item.parts.findLastIndex(part => part.kind === 'literal');
+  assert.ok(emptyPartIndex > 0);
+  item.parts[emptyPartIndex].text = ' \t ';
+  candidate.reviewTargets = candidate.reviewTargets.filter(target => !(target.ownerId === blessing.authoringId
+    && target.dimension === 'content' && target.fieldPath.startsWith(itemPath)));
+  const coarseTarget = {
+    targetId: 'test:w06:empty-part-coarse-review',
+    ownerKind: 'presentation',
+    ownerId: blessing.authoringId,
+    fieldPath: itemPath,
+    dimension: 'content',
+  };
+  const declaredParts = item.parts.map((_, index) => ({
+    targetId: 'test:w06:empty-part-review-' + index,
+    ownerKind: 'presentation',
+    ownerId: blessing.authoringId,
+    fieldPath: itemPath + '/parts/' + index,
+    dimension: 'content',
+  }));
+  candidate.reviewTargets.push(coarseTarget, ...declaredParts);
+  candidate.reviewReceipts.push(createReviewReceipt(candidate, coarseTarget, {
+    ...inputs,
+    reviewer: { kind: 'human', id: 'test-w06-coarse-part-reviewer' },
+    reviewedAt: '2026-10-19T00:00:00Z',
+  }));
+  for (const [index, target] of declaredParts.entries()) if (index !== emptyPartIndex) {
+    candidate.reviewReceipts.push(createReviewReceipt(candidate, target, {
+      ...inputs,
+      reviewer: { kind: 'human', id: 'test-w06-part-reviewer' },
+      reviewedAt: '2026-10-19T00:00:00Z',
+    }));
+  }
+  const candidateInputs = { ...inputs, authoring: candidate };
+  assert.equal(validateWebAuthoring(candidate, candidateInputs).valid, true);
+  const built = buildW06Candidate(candidateInputs, committedW01(repoRoot));
+  const row = built.matrix.detailRows.find(entry => entry.presentationId === blessing.authoringId
+    && entry.itemId === item.itemId && entry.tier === option.tier);
+  assert.deepEqual(row.reviewTargetIds, [coarseTarget.targetId, ...declaredParts.map(target => target.targetId)]);
+  assert.deepEqual(row.reviewTargets.map(target => target.reviewState), [
+    'approved',
+    ...declaredParts.map((_, index) => index === emptyPartIndex ? 'pending' : 'approved'),
+  ]);
+  assert.equal(row.reviewState, 'pending');
 });

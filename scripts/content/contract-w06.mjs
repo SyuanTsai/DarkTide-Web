@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import {
   getReviewState,
   loadWebAuthoringInputs,
+  resolveDetailReviewTargets,
   validateWebAuthoring,
 } from './contract-authoring.mjs';
 
@@ -132,8 +133,19 @@ function createReviewMatrix(inputs, baseline) {
           const fieldPath = context.tier === null
             ? '/detailSections/' + sectionIndex + '/items/' + itemIndex
             : '/tierPresentations/options/' + context.optionIndex + '/detailSections/' + sectionIndex + '/items/' + itemIndex;
-          const target = inputs.authoring.reviewTargets.find(candidate => candidate.ownerId === presentation.authoringId && candidate.fieldPath === fieldPath);
-          if (!target) throw new Error('Review target is missing for W06 detail row: ' + fieldPath);
+          const resolution = resolveDetailReviewTargets(inputs.authoring, presentation.authoringId, item, fieldPath);
+          const targets = resolution.targets;
+          if (resolution.required && targets.length === 0) throw new Error('Review target is missing for W06 detail row: ' + fieldPath);
+          const reviewTargets = targets.map(target => ({
+            targetId: target.targetId,
+            fieldPath: target.fieldPath,
+            dimension: target.dimension,
+            reviewState: getReviewState(inputs.authoring, target.targetId, inputs),
+          }));
+          const reviewTargetIds = reviewTargets.map(target => target.targetId);
+          const reviewState = reviewTargets.length > 0
+            ? aggregateReviewStates(reviewTargets.map(target => target.reviewState))
+            : 'not-required';
           const currentText = renderDetail(item, presentation.entityRef.gameReleaseId, sourceRecordMap);
           const previousText = previous ? renderDetail(previous, presentation.entityRef.gameReleaseId, sourceRecordMap) : null;
           const refs = claimProjection(item.claimRefs, presentation.entityRef.gameReleaseId, sourceRecordMap);
@@ -145,8 +157,10 @@ function createReviewMatrix(inputs, baseline) {
             tier: context.tier,
             sectionId: section.sectionId,
             sectionLabel: SECTION_LABELS[section.sectionId],
-            reviewTargetId: target.targetId,
-            reviewState: getReviewState(inputs.authoring, target.targetId, inputs),
+            reviewTargetId: reviewTargetIds.length === 1 ? reviewTargetIds[0] : null,
+            reviewTargetIds,
+            reviewTargets,
+            reviewState,
             wordingChange: previousText === null ? 'new' : previousText === currentText ? 'unchanged' : 'changed',
             previousText,
             proposedText: currentText,
@@ -180,7 +194,7 @@ function createReviewMatrix(inputs, baseline) {
     }
   }
   return {
-    schemaVersion: '1.0.0',
+    schemaVersion: '1.1.0',
     candidateOnly: true,
     publicationEligible: false,
     baseline: { commit: baseline.commit, path: W01_AUTHORING_PATH, sha256: baseline.sha256 },
@@ -211,6 +225,12 @@ function createReviewMatrix(inputs, baseline) {
     reviewReceiptCount: inputs.authoring.reviewReceipts.length,
     pendingReviewTargetCount: inputs.authoring.reviewTargets.filter(target => getReviewState(inputs.authoring, target.targetId, inputs) === 'pending').length,
   };
+}
+
+function aggregateReviewStates(states) {
+  const priority = { approved: 0, pending: 1, stale: 2, rejected: 3 };
+  if (states.length === 0 || states.some(state => !Object.hasOwn(priority, state))) throw new Error('W06 detail row has an unknown review state');
+  return states.reduce((highest, state) => priority[state] > priority[highest] ? state : highest, 'approved');
 }
 
 function markdownText(value) {
@@ -261,12 +281,12 @@ function createReviewMarkdown(inputs, matrix) {
   }
   lines.push('## W01 → W06 逐句清稿與差異');
   lines.push('');
-  lines.push('完整欄位、Source claim 值與 evidence、上下文、詞規則、target ID、前後文與狀態見同目錄的 review-matrix.json。stage/actor/property/target 只按固定 Source 欄位列示；Source 沒有提供的內容保留為空，不另行推定。條件、例外與否定依原句及既有 W01 分析文件檢查。');
+  lines.push('完整欄位、Source claim 值與 evidence、上下文、詞規則、所有 review target ID/路徑/維度/逐項狀態、前後文與狀態見同目錄的 review-matrix.json；單一 target 時保留原 reviewTargetId，多 target 時以 reviewTargetIds 為準，reviewTargetId 為 null。stage/actor/property/target 只按固定 Source 欄位列示；Source 沒有提供的內容保留為空，不另行推定。條件、例外與否定依原句及既有 W01 分析文件檢查。');
   lines.push('');
   for (const row of matrix.detailRows) {
     lines.push('### ' + row.stableId);
     lines.push('');
-    lines.push('- Section：' + row.sectionLabel + '；Review target：' + row.reviewTargetId + '；狀態：' + row.reviewState + '；W01 對照：' + row.wordingChange + '。');
+    lines.push('- Section：' + row.sectionLabel + '；Review targets：' + row.reviewTargets.map(target => target.targetId + ' (' + target.fieldPath + '; ' + target.dimension + '; ' + target.reviewState + ')').join('；') + '；彙總狀態：' + row.reviewState + '；W01 對照：' + row.wordingChange + '。');
     if (row.tier !== null) lines.push('- 綁定階級：' + row.tier + '。');
     lines.push('- W01 原句：' + (row.previousText === null ? '無（新增）' : markdownText(row.previousText)));
     lines.push('- W06 候選：' + markdownText(row.proposedText));
@@ -294,6 +314,15 @@ function createReviewMarkdown(inputs, matrix) {
   return lines.join('\n');
 }
 
+export function buildW06Candidate(inputs, baseline = committedW01(REPO_ROOT)) {
+  const validation = validateWebAuthoring(inputs.authoring, inputs);
+  if (!validation.valid) throw new Error(validation.issues.map(item => item.path + ': ' + item.message).join('\n'));
+  const matrix = createReviewMatrix(inputs, baseline);
+  const markdown = createReviewMarkdown(inputs, matrix);
+  const matrixBytes = Buffer.from(JSON.stringify(matrix, null, 2) + '\n', 'utf8');
+  return { matrix, markdown, matrixBytes };
+}
+
 async function main() {
   try {
     const args = process.argv.slice(2);
@@ -312,9 +341,7 @@ async function main() {
       return;
     }
     const baseline = committedW01(REPO_ROOT);
-    const matrix = createReviewMatrix(inputs, baseline);
-    const markdown = createReviewMarkdown(inputs, matrix);
-    const matrixBytes = Buffer.from(JSON.stringify(matrix, null, 2) + '\n', 'utf8');
+    const { matrix, markdown, matrixBytes } = buildW06Candidate(inputs, baseline);
     await mkdir(outputRoot, { recursive: false });
     await writeFile(path.join(outputRoot, 'review-candidate.md'), markdown, { encoding: 'utf8', flag: 'wx' });
     await writeFile(path.join(outputRoot, 'review-matrix.json'), matrixBytes, { flag: 'wx' });

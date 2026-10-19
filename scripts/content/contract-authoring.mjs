@@ -616,36 +616,60 @@ function detailItemHasContent(item) {
   return (item.parts ?? []).some(part => part.kind !== 'literal' || hasNonemptyText(part.text));
 }
 
-function detailItemHasReviewCoverage(contract, ownerId, item, itemPath) {
-  const acceptedScopes = [itemPath];
-  const tierItemPath = itemPath.match(/^(\/tierPresentations\/options\/\d+)\/detailSections\/(\d+)\/items\/(\d+)$/);
-  if (tierItemPath) acceptedScopes.push(
-    tierItemPath[1],
-    tierItemPath[1] + '/detailSections/' + tierItemPath[2] + '/items',
-  );
-  if ((item.parts ?? []).length > 0) acceptedScopes.push(itemPath + '/parts');
-  if (acceptedScopes.some(fieldPath => hasUniqueReviewTarget(contract, 'presentation', ownerId, fieldPath, 'content'))) return true;
-  if (hasNonemptyText(item.text)) {
-    return hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/text', 'content');
+export function resolveDetailReviewTargets(contract, ownerId, item, itemPath) {
+  const required = detailItemHasContent(item);
+  const scopes = new Set([itemPath]);
+  const tierItemPath = itemPath.match(/^(\/tierPresentations\/options\/(\d+))\/detailSections\/(\d+)\/items\/(\d+)$/);
+  if (tierItemPath) {
+    scopes.add(tierItemPath[1]);
+    scopes.add(tierItemPath[1] + '/detailSections');
+    scopes.add(tierItemPath[1] + '/detailSections/' + tierItemPath[3] + '/items');
+  } else if (/^\/detailSections\/\d+\/items\/\d+$/.test(itemPath)) {
+    scopes.add('/detailSections');
   }
-  const parts = (item.parts ?? []).map((part, index) => ({ part, index }))
+  if (typeof item.text === 'string') scopes.add(itemPath + '/text');
+  const allParts = (item.parts ?? []).map((part, index) => ({ part, index }));
+  if (allParts.length > 0) {
+    scopes.add(itemPath + '/parts');
+    for (const { part, index } of allParts) {
+      scopes.add(itemPath + '/parts/' + index);
+      if (part.kind === 'literal') scopes.add(itemPath + '/parts/' + index + '/text');
+    }
+  }
+  const relevantParts = (item.parts ?? []).map((part, index) => ({ part, index }))
     .filter(({ part }) => part.kind !== 'literal' || hasNonemptyText(part.text));
-  return parts.length > 0 && parts.every(({ part, index }) => hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/parts/' + index, 'content')
-    || (part.kind === 'literal' && hasUniqueReviewTarget(contract, 'presentation', ownerId, itemPath + '/parts/' + index + '/text', 'content')));
+
+  const targets = contract.reviewTargets.filter(target => target.ownerKind === 'presentation'
+    && target.ownerId === ownerId && target.dimension === 'content' && scopes.has(target.fieldPath));
+  const targetPaths = new Set(targets.map(target => target.fieldPath));
+  const broadScopes = [itemPath];
+  if (tierItemPath) broadScopes.push(tierItemPath[1], tierItemPath[1] + '/detailSections', tierItemPath[1] + '/detailSections/' + tierItemPath[3] + '/items');
+  else if (/^\/detailSections\/\d+\/items\/\d+$/.test(itemPath)) broadScopes.push('/detailSections');
+  let covered = !required;
+  if (required) {
+    covered = broadScopes.some(fieldPath => targetPaths.has(fieldPath));
+    if (!covered && hasNonemptyText(item.text)) covered = targetPaths.has(itemPath + '/text');
+    if (!covered && relevantParts.length > 0) {
+      covered = targetPaths.has(itemPath + '/parts') || relevantParts.every(({ part, index }) =>
+        targetPaths.has(itemPath + '/parts/' + index)
+        || (part.kind === 'literal' && targetPaths.has(itemPath + '/parts/' + index + '/text')));
+    }
+  }
+  return { targets, covered, required };
+}
+
+function detailItemHasReviewCoverage(contract, ownerId, item, itemPath) {
+  return resolveDetailReviewTargets(contract, ownerId, item, itemPath).covered;
 }
 
 function detailSectionsHaveReviewCoverage(contract, ownerId, sections, basePath) {
-  const contentItems = [];
   for (const [sectionIndex, section] of sections.entries()) {
     for (const [itemIndex, item] of section.items.entries()) if (detailItemHasContent(item)) {
-      contentItems.push({ item, itemPath: basePath + '/' + sectionIndex + '/items/' + itemIndex });
+      const itemPath = basePath + '/' + sectionIndex + '/items/' + itemIndex;
+      if (!resolveDetailReviewTargets(contract, ownerId, item, itemPath).covered) return false;
     }
   }
-  if (contentItems.length === 0) return true;
-  if (hasUniqueReviewTarget(contract, 'presentation', ownerId, basePath, 'content')) return true;
-  const tierBasePath = basePath.match(/^(\/tierPresentations\/options\/\d+)\/detailSections$/);
-  if (tierBasePath && hasUniqueReviewTarget(contract, 'presentation', ownerId, tierBasePath[1], 'content')) return true;
-  return contentItems.every(({ item, itemPath }) => detailItemHasReviewCoverage(contract, ownerId, item, itemPath));
+  return true;
 }
 
 function validateRequiredReviewCoverage(contract, issues) {
