@@ -779,3 +779,113 @@ test('UnitT74_content-driven-announcement-and-change-coverage-is-owner-bound', a
   });
   assert.equal(validate(addedAnnouncement, inputs).valid, true, JSON.stringify(validate(addedAnnouncement, inputs).issues));
 });
+
+// Scenario: one valid Source game change contains fields A and B while Web reviews localized field summaries separately.
+// Purpose: bind each per-field receipt to that summary's exact Source field without staling unrelated scopes.
+test('UnitT75_game-change-per-field-review-binds-exact-field-identity', async () => {
+  const inputs = await loadInputs();
+  const gameChange = inputs.authoring.gameChanges[0];
+  const sourceContract = structuredClone(inputs.sourceContract);
+  const sourceChange = sourceContract.records.find(item => item.kind === 'game-change' && item.recordId === gameChange.changeId);
+  const fieldA = sourceChange.payload.changedFields[0].field;
+  const fieldB = 'synthetic-secondary';
+  const fieldC = 'synthetic-tertiary';
+  for (const [field, before, after] of [[fieldB, '2', '3'], [fieldC, '4', '5']]) {
+    const changedField = structuredClone(sourceChange.payload.changedFields[0]);
+    changedField.field = field;
+    changedField.before.decimal = before;
+    changedField.after.decimal = after;
+    sourceChange.payload.changedFields.push(changedField);
+  }
+  const sourceValidation = inputs.sourceValidator.validateSourceContract(sourceContract, { schema: inputs.sourceSchema });
+  assert.equal(sourceValidation.valid, true, JSON.stringify(sourceValidation.issues));
+  const reviewInputs = {
+    ...inputs,
+    sourceContract,
+    sourceValidation,
+    sourceRecordMap: new Map(sourceContract.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item])),
+  };
+  const fieldTargetId = index => 'test:game-change:field-summary:' + index;
+  const makeContract = fields => {
+    const contract = structuredClone(inputs.authoring);
+    const owner = contract.gameChanges.find(item => item.changeId === gameChange.changeId);
+    owner.fieldSummaries = fields.map(field => ({ field, summary: '固定的合成摘要。' }));
+    contract.reviewTargets = contract.reviewTargets.filter(target => !(target.ownerKind === 'game-change'
+      && target.ownerId === owner.changeId
+      && (target.fieldPath === '/fieldSummaries' || /^\/fieldSummaries\/\d+\/summary$/.test(target.fieldPath))));
+    const fieldTargets = fields.map((_, index) => ({
+      targetId: fieldTargetId(index), ownerKind: 'game-change', ownerId: owner.changeId,
+      fieldPath: '/fieldSummaries/' + index + '/summary', dimension: 'content',
+    }));
+    const collectionTarget = {
+      targetId: 'test:game-change:field-summary:collection', ownerKind: 'game-change', ownerId: owner.changeId,
+      fieldPath: '/fieldSummaries', dimension: 'content',
+    };
+    contract.reviewTargets.push(...fieldTargets, collectionTarget);
+    contract.reviewReceipts = [];
+    return { contract, fieldTargets, collectionTarget };
+  };
+  const addReceipts = (contract, targets) => {
+    for (const target of targets) contract.reviewReceipts.push(createReviewReceipt(contract, target, {
+      ...reviewInputs,
+      reviewer: { kind: 'human', id: 'synthetic-field-reviewer' },
+      reviewedAt: '2026-10-18T00:00:00Z',
+    }));
+  };
+
+  const singleField = makeContract([fieldA]);
+  const singleFieldTarget = singleField.fieldTargets[0];
+  assert.equal(validate(singleField.contract, reviewInputs).valid, true);
+  addReceipts(singleField.contract, [singleFieldTarget]);
+  assert.equal(getReviewState(singleField.contract, singleFieldTarget.targetId, reviewInputs), 'approved');
+  const beforeRebind = computeReviewDigests(singleField.contract, singleFieldTarget, reviewInputs);
+  const rebound = structuredClone(singleField.contract);
+  rebound.gameChanges[0].fieldSummaries[0].field = fieldB;
+  const reboundResult = validate(rebound, reviewInputs);
+  assert.equal(reboundResult.valid, true, JSON.stringify(reboundResult.issues));
+  assert.equal(rebound.gameChanges[0].fieldSummaries[0].summary, singleField.contract.gameChanges[0].fieldSummaries[0].summary);
+  assert.equal(getReviewState(rebound, singleFieldTarget.targetId, reviewInputs), 'stale');
+  const afterRebind = computeReviewDigests(rebound, singleFieldTarget, reviewInputs);
+  assert.equal(afterRebind.targetDigest, beforeRebind.targetDigest);
+  assert.notEqual(afterRebind.dependenciesDigest, beforeRebind.dependenciesDigest);
+
+  const twoFields = makeContract([fieldA, fieldB]);
+  const gameSummaryTarget = twoFields.contract.reviewTargets.find(target => target.ownerKind === 'game-change'
+    && target.ownerId === gameChange.changeId && target.fieldPath === '/summary');
+  const presentationTarget = twoFields.contract.reviewTargets.find(target => target.ownerKind === 'presentation'
+    && target.targetId === 'fixture:review:weapon-r1-name');
+  addReceipts(twoFields.contract, [...twoFields.fieldTargets, twoFields.collectionTarget, gameSummaryTarget, presentationTarget]);
+  assert.equal(validate(twoFields.contract, reviewInputs).valid, true);
+  assert.equal(getReviewState(twoFields.contract, twoFields.fieldTargets[0].targetId, reviewInputs), 'approved');
+  assert.equal(getReviewState(twoFields.contract, twoFields.fieldTargets[1].targetId, reviewInputs), 'approved');
+
+  const sameBinding = structuredClone(twoFields.contract);
+  assert.equal(getReviewState(sameBinding, twoFields.fieldTargets[0].targetId, reviewInputs), 'approved');
+  const swapped = structuredClone(twoFields.contract);
+  [swapped.gameChanges[0].fieldSummaries[0].field, swapped.gameChanges[0].fieldSummaries[1].field] = [fieldB, fieldA];
+  assert.equal(validate(swapped, reviewInputs).valid, true);
+  assert.equal(getReviewState(swapped, twoFields.fieldTargets[0].targetId, reviewInputs), 'stale');
+  assert.equal(getReviewState(swapped, twoFields.fieldTargets[1].targetId, reviewInputs), 'stale');
+  assert.equal(getReviewState(swapped, twoFields.collectionTarget.targetId, reviewInputs), 'stale');
+  assert.equal(getReviewState(swapped, gameSummaryTarget.targetId, reviewInputs), 'approved');
+  assert.equal(getReviewState(swapped, presentationTarget.targetId, reviewInputs), 'approved');
+
+  const siblingTextEdit = structuredClone(twoFields.contract);
+  siblingTextEdit.gameChanges[0].fieldSummaries[1].summary = '不同的相鄰摘要。';
+  assert.equal(getReviewState(siblingTextEdit, twoFields.fieldTargets[0].targetId, reviewInputs), 'approved');
+  assert.equal(getReviewState(siblingTextEdit, twoFields.fieldTargets[1].targetId, reviewInputs), 'stale');
+  assert.equal(getReviewState(siblingTextEdit, gameSummaryTarget.targetId, reviewInputs), 'approved');
+  assert.equal(getReviewState(siblingTextEdit, presentationTarget.targetId, reviewInputs), 'approved');
+  const siblingFieldEdit = structuredClone(twoFields.contract);
+  siblingFieldEdit.gameChanges[0].fieldSummaries[1].field = fieldC;
+  assert.equal(validate(siblingFieldEdit, reviewInputs).valid, true);
+  assert.equal(getReviewState(siblingFieldEdit, twoFields.fieldTargets[0].targetId, reviewInputs), 'approved');
+  assert.equal(getReviewState(siblingFieldEdit, twoFields.fieldTargets[1].targetId, reviewInputs), 'stale');
+
+  const missingField = structuredClone(twoFields.contract);
+  delete missingField.gameChanges[0].fieldSummaries[0].field;
+  assert.equal(validate(missingField, reviewInputs).valid, false);
+  const wrongField = structuredClone(twoFields.contract);
+  wrongField.gameChanges[0].fieldSummaries[0].field = 'not-in-source';
+  assert.equal(validate(wrongField, reviewInputs).valid, false);
+});

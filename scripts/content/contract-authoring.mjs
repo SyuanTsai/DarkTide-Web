@@ -1381,6 +1381,14 @@ export function computeReviewDigests(contract, target, inputs) {
   if (target.ownerKind === 'presentation' && target.dimension !== 'translation') {
     dependencies.push({ kind: 'presentation-identity', value: owner.entityRef });
   }
+  const fieldSummaryMatch = target.ownerKind === 'game-change' && target.fieldPath.match(/^\/fieldSummaries\/(\d+)\/summary$/);
+  if (fieldSummaryMatch) {
+    const fieldSummary = owner.fieldSummaries?.[Number(fieldSummaryMatch[1])];
+    if (typeof fieldSummary?.field !== 'string' || fieldSummary.field.trim() === '') {
+      throw new Error('Game-change field summary review dependency has no field identity: ' + target.targetId);
+    }
+    dependencies.push({ kind: 'game-change-field-summary-binding', field: fieldSummary.field });
+  }
   for (const ruleId of collectTermRuleIds(reviewSourceValue(target, owner, value))) {
     const rule = inputs.termRules?.rules?.find(item => item.ruleId === ruleId);
     if (!rule) throw new Error('Terminology rule dependency does not resolve: ' + ruleId);

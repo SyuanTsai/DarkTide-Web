@@ -1,6 +1,8 @@
 # W06 review candidate
 
-目前 r4 入口為 [review candidate](candidate-r4/review-candidate.md) 與 [完整矩陣](candidate-r4/review-matrix.json)。四項 Review 修補：審核時間排序、公告／變更紀錄覆蓋、sourceSnapshots 三方合併與修訂紀錄、非階級技能 parts 集合路徑。固定 Source `f5514e4361d09361d9621e885082b7b5c51d1c95`；文案、mechanics、原審核 digests 保留，候選只更新固定來源 metadata。新增驗證、相容性、驗收與只回復本輪方式見 [r4 報告](../w07/review-four-findings-repair.md)。W06 已驗收／W07 待人類驗收；停 W07。
+最新 r5 修補 F20：逐欄摘要改綁欄位必須使舊審核 stale，相鄰欄位保持獨立；[驗證、局部 digest 相容性與只回復本輪方式](../w07/review-field-binding-repair.md)。Source f5514e4 與所有真資料不變，沿用 candidate-r4 兩產物；原113 targets digest／states保持，W06已驗收、W07待人類驗收，停W07。
+
+前次 r4 入口為 [review candidate](candidate-r4/review-candidate.md) 與 [完整矩陣](candidate-r4/review-matrix.json)。四項 Review 修補：審核時間排序、公告／變更紀錄覆蓋、sourceSnapshots 三方合併與修訂紀錄、非階級技能 parts 集合路徑。固定 Source `f5514e4361d09361d9621e885082b7b5c51d1c95`；文案、mechanics、原審核 digests 保留，候選只更新固定來源 metadata。新增驗證、相容性、驗收與只回復本輪方式見 [r4 報告](../w07/review-four-findings-repair.md)。W06 已驗收／W07 待人類驗收；停 W07。
 
 前次入口為 [candidate-r3/review-candidate.md](candidate-r3/review-candidate.md) 與 [完整矩陣](candidate-r3/review-matrix.json)。r3 修補 F15：合法整節／tier／parts 審核覆蓋通過驗證後，也能產生候選；逐列列出全部真實 targets 與各自狀態，保守彙整。格式 1.1.0 新增 reviewTargetIds／reviewTargets；單一 reviewTargetId 保持原值，多目標為 null。既有 23 句、14 官方輸入與所有舊欄位不變，原 r1／r2 候選保留。
 
