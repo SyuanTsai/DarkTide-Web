@@ -1,0 +1,183 @@
+{
+  "scope": "W07/R07 r6 static supplement; not human acceptance",
+  "sourceCommit": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+  "publicCodeCommit": "ba6c148f3c2768ca3ce20d846a12e56e2f433f3e",
+  "webBaseCommit": "00488b307936ee22fd019b50be2787fad2229469",
+  "webCommitResolution": "git log --diff-filter=A -1 --format=%H -- docs/contracts/w07/r6-static-supplement-review.md",
+  "sourceCI": {
+    "valid": true,
+    "headSha": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+    "runs": {
+      "push": {
+        "runId": 39260094738,
+        "url": "https://github.com/SyuanTsai/DarkTide-Source-Data/actions/runs/39260094738",
+        "counts": {
+          "tests": 129,
+          "pass": 129,
+          "fail": 0,
+          "skipped": 0
+        },
+        "conclusion": "success",
+        "logSha256": "bbe6b27ea2568d476182899e7b047b1b5deb6543e119d671342525e459a8ef77",
+        "previewOnlyReceiptChecksPassed": true
+      },
+      "pr": {
+        "runId": 39260104575,
+        "url": "https://github.com/SyuanTsai/DarkTide-Source-Data/actions/runs/39260104575",
+        "counts": {
+          "tests": 129,
+          "pass": 129,
+          "fail": 0,
+          "skipped": 0
+        },
+        "conclusion": "success",
+        "logSha256": "b8d23006c67af43a3a9b7e2b35a9c77b8bcb64de5573a09c5a48c12445ba777e",
+        "previewOnlyReceiptChecksPassed": true
+      }
+    }
+  },
+  "matrixAudit": {
+    "valid": true,
+    "projectedFactsChecked": 180,
+    "presentations": 2,
+    "actions": 16,
+    "targets": 52,
+    "armorIdentities": 8,
+    "modifierRules": 3,
+    "sourceRecords": 227,
+    "publicationEligible": false,
+    "outputs": [
+      {
+        "path": "docs/contracts/w06/candidate-r6/review-candidate.md",
+        "byteCount": 32507,
+        "sha256": "9ebf03f6b2135e6f386d6502464c19d1971cc60442799c79ce65b4bb6bccc66c"
+      },
+      {
+        "path": "docs/contracts/w06/candidate-r6/review-matrix.json",
+        "byteCount": 140046,
+        "sha256": "b07e55a6ef30f9ee98fd6b7f477620c4b377c6ba837165f3886639f02de0021a"
+      },
+      {
+        "path": "docs/contracts/w07/candidate-r6/review-candidate.md",
+        "byteCount": 1519328,
+        "sha256": "a0bfd1c5fc9ff358992f940548c8d94855f99494b683ea07ee4295f3ef903a02"
+      },
+      {
+        "path": "docs/contracts/w07/candidate-r6/review-matrix.json",
+        "byteCount": 8487695,
+        "sha256": "f58ac3488c7bdef54f9cb7844c80201be6407e48c5a2781a98b6855cf3200a94"
+      }
+    ]
+  },
+  "pinAudit": {
+    "valid": true,
+    "sourceCommit": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+    "modes": {
+      "w06": {
+        "cache": [
+          {
+            "kind": "schema",
+            "path": "content/schema/v2/source-contract.schema.json",
+            "byteCount": 127718,
+            "sha256": "0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5"
+          },
+          {
+            "kind": "data",
+            "path": "content/authoring/v2/w06-skills-blessings.json",
+            "byteCount": 112425,
+            "sha256": "b04521a6202a15db1acef9430803d7a2bc0e2aa2b392bd875f5ccba010280ab2"
+          },
+          {
+            "kind": "validator",
+            "path": "scripts/content/contract-validator.mjs",
+            "byteCount": 140557,
+            "sha256": "48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54"
+          }
+        ],
+        "authoringSha256": "ed2897ad64db33e1017ff3ee1ab1809f1f5bb33fa7899077b678db70050d8aef",
+        "actualReceiptCount": 0
+      },
+      "w07": {
+        "cache": [
+          {
+            "kind": "schema",
+            "path": "content/schema/v2/source-contract.schema.json",
+            "byteCount": 127718,
+            "sha256": "0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5"
+          },
+          {
+            "kind": "data",
+            "path": "content/authoring/v2/w07-weapons.json",
+            "byteCount": 6043003,
+            "sha256": "a728b2e8dc65078ade88b01f87537323eb781fc8665f16c8166140292eb63acb"
+          },
+          {
+            "kind": "validator",
+            "path": "scripts/content/contract-validator.mjs",
+            "byteCount": 140557,
+            "sha256": "48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54"
+          }
+        ],
+        "authoringSha256": "057edae9f312eaedf57b861245e67b4ee7813016b8bb462b00c8246b7c7914bb",
+        "actualReceiptCount": 0
+      }
+    }
+  },
+  "reviewImpact": {
+    "fixture": {
+      "changed": 0,
+      "unchanged": 41,
+      "added": 0,
+      "removed": 0
+    },
+    "w06": {
+      "changed": 0,
+      "unchanged": 34,
+      "added": 0,
+      "removed": 0
+    },
+    "w07": {
+      "changed": 26,
+      "unchanged": 12,
+      "added": 0,
+      "removed": 0
+    }
+  },
+  "independentLocalContractTests": {
+    "tests": 96,
+    "pass": 96,
+    "fail": 0,
+    "skipped": 0
+  },
+  "implementerAffectedTests": {
+    "pass": 126,
+    "fail": 0,
+    "skipped": 0
+  },
+  "preserved": {
+    "historicalCandidateFiles": 14,
+    "protectedArtifacts": 19,
+    "sourceFrozenInputs": 7,
+    "knownClaimValueAndDisplayNumbers": 162,
+    "realReceiptArraysChanged": false
+  },
+  "independentFixedSourceAudit": {
+    "rawRows": 2304,
+    "fixedGitFiles": 83,
+    "targetProfiles": 52,
+    "zones": 624,
+    "actors": 1232,
+    "multipliers": 502,
+    "resolvedLocalDecimalConstants": 55,
+    "traitRows": 66,
+    "concreteTraitBindings": 266
+  },
+  "remaining": [
+    "Actual obtainable interval requires matching server roll/catalog/entitlement and build evidence or explicit user acceptance decision; criterion remains unfinished.",
+    "Eight beast_of_nurgle references target zones absent from the fixed declared zone table; raw evidence retained.",
+    "Exact Steam build UNVERIFIED; weapon image licensing NOT_REVIEWED."
+  ],
+  "postCommitValidation": "Actual clean clone rebuild and Web CI results with full commit SHA are supplied in the same-round Jira delivery comment.",
+  "publicationEligible": false,
+  "humanApprovalCreated": false
+}

@@ -1,0 +1,21 @@
+# W07 weapon authoring review
+
+最新 r6 靜態補件：[中文候選](candidate-r6/review-candidate.md)、[完整矩陣](candidate-r6/review-matrix.json)。Source 固定 `f22b4ae2e1d3b4887f3741464e3c9bf507399db6`；[逐項缺口、證據、驗收與精確回復](r6-static-supplement-review.md)。W06 已驗收；W07 的可取得範圍完成條件仍未證實，等待重新驗收。下列 r1–r5 入口為保留的歷史紀錄。
+
+最新 r5 修補 F20：逐欄摘要改綁欄位必須使舊審核 stale，相鄰欄位保持獨立；[驗證、局部 digest 相容性與只回復本輪方式](review-field-binding-repair.md)。Source f5514e4 與所有真資料不變，沿用 candidate-r4 兩產物；原113 targets digest／states保持，W06已驗收、W07待人類驗收，停W07。
+
+前次 r4 入口為 [review candidate](candidate-r4/review-candidate.md) 與 [完整矩陣](candidate-r4/review-matrix.json)。四項 Review 修補：審核時間排序、公告／變更紀錄覆蓋、sourceSnapshots 三方合併與修訂紀錄、非階級技能 parts 集合路徑。固定 Source `f5514e4361d09361d9621e885082b7b5c51d1c95`；文案、mechanics、原審核 digests 保留，候選只更新固定來源 metadata。新增驗證、相容性、驗收與只回復本輪方式見 [r4 報告](review-four-findings-repair.md)。W06 已驗收／W07 待人類驗收；停 W07。
+
+前次入口為 [candidate-r2/review-candidate.md](candidate-r2/review-candidate.md) 與 [完整矩陣](candidate-r2/review-matrix.json)。r2 修補 F12 無法解析 pointer、F13 缺少必需審核覆蓋、F14 commit／permalink 無謂失效；r1 候選與歷史 commit 保留。固定 Source `b9d6eb3d2f067772aee4613daecba0414cb11c0d`；W07 仍待人類驗收。完整差異、沿用證據、限制與回復見 [修補驗證報告](review-contract-repair.md)。
+
+最新 r3 補上 F15 的 W06 候選 coverage resolver／完整逐 target 狀態；[W06 r3 候選](../w06/candidate-r3/review-candidate.md) 與 [本輪驗證／回復報告](review-coverage-builder-repair.md)。W07 r2 的兩份候選 bytes 經同 CLI 重建確認相同，繼續沿用。
+
+Run `npm run contract:w07:validate` to validate the pinned W07 inputs. The command is read-only and does not write a review candidate. To create the two review files, pass a new output directory explicitly:
+
+```powershell
+node scripts/content/contract-w07.mjs --out-root .tmp/w07-review-draft
+```
+
+The parent directory must already exist and the output directory must not. The writer refuses existing paths and symbolic-link parents. It writes `review-candidate.md` for the readable Chinese review and `review-matrix.json` for complete Source facts, official locators, review digests, coverage, and provenance. Re-running against the same inputs produces the same bytes.
+
+The candidate has no human receipts and `publicationEligible` remains `false`. Source owns mechanics; the Web presentation only owns labels, notes, and typed references. This work does not execute damage overrides, calculate final damage, implement a renderer, or establish an exact Steam build. Weapon image references and licensing remain unverified for both selected marks.

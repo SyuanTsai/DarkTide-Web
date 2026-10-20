@@ -12,7 +12,19 @@
     "prepare:deploy": "node scripts/prepare-deploy.mjs",
     "verify:deploy-config": "node scripts/verify-deploy-config.mjs",
     "smoke:cloudflare": "node scripts/cloudflare-runtime-smoke.mjs",
-    "deploy:cloudflare": "node scripts/cloudflare-deploy.mjs"
+    "deploy:cloudflare": "node scripts/cloudflare-deploy.mjs",
+    "w01:build": "node scripts/w01-build.mjs",
+    "w01:verify": "node scripts/w01-verify.mjs",
+    "w01:compose-source": "node scripts/w01-compose-source.mjs",
+    "w01:retain": "node scripts/w01-retain-baseline.mjs",
+    "w01:rollback-r1": "node scripts/w01-rollback-r1.mjs",
+    "w01:restore-preview": "node scripts/w01-restore-preview.mjs",
+    "w01:pr": "node scripts/w01-pr.mjs",
+    "w01:serve": "node scripts/w01-serve.mjs",
+    "w01:preview-receipt": "node scripts/w01-preview-deployment-receipt.mjs",
+    "contract:validate": "node scripts/content/contract-authoring.mjs",
+    "contract:w06:validate": "node scripts/content/contract-w06.mjs",
+    "contract:w07:validate": "node scripts/content/contract-w07.mjs"
   },
   "engines": {
     "node": ">=24"

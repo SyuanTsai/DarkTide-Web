@@ -1,0 +1,1196 @@
+{
+  "schemaVersion": "2.0.0",
+  "contractKind": "web-authoring",
+  "fixtureOnly": false,
+  "publicationEligible": false,
+  "sourcePin": {
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "commit": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+    "schemaId": "https://github.com/SyuanTsai/DarkTide-Source-Data/content/schema/v2/source-contract.schema.json",
+    "schemaSha256": "0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5",
+    "dataSha256": "b04521a6202a15db1acef9430803d7a2bc0e2aa2b392bd875f5ccba010280ab2",
+    "validatorSha256": "48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54"
+  },
+  "officialInputsSha256": "b203b465123ef48b92187afc753de5014f379c84226dd8f7bf7e7a02ce6886e8",
+  "presentations": [
+    {
+      "authoringId": "web:presentation:psyker-brain-burst-improved",
+      "entityRef": {
+        "recordId": "darktide:skill:psyker:brain-burst-improved",
+        "gameReleaseId": "darktide:1.13.2",
+        "kind": "skill"
+      },
+      "locale": "zh-TW",
+      "name": "顱腦崩裂",
+      "nameOfficialSourceId": "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:zh-tw:1",
+      "nameOfficialLocaleRefs": [
+        {
+          "officialSourceId": "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:en:1",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:ui:c3b5cefd:loc_talent_psyker_brain_burst_improved:zh-tw:1",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "nameTermRuleRefs": [
+        "brain-rupture"
+      ],
+      "official": {
+        "officialSourceId": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:zh-tw:1",
+        "entityRef": {
+          "recordId": "darktide:skill:psyker:brain-burst-improved",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "skill"
+        },
+        "origin": "game-localization",
+        "sourceLocale": "zh-TW",
+        "resource": "ui",
+        "key": "loc_talent_psyker_brain_burst_improved_description",
+        "sourceHash": "681e4980",
+        "occurrence": 1,
+        "sourceText": "積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成{damage:%s}傷害的{talent_old:%s}的加強版。",
+        "sourceTextSha256": "3c2c9776162b4a5b5e88615acdb3fb8d8a64f976c17a733fa6ae681d6392da27",
+        "segments": [
+          {
+            "segmentId": "segment-1",
+            "kind": "text",
+            "text": "積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成",
+            "sha256": "90db38f2cd20a87f38fd4e6acd5a8a75279da2ae4e197c3e96235ba69e8bd4d4"
+          },
+          {
+            "segmentId": "segment-2",
+            "kind": "parameter",
+            "parameterId": "damage",
+            "token": "{damage:%s}",
+            "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd"
+          },
+          {
+            "segmentId": "segment-3",
+            "kind": "text",
+            "text": "傷害的",
+            "sha256": "b0c40a99136b52f3ed2405d07b1217683976c5fceaa49b06406025ed0623dcee"
+          },
+          {
+            "segmentId": "segment-4",
+            "kind": "parameter",
+            "parameterId": "talent_old",
+            "token": "{talent_old:%s}",
+            "sha256": "b84074878dbcd309d7d6d437e5e759ec642e7966bd432a10efb002fe702c061d"
+          },
+          {
+            "segmentId": "segment-5",
+            "kind": "text",
+            "text": "的加強版。",
+            "sha256": "f141f500e7a84e040c65f34d49c19a1f4b7249db419e95e1e0825f5d4e970998"
+          }
+        ],
+        "params": [
+          {
+            "parameterId": "damage",
+            "sourceKey": "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+            "value": "+50%"
+          },
+          {
+            "parameterId": "talent_old",
+            "sourceKey": "official:ui:6f06e398:loc_ability_psyker_smite:zh-tw:1",
+            "value": "顱腦爆裂",
+            "officialNameRef": {
+              "sourceId": "official:ui:6f06e398:loc_ability_psyker_smite:zh-tw:1",
+              "sourceLocale": "zh-TW",
+              "resource": "ui",
+              "sourceHash": "6f06e398",
+              "key": "loc_ability_psyker_smite",
+              "occurrence": 1,
+              "text": "顱腦爆裂",
+              "textSha256": "a5c13ef08854f2c1bd44f92a232d02bda26073076882fa7cd6644bb65dcb4b0e"
+            }
+          }
+        ],
+        "resolvedText": "積蓄靈能力量，釋放時可對單個敵人造成巨大傷害。\n\n該天賦是可造成+50%傷害的顱腦爆裂的加強版。",
+        "resolvedTextSha256": "4067f159578cefff82d8ac2455af17b41b671d4fb4fe46d909a09ef00fbc9a0c"
+      },
+      "officialLocaleRefs": [
+        {
+          "officialSourceId": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:en:1",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:ui:681e4980:loc_talent_psyker_brain_burst_improved_description:zh-tw:1",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "errata": [],
+      "detailSections": [
+        {
+          "sectionId": "effects",
+          "items": [
+            {
+              "itemId": "psyker-numerical-assumptions",
+              "text": "以下數值不含其他加成或減免。",
+              "claimRefs": [],
+              "termRefs": [],
+              "termRuleRefs": []
+            },
+            {
+              "itemId": "psyker-description-damage-parameter",
+              "text": "相較於顱腦爆裂，顱腦崩裂傷害提高 50%（1.5 倍）；這項加成不適用於所有靈能攻擊。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-burst",
+                "brain-rupture"
+              ]
+            },
+            {
+              "itemId": "psyker-base-hit-peril-cost",
+              "text": "顱腦崩裂蓄力時，你會累積反噬；造成傷害後再增加 25%。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "peril-general"
+              ]
+            }
+          ]
+        },
+        {
+          "sectionId": "conditions",
+          "items": [
+            {
+              "itemId": "psyker-normal-charge-condition",
+              "text": "先蓄力再鎖定：未鎖定敵人也能蓄力；鎖定後接續蓄力進度。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": []
+            },
+            {
+              "itemId": "psyker-sticky-charge-condition",
+              "text": "直接鎖定蓄力：先鎖定敵人，再蓄力。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": []
+            },
+            {
+              "itemId": "psyker-lock-on-charge-condition",
+              "text": "鎖定後，移開準星也不會更換目標。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": []
+            }
+          ]
+        },
+        {
+          "sectionId": "calculation",
+          "items": [
+            {
+              "itemId": "psyker-estimate-assumptions",
+              "text": "你的反噬從 0% 起算，且蓄力不中斷：",
+              "claimRefs": [],
+              "termRefs": [],
+              "termRuleRefs": [
+                "peril-general"
+              ]
+            },
+            {
+              "itemId": "psyker-normal-charge-peril-estimate",
+              "text": "先蓄力再鎖定：約 3 秒蓄滿；1／2／3 秒時，你的反噬約 6.67%／13.33%／20%。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "peril-general"
+              ]
+            },
+            {
+              "itemId": "psyker-sticky-charge-peril-estimate",
+              "text": "直接鎖定蓄力：約 2 秒蓄滿；1／2 秒時，你的反噬約 10%／20%。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "peril-general"
+              ]
+            },
+            {
+              "itemId": "psyker-full-charge-peril-rate-estimate",
+              "text": "滿蓄後繼續蓄力，你的反噬每秒約增加 9%。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "peril-general"
+              ]
+            },
+            {
+              "itemId": "psyker-full-charge-hit-peril-estimate",
+              "text": "顱腦崩裂蓄滿後立即造成傷害，你的反噬約 45%；多維持 1 秒則約 54%。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "peril-general"
+              ]
+            }
+          ]
+        },
+        {
+          "sectionId": "notes",
+          "items": [
+            {
+              "itemId": "psyker-empty-cast-peril-cost",
+              "text": "顱腦崩裂未造成傷害時，你不會再累積 25% 反噬；蓄力時累積的反噬仍保留。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "peril-general"
+              ]
+            }
+          ]
+        },
+        {
+          "sectionId": "extra",
+          "items": [
+            {
+              "itemId": "psyker-stagger-eligible-target-condition",
+              "text": "以下僅適用於會被顱腦崩裂打出踉蹌的敵人：",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "staggering"
+              ]
+            },
+            {
+              "itemId": "psyker-lock-on-direct-stagger-condition",
+              "text": "直接鎖定：鎖定同一敵人超過 1 秒，顱腦崩裂使其輕微踉蹌一次。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "stagger"
+              ]
+            },
+            {
+              "itemId": "psyker-lock-on-transition-stagger-condition",
+              "text": "先蓄力再鎖定：鎖定敵人超過 0.25 秒，顱腦崩裂使其輕微踉蹌一次。",
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                {
+                  "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": [
+                "brain-rupture",
+                "stagger"
+              ]
+            }
+          ]
+        }
+      ],
+      "tierApplicability": []
+    },
+    {
+      "authoringId": "web:presentation:chainaxe-p1-movement-speed",
+      "entityRef": {
+        "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation",
+        "gameReleaseId": "darktide:1.13.2",
+        "kind": "blessing"
+      },
+      "locale": "zh-TW",
+      "name": "提速",
+      "nameOfficialSourceId": "official:items:5d0fe023:key-unknown:zh-tw:1",
+      "nameOfficialLocaleRefs": [
+        {
+          "officialSourceId": "official:items:5d0fe023:key-unknown:en:1",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:items:5d0fe023:key-unknown:zh-tw:1",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "nameTermRuleRefs": [
+        "rev-it-up"
+      ],
+      "official": {
+        "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4",
+        "entityRef": {
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "blessing"
+        },
+        "origin": "game-localization",
+        "sourceLocale": "zh-TW",
+        "resource": "items",
+        "key": null,
+        "sourceHash": "863b83e4",
+        "occurrence": 1,
+        "bindingContext": {
+          "variantRef": {
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "blessing-variant"
+          },
+          "tier": 4
+        },
+        "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+        "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887",
+        "segments": [
+          {
+            "segmentId": "segment-1",
+            "kind": "text",
+            "text": "武器特殊啟動後",
+            "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78"
+          },
+          {
+            "segmentId": "segment-2",
+            "kind": "parameter",
+            "parameterId": "movement_speed",
+            "token": "{movement_speed:%s}",
+            "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577"
+          },
+          {
+            "segmentId": "segment-3",
+            "kind": "text",
+            "text": "移動速度，持續",
+            "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7"
+          },
+          {
+            "segmentId": "segment-4",
+            "kind": "parameter",
+            "parameterId": "time",
+            "token": "{time:%s}",
+            "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b"
+          },
+          {
+            "segmentId": "segment-5",
+            "kind": "text",
+            "text": "秒。",
+            "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe"
+          }
+        ],
+        "params": [
+          {
+            "parameterId": "movement_speed",
+            "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+            "value": "+20%"
+          },
+          {
+            "parameterId": "time",
+            "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+            "value": "2"
+          }
+        ],
+        "resolvedText": "武器特殊啟動後+20%移動速度，持續2秒。",
+        "resolvedTextSha256": "6d696d2a37fb7dbebe0e9433ed6e3b4facdaf25550f896eeefb5a69e6cad3d9d"
+      },
+      "officialLocaleRefs": [
+        {
+          "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-4",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "errata": [],
+      "detailSections": [
+        {
+          "sectionId": "effects",
+          "items": [
+            {
+              "itemId": "chainaxe-tier-display-parameter",
+              "parts": [
+                {
+                  "kind": "literal",
+                  "text": "你的移動速度提高 "
+                },
+                {
+                  "kind": "unsigned-percent",
+                  "bindingRef": {
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                    "gameReleaseId": "darktide:1.13.2",
+                    "kind": "claim"
+                  }
+                },
+                {
+                  "kind": "literal",
+                  "text": "。"
+                }
+              ],
+              "claimRefs": [
+                {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                }
+              ],
+              "termRefs": [],
+              "termRuleRefs": []
+            }
+          ]
+        },
+        {
+          "sectionId": "conditions",
+          "items": [
+            {
+              "itemId": "chainaxe-special-activation-condition",
+              "text": "使用武器特殊動作後生效，持續 2 秒。",
+              "claimRefs": [],
+              "termRefs": [],
+              "termRuleRefs": []
+            }
+          ]
+        }
+      ],
+      "tierApplicability": [
+        {
+          "variantRef": {
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "blessing-variant"
+          },
+          "tiers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "tierPresentations": {
+        "variantRef": {
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "blessing-variant"
+        },
+        "defaultTier": 4,
+        "options": [
+          {
+            "tier": 1,
+            "params": [
+              {
+                "name": "movement_speed",
+                "placeholder": "{movement_speed:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "signed-percent"
+              },
+              {
+                "name": "time",
+                "placeholder": "{time:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "plain-number"
+              }
+            ],
+            "officialLocaleRefs": [
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-1",
+                "sourceLocale": "en"
+              },
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-1",
+                "sourceLocale": "zh-TW"
+              }
+            ],
+            "detailSections": [
+              {
+                "sectionId": "effects",
+                "items": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "你的移動速度提高 "
+                      },
+                      {
+                        "kind": "unsigned-percent",
+                        "bindingRef": {
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                          "gameReleaseId": "darktide:1.13.2",
+                          "kind": "claim"
+                        }
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      {
+                        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+                        "gameReleaseId": "darktide:1.13.2",
+                        "kind": "claim"
+                      }
+                    ],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              },
+              {
+                "sectionId": "conditions",
+                "items": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "使用武器特殊動作後生效，持續 2 秒。",
+                    "claimRefs": [],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tier": 2,
+            "params": [
+              {
+                "name": "movement_speed",
+                "placeholder": "{movement_speed:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "signed-percent"
+              },
+              {
+                "name": "time",
+                "placeholder": "{time:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "plain-number"
+              }
+            ],
+            "officialLocaleRefs": [
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-2",
+                "sourceLocale": "en"
+              },
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-2",
+                "sourceLocale": "zh-TW"
+              }
+            ],
+            "detailSections": [
+              {
+                "sectionId": "effects",
+                "items": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "你的移動速度提高 "
+                      },
+                      {
+                        "kind": "unsigned-percent",
+                        "bindingRef": {
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+                          "gameReleaseId": "darktide:1.13.2",
+                          "kind": "claim"
+                        }
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      {
+                        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+                        "gameReleaseId": "darktide:1.13.2",
+                        "kind": "claim"
+                      }
+                    ],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              },
+              {
+                "sectionId": "conditions",
+                "items": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "使用武器特殊動作後生效，持續 2 秒。",
+                    "claimRefs": [],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tier": 3,
+            "params": [
+              {
+                "name": "movement_speed",
+                "placeholder": "{movement_speed:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "signed-percent"
+              },
+              {
+                "name": "time",
+                "placeholder": "{time:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "plain-number"
+              }
+            ],
+            "officialLocaleRefs": [
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-3",
+                "sourceLocale": "en"
+              },
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-3",
+                "sourceLocale": "zh-TW"
+              }
+            ],
+            "detailSections": [
+              {
+                "sectionId": "effects",
+                "items": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "你的移動速度提高 "
+                      },
+                      {
+                        "kind": "unsigned-percent",
+                        "bindingRef": {
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+                          "gameReleaseId": "darktide:1.13.2",
+                          "kind": "claim"
+                        }
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      {
+                        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+                        "gameReleaseId": "darktide:1.13.2",
+                        "kind": "claim"
+                      }
+                    ],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              },
+              {
+                "sectionId": "conditions",
+                "items": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "使用武器特殊動作後生效，持續 2 秒。",
+                    "claimRefs": [],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tier": 4,
+            "params": [
+              {
+                "name": "movement_speed",
+                "placeholder": "{movement_speed:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "signed-percent"
+              },
+              {
+                "name": "time",
+                "placeholder": "{time:%s}",
+                "bindingRef": {
+                  "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+                  "gameReleaseId": "darktide:1.13.2",
+                  "kind": "claim"
+                },
+                "format": "plain-number"
+              }
+            ],
+            "officialLocaleRefs": [
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-4",
+                "sourceLocale": "en"
+              },
+              {
+                "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4",
+                "sourceLocale": "zh-TW"
+              }
+            ],
+            "detailSections": [
+              {
+                "sectionId": "effects",
+                "items": [
+                  {
+                    "itemId": "chainaxe-tier-display-parameter",
+                    "parts": [
+                      {
+                        "kind": "literal",
+                        "text": "你的移動速度提高 "
+                      },
+                      {
+                        "kind": "unsigned-percent",
+                        "bindingRef": {
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                          "gameReleaseId": "darktide:1.13.2",
+                          "kind": "claim"
+                        }
+                      },
+                      {
+                        "kind": "literal",
+                        "text": "。"
+                      }
+                    ],
+                    "claimRefs": [
+                      {
+                        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+                        "gameReleaseId": "darktide:1.13.2",
+                        "kind": "claim"
+                      }
+                    ],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              },
+              {
+                "sectionId": "conditions",
+                "items": [
+                  {
+                    "itemId": "chainaxe-special-activation-condition",
+                    "text": "使用武器特殊動作後生效，持續 2 秒。",
+                    "claimRefs": [],
+                    "termRefs": [],
+                    "termRuleRefs": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "termLocalizations": [
+    {
+      "authoringId": "web:term-localization:psyker-smite-damage-multiplier-parameter",
+      "termRef": {
+        "recordId": "darktide:term:psyker:smite-damage-multiplier-parameter",
+        "gameReleaseId": "darktide:1.13.2",
+        "kind": "term"
+      },
+      "locale": "zh-TW",
+      "contextKey": "psyker_brain_burst_improved.stat_buffs",
+      "label": "傷害倍率",
+      "definition": "此天賦用來放大對應傷害的倍率；不能套用到所有靈能攻擊。"
+    }
+  ],
+  "announcements": [],
+  "gameChanges": [],
+  "officialTextChanges": [],
+  "reviewTargets": [
+    {
+      "targetId": "review:w06:brain-burst-improved:official",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/officialLocaleRefs",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:effects:psyker-numerical-assumptions",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/0/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:effects:psyker-description-damage-parameter",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/0/items/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:effects:psyker-base-hit-peril-cost",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/0/items/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:conditions:psyker-normal-charge-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/1/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:conditions:psyker-sticky-charge-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/1/items/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:conditions:psyker-lock-on-charge-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/1/items/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:calculation:psyker-estimate-assumptions",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/2/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:calculation:psyker-normal-charge-peril-estimate",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/2/items/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:calculation:psyker-sticky-charge-peril-estimate",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/2/items/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:calculation:psyker-full-charge-peril-rate-estimate",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/2/items/3",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:calculation:psyker-full-charge-hit-peril-estimate",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/2/items/4",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:notes:psyker-empty-cast-peril-cost",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/3/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:extra:psyker-stagger-eligible-target-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/4/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:extra:psyker-lock-on-direct-stagger-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/4/items/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst:content:tier-base:extra:psyker-lock-on-transition-stagger-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/detailSections/4/items/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:brain-burst-improved:name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:psyker-brain-burst-improved",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:official:tier-1",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/0",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-0:effects:chainaxe-tier-display-parameter",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/0/detailSections/0/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-0:conditions:chainaxe-special-activation-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/0/detailSections/1/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:official:tier-2",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/1",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-1:effects:chainaxe-tier-display-parameter",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/1/detailSections/0/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-1:conditions:chainaxe-special-activation-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/1/detailSections/1/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:official:tier-3",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/2",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-2:effects:chainaxe-tier-display-parameter",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/2/detailSections/0/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-2:conditions:chainaxe-special-activation-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/2/detailSections/1/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:official:tier-4",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/3",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-3:effects:chainaxe-tier-display-parameter",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/3/detailSections/0/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:content:tier-3:conditions:chainaxe-special-activation-condition",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierPresentations/options/3/detailSections/1/items/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:p1-movement-speed-on-activation:name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:chainaxe:tier-applicability-context",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-movement-speed",
+      "fieldPath": "/tierApplicability",
+      "dimension": "context"
+    },
+    {
+      "targetId": "review:w06:smite-damage-multiplier-term:context",
+      "ownerKind": "term-localization",
+      "ownerId": "web:term-localization:psyker-smite-damage-multiplier-parameter",
+      "fieldPath": "/contextKey",
+      "dimension": "context"
+    },
+    {
+      "targetId": "review:w06:smite-damage-multiplier-term:label",
+      "ownerKind": "term-localization",
+      "ownerId": "web:term-localization:psyker-smite-damage-multiplier-parameter",
+      "fieldPath": "/label",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w06:smite-damage-multiplier-term:definition",
+      "ownerKind": "term-localization",
+      "ownerId": "web:term-localization:psyker-smite-damage-multiplier-parameter",
+      "fieldPath": "/definition",
+      "dimension": "content"
+    }
+  ],
+  "reviewReceipts": []
+}
