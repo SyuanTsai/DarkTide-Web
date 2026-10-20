@@ -1,0 +1,510 @@
+{
+  "schema": "w09-engineering-verification/1",
+  "webCodeCommit": "b6019e268001df9ee1a8c31d797739347c785ea6",
+  "sourceCodeCommit": "589f89ea880d33450552029a03f7893b3fb6cb6a",
+  "actors": {
+    "root": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "verifiedTurnContext": "2026-10-20T15:18:43.381Z",
+      "responsibilities": [
+        "plan",
+        "independent review",
+        "actual Git",
+        "Jira"
+      ]
+    },
+    "implementer": {
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "verifiedTurnContext": "2026-10-20T15:13:51.367Z",
+      "responsibilities": [
+        "implementation",
+        "tests",
+        "finding fixes"
+      ]
+    },
+    "source": "streamed trusted local session turn_context metadata; no raw session persisted"
+  },
+  "independent": [
+    {
+      "localEvidenceName": "allocator-independent-result.json",
+      "originalEvidenceSha256": "3d01aaa0c5f7fd3dc4f2dfc499fba96f4295b5778d5b9c7b6f899d222ffb8adb",
+      "checksPassed": null,
+      "checks": null,
+      "passed": true,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "compiler-pin-independent-result.json",
+      "originalEvidenceSha256": "6901c1b7e136ebf17a018bf156a5bfb41832dea7fbe9e5434a65a464a9e1369d",
+      "kind": "isolated-engineering-code-pin-test-not-content-approval",
+      "checksPassed": 5,
+      "checks": [
+        "raw Git code pin and sorted raw-byte file-set digest validate",
+        "metadata-only HEAD retains the original compiler commit and identical code pin",
+        "uncommitted executable modification rejects before composition",
+        "committed executable modification without a new reviewed code lock rejects",
+        "an explicit replacement code commit and file-set pin records the changed executable"
+      ],
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "compiler-windows-checkout-probe-result.json",
+      "originalEvidenceSha256": "499a1ec47e2ab139735d56022861a1172de61220a8d572e9e5ee5c0c7d8c8580",
+      "kind": "isolated-clean-Windows-autocrlf-checkout-compiler-pin",
+      "checksPassed": null,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "prepared-code-pin-independent-result.json",
+      "originalEvidenceSha256": "589e70d8122ef1b7ecec9b85b616bd6f2a0a374e91e1459e9194591b804db75a",
+      "kind": "isolated-formal-shape-qa-not-publication-authority",
+      "checksPassed": 6,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "proposal-carry-retry-green.json",
+      "originalEvidenceSha256": "3ae7da7e83a356e55db5e571cc0338eb2930ee6cdd20fe9a66939d938a298447",
+      "kind": "isolated-proposal-retry-check-not-content-approval",
+      "checksPassed": 5,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "four-domain-static-independent-result.json",
+      "originalEvidenceSha256": "0db7a5fcec6aad1edf6df3d50973e3f126f9e2c7877f19a04008c55af435cc1c",
+      "kind": "isolated-static-artifact-and-client-test-not-deployment",
+      "checksPassed": 4,
+      "checks": [
+        "all 2277 accepted legacy data URLs retain identical bytes",
+        "existing public whole-package verifier accepts the complete shared artifact",
+        "every active per-game manifest has canonical identity, complete domains and identical core selections",
+        "real legacy client loads its catalog, accepts the same shared package and detects a changed build"
+      ],
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "four-domain-cloudflare-independent-result.json",
+      "originalEvidenceSha256": "008fb576e229b37e2b7c08279b9decf83daaa100a8e35d62686ae2d69c1ea268",
+      "kind": "isolated-real-artifact-deploy-gate-and-transport-test-not-deployment",
+      "checksPassed": 3,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "runtime-archive-independent-result.json",
+      "originalEvidenceSha256": "c6dc353291e8209fc1f0f28dabf53cf3e672f0f2165b75f369bf25d3661b2c67",
+      "kind": "isolated-full-four-domain-static-archive-git-roundtrip-not-publication",
+      "checksPassed": 6,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "controller-independent-result.json",
+      "originalEvidenceSha256": "30236b1d4b9c5f77ae9c6872055d5bfaef5a1c22c5a83313ac194655155bcb61",
+      "kind": "isolated-formal-shape-independent-QA-not-publication-authority",
+      "checksPassed": 8,
+      "checks": [
+        "same-data-pointer-stale-runtime-CAS-rejected-before-preparation",
+        "rollback-release-ID-and-whole-snapshot-set-mismatch-rejected",
+        "accurate-CAS-and-old-Source-ID-cannot-implicitly-downgrade",
+        "corrupt-durable-runtime-refused-without-state-or-deployment-effects",
+        "origin-failure-retains-whole-current-CAS-and-retryable-owned-journal",
+        "retry-reuses-identical-whole-artifact-and-journal-without-new-number",
+        "old-runtime-bytes-restored-with-newer-shared-URLs-retained",
+        "original-descriptor-whole-artifact-restored-after-probe"
+      ],
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "durable-hook-independent-result.json",
+      "originalEvidenceSha256": "dd6a6c4bffa4f5836ee7d363abe03383be961da0be5150d2e6c5b3b5128df839",
+      "kind": "isolated-durable-callback-independent-check-no-publication-authority",
+      "checksPassed": 5,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "receipt-checkpoint-independent-result.json",
+      "originalEvidenceSha256": "8aa59ee2eab0428c8374dd3f4ff8249587e6045fed135461c748e10e96476d24",
+      "kind": "isolated-independent-durable-receipt-check-not-publication-authority",
+      "checksPassed": 4,
+      "checks": [
+        "journal-persistence-failure-prevents-external-operation",
+        "active-persistence-failure-cannot-return-success-and-restores-retryable-journal",
+        "fresh-owner-journal-retry-preserves-transaction-artifact-number-and-closed-durable-receipt",
+        "four-receipt-tampering-cases-fail-closed"
+      ],
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "receipt-data-revision-probe-result.json",
+      "originalEvidenceSha256": "fed3e48021a3f6cb3ddc25b75f69ea7da805caecbcb7a64d93c82a0debfe8a95",
+      "kind": "isolated-receipt-data-revision-binding-probe",
+      "checksPassed": null,
+      "checks": null,
+      "passed": null,
+      "rejected": true,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "original Red retained separately; same probe now rejects tampered revision"
+    },
+    {
+      "localEvidenceName": "state-root-link-probe-result.json",
+      "originalEvidenceSha256": "8fcbb8d5951a619c856a2e6c54986c045242e9491ef1e814cb86fdcd6950c787",
+      "kind": "isolated-owner-state-root-directory-link-probe",
+      "checksPassed": null,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "state-missing-ledger-probe-result.json",
+      "originalEvidenceSha256": "1354b7896df16c91af0c5ae30e0d148079212a26a314908e29a281736aa2091e",
+      "kind": "isolated-existing-owner-branch-with-missing-ledger",
+      "checksPassed": null,
+      "checks": null,
+      "passed": null,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    },
+    {
+      "localEvidenceName": "source-recovery-independent-result.json",
+      "originalEvidenceSha256": "133b2d7b01270182742654c3c1d859ffddc29e365203a97afc36d8799400cbff",
+      "kind": "isolated-local-Git-recovery-rehearsal",
+      "checksPassed": null,
+      "checks": null,
+      "passed": true,
+      "rejected": null,
+      "actualDeployments": 0,
+      "actualHumanReceipts": 0,
+      "scope": "isolated independent QA; earlier valid evidence reused where the behavior was unaffected; not actual content approval"
+    }
+  ],
+  "implementerFinal": {
+    "node": "24.19.0",
+    "tests": [
+      {
+        "file": "candidate-final.txt",
+        "command": "node --test test/contract-w09-candidate.test.mjs",
+        "pass": 2,
+        "fail": 0,
+        "skip": 0,
+        "sha256": "6a5abd93eb69e4ddb5e67c4c9832dbaf5358ce87bfacf1c918c686cc8543d531",
+        "selectedTests": [
+          "InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges-main-and-leaves-conflicts-pending (21842.9847ms)",
+          "InterT29_candidate-workflow-is-a-serialized-unselected-repository-dispatch-route (16.7063ms)"
+        ]
+      },
+      {
+        "file": "state-branch-final.txt",
+        "command": "node --test test/contract-w09-state-branch.test.mjs",
+        "pass": 7,
+        "fail": 0,
+        "skip": 0,
+        "sha256": "4da31575b901ba13afdfe8de6cf01b9537622abf8ecbfeec7ee3c3c66f753cd5",
+        "selectedTests": [
+          "InterT25_owner-state-branch-restores-whitelisted-files-without-touching-checkout-index-or-head (8478.4344ms)",
+          "InterT25_owner-state-branch-rejects-stale-runner-with-non-fast-forward-CAS (10723.1512ms)",
+          "InterT25_owner-state-branch-rejects-nonofficial-origin (1975.658ms)",
+          "InterT25_owner-state-branch-rejects-unwhitelisted-remote-tree-before-restoring-files (7393.3952ms)",
+          "InterT25_owner-state-branch-refuses-junctions-at-state-and-allowed-tree-roots (7010.0851ms)",
+          "InterT26_owner-state-read-distinguishes-empty-and-active-without-restoring-checkout-files (5244.7382ms)",
+          "InterT27_owner-state-branch-never-restores-or-persists-without-the-ledger (9460.8521ms)"
+        ]
+      },
+      {
+        "file": "release-focused.txt",
+        "command": "node --test --test-name-pattern='UnitT25_formal-publication-entry|UnitT26_publication-receipt-dataRevision|InterT25_explicit-retention-reference|InterT25_workflows-serialize-shared-publication' test/contract-w09-release.test.mjs",
+        "pass": 4,
+        "fail": 0,
+        "skip": 0,
+        "sha256": "39496394b522e16ea877c0419bdee56cf1a8af1efc2f9d7a55697a2c822f85c7",
+        "selectedTests": [
+          "UnitT26_publication-receipt-dataRevision-is-bound-to-highest-numeric-active-gameVersion (22.2697ms)",
+          "UnitT25_formal-publication-entry-requires-durable-owner-state-capability (2.4292ms)",
+          "InterT25_explicit-retention-reference-changes-use-the-durable-owner-state-checkpoint (65.7354ms)",
+          "InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route (53.1238ms)"
+        ]
+      },
+      {
+        "file": "compose-pr-retry.txt",
+        "command": "node --test --test-name-pattern='InterT03_PR-retry-merges-per-game-proposals' test/contract-w09-compose.test.mjs",
+        "pass": 1,
+        "fail": 0,
+        "skip": 0,
+        "sha256": "8040b057eec72ca1da6d60fcc5080cee69437e7c17ce10648c1b34bcd41cef50",
+        "selectedTests": [
+          "InterT03_PR-retry-merges-per-game-proposals-and-rejects-conflicts (70.9001ms)"
+        ]
+      },
+      {
+        "file": "workflow-guards-final.txt",
+        "command": "node --test --test-name-pattern='InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route' test/contract-w09-release.test.mjs",
+        "pass": 1,
+        "fail": 0,
+        "skip": 0,
+        "sha256": "bdc4479a38879ab9829b10c302d9327ef9de95f779bea08cafa62bd020ca2dfd",
+        "selectedTests": [
+          "InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route (34.3394ms)"
+        ]
+      }
+    ],
+    "interT14": {
+      "test": "InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-nested-files",
+      "command": "node --test --test-name-pattern=InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-nested-files test/contract-w09-release.test.mjs",
+      "result": {
+        "status": "passed",
+        "tests": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "testDurationMs": 1200786.9489,
+        "totalDurationMs": 1201111.409
+      },
+      "evidence": {
+        "source": "functions.exec/write_stdin session 96004 tool result",
+        "rawStdoutFileBacked": false,
+        "rawStdoutCopied": false
+      },
+      "reuseScope": "valid long integration evidence reused after the final narrow dataRevision validator, Git message and workflow text fixes; those fixes have their own focused checks"
+    },
+    "syntax": {
+      "jsFiles": [
+        "scripts/prepare-w09-candidate.mjs: syntax ok",
+        "scripts/promote-w09-release.mjs: syntax ok",
+        "scripts/content/contract-w09-compose.mjs: syntax ok",
+        "scripts/content/contract-w09-release.mjs: syntax ok",
+        "scripts/content/contract-w09-state-branch.mjs: syntax ok",
+        "src/static/build.mjs: syntax ok",
+        "src/static/verify.mjs: syntax ok",
+        "src/static/shared-release.mjs: syntax ok",
+        "src/deploy/cloudflare.mjs: syntax ok",
+        "web/client.mjs: syntax ok",
+        "scripts/browser-smoke.mjs: syntax ok",
+        "test/contract-w09-candidate.test.mjs: syntax ok",
+        "test/contract-w09-release.test.mjs: syntax ok",
+        "test/contract-w09-state-branch.test.mjs: syntax ok"
+      ],
+      "yamlFiles": [
+        ".github/workflows/static-ci.yml: YAML parsed",
+        ".github/workflows/shared-release.yml: YAML parsed",
+        ".github/workflows/shared-candidate.yml: YAML parsed"
+      ]
+    },
+    "note": "Focused runs overlap; do not sum them as distinct full-suite tests. Text-only generated Git message marker was syntax checked after the last behavior run. Full fixed delivery is validated again by natural PR CI."
+  },
+  "actualPendingDryRun": {
+    "passed": true,
+    "status": "pending",
+    "reason": "no reviewed W09 selected composition is present in tracked Web inputs",
+    "allocationArtifactsCreated": false,
+    "actualReceiptsAdded": 0,
+    "realExternalWrites": 0
+  },
+  "fixedRuntimeLocalQA": {
+    "runtimeGitCommit": "b6019e268001df9ee1a8c31d797739347c785ea6",
+    "rawRuntimeInputs": [
+      {
+        "path": "web/app.mjs",
+        "sizeBytes": 46429,
+        "sha256": "333a0ba4e9adfc4fbeac2f399b26394c6e9842f5c73607406faa21a8a689fcac"
+      },
+      {
+        "path": "web/client.mjs",
+        "sizeBytes": 42244,
+        "sha256": "fdc9f68e958fee58139717139fa3e65d14114c916ba23bddd4e649cb12f2c395"
+      },
+      {
+        "path": "web/index.html",
+        "sizeBytes": 1487,
+        "sha256": "bab0702a332a2d2327fa12b1563e43f09706b6ef27f4c179927af966541f3d8a"
+      },
+      {
+        "path": "web/style.css",
+        "sizeBytes": 16487,
+        "sha256": "8a76e9330e95f16f748a39c925d49b277e3cfe57d2cfb1ada88c237beea1a444"
+      },
+      {
+        "path": "content/published/content.json",
+        "sizeBytes": 3956394,
+        "sha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc"
+      },
+      {
+        "path": "wrangler.preview.json",
+        "sizeBytes": 231,
+        "sha256": "0b069010c878e12eee5a9bb866ac3e3e99f658ac2a086e7ef2fb91b49b57309c"
+      }
+    ],
+    "buildId": "77fb09d9fb9bea29dfbceb59170b5add0f94291707bea9671c0711addfbd36c1",
+    "files": 2299,
+    "sharedClosureFiles": 12,
+    "localHTTP": {
+      "passed": true,
+      "buildId": "77fb09d9fb9bea29dfbceb59170b5add0f94291707bea9671c0711addfbd36c1",
+      "productionRequests": 0,
+      "deployments": 0
+    },
+    "browser": {
+      "passed": true,
+      "log": "final-git-runtime-browser-smoke.log",
+      "actualDeployments": 0
+    }
+  },
+  "naturalSourceCI": {
+    "url": "https://github.com/SyuanTsai/DarkTide-Source-Data/actions/runs/39410860723",
+    "head": "589f89ea880d33450552029a03f7893b3fb6cb6a",
+    "pass": 143,
+    "fail": 0,
+    "skip": 0
+  },
+  "naturalWebCI": "Run on the final pending PR after this metadata commit; authoritative URL/result belongs to PR and Jira, not a future self-referencing artifact.",
+  "reuse": {
+    "acceptedStages": "W01–W08 and existing unaffected repairs",
+    "protectedRawGitFiles": [
+      {
+        "path": "content/contracts/w08/compiler.lock.json",
+        "sizeBytes": 831,
+        "sha256": "7dc9c969840cdf9fa81efb7ea516d23f4b59ce98bc096c9c9c9386808a3f7e0f"
+      },
+      {
+        "path": "content/schema/v2/shared-candidate.schema.json",
+        "sizeBytes": 7143,
+        "sha256": "58ea9503ea04fe6a066a80861e18cc88683f6e96dbf4c8f9bcd95a54914732c2"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/candidate.json",
+        "sizeBytes": 317557,
+        "sha256": "71e0254a58e08e22fb37a25ffce370b682e9734d7dca7236094f602dbe5760f4"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/blessings.json",
+        "sizeBytes": 81429,
+        "sha256": "d844ce7431ca96366b97fad27cb428b495b290b93deeeaf646b6f1332d759588"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/skills.json",
+        "sizeBytes": 125986,
+        "sha256": "9cefb6ccc4de5ef609b41237324ceedca6e0a49cf0857ef93a82951af3b5bb4d"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/terms.json",
+        "sizeBytes": 96300,
+        "sha256": "cdc0873c70bbf0a1e04a92205507c2d459de7aa879de3708e8e41d109faa011a"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/weapons.json",
+        "sizeBytes": 6195771,
+        "sha256": "2ec969988b7a7840b6900dce160f2447f8326d5b9f5859e4a5d46a9369c9ac29"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/manifest.json",
+        "sizeBytes": 1991,
+        "sha256": "ddc572cfcc00f01502e09185932f1b5dedbf903047e439fdc47267f67444e0ea"
+      },
+      {
+        "path": "docs/contracts/w08/gate-fix-r2-evidence.json",
+        "sizeBytes": 54599,
+        "sha256": "55c1d40874ecec35a4989e6367e8dee3b2dae1a76be73c2c9adbc7eeccec8aa8"
+      },
+      {
+        "path": "docs/contracts/w08/gate-fix-r2-plan.md",
+        "sizeBytes": 2460,
+        "sha256": "51921418a283569f40aeb0d02963dd221d373bc6e15301b022b99d877141546f"
+      },
+      {
+        "path": "docs/contracts/w08/gate-fix-r2.md",
+        "sizeBytes": 6477,
+        "sha256": "3ff8a25f1d74600c29a7b4fddf01d0eba892bc0f992e06855f14b768a77d6c1b"
+      },
+      {
+        "path": "docs/contracts/w08/review-matrix-r2.json",
+        "sizeBytes": 315937,
+        "sha256": "31c3bc5d3ff5277fdc467f9d6ac2d77410be5e902cea7535da9761138696b829"
+      },
+      {
+        "path": "scripts/content/contract-authoring.mjs",
+        "sizeBytes": 166907,
+        "sha256": "39329ca622ae4c620e858d827dc7c4b2d9f54f7fb91419aef49b0c00ad25ed35"
+      },
+      {
+        "path": "scripts/content/contract-release.mjs",
+        "sizeBytes": 24311,
+        "sha256": "f2054ed33afdd6325450138202f7fbde9278f881de800959fb638db2794414d3"
+      },
+      {
+        "path": "scripts/content/contract-w08-build.mjs",
+        "sizeBytes": 89579,
+        "sha256": "313593cf5c7157bdc19b2a85f2a4b42818ca6301cd773d38387b8f03cd391809"
+      },
+      {
+        "path": "test/contract-w08-build.test.mjs",
+        "sizeBytes": 39771,
+        "sha256": "5f78ee537860e4a4bc41ee54c0138ee2db5e59646a241f4ac242f1ff65910f61"
+      }
+    ],
+    "priorWebCI": {
+      "url": "https://github.com/SyuanTsai/DarkTide-Web/actions/runs/39388531645",
+      "pass": 484,
+      "fail": 0,
+      "namedBaselineSkips": 15
+    },
+    "noRerun": [
+      "Google POC",
+      "Mods POC",
+      "historical content approvals",
+      "formal production release"
+    ]
+  }
+}
