@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "w08-shared-candidate/1.0.0",
+  "title": "W08 shared content candidate envelope",
+  "description": "Candidate-only metadata for a deterministic, multi-domain release build. This envelope does not publish a version pointer.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "candidateOnly",
+    "fixtureOnly",
+    "publicationEligible",
+    "proposedContentVersion",
+    "gameReleaseId",
+    "sourceBuild",
+    "compiler",
+    "webInputs",
+    "manifest",
+    "review",
+    "publicationGate",
+    "acceptedLimitations"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "w08-shared-candidate/1.0.0" },
+    "candidateOnly": { "const": true },
+    "fixtureOnly": { "const": false },
+    "publicationEligible": { "const": false },
+    "proposedContentVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "gameReleaseId": { "type": "string", "minLength": 1 },
+    "sourceBuild": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "sourceRevision", "manifestSha256", "buildIdentityVerified", "publicationEligible", "receiptSha256"],
+      "properties": {
+        "repository": { "const": "https://github.com/SyuanTsai/DarkTide-Source-Data" },
+        "commit": { "$ref": "#/$defs/sha1" },
+        "sourceRevision": { "$ref": "#/$defs/sha256" },
+        "manifestSha256": { "$ref": "#/$defs/sha256" },
+        "buildIdentityVerified": { "const": false },
+        "publicationEligible": { "const": false },
+        "receiptSha256": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] }
+      }
+    },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "inputLockSha256", "files", "authoringCommit"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/sha1" },
+        "inputLockSha256": { "$ref": "#/$defs/sha256" },
+        "authoringCommit": { "$ref": "#/$defs/sha1" },
+        "files": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "$ref": "#/$defs/pinnedFile" }
+        }
+      }
+    },
+    "webInputs": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mode", "authoringSha256", "officialInputsSha256", "termRulesSha256", "baselineSha256"],
+        "properties": {
+          "mode": { "enum": ["w06", "w07"] },
+          "authoringSha256": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] },
+          "officialInputsSha256": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] },
+          "termRulesSha256": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] },
+          "baselineSha256": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] }
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "dataRevision"],
+      "properties": {
+        "path": { "type": "string", "pattern": "^/data/[a-f0-9]{64}/manifest\\.json$" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "dataRevision": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptCount", "targetCount", "webTargetCount", "sourceTargetCount", "states", "targets", "sourceTargets", "receipts"],
+      "properties": {
+        "receiptCount": { "type": "integer", "minimum": 0 },
+        "targetCount": { "type": "integer", "minimum": 0 },
+        "webTargetCount": { "type": "integer", "minimum": 0 },
+        "sourceTargetCount": { "type": "integer", "minimum": 0 },
+        "states": { "$ref": "#/$defs/stateCounts" },
+        "targets": { "type": "array", "items": { "$ref": "#/$defs/webTarget" } },
+        "sourceTargets": { "type": "array", "items": { "$ref": "#/$defs/sourceTarget" } },
+        "receipts": { "type": "array", "items": { "type": "object", "required": ["mode", "receipt"], "properties": { "mode": { "type": "string" }, "receipt": { "type": "object" } } } }
+      }
+    },
+    "publicationGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "publicationEligible", "blockers"],
+      "properties": {
+        "status": { "enum": ["blocked", "ready-for-release-allocation"] },
+        "publicationEligible": { "const": false },
+        "blockers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "acceptedLimitations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "type": "object", "required": ["key", "status"], "properties": { "key": { "type": "string" }, "status": { "type": "string" } } }
+    }
+  },
+  "$defs": {
+    "sha1": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "pinnedFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sizeBytes", "sha256"],
+      "properties": { "path": { "type": "string", "minLength": 1 }, "sizeBytes": { "type": "integer", "minimum": 1 }, "sha256": { "$ref": "#/$defs/sha256" } }
+    },
+    "stateCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "pending", "stale", "rejected"],
+      "properties": { "approved": { "type": "integer", "minimum": 0 }, "pending": { "type": "integer", "minimum": 0 }, "stale": { "type": "integer", "minimum": 0 }, "rejected": { "type": "integer", "minimum": 0 } }
+    },
+    "webTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "target", "state", "targetDigest", "dependenciesDigest"],
+      "properties": {
+        "mode": { "enum": ["w06", "w07"] },
+        "target": { "type": "object", "required": ["targetId", "ownerId", "fieldPath", "dimension"], "properties": { "targetId": { "type": "string" }, "ownerId": { "type": "string" }, "fieldPath": { "type": "string" }, "dimension": { "type": "string" } } },
+        "state": { "$ref": "#/$defs/state" },
+        "targetDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] },
+        "dependenciesDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] }
+      }
+    },
+    "sourceTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "gameReleaseId", "recordId", "fieldPath", "dimension", "state", "targetDigest", "dependenciesDigest"],
+      "properties": { "mode": { "const": "source" }, "gameReleaseId": { "type": "string" }, "recordId": { "type": "string" }, "fieldPath": { "type": "string" }, "dimension": { "type": "string" }, "state": { "$ref": "#/$defs/state" }, "targetDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] }, "dependenciesDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }] } }
+    },
+    "state": { "enum": ["approved", "pending", "stale", "rejected"] }
+  }
+}
