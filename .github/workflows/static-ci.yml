@@ -9,11 +9,14 @@ permissions:
 jobs:
   static-package:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
+    outputs:
+      selected_shared: ${{ steps.selected.outputs.selected }}
     steps:
       - name: Check out source without persisted credentials
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -22,15 +25,41 @@ jobs:
           package-manager-cache: false
       - name: Install locked dependencies
         run: npm ci
+      - name: Validate the selected shared-release authority marker
+        id: selected
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, lstatSync, readFileSync } from 'node:fs';
+          import path from 'node:path';
+
+          const markerPath = path.join(process.cwd(), 'content/contracts/w09/source-handoff/selected.json');
+          let info;
+          try { info = lstatSync(markerPath); }
+          catch (error) {
+            if (error.code !== 'ENOENT') throw error;
+            appendFileSync(process.env.GITHUB_OUTPUT, 'selected=false\n');
+            appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'No selected W09 composition is present; the legacy package path may run, and the publisher checks durable owner state before any production deployment.\n');
+            process.exit(0);
+          }
+          if (!info.isFile() || info.isSymbolicLink()) throw new Error('selected W09 authority marker must be a regular file');
+          const marker = JSON.parse(readFileSync(markerPath, 'utf8'));
+          const { validateW09SelectedComposition } = await import('./scripts/content/contract-w09-compose.mjs');
+          try { validateW09SelectedComposition(marker); }
+          catch { throw new Error('selected W09 authority marker is malformed; refusing a legacy deployment'); }
+          appendFileSync(process.env.GITHUB_OUTPUT, 'selected=true\n');
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'A valid selected W09 composition is present. The legacy publisher will yield to the serialized shared-release workflow.\n');
+          NODE
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test
         run: npm test
       - name: Build and verify deployable published package
+        if: steps.selected.outputs.selected != 'true'
         run: npm run prepare:deploy
         env:
           WRANGLER_SEND_METRICS: 'false'
       - name: Upload the verified static artifact
+        if: steps.selected.outputs.selected != 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: darktide-static-package
@@ -39,7 +68,7 @@ jobs:
           retention-days: 14
   deploy:
     needs: [static-package]
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.static-package.outputs.selected_shared != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     concurrency:
@@ -50,6 +79,7 @@ jobs:
       - name: Check out the exact verified source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          fetch-depth: 0
           persist-credentials: false
           ref: ${{ github.sha }}
       - name: Set up Node.js 24
@@ -90,15 +120,31 @@ jobs:
             echo "current=false" >> "$GITHUB_OUTPUT"
             echo "Skipped stale deployment; main has moved." >> "$GITHUB_STEP_SUMMARY"
           fi
-      - name: Verify preview, publish production, and verify HTTPS
+      - name: Prevent legacy fallback after a W09 shared release is active
+        id: legacy-authority
         if: steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true'
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync } from 'node:fs';
+          import { readW09OwnerStateBranch } from './scripts/content/contract-w09-state-branch.mjs';
+
+          const owner = await readW09OwnerStateBranch({ repoRoot: process.cwd(), branch: 'w09-release-state' });
+          if (owner.active) {
+            appendFileSync(process.env.GITHUB_OUTPUT, 'allowed=false\n');
+            appendFileSync(process.env.GITHUB_STEP_SUMMARY, 'A prior W09 shared release is active while the selected marker is absent. Legacy deployment is blocked; restore a reviewed selection or explicitly promote a replacement.\n');
+          } else {
+            appendFileSync(process.env.GITHUB_OUTPUT, 'allowed=true\n');
+          }
+          NODE
+      - name: Verify preview, publish production, and verify HTTPS
+        if: steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true' && steps.legacy-authority.outputs.allowed == 'true'
         run: npm run deploy:cloudflare
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '38d350980998e83d3f405aff0170921a'
           WRANGLER_SEND_METRICS: 'false'
       - name: Save deployment receipt
-        if: always() && steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true'
+        if: always() && steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true' && steps.legacy-authority.outputs.allowed == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: darktide-deployment-receipt

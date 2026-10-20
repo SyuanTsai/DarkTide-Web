@@ -7,6 +7,8 @@ import { validateCacheHeaders } from './header-policy.mjs';
 import { renderStaticRewrites } from './routing-policy.mjs';
 import { verifyHashedModuleGraph } from './module-graph.mjs';
 import { validatePublicFiles } from '../published/contract.mjs';
+import { validateVersion as validateW02Version } from '../../scripts/content/contract-release.mjs';
+import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
 
 const MANIFEST_FIELDS = ['schema_version', 'package_kind', 'build_id', 'data_revision', 'files'];
 const FILE_FIELDS = ['path', 'size_bytes', 'sha256'];
@@ -28,20 +30,161 @@ function normalizePrivateKey(key) {
   return key.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-function scanPublicBoundary(value, location = '$') {
+const OFFICIAL_INPUT_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.officialInputs\.sources\[\d+\]$/u;
+const OFFICIAL_PRESENTATION_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.presentations\[\d+\]\.official$/u;
+const OFFICIAL_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.(?:officialInputs\.sources\[\d+\]|presentations\[\d+\]\.official)\.segments\[\d+\]\.token$/u;
+
+function validatePublicOfficialInput(source, location) {
+  const sourceRequired = [
+    'officialSourceId', 'entityRef', 'origin', 'sourceLocale', 'resource', 'key', 'occurrence',
+    'sourceText', 'sourceTextSha256', 'segments', 'params', 'resolvedText', 'resolvedTextSha256',
+  ];
+  const sourceAllowed = new Set([...sourceRequired, 'sourceHash', 'bindingContext']);
+  if (!source || typeof source !== 'object' || Array.isArray(source) ||
+      sourceRequired.some(key => !Object.hasOwn(source, key)) || Object.keys(source).some(key => !sourceAllowed.has(key)) ||
+      typeof source.officialSourceId !== 'string' || !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(source.officialSourceId) ||
+      !['game-localization', 'official-patch-notes', 'official-ui'].includes(source.origin) ||
+      typeof source.sourceLocale !== 'string' || source.sourceLocale.length < 2 || source.sourceLocale.length > 35 ||
+      typeof source.resource !== 'string' || source.resource.length < 1 || source.resource.length > 10000 ||
+      (source.key !== null && (typeof source.key !== 'string' || !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(source.key))) ||
+      !Number.isSafeInteger(source.occurrence) || source.occurrence < 0 ||
+      !Array.isArray(source.segments) || source.segments.length === 0 || !Array.isArray(source.params) ||
+      typeof source.sourceText !== 'string' || typeof source.sourceTextSha256 !== 'string' ||
+      typeof source.resolvedText !== 'string' || typeof source.resolvedTextSha256 !== 'string') {
+    fail('public official input has an invalid formal segment shape at ' + location);
+  }
+  if (!source.entityRef || typeof source.entityRef !== 'object' || Array.isArray(source.entityRef) ||
+      !['recordId', 'gameReleaseId', 'kind'].every(key => Object.hasOwn(source.entityRef, key)) ||
+      Object.keys(source.entityRef).some(key => !['recordId', 'gameReleaseId', 'kind', 'compatibilityRef'].includes(key)) ||
+      typeof source.entityRef.recordId !== 'string' || !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(source.entityRef.recordId) ||
+      typeof source.entityRef.gameReleaseId !== 'string' || !/^[a-z0-9][a-z0-9._:-]{1,127}$/u.test(source.entityRef.gameReleaseId) ||
+      typeof source.entityRef.kind !== 'string') {
+    fail('public official input has an invalid entity reference at ' + location);
+  }
+  if (source.sourceHash !== undefined && (typeof source.sourceHash !== 'string' || !/^[a-f0-9]{8,64}$/u.test(source.sourceHash))) {
+    fail('public official input has an invalid fixed source hash at ' + location);
+  }
+  const parameters = new Map();
+  for (const parameter of source.params) {
+    if (!parameter || typeof parameter !== 'object' || Array.isArray(parameter) ||
+        !['parameterId', 'sourceKey', 'value'].every(key => Object.hasOwn(parameter, key)) ||
+        Object.keys(parameter).some(key => !['parameterId', 'sourceKey', 'value', 'officialNameRef'].includes(key)) ||
+        typeof parameter.parameterId !== 'string' || typeof parameter.value !== 'string' ||
+        !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(parameter.parameterId) ||
+        typeof parameter.sourceKey !== 'string' || !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(parameter.sourceKey) ||
+        parameters.has(parameter.parameterId)) {
+      fail('public official input has an invalid or duplicate parameter binding at ' + location);
+    }
+    parameters.set(parameter.parameterId, parameter.value);
+  }
+  const segmentIds = new Set();
+  const usedParameters = new Set();
+  const sourceParts = [];
+  const renderedParts = [];
+  for (const segment of source.segments) {
+    if (!segment || typeof segment !== 'object' || Array.isArray(segment) ||
+        typeof segment.segmentId !== 'string' || !/^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(segment.segmentId) || segmentIds.has(segment.segmentId) ||
+        typeof segment.sha256 !== 'string' || !/^[a-f0-9]{64}$/u.test(segment.sha256)) {
+      fail('public official input has an invalid or duplicate segment at ' + location);
+    }
+    segmentIds.add(segment.segmentId);
+    if (segment.kind === 'text') {
+      if (Object.keys(segment).sort().join(',') !== 'kind,segmentId,sha256,text' || typeof segment.text !== 'string' ||
+          sha256(Buffer.from(segment.text, 'utf8')) !== segment.sha256) {
+        fail('public official text segment does not match its formal bytes at ' + location);
+      }
+      sourceParts.push(segment.text);
+      renderedParts.push(segment.text);
+    } else if (segment.kind === 'parameter') {
+      if (Object.keys(segment).sort().join(',') !== 'kind,parameterId,segmentId,sha256,token' ||
+          typeof segment.parameterId !== 'string' || typeof segment.token !== 'string' || segment.token.length === 0 ||
+          sha256(Buffer.from(segment.token, 'utf8')) !== segment.sha256 || !parameters.has(segment.parameterId)) {
+        fail('public official parameter segment does not match its formal binding at ' + location);
+      }
+      usedParameters.add(segment.parameterId);
+      sourceParts.push(segment.token);
+      renderedParts.push(parameters.get(segment.parameterId));
+    } else {
+      fail('public official input has an unsupported segment kind at ' + location);
+    }
+  }
+  if (usedParameters.size !== parameters.size || [...parameters.keys()].some(id => !usedParameters.has(id))) {
+    fail('public official input has an unbound parameter at ' + location);
+  }
+  if (source.sourceText !== sourceParts.join('') || source.resolvedText !== renderedParts.join('') ||
+      sha256(Buffer.from(source.sourceText, 'utf8')) !== source.sourceTextSha256 ||
+      sha256(Buffer.from(source.resolvedText, 'utf8')) !== source.resolvedTextSha256) {
+    fail('public official input text does not match its ordered segments and bindings at ' + location);
+  }
+}
+
+function sortedJsonValue(value) {
+  if (Array.isArray(value)) return value.map(sortedJsonValue);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, sortedJsonValue(value[key])]));
+  }
+  return value;
+}
+
+function collectOfficialInputSources(filePath, value, officialInputFiles) {
+  if (!officialInputFiles.has(filePath)) return null;
+  const sources = value?.web?.officialInputs?.sources;
+  if (!Array.isArray(sources)) return new Map();
+  const byId = new Map();
+  for (const source of sources) {
+    if (!source || typeof source !== 'object' || typeof source.officialSourceId !== 'string' || byId.has(source.officialSourceId)) {
+      fail('public official input sources have invalid or duplicate identities at ' + filePath);
+    }
+    byId.set(source.officialSourceId, source);
+  }
+  return byId;
+}
+
+function scanPublicBoundary(value, location = '$', { officialInputFiles = new Set(), officialInputSources = new Map() } = {}) {
   if (typeof value === 'string') {
     if (/(?:^|[\s"'(])[A-Za-z]:[\\/]/.test(value)) fail('public JSON contains an absolute source path at ' + location);
     return;
   }
   if (Array.isArray(value)) {
-    value.forEach((item, index) => scanPublicBoundary(item, location + '[' + index + ']'));
+    value.forEach((item, index) => scanPublicBoundary(item, location + '[' + index + ']', { officialInputFiles, officialInputSources }));
     return;
   }
   if (!value || typeof value !== 'object') return;
-  for (const [key, item] of Object.entries(value)) {
-    if (PRIVATE_KEYS.has(normalizePrivateKey(key))) fail('public JSON contains a private field: ' + key);
-    scanPublicBoundary(item, location + '.' + key);
+  const officialInputMatch = OFFICIAL_INPUT_SOURCE_PATH.exec(location);
+  const officialPresentationMatch = OFFICIAL_PRESENTATION_SOURCE_PATH.exec(location);
+  if (officialInputMatch && officialInputFiles.has(officialInputMatch[1])) validatePublicOfficialInput(value, location);
+  if (officialPresentationMatch && officialInputFiles.has(officialPresentationMatch[1])) {
+    validatePublicOfficialInput(value, location);
+    const pinnedSource = officialInputSources.get(officialPresentationMatch[1])?.get(value.officialSourceId);
+    if (!pinnedSource || JSON.stringify(sortedJsonValue(pinnedSource)) !== JSON.stringify(sortedJsonValue(value))) {
+      fail('public presentation official input does not match its validated official source identity at ' + location);
+    }
   }
+  for (const [key, item] of Object.entries(value)) {
+    const childLocation = location + '.' + key;
+    const allowedOfficialParameterToken = key === 'token' && OFFICIAL_PARAMETER_TOKEN_PATH.test(childLocation) &&
+      officialInputFiles.has(OFFICIAL_PARAMETER_TOKEN_PATH.exec(childLocation)[1]);
+    if (PRIVATE_KEYS.has(normalizePrivateKey(key)) && !allowedOfficialParameterToken) fail('public JSON contains a private field: ' + key);
+    scanPublicBoundary(item, childLocation, { officialInputFiles, officialInputSources });
+  }
+}
+
+function collectOfficialInputDomainFiles(sharedBundle) {
+  const files = new Set();
+  if (!sharedBundle) return files;
+  for (const pointer of sharedBundle.metadata.retained_releases) {
+    const manifestPath = pointer.manifest_path.slice(1);
+    const bytes = sharedBundle.files.get(manifestPath);
+    if (!bytes) continue;
+    const manifest = parseJson(bytes, manifestPath);
+    for (const row of manifest.files) {
+      if ((row.kind === 'skills' || row.kind === 'blessings') &&
+          (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json')) {
+        files.add('data/' + pointer.data_revision + '/' + row.path);
+      }
+    }
+  }
+  return files;
 }
 
 async function collectDirectory(root) {
@@ -121,15 +264,23 @@ function validateDirectorySet(files, directories) {
   }
 }
 
-function validateOutputPaths(files, revision) {
+function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevision = revision } = {}) {
   for (const required of FIXED_REQUIRED) if (!files.has(required)) fail('static artifact is missing ' + required);
+  const allowedDataRoots = new Set(['data/' + revision + '/', 'data/' + runtimeRevision + '/']);
+  if (sharedBundle) for (const relativePath of sharedBundle.files.keys()) {
+    const match = /^(data\/[^/]+\/)/u.exec(relativePath);
+    if (match) allowedDataRoots.add(match[1]);
+  }
+  const allowedSourceLocks = new Set(sharedBundle ? [...sharedBundle.files.keys()].filter(name => name.startsWith('source-locks/')) : []);
   for (const name of files.keys()) {
     if (FIXED_REQUIRED.has(name) || name === 'sitemap.xml' || HASHED_ASSET.test(name)) continue;
-    const prefix = 'data/' + revision + '/';
-    if (name.startsWith(prefix)) {
+    if (name === 'shared-fixture.json' && sharedBundle?.packageKind === 'fixture') continue;
+    const prefix = [...allowedDataRoots].find(value => name.startsWith(value));
+    if (prefix) {
       safeRelativePath(name.slice(prefix.length), 'published data path');
       continue;
     }
+    if (allowedSourceLocks.has(name)) continue;
     fail('artifact contains an unsupported file path: ' + name);
   }
   const html = [...files.keys()].filter(name => name.endsWith('.html'));
@@ -181,17 +332,45 @@ function validateRobotsAndSitemap(files, catalog) {
   return origin;
 }
 
-function validateBuildContext(indexBytes, version) {
+function validateBuildContext(indexBytes, version, { sharedBundle = null, runtimeGameVersion = null, runtimePackageKind = null } = {}) {
   const index = Buffer.from(indexBytes).toString('utf8');
   const matches = [...index.matchAll(/<script>\s*window\.__BUILD__\s*=\s*(\{[^<]*?\})\s*;?\s*<\/script>/g)];
   if (matches.length !== 1) fail('index.html must inject one build context');
   const context = parseJson(Buffer.from(matches[0][1], 'utf8'), 'build context');
-  assertExactKeys(context, VERSION_FIELDS, 'build context');
-  for (const field of VERSION_FIELDS) if (context[field] !== version[field]) fail('build context does not match version.json');
+  if (!sharedBundle) {
+    assertExactKeys(context, VERSION_FIELDS, 'build context');
+    for (const field of VERSION_FIELDS) if (context[field] !== version[field]) fail('build context does not match version.json');
+  } else {
+    const sharedFields = ['shared_data_revision', 'shared_game_version', 'shared_package_kind', 'game_releases', 'retained_releases', 'source_locks', 'shared_files'];
+    const fixtureFields = sharedBundle.packageKind === 'fixture' ? ['shared_fixture_only', 'fixture_id'] : [];
+    assertExactKeys(context, [...VERSION_FIELDS, ...sharedFields, ...fixtureFields], 'shared build context');
+    for (const field of VERSION_FIELDS) {
+      if (field === 'data_revision' || field === 'game_version' || field === 'package_kind') continue;
+      if (context[field] !== version[field]) fail('legacy build context does not match version.json');
+    }
+    if (!/^[a-f0-9]{64}$/.test(context.data_revision) || typeof runtimeGameVersion !== 'string'
+        || context.game_version !== runtimeGameVersion || context.package_kind !== runtimePackageKind
+        || !['published', 'fixture'].includes(context.package_kind)) {
+      fail('shared build context does not match the retained legacy runtime package');
+    }
+    if (context.shared_data_revision !== version.data_revision || context.shared_game_version !== version.game_version ||
+        context.shared_package_kind !== version.package_kind ||
+        JSON.stringify(context.game_releases) !== JSON.stringify(version.game_releases) ||
+        JSON.stringify(context.retained_releases) !== JSON.stringify(sharedBundle.metadata.retained_releases) ||
+        JSON.stringify(context.source_locks) !== JSON.stringify(sharedBundle.metadata.source_locks) ||
+        JSON.stringify(context.shared_files) !== JSON.stringify(sharedBundle.metadata.shared_files)) {
+      fail('shared build context does not match the W02 shared release pointers');
+    }
+    if (sharedBundle.packageKind === 'fixture' && (context.shared_fixture_only !== true ||
+        context.fixture_id !== sharedBundle.fixtureMarker.fixtureId)) {
+      fail('shared fixture build context is missing its explicit non-publishable marker');
+    }
+  }
   if (index.includes('__BUILD_CONTEXT__')) fail('index.html has an unreplaced build context placeholder');
   return {
     index,
-    normalized: index.replace(matches[0][0], '<script>window.__BUILD__=__BUILD_CONTEXT__</script>')
+    normalized: index.replace(matches[0][0], '<script>window.__BUILD__=__BUILD_CONTEXT__</script>'),
+    context,
   };
 }
 
@@ -238,26 +417,72 @@ export async function verifyStaticPackage(directory) {
   const versionBytes = files.get('version.json');
   if (!versionBytes) fail('static artifact is missing version.json');
   const version = parseJson(versionBytes, 'version.json');
-  assertExactKeys(version, VERSION_FIELDS, 'version');
+  const hasSharedRelease = Object.hasOwn(version, 'game_releases');
+  assertExactKeys(version, hasSharedRelease ? [...VERSION_FIELDS, 'game_releases'] : VERSION_FIELDS, 'version');
   if (version.schema_version !== 2 || version.package_kind !== manifest.package_kind ||
       version.build_id !== manifest.build_id || version.data_revision !== manifest.data_revision) {
     fail('version.json does not match artifact manifest');
   }
   if (typeof version.game_version !== 'string' || !version.game_version.trim()) fail('version game_version must be a nonempty string');
   if (!/^[a-f0-9]{64}$/.test(version.data_revision)) fail('version data_revision is invalid');
-  validateOutputPaths(files, version.data_revision);
+  let sharedBundle = null;
+  let runtimeRevision = version.data_revision;
+  if (hasSharedRelease) {
+    const contextMatch = /<script>\s*window\.__BUILD__\s*=\s*(\{[^<]*?\})\s*;?\s*<\/script>/u.exec(Buffer.from(files.get('index.html') ?? []).toString('utf8'));
+    if (!contextMatch) fail('index.html must inject one build context');
+    const initialContext = parseJson(Buffer.from(contextMatch[1], 'utf8'), 'build context');
+    runtimeRevision = initialContext.data_revision;
+    if (!Array.isArray(initialContext.retained_releases)) fail('shared build context is missing retained release pointers');
+    const retainedReleases = initialContext.retained_releases.map(pointer => ({
+      game_version: pointer.game_version,
+      content_version: pointer.content_version,
+      data_revision: pointer.data_revision,
+      manifest_path: pointer.manifest_path,
+      manifest_sha256: pointer.manifest_sha256,
+    }));
+    const sharedFiles = new Map([...files].filter(([name]) => (name.startsWith('data/') && !name.startsWith('data/' + runtimeRevision + '/')) || name.startsWith('source-locks/')));
+    if (version.package_kind === 'fixture') {
+      const markerBytes = files.get('shared-fixture.json');
+      if (!markerBytes) fail('shared fixture is missing its non-publishable marker');
+      const fixtureMarker = parseJson(markerBytes, 'shared-fixture.json');
+      sharedBundle = validateSharedStaticFiles({ version, fixtureMarker, retainedReleases, files: sharedFiles });
+    } else {
+      sharedBundle = validateSharedStaticFiles({ version, retainedReleases, files: sharedFiles });
+    }
+    if (!/^[a-f0-9]{64}$/.test(runtimeRevision) || runtimeRevision === version.data_revision) {
+      fail('shared static package must preserve a distinct legacy runtime data revision');
+    }
+    for (const [relativePath, expectedBytes] of sharedBundle.files) {
+      const actualBytes = files.get(relativePath);
+      if (!actualBytes || !Buffer.from(actualBytes).equals(expectedBytes)) fail('shared static lock or data bytes differ: ' + relativePath);
+    }
+    const actualLocks = new Set([...files.keys()].filter(name => name.startsWith('source-locks/')));
+    const expectedLocks = new Set([...sharedBundle.files.keys()].filter(name => name.startsWith('source-locks/')));
+    if (actualLocks.size !== expectedLocks.size || [...actualLocks].some(name => !expectedLocks.has(name))) {
+      fail('shared static package contains an unreferenced Source lock');
+    }
+  }
+  if (hasSharedRelease) {
+    try { validateW02Version({ ...version, package_kind: 'published' }); }
+    catch (error) { fail('shared version.json violates the closed W02 version contract: ' + error.message); }
+    if (sharedBundle.packageKind !== version.package_kind) fail('shared package kind differs from its validated marker');
+  }
+  validateOutputPaths(files, version.data_revision, { sharedBundle, runtimeRevision });
 
+  const officialInputFiles = collectOfficialInputDomainFiles(sharedBundle);
   for (const [name, bytes] of files) {
-    if (name.endsWith('.json') && name !== 'artifact-manifest.json') scanPublicBoundary(parseJson(bytes, name), name);
+    if (name.endsWith('.json') && name !== 'artifact-manifest.json') {
+      const parsed = parseJson(bytes, name);
+      const officialInputSources = collectOfficialInputSources(name, parsed, officialInputFiles);
+      scanPublicBoundary(parsed, name, { officialInputFiles, officialInputSources: new Map([[name, officialInputSources]]) });
+    }
   }
 
-  const dataRoot = 'data/' + version.data_revision + '/';
+  const dataRoot = 'data/' + runtimeRevision + '/';
   const dataFiles = new Map();
   for (const [name, bytes] of files) if (name.startsWith(dataRoot)) dataFiles.set(name.slice(dataRoot.length), bytes);
-  if (version.package_kind === 'published' && [...dataFiles.keys()].some(name => !name.endsWith('.json'))) {
-    fail('published static data must contain JSON only; downloaded image bytes are not allowed');
-  }
-  if (hashNamedFiles(dataFiles) !== version.data_revision) fail('data_revision does not match sorted public file names and bytes');
+  const expectedRuntimeRevision = hasSharedRelease ? runtimeRevision : version.data_revision;
+  if (hashNamedFiles(dataFiles) !== expectedRuntimeRevision) fail('legacy runtime data revision does not match its sorted public file names and bytes');
   const validationFiles = new Map();
   for (const [name, bytes] of dataFiles) {
     if (!name.endsWith('.json')) {
@@ -268,18 +493,31 @@ export async function verifyStaticPackage(directory) {
     catch (error) { throw new Error(name + ' is not UTF-8 JSON', { cause: error }); }
   }
   const { catalog } = validatePublicFiles(validationFiles);
+  if (catalog.package_kind === 'published' && [...dataFiles.keys()].some(name => !name.endsWith('.json'))) {
+    fail('published static data must contain JSON only; downloaded image bytes are not allowed');
+  }
 
   if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog)) fail('Cloudflare document rewrites do not match catalog');
   validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'));
   const siteOrigin = validateRobotsAndSitemap(files, catalog);
-  const { index, normalized } = validateBuildContext(files.get('index.html'), version);
+  const { index, normalized, context } = validateBuildContext(files.get('index.html'), version, {
+    sharedBundle,
+    ...(sharedBundle ? { runtimeGameVersion: catalog.game_version, runtimePackageKind: catalog.package_kind } : {}),
+  });
   validateInitialGamesLanternCredit(index, catalog, dataFiles);
   const assetFiles = new Map([...files].filter(([name]) => name.startsWith('assets/')));
   verifyHashedModuleGraph(Buffer.from(files.get('index.html')).toString('utf8'), assetFiles);
 
   const buildInputs = new Map(assetFiles);
   buildInputs.set('index.html', normalized);
-  for (const [name, bytes] of dataFiles) buildInputs.set('data/' + name, bytes);
+  if (sharedBundle) {
+    for (const [name, bytes] of dataFiles) buildInputs.set('data/' + runtimeRevision + '/' + name, bytes);
+    for (const [name, bytes] of sharedBundle.files) buildInputs.set(name, bytes);
+    if (sharedBundle.packageKind === 'fixture') buildInputs.set('shared-fixture.json', files.get('shared-fixture.json'));
+    buildInputs.set('shared-release-identity.json', createSharedReleaseIdentity(sharedBundle));
+  } else {
+    for (const [name, bytes] of dataFiles) buildInputs.set('data/' + name, bytes);
+  }
   buildInputs.set('_redirects', files.get('_redirects'));
   buildInputs.set('_headers', files.get('_headers'));
   buildInputs.set('robots.txt', files.get('robots.txt'));
@@ -290,6 +528,16 @@ export async function verifyStaticPackage(directory) {
     schema_version: version.schema_version,
     package_kind: version.package_kind,
     data_revision: version.data_revision,
+    ...(sharedBundle ? {
+      runtime_package_kind: context.package_kind,
+      runtime_data_revision: runtimeRevision,
+      shared_data_revision: version.data_revision,
+      shared_game_version: version.game_version,
+      game_releases: version.game_releases,
+      retained_releases: sharedBundle.metadata.retained_releases,
+      source_locks: sharedBundle.metadata.source_locks,
+      shared_files: sharedBundle.metadata.shared_files,
+    } : {}),
     build_id: version.build_id,
     file_count: files.size,
     catalog_counts: catalog.counts,

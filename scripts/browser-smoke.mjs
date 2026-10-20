@@ -48,7 +48,7 @@ async function readJson(filePath, label) {
 }
 
 async function readVerifiedData(distPath, verification) {
-  const revisionDirectory = path.join(distPath, 'data', verification.data_revision);
+  const revisionDirectory = path.join(distPath, 'data', verification.runtime_data_revision ?? verification.data_revision);
   const catalog = await readJson(path.join(revisionDirectory, 'catalog.json'), 'Versioned catalog');
   assert.equal(catalog.schema_version, 2, 'browser smoke requires a schema 2 catalog');
   assert.ok(Array.isArray(catalog.entries), 'verified catalog has no entry array');

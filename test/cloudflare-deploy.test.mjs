@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { deployVerifiedArtifact, assertDeploymentConfig, verifyOrigin } from '../src/deploy/cloudflare.mjs';
+import { sha256 } from '../src/static/common.mjs';
 
 const settings = { account_id:'38d350980998e83d3f405aff0170921a', name:'darktide-zh-tw',
  workers_dev:true, compatibility_date:'2026-10-12',
@@ -121,4 +122,39 @@ test('UnitT70_origin_rejects_stale_build',async()=>{
 // Purpose: Reject routing fallback before declaring a working site.
 test('UnitT75_origin_rejects_html_version_response',async()=>{
  await assert.rejects(verifyOrigin('https://example.test',artifact,{fetch:async()=>new Response('<html>',{headers:{'content-type':'text/html'}})}),/MIME/);
+});
+
+test('InterT10_shared_origin_verifies_legacy_catalog_and_every_retained_W02_URL_hash',async()=>{
+ const sharedRevision='d'.repeat(64);const runtimeRevision='e'.repeat(64);
+ const manifestBytes=Buffer.from('{"manifest":true}\n');
+ const pointer={game_version:'1.13.2',content_version:'1.13.2.1',data_revision:sharedRevision,
+  manifest_path:'/data/'+sharedRevision+'/manifest.json',manifest_sha256:sha256(manifestBytes)};
+ const version={schema_version:2,data_revision:sharedRevision,build_id:artifact.build_id,game_version:'1.13.2',
+  package_kind:'published',game_releases:[pointer]};
+ const sharedBodies=new Map([
+  [pointer.manifest_path,manifestBytes],
+  ['/data/'+sharedRevision+'/skills.json',Buffer.from('{"domain":"skills"}\n')],
+  ['/source-locks/'+('a'.repeat(64))+'/'+('b'.repeat(64))+'.json',Buffer.from('{"lock":true}\n')],
+ ]);
+ const sharedFiles=[...sharedBodies].map(([path,bytes])=>({path,size_bytes:bytes.byteLength,sha256:sha256(bytes)}));
+ const expected={...artifact,data_revision:sharedRevision,runtime_data_revision:runtimeRevision,shared_data_revision:sharedRevision,
+  game_releases:[pointer],shared_files:sharedFiles};
+ const calls=[];
+ const fetch=async(url)=>{
+  const pathname=new URL(url).pathname;calls.push(pathname);
+  if(pathname==='/version.json')return new Response(JSON.stringify(version),{headers:{'content-type':'application/json','cache-control':'no-store'}});
+  if(pathname==='/data/'+runtimeRevision+'/catalog.json')return new Response(JSON.stringify({game_version:'1.13.2',entries:[
+   {kind:'skill',id:'skill-a',detail_path:'details/skill-a.json'},
+   {kind:'weapon',id:'weapon-a',detail_path:'details/weapon-a.json'},
+   {kind:'blessing',id:'blessing-a',detail_path:'details/blessing-a.json'}]}),{headers:{'content-type':'application/json','cache-control':'public,max-age=31536000,immutable'}});
+  if(pathname.startsWith('/data/'+runtimeRevision+'/details/'))return new Response('{}',{headers:{'content-type':'application/json'}});
+  if(sharedBodies.has(pathname))return new Response(sharedBodies.get(pathname),{headers:{'content-type':'application/json'}});
+  if(pathname.startsWith('/data/')||pathname.startsWith('/assets/'))return new Response('missing',{status:404});
+  return new Response('<html><body>Games Lantern '+artifact.build_id+'</body></html>',{headers:{'content-type':'text/html'}});
+ };
+ const result=await verifyOrigin('https://example.test',expected,{fetch});
+ assert.equal(result.runtime_data_revision,runtimeRevision);
+ assert.ok(calls.includes('/data/'+runtimeRevision+'/catalog.json'));
+ for(const row of sharedFiles)assert.ok(calls.includes(row.path),row.path);
+ assert.ok(calls.includes('/data/'+runtimeRevision+'/not-present.json'));
 });
