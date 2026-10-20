@@ -482,6 +482,15 @@ export async function verifyStaticPackage(directory) {
   const dataFiles = new Map();
   for (const [name, bytes] of files) if (name.startsWith(dataRoot)) dataFiles.set(name.slice(dataRoot.length), bytes);
   const expectedRuntimeRevision = hasSharedRelease ? runtimeRevision : version.data_revision;
+  // Reject downloaded files at the publication boundary before the immutable runtime digest check
+  // obscures the more specific policy error for an otherwise listed local image.
+  const earlyCatalogBytes = dataFiles.get('catalog.json');
+  if (earlyCatalogBytes) {
+    const earlyCatalog = parseJson(earlyCatalogBytes, dataRoot + 'catalog.json');
+    if (earlyCatalog.package_kind === 'published' && [...dataFiles.keys()].some(name => !name.endsWith('.json'))) {
+      fail('published static data must contain JSON only; downloaded image bytes are not allowed');
+    }
+  }
   if (hashNamedFiles(dataFiles) !== expectedRuntimeRevision) fail('legacy runtime data revision does not match its sorted public file names and bytes');
   const validationFiles = new Map();
   for (const [name, bytes] of dataFiles) {
@@ -493,9 +502,6 @@ export async function verifyStaticPackage(directory) {
     catch (error) { throw new Error(name + ' is not UTF-8 JSON', { cause: error }); }
   }
   const { catalog } = validatePublicFiles(validationFiles);
-  if (catalog.package_kind === 'published' && [...dataFiles.keys()].some(name => !name.endsWith('.json'))) {
-    fail('published static data must contain JSON only; downloaded image bytes are not allowed');
-  }
 
   if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog)) fail('Cloudflare document rewrites do not match catalog');
   validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'));

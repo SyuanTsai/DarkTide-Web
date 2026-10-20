@@ -24,6 +24,7 @@ const CONTRACT_EOL_RULES = [
   '/content/schema/v2/** text eol=lf',
   '/content/fixtures/v2/** text eol=lf',
   '/content/contracts/** text eol=lf',
+  '/content/contracts/w09/runtime-snapshots/** -text !eol',
   '/scripts/content/contract*.mjs text eol=lf',
   '/test/contract*.test.mjs text eol=lf',
   '/docs/contracts/** text eol=lf',
@@ -222,6 +223,25 @@ test('UnitT65_W06-gitattributes-add-only-the-two-exact-lf-rules', () => {
   assert.equal(isSafeContractGitattributesChange(contractEolAttributes, extended), true);
   assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/terms/w06-rules.json text eol=lf\n', '')), true);
   assert.equal(isSafeContractGitattributesChange(undefined, extended.replace('/content/terms/w06-rules.json text eol=lf', '/content/terms/** text eol=lf')), false);
+});
+
+// Scenario: .gitattributes adds the exact binary treatment for immutable runtime snapshot archives.
+// Purpose: keep that one bounded storage path deployment-neutral while broad, adjacent, or altered rules remain unsafe.
+test('UnitT67_only-the-exact-runtime-snapshot-binary-rule-is-deployment-neutral', () => {
+  const exactRule = '/content/contracts/w09/runtime-snapshots/** -text !eol';
+  const baselineRules = CONTRACT_EOL_RULES.filter(rule => rule !== exactRule);
+  const baseline = baselineRules.join('\n') + '\n';
+  const extended = baseline + exactRule + '\n';
+  assert.equal(isSafeContractGitattributesChange(baseline, extended), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, exactRule + '\n'), true);
+  assert.equal(isSafeContractGitattributesChange(undefined, '/content/contracts/w09/runtime-snapshots/* -text !eol\n'), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, '/content/contracts/w09/runtime-snapshots/** binary\n'), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, '/content/contracts/w09/** -text !eol\n'), false);
+  assert.equal(isSafeContractGitattributesChange(undefined, 'content/contracts/w09/runtime-snapshots/** -text !eol\n'), false);
+  assert.deepEqual(classifyChangedPaths(['.gitattributes'], {
+    baseGitattributes: baseline,
+    headGitattributes: extended,
+  }), { shouldDeploy: false, reason: 'contract-only', changedPathCount: 1 });
 });
 
 // Scenario: Git reports a contract-only commit, a runtime commit, and a mixed commit between fixed object IDs.

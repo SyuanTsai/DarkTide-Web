@@ -45,6 +45,20 @@ const W09_COMPILER_FILE_PATHS = [
   'scripts/content/contract-w09-release.mjs',
 ];
 
+async function installW09CompilerFilesInFixture(webRoot) {
+  for (const relativePath of W09_COMPILER_FILE_PATHS) {
+    const sourcePath = path.join(REPO_ROOT, ...relativePath.split('/'));
+    const destination = path.join(webRoot, ...relativePath.split('/'));
+    await mkdir(path.dirname(destination), { recursive: true });
+    const existing = await lstat(destination).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
+    if (existing?.isSymbolicLink() || (existing && !existing.isFile())) {
+      throw new Error('isolated test clone compiler input must be a regular file: ' + relativePath);
+    }
+    const bytes = await readFile(sourcePath);
+    await writeFile(destination, bytes, existing ? undefined : { flag: 'wx' });
+  }
+}
+
 const sha = character => character.repeat(64);
 const source = (gameVersion, gameReleaseId, inputDigest, manifestSha256 = sha('b')) => ({
   gameVersion, gameReleaseId, inputDigest, manifestSha256,
@@ -359,6 +373,30 @@ test('UnitT24_rollback-requires-and-restores-a-complete-multigame-snapshot', asy
   assert.equal(callbackCalled, false, 'partial or expanded targets must fail before any deployment callback');
 });
 
+// Scenario: a disposable clone already has tracked compiler inputs at the pinned W09 paths.
+// Purpose: replace regular fixture files safely and reject non-file destinations before reading compiler pins.
+test('UnitT14_replaces-only-regular-pinned-files-in-a-disposable-clone', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'w09-compiler-pin-fixture-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  for (const relativePath of W09_COMPILER_FILE_PATHS) {
+    const destination = path.join(root, ...relativePath.split('/'));
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, Buffer.from('preexisting tracked clone file'), { flag: 'wx' });
+  }
+
+  await installW09CompilerFilesInFixture(root);
+  for (const relativePath of W09_COMPILER_FILE_PATHS) {
+    const destination = path.join(root, ...relativePath.split('/'));
+    const sourcePath = path.join(REPO_ROOT, ...relativePath.split('/'));
+    assert.deepEqual(await readFile(destination), await readFile(sourcePath), relativePath);
+  }
+
+  const nonFileRoot = path.join(root, 'non-file-destination');
+  const firstDestination = path.join(nonFileRoot, ...W09_COMPILER_FILE_PATHS[0].split('/'));
+  await mkdir(firstDestination, { recursive: true });
+  await assert.rejects(installW09CompilerFilesInFixture(nonFileRoot), /must be a regular file/i);
+});
+
 // Scenario: pinned formal Source bytes are published through the resolver and combined with reviewed Web overlays.
 // Purpose: exercise W05 build/replay, source lock validation, W08 projection, allocation and immutable nested package retry.
 // All synthetic human approvals and fake archive HTTP responses are confined to disposable local Git fixtures.
@@ -614,12 +652,7 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   await writeOverlay('w07', 'authoring', 'content/contracts/w09/authoring-overlays/w07/authoring/integration-fixture.json', w07Authoring);
   await writeOverlay('w07', 'officialInputs', 'content/contracts/w09/authoring-overlays/w07/officialInputs/integration-fixture.json', w07Adapted.officialInputs, w07Adapted.officialInputsBytes);
 
-  for (const relativePath of W09_COMPILER_FILE_PATHS) {
-    const sourcePath = path.join(REPO_ROOT, ...relativePath.split('/'));
-    const destination = path.join(webRoot, ...relativePath.split('/'));
-    await mkdir(path.dirname(destination), { recursive: true });
-    await writeFile(destination, await readFile(sourcePath), { flag: 'wx' });
-  }
+  await installW09CompilerFilesInFixture(webRoot);
   git(webRoot, ['add', '--all']);
   git(webRoot, ['commit', '-m', 'W09 isolated compiler code fixture']);
   const codeCommit = git(webRoot, ['rev-parse', 'HEAD']);
