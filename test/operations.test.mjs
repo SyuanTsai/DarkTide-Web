@@ -7,7 +7,7 @@ import { promisify } from 'node:util';
 import { buildStaticSite } from '../src/static/build.mjs';
 import { createBuildRoot, disposeBuildRoot, publishedRemotePackage } from './static-test-helpers.mjs';
 import { createBackup, validateDeploymentReceipt, inspectBackup, restoreBackup } from '../src/operations/backup.mjs';
-import { monitorOrigin, incidentAction } from '../src/operations/monitor.mjs';
+import { assertSamePublication, monitorOrigin, incidentAction } from '../src/operations/monitor.mjs';
 
 const versionId = '45770a28-fd27-445a-98e9-7d619764f3db';
 function receipt(artifact) {
@@ -89,6 +89,15 @@ test('UnitT40_monitor_rejects_HTML_fallback_and_false_404', async t => {
     const fetcher = url => new URL(url).pathname === target ? new Response('<html>shell</html>', { headers: { 'content-type': 'text/html' } }) : h.fetcher(url);
     await assert.rejects(monitorOrigin('https://example.test', h.manifest, { fetch: fetcher }));
   }
+});
+
+// Scenario: Individually healthy origins serve different retained publications.
+// Purpose: Do not treat a split preview/production release as globally healthy.
+test('UnitT45_all_healthy_origins_must_serve_the_same_publication', () => {
+  const row = { status: 'healthy', build_id: 'a'.repeat(64), data_revision: 'b'.repeat(64) };
+  assert.doesNotThrow(() => assertSamePublication([row, { ...row }, { ...row }]));
+  assert.throws(() => assertSamePublication([row, { ...row, build_id: 'c'.repeat(64) }]), /different approved builds/);
+  assert.throws(() => assertSamePublication([row, { ...row, data_revision: 'c'.repeat(64) }]), /different approved builds/);
 });
 
 // Scenario: Failure repeats, then service recovers; an unrelated issue happens to exist.

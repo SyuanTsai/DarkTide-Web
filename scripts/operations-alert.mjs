@@ -18,7 +18,7 @@ const issues = JSON.parse((await exec('gh', ['api', '--paginate', '--slurp', 're
 const flatIssues = issues.flat();
 const action = incidentAction(report.status === 'healthy', flatIssues);
 const run = 'https://github.com/' + REPOSITORY + '/actions/runs/' + process.env.GITHUB_RUN_ID;
-const body = (report.drill ? '**Controlled exercise: no real outage is claimed.**\n\n' : '') + 'Run: ' + run + '\n\n' + 'See the monitor report artifact and job summary for HTTPS, version, JSON integrity, asset and 404 checks.\n\n' + JSON.stringify(report.origins?.filter(row => row.status !== 'healthy').map(row => ({ origin: row.origin, error: row.error })) ?? report, null, 2);
+const body = (report.drill ? '**Controlled exercise: no real outage is claimed.**\n\n' : '') + 'Run: ' + run + '\n\n' + 'See the monitor report artifact and job summary for HTTPS, version, JSON integrity, asset and 404 checks.\n\n' + JSON.stringify({ error: report.error, failed_origins: report.origins?.filter(row => row.status !== 'healthy').map(row => ({ origin: row.origin, error: row.error })) }, null, 2);
 if (action.action === 'open') await api('repos/' + REPOSITORY + '/issues', 'POST', { title: INCIDENT_TITLE, body });
 if (action.action === 'close') {
   await api('repos/' + REPOSITORY + '/issues/' + action.number + '/comments', 'POST', { body: 'All monitored origins recovered. Verified run: ' + run });

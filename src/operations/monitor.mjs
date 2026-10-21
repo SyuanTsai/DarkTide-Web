@@ -4,6 +4,10 @@ import { verifyOrigin } from '../deploy/cloudflare.mjs';
 import { REPOSITORY } from './backup.mjs';
 
 export const INCIDENT_TITLE = '[Operations] Static site incident';
+export function assertSamePublication(origins) {
+  assert.ok(origins.length > 0 && origins.every(row => row.status === 'healthy'), 'all origins must be healthy');
+  assert.equal(new Set(origins.map(row => row.build_id + ':' + row.data_revision)).size, 1, 'origins serve different approved builds or data revisions');
+}
 export function incidentAction(healthy, issues) {
   const issue = issues.find(row => row.title === INCIDENT_TITLE && row.user?.login === 'github-actions[bot]');
   return issue ? { action: healthy ? 'close' : 'keep', number: issue.number } : { action: healthy ? 'none' : 'open' };

@@ -12,7 +12,7 @@
 | 歷史真實回復 | [historical-rollback-api-receipt.json](historical-rollback-api-receipt.json)：原 run 38223871853 實際回復 `c12ff07d-3671-4925-818b-416fd37b9dea` 100%，回條只記 api-accepted。這是實際 API 回復證據，不能單獨當作公開 HTTPS 回復成功；新的遠端備份還原與 runtime 證據另列。 |
 | 用量／錯誤 | 已登入 Dashboard 唯讀核對正式 Worker 與 Host=darktide.tw-syuan.com 的 Analytics。Worker 明示 static-only 不提供 Metrics，Logs／Traces disabled；不把無資料當零錯誤。實際流量統計及截圖留在授權 Jira／本機證據，未公開。每週／事件時的具體檢查方法在運維手冊。 |
 
-新邏輯的專項測試為 `node --test test/operations.test.mjs test/operations-workflow.test.mjs`：10 Pass／0 Fail／0 Skip，含 verified receipt、錯版／credential extras 拒絕、真實 Git/tar roundtrip、篡改前置拒絕、Windows autocrlf、HTML 轉址／動態注入、nofollow、JSON 改 byte、HTML fallback、真實 404，以及 CI 權限／手動回復預設不部署。初次缺模組、Windows 封存換行與 index canonical 探測均實際失敗後修正；未將失敗或第一次解壓成功計為完成。既有完整 suite 曾跑 492 Pass／0 Fail／15 既有 W01 外部依賴 Skip；最終完整結果由本 PR 的自然 CI 核對，Skip 不計通過。
+新邏輯的專項測試為 `node --test test/operations.test.mjs test/operations-workflow.test.mjs`：11 Pass／0 Fail／0 Skip，含 verified receipt、錯版／credential extras 拒絕、真實 Git/tar roundtrip、篡改前置拒絕、Windows autocrlf、HTML 轉址／動態注入、nofollow、JSON 改 byte、HTML fallback、真實 404，跨入口同版，以及 CI 權限／手動回復預設不部署。初次缺模組、Windows 封存換行與 index canonical 探測均實際失敗後修正；未將失敗或第一次解壓成功計為完成。既有完整 suite 曾跑 492 Pass／0 Fail／15 既有 W01 外部依賴 Skip；最終完整結果由本 PR 的自然 CI 核對，Skip 不計通過。
 
 針對最終 diff 的自審未發現仍未處理的 correctness／credential boundary 問題。保留限制：GitHub 排程可延遲／60 日無活動停用；通知 email 送達未實測；用量檢查為已有 Dashboard 的人工運維步驟；監控不是全站逐檔／外部圖片／真瀏覽器巡檢；GitHub owner 仍可刪改 Release。完整原始包的 hash 與還原驗證不因此放寬。
 
