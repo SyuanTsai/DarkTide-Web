@@ -68,6 +68,8 @@ jobs:
           retention-days: 14
   deploy:
     needs: [static-package]
+    outputs:
+      verified: ${{ steps.publish.outcome == 'success' && steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true' && steps.legacy-authority.outputs.allowed == 'true' }}
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.static-package.outputs.selected_shared != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -137,6 +139,7 @@ jobs:
           }
           NODE
       - name: Verify preview, publish production, and verify HTTPS
+        id: publish
         if: steps.credential.outputs.ready == 'true' && steps.freshness.outputs.current == 'true' && steps.legacy-authority.outputs.allowed == 'true'
         run: npm run deploy:cloudflare
         env:
@@ -152,3 +155,32 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
           retention-days: 30
+  backup:
+    needs: [static-package, deploy]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && needs.deploy.outputs.verified == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the exact published source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: darktide-static-package
+          path: dist/
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: darktide-deployment-receipt
+          path: .deployment/
+      - name: Retain verified public package outside Cloudflare
+        run: node scripts/operations-publish.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}

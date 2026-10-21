@@ -7,6 +7,7 @@ import {
   filterEntries,
   mechanicsItems,
   groupBlessingEffects,
+  blessingAvailabilityNote,
   browsingRelations,
   preferredSkillView,
   makeRedirectUrl,
@@ -272,7 +273,7 @@ function renderListIcon(item, group, entry) {
   visual.append(placeholder);
   item.append(visual);
   item.dataset.iconState = entry.asset_ids.length ? 'loading' : 'generic';
-  visual.title = entry.asset_ids.length ? '正在載入技能圖片' : '通用技能圖示（來源未提供專屬圖示）';
+  visual.title = entry.asset_ids.length ? '正在載入技能圖片' : '通用技能圖示（尚無對應的專屬圖示）';
   if (!entry.asset_ids.length) return;
   dataClient.loadDetail(entry).then(detail => {
     if (!item.isConnected) return;
@@ -610,6 +611,8 @@ function renderBlessingLevels(parent, levels, catalog, commonEffect) {
     card.dataset.variantIds = group.levels.map(d=>d.record.variant_id).join(' ');
     card.dataset.variantId = selection?.value ?? group.record.variant_id;
     card.dataset.weaponId = group.levels.find(d=>d.record.variant_id===card.dataset.variantId)?.record.weapon_id ?? group.record.weapon_id;
+    const availabilityNote = blessingAvailabilityNote(group.levels.map(detail => detail.record));
+    if (availabilityNote) card.append(element('p', availabilityNote, 'tier-availability result-note'));
     if (group.effect && group.effect.trim() !== commonEffect?.trim()) { card.append(element('h3', groups.length > 1 ? '此武器的效果' : '等級效果'), mechanicsList(group.effect)); }
     const tiers = group.record.defined_tiers ?? [];
     const claims = new Map((group.record.tier_claims ?? []).map(t=>[t.tier,t.claims]));

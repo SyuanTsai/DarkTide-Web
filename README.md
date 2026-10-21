@@ -10,7 +10,7 @@
 
 新增或更新 Secret 本身不會觸發部署；首次設定後需手動 Run workflow。之後 main 更新會自動建置與部署。缺 Secret 時建置照常驗證，部署標示等候憑證。
 
-詳見 [GitHub 部署說明](docs/CLOUDFLARE-DEPLOYMENT.md)。
+詳見 [GitHub 部署說明](docs/CLOUDFLARE-DEPLOYMENT.md)；日常維護請看 [監控、備份與回復手冊](docs/OPERATIONS.md)。
 
 ## 網站內容
 - 七職業圖示天賦樹、技能清單圖片與條列效果／機制。

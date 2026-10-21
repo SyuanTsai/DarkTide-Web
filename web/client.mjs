@@ -799,6 +799,12 @@ export function groupBlessingEffects(levels, catalog) {
   return [...groups.values()];
 }
 
+export function blessingAvailabilityNote(records) {
+  return records.some(record => !Array.isArray(record.available_tiers))
+    ? '以下為來源定義的等級與數值；各等級在遊戲內是否可取得，尚未核實。'
+    : null;
+}
+
 export function browsingRelations(kind, relations) {
   const target = kind === 'blessing' ? 'weapon' : kind === 'weapon' ? 'blessing' : null;
   if (!target) return relations;

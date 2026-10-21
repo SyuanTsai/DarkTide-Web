@@ -34,3 +34,18 @@ test('UnitT40_splits_skill_effect_sentences_and_preserves_decimal_values',()=>{
  assert.deepEqual(client.mechanicsItems('持續 0.5 秒；命中刷新。\n最多 3 層。'),['持續 0.5 秒；','命中刷新。','最多 3 層。']);
  assert.deepEqual(client.mechanicsItems('1.5 seconds. Keep 2.0 stacks; next.'),['1.5 seconds. Keep 2.0 stacks; next.']);
 });
+// Scenario: A blessing displays source-defined tiers while availability is unknown for one or more applicable weapons.
+// Purpose: Prevent readers from treating defined numerical levels as verified in-game obtainability.
+test('UnitT50_discloses_unknown_tier_availability_without_changing_records',()=>{
+ assert.equal(typeof client.blessingAvailabilityNote,'function');
+ const rows=[{defined_tiers:[1,2,3,4],available_tiers:null},{defined_tiers:[1,2],available_tiers:[2]}];
+ const before=structuredClone(rows);
+ const note=client.blessingAvailabilityNote(rows);
+ assert.equal(note,'以下為來源定義的等級與數值；各等級在遊戲內是否可取得，尚未核實。');
+ assert.equal(client.blessingAvailabilityNote([rows[0]]),note);
+ assert.equal(client.blessingAvailabilityNote([{defined_tiers:[1]}]),note);
+ assert.equal(client.blessingAvailabilityNote([rows[1]]),null);
+ assert.equal(client.blessingAvailabilityNote([{defined_tiers:[1],available_tiers:[]}]),null);
+ assert.equal(client.blessingAvailabilityNote([]),null);
+ assert.deepEqual(rows,before);
+});
