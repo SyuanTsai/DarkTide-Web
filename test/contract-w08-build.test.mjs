@@ -4,6 +4,8 @@ import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
+import { loadWebAuthoringInputs, validateWebAuthoring } from '../scripts/content/contract-authoring.mjs';
 import {
   compileW08Candidate,
   evaluateW08PublicationGate,
@@ -13,6 +15,7 @@ import {
 } from '../scripts/content/contract-w08-build.mjs';
 import { buildManifestPath, computeDataRevision } from '../scripts/content/contract-release.mjs';
 
+const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RELEASE_ID = 'darktide:1.13.2';
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
 const SOURCE_COMMIT = 'c'.repeat(40);
@@ -138,32 +141,13 @@ function makeMode(name, presentations, extra = {}) {
   };
 }
 
-function makeInput({ withEventSource = false, addAnnouncement = false, addGameChange = false } = {}) {
-  const sourceContract = makeSourceContract({ withEventSource });
+function makeInput() {
+  const sourceContract = makeSourceContract();
   const skill = makePresentation('skill:one', 'skill', 'presentation:skill');
   const blessing = makePresentation('blessing:one', 'blessing', 'presentation:blessing');
   const weapon = makePresentation('weapon:one', 'weapon', 'presentation:weapon');
   const w06 = makeMode('w06', [skill, blessing], { sourceContract: structuredClone(sourceContract) });
-  const w07Extra = { sourceContract: structuredClone(sourceContract) };
-  if (addAnnouncement) {
-    w07Extra.authoring = structuredClone(makeMode('w07', [weapon]).authoring);
-    w07Extra.authoring.announcements.push({ announcementId: 'announcement:site-only', locale: 'zh-TW', text: 'A site note' });
-  }
-  if (addGameChange) {
-    w07Extra.authoring ??= structuredClone(makeMode('w07', [weapon]).authoring);
-    w07Extra.authoring.gameChanges = [{
-      changeId: 'change:combat',
-      locale: 'zh-TW',
-      summary: 'Combat change',
-      sourceRef: { sourceId: 'source:event', gameReleaseId: RELEASE_ID },
-      evidenceRef: { recordId: 'evidence:event', gameReleaseId: RELEASE_ID, kind: 'evidence' },
-    }];
-    w07Extra.authoring.reviewTargets = [...w07Extra.authoring.reviewTargets, {
-      targetId: 'target:change:combat:summary', ownerId: 'change:combat', fieldPath: '/summary', dimension: 'content',
-    }];
-    w07Extra.reviewStates = { ...w07Extra.reviewStates, 'target:change:combat:summary': 'pending' };
-  }
-  const w07 = makeMode('w07', [weapon], w07Extra);
+  const w07 = makeMode('w07', [weapon], { sourceContract: structuredClone(sourceContract) });
   return {
     sourceContract,
     sourceBuild: {
@@ -188,6 +172,167 @@ function makeInput({ withEventSource = false, addAnnouncement = false, addGameCh
     proposedContentVersion: '1.13.2.1',
     gameReleaseId: RELEASE_ID,
   };
+}
+
+function makeSyntheticAnnouncementInput(donor) {
+  const input = makeInput();
+  const announcement = structuredClone(donor.authoring.announcements.find(item => item.scope === 'site'));
+  const targets = structuredClone(donor.authoring.reviewTargets.filter(target => target.ownerId === announcement.announcementId));
+  input.w07.authoring.announcements = [announcement];
+  input.w07.authoring.reviewTargets.push(...targets);
+  input.w07.reviewStates = Object.fromEntries(input.w07.authoring.reviewTargets.map(target => [target.targetId, 'pending']));
+  return input;
+}
+
+async function loadValidatedFormalDonor() {
+  const loaded = await loadWebAuthoringInputs({ repoRoot: REPO_ROOT });
+  const authoring = structuredClone(loaded.authoring);
+  const announcement = authoring.announcements.find(item => item.scope === 'site');
+  const spoiler = announcement.blocks.find(block => block.kind === 'spoiler');
+  const assetId = announcement.assets[0].assetId;
+  const url = 'https://example.invalid/synthetic-patch-notes';
+  spoiler.blocks.push(
+    { blockId: 'fixture:block:nested-heading', kind: 'heading', text: 'Power Sword patch notes' },
+    { blockId: 'fixture:block:nested-link', kind: 'link', text: url, href: url },
+    { blockId: 'fixture:block:nested-list', kind: 'list', ordered: true, items: [
+      { blockId: 'fixture:block:nested-list-item', text: 'Power Sword' },
+    ] },
+    { blockId: 'fixture:block:nested-table', kind: 'table', rows: [
+      { cells: [
+        { blockId: 'fixture:block:nested-table-cell-name', text: 'Damage' },
+        { blockId: 'fixture:block:nested-table-cell-value', text: '40' },
+      ] },
+    ] },
+    { blockId: 'fixture:block:nested-image', kind: 'image', assetRef: { assetId }, alt: 'Weapon preview' },
+    { blockId: 'fixture:block:nested-spoiler', kind: 'spoiler', label: 'More details', blocks: [
+      { blockId: 'fixture:block:nested-spoiler-paragraph', kind: 'paragraph', text: 'Patch 1.13.2 details' },
+    ] },
+  );
+  const validationInputs = { ...loaded, authoring };
+  const validation = validateWebAuthoring(authoring, validationInputs);
+  assert.equal(validation.valid, true, JSON.stringify(validation.issues));
+  return { authoring, inputs: validationInputs };
+}
+
+async function makeFormalCompilerInput(donor, {
+  announcements = true,
+  gameChanges = true,
+  officialTextChanges = true,
+} = {}) {
+  const releaseId = 'fixture-r1';
+  const sourceContract = structuredClone(donor.inputs.sourceContract);
+  // This adapter is local to the W08 unit test: candidate identities stay synthetic and no fixture is written as a real pin.
+  sourceContract.fixtureOnly = false;
+  sourceContract.publicationEligible = false;
+  // Exclude donor Source rows outside the selected presentation/event closure so the candidate does not require their review targets.
+  sourceContract.records = sourceContract.records.filter(record => !(
+    (record.gameReleaseId === 'fixture-r1' && ['fixture:catalog:alpha', 'fixture:curio:alpha'].includes(record.recordId))
+    || (record.gameReleaseId === 'fixture-r2'
+      && ['fixture:blessing:alpha', 'fixture:compat:r2', 'fixture:variant:r2'].includes(record.recordId))
+  ));
+  const release = sourceContract.gameReleases.find(item => item.gameReleaseId === releaseId);
+  assert.ok(release, 'the validated donor must contain its selected release');
+
+  const authoring = structuredClone(donor.authoring);
+  authoring.presentations = authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
+    && ['skill', 'blessing', 'weapon'].includes(item.entityRef.kind));
+  authoring.termLocalizations = authoring.termLocalizations.filter(item => item.termRef.gameReleaseId === releaseId);
+  if (!announcements) authoring.announcements = [];
+  if (!gameChanges) authoring.gameChanges = [];
+  if (!officialTextChanges) authoring.officialTextChanges = [];
+  const ownerIds = new Set([
+    ...authoring.presentations.map(item => item.authoringId),
+    ...authoring.termLocalizations.map(item => item.authoringId),
+    ...authoring.announcements.map(item => item.announcementId),
+    ...authoring.gameChanges.map(item => item.changeId),
+    ...authoring.officialTextChanges.map(item => item.changeId),
+  ]);
+  authoring.reviewTargets = authoring.reviewTargets.filter(target => ownerIds.has(target.ownerId));
+  const targetIds = new Set(authoring.reviewTargets.map(target => target.targetId));
+  authoring.reviewReceipts = authoring.reviewReceipts.filter(receipt => targetIds.has(receipt.targetId));
+
+  const w06 = makeMode('w06', []);
+  w06.sourceContract = structuredClone(sourceContract);
+  w06.officialInputs = { sources: [] };
+  w06.termRules = structuredClone(donor.inputs.termRules);
+  const w07 = makeMode('w07', []);
+  w07.authoring = authoring;
+  w07.sourceContract = structuredClone(sourceContract);
+  w07.officialInputs = structuredClone(donor.inputs.officialInputs);
+  w07.termRules = structuredClone(donor.inputs.termRules);
+  w07.reviewStates = Object.fromEntries(authoring.reviewTargets.map(target => [target.targetId, 'pending']));
+
+  const input = makeInput();
+  input.sourceContract = sourceContract;
+  input.gameReleaseId = releaseId;
+  input.proposedContentVersion = release.gameVersion + '.1';
+  input.w06 = w06;
+  input.w07 = w07;
+  return input;
+}
+
+function collectAnnouncementTextPaths(announcement) {
+  const paths = [];
+  const visit = (blocks, prefix) => {
+    blocks.forEach((block, index) => {
+      const blockPath = [...prefix, index];
+      if (['heading', 'paragraph', 'link'].includes(block.kind)) paths.push({ path: [...blockPath, 'text'], label: block.kind + '.text' });
+      else if (block.kind === 'list') block.items.forEach((item, itemIndex) => {
+        paths.push({ path: [...blockPath, 'items', itemIndex, 'text'], label: 'list.items[].text' });
+      });
+      else if (block.kind === 'table') block.rows.forEach((row, rowIndex) => row.cells.forEach((cell, cellIndex) => {
+        paths.push({ path: [...blockPath, 'rows', rowIndex, 'cells', cellIndex, 'text'], label: 'table.rows[].cells[].text' });
+      }));
+      else if (block.kind === 'image') paths.push({ path: [...blockPath, 'alt'], label: 'image.alt' });
+      else if (block.kind === 'spoiler') {
+        paths.push({ path: [...blockPath, 'label'], label: 'spoiler.label' });
+        visit(block.blocks, [...blockPath, 'blocks']);
+      }
+    });
+  };
+  visit(announcement.blocks, ['blocks']);
+  announcement.assets.forEach((asset, index) => paths.push({ path: ['assets', index, 'alt'], label: 'assets[].alt' }));
+  return paths;
+}
+
+function collectAnnouncementBlockKinds(announcement) {
+  const kinds = new Set();
+  const visit = blocks => blocks.forEach(block => {
+    kinds.add(block.kind);
+    if (block.kind === 'spoiler') visit(block.blocks);
+  });
+  visit(announcement.blocks);
+  return [...kinds].sort();
+}
+
+function findAnnouncementBlock(announcement, blockId) {
+  const visit = blocks => {
+    for (const block of blocks) {
+      if (block.blockId === blockId) return block;
+      if (block.kind === 'spoiler') {
+        const found = visit(block.blocks);
+        if (found) return found;
+      }
+    }
+    return null;
+  };
+  return visit(announcement.blocks);
+}
+
+function deleteAtPath(value, pathParts) {
+  let parent = value;
+  for (const key of pathParts.slice(0, -1)) parent = parent[key];
+  delete parent[pathParts.at(-1)];
+}
+
+function setAtPath(value, pathParts, next) {
+  let parent = value;
+  for (const key of pathParts.slice(0, -1)) parent = parent[key];
+  parent[pathParts.at(-1)] = next;
+}
+
+function requiredContentBlockers(candidate) {
+  return candidate.envelope.publicationGate.blockers.filter(item => item.startsWith('required-zh-tw-content-missing:'));
 }
 
 function serializedOutput(candidate) {
@@ -274,30 +419,133 @@ test('UnitT04_W08GateDerivesStateFromReviewTargetsInsteadOfClaimedCounts', () =>
   assert.ok(gate.blockers.includes('review-state-counts-mismatch'));
 });
 
-test('UnitT05_W08EventDomainClosesWebSourceRefsAndTypedEvidence', () => {
-  // Scenario: a localized gameplay change refers to a Source locator and an evidence record outside the four domain roots.
-  // Purpose: event projections must carry the exact Source record/provenance closure and reject dangling typed references.
-  const result = compileW08Candidate(makeInput({ withEventSource: true, addGameChange: true }));
+test('UnitT05_W08EventDomainClosesWebSourceRefsAndTypedEvidence', async () => {
+  // Scenario: schema- and semantic-validated event rows are compiled with the game change's typed evidence closure.
+  // Purpose: event projections must retain exact Source records and provenance while rejecting dangling typed references.
+  const donor = await loadValidatedFormalDonor();
+  const input = await makeFormalCompilerInput(donor);
+  const result = compileW08Candidate(input);
   const changePath = result.manifest.files.find(file => file.kind === 'game-changes').path;
   const change = JSON.parse(result.files.get(changePath).toString('utf8'));
 
-  assert.ok(change.source.records.some(record => record.recordId === 'evidence:event'));
-  assert.ok(change.source.sourceRefs.some(ref => ref.sourceId === 'source:event'));
+  assert.ok(change.source.records.some(record => record.recordId === 'fixture:evidence:r2'));
+  assert.ok(change.source.sourceRefs.some(ref => ref.sourceId === 'fixture-public-code-r2'));
   assert.equal(change.web.gameChanges.length, 1);
-  assert.ok(result.manifest.compatibility.gameSnapshotRefs.includes(SUPPLEMENTAL_SNAPSHOT.snapshotId));
+  assert.ok(result.manifest.compatibility.gameSnapshotRefs.includes('fixture-snapshot-r2'));
+  assert.deepEqual(requiredContentBlockers(result), []);
 
-  const invalid = makeInput({ withEventSource: true, addGameChange: true });
-  invalid.w07.authoring.gameChanges[0].evidenceRef.recordId = 'evidence:missing';
+  const invalid = structuredClone(input);
+  invalid.w07.authoring.gameChanges[0].sourceRef.recordId = 'fixture:game-change:missing';
   assert.throws(() => compileW08Candidate(invalid), /unresolved/i);
 });
 
-test('UnitT06_W08SiteAnnouncementDoesNotCreateAGameChangeDomain', () => {
-  // Scenario: an informational announcement exists without a gameplay or official-text change.
-  // Purpose: the compiler must preserve the announcement while avoiding a fabricated game-change file.
-  const result = compileW08Candidate(makeInput({ addAnnouncement: true }));
+test('UnitT06_W08SiteAnnouncementDoesNotCreateAGameChangeDomain', async () => {
+  // Scenario: the validated authoring fixture contains a site announcement but no projected change rows.
+  // Purpose: preserve announcement content without fabricating a game-change file or a missing-content blocker.
+  const donor = await loadValidatedFormalDonor();
+  const input = makeSyntheticAnnouncementInput(donor);
+  const result = compileW08Candidate(input);
+  const announcementPath = result.manifest.files.find(file => file.kind === 'announcements').path;
+  const announcementDocument = JSON.parse(result.files.get(announcementPath).toString('utf8'));
 
+  assert.deepEqual(announcementDocument.web.announcements, input.w07.authoring.announcements);
   assert.ok(result.manifest.files.some(file => file.kind === 'announcements'));
   assert.equal(result.manifest.files.some(file => file.kind === 'game-changes'), false);
+  assert.deepEqual(requiredContentBlockers(result), []);
+});
+
+test('UnitT15_W08ValidatedRepresentativeContentPassesPublicCompileGate', async () => {
+  // Scenario: full fixture authoring passes the schema and semantic validator before its formal event rows reach W08 compile.
+  // Purpose: required-content collection must follow authoring shapes while preserving all seven announcement block kinds.
+  const donor = await loadValidatedFormalDonor();
+  const input = await makeFormalCompilerInput(donor);
+  const result = compileW08Candidate(input);
+  const announcementsPath = result.manifest.files.find(file => file.kind === 'announcements').path;
+  const gameChangesPath = result.manifest.files.find(file => file.kind === 'game-changes').path;
+  const announcements = JSON.parse(result.files.get(announcementsPath).toString('utf8')).web.announcements;
+  const changes = JSON.parse(result.files.get(gameChangesPath).toString('utf8')).web;
+
+  assert.deepEqual(collectAnnouncementBlockKinds(announcements[0]), ['heading', 'image', 'link', 'list', 'paragraph', 'spoiler', 'table']);
+  assert.deepEqual(announcements, input.w07.authoring.announcements);
+  assert.deepEqual(changes.gameChanges, input.w07.authoring.gameChanges);
+  assert.deepEqual(changes.officialTextChanges, input.w07.authoring.officialTextChanges);
+  assert.deepEqual(requiredContentBlockers(result), []);
+  assert.doesNotThrow(() => validateW08Candidate(result));
+});
+
+test('UnitT16_W08MissingNestedAnnouncementTextAndUnsupportedShapesBlock', async () => {
+  // Scenario: one required announcement text leaf is absent, a required nested collection is empty, or a block kind is unknown.
+  // Purpose: all schema text leaves must fail closed at arbitrary spoiler depth, including English links and asset alternatives.
+  const donor = await loadValidatedFormalDonor();
+  const baseline = makeSyntheticAnnouncementInput(donor);
+  const announcementId = baseline.w07.authoring.announcements[0].announcementId;
+  assert.deepEqual(requiredContentBlockers(compileW08Candidate(baseline)), []);
+  const textPaths = collectAnnouncementTextPaths(baseline.w07.authoring.announcements[0]);
+  assert.ok(textPaths.some(item => item.label === 'link.text'));
+  assert.ok(textPaths.some(item => item.label === 'list.items[].text'));
+  assert.ok(textPaths.some(item => item.label === 'table.rows[].cells[].text'));
+  assert.ok(textPaths.some(item => item.label === 'image.alt'));
+  assert.ok(textPaths.some(item => item.label === 'spoiler.label'));
+  assert.ok(textPaths.some(item => item.label === 'assets[].alt'));
+
+  for (const textPath of textPaths) {
+    const input = structuredClone(baseline);
+    deleteAtPath(input.w07.authoring.announcements[0], textPath.path);
+    const candidate = compileW08Candidate(input);
+    assert.ok(requiredContentBlockers(candidate).includes('required-zh-tw-content-missing:' + announcementId), textPath.label);
+  }
+  for (const textPath of textPaths) {
+    const input = structuredClone(baseline);
+    setAtPath(input.w07.authoring.announcements[0], textPath.path, ' \t\n');
+    const candidate = compileW08Candidate(input);
+    assert.ok(requiredContentBlockers(candidate).includes('required-zh-tw-content-missing:' + announcementId), textPath.label + ' whitespace');
+  }
+
+  const emptyCollectionCases = [
+    ['blocks', announcement => { announcement.blocks = []; }],
+    ['nested list items', announcement => { findAnnouncementBlock(announcement, 'fixture:block:nested-list').items = []; }],
+    ['nested table rows', announcement => { findAnnouncementBlock(announcement, 'fixture:block:nested-table').rows = []; }],
+    ['nested table cells', announcement => { findAnnouncementBlock(announcement, 'fixture:block:nested-table').rows[0].cells = []; }],
+    ['nested spoiler children', announcement => { findAnnouncementBlock(announcement, 'fixture:block:nested-spoiler').blocks = []; }],
+  ];
+  for (const [label, mutate] of emptyCollectionCases) {
+    const input = structuredClone(baseline);
+    mutate(input.w07.authoring.announcements[0]);
+    const candidate = compileW08Candidate(input);
+    assert.ok(requiredContentBlockers(candidate).includes('required-zh-tw-content-missing:' + announcementId), label);
+  }
+
+  const unknownKind = structuredClone(baseline);
+  unknownKind.w07.authoring.announcements[0].blocks.push({
+    blockId: 'fixture:block:unknown-kind', kind: 'unknown-extension', text: 'Unrecognized content',
+  });
+  const candidate = compileW08Candidate(unknownKind);
+  assert.ok(requiredContentBlockers(candidate).includes('required-zh-tw-content-missing:' + announcementId));
+});
+
+test('UnitT17_W08LocalizedChangeSummariesAndFieldSummariesMustBeComplete', async () => {
+  // Scenario: required change summary locale/text or a Source field summary is absent or empty.
+  // Purpose: compile must recognize localizedSummary objects and all required per-field Web wording.
+  const donor = await loadValidatedFormalDonor();
+  const baseline = await makeFormalCompilerInput(donor, { announcements: false });
+  const gameChangeId = baseline.w07.authoring.gameChanges[0].changeId;
+  const officialChangeId = baseline.w07.authoring.officialTextChanges[0].changeId;
+  assert.deepEqual(requiredContentBlockers(compileW08Candidate(baseline)), []);
+  const mutationCases = [
+    ['game summary text', input => { delete input.w07.authoring.gameChanges[0].summary.text; }, gameChangeId],
+    ['game summary locale', input => { input.w07.authoring.gameChanges[0].summary.locale = 'en'; }, gameChangeId],
+    ['game field summary missing', input => { delete input.w07.authoring.gameChanges[0].fieldSummaries[0].summary; }, gameChangeId],
+    ['game field summary whitespace', input => { input.w07.authoring.gameChanges[0].fieldSummaries[0].summary = ' \t\n'; }, gameChangeId],
+    ['empty game field summaries', input => { input.w07.authoring.gameChanges[0].fieldSummaries = []; }, gameChangeId],
+    ['official summary text', input => { input.w07.authoring.officialTextChanges[0].summary.text = '  '; }, officialChangeId],
+    ['official summary locale', input => { delete input.w07.authoring.officialTextChanges[0].summary.locale; }, officialChangeId],
+  ];
+  for (const [label, mutate, ownerId] of mutationCases) {
+    const input = structuredClone(baseline);
+    mutate(input);
+    const candidate = compileW08Candidate(input);
+    assert.ok(requiredContentBlockers(candidate).includes('required-zh-tw-content-missing:' + ownerId), label);
+  }
 });
 
 test('UnitT07_W08WriterPlacesManifestAtItsDeclaredImmutablePath', async () => {

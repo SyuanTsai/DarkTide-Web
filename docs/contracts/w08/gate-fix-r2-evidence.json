@@ -1,0 +1,1259 @@
+{
+  "schemaVersion": "w08-gate-fix-evidence/1",
+  "baselineWeb": "1688dbfab89531e9a522377c6c0d94df1cd0086c",
+  "sourceMainCommit": "8e48334619f448794aab666f1805cb2bd6adf11a",
+  "rootRed": {
+    "baselineWeb": "1688dbfab89531e9a522377c6c0d94df1cd0086c",
+    "fixtureAuthoringSchemaAndSemanticsValid": true,
+    "realW07WithFormalAnnouncementSchemaAndSemanticsValid": true,
+    "publicCompilerAnnouncementFalsePositiveReproduced": true,
+    "blockers": [
+      "required-zh-tw-content-missing:fixture:announcement:site"
+    ],
+    "scope": "In-memory only; no candidate output, no approval receipt."
+  },
+  "rootAllThreeRed": {
+    "stage": "red",
+    "fullFormalAuthoringSchemaAndSemanticsValid": true,
+    "unmodifiedFormalRowsAllThree": true,
+    "publicCompilerAndCandidateValidator": true,
+    "missing": [
+      "required-zh-tw-content-missing:fixture:announcement:site",
+      "required-zh-tw-content-missing:fixture:game-change:curve",
+      "required-zh-tw-content-missing:fixture:official-text-change:weapon"
+    ],
+    "syntheticAdapterDisclosure": "Only in-memory core presentations/current-release review targets are selected and fixture Source.fixtureOnly flag is set false to exercise pure compile API; fake identity SHAs; no written candidate or receipt. Whole original fixture schema+semantics valid before adapter; this is not delivery source provenance."
+  },
+  "rootRealW07AnnouncementGreen": {
+    "baselineWeb": "1688dbfab89531e9a522377c6c0d94df1cd0086c",
+    "fixtureAuthoringSchemaAndSemanticsValid": true,
+    "realW07WithFormalAnnouncementSchemaAndSemanticsValid": true,
+    "publicCompilerFormalAnnouncementAccepted": true,
+    "blockers": [],
+    "scope": "In-memory only; no candidate output, no approval receipt."
+  },
+  "lunaRed": {
+    "stage": "test-first Red before production change",
+    "timestampUtc": "2026-10-20",
+    "checkout": "C:/Users/carsu/AppData/Local/Temp/syp-w08-merged-main-1688dbf/DarkTide-Web",
+    "baseline": "1688dbfab89531e9a522377c6c0d94df1cd0086c",
+    "node": "v24.19.0",
+    "command": "node --test --test-name-pattern='UnitT05|UnitT06|UnitT15|UnitT16|UnitT17' test/contract-w08-build.test.mjs",
+    "result": {
+      "tests": 5,
+      "passed": 0,
+      "failed": 5,
+      "exitCode": 1
+    },
+    "fixtureEvidence": "Each compiler fixture starts with loadWebAuthoringInputs; the full original donor, including synthetic nested link/list/table/image/spoiler enrichment, passes validateWebAuthoring before compiler adaptation.",
+    "observedFalsePositiveBlockers": [
+      "required-zh-tw-content-missing:fixture:announcement:site",
+      "required-zh-tw-content-missing:fixture:game-change:curve",
+      "required-zh-tw-content-missing:fixture:official-text-change:weapon"
+    ],
+    "tests": [
+      "UnitT05_W08EventDomainClosesWebSourceRefsAndTypedEvidence",
+      "UnitT06_W08SiteAnnouncementDoesNotCreateAGameChangeDomain",
+      "UnitT15_W08ValidatedRepresentativeContentPassesPublicCompileGate",
+      "UnitT16_W08MissingNestedAnnouncementTextAndUnsupportedShapesBlock",
+      "UnitT17_W08LocalizedChangeSummariesAndFieldSummariesMustBeComplete"
+    ],
+    "modifiedFilesAtRed": [
+      "test/contract-w08-build.test.mjs"
+    ],
+    "productionUntouched": true,
+    "adapterDisclosure": "In-memory compiler test adapter selects validated donor content and matching review targets/Source closure, uses synthetic compiler/source identities, and writes no candidate or receipt. It is not a claim that the adapted input is a fully valid W06/W07 delivery artifact."
+  },
+  "rootAllThreeGreenAndNegativeCases": {
+    "stage": "green",
+    "negativeCases": 17,
+    "fullFormalAuthoringSchemaAndSemanticsValid": true,
+    "unmodifiedFormalRowsAllThree": true,
+    "publicCompilerAndCandidateValidator": true,
+    "missing": [],
+    "syntheticAdapterDisclosure": "Only in-memory core/current-release presentations and review targets plus their Source closure are selected and fixture Source.fixtureOnly flag is set false to exercise pure compile API; fake identity SHAs; no written candidate or receipt. Whole original fixture schema+semantics valid before adapter; this is not delivery source provenance."
+  },
+  "actualCandidate": {
+    "valid": true,
+    "baselineWeb": "1688dbfab89531e9a522377c6c0d94df1cd0086c",
+    "sourceMainCommit": "8e48334619f448794aab666f1805cb2bd6adf11a",
+    "sourcePinnedCommit": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+    "compilerCommit": "6184cd7c45770d48fe938d2002e6c6322a415e63",
+    "authoringCommit": "40c477835353bd9513f202d6b82609a580afeabd",
+    "inputLockSha256": "e520f2313ff4fa90db3288db92a6d1dd83022f437e7066e7b83f28f06dd421d6",
+    "dataRevision": "46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034",
+    "twoInMemoryRebuildsSameBytes": true,
+    "fourDomainBytesEqualR1": true,
+    "domains": [
+      {
+        "kind": "blessings",
+        "path": "domains/blessings.json",
+        "sha256": "d844ce7431ca96366b97fad27cb428b495b290b93deeeaf646b6f1332d759588",
+        "sizeBytes": 81429,
+        "records": 14,
+        "presentations": 1,
+        "officialSources": 10,
+        "webReviewTargets": 14
+      },
+      {
+        "kind": "skills",
+        "path": "domains/skills.json",
+        "sha256": "9cefb6ccc4de5ef609b41237324ceedca6e0a49cf0857ef93a82951af3b5bb4d",
+        "sizeBytes": 125986,
+        "records": 19,
+        "presentations": 1,
+        "officialSources": 4,
+        "webReviewTargets": 17
+      },
+      {
+        "kind": "terms",
+        "path": "domains/terms.json",
+        "sha256": "cdc0873c70bbf0a1e04a92205507c2d459de7aa879de3708e8e41d109faa011a",
+        "sizeBytes": 96300,
+        "records": 19,
+        "presentations": 0,
+        "officialSources": 0,
+        "webReviewTargets": 3
+      },
+      {
+        "kind": "weapons",
+        "path": "domains/weapons.json",
+        "sha256": "2ec969988b7a7840b6900dce160f2447f8326d5b9f5859e4a5d46a9369c9ac29",
+        "sizeBytes": 6195771,
+        "records": 198,
+        "presentations": 2,
+        "officialSources": 4,
+        "webReviewTargets": 38
+      }
+    ],
+    "consumerPathsAndHashesEqual": true,
+    "sourceAndAuthoringInputsAndR1Unchanged": true,
+    "preservedFiles": 44,
+    "oldHashListAgainstBaselineBlobsVerified": 14,
+    "reviewUnchanged": true,
+    "pending": 869,
+    "receipts": 0,
+    "acceptedLimitations": [
+      {
+        "key": "obtainable-ranges",
+        "reasonCode": "NOT_EXPOSED_BY_SOURCE",
+        "status": "unknown"
+      },
+      {
+        "count": 8,
+        "key": "unresolved-hit-zone-references",
+        "status": "preserved"
+      },
+      {
+        "gameBuilds": [
+          "UNVERIFIED"
+        ],
+        "key": "steam-build",
+        "status": "UNVERIFIED"
+      },
+      {
+        "assetIds": [],
+        "declaredAssetRefCount": 0,
+        "key": "weapon-artwork",
+        "status": "NOT_REVIEWED"
+      }
+    ],
+    "publicationGate": {
+      "blockers": [
+        "review-target-pending",
+        "source-build-identity-unverified",
+        "source-build-not-publication-eligible"
+      ],
+      "publicationEligible": false,
+      "status": "blocked"
+    },
+    "artifactHashes": [
+      {
+        "path": "docs/contracts/w08/candidate-r2/candidate.json",
+        "sizeBytes": 317557,
+        "sha256": "71e0254a58e08e22fb37a25ffce370b682e9734d7dca7236094f602dbe5760f4"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/manifest.json",
+        "sizeBytes": 1991,
+        "sha256": "ddc572cfcc00f01502e09185932f1b5dedbf903047e439fdc47267f67444e0ea"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/blessings.json",
+        "sizeBytes": 81429,
+        "sha256": "d844ce7431ca96366b97fad27cb428b495b290b93deeeaf646b6f1332d759588"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/skills.json",
+        "sizeBytes": 125986,
+        "sha256": "9cefb6ccc4de5ef609b41237324ceedca6e0a49cf0857ef93a82951af3b5bb4d"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/terms.json",
+        "sizeBytes": 96300,
+        "sha256": "cdc0873c70bbf0a1e04a92205507c2d459de7aa879de3708e8e41d109faa011a"
+      },
+      {
+        "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/weapons.json",
+        "sizeBytes": 6195771,
+        "sha256": "2ec969988b7a7840b6900dce160f2447f8326d5b9f5859e4a5d46a9369c9ac29"
+      }
+    ],
+    "scope": "New candidate generation/integration only; existing full writer negative tests, full regression and historical CI reused; no formal content approval."
+  },
+  "targetedReadonlyTests": {
+    "tests": 16,
+    "pass": 16,
+    "fail": 0,
+    "skipped": 0
+  },
+  "independentEngineeringReview": {
+    "reviewer": "Root SOL/high",
+    "formalContentApproval": false,
+    "ledger": "# Root 獨立覆核紀錄：W08/R04 P2\n\n- P2-01（使用者與 Root 重現）：contract-w08-build.mjs required-content collector 對公告假設頂層 locale/title/text 與單一 block.text，對兩類 change 假設字串 summary。Root 實際 pinned W07 加合法公告後 whole authoring schema＋語義通過，公開 compile 卻產生 missing blocker；三類完整 donor 另經公開 compile／candidate validator 重現。證據 root-red.json／root-formal-red.json。\n- R2-F01（測試適配，提交前修正）：完整 Source fixture 含非本候選投影的 records，不能讓 coverage error 冒充內容門檻 Red。測試必須選取對應 closure，公告單獨案例可使用 validated donor 公告加既有 synthetic minimal registry，明確揭露 adapter。Root 三類 Red 已核對為具體 required-zh-tw-content-missing blocker。\n- R2-F02（測試契約，提交前修正）：測試草稿把 fieldSummaries[].summary 誤當 localizedSummary；正式 schema 此欄位是字串。已要求 Luna 回到 string text 檢查，負例刪除／清空該字串，不新增不存在的 locale。不能讓錯誤測試推動 production 再次偏離契約。\n- 待 Green 後：Root 讀完整 diff、獨立正例／缺漏反例、真 pin 重建、四域與 r1 raw bytes 保全、869 pending／0 receipts／四限制、hash／Git blobs、PR event 無 deploy，完成才關閉 P2-01。\n- Green 覆核完成：正式 schema 的 fieldSummaries 字串已修正；Root 16 項唯讀、三類正例及 17 缺漏反例通過，真 W07 公告前後 schema／語義皆 valid，假陽性已消除。新真 pin r2 四域 bytes、869 pending／0 receipts、四限制、44 個既有檔與原 14 檔基準 blobs 核對通過。P2-01 工程 finding 關閉；W08 仍待使用者重新驗收，沒有內容批准。\n"
+  },
+  "initialFilterDisclosure": "Initial negative name pattern also matched test parent; 17 tests passed including one existing writer smoke. Corrected positive pattern selected 16 readonly tests. No full writer failure suite rerun.",
+  "reusedEvidence": {
+    "baselineDeliveryCommit": "1c8a56123ca42d74c7e0d32a07a77ac970f4ca23",
+    "sourcePinnedCommit": "f22b4ae2e1d3b4887f3741464e3c9bf507399db6",
+    "sourceMainTreeEqualsPinnedSource": "Verified at W08 merge; unchanged this repair.",
+    "oldFullCi": {
+      "valid": true,
+      "headSha": "1c8a56123ca42d74c7e0d32a07a77ac970f4ca23",
+      "runs": {
+        "pr": {
+          "runId": 39365370441,
+          "url": "https://github.com/SyuanTsai/DarkTide-Web/actions/runs/39365370441",
+          "counts": {
+            "tests": 496,
+            "pass": 496,
+            "fail": 0,
+            "skipped": 0
+          },
+          "conclusion": "success",
+          "logSha256": "903e21350b4748202156b44dbfbd8e14d9313eedb9092a69de93d3ef280aa35a",
+          "skippedNames": [],
+          "jobs": [
+            {
+              "name": "isolated-preview",
+              "conclusion": "success",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out Web candidate without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the pinned prior preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact pinned R1 preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published R2 A data source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.3 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.4 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.5 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.6 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.7 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.8 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.9 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.10 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.11 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.12 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.13 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.14 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.15 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.16 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Classify W01 deployment scope",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Install locked Web dependencies",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the pinned production baseline data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact R1 package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in R1 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact R1 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published R2 A package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact R2 A package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published R2 A and retained R1 and production data revisions",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published real 0.0.3 package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact 0.0.3 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published real 0.0.3 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.3 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.4 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.4 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.4 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.4 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.5 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.5 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.5 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.5 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.6 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.6 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.6 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.6 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.7 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.7 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.7 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.7 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.8 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.8 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.8 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.9 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.9 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.9 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.10 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.10 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.10 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.11 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.11 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.11 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.12 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.12 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.12 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.12 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.13 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.13 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.13 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.13 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.14 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.14 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.14 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.14 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.15 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.15 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.15 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.15 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.16 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.16 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.16 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.16 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Build current pending 0.0.17 candidate preview",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in current 0.0.17 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify current 0.0.17 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run Web tests against pinned lifecycle packages",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Upload only the isolated W01 preview artifact",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Deploy only the fixed W01 preview worker",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Verify the deployed preview and write a deployment receipt",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Upload the public preview deployment receipt",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.16 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.15 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.14 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.13 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.12 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.11 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.10 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.9 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.8 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.7 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.6 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.5 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.4 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.3 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published R2 A data source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact pinned R1 preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the pinned prior preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out Web candidate without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "conclusion": "success"
+                }
+              ]
+            }
+          ]
+        },
+        "static": {
+          "runId": 39365370374,
+          "url": "https://github.com/SyuanTsai/DarkTide-Web/actions/runs/39365370374",
+          "counts": {
+            "tests": 496,
+            "pass": 481,
+            "fail": 0,
+            "skipped": 15
+          },
+          "conclusion": "success",
+          "logSha256": "12a92a8994c6a8f94e6cc8ec9703d8336d524d4c380923412b65398373eef1b0",
+          "skippedNames": [
+            "UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-17",
+            "UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-17",
+            "UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15",
+            "UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15",
+            "UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15",
+            "UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-17",
+            "UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantine-flags",
+            "InterT02_deployment-receipt-retries-only-content-addressed-object-404",
+            "UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions",
+            "UnitT42_clean-runner-rebuilds-published-a-then-restores-fixed-r1-with-all-urls",
+            "UnitT10_fixed-r4-to-r3-restoration-retains-all-immutable-data",
+            "UnitT20_wrong-release-and-unsafe-path-reject-before-active-mutation",
+            "UnitT30_tampered-active-data-fails-before-any-recovery-write",
+            "UnitT40_symlinked-target-file-rejects-before-active-mutation",
+            "UnitT50_failed-stage-replacement-restores-active-r4"
+          ],
+          "jobs": [
+            {
+              "name": "static-package",
+              "conclusion": "success",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out source without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Install locked dependencies",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Install Chromium",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Test",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Build and verify deployable published package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Upload the verified static artifact",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out source without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "conclusion": "success"
+                }
+              ]
+            },
+            {
+              "name": "deploy",
+              "conclusion": "skipped",
+              "steps": []
+            }
+          ]
+        },
+        "push": {
+          "runId": 39365364121,
+          "url": "https://github.com/SyuanTsai/DarkTide-Web/actions/runs/39365364121",
+          "counts": {
+            "tests": 496,
+            "pass": 496,
+            "fail": 0,
+            "skipped": 0
+          },
+          "conclusion": "success",
+          "logSha256": "2b688a05f1b45efad8992784a36299cb8cb23110a22f95048c9fd66d8b82fb1f",
+          "skippedNames": [],
+          "jobs": [
+            {
+              "name": "isolated-preview",
+              "conclusion": "success",
+              "steps": [
+                {
+                  "name": "Set up job",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out Web candidate without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the pinned prior preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact pinned R1 preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published R2 A data source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.3 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.4 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.5 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.6 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.7 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.8 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.9 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.10 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.11 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.12 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.13 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.14 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.15 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Check out the exact published pending 0.0.16 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Classify W01 deployment scope",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Install locked Web dependencies",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the pinned production baseline data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact R1 package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in R1 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact R1 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published R2 A package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact R2 A package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published R2 A and retained R1 and production data revisions",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published real 0.0.3 package into the candidate output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact 0.0.3 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published real 0.0.3 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.3 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.4 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.4 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.4 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.4 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.5 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.5 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.5 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.5 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.6 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.6 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.6 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.6 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild the exact published 0.0.7 package and retained data",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in exact published 0.0.7 package",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.7 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.7 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.8 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.8 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.8 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.9 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.9 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.9 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.10 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.10 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.10 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.11 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.11 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.11 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.12 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.12 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.12 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.12 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.13 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.13 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.13 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.13 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.14 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.14 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.14 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.14 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.15 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.15 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.15 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.15 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Rebuild exact published pending 0.0.16 candidate into output",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned production baseline in exact published 0.0.16 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify exact published 0.0.16 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Freeze the verified published 0.0.16 package for lifecycle tests",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Build current pending 0.0.17 candidate preview",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Retain the pinned baseline in current 0.0.17 candidate",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Verify current 0.0.17 and retained historical data URLs",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Run Web tests against pinned lifecycle packages",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Upload only the isolated W01 preview artifact",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Deploy only the fixed W01 preview worker",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Verify the deployed preview and write a deployment receipt",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Upload the public preview deployment receipt",
+                  "conclusion": "skipped"
+                },
+                {
+                  "name": "Post Set up Node.js 24",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.16 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.15 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.14 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.13 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.12 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.11 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.10 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.9 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.8 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.7 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.6 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.5 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.4 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published pending 0.0.3 candidate source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact published R2 A data source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the exact pinned R1 preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out the pinned prior preview source",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Post Check out Web candidate without persisted credentials",
+                  "conclusion": "success"
+                },
+                {
+                  "name": "Complete job",
+                  "conclusion": "success"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "same15SkipNamesAsR4": [
+        "InterT02_deployment-receipt-retries-only-content-addressed-object-404",
+        "UnitT01_deployment-receipt-verifies-native-pending-candidate-and-quarantine-flags",
+        "UnitT10_fixed-r4-to-r3-restoration-retains-all-immutable-data",
+        "UnitT20_exact-published-0-0-5-data-remains-byte-identical-in-0-0-17",
+        "UnitT20_wrong-release-and-unsafe-path-reject-before-active-mutation",
+        "UnitT21_exact-published-0-0-6-data-and-official-text-remain-byte-identical-in-0-0-17",
+        "UnitT27_exact-published-0-0-7-data-remains-byte-identical-in-0-0-15",
+        "UnitT28_exact-published-0-0-12-data-remains-byte-identical-in-0-0-15",
+        "UnitT30_tampered-active-data-fails-before-any-recovery-write",
+        "UnitT32_exact-published-0-0-13-data-remains-byte-identical-in-0-0-15",
+        "UnitT37_exact-0-0-15-identity-and-data-remain-immutable-in-0-0-17",
+        "UnitT40_symlinked-target-file-rejects-before-active-mutation",
+        "UnitT41_r1-r2-fixed-rollback-helper-retains-all-data-revisions",
+        "UnitT42_clean-runner-rebuilds-published-a-then-restores-fixed-r1-with-all-urls",
+        "UnitT50_failed-stage-replacement-restores-active-r4"
+      ],
+      "actualPushScope": {
+        "shouldDeploy": false,
+        "reason": "contract-only",
+        "changedPathCount": 24
+      },
+      "deployReceiptUploadSkipped": true,
+      "staticDeployJobSkipped": true
+    },
+    "rootPriorContractTests": {
+      "tests": 110,
+      "pass": 110,
+      "fail": 0,
+      "skipped": 0
+    },
+    "priorWriterAndPreservation": "Baseline docs/contracts/w08/engineering-evidence.json retained byte-for-byte; writer implementation and its full negative suite unchanged.",
+    "scope": "Historical CI is reused for unchanged areas; no claim it tested this new fix. New automatic PR CI recorded against actual final SHA in Jira."
+  }
+}

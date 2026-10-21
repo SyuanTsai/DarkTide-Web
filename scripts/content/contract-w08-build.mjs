@@ -818,16 +818,49 @@ function collectRequiredContentFromWeb(web) {
     content.push({ id: item.authoringId, present: item.locale === 'zh-TW' && nonemptyText(item.label) && nonemptyText(item.definition) });
   }
   for (const item of web.announcements ?? []) {
-    const blocksPresent = !Array.isArray(item.blocks) || item.blocks.every(block => nonemptyText(block.text));
-    content.push({ id: item.announcementId ?? item.recordId, present: item.locale === 'zh-TW' && (nonemptyText(item.title) || nonemptyText(item.text)) && blocksPresent });
+    content.push({ id: item.announcementId ?? item.recordId, present: announcementHasRequiredText(item) });
   }
   for (const item of web.gameChanges ?? []) {
-    content.push({ id: item.changeId, present: item.locale === 'zh-TW' && nonemptyText(item.summary) });
+    const fieldSummariesPresent = Array.isArray(item.fieldSummaries) && item.fieldSummaries.length > 0
+      && item.fieldSummaries.every(field => isRecord(field) && nonemptyText(field.summary));
+    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) && fieldSummariesPresent });
   }
   for (const item of web.officialTextChanges ?? []) {
-    content.push({ id: item.changeId, present: item.locale === 'zh-TW' && nonemptyText(item.summary) });
+    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) });
   }
   return content;
+}
+
+function announcementHasRequiredText(announcement) {
+  return isRecord(announcement)
+    && Array.isArray(announcement.blocks) && announcement.blocks.length > 0
+    && announcement.blocks.every(announcementBlockHasRequiredText)
+    && Array.isArray(announcement.assets)
+    && announcement.assets.every(asset => isRecord(asset) && nonemptyText(asset.alt));
+}
+
+function announcementBlockHasRequiredText(block) {
+  if (!isRecord(block)) return false;
+  if (['heading', 'paragraph', 'link'].includes(block.kind)) return nonemptyText(block.text);
+  if (block.kind === 'list') {
+    return Array.isArray(block.items) && block.items.length > 0
+      && block.items.every(item => isRecord(item) && nonemptyText(item.text));
+  }
+  if (block.kind === 'table') {
+    return Array.isArray(block.rows) && block.rows.length > 0
+      && block.rows.every(row => isRecord(row) && Array.isArray(row.cells) && row.cells.length > 0
+        && row.cells.every(cell => isRecord(cell) && nonemptyText(cell.text)));
+  }
+  if (block.kind === 'image') return nonemptyText(block.alt);
+  if (block.kind === 'spoiler') {
+    return nonemptyText(block.label) && Array.isArray(block.blocks) && block.blocks.length > 0
+      && block.blocks.every(announcementBlockHasRequiredText);
+  }
+  return false;
+}
+
+function localizedSummaryHasRequiredText(summary) {
+  return isRecord(summary) && summary.locale === 'zh-TW' && nonemptyText(summary.text);
 }
 
 function nonemptyText(value) {
