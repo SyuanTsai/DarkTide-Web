@@ -1,0 +1,523 @@
+{
+  "issue": "SYP-290",
+  "checked_on": "2026-10-21",
+  "timezone": "Asia/Taipei",
+  "result": "pending user acceptance and architecture decisions; not Done",
+  "baseline": {
+    "main_sha": "55c0d002bd07109c34f15aa021074b16d81224f9",
+    "content_sha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+    "content_matches_deployed_8a4b3db": true,
+    "schema_version": 2,
+    "data_revision": "0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b",
+    "build_id": "98034cf0847d344da1d43e9b08e8059fdbad1527a4cfd347b263c3a4958ed013",
+    "game_version": "1.13.1",
+    "package_kind": "published"
+  },
+  "counts": {
+    "skills": 646,
+    "weapons": 70,
+    "marks": 135,
+    "blessings": 167,
+    "variants": 605,
+    "bindings": 1185,
+    "assets": 779,
+    "sources": 13,
+    "routes": 2269,
+    "talent_trees": 7
+  },
+  "contract_and_artifact_validation": "passed",
+  "null_names": [
+    {
+      "kind": "skill",
+      "id": "veteran/veteran_cover_peeking"
+    },
+    {
+      "kind": "weapon",
+      "id": "transonic_knife_p1"
+    },
+    {
+      "kind": "weapon",
+      "id": "transonic_sword_p1"
+    },
+    {
+      "kind": "mark",
+      "id": "laspistol_p1_m2"
+    },
+    {
+      "kind": "mark",
+      "id": "transonic_knife_p1_m1"
+    },
+    {
+      "kind": "mark",
+      "id": "transonic_sword_p1_m1"
+    }
+  ],
+  "unknown_numeric_claim_count": 0,
+  "available_tiers": {
+    "variants_unknown": 605,
+    "bindings_unknown": 1185
+  },
+  "missing_mechanics": [
+    {
+      "archetype": "arbites",
+      "id": "adamant_companion_coherency",
+      "effect_present": true
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_dodge_improvement",
+      "effect_present": true
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_limit_dmg_taken_from_hits",
+      "effect_present": true
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_sprinting_sliding",
+      "effect_present": true
+    },
+    {
+      "archetype": "arbites",
+      "id": "base_melee_damage_node_buff_medium_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "arbites",
+      "id": "base_ranged_damage_node_buff_medium_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_longer_charge",
+      "effect_present": true
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_special_ammo",
+      "effect_present": true
+    },
+    {
+      "archetype": "psyker",
+      "id": "psyker_sphere_shield",
+      "effect_present": true
+    },
+    {
+      "archetype": "scum",
+      "id": "base_crit_chance_node_buff_low_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "scum",
+      "id": "base_melee_damage_node_buff_medium_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_ability_stimm_field_sub_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_keystone_chemical_dependency_sub_2",
+      "effect_present": true
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_passive_cooldown_regen",
+      "effect_present": true
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_specials_marking",
+      "effect_present": true
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_weakspot_kills_grant_power",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "base_toughness_damage_reduction_node_buff_medium_1",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "base_toughness_node_buff_medium_2",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_aura_gain_ammo_on_elite_kill",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_combat_ability_revive_nearby_allies",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_cover_peeking",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_frag_grenade",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_replenish_grenades",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_supression_immunity",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_survivalist_passive",
+      "effect_present": true
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_toughness_bonus_leaving_invisibility",
+      "effect_present": true
+    }
+  ],
+  "missing_skill_icons": [
+    {
+      "archetype": "arbites",
+      "id": "adamant_area_buff_drone",
+      "name": "天鷹使節(Nuncio-Aquila)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_command_dog_with_tag",
+      "name": "電子獒犬標記指令",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_companion_aura",
+      "name": "電子獒犬協同(Companion Aura)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_companion_damage_per_level",
+      "name": "電子獒犬等級增傷(Companion Damage per Level)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "arbites",
+      "id": "adamant_grenade",
+      "name": "法務官手榴彈(Arbites Grenade)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_base_tank_passive",
+      "name": "厚實表皮(Thick Skin)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_charge",
+      "name": "蠻牛衝撞(Bull Rush)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_coherency_radius_increase",
+      "name": "卓越氣場(Towering Presence)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_dodge_stagger",
+      "name": "滾吧你！(Outta My Way!)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_grenade_box",
+      "name": "巨量傷害盒(Big Box of Hurt)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_helping_hand",
+      "name": "救援時不可打斷",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "ogryn",
+      "id": "ogryn_melee_damage_coherency",
+      "name": "威嚇氣場(Intimidating Presence)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_ability_focus",
+      "name": "亡命之徒(Desperado)：基礎戰鬥能力",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_aura_gunslinger",
+      "name": "神射手(Gunslinger)：基礎光環",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_blitz_flash_grenade",
+      "name": "閃光彈(Blinder)：基礎閃擊",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_passive_improved_sprint_dodge",
+      "name": "迅如疾風(Like the Wind)：基礎被動",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_stimm_description_talent",
+      "name": "財閥專員(Cartel Special)：專用興奮劑",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "scum",
+      "id": "broker_syringe",
+      "name": "專用興奮劑充能",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_coherency_regen_aura",
+      "name": "復甦（基礎光環）(Resurgence)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_discharge_base",
+      "name": "電能擴張器(Voltaic Expander)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_passive_cooldown_regen",
+      "name": "動力引擎(Motive Engine)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "skitarii",
+      "id": "cryptic_servo_skull_order",
+      "name": "伺服頭骨(Servo-Skull)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_aura_gain_ammo_on_elite_kill",
+      "name": "拾荒者(Scavenger)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_base_ranged_damage",
+      "name": "衛兵(Guardsman)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_cover_peeking",
+      "name": null,
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_frag_grenade",
+      "name": "破片手雷(Frag Grenade)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_supression_immunity",
+      "name": "堅定不移(Determined)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "archetype": "veteran",
+      "id": "veteran_survivalist_passive",
+      "name": "實踐效率(Practiced Efficiency)",
+      "kind": "base-effect",
+      "status": "source-specific absence not yet verified"
+    }
+  ],
+  "missing_blessing_icons": [
+    {
+      "id": "hit-and-run-activated",
+      "name": "遊擊（特殊攻擊命中）",
+      "effect": "手持突擊鏈鋸劍，以特殊攻擊直接命中後，移動速度提高 I–IV +12.5%／+15%／+17.5%／+20%，持續 4 秒；再次符合條件的命中重新計算持續時間，不疊加。",
+      "status": "source-specific absence not yet verified"
+    },
+    {
+      "id": "quickloader",
+      "name": "快速裝填",
+      "effect": "手持適用步兵自動槍進入閃避狀態後，接下來 2 秒內提高 10%／12.5%／15%／20% 裝填速度；再次觸發會重新開始計時。",
+      "status": "source-specific absence not yet verified"
+    }
+  ],
+  "capacities": {
+    "shared": {
+      "files": 9,
+      "raw_bytes": 370492
+    },
+    "catalog": {
+      "files": 1,
+      "raw_bytes": 927320
+    },
+    "blessing": {
+      "files": 167,
+      "raw_bytes": 805000
+    },
+    "mark": {
+      "files": 135,
+      "raw_bytes": 635103
+    },
+    "mechanics": {
+      "files": 646,
+      "raw_bytes": 1657254
+    },
+    "skill": {
+      "files": 646,
+      "raw_bytes": 1663714
+    },
+    "variant": {
+      "files": 605,
+      "raw_bytes": 1833186
+    },
+    "weapon": {
+      "files": 70,
+      "raw_bytes": 347196
+    },
+    "talent-trees": {
+      "files": 7,
+      "raw_bytes": 1840769
+    }
+  },
+  "total_artifact_raw_bytes": 10705268,
+  "remote_image_bytes_included": false,
+  "http": {
+    "total": 82,
+    "matching_checks": 80,
+    "failures": [
+      {
+        "origin": "https://darktide.tw-syuan.com",
+        "path": "/skills/veteran/not-a-real-skill/",
+        "kind": "404",
+        "status": 200,
+        "elapsed_ms": 436,
+        "bytes": 2885,
+        "content_type": "text/html",
+        "cache_control": "no-cache, must-revalidate",
+        "etag": null,
+        "x_robots_tag": null,
+        "cf_cache_status": "HIT"
+      },
+      {
+        "origin": "https://darktide-zh-tw-preview.syuan-tsai.workers.dev",
+        "path": "/skills/veteran/not-a-real-skill/",
+        "kind": "404",
+        "status": 200,
+        "elapsed_ms": 442,
+        "bytes": 1947,
+        "content_type": "text/html",
+        "cache_control": "no-cache, must-revalidate",
+        "etag": null,
+        "x_robots_tag": null,
+        "cf_cache_status": "HIT"
+      }
+    ],
+    "meaning": "80 requests met their expected conditions; two nonexistent skill URLs returned 200. This is not full acceptance."
+  },
+  "localization": {
+    "version": "1.13.1",
+    "steam_build": 25606770,
+    "dictionary_source_sha": "7e662fcda16219d775b84af50322be2e9cd9d62e",
+    "traditional_chinese_records": 176792,
+    "archive_sha256": "e5bfbedbead71249fe86c42865a0c14542c1689b6cb5217ff69b0d541f02b378",
+    "archive_checksum_pass": true,
+    "archive_checksum_count": 12,
+    "limitation": "Pinned release source/README.md plus local archive batch README; no new installed-game verification"
+  },
+  "candidate_fix": {
+    "schema_version": 2,
+    "data_revision": "0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b",
+    "build_id": "75a9a5bbb34153ef8d891a56401d3c457819b32482b54adf288419b7e51efff8",
+    "game_version": "1.13.1",
+    "package_kind": "published",
+    "deployed": false,
+    "unit_and_existing_tests": {
+      "pass": 485,
+      "fail": 0,
+      "skipped": 15,
+      "skipped_reason": "Historical W01 packages require external fixture roots"
+    },
+    "targeted_baseline_tests": {
+      "pass": 82,
+      "fail": 0,
+      "skipped": 0
+    },
+    "red": "UnitT50 failed because availability disclosure function was absent",
+    "green": "UnitT50 and exact published-content preservation passed"
+  },
+  "scope_exclusions": {
+    "suspicious_tracked_paths": [],
+    "suspicious_artifact_paths": [],
+    "private_sources_required_for_public_build": false,
+    "english_site_entry": false,
+    "dialogue_subtitle_voice_payload": false
+  },
+  "decisions_pending": [
+    "Unknown known-prefix page URLs return HTTP 200; preserve SPA behavior or decide routing change.",
+    "Initial HTML lacks content and per-page social metadata; accept limitations or decide architecture change.",
+    "605 variants and 1185 bindings have no verified in-game tier availability.",
+    "Full Taiwan terminology word-by-word acceptance and six missing names remain pending.",
+    "Source-specific icon absence is not globally proven merely by missing exact filenames.",
+    "Final user acceptance has not been given."
+  ]
+}
