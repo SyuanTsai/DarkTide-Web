@@ -285,6 +285,12 @@ async function expectBlessingLevels(page, detail, catalog, details) {
       }
       const unknown=group.record.tier_claims.some(t=>t.claims.some(c=>c.state!=='known'));
       assert.equal(await card.locator('.data-limitations').count(),unknown?1:0,'real missing evidence remains disclosed');
+      // Scenario: The displayed source-defined levels have no confirmed obtainability for an applicable weapon.
+      // Purpose: Keep this limitation visible beside the numerical table, including after weapon selection.
+      const unknownAvailability=group.levels.some(d=>!Array.isArray(d.record.available_tiers));
+      const availabilityNote=card.locator('.tier-availability');
+      assert.equal(await availabilityNote.count(),unknownAvailability?1:0,'unverified tier obtainability must be disclosed');
+      if(unknownAvailability) assert.equal(await availabilityNote.innerText(),'以下為來源定義的等級與數值；各等級在遊戲內是否可取得，尚未核實。');
       assert.ok(!(await page.locator('main').innerText()).includes('觸發條件：尚未確認'));
       assert.ok(!(await page.locator('main').innerText()).includes('可用等級：尚未確認'));
     }
