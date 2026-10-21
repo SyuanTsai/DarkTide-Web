@@ -1065,31 +1065,41 @@ export async function publishW09SourceArchive({
     }
     if (typeof fetchImpl !== 'function') throw new Error('fetchImpl must be a function');
 
-    const tagCommit = await fetchSourceArchiveTagCommit({ releaseId: request.releaseId, fetchImpl, token });
-    if (tagCommit !== null && tagCommit !== request.sourceCommit) {
-      const recovered = await reconstructW09RequestAtTagCommit({ request, packetDir, sourceRoot, tagCommit });
-      request = recovered.request;
-      packetDir = recovered.packetDir;
-      bundle = recovered.bundle;
-      recoveredCleanup = recovered.cleanup;
-    }
-
-    const archiveBytes = makeW09SourceArchive(request, bundle);
-    verifyW09SourceArchive({ bytes: archiveBytes, request });
     let release = await fetchSourceRelease({ releaseId: request.releaseId, fetchImpl, token, allowDraft: true });
     let archiveRequest = request;
+    let existingArchive;
+    if (release) {
+      const assetName = w09SourceArchiveAssetName(request.releaseId);
+      const matchingAssets = release.assets.filter((asset) => asset?.name === assetName);
+      if (matchingAssets.length > 0 || !release.draft) {
+        existingArchive = await verifyReleaseAsset({ release, releaseId: request.releaseId, fetchImpl, token });
+        archiveRequest = await verifyExistingArchiveForRequest({ existing: existingArchive, request, bundle, packetDir, sourceRoot });
+        await ensureSourceArchiveTag({ releaseId: request.releaseId, expectedCommit: archiveRequest.sourceCommit, fetchImpl, token });
+        if (!release.draft) {
+          return {
+            status: 'reused', releaseId: request.releaseId, requestId: archiveRequest.requestId, sourceCommit: archiveRequest.sourceCommit, request: archiveRequest,
+            providerImmutable: release.immutable === true ? true : release.immutable === false ? false : null,
+            archiveSha256: sha256(existingArchive.bytes)
+          };
+        }
+      }
+    }
+
+    if (!existingArchive) {
+      const tagCommit = await fetchSourceArchiveTagCommit({ releaseId: request.releaseId, fetchImpl, token });
+      if (tagCommit !== null && tagCommit !== request.sourceCommit) {
+        const recovered = await reconstructW09RequestAtTagCommit({ request, packetDir, sourceRoot, tagCommit });
+        request = recovered.request;
+        packetDir = recovered.packetDir;
+        bundle = recovered.bundle;
+        archiveRequest = request;
+        recoveredCleanup = recovered.cleanup;
+      }
+    }
+
+    const archiveBytes = existingArchive?.bytes ?? makeW09SourceArchive(request, bundle);
+    if (!existingArchive) verifyW09SourceArchive({ bytes: archiveBytes, request });
     let verifiedArchiveBytes = archiveBytes;
-  if (release && !release.draft) {
-    const existing = await verifyReleaseAsset({ release, releaseId: request.releaseId, fetchImpl, token });
-    archiveRequest = await verifyExistingArchiveForRequest({ existing, request, bundle, packetDir, sourceRoot });
-    await ensureSourceArchiveTag({ releaseId: request.releaseId, expectedCommit: archiveRequest.sourceCommit, fetchImpl, token });
-    verifiedArchiveBytes = existing.bytes;
-    return {
-      status: 'reused', releaseId: request.releaseId, requestId: archiveRequest.requestId, sourceCommit: archiveRequest.sourceCommit, request: archiveRequest,
-      providerImmutable: release.immutable === true ? true : release.immutable === false ? false : null,
-      archiveSha256: sha256(verifiedArchiveBytes)
-    };
-  }
   if (!release) {
     await ensureSourceArchiveTag({ releaseId: request.releaseId, expectedCommit: request.sourceCommit, fetchImpl, token, createIfMissing: true });
     const tagName = w09SourceArchiveTag(request.releaseId);
@@ -1115,8 +1125,8 @@ export async function publishW09SourceArchive({
   const existing = release.assets.filter((asset) => asset?.name === assetName);
   if (existing.length > 1) throw new Error('Source release contains duplicate W09 archive assets');
   if (existing.length === 1) {
-    const verified = await verifyReleaseAsset({ release, releaseId: request.releaseId, fetchImpl, token });
-    archiveRequest = await verifyExistingArchiveForRequest({ existing: verified, request, bundle, packetDir, sourceRoot });
+    const verified = existingArchive ?? await verifyReleaseAsset({ release, releaseId: request.releaseId, fetchImpl, token });
+    if (!existingArchive) archiveRequest = await verifyExistingArchiveForRequest({ existing: verified, request, bundle, packetDir, sourceRoot });
     await ensureSourceArchiveTag({ releaseId: request.releaseId, expectedCommit: archiveRequest.sourceCommit, fetchImpl, token });
     verifiedArchiveBytes = verified.bytes;
   } else {
