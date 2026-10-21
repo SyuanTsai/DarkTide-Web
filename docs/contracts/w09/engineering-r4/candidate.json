@@ -1,0 +1,146 @@
+{
+  "schema": "w09-engineering-review-candidate/1",
+  "candidateId": "w09-engineering-r4",
+  "issue": "SYP-341",
+  "status": "awaiting-engineering-acceptance-with-external-items-open",
+  "selected": false,
+  "publicationEligible": false,
+  "allocationReserved": false,
+  "contentVersion": null,
+  "formalWebReleaseId": null,
+  "webBaseline": "4ce0a7fe528f021f1312f53fdf6288d12d22ee70",
+  "webCodeCommit": "1aadf6652838bcee4c282c884b5363be8d0ecb87",
+  "webCompilerLockCommit": "f6a9acfd9794b9fc95da43e1a76031f8a45f1b96",
+  "webCompilerFileSetSha256": "0b76696403ab5c5ff419c7226d25255367c82b20a62c089ea9f255f78f175e15",
+  "sourceCodeCommit": "55379ecf88bbb0777ed27b06a9e16d367f161a59",
+  "sourceRequestProvenanceCommit": "9840a44cda9538b6e60c963e43e3838f0ccc7409",
+  "sourceBaseline": "8e48334619f448794aab666f1805cb2bd6adf11a",
+  "sourceRevision": "fa83649a220c3593d6bc9bda6c05b71fdb30f60783fb0b37c11298ab19ba0662",
+  "sourceManifestSha256": "41227789afd6dd00d9915040509f1e5be517e0d4fb23c9850c76d65e10e489b4",
+  "pendingRequests": [
+    {
+      "path": "content/contracts/w09/source-handoff/requests/940832306a860f6ca1ffd6ed7429761c065971340654f05dd3cc032e80eccf7c.json",
+      "sizeBytes": 2593,
+      "sha256": "6179b0241dc04f02b0012679f6088bd59d6f26789c8615e719a94e9883fa2748",
+      "requestId": "940832306a860f6ca1ffd6ed7429761c065971340654f05dd3cc032e80eccf7c",
+      "releaseId": "w09-9a07acb5b69c5ee78fc343edece86db2",
+      "gameReleaseId": "darktide:1.13.2",
+      "changedRecords": 0,
+      "changedClaims": 0,
+      "status": "pending"
+    },
+    {
+      "path": "content/contracts/w09/source-handoff/requests/bfba0712e4d0352112d31f6b716bf33baeba4712c5e45dc1777f405b6c939e5a.json",
+      "sizeBytes": 2593,
+      "sha256": "72fec59398dcfaed8a8a0631ec250a2afd581373b857752075b8b8ebe3066f8b",
+      "requestId": "bfba0712e4d0352112d31f6b716bf33baeba4712c5e45dc1777f405b6c939e5a",
+      "releaseId": "w09-346cd99c3dee64d1e44dfdf072bee5bd",
+      "gameReleaseId": "darktide:1.13.1",
+      "changedRecords": 0,
+      "changedClaims": 0,
+      "status": "pending"
+    }
+  ],
+  "unchangedContentCandidateFiles": [
+    {
+      "path": "docs/contracts/w08/candidate-r2/candidate.json",
+      "sizeBytes": 317557,
+      "sha256": "71e0254a58e08e22fb37a25ffce370b682e9734d7dca7236094f602dbe5760f4"
+    },
+    {
+      "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/blessings.json",
+      "sizeBytes": 81429,
+      "sha256": "d844ce7431ca96366b97fad27cb428b495b290b93deeeaf646b6f1332d759588"
+    },
+    {
+      "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/skills.json",
+      "sizeBytes": 125986,
+      "sha256": "9cefb6ccc4de5ef609b41237324ceedca6e0a49cf0857ef93a82951af3b5bb4d"
+    },
+    {
+      "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/terms.json",
+      "sizeBytes": 96300,
+      "sha256": "cdc0873c70bbf0a1e04a92205507c2d459de7aa879de3708e8e41d109faa011a"
+    },
+    {
+      "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/domains/weapons.json",
+      "sizeBytes": 6195771,
+      "sha256": "2ec969988b7a7840b6900dce160f2447f8326d5b9f5859e4a5d46a9369c9ac29"
+    },
+    {
+      "path": "docs/contracts/w08/candidate-r2/data/46a3914a733b632e717fef158e9fc7137f887800b81118a71ad2ec892cbab034/manifest.json",
+      "sizeBytes": 1991,
+      "sha256": "ddc572cfcc00f01502e09185932f1b5dedbf903047e439fdc47267f67444e0ea"
+    }
+  ],
+  "actualReview": {
+    "sourcePending": 797,
+    "webPending": 72,
+    "totalPending": 869,
+    "formalContentReceipts": 0,
+    "newHumanApprovals": 0
+  },
+  "actualReleaseActions": {
+    "sourceRelease": 0,
+    "repositoryDispatch": 0,
+    "cloudflareDeploy": 0,
+    "activeChanges": 0
+  },
+  "acceptedW07Limitations": [
+    {
+      "id": "obtainable-bounds",
+      "state": "unknown",
+      "meaning": "玩家可取得上下限未證實，不當成已證數值"
+    },
+    {
+      "id": "unresolved-zones",
+      "state": "unresolved",
+      "count": 8,
+      "meaning": "保留原文與未解析引用，不猜測 zone"
+    },
+    {
+      "id": "exact-steam-build",
+      "state": "UNVERIFIED",
+      "meaning": "公開 code snapshot 與精確 Steam build 未對照"
+    },
+    {
+      "id": "weapon-images",
+      "state": "NOT_REVIEWED",
+      "count": 0,
+      "meaning": "維持缺圖，不引用授權未核實素材"
+    }
+  ],
+  "localRuntimeQANotPublicationAuthority": {
+    "codeCommit": "b6019e268001df9ee1a8c31d797739347c785ea6",
+    "buildId": "77fb09d9fb9bea29dfbceb59170b5add0f94291707bea9671c0711addfbd36c1",
+    "files": 2299,
+    "sharedClosureFiles": 12,
+    "retainedReleases": 2,
+    "runtimeInputProvenance": "raw-Git-bytes",
+    "evidenceScope": "Preserved r1/r2 static client/runtime proof for unchanged runtime files. This is not a runtime artifact built from r4 compiler code."
+  },
+  "matrix": "docs/contracts/w09/engineering-r4/matrix.md",
+  "verification": "docs/contracts/w09/engineering-r4/verification.json",
+  "hashes": "docs/contracts/w09/engineering-r4/hashes.json",
+  "remaining": [
+    "Source WEB_HANDOFF_TOKEN 未配置；真跨 repo dispatch 未執行",
+    "新 workflow 尚未在 main；workflow-token 建 PR／provider policy 與所需 CI approval 待實測",
+    "真內容仍有 869 pending；沒有正式 Source archive 或 Web selected composition",
+    "正式 Cloudflare promote／HTTPS／production rollback 未執行且本輪未授權",
+    "W09 尚待人工工程驗收，不進 W10"
+  ],
+  "webReviewedPatchCommit": "1aadf6652838bcee4c282c884b5363be8d0ecb87",
+  "previousCandidate": {
+    "path": "docs/contracts/w09/engineering-r3/candidate.json",
+    "sha256": "fc188864a8a560cc4a3d0790d25f32696a122977a2288c799c1df221833bcd2d",
+    "deliveryCommit": "8d9e514a2f47e9970b2aa0232aaa29ec47937121",
+    "result": "r3 local and natural CI were green, but Root found a P3 compatibility regression: a complete H0 archive retry with explicit H1 baseline and H2 metadata-only request failed before reading the archive. r3 is preserved, not accepted."
+  },
+  "runtimePolicy": {
+    "strategy": "fixed-reviewed-runtime",
+    "reviewedSourceCommit": "589f89ea880d33450552029a03f7893b3fb6cb6a",
+    "files": 4,
+    "readFrom": "request.sourceCommit raw regular Git blobs",
+    "requirement": "All four sizes and SHA-256 digests must match the fixed approved set before any import; new pinned runtime bytes require deliberate review/update, including comment-only runtime changes. Existing approved historical request remains replayable after current HEAD changes."
+  }
+}

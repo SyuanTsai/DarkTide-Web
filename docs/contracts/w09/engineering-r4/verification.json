@@ -1,0 +1,566 @@
+{
+  "schema": "w09-engineering-verification/4",
+  "kind": "engineering-evidence-not-human-content-approval",
+  "webCodeCommit": "1aadf6652838bcee4c282c884b5363be8d0ecb87",
+  "webCompilerLockCommit": "f6a9acfd9794b9fc95da43e1a76031f8a45f1b96",
+  "sourceCodeCommit": "55379ecf88bbb0777ed27b06a9e16d367f161a59",
+  "baseline": {
+    "web": "902f12dd5dd3a2fb20b3490be4104406f1dfc5e0",
+    "source": "589f89ea880d33450552029a03f7893b3fb6cb6a"
+  },
+  "previousEvidence": {
+    "path": "docs/contracts/w09/engineering-r3/verification.json",
+    "sha256": "90d9b5f546b70d70a2a622bf5d6064c0692b07bbdb3dd91c72ad06a49f563b69",
+    "scope": "W01–W08 and r1/r2/r3 unaffected fixed runtime, historical pin, Web compose/controller/retention/browser proofs. r3 P3 complete-archive compatibility is explicitly failed and replaced by r4 Red/Green/Root evidence."
+  },
+  "reproduction": {
+    "p2p3": {
+      "schema": "w09-r3-isolated-red-repro/1",
+      "fixtureRoot": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r3-p2-p3-iYpyOS",
+      "sourceRoot": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r3-p2-p3-iYpyOS\\source",
+      "startingSourceCommit": "589f89ea880d33450552029a03f7893b3fb6cb6a",
+      "fixtureFormalCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+      "commentOnlyMetadataCommit": "2e999e989327a1c4ef9fc34a3c8f1d95b5bc149c",
+      "gameReleaseId": "darktide:1.13.1",
+      "sourceRevision": "3d464a769cb1029626b4ec26c203e366feac631ceae6164082585e61cf4d9cc4",
+      "manifestSha256": "8fa51f19edc22cb2837f0af638ac9681a8a221beecb44e500830a0222a0b3a24",
+      "requestId": "e479b9e8177e9349e31f23c67f373d7e196d67a8b34898e23a8ebf45edc3f14a",
+      "releaseId": "w09-511c182ae93068cec9554b1a0856419d",
+      "sourceInputSha256BeforeAndAfterComment": "ef4fff5d9f65542755b92b9d0eba5a263004b3583247aba8a84ce97af01e5ab4",
+      "p2": {
+        "reproduced": true,
+        "trigger": "Verify the original valid request after the isolated clone changed only a source comment in scripts/content/contract-w05-build.mjs and advanced HEAD.",
+        "error": "W05 build code differs from the pinned Source commit: scripts/content/contract-w05-build.mjs",
+        "sourceCodeLocation": "scripts/content/contract-w09-request.mjs:510-518; verifyW09SourceRevision calls assertPinnedBuildCode at :670."
+      },
+      "p3": {
+        "reproduced": true,
+        "trigger": "Stub POST /git/refs succeeds at the original commit; stub POST /releases fails 502 leaving no release/asset. After the comment-only commit, prepare the same revision/releaseId from a fresh output root and retry against the old tag.",
+        "initialPublishError": "Source release creation failed with HTTP 502",
+        "tagCommitAfterPartialPublish": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+        "retryError": "Source archive Git tag points to a different commit than its verified request",
+        "releaseCreatedByRetry": false,
+        "sourceCodeLocation": "scripts/content/contract-w09-request.mjs:775-803 (ensureSourceArchiveTag), called before release creation at :956-963 and asset upload at :985-994.",
+        "initialAttemptReleasePersisted": false,
+        "initialAttemptAssetPersisted": false
+      },
+      "stubbedHttpCallCount": 7,
+      "externalNetworkRequests": 0,
+      "realRepositoryWrites": 0,
+      "realGitHubReleaseOrTagWrites": 0,
+      "realSecretsRead": false,
+      "recommendations": {
+        "p2": "At a pinned commit, replay W05 using the exact pinned builder/merge/validator/schema blobs rather than requiring the current working checkout bytes to equal old historical code; bind the selected runtime files/hashes in request and validate them from Git objects. Keep current code trust separate from historical request verification.",
+        "p3": "Treat an existing exact tag as an idempotent partial-publication marker: verify it points to the request commit; if the release is absent, resume creation using the tag provenance rather than requiring current metadata-only HEAD to match. If retry provenance points to a different commit, revalidate that commit and packet and preserve the original tag/request provenance, or reject before mutation with a clear immutable-request conflict."
+      },
+      "regressionTestDesign": [
+        {
+          "proposedTestName": "InterT04_historical_request_replays_from_its_pinned_w05_code_after_a_comment_only_head_advance",
+          "setup": "In a disposable clone, create a valid formal request and six-file packet at H0. Add only a comment to scripts/content/contract-w05-build.mjs and commit H1 without changing any authoring input bytes.",
+          "invoke": "Call verifyW09SourceRevision with the original request, H0, and the clean checkout now at H1.",
+          "expectedAfterFix": "Replay through the trusted/pinned H0 W05 build runtime; verify packet bytes, sourceRevision, manifestSha256, requestId, and source-input pins remain exact. Do not import builder/validator/schema bytes from a caller-controlled working tree.",
+          "negative": "Alter an actual W05 behavior or pinned dependency blob and show that replay rejects a code identity/hash mismatch before accepting the request."
+        },
+        {
+          "proposedTestName": "InterT05_partial_archive_retry_resumes_the_durable_original_request_after_metadata_only_head_advance",
+          "setup": "In a disposable formal fixture, stub GitHub tag creation at H0, then fail draft release creation with HTTP 502 so the tag exists but no release/asset does. Persist the immutable request/packet provenance in the durable owner state.",
+          "retry": "Start from a fresh output root/runner at comment-only H1; prepare the same revision-derived releaseId and load the durable original request (H0) before any external mutation.",
+          "expectedAfterFix": "Verify the existing tag resolves to H0, resume one draft release and exact asset upload from the original request/packet, publish/verify once, and preserve the same requestId/releaseId/archive bytes. Never move or recreate the tag.",
+          "negative": "If the tag exists but durable original request/packet provenance is missing or conflicts, fail closed before release creation/upload; a different semantic revision must use a different releaseId."
+        }
+      ]
+    },
+    "webValidatorSeam": {
+      "schema": "w09-r3-web-validator-seam-red/1",
+      "reproduced": true,
+      "baseline": "902f12dd5dd3a2fb20b3490be4104406f1dfc5e0",
+      "method": "exact makeSourceLock function extracted without changing its body; Node dependencies supplied in disposable module; not a public compiler end-to-end invocation",
+      "pinnedSourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+      "top": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-web-validator-red-ULZrrE",
+      "sourceGitPinRead": true,
+      "workingValidatorExecuted": true,
+      "syntheticCanaryObserved": true,
+      "realCredentialsRead": false,
+      "externalRequests": 0,
+      "realRepositoryWrites": 0
+    },
+    "r3Compatibility": {
+      "schema": "w09-baseline-retry-boundary-review/1",
+      "top": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-baseline-retry-review-VY8B6K",
+      "H0": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+      "H1": "59761d6c50a6b6cf7d95b27231a6c9a51b3ae07e",
+      "H2": "c41cee0a18b221425d69ecfc300c0fd9b15d5e5f",
+      "requestId": "aa2d47973af973e97133a1105717d8d8290460a123bff529858e83660af5703d",
+      "allSixPacketBytesSame": true,
+      "rolesHaveSameRawInputHash": true,
+      "explicitBaselineIsValidAncestorOfRetryCommit": true,
+      "results": {
+        "r2": {
+          "status": "reused",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r3": {
+          "error": "baseline commit must be an explicit ancestor of the pinned Source commit"
+        }
+      },
+      "realExternalWrites": 0
+    },
+    "newInterT06Red": {
+      "command": "C:/Users/carsu/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe --test --test-name-pattern 'InterT06_partial_archive_checkpoints_resume_from_the_verified_tag_commit' C:/Users/carsu/AppData/Local/Temp/syp-311-sol-w01/DarkTide-Source-Data/tests/contract-w09-request.test.mjs",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "durationMs": 43492.2483,
+      "log": "F:/GitFile/Persion - Games/DarkTide-Web/.tmp/w09-r4-20261021/source-inter06-red.log",
+      "failure": "baseline commit must be an explicit ancestor of the pinned Source commit; raised by readPinnedSourceInputs during tag reconstruction before existing archive verification"
+    }
+  },
+  "independentRootReview": {
+    "source": {
+      "schema": "w09-r3-source-independent-review/1",
+      "passed": true,
+      "top": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r3-root-green-gRnFvD",
+      "checks": [
+        "Historical approved request replays after a clean current HEAD builder-comment commit without changing checkout/index.",
+        "Unapproved pinned builder/validator rejected before import; approved historical pin ignores malicious working runtime, fake credential side effect never executes.",
+        "Independent HTTP stub resumes original provenance at tag-only, empty-draft, uploaded-draft, published checkpoints; exact original archive bytes and no tag writes.",
+        "Tag pointing to different Source content fails before any release/asset/tag mutation."
+      ],
+      "replay": {
+        "valid": true,
+        "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+        "sourceRevision": "3d464a769cb1029626b4ec26c203e366feac631ceae6164082585e61cf4d9cc4",
+        "manifestSha256": "8fa51f19edc22cb2837f0af638ac9681a8a221beecb44e500830a0222a0b3a24",
+        "sourceInputs": [
+          {
+            "role": "baseline",
+            "commit": "8e48334619f448794aab666f1805cb2bd6adf11a",
+            "path": "content/authoring/v2/w07-weapons.json",
+            "sha256": "a728b2e8dc65078ade88b01f87537323eb781fc8665f16c8166140292eb63acb"
+          },
+          {
+            "role": "authoring",
+            "commit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+            "path": "content/authoring/v2/w07-weapons.json",
+            "sha256": "ef4fff5d9f65542755b92b9d0eba5a263004b3583247aba8a84ce97af01e5ab4"
+          },
+          {
+            "role": "candidate",
+            "commit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+            "path": "content/authoring/v2/w07-weapons.json",
+            "sha256": "ef4fff5d9f65542755b92b9d0eba5a263004b3583247aba8a84ce97af01e5ab4"
+          }
+        ]
+      },
+      "outcomes": [
+        {
+          "checkpoint": "tag-only",
+          "status": "published",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "calls": 13,
+          "archiveSha256": "4856461db9baf93d90871aae0f8260d0c623eb6ba8f58c00547e913c0460d972"
+        },
+        {
+          "checkpoint": "empty-draft",
+          "status": "published",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "calls": 11,
+          "archiveSha256": "4856461db9baf93d90871aae0f8260d0c623eb6ba8f58c00547e913c0460d972"
+        },
+        {
+          "checkpoint": "uploaded-draft",
+          "status": "published",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "calls": 9,
+          "archiveSha256": "4856461db9baf93d90871aae0f8260d0c623eb6ba8f58c00547e913c0460d972"
+        },
+        {
+          "checkpoint": "published",
+          "status": "reused",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "calls": 3,
+          "archiveSha256": "4856461db9baf93d90871aae0f8260d0c623eb6ba8f58c00547e913c0460d972"
+        }
+      ],
+      "metadataCommit": "ebd20431edbe369d698886fbeb12ea0f2b505262",
+      "syntheticApprovalsOnly": true,
+      "externalRequests": 0,
+      "realCredentialsRead": false,
+      "realPublicationWrites": 0
+    },
+    "web": {
+      "schema": "w09-r3-web-independent-review/1",
+      "passed": true,
+      "kind": "Public prepareW09SourceProposal called twice through actual r4 Web/compiler/Source cache in disposable clone",
+      "top": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r3-root-web-l3gb6S",
+      "webHead": "f6a9acfd9794b9fc95da43e1a76031f8a45f1b96",
+      "currentSourceHead": "3bbd18bf4f1dd770c726ce126bb5ae81958ffbe3",
+      "requestSourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+      "runtimeIdentity": {
+        "schema": "w09-approved-source-runtime/1",
+        "approvedAtCommit": "589f89ea880d33450552029a03f7893b3fb6cb6a",
+        "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+        "files": [
+          {
+            "path": "content/schema/v2/source-contract.schema.json",
+            "sizeBytes": 127718,
+            "sha256": "0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5"
+          },
+          {
+            "path": "scripts/content/contract-validator.mjs",
+            "sizeBytes": 140557,
+            "sha256": "48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54"
+          },
+          {
+            "path": "scripts/content/contract-w05-build.mjs",
+            "sizeBytes": 26306,
+            "sha256": "5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac"
+          },
+          {
+            "path": "scripts/content/contract-w05-merge.mjs",
+            "sizeBytes": 10794,
+            "sha256": "4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b"
+          }
+        ],
+        "sha256": "dcd744ec7189e2873d3fadf936492eaf35f01d0c721a8db41e758d00c9e8ca28"
+      },
+      "publicProposalReplay": true,
+      "unchangedExpectedAuthoringBlocker": "W06 W09 authoring overlay failed validation: /official-inputs/sources/0/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:skill:psyker:brain-burst-improved; /official-inputs/sources/0/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/1/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:skill:psyker:brain-burst-improved; /official-inputs/sources/1/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/2/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/2/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/3/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/3/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/4/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:skill:psyker:brain-burst-improved; /official-inputs/sources/4/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/5/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:skill:psyker:brain-burst-improved; /official-inputs/sources/5/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/6/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/6/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/6/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/7/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/7/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/7/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/8/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/8/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/8/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/9/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/9/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/9/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/10/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/10/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/10/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/11/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/11/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/11/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/12/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/12/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/12/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/13/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /official-inputs/sources/13/entityRef/gameReleaseId official input references an unknown game release; /official-inputs/sources/13/bindingContext/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /presentations/0/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:skill:psyker:brain-burst-improved; /presentations/0/detailSections/0/items/1/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-description-display-percent; /presentations/0/detailSections/0/items/1/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier; /presentations/0/detailSections/0/items/2/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/0/items/2/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/0/items/2/claimRefs/2 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio; /presentations/0/detailSections/1/items/0/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/1/items/1/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/1/items/1/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/1/items/2/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/1/items/2/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/2/items/1/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/2/items/2/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/2/items/3/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/2/items/3/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/2/items/4/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/2/items/4/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/2/items/4/claimRefs/2 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio; /presentations/0/detailSections/3/items/0/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio; /presentations/0/detailSections/4/items/0/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/4/items/0/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/4/items/1/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/4/items/1/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/0/detailSections/4/items/2/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-normal-charge-base-time; /presentations/0/detailSections/4/items/2/claimRefs/1 Source record reference is unresolved: darktide:1.13.2:darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time; /presentations/1/entityRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing:chainaxe:p1-movement-speed-on-activation; /presentations/1/detailSections/0/items/0/claimRefs/0 Source record reference is unresolved: darktide:1.13.2:darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent; /presentations/1/detailSections/0/items/0/parts/1/bindingRef Source record reference is unresolved: darktide:1.13.2:darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent; /presentations/1/tierApplicability/0/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /presentations/1/tierPresentations/variantRef Source record reference is unresolved: darktide:1.13.2:darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation; /termLocalizations/0/termRef Source record reference is unresolved: darktide:1.13.2:darktide:term:psyker:smite-damage-multiplier-parameter",
+      "proposalIdempotent": true,
+      "syntheticCredentialCanaryExecuted": false,
+      "guardedAuthorityPathsAbsent": [
+        "content/contracts/w09/release-state.json",
+        "content/contracts/w09/publication.lock",
+        "content/contracts/w09/source-handoff/selected.json",
+        "content/contracts/w09/prepared"
+      ],
+      "stubGetRequests": 6,
+      "archiveSha256": "4856461db9baf93d90871aae0f8260d0c623eb6ba8f58c00547e913c0460d972",
+      "realExternalRequests": 0,
+      "realPublicationWrites": 0,
+      "syntheticApprovalsOnly": true
+    },
+    "completeArchiveRetry": {
+      "schema": "w09-r4-baseline-retry-independent-review/1",
+      "passed": true,
+      "top": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r4-independent-baseline-xCcewM",
+      "H0": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+      "H1": "abd1cc0d357337321b5a845373d6d6f86097b415",
+      "H2": "bf6f347fdba3d80740bae6686e5193b95b5ebf3d",
+      "requestId": "aa2d47973af973e97133a1105717d8d8290460a123bff529858e83660af5703d",
+      "allSixPacketBytesSame": true,
+      "rolesHaveSameRawInputHash": true,
+      "explicitBaselineIsValidAncestorOfRetryCommit": true,
+      "results": {
+        "r2-published": {
+          "status": "reused",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "originalRequestPreserved": true,
+          "originalArchiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "writes": [],
+          "assetReads": 1,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r2-uploaded-draft": {
+          "status": "published",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "originalRequestPreserved": true,
+          "originalArchiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "writes": [
+            {
+              "method": "PATCH",
+              "url": "https://api.github.com/repos/SyuanTsai/DarkTide-Source-Data/releases/66"
+            }
+          ],
+          "assetReads": 2,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r3-published": {
+          "error": "baseline commit must be an explicit ancestor of the pinned Source commit",
+          "writes": [],
+          "assetReads": 0,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r3-uploaded-draft": {
+          "error": "baseline commit must be an explicit ancestor of the pinned Source commit",
+          "writes": [],
+          "assetReads": 0,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r4-published": {
+          "status": "reused",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "originalRequestPreserved": true,
+          "originalArchiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "writes": [],
+          "assetReads": 1,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "r4-uploaded-draft": {
+          "status": "published",
+          "sourceCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce",
+          "originalRequestPreserved": true,
+          "originalArchiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "writes": [
+            {
+              "method": "PATCH",
+              "url": "https://api.github.com/repos/SyuanTsai/DarkTide-Source-Data/releases/66"
+            }
+          ],
+          "assetReads": 2,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "corrupt": {
+          "rejected": true,
+          "writes": [],
+          "assetReads": 1,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "duplicate": {
+          "rejected": true,
+          "writes": [],
+          "assetReads": 0,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "publishedMissing": {
+          "rejected": true,
+          "writes": [],
+          "assetReads": 0,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "6f8e448fc7bf2347aedcd0c19d7ac13e353143ce"
+        },
+        "wrongTag": {
+          "rejected": true,
+          "writes": [],
+          "assetReads": 1,
+          "archiveSha256": "031c5b476338c5162763bb33391f5f17f72882ff072ad14ff50bcad519e8a6df",
+          "tagCommit": "abd1cc0d357337321b5a845373d6d6f86097b415"
+        }
+      },
+      "realExternalWrites": 0
+    }
+  },
+  "actualTests": {
+    "schema": "w09-r4-actual-test-results/1",
+    "passed": true,
+    "runtime": "Node v24.19.0",
+    "syntaxChecks": "node --check passed for both changed files",
+    "local": [
+      {
+        "command": "C:/Users/carsu/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe --test --test-name-pattern 'InterT06_partial_archive_checkpoints_resume_from_the_verified_tag_commit' C:/Users/carsu/AppData/Local/Temp/syp-311-sol-w01/DarkTide-Source-Data/tests/contract-w09-request.test.mjs",
+        "log": "F:/GitFile/Persion - Games/DarkTide-Web/.tmp/w09-r4-20261021/source-inter06-green.log",
+        "sha256": "01335aee5951fcc1f166d1519bfb83e0ebb128ead90f3cff500e943b5a83f5c0",
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "skip": 0
+        },
+        "durationMs": 41147.1386
+      },
+      {
+        "command": "C:/Users/carsu/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe --test C:/Users/carsu/AppData/Local/Temp/syp-311-sol-w01/DarkTide-Source-Data/tests/contract-w09-request.test.mjs",
+        "log": "F:/GitFile/Persion - Games/DarkTide-Web/.tmp/w09-r4-20261021/source-w09-full-suite.log",
+        "sha256": "f4025240d543c127e2883ce797346bb2aa398b2f82d219810caaa4c22836d692",
+        "counts": {
+          "tests": 17,
+          "pass": 17,
+          "fail": 0,
+          "skip": 0
+        },
+        "durationMs": 142960.1913
+      }
+    ],
+    "reusedCompletedWebRuns": [
+      {
+        "command": "node --test test/contract-w09-compose.test.mjs",
+        "log": "F:\\GitFile\\Persion - Games\\DarkTide-Web\\.tmp/w09-r3-20261021/web-compose-tests.log",
+        "sha256": "42e8660f70eb6f385db081807a3337c7b67ce97eaf1e96413d84762ac164cfa8",
+        "counts": {
+          "tests": 4,
+          "pass": 4,
+          "fail": 0,
+          "skip": 0
+        },
+        "durationMs": 440.6026,
+        "scope": "r3 actual completed run reused: Web compose/release/test and fixed runtime helper unchanged; r4 only changes Source publisher existing-archive order plus cache/locks. Final r4 natural CI still required."
+      },
+      {
+        "command": "node --test --test-name-pattern InterT14 test/contract-w09-release.test.mjs",
+        "log": "F:\\GitFile\\Persion - Games\\DarkTide-Web\\.tmp/w09-r3-20261021/web-source-runtime-intert14-escalated.log",
+        "sha256": "43cfecd40566c69cc30dade91cc354ac2e8a964d850dcb2c3806d95da20a0128",
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "skip": 0
+        },
+        "durationMs": 807678.918,
+        "scope": "r3 actual completed run reused: Web compose/release/test and fixed runtime helper unchanged; r4 only changes Source publisher existing-archive order plus cache/locks. Final r4 natural CI still required."
+      }
+    ],
+    "sourceNaturalCI": {
+      "schema": "w09-r4-source-ci/1",
+      "passed": true,
+      "kind": "engineering-ci-not-content-approval",
+      "pr": "https://github.com/SyuanTsai/DarkTide-Source-Data/pull/3",
+      "run": "https://github.com/SyuanTsai/DarkTide-Source-Data/actions/runs/39530713321",
+      "id": 39530713321,
+      "headCommit": "55379ecf88bbb0777ed27b06a9e16d367f161a59",
+      "counts": {
+        "tests": 146,
+        "pass": 146,
+        "fail": 0,
+        "skip": 0
+      },
+      "mergeCheckoutCommit": "506478ededd76967cd9751159da58e192052ea77",
+      "headAndMergeTree": "011188946b04e70267e38fb49d61b9f2613dbe48",
+      "headAndMergeTreesEqual": true,
+      "pendingPrepare": "success",
+      "formalHandoff": "skipped-by-pr-guard",
+      "w01Run": {
+        "conclusion": "success",
+        "databaseId": 39530713285,
+        "headSha": "55379ecf88bbb0777ed27b06a9e16d367f161a59",
+        "status": "completed",
+        "url": "https://github.com/SyuanTsai/DarkTide-Source-Data/actions/runs/39530713285"
+      },
+      "downloadedCliLogSha256": "35a89562945f7662bb7fd489696f93fbde1ea87e6930fa76da579c02119ec7be",
+      "realSourceReleases": 0,
+      "realDispatches": 0,
+      "formalContentReceiptsAdded": 0
+    },
+    "red": {
+      "command": "C:/Users/carsu/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe --test --test-name-pattern 'InterT06_partial_archive_checkpoints_resume_from_the_verified_tag_commit' C:/Users/carsu/AppData/Local/Temp/syp-311-sol-w01/DarkTide-Source-Data/tests/contract-w09-request.test.mjs",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "durationMs": 43492.2483,
+      "log": "F:/GitFile/Persion - Games/DarkTide-Web/.tmp/w09-r4-20261021/source-inter06-red.log",
+      "failure": "baseline commit must be an explicit ancestor of the pinned Source commit; raised by readPinnedSourceInputs during tag reconstruction before existing archive verification"
+    },
+    "independentRootEvidence": [
+      "baseline-retry-green.json",
+      "source-independent-green.json",
+      "web-independent-green.json",
+      "actual-source-replay.json"
+    ],
+    "webNaturalCI": "Final C4 delivery head must pass its own natural CI; receipts recorded outside self-referential candidate commit.",
+    "actualHumanApprovalsAdded": 0,
+    "evidenceReuse": "Valid W01–W08/r1/r2 and unaffected r3 fixed runtime/historical pin/Web tests retained. r3 complete-archive compatibility is failed and replaced with this round Red, Green, and independent public API proof. Counts overlap and are not summed as distinct tests."
+  },
+  "actualSourceReplay": {
+    "schema": "w09-r3-actual-pending-replay/1",
+    "passed": true,
+    "sourceCodeCommit": "55379ecf88bbb0777ed27b06a9e16d367f161a59",
+    "requests": [
+      {
+        "requestId": "940832306a860f6ca1ffd6ed7429761c065971340654f05dd3cc032e80eccf7c",
+        "gameReleaseId": "darktide:1.13.2",
+        "requestSourceCommit": "9840a44cda9538b6e60c963e43e3838f0ccc7409",
+        "replayed": true
+      },
+      {
+        "requestId": "bfba0712e4d0352112d31f6b716bf33baeba4712c5e45dc1777f405b6c939e5a",
+        "gameReleaseId": "darktide:1.13.1",
+        "requestSourceCommit": "9840a44cda9538b6e60c963e43e3838f0ccc7409",
+        "replayed": true
+      }
+    ],
+    "sourceRevision": "fa83649a220c3593d6bc9bda6c05b71fdb30f60783fb0b37c11298ab19ba0662",
+    "formalMode": "blocked; fallback candidate",
+    "formalBlockReason": "formal output blocked: game release darktide:1.13.1 build value \"UNVERIFIED\"; game release darktide:1.13.2 build value \"UNVERIFIED\"; source darktide:1.13.1:legacy:mods:psyker:brain-burst-improved:analysis-en build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:action-damage-target-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:action-smite-targeting-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:charge-action-module-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:damage-calculation-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-abilities-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-buff-templates-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-damage-profile-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-smite-action-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-smite-targeting-module-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-talents-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:psyker-tree-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:shared-overheat-warp-charge-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:warp-charge-action-module-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:warp-charge-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.1:public-code:weapon-charge-templates-at-7e662fc build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:action-damage-target-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:action-smite-targeting-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:chainaxe-damage-profiles-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:chainaxe-default-light-profile-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:chainaxe-p1-m1-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:chainaxe-p1-m2-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:chainaxe-p1-traits-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:charge-action-module-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:damage-calculation-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:damage-profile-settings-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:damage-trait-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-abilities-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-buff-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-damage-profile-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-smite-action-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-smite-targeting-module-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-talents-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:psyker-tree-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:shared-overheat-warp-charge-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:talent-layout-parser-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:trait-value-parser-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-common-damage-profile-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-movement-curve-modifier-trait-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-power-level-settings-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-00c3712bf36a5e51 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0166c5bd7dd7c5d6 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-01b04e060272f44f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-063b6544eba334f4 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-06f7c3f72a72072b build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-08e8490fcd07a089 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0aa94d6bd7e64a17 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0be6a23d5beb9721 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0d64de44ce27f0d3 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0e5c85d419c62fee build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-0f56f7e0aa1ca9f4 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-1049e9077d217c41 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-14bc50e674d9db01 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-1518f71e2b91d458 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-19573ccca4e3dbb1 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-1b4f4c7a5caa0faf build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-1bb3fa7486dffc0a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-206f726fd623296a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-21fcbe8c5bb1ccd4 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-23ffcbc69b5bfada build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-24fa053a68d7cd23 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-2644524052ed3370 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-264d512186413167 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-27acb51d57f43bb9 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-29a58da47a8d3879 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-2e4517dac8389fd8 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-2fabbc2b700f932f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-30e7161ce2380613 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-34df99cb9f11ecbb build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-38f6ca0514771037 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-39dca422f9f8d6c1 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-3ba3a101f69b9c7a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-3fe9aba0fb3e1f0e build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-45a884333a3dd85e build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-4616ac8399a40714 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-461cd676061fe32a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-58bf8f5fa41360df build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-5bdb1fd355bf77df build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-5e6ec77a2ec48397 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-60d62e6dcd32168a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-646f5700fb2844bc build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-66162262a29f18ad build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-66805af4a5cc8091 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-67acd0c07a82e172 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-686ef93e2821997a build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-689740d8ebfbd575 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-69a57bf9062d3c3f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-6e732c742297bafb build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-703c430384b8e801 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-725cbd4aff941959 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-751802f310669d43 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-75905d95b005c639 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-7a9a492a80cecb5f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-7c681070c0f3eef8 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-7ed58ade526e32a2 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-8c202e7fbe2dc911 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-8f800b148d44194b build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-942a36b9bb8bbdfd build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-942abc8e62c1fc41 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-958df499d4685490 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-95d32e8102f4a789 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-96450c545478228b build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-98aae0eb5e02f101 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-996c0bf10f0855d4 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-9dedeb14181b8ed7 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-a366114f2eca8f74 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-a7b215a2ce142f90 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-a9bdf6ec15636bfe build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-aa9217ebf7b122f3 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-ad7704d76e893889 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-ae9f9b11004cddd6 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b05127be1c6a1f04 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b0d097a968d2fa7d build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b2233484f4981238 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b43eefe4b8a29694 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b4ba72d66aa19de5 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b78e9db070477b33 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-b8f2b1d4db868ba0 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-c0d7439c6116841f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-c2dbcb45d20f03d8 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-c647f7d287d9f2ab build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-cadd35f812076f00 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-d38832b7414209ee build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-d536672bc4490bc3 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-d6884320d0c4f1bd build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-d9d5cd5b62a6d914 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-dcbabcf0bbbb54e7 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-de2cf23664eccddc build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-de645ae5caa19a6c build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-e28924e222d4ff26 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-e2b6a99a860bce53 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-e3ffe9a131f2bb89 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-e87d7bb0624cae35 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-ea283e6c1ea66b5f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-eb0928223a4184f7 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-eb4a13b05fb12711 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-eb5c9efada78b22c build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-ed89e73a84e1ae14 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-f0b476edd586b03c build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-f1de7d242e75685e build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-f26425ca5e6d5f6f build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-f5cfca726e546bcc build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:w07-static-ba6c148-ff991e65529e10b8 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:warp-charge-action-module-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:warp-charge-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-bar-ui-descriptions-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-charge-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-dodge-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-dodge-trait-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-info-value-formatting-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-sprint-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-sprint-trait-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-stamina-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-stamina-trait-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-tweak-stats-ui-data-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-tweak-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-code:weapon-ui-stats-templates-ba6c148 build value \"UNVERIFIED\"; source darktide:1.13.2:public-data:psyker-scoped-release-compatibility-provenance build value \"UNVERIFIED\" must be verified",
+    "packetFiles": [
+      {
+        "path": "analysis.md",
+        "sizeBytes": 131416,
+        "sha256": "e7c50b0049bd38b8e5a719f57388f2134f2960535a5bd09fd5f0b53fd1d8a0db"
+      },
+      {
+        "path": "source-revision.json",
+        "sizeBytes": 695,
+        "sha256": "62e335da76aabdd645e2844978792a6f66bea9b10e5fd2db32085fd017fa4d41"
+      },
+      {
+        "path": "source-revision.md",
+        "sizeBytes": 584,
+        "sha256": "9ed81e32161f5b6e4445534a555431420a70aeedae0a833a20d755fb2fa0a148"
+      },
+      {
+        "path": "source-manifest.json",
+        "sizeBytes": 27285,
+        "sha256": "41227789afd6dd00d9915040509f1e5be517e0d4fb23c9850c76d65e10e489b4"
+      },
+      {
+        "path": "source-receipt.json",
+        "sizeBytes": 1148,
+        "sha256": "0f0aa5eedc9966f0f980cb1f778dc9299b0080b944b7eb9f98d9a4a08df3ec57"
+      },
+      {
+        "path": "technical.json",
+        "sizeBytes": 6043003,
+        "sha256": "f464b28fdabda20f70a9e425667e67acce35ad47bd8f1d00a2a1516d7e339f30"
+      }
+    ],
+    "allSixExistingPacketBytesEqual": true,
+    "formalSourceReceipts": 0,
+    "formalWebReceipts": 0,
+    "totalPending": 869,
+    "outputRoot": "C:\\Users\\carsu\\AppData\\Local\\Temp\\w09-r3-actual-pending-y5ZRHV",
+    "guardedAuthorityPathsAbsent": [
+      "content/contracts/w09/release-state.json",
+      "content/contracts/w09/publication.lock",
+      "content/contracts/w09/prepared",
+      "content/contracts/w09/runtime-snapshots",
+      "content/contracts/w09/source-handoff/locks",
+      "content/contracts/w09/source-handoff/selected.json"
+    ],
+    "actualReleaseOrDispatchOrDeploy": 0,
+    "actualHumanApprovalsAdded": 0
+  },
+  "preservation": {
+    "protectedFiles": 53,
+    "sha256": "01ed84bbdfa372fda1d60af72bb67b8cffd377ca763336dcdf9695e3b82b20a3",
+    "historyHashes": {
+      "passed": true,
+      "results": [
+        {
+          "revision": "r1",
+          "commit": "e33df26ff1b96b45b3f440d41b9cabae49b0aca0",
+          "files": 19,
+          "passed": true,
+          "verificationScope": "Entire old hash manifest against its original raw Git commit; four historical candidate documents also match current bytes. New current compiler lock may differ intentionally."
+        },
+        {
+          "revision": "r2",
+          "commit": "902f12dd5dd3a2fb20b3490be4104406f1dfc5e0",
+          "files": 18,
+          "passed": true,
+          "verificationScope": "Entire old hash manifest against its original raw Git commit; four historical candidate documents also match current bytes. New current compiler lock may differ intentionally."
+        },
+        {
+          "revision": "r3",
+          "commit": "8d9e514a2f47e9970b2aa0232aaa29ec47937121",
+          "files": 18,
+          "passed": true,
+          "verificationScope": "Entire old hash manifest against its original raw Git commit; four historical candidate documents also match current bytes. New current compiler lock may differ intentionally."
+        }
+      ]
+    }
+  },
+  "naturalCI": "The next natural PR runs must be checked against final delivery heads. Exact run/head/result receipts are recorded separately in Jira and delivery report; no future CI success is invented inside its own commit.",
+  "actualFormalContentReceiptsAdded": 0,
+  "actualSourceReleasePublished": false,
+  "actualWebSelected": false,
+  "actualContentVersionAllocated": false,
+  "cloudflareDeploys": 0,
+  "rootReviewScope": "Changed protocol runtime trust, historical pin replay, provider checkpoint recovery, Web validator integration and direct dependencies. External credential/policy/formal production checks remain open."
+}
