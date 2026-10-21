@@ -685,7 +685,43 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   const overlayCommit = git(webRoot, ['rev-parse', 'HEAD']);
   const baseHead = git(webRoot, ['rev-parse', 'HEAD^^']);
 
+  const canaryGlobalKey = '__W09_SOURCE_RUNTIME_TEST_CANARY';
+  assert.equal(Object.hasOwn(globalThis, canaryGlobalKey), false, 'isolated source-runtime canary global must be unused');
+  const validatorCanaryPath = path.join(webRoot, '.w09-source-validator-canary.json');
+  globalThis[canaryGlobalKey] = {
+    path: validatorCanaryPath,
+    credentials: { web: 'synthetic-web-token-only', cloudflare: 'synthetic-cloudflare-token-only' },
+  };
+  t.after(() => { delete globalThis[canaryGlobalKey]; });
+  const untrustedValidator = await readFile(sourceValidatorPath, 'utf8');
+  const validatorCanaryCode = `\nconst canary = globalThis[${JSON.stringify(canaryGlobalKey)}];\nif (canary) await (await import('node:fs/promises')).writeFile(canary.path, JSON.stringify(canary.credentials), 'utf8');\n`;
+  await writeFile(sourceValidatorPath, untrustedValidator + validatorCanaryCode, 'utf8');
+  git(sourceRoot, ['add', 'scripts/content/contract-validator.mjs']);
+  git(sourceRoot, ['commit', '-m', 'SYP-341\n\nCreate an isolated unapproved Source validator fixture']);
+  const unapprovedSourceCommit = git(sourceRoot, ['rev-parse', 'HEAD']);
+  assert.notEqual(unapprovedSourceCommit, sourceCommit);
+
+  const unapprovedRequest = structuredClone(request);
+  unapprovedRequest.sourceCommit = unapprovedSourceCommit;
+  unapprovedRequest.sourceInputs = unapprovedRequest.sourceInputs.map(input => ({ ...input, commit: unapprovedSourceCommit }));
+  const originalArchiveRequest = archiveRow.request;
+  const originalArchiveBytes = archiveRow.archiveBytes;
+  archiveRow.request = unapprovedRequest;
+  archiveRow.archiveBytes = await sourceApi.createW09SourceArchive({ request: unapprovedRequest, packetDir: packetRoot });
+  try {
+    await assert.rejects(
+      prepareW09SourceProposal({ repoRoot: webRoot, sourceRoot, releaseId: request.releaseId, fetchImpl }),
+      /pinned Source runtime|approved W09 code hash/i,
+      'an unapproved Source validator pin must fail before its module can read synthetic Web/Cloudflare canaries',
+    );
+    await assert.rejects(readFile(validatorCanaryPath), { code: 'ENOENT' });
+  } finally {
+    archiveRow.request = originalArchiveRequest;
+    archiveRow.archiveBytes = originalArchiveBytes;
+  }
+
   const proposal = await prepareW09SourceProposal({ repoRoot: webRoot, sourceRoot, releaseId: request.releaseId, fetchImpl });
+  await assert.rejects(readFile(validatorCanaryPath), { code: 'ENOENT' }, 'the old approved request must not execute the modified working-tree validator');
   assert.equal(proposal.proposalWritten, true, 'release_id-only handoff must persist a Web proposal');
   assert.equal(proposal.selected, false);
   assert.equal(proposal.allocationReserved, false);
@@ -755,6 +791,7 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   git(webRoot, ['commit', '-m', 'W09 isolated reviewed composition fixture']);
 
   const carriedProposal = await prepareW09SourceProposal({ repoRoot: webRoot, sourceRoot, releaseId: request.releaseId, fetchImpl });
+  await assert.rejects(readFile(validatorCanaryPath), { code: 'ENOENT' }, 'proposal and compiler projection must use the approved historical runtime');
   assert.equal(carriedProposal.selected, false, 'the refreshed same-release proposal remains unselected');
   assert.notEqual(carriedProposal.proposalDirectory, proposal.proposalDirectory,
     'changed Web inputs must create a new immutable proposal version instead of conflicting with history');
@@ -809,6 +846,7 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
       return { status: 'persisted' };
     },
   });
+  await assert.rejects(readFile(validatorCanaryPath), { code: 'ENOENT' }, 'selected-composition projection must not import the modified Source working-tree validator');
   assert.deepEqual(preparationCheckpoints.map(row => row.phase), ['reserved', 'prepared']);
   assert.equal(first.status, 'prepared', JSON.stringify(first.gate));
   assert.equal(first.gate.status, 'ready-for-release-allocation');

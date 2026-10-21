@@ -539,7 +539,14 @@ async function loadPinnedSourceApi(repoRoot, head) {
   }
   const modulePath = path.join(repoRoot, ...lock.cachePath.split('/'));
   const module = await import(pathToFileURL(modulePath).href + '?sha256=' + lock.sha256);
-  for (const exportName of ['validateW09SourceRequest', 'resolvePublishedW09SourceArchive', 'verifyW09SourcePacket', 'verifyW09SourceRevision']) {
+  for (const exportName of [
+    'validateW09SourceRequest',
+    'resolvePublishedW09SourceArchive',
+    'verifyW09SourcePacket',
+    'verifyW09SourceRevision',
+    'loadW09ApprovedSourceRuntime',
+    'cleanupW09ApprovedSourceRuntime',
+  ]) {
     if (typeof module[exportName] !== 'function') throw new Error('pinned Source request cache omits ' + exportName);
   }
   return module;
@@ -627,16 +634,38 @@ async function loadSelectedAuthoringOverlay(repoRoot, head, selection) {
   };
 }
 
-function makeSourceLock(request, sourceRoot) {
+async function makeSourceLock(request, sourceRoot, sourceApi) {
   const dataInput = request.sourceInputs.find(input => input.role === 'candidate');
   if (!dataInput) throw new Error('verified Source request omits its candidate input pin');
   const schemaPath = 'content/schema/v2/source-contract.schema.json';
   const validatorPath = 'scripts/content/contract-validator.mjs';
-  const schemaBytes = gitBytes(sourceRoot, ['show', request.sourceCommit + ':' + schemaPath], 'Source schema pin');
-  const validatorBytes = gitBytes(sourceRoot, ['show', request.sourceCommit + ':' + validatorPath], 'Source validator pin');
-  const schema = parseJson(schemaBytes, 'pinned Source schema');
-  const validatorUrl = pathToFileURL(path.join(sourceRoot, ...validatorPath.split('/'))).href + '?sourceCommit=' + request.sourceCommit;
-  return import(validatorUrl).then(sourceValidator => {
+  if (typeof sourceApi?.loadW09ApprovedSourceRuntime !== 'function'
+      || typeof sourceApi?.cleanupW09ApprovedSourceRuntime !== 'function') {
+    const error = new Error('pinned Source request API omits the approved runtime loader or cleanup helper');
+    error.code = 'ERR_W09_UNTRUSTED_SOURCE_RUNTIME';
+    throw error;
+  }
+  let runtime;
+  let cleaned = false;
+  const cleanup = async () => {
+    if (!runtime || cleaned) return;
+    await sourceApi.cleanupW09ApprovedSourceRuntime(runtime);
+    cleaned = true;
+  };
+  try {
+    runtime = await sourceApi.loadW09ApprovedSourceRuntime({ sourceRoot, sourceCommit: request.sourceCommit });
+    if (runtime?.identity?.sourceCommit !== request.sourceCommit
+        || typeof runtime.validator?.validateSourceContract !== 'function'
+        || typeof runtime.validator?.assertSchemaValidatorParity !== 'function'
+        || !isRecord(runtime.schema) || !Array.isArray(runtime.identity.files)) {
+      throw new Error('approved Source runtime identity or validator interface is invalid');
+    }
+    const runtimeFiles = new Map(runtime.identity.files.map(row => [row.path, row]));
+    const schemaPin = runtimeFiles.get(schemaPath);
+    const validatorPin = runtimeFiles.get(validatorPath);
+    if (!schemaPin || !validatorPin) throw new Error('approved Source runtime does not include the pinned schema and validator');
+    const schema = runtime.schema;
+    const sourceValidator = runtime.validator;
     if (sourceValidator.CONTRACT_SCHEMA_ID !== schema.$id) throw new Error('pinned Source schema/validator identity mismatch');
     sourceValidator.assertSchemaValidatorParity(schema);
     return {
@@ -646,15 +675,28 @@ function makeSourceLock(request, sourceRoot) {
         commit: request.sourceCommit,
         schemaId: sourceValidator.CONTRACT_SCHEMA_ID,
         files: {
-          schema: { path: schemaPath, sha256: sha256(schemaBytes) },
+          schema: { path: schemaPath, sha256: schemaPin.sha256 },
           data: { path: dataInput.path, sha256: dataInput.sha256 },
-          validator: { path: validatorPath, sha256: sha256(validatorBytes) },
+          validator: { path: validatorPath, sha256: validatorPin.sha256 },
         },
       },
       schema,
       validator: sourceValidator,
+      runtimeIdentity: structuredClone(runtime.identity),
+      cleanup,
     };
-  });
+  } catch (cause) {
+    try { await cleanup(); }
+    catch (cleanupError) {
+      const error = new AggregateError([cause, cleanupError], 'approved Source runtime loading and cleanup both failed');
+      error.code = 'ERR_W09_UNTRUSTED_SOURCE_RUNTIME';
+      throw error;
+    }
+    if (cause?.code === 'ERR_W09_UNTRUSTED_SOURCE_RUNTIME') throw cause;
+    const error = new Error('approved Source runtime verification failed: ' + (cause?.message ?? String(cause)), { cause });
+    error.code = 'ERR_W09_UNTRUSTED_SOURCE_RUNTIME';
+    throw error;
+  }
 }
 
 function applyOverlayRows(modeInputs, rows, web) {
@@ -708,7 +750,7 @@ function applyOverlayRows(modeInputs, rows, web) {
   }
 }
 
-async function createW09CompilerProjection({ repoRoot, request, packet, replay, lock }) {
+async function createW09CompilerProjection({ repoRoot, request, packet, replay, lock, sourceApi }) {
   const w08 = await import('./contract-w08-build.mjs');
   const authoring = await import('./contract-authoring.mjs');
   const head = gitText(repoRoot, ['rev-parse', 'HEAD']);
@@ -730,7 +772,8 @@ async function createW09CompilerProjection({ repoRoot, request, packet, replay, 
     ...compilerInput.compilerIdentity.files.map(row => row.path)];
   for (const filePath of compilerFiles) gitBlob(repoRoot, head, filePath);
 
-  const sourcePin = await makeSourceLock(request, replay.sourceRoot);
+  const sourcePin = await makeSourceLock(request, replay.sourceRoot, sourceApi);
+  try {
   const authoringSourcePin = createW09AuthoringSourcePin(sourcePin.lock);
   const sourceContract = structuredClone(packet.technical);
   if (sourceContract.fixtureOnly !== false || sourceContract.publicationEligible !== true) {
@@ -856,6 +899,9 @@ async function createW09CompilerProjection({ repoRoot, request, packet, replay, 
     gate,
     inputDigest,
   };
+  } finally {
+    await sourcePin.cleanup();
+  }
 }
 
 function sourceReviewDigestRows(contract, validator) {
@@ -1001,6 +1047,7 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
   if (resolved.request.releaseId !== releaseId) throw new Error('public Source archive release_id does not match the triggering event');
 
   const packetTemp = await mkdtemp(path.join(os.tmpdir(), 'w09-web-proposal-packet-'));
+  let sourcePin;
   try {
     for (const filePath of SOURCE_PACKET_PATHS) {
       const bytes = resolved.files.get(filePath);
@@ -1014,7 +1061,7 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
       sourceRoot: absoluteSourceRoot,
       expectedCommit: resolved.request.sourceCommit,
     });
-    const sourcePin = await makeSourceLock(resolved.request, absoluteSourceRoot);
+    sourcePin = await makeSourceLock(resolved.request, absoluteSourceRoot, sourceApi);
     const compilerModule = await import('./contract-w08-build.mjs');
     const compilerInput = await compilerModule.loadW08CompilerInputs({ repoRoot: absoluteWebRoot });
     const previousSelection = await loadSelectedComposition(absoluteWebRoot, head);
@@ -1070,8 +1117,10 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
           packet,
           replay: { ...replay, sourceRoot: absoluteSourceRoot, providerImmutable: resolved.providerImmutable },
           lock,
+          sourceApi,
         });
       } catch (error) {
+        if (error?.code === 'ERR_W09_UNTRUSTED_SOURCE_RUNTIME') throw error;
         projectionError = error?.message ?? String(error);
       }
     }
@@ -1156,7 +1205,11 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
       ...(composition ? { gate: composition.gate, inputDigest: composition.inputDigest } : { reason: projectionError ?? 'Source archive is not formally eligible yet' }),
     };
   } finally {
-    await rm(packetTemp, { recursive: true, force: true });
+    try {
+      if (sourcePin) await sourcePin.cleanup();
+    } finally {
+      await rm(packetTemp, { recursive: true, force: true });
+    }
   }
 }
 
@@ -1222,6 +1275,7 @@ export async function loadW09VerifiedComposition({ repoRoot, sourceRoot, release
       packet,
       replay: { ...replay, sourceRoot: await realpath(sourceRoot), providerImmutable: resolved.providerImmutable },
       lock,
+      sourceApi,
     });
     return {
       ...composition,

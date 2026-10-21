@@ -8,6 +8,13 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 export const W09_SOURCE_REPOSITORY = 'SyuanTsai/DarkTide-Source-Data';
 export const W09_WEB_REPOSITORY = 'SyuanTsai/DarkTide-Web';
 export const W09_SOURCE_ORIGIN = 'https://github.com/SyuanTsai/DarkTide-Source-Data.git';
+export const W09_APPROVED_SOURCE_RUNTIME_COMMIT = '589f89ea880d33450552029a03f7893b3fb6cb6a';
+export const W09_APPROVED_SOURCE_RUNTIME_FILES = Object.freeze([
+  Object.freeze({ path: 'content/schema/v2/source-contract.schema.json', sizeBytes: 127718, sha256: '0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5' }),
+  Object.freeze({ path: 'scripts/content/contract-validator.mjs', sizeBytes: 140557, sha256: '48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-build.mjs', sizeBytes: 26306, sha256: '5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-merge.mjs', sizeBytes: 10794, sha256: '4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b' })
+]);
 export const W09_ACCEPTED_W07_BASELINE_COMMIT = '8e48334619f448794aab666f1805cb2bd6adf11a';
 export const W09_ACCEPTED_W07_BASELINE_SHA256 = 'a728b2e8dc65078ade88b01f87537323eb781fc8665f16c8166140292eb63acb';
 export const W09_SOURCE_PACKET_FILES = Object.freeze([
@@ -39,12 +46,6 @@ const ALLOWED_KINDS = new Set([
 ]);
 const REGISTRIES = Object.freeze(['gameReleases', 'sourceSnapshots', 'sourceRefs', 'records', 'tombstones']);
 const MANIFEST_FILE_NAMES = Object.freeze(['analysis.md', 'source-revision.json', 'source-revision.md', 'technical.json']);
-const PINNED_BUILD_FILES = Object.freeze([
-  'scripts/content/contract-w05-build.mjs',
-  'scripts/content/contract-w05-merge.mjs',
-  'scripts/content/contract-validator.mjs',
-  'content/schema/v2/source-contract.schema.json'
-]);
 const DISPATCH_ENDPOINT = `https://api.github.com/repos/${W09_WEB_REPOSITORY}/dispatches`;
 const SOURCE_RELEASES_ENDPOINT = `https://api.github.com/repos/${W09_SOURCE_REPOSITORY}/releases`;
 const SOURCE_GIT_ENDPOINT = `https://api.github.com/repos/${W09_SOURCE_REPOSITORY}/git`;
@@ -507,14 +508,68 @@ function readGitBlob(sourceRoot, commit, relativePath) {
   return gitResult(sourceRoot, ['show', `${commit}:${relativePath}`], { maxBuffer: 32 * 1024 * 1024 });
 }
 
-async function assertPinnedBuildCode(sourceRoot, sourceCommit) {
-  for (const relativePath of PINNED_BUILD_FILES) {
-    const absolutePath = path.join(sourceRoot, relativePath);
-    await assertNoSymlinkComponents(absolutePath);
-    const workingBytes = await readFile(absolutePath);
-    const pinnedBytes = readGitBlob(sourceRoot, sourceCommit, relativePath);
-    if (!workingBytes.equals(pinnedBytes)) throw new Error(`W05 build code differs from the pinned Source commit: ${relativePath}`);
+export async function loadW09ApprovedSourceRuntime({ sourceRoot, sourceCommit } = {}) {
+  const repository = await assertSourceRepository(sourceRoot, sourceCommit);
+  const verifiedFiles = [];
+  for (const expected of W09_APPROVED_SOURCE_RUNTIME_FILES) {
+    const bytes = readGitBlob(repository.sourceRoot, repository.sourceCommit, expected.path);
+    const actualSha256 = sha256(bytes);
+    if (bytes.length !== expected.sizeBytes || actualSha256 !== expected.sha256) {
+      throw new Error(`pinned Source runtime does not match the approved W09 code hash: ${expected.path}`);
+    }
+    verifiedFiles.push({ ...expected, bytes });
   }
+
+  const runtimeRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-approved-source-runtime-'));
+  let cleaned = false;
+  const cleanup = async () => {
+    if (cleaned) return;
+    const rootInfo = await lstat(runtimeRoot).catch((error) => error.code === 'ENOENT' ? null : Promise.reject(error));
+    if (rootInfo && (!rootInfo.isDirectory() || rootInfo.isSymbolicLink())) throw new Error('approved Source runtime temporary root was replaced');
+    await rm(runtimeRoot, { recursive: true, force: true });
+    cleaned = true;
+  };
+  try {
+    for (const file of verifiedFiles) {
+      const destination = path.join(runtimeRoot, file.path);
+      await mkdir(path.dirname(destination), { recursive: true });
+      await writeFile(destination, file.bytes, { flag: 'wx', mode: 0o600 });
+    }
+    const builderPath = path.join(runtimeRoot, 'scripts/content/contract-w05-build.mjs');
+    const validatorPath = path.join(runtimeRoot, 'scripts/content/contract-validator.mjs');
+    const builder = await import(pathToFileURL(builderPath).href);
+    const validator = await import(pathToFileURL(validatorPath).href);
+    if (typeof builder.buildContractCandidate !== 'function'
+        || typeof validator.validateSourceContract !== 'function'
+        || typeof validator.computeReviewDigests !== 'function'
+        || typeof validator.loadContractSchema !== 'function') {
+      throw new Error('approved W09 Source runtime does not expose the required W05 interfaces');
+    }
+    const schema = await validator.loadContractSchema({ sourceRoot: runtimeRoot });
+    const files = verifiedFiles.map(({ path: relativePath, sizeBytes, sha256: digest }) => ({ path: relativePath, sizeBytes, sha256: digest }));
+    const identityCore = {
+      schema: 'w09-approved-source-runtime/1',
+      approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_COMMIT,
+      sourceCommit: repository.sourceCommit,
+      files
+    };
+    return {
+      builder,
+      validator,
+      schema,
+      runtimeRoot,
+      identity: { ...identityCore, sha256: sha256Canonical(identityCore) },
+      cleanup
+    };
+  } catch (error) {
+    await cleanup();
+    throw error;
+  }
+}
+
+export async function cleanupW09ApprovedSourceRuntime(runtime) {
+  if (!runtime || typeof runtime.cleanup !== 'function') throw new Error('an approved Source runtime handle is required for cleanup');
+  await runtime.cleanup();
 }
 
 async function readPinnedSourceInputs(sourceRoot, sourceCommit, inputRefs) {
@@ -667,7 +722,6 @@ export async function verifyW09SourceRevision({ request, packetDir, sourceRoot, 
   if (expectedCommit !== request.sourceCommit) throw new Error('expected commit does not match the request pin');
   const bundle = await verifyW09SourcePacket({ request, packetDir });
   const repository = await assertSourceRepository(sourceRoot, expectedCommit);
-  await assertPinnedBuildCode(repository.sourceRoot, expectedCommit);
   const sourceInputs = await readPinnedSourceInputs(repository.sourceRoot, expectedCommit, inputPathsFromRequest(request));
   for (const input of sourceInputs) {
     const expected = request.sourceInputs.find((entry) => entry.role === input.role);
@@ -675,13 +729,11 @@ export async function verifyW09SourceRevision({ request, packetDir, sourceRoot, 
       throw new Error(`pinned ${input.role} input hash does not match the request`);
     }
   }
-  const builderPath = path.join(repository.sourceRoot, 'scripts', 'content', 'contract-w05-build.mjs');
-  await assertNoSymlinkComponents(builderPath);
-  const builder = await import(pathToFileURL(builderPath).href);
-  if (typeof builder.buildContractCandidate !== 'function') throw new Error('pinned W05 builder does not expose buildContractCandidate');
-  const replayRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-revision-replay-'));
+  const runtime = await loadW09ApprovedSourceRuntime({ sourceRoot: repository.sourceRoot, sourceCommit: expectedCommit });
+  let replayRoot;
   try {
-    const replay = await builder.buildContractCandidate({
+    replayRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-revision-replay-'));
+    const replay = await runtime.builder.buildContractCandidate({
       baseline: sourceInputs.find((item) => item.role === 'baseline').document,
       authoring: sourceInputs.find((item) => item.role === 'authoring').document,
       candidate: sourceInputs.find((item) => item.role === 'candidate').document,
@@ -694,7 +746,11 @@ export async function verifyW09SourceRevision({ request, packetDir, sourceRoot, 
       if (!replayBytes || !packetBytes.equals(replayBytes)) throw new Error(`W05 replay bytes differ from packet file ${fileName}`);
     }
   } finally {
-    await rm(replayRoot, { recursive: true, force: true });
+    try {
+      if (replayRoot) await rm(replayRoot, { recursive: true, force: true });
+    } finally {
+      await runtime.cleanup();
+    }
   }
   const expectedRequests = buildRequestsFromBundle({
     bundle,
@@ -849,6 +905,72 @@ async function verifyExistingArchiveForRequest({ existing, request, bundle, pack
   return archiveRequest;
 }
 
+async function reconstructW09RequestAtTagCommit({ request, packetDir, sourceRoot, tagCommit } = {}) {
+  if (typeof tagCommit !== 'string' || !COMMIT_RE.test(tagCommit)) throw new Error('existing Source archive tag does not identify a full commit');
+  try { gitResult(sourceRoot, ['merge-base', '--is-ancestor', tagCommit, request.sourceCommit]); }
+  catch { throw new Error('Source archive Git tag points to a different commit than its verified request: tag commit is not an ancestor of the retried request'); }
+  const currentBundle = await verifyW09SourcePacket({ request, packetDir });
+  const anchoredRefs = request.sourceInputs.map(({ role, commit, path: inputPath, sha256: digest }) => ({
+    role,
+    commit: commit === request.sourceCommit ? tagCommit : commit,
+    path: inputPath,
+    sha256: digest
+  }));
+  const sourceInputs = await readPinnedSourceInputs(sourceRoot, tagCommit, anchoredRefs);
+  for (const input of sourceInputs) {
+    const requested = request.sourceInputs.find((item) => item.role === input.role);
+    if (!requested || requested.path !== input.path || requested.sha256 !== input.sha256) {
+      throw new Error(`tag-anchored ${input.role} input does not match the retried request`);
+    }
+  }
+
+  const runtime = await loadW09ApprovedSourceRuntime({ sourceRoot, sourceCommit: tagCommit });
+  let replayRoot;
+  try {
+    replayRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-tag-anchored-replay-'));
+    const replay = await runtime.builder.buildContractCandidate({
+      baseline: sourceInputs.find((item) => item.role === 'baseline').document,
+      authoring: sourceInputs.find((item) => item.role === 'authoring').document,
+      candidate: sourceInputs.find((item) => item.role === 'candidate').document,
+      outRoot: replayRoot,
+      mode: currentBundle.manifest.mode
+    });
+    const replayPacketDir = path.join(replayRoot, replay.receipt.outputDirectory);
+    const replayBundle = await readPacketBundle(replayPacketDir);
+    const requests = buildRequestsFromBundle({
+      bundle: replayBundle,
+      sourceCommit: tagCommit,
+      sourceInputs,
+      baseline: sourceInputs.find((item) => item.role === 'baseline').document
+    });
+    const anchoredRequest = pickRequestFromCollection(requests, request);
+    if (canonicalJson(requestContentIdentity(anchoredRequest)) !== canonicalJson(requestContentIdentity(request))) {
+      throw new Error('tag-anchored request conflicts with the retried revision, manifest, or input content');
+    }
+    for (const filePath of W09_SOURCE_PACKET_FILES) {
+      const currentBytes = currentBundle.files.get(filePath);
+      const replayBytes = replayBundle.files.get(filePath);
+      if (!currentBytes || !replayBytes || !currentBytes.equals(replayBytes)) {
+        throw new Error(`tag-anchored W05 replay differs from the retried packet file ${filePath}`);
+      }
+    }
+    await verifyW09SourceRevision({ request: anchoredRequest, packetDir: replayPacketDir, sourceRoot, expectedCommit: tagCommit });
+    const retainedReplayRoot = replayRoot;
+    replayRoot = undefined;
+    return {
+      request: anchoredRequest,
+      packetDir: replayPacketDir,
+      bundle: replayBundle,
+      cleanup: async () => rm(retainedReplayRoot, { recursive: true, force: true })
+    };
+  } catch (error) {
+    if (replayRoot) await rm(replayRoot, { recursive: true, force: true });
+    throw error;
+  } finally {
+    await runtime.cleanup();
+  }
+}
+
 async function fetchSourceArchiveAsset({ assetUrl, fetchImpl, token } = {}) {
   let currentUrl = assetUrl;
   let redirects = 0;
@@ -922,26 +1044,41 @@ export async function verifyPublishedW09SourceArchive({ request, fetchImpl = glo
 }
 
 export async function publishW09SourceArchive({
-  request,
-  packetDir,
+  request: requestedRequest,
+  packetDir: requestedPacketDir,
   sourceRoot,
   expectedCommit,
   token = process.env.SOURCE_ARCHIVE_TOKEN,
   fetchImpl = globalThis.fetch
 } = {}) {
-  const bundle = await verifyW09SourcePacket({ request, packetDir });
-  await verifyW09SourceRevision({ request, packetDir, sourceRoot, expectedCommit });
-  const eligibility = deriveEligibility({ mode: bundle.manifest.mode, manifest: bundle.manifest, receipt: bundle.receipt, technical: bundle.technical });
-  if (eligibility.status !== 'eligible') return { status: 'pending', releaseId: request.releaseId, reason: eligibility.reasons.join('; ') };
-  if (typeof token !== 'string' || token.trim().length === 0) {
-    return { status: 'pending', releaseId: request.releaseId, reason: 'Source release archive credential is not configured' };
-  }
-  if (typeof fetchImpl !== 'function') throw new Error('fetchImpl must be a function');
-  const archiveBytes = makeW09SourceArchive(request, bundle);
-  verifyW09SourceArchive({ bytes: archiveBytes, request });
-  let release = await fetchSourceRelease({ releaseId: request.releaseId, fetchImpl, token, allowDraft: true });
-  let archiveRequest = request;
-  let verifiedArchiveBytes = archiveBytes;
+  let request = requestedRequest;
+  let packetDir = requestedPacketDir;
+  let bundle;
+  let recoveredCleanup;
+  try {
+    bundle = await verifyW09SourcePacket({ request, packetDir });
+    await verifyW09SourceRevision({ request, packetDir, sourceRoot, expectedCommit });
+    const eligibility = deriveEligibility({ mode: bundle.manifest.mode, manifest: bundle.manifest, receipt: bundle.receipt, technical: bundle.technical });
+    if (eligibility.status !== 'eligible') return { status: 'pending', releaseId: request.releaseId, reason: eligibility.reasons.join('; ') };
+    if (typeof token !== 'string' || token.trim().length === 0) {
+      return { status: 'pending', releaseId: request.releaseId, reason: 'Source release archive credential is not configured' };
+    }
+    if (typeof fetchImpl !== 'function') throw new Error('fetchImpl must be a function');
+
+    const tagCommit = await fetchSourceArchiveTagCommit({ releaseId: request.releaseId, fetchImpl, token });
+    if (tagCommit !== null && tagCommit !== request.sourceCommit) {
+      const recovered = await reconstructW09RequestAtTagCommit({ request, packetDir, sourceRoot, tagCommit });
+      request = recovered.request;
+      packetDir = recovered.packetDir;
+      bundle = recovered.bundle;
+      recoveredCleanup = recovered.cleanup;
+    }
+
+    const archiveBytes = makeW09SourceArchive(request, bundle);
+    verifyW09SourceArchive({ bytes: archiveBytes, request });
+    let release = await fetchSourceRelease({ releaseId: request.releaseId, fetchImpl, token, allowDraft: true });
+    let archiveRequest = request;
+    let verifiedArchiveBytes = archiveBytes;
   if (release && !release.draft) {
     const existing = await verifyReleaseAsset({ release, releaseId: request.releaseId, fetchImpl, token });
     archiveRequest = await verifyExistingArchiveForRequest({ existing, request, bundle, packetDir, sourceRoot });
@@ -1014,11 +1151,14 @@ export async function publishW09SourceArchive({
   if (publicVerification.status !== 'verified' || publicVerification.archiveSha256 !== sha256(verifiedArchiveBytes)) {
     throw new Error('published Source archive did not pass public identity and byte verification');
   }
-  return {
-    status: 'published', releaseId: request.releaseId, requestId: archiveRequest.requestId, sourceCommit: archiveRequest.sourceCommit, request: archiveRequest,
-    providerImmutable: publishedRelease.immutable === true ? true : publishedRelease.immutable === false ? false : null,
-    archiveSha256: sha256(verifiedArchiveBytes)
-  };
+    return {
+      status: 'published', releaseId: request.releaseId, requestId: archiveRequest.requestId, sourceCommit: archiveRequest.sourceCommit, request: archiveRequest,
+      providerImmutable: publishedRelease.immutable === true ? true : publishedRelease.immutable === false ? false : null,
+      archiveSha256: sha256(verifiedArchiveBytes)
+    };
+  } finally {
+    if (recoveredCleanup) await recoveredCleanup();
+  }
 }
 
 export async function createW09SourceRequests({ packetDir, sourceRoot, expectedCommit, inputPreset = 'acceptedW07', inputRefs } = {}) {
@@ -1165,56 +1305,57 @@ export async function prepareW09SourceHandoff({
     inputPreset,
     inputRefs
   });
-  const builderPath = path.join(repository.sourceRoot, 'scripts', 'content', 'contract-w05-build.mjs');
-  await assertNoSymlinkComponents(builderPath);
-  const builder = await import(pathToFileURL(builderPath).href);
-  if (typeof builder.buildContractCandidate !== 'function') throw new Error('pinned W05 builder does not expose buildContractCandidate');
-  const packetRoot = path.join(absoluteOutputRoot, 'packets');
-  let actualMode = mode;
-  let formalBlockReason = null;
-  let built;
+  const runtime = await loadW09ApprovedSourceRuntime({ sourceRoot: repository.sourceRoot, sourceCommit: repository.sourceCommit });
   try {
-    built = await builder.buildContractCandidate({
-      baseline: sourceInputs.find((item) => item.role === 'baseline').document,
-      authoring: sourceInputs.find((item) => item.role === 'authoring').document,
-      candidate: sourceInputs.find((item) => item.role === 'candidate').document,
-      outRoot: packetRoot,
-      mode
+    const packetRoot = path.join(absoluteOutputRoot, 'packets');
+    let actualMode = mode;
+    let formalBlockReason = null;
+    let built;
+    try {
+      built = await runtime.builder.buildContractCandidate({
+        baseline: sourceInputs.find((item) => item.role === 'baseline').document,
+        authoring: sourceInputs.find((item) => item.role === 'authoring').document,
+        candidate: sourceInputs.find((item) => item.role === 'candidate').document,
+        outRoot: packetRoot,
+        mode
+      });
+    } catch (error) {
+      const isFormalGateBlock = /^formal output (?:blocked:|requires )/u.test(error.message);
+      if (mode !== 'formal' || !fallbackCandidate || !isFormalGateBlock) throw error;
+      formalBlockReason = error.message;
+      actualMode = 'candidate';
+      built = await runtime.builder.buildContractCandidate({
+        baseline: sourceInputs.find((item) => item.role === 'baseline').document,
+        authoring: sourceInputs.find((item) => item.role === 'authoring').document,
+        candidate: sourceInputs.find((item) => item.role === 'candidate').document,
+        outRoot: packetRoot,
+        mode: 'candidate'
+      });
+    }
+    const packetDir = path.join(packetRoot, built.receipt.outputDirectory);
+    const requests = await createW09SourceRequests({
+      packetDir,
+      sourceRoot: repository.sourceRoot,
+      expectedCommit: repository.sourceCommit,
+      inputPreset,
+      inputRefs
     });
-  } catch (error) {
-    const isFormalGateBlock = /^formal output (?:blocked:|requires )/u.test(error.message);
-    if (mode !== 'formal' || !fallbackCandidate || !isFormalGateBlock) throw error;
-    formalBlockReason = error.message;
-    actualMode = 'candidate';
-    built = await builder.buildContractCandidate({
-      baseline: sourceInputs.find((item) => item.role === 'baseline').document,
-      authoring: sourceInputs.find((item) => item.role === 'authoring').document,
-      candidate: sourceInputs.find((item) => item.role === 'candidate').document,
-      outRoot: packetRoot,
-      mode: 'candidate'
-    });
+    const persisted = await writeImmutableRequestFiles(absoluteOutputRoot, requests);
+    return {
+      sourceRoot: repository.sourceRoot,
+      sourceCommit: repository.sourceCommit,
+      packetDir,
+      requests: persisted.requests,
+      requestPaths: persisted.paths,
+      mode: actualMode,
+      formalBlockReason,
+      handoff: mode === 'formal' && !formalBlockReason
+        ? { status: 'pending', reason: 'formal request prepared; cross-repository dispatch requires explicit credentials and dispatch authorization' }
+        : { status: 'pending', reason: formalBlockReason || 'candidate request is preview-only and awaits human review' }
+    };
+  } finally {
+    await runtime.cleanup();
   }
-  const packetDir = path.join(packetRoot, built.receipt.outputDirectory);
-  const requests = await createW09SourceRequests({
-    packetDir,
-    sourceRoot: repository.sourceRoot,
-    expectedCommit: repository.sourceCommit,
-    inputPreset,
-    inputRefs
-  });
-  const persisted = await writeImmutableRequestFiles(absoluteOutputRoot, requests);
-  return {
-    sourceRoot: repository.sourceRoot,
-    sourceCommit: repository.sourceCommit,
-    packetDir,
-    requests: persisted.requests,
-    requestPaths: persisted.paths,
-    mode: actualMode,
-    formalBlockReason,
-    handoff: mode === 'formal' && !formalBlockReason
-      ? { status: 'pending', reason: 'formal request prepared; cross-repository dispatch requires explicit credentials and dispatch authorization' }
-      : { status: 'pending', reason: formalBlockReason || 'candidate request is preview-only and awaits human review' }
-  };
 }
 
 export async function dispatchW09SourceRequest({
