@@ -1,0 +1,85 @@
+name: Static site operations monitor
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+    inputs:
+      alert_exercise:
+        description: 'Exercise the failure/recovery incident path without changing production'
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - '.github/workflows/operations-monitor.yml'
+      - 'src/operations/**'
+      - 'scripts/operations-*.mjs'
+      - 'test/operations*.mjs'
+permissions:
+  contents: read
+jobs:
+  contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: node --test test/operations.test.mjs
+      - name: Read-only public content smoke
+        run: node scripts/operations-monitor.mjs
+      - name: Save PR probe report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: operations-pr-probe
+          path: .operations/monitor-report.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+  monitor:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'SyuanTsai/DarkTide-Web'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: darktide-operations-monitor
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verify HTTPS and content against retained backup
+        id: probe
+        run: node scripts/operations-monitor.mjs
+        env:
+          MONITOR_DRILL: ${{ inputs.alert_exercise == true && 'true' || 'false' }}
+      - name: Record incident or verified recovery
+        if: always()
+        run: node scripts/operations-alert.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Save operations report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: operations-monitor-report
+          path: .operations/monitor-report.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+      - name: Summarize
+        if: always()
+        run: |
+          echo 'Operations report (failed runs open one bot-owned incident; healthy runs close it):' >> "$GITHUB_STEP_SUMMARY"
+          cat .operations/monitor-report.json >> "$GITHUB_STEP_SUMMARY"
