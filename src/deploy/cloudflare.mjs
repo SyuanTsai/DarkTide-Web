@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { safeRelativePath, sha256 } from '../static/common.mjs';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
 export const SITE_ORIGIN='https://darktide.tw-syuan.com';
 export const PREVIEW_ORIGIN='https://darktide-zh-tw-preview.syuan-tsai.workers.dev';
@@ -32,6 +33,17 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
  assert.equal(version.build_id,expected.build_id,'deployed build mismatch');
  assert.equal(version.data_revision,expected.data_revision,'deployed data revision mismatch');
  assert.equal(version.package_kind,'published','deployed package is not published');
+ const runtimeRevision=expected.runtime_data_revision??expected.data_revision;
+ if(expected.shared_data_revision){
+  assert.equal(version.data_revision,expected.shared_data_revision,'deployed shared revision mismatch');
+  assert.deepEqual(version.game_releases,expected.game_releases,'deployed shared release pointers mismatch');
+  assert.ok(Array.isArray(expected.shared_files),'verified shared file closure is missing');
+  for(const pointer of expected.game_releases){
+   const manifest=expected.shared_files.find(row=>row.path===pointer.manifest_path);
+   assert.ok(manifest,'verified shared file closure is missing a retained manifest');
+   assert.equal(manifest.sha256,pointer.manifest_sha256,'retained manifest hash differs from version pointer');
+  }
+ }
  assert.match(versionResponse.headers.get('cache-control')??'',/no-cache|no-store/,'version must revalidate');
  for(const route of ['/','/skills/ogryn/','/weapons/bolter_p1/','/blessings/terrifying-barrage/']){
   const r=await get(route,{headers:{'Sec-Fetch-Mode':'navigate'}});
@@ -41,25 +53,40 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
   assert.ok(body.includes(expected.build_id),'document is stale '+route);
   assert.match(body,/Games Lantern/,'missing initial attribution');
  }
- const catalogResponse=await get('/data/'+expected.data_revision+'/catalog.json');
+ const catalogResponse=await get('/data/'+runtimeRevision+'/catalog.json');
  assert.equal(catalogResponse.status,200);
  assert.match(catalogResponse.headers.get('content-type')??'',/application\/json/i);
  assert.match(catalogResponse.headers.get('cache-control')??'',/immutable/);
  const catalog=await catalogResponse.json();
  for(const kind of ['skill','weapon','blessing']){
   const row=catalog.entries.find(x=>x.kind===kind);assert.ok(row,'missing catalog '+kind);
-  const r=await get('/data/'+expected.data_revision+'/'+row.detail_path);
+  const r=await get('/data/'+runtimeRevision+'/'+row.detail_path);
   assert.equal(r.status,200);assert.match(r.headers.get('content-type')??'',/application\/json/i);
   await r.json();
  }
- for(const p of ['/data/'+expected.data_revision+'/not-present.json','/assets/not-present.mjs']){
+ if(expected.shared_data_revision){
+  for(const row of expected.shared_files){
+   assert.ok(row&&typeof row.path==='string'&&row.path.startsWith('/'),'shared file closure path must be absolute and same-origin');
+   const relative=row.path.slice(1);safeRelativePath(relative,'shared file closure path');
+   assert.ok(relative.startsWith('data/')||relative.startsWith('source-locks/'),'shared file closure path is outside versioned shared data');
+   assert.ok(Number.isSafeInteger(row.size_bytes)&&row.size_bytes>=0,'shared file closure size is invalid');
+   assert.match(row.sha256,/^[a-f0-9]{64}$/,'shared file closure hash is invalid');
+   const response=await get(row.path);
+   assert.equal(response.status,200,'shared retained file status '+row.path);
+   assert.match(response.headers.get('content-type')??'',/application\/json/i,'shared retained file MIME '+row.path);
+   const bytes=Buffer.from(await response.arrayBuffer());
+   assert.equal(bytes.byteLength,row.size_bytes,'shared retained file size '+row.path);
+   assert.equal(sha256(bytes),row.sha256,'shared retained file hash '+row.path);
+  }
+ }
+ for(const p of ['/data/'+runtimeRevision+'/not-present.json','/assets/not-present.mjs']){
   for(const mode of ['cors','navigate']){
    const r=await get(p,{headers:{'Sec-Fetch-Mode':mode}});
    assert.equal(r.status,404,'missing asset must be 404 '+p);
    assert.ok(!(await r.text()).includes(expected.build_id),'missing asset returned HTML shell');
   }
  }
- return {origin,build_id:version.build_id,data_revision:version.data_revision};
+ return {origin,build_id:version.build_id,data_revision:version.data_revision,...(expected.shared_data_revision?{runtime_data_revision:runtimeRevision}: {})};
 }
 export async function deployVerifiedArtifact({token,config},deps) {
  if(typeof token!=='string'||!token.trim())throw new Error('CLOUDFLARE_API_TOKEN is required; no network request or deployment was made');

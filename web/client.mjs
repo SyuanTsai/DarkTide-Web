@@ -2,6 +2,8 @@ const CONTENT_KINDS = new Set(['skill', 'mechanics', 'weapon', 'mark', 'blessing
 const COUNT_FIELDS = ['skills', 'weapons', 'marks', 'blessings', 'variants', 'mechanics'];
 const ID_SEGMENT = /^[a-z0-9_-]+$/;
 const DATA_REVISION = /^[a-f0-9]{64}$/;
+const GAME_VERSION = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/;
+const CONTENT_VERSION = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.([1-9][0-9]*)$/;
 const DATA_PATH_SEGMENT = /^[a-zA-Z0-9_.-]+$/;
 const GITHUB_ATTACHMENT_URL = /^https:\/\/github\.com\/user-attachments\/assets\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -598,7 +600,41 @@ function validateVersion(version) {
       !['published', 'fixture'].includes(version.package_kind)) {
     throw fail('version response has an unsupported schema or invalid identity', 'InvalidPublicDataError');
   }
+  if (Object.hasOwn(version, 'game_releases')) {
+    if (!Array.isArray(version.game_releases) || version.game_releases.length === 0) {
+      throw fail('version response has invalid shared release metadata', 'InvalidPublicDataError');
+    }
+    const seen = new Set();
+    let selected = null;
+    for (const row of version.game_releases) {
+      requireObject(row, 'shared release pointer');
+      if (!GAME_VERSION.test(row.game_version ?? '') || !CONTENT_VERSION.test(row.content_version ?? '') ||
+          !DATA_REVISION.test(row.data_revision ?? '') || !DATA_REVISION.test(row.manifest_sha256 ?? '') ||
+          row.content_version.slice(0, row.content_version.lastIndexOf('.')) !== row.game_version ||
+          row.manifest_path !== `/data/${row.data_revision}/manifest.json` || seen.has(row.game_version)) {
+        throw fail('version response has invalid shared release metadata', 'InvalidPublicDataError');
+      }
+      seen.add(row.game_version);
+      if (row.game_version === version.game_version) selected = row;
+    }
+    if (!selected || selected.data_revision !== version.data_revision) {
+      throw fail('version response has no matching selected shared release', 'InvalidPublicDataError');
+    }
+  }
   return version;
+}
+
+function hasVersionUpdate(version, build) {
+  const versionHasShared = Array.isArray(version.game_releases);
+  const buildHasShared = Array.isArray(build.game_releases);
+  if (versionHasShared || buildHasShared) {
+    if (!versionHasShared || !buildHasShared) return true;
+    return version.build_id !== build.build_id || version.package_kind !== build.shared_package_kind ||
+      version.data_revision !== build.shared_data_revision || version.game_version !== build.shared_game_version ||
+      JSON.stringify(version.game_releases) !== JSON.stringify(build.game_releases);
+  }
+  return version.data_revision !== build.data_revision || version.build_id !== build.build_id ||
+    version.game_version !== build.game_version || version.package_kind !== build.package_kind;
 }
 
 export function createDataClient({ build, fetchImpl = globalThis.fetch, getLocationHref = () => globalThis.location?.href ?? '/' }) {
@@ -623,8 +659,7 @@ export function createDataClient({ build, fetchImpl = globalThis.fetch, getLocat
     } catch {
       throw originalError;
     }
-    const mismatch = version.data_revision !== build.data_revision || version.build_id !== build.build_id ||
-      version.game_version !== build.game_version || version.package_kind !== build.package_kind;
+    const mismatch = hasVersionUpdate(version, build);
     if (mismatch) {
       const update = fail('The published data has changed. Reload this page to continue.', 'UpdateAvailableError');
       update.location = currentLocationPath(getLocationHref());
@@ -639,8 +674,7 @@ export function createDataClient({ build, fetchImpl = globalThis.fetch, getLocat
       try {
         const response = await fetchImpl('/version.json', { cache: 'no-store' });
         const version = validateVersion(await responseJson(response, 'version.json'));
-        return version.build_id !== build.build_id || version.data_revision !== build.data_revision ||
-          version.game_version !== build.game_version || version.package_kind !== build.package_kind;
+        return hasVersionUpdate(version, build);
       } catch { return null; }
     },
     async loadCatalog({ force = false } = {}) {

@@ -27,6 +27,7 @@ const CONTRACT_EOL_RULES = Object.freeze([
   '/content/schema/v2/** text eol=lf',
   '/content/fixtures/v2/** text eol=lf',
   '/content/contracts/** text eol=lf',
+  '/content/contracts/w09/runtime-snapshots/** -text !eol',
   '/scripts/content/contract*.mjs text eol=lf',
   '/test/contract*.test.mjs text eol=lf',
   '/docs/contracts/** text eol=lf',

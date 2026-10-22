@@ -1,0 +1,238 @@
+{
+  "schema": "w09-integration-verification/1",
+  "kind": "engineering-only-not-content-approval",
+  "baseline": {
+    "schemaVersion": "w09-r5-baseline/1",
+    "checkedAt": "2026-10-21T14:52:16.517Z",
+    "heads": {
+      "web": "9d8686507111fa951856db0f61d9b8a65ada8d13",
+      "source": "55379ecf88bbb0777ed27b06a9e16d367f161a59"
+    },
+    "trees": {
+      "web": "5a06aeb2de77b525481bccbdc37e7dad9da8d9a1",
+      "source": "011188946b04e70267e38fb49d61b9f2613dbe48"
+    },
+    "main": "9e9e2ec26b71e296a8a4165fcf81fe2ad45fec63",
+    "r4HashEntriesVerified": 18,
+    "majorHashes": [
+      {
+        "path": "docs/contracts/w09/engineering-r4/candidate.json",
+        "sha256": "89c80f2a7bb4ee9ff7cdb895de0b13ed5aac9e49b134dbd7138fe8649230f947"
+      },
+      {
+        "path": "docs/contracts/w09/engineering-r4/matrix.md",
+        "sha256": "6c3c04a05251f9f4710aadcb36a2637fd9ba8e25f5ab4944892220f7b5d9c8bc"
+      },
+      {
+        "path": "docs/contracts/w09/engineering-r4/hashes.json",
+        "sha256": "667f575b64e59e86c8cdb81a2127e137691c723841e4f6de1f9743985c637eae"
+      },
+      {
+        "path": "docs/contracts/w09/engineering-review-r4.md",
+        "sha256": "b4752c5687ae4cd3fa088c9bce2b962afda4e94af71885d9ee2b69a171d7ade1"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "../w09-reaccept-r4-report.json",
+        "sha256": "1c78fa3eebcaa36d8b19475c74a3bbcdb843c2576c206875fb86aa68371c3b11"
+      },
+      {
+        "path": "../w09-reaccept-r4-artifacts.json",
+        "sha256": "460741513a3fe4713cd429e621ec78947bb0ba78ebfe31babc39eef7202bed74"
+      },
+      {
+        "path": "../w09-reaccept-r4-probes.json",
+        "sha256": "c0fc266a94b6f1662dde7f7c818b6aae87929761685108b3ddf78dbfa37cfa7f"
+      },
+      {
+        "path": "../w09-r4-20261021/delivery-report.md",
+        "sha256": "5cc2bb35239ba707d6fa27271c8d6c950950cfb87e8bd6316a8e96c7d22fac6a"
+      }
+    ],
+    "r4IndependentReacceptance": {
+      "pass": 21,
+      "fail": 0,
+      "skip": 0
+    }
+  },
+  "productionDelta": [
+    ".github/workflows/static-ci.yml: preserve selected and durable owner guards while integrating main verified-backup output/job",
+    ".github/workflows/operations-restore.yml: reject legacy publication when selected or active/pending W09 authority exists"
+  ],
+  "red": {
+    "path": "restore-gate-red.log",
+    "sha256": "152a6e0ad3ce66a497219bff63defc5627795a5572a59aa060f8f30d73836e05",
+    "tests": 1,
+    "pass": 0,
+    "fail": 1,
+    "skip": 0
+  },
+  "green": {
+    "affected": {
+      "path": "affected-tests-approved.log",
+      "sha256": "addbd08a46e08d189c0ba70f97938bceb0ca03e97e29ba2655caaeadb64f38cb",
+      "tests": 42,
+      "pass": 42,
+      "fail": 0,
+      "skip": 0
+    },
+    "workflow": {
+      "path": "workflow-state-final.log",
+      "sha256": "47de38bba286e4d82fe6d15e98260fd0a20e484f8c0c0f994250c577647506f6",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skip": 0
+    },
+    "overlap": "2 operations workflow cases overlap; counts are not additive",
+    "sandboxInitial": {
+      "path": "affected-tests.log",
+      "pass": 37,
+      "fail": 5,
+      "reason": "fixture git init .git/config Permission denied; unchanged rerun outside sandbox passed42/0/0"
+    }
+  },
+  "independentReview": {
+    "role": "read-only Reviewer; Root remains sole writer",
+    "finding": "Legacy operations restore could bypass W09 active state and complete CAS rollback",
+    "status": "closed-for-r5-code",
+    "reviewScope": "static CI conflict, restore authority, auto-merged browser/client direct contracts",
+    "actualExternalPublicationTest": false
+  },
+  "providerReadOnly": {
+    "checkedAt": "2026-10-21T14:58:48.031Z",
+    "readOnly": true,
+    "secretValuesRead": false,
+    "settingsChanged": false,
+    "DarkTide-Web": {
+      "main": "9e9e2ec26b71e296a8a4165fcf81fe2ad45fec63",
+      "secretNames": [
+        "CLOUDFLARE_API_TOKEN"
+      ],
+      "immutableReleases": {
+        "enabled": false,
+        "enforced_by_owner": false
+      },
+      "workflowPolicy": {
+        "default_workflow_permissions": "read",
+        "can_approve_pull_request_reviews": false
+      },
+      "registeredWorkflows": [
+        {
+          "path": ".github/workflows/fixture-ci.yml",
+          "state": "active",
+          "id": 380508687
+        },
+        {
+          "path": ".github/workflows/operations-monitor.yml",
+          "state": "active",
+          "id": 391308579
+        },
+        {
+          "path": ".github/workflows/operations-restore.yml",
+          "state": "active",
+          "id": 391314086
+        },
+        {
+          "path": ".github/workflows/public-http-diagnostics.yml",
+          "state": "active",
+          "id": 381967101
+        },
+        {
+          "path": ".github/workflows/static-ci.yml",
+          "state": "active",
+          "id": 381777706
+        },
+        {
+          "path": ".github/workflows/w01-preview.yml",
+          "state": "active",
+          "id": 383278321
+        }
+      ],
+      "mainWorkflowFiles": {
+        "shared-candidate.yml": {
+          "status": 404
+        },
+        "shared-release.yml": {
+          "status": 404
+        }
+      },
+      "actionRequiredRuns": []
+    },
+    "DarkTide-Source-Data": {
+      "main": "8e48334619f448794aab666f1805cb2bd6adf11a",
+      "secretNames": [],
+      "immutableReleases": {
+        "enabled": false,
+        "enforced_by_owner": false
+      },
+      "workflowPolicy": {
+        "default_workflow_permissions": "read",
+        "can_approve_pull_request_reviews": false
+      },
+      "registeredWorkflows": [
+        {
+          "path": ".github/workflows/shared-source-handoff.yml",
+          "state": "active",
+          "id": 390432624
+        },
+        {
+          "path": ".github/workflows/w01-source-ci.yml",
+          "state": "active",
+          "id": 383148328
+        }
+      ],
+      "mainWorkflowFiles": {
+        "shared-source-handoff.yml": {
+          "status": 404
+        }
+      },
+      "actionRequiredRuns": []
+    },
+    "webPR": {
+      "head": "9d8686507111fa951856db0f61d9b8a65ada8d13",
+      "base": "55c0d002bd07109c34f15aa021074b16d81224f9",
+      "draft": true,
+      "state": "open",
+      "merged": false,
+      "autoMerge": null,
+      "mergeable": false,
+      "mergeableState": "dirty"
+    }
+  },
+  "inherited": {
+    "r4Independent": {
+      "pass": 21,
+      "fail": 0,
+      "skip": 0
+    },
+    "sourceCI": {
+      "run": 39530713321,
+      "pass": 146,
+      "fail": 0,
+      "skip": 0,
+      "formalHandoff": "skipped"
+    },
+    "webCI": {
+      "run": 39531091019,
+      "pass": 520,
+      "fail": 0,
+      "skip": 15,
+      "deploy": "skipped"
+    },
+    "w01CI": {
+      "run": 39531091020,
+      "pass": 535,
+      "fail": 0,
+      "skip": 0,
+      "previewHTTPS": "skipped"
+    },
+    "reuseScope": "r4 Source runtime/replay/request/archive, same-digest allocation/concurrency, immutable byte checks, complete retained dependencies and whole-build CAS rollback engineering; not a rerun or real provider proof"
+  },
+  "naturalCI": "Final r5 PR CI must be verified after this merge commit is pushed. Exact head/run/log hashes are recorded in Jira and local delivery receipt; no future success is asserted here.",
+  "actualFormalContentApprovalsAdded": 0,
+  "actualReleaseOrDispatchOrDeploy": 0,
+  "mainMerged": false,
+  "enteredW10": false
+}

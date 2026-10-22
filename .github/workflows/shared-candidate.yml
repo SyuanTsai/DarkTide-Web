@@ -1,0 +1,52 @@
+name: W09 Source proposal candidate
+on:
+  repository_dispatch:
+    types: [w09-source-release]
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Verified W09 Source release ID to retry as an unselected Web proposal
+        type: string
+        required: true
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  proposal-candidate:
+    if: github.repository == 'SyuanTsai/DarkTide-Web'
+      && ((github.event_name == 'repository_dispatch' && github.event.action == 'w09-source-release')
+        || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    concurrency:
+      group: darktide-w09-candidate-proposals
+      cancel-in-progress: false
+    steps:
+      - name: Check out current Web main without persisted credentials
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check out public Source history for fixed-commit replay
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/DarkTide-Source-Data
+          ref: main
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare or update the revision-scoped candidate PR
+        env:
+          W09_RELEASE_ID: ${{ github.event.client_payload.release_id || inputs.release_id }}
+          W09_SOURCE_ROOT: ${{ github.workspace }}/source
+          W09_GIT_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/prepare-w09-candidate.mjs

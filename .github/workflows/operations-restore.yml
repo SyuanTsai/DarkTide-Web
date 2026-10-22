@@ -55,6 +55,24 @@ jobs:
         run: |
           latest="$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq '.sha')"
           [ "$latest" = "$GITHUB_SHA" ] || exit 1
+      - name: Prevent legacy recovery from bypassing W09 release authority
+        if: inputs.publish == true
+        run: |
+          node --input-type=module <<'NODE'
+          import { lstat } from 'node:fs/promises';
+          import path from 'node:path';
+          import { readW09OwnerStateBranch } from './scripts/content/contract-w09-state-branch.mjs';
+
+          const markerPath = path.join(process.cwd(), 'content/contracts/w09/source-handoff/selected.json');
+          try {
+            await lstat(markerPath);
+            throw new Error('A selected W09 composition is present; use shared-release rollback with its complete expected-current snapshot.');
+          } catch (error) {
+            if (error.code !== 'ENOENT') throw error;
+          }
+          const owner = await readW09OwnerStateBranch({ repoRoot: process.cwd(), branch: 'w09-release-state' });
+          if (owner.active) throw new Error('An active or pending W09 publication exists; use shared-release rollback with its complete expected-current snapshot.');
+          NODE
       - name: Publish the exact restored package with existing HTTPS and automatic rollback checks
         if: inputs.publish == true
         run: npm run deploy:cloudflare

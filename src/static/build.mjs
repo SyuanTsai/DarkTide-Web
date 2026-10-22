@@ -15,6 +15,7 @@ import {
   validatePublicFiles as validateGeneratedPublicFiles
 } from '../published/contract.mjs';
 import { verifyStaticPackage } from './verify.mjs';
+import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
 
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const BUILD_CONTEXT_MARKER = '__BUILD_CONTEXT__';
@@ -97,6 +98,41 @@ async function loadPublishedPackage(root) {
   validatePublishedContent(raw, { assetBytes });
   if (raw.package_kind !== 'published') throw new Error('formal build requires package_kind published');
   return { data: raw, assetBytes };
+}
+
+async function loadPublishedRuntimeSnapshot(snapshotRoot) {
+  const { verifyStaticPackage } = await import('./verify.mjs');
+  const verified = await verifyStaticPackage(snapshotRoot);
+  if (verified.package_kind !== 'published') throw new Error('runtime snapshot must be a verified published static artifact');
+  const manifest = JSON.parse((await checkedFile(snapshotRoot, 'artifact-manifest.json', 'runtime snapshot manifest')).toString('utf8'));
+  const files = new Map();
+  for (const row of manifest.files) files.set(row.path, await checkedFile(snapshotRoot, row.path, 'runtime snapshot file'));
+  const runtimeRevision = verified.runtime_data_revision ?? verified.data_revision;
+  const dataPrefix = 'data/' + runtimeRevision + '/';
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+  const publicFiles = new Map([...files]
+    .filter(([name]) => name.startsWith(dataPrefix))
+    .map(([name, bytes]) => {
+      const text = decoder.decode(bytes);
+      if (!Buffer.from(text, 'utf8').equals(bytes)) {
+        throw new Error('runtime snapshot public JSON is not canonical UTF-8: ' + name);
+      }
+      return [name.slice(dataPrefix.length), text];
+    }));
+  validateGeneratedPublicFiles(publicFiles);
+  const catalog = JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8'));
+  const index = Buffer.from(files.get('index.html') ?? []).toString('utf8');
+  const contextMatches = [...index.matchAll(/<script>\s*window\.__BUILD__\s*=\s*(\{[^<]*?\})\s*;?\s*<\/script>/gu)];
+  if (contextMatches.length !== 1) throw new Error('runtime snapshot must contain one verified build context');
+  const indexTemplate = index.replace(contextMatches[0][0], '<script>window.__BUILD__=__BUILD_CONTEXT__</script>');
+  const assetFiles = new Map([...files].filter(([name]) => name.startsWith('assets/')));
+  return {
+    data: { game_version: catalog.game_version, package_kind: catalog.package_kind },
+    assetBytes: new Map(),
+    publicFiles,
+    assetFiles,
+    indexTemplate,
+  };
 }
 
 function validatePublicFiles(files) {
@@ -189,7 +225,17 @@ function usesGamesLanternAssets(data) {
     (isGamesLanternUrl(asset.source_url) || isGamesLanternUrl(asset.attribution?.href)));
 }
 
-function makeVersion(data, dataRevision, buildId) {
+function makeVersion(data, dataRevision, buildId, sharedBundle = null) {
+  if (sharedBundle) {
+    return {
+      schema_version: 2,
+      data_revision: sharedBundle.version.data_revision,
+      build_id: buildId,
+      game_version: sharedBundle.version.game_version,
+      package_kind: sharedBundle.packageKind,
+      game_releases: structuredClone(sharedBundle.version.game_releases),
+    };
+  }
   return {
     schema_version: 2,
     data_revision: dataRevision,
@@ -286,21 +332,41 @@ async function collectStaticSources(root) {
   return sourceFiles;
 }
 
-export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published', data, siteOrigin } = {}) {
+function validateSharedReleaseInput(sharedRelease, mode) {
+  if (sharedRelease === undefined || sharedRelease === null) return null;
+  if (!sharedRelease || typeof sharedRelease !== 'object' || !(sharedRelease.files instanceof Map)) {
+    throw new TypeError('sharedRelease must be a validated W02 bundle with an exact file Map');
+  }
+  const bundle = validateSharedStaticFiles({
+    version: sharedRelease.version,
+    fixtureMarker: sharedRelease.fixtureMarker ?? null,
+    retainedReleases: sharedRelease.retainedReleases ?? [],
+    files: sharedRelease.files,
+  });
+  if (bundle.packageKind !== sharedRelease.packageKind) throw new Error('shared release package kind differs from its W02 validated version');
+  if (mode === 'fixture' && bundle.packageKind !== 'fixture') throw new Error('fixture mode requires an explicitly non-publishable shared bundle');
+  return bundle;
+}
+
+export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published', data, siteOrigin, sharedRelease, runtimeSnapshot } = {}) {
   if (mode !== 'published' && mode !== 'fixture') throw new Error('build mode must be published or fixture');
   const projectRoot = path.resolve(root);
   const normalizedSiteOrigin = normalizeSiteOrigin(siteOrigin);
   const rootInfo = await lstat(projectRoot);
   if (rootInfo.isSymbolicLink() || !rootInfo.isDirectory()) throw new Error('repository root must be a real directory');
   const outputDirectory = assertChildPath(projectRoot, path.join(projectRoot, 'dist'), 'dist path');
-  const input = mode === 'published' ? await loadPublishedPackage(projectRoot) : await loadFixturePackage(data);
+  if (runtimeSnapshot !== undefined && mode !== 'published') throw new Error('runtime snapshots are supported only for published builds');
+  const input = mode === 'published'
+    ? runtimeSnapshot ? await loadPublishedRuntimeSnapshot(path.resolve(runtimeSnapshot)) : await loadPublishedPackage(projectRoot)
+    : await loadFixturePackage(data);
   const publicData = input.data;
   const assetBytes = input.assetBytes;
-  validatePublishedContent(publicData, { assetBytes });
+  if (runtimeSnapshot === undefined) validatePublishedContent(publicData, { assetBytes });
   if (mode === 'published' && publicData.package_kind !== 'published') throw new Error('formal build requires package_kind published');
   if (mode === 'fixture' && publicData.package_kind !== 'fixture') throw new Error('fixture build requires package_kind fixture');
+  const sharedBundle = validateSharedReleaseInput(sharedRelease, mode);
 
-  const publicFiles = createPublicFiles(publicData, { assetBytes });
+  const publicFiles = input.publicFiles ?? createPublicFiles(publicData, { assetBytes });
   validatePublicFiles(publicFiles);
   validateGeneratedPublicFiles(publicFiles);
   if (mode === 'published' && [...publicFiles.keys()].some(name => !name.endsWith('.json'))) {
@@ -309,16 +375,40 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   const dataRevision = hashNamedFiles(publicFiles);
   const dataRoot = 'data/' + dataRevision + '/';
   const outputData = new Map([...publicFiles].map(([name, value]) => [dataRoot + name, value]));
+  if (sharedBundle && sharedBundle.version.data_revision === dataRevision) {
+    throw new Error('shared and legacy runtime data revisions cannot use the same URL root');
+  }
+  const sharedOutputFiles = new Map();
+  if (sharedBundle) {
+    for (const [name, value] of sharedBundle.files) {
+      safeRelativePath(name, 'shared static output path');
+      if (outputData.has(name)) throw new Error('shared static output collides with legacy runtime path: ' + name);
+      sharedOutputFiles.set(name, Buffer.from(value));
+    }
+    if (sharedBundle.packageKind === 'fixture') {
+      sharedOutputFiles.set('shared-fixture.json', Buffer.from(JSON.stringify(sharedBundle.fixtureMarker, null, 2) + '\n', 'utf8'));
+    }
+  }
 
-  const sourceFiles = await collectStaticSources(projectRoot);
-  const hashed = await buildHashedAssets(sourceFiles);
-  let indexTemplate = replaceSiteReferences(hashed.index, hashed.moduleEntry, hashed.styleEntry);
-  indexTemplate = injectInitialGamesLanternCredit(indexTemplate, usesGamesLanternAssets(publicData));
+  const snapshot = runtimeSnapshot === undefined ? null : input;
+  const hashed = snapshot
+    ? { assets: snapshot.assetFiles }
+    : await buildHashedAssets(await collectStaticSources(projectRoot));
+  let indexTemplate = snapshot
+    ? snapshot.indexTemplate
+    : replaceSiteReferences(hashed.index, hashed.moduleEntry, hashed.styleEntry);
+  if (!snapshot) indexTemplate = injectInitialGamesLanternCredit(indexTemplate, usesGamesLanternAssets(publicData));
   const normalizedIndex = indexTemplate;
   const headers = makeHeaders(publicFiles, normalizedSiteOrigin);
   const buildInputs = new Map([...hashed.assets]);
   buildInputs.set('index.html', normalizedIndex);
-  for (const [name, value] of publicFiles) buildInputs.set('data/' + name, value);
+  if (sharedBundle) {
+    for (const [name, value] of outputData) buildInputs.set(name, value);
+    for (const [name, value] of sharedOutputFiles) buildInputs.set(name, value);
+    buildInputs.set('shared-release-identity.json', createSharedReleaseIdentity(sharedBundle));
+  } else {
+    for (const [name, value] of publicFiles) buildInputs.set('data/' + name, value);
+  }
   const rewrites = renderStaticRewrites(JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8')));
   buildInputs.set('_redirects', rewrites);
   buildInputs.set('_headers', headers);
@@ -327,14 +417,19 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   if (sitemap !== null) buildInputs.set('sitemap.xml', sitemap);
   buildInputs.set('robots.txt', robots);
   const buildId = hashNamedFiles(buildInputs);
-  const version = makeVersion(publicData, dataRevision, buildId);
-  const serializedContext = escapeScriptJson(version);
+  const version = makeVersion(publicData, dataRevision, buildId, sharedBundle);
+  const buildContext = sharedBundle ? {
+    ...makeVersion(publicData, dataRevision, buildId),
+    ...structuredClone(sharedBundle.metadata),
+  } : version;
+  const serializedContext = escapeScriptJson(buildContext);
   indexTemplate = indexTemplate.replace(BUILD_CONTEXT_MARKER, serializedContext);
 
   const outputFiles = new Map([
     ['index.html', indexTemplate],
     ...hashed.assets,
     ...outputData,
+    ...sharedOutputFiles,
     ['version.json', Buffer.from(JSON.stringify(version, null, 2) + '\n', 'utf8')],
     ['_headers', headers],
     ['_redirects', rewrites],
@@ -371,7 +466,11 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
     data_revision: version.data_revision,
     build_id: version.build_id,
     file_count: outputFiles.size,
-    outputDirectory
+    outputDirectory,
+    ...(sharedBundle ? {
+      runtime_package_kind: publicData.package_kind,
+      runtime_data_revision: dataRevision,
+    } : {}),
   };
 }
 
