@@ -231,6 +231,25 @@ test('UnitT60_keeps_each_weapon_mark_source_bundle_together', () => {
   assert.equal(markXii.dropRange, undefined);
 });
 
+// Scenario: A weapon detail section cites repeated typed terms and has valid plus stale official-source anchors.
+// Purpose: Preserve context-scoped weapon terminology and show only errata anchored to the canonical official source.
+// Given one canonical weapon source segment and a stale digest, When a mark view is built, Then terms deduplicate and only the exact erratum remains.
+test('UnitT65_weapon_view_preserves_typed_terms_and_only_exact_canonical_errata', () => {
+  const domains = [makeWeaponDomain({ withAnnotations: true }), makeTermsDomain({ withWeaponTerms: true })];
+  const result = createSharedViewModel({ domains, gameReleaseId: RELEASE })
+    .getWeapon({ familyId: 'chainaxe-p1', markId: 'mark-iv' });
+
+  assert.equal(result.status, 'ready');
+  assert.equal(result.official.resolvedText, '同版官方武器描述。');
+  assert.deepEqual(result.terms.map((term) => [term.label, term.contextKey, term.definition]), [
+    ['攻擊對象', 'weapon.displayed-attacks', '此武器攻擊資料列示的目標類型。'],
+  ]);
+  assert.deepEqual(result.termRules, [{ ruleId: 'weapon:rule:chain', text: '連段資料依來源列示。' }]);
+  assert.deepEqual(result.errata.map((row) => row.text), ['此型號另有獨立勘誤。']);
+  assert.equal(result.errata[0].anchor.officialSourceId, officialIds.weaponIvDescription);
+  assert.equal(result.errata[0].context.description, '只說明 Mk IV 的名稱範圍。');
+});
+
 const approvedPackageDir = process.env.SYP_W11_APPROVED_PACKAGE_DIR;
 // Scenario: The fixed isolated candidate has exact pinned bytes but is not a selected or published release.
 // Purpose: Re-run the pure model against real approved input without copying its multi-megabyte domains into the repository.

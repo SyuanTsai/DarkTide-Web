@@ -4,6 +4,7 @@ export const refs = Object.freeze({
   skill: { gameReleaseId: RELEASE, kind: 'skill', recordId: 'darktide:skill:test' },
   termA: { gameReleaseId: RELEASE, kind: 'term', recordId: 'darktide:term:test:context-a' },
   termB: { gameReleaseId: RELEASE, kind: 'term', recordId: 'darktide:term:test:context-b' },
+  termWeapon: { gameReleaseId: RELEASE, kind: 'term', recordId: 'darktide:term:test:weapon-context' },
   blessing: { gameReleaseId: RELEASE, kind: 'blessing', recordId: 'darktide:blessing:family:mark:sample' },
   blessingVariant: { gameReleaseId: RELEASE, kind: 'blessing-variant', recordId: 'darktide:blessing-variant:family:mark:sample' },
   weaponIv: { gameReleaseId: RELEASE, kind: 'weapon', recordId: 'darktide:weapon:family:mark-iv' },
@@ -30,6 +31,7 @@ export const officialIds = Object.freeze({
   blessingTier1: 'official:test:blessing-tier-1:zh-tw',
   blessingTier4: 'official:test:blessing-tier-4:zh-tw',
   weaponIvName: 'official:test:weapon-mark-iv:zh-tw',
+  weaponIvDescription: 'official:test:weapon-mark-iv-description:zh-tw',
   weaponXiiName: 'official:test:weapon-mark-xii:zh-tw',
 });
 
@@ -94,7 +96,7 @@ export function makeSkillDomain({ presentationOverrides = {}, extraRecords = [] 
   };
 }
 
-export function makeTermsDomain() {
+export function makeTermsDomain({ withWeaponTerms = false } = {}) {
   return {
     schemaVersion: 'w08-shared-domain/1.0.0',
     kind: 'terms',
@@ -102,6 +104,7 @@ export function makeTermsDomain() {
     source: { records: [
       asRecord(refs.termA, { contextKey: 'skill.stats' }),
       asRecord(refs.termB, { contextKey: 'skill.conditions' }),
+      ...(withWeaponTerms ? [asRecord(refs.termWeapon, { contextKey: 'weapon.displayed-attacks' })] : []),
     ] },
     web: {
       presentations: [],
@@ -109,7 +112,9 @@ export function makeTermsDomain() {
       termLocalizations: [
         { termRef: refs.termA, contextKey: 'skill.stats', locale: 'zh-TW', label: '倍率', definition: '這個脈絡中的倍率。' },
         { termRef: refs.termB, contextKey: 'skill.conditions', locale: 'zh-TW', label: '倍率', definition: '這個脈絡中的條件倍率。' },
+        ...(withWeaponTerms ? [{ termRef: refs.termWeapon, contextKey: 'weapon.displayed-attacks', locale: 'zh-TW', label: '攻擊對象', definition: '此武器攻擊資料列示的目標類型。' }] : []),
       ],
+      ...(withWeaponTerms ? { termRules: { rules: [{ ruleId: 'weapon:rule:chain', targetText: '連段資料依來源列示。' }] } } : {}),
     },
   };
 }
@@ -208,7 +213,7 @@ export function makeBlessingDomains({ weaponRefs = [refs.weaponIv], presentation
   return blessing;
 }
 
-export function makeWeaponDomain() {
+export function makeWeaponDomain({ withAnnotations = false } = {}) {
   const weapons = [
     { weaponRef: refs.weaponIv, markId: 'mark-iv', markLabel: 'Mk IV', curveRef: refs.weaponCurveIv, definitionRef: refs.weaponDefinitionIv, attackRef: refs.attackIv, damage: '80' },
     { weaponRef: refs.weaponXii, markId: 'mark-xii', markLabel: 'Mk XII', curveRef: refs.weaponCurveXii, definitionRef: refs.weaponDefinitionXii, attackRef: refs.attackXii, damage: '96' },
@@ -218,6 +223,8 @@ export function makeWeaponDomain() {
   const officialSources = [];
   for (const row of weapons) {
     const officialSourceId = row.markId === 'mark-iv' ? officialIds.weaponIvName : officialIds.weaponXiiName;
+    const canonicalOfficialSourceId = row.markId === 'mark-iv' && withAnnotations
+      ? officialIds.weaponIvDescription : officialSourceId;
     const claim60 = { ...refs.weaponClaim60, recordId: `${refs.weaponClaim60.recordId}:${row.markId}` };
     const claim80 = { ...refs.weaponClaim80, recordId: `${refs.weaponClaim80.recordId}:${row.markId}` };
     const statSection = {
@@ -248,9 +255,12 @@ export function makeWeaponDomain() {
       locale: 'zh-TW',
       name: '突擊鏈斧',
       nameOfficialSourceId: officialSourceId,
-      official: { entityRef: row.weaponRef, officialSourceId },
+      official: { entityRef: row.weaponRef, officialSourceId: canonicalOfficialSourceId },
       errata: [],
-      detailSections: [],
+      detailSections: withAnnotations && row.markId === 'mark-iv' ? [{
+        sectionId: 'effects',
+        items: [{ itemId: 'weapon-context', text: '武器攻擊資料。', termRefs: [refs.termWeapon, refs.termWeapon], termRuleRefs: ['weapon:rule:chain'] }],
+      }] : [],
       weaponView: {
         sourceWeaponRef: row.weaponRef,
         markLabel: row.markLabel,
@@ -262,6 +272,25 @@ export function makeWeaponDomain() {
       },
     });
     officialSources.push(officialInput(officialSourceId, row.weaponRef, '突擊鏈斧', '突擊鏈斧'));
+    if (row.markId === 'mark-iv' && withAnnotations) {
+      officialSources.push(officialInput(canonicalOfficialSourceId, row.weaponRef, '官方武器說明。', '同版官方武器描述。', {
+        segments: [{ segmentId: 'weapon-name-segment', sha256: 'c'.repeat(64), text: '官方武器說明。' }],
+      }));
+      presentations[presentations.length - 1].errata = [
+        {
+          errataId: 'weapon-valid-erratum',
+          anchor: { officialSourceId: canonicalOfficialSourceId, segmentId: 'weapon-name-segment', segmentSha256: 'c'.repeat(64) },
+          context: { description: '只說明 Mk IV 的名稱範圍。', refs: [refs.weaponIv] },
+          claimRefs: [refs.weaponClaim60], evidenceRefs: [refs.skillEvidence], text: '此型號另有獨立勘誤。',
+        },
+        {
+          errataId: 'weapon-stale-erratum',
+          anchor: { officialSourceId: canonicalOfficialSourceId, segmentId: 'weapon-name-segment', segmentSha256: 'd'.repeat(64) },
+          context: { description: '舊錨點不可顯示。', refs: [refs.weaponIv] },
+          claimRefs: [refs.weaponClaim60], evidenceRefs: [refs.skillEvidence], text: '不可顯示的舊勘誤。',
+        },
+      ];
+    }
   }
   return {
     schemaVersion: 'w08-shared-domain/1.0.0', kind: 'weapons', gameReleaseId: RELEASE,

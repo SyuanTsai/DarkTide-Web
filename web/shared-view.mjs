@@ -387,7 +387,8 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
       return unavailable('missing-zh-tw-weapon-presentation', 'weapon');
     }
     const nameSource = findOfficial(officialSources, presentation.nameOfficialSourceId, weaponRef, gameReleaseId);
-    if (!nameSource) return unavailable('missing-zh-tw-weapon-name', 'official');
+    const canonicalOfficialSource = findOfficial(officialSources, presentation.official?.officialSourceId, weaponRef, gameReleaseId);
+    if (!nameSource || !canonicalOfficialSource) return unavailable('missing-zh-tw-weapon-name', 'official');
     const view = presentation.weaponView;
     if (!Array.isArray(view.statSections) || !Array.isArray(view.attackProfileRefs)) return unavailable('invalid-weapon-presentation', 'weapon');
     const statSections = [];
@@ -406,14 +407,17 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
     }
     const attackProfiles = resolveRecords(view.attackProfileRefs, 'attack-profile', gameReleaseId, recordByKey);
     if (!attackProfiles) return unavailable('incomplete-weapon-attack-bundle', 'weapon');
+    const termViews = new Map();
+    addTerms(termViews, weapon.payload.termRefs, recordByKey, termLocalizations, gameReleaseId);
     const sectionResult = orderedSections(presentation.detailSections ?? [], {
-      terms: new Map(), recordByKey, localizations: termLocalizations, termRules, gameReleaseId,
+      terms: termViews, recordByKey, localizations: termLocalizations, termRules, gameReleaseId,
     });
     if (!sectionResult.ok) return unavailable('invalid-weapon-sections', 'weapon');
     return {
       status: 'ready',
       name: presentation.name,
-      official: officialView(nameSource),
+      official: officialView(canonicalOfficialSource),
+      errata: canonicalOfficialSource ? exactErrata(presentation.errata, canonicalOfficialSource) : [],
       familyId,
       markId,
       markLabel: view.markLabel,
@@ -421,6 +425,8 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
       comparisonHeading: view.comparisonHeading,
       note: view.note,
       sections: sectionResult.sections,
+      terms: [...termViews.values()].filter((term) => term.termRef),
+      termRules: [...termViews.values()].filter((term) => term.ruleId),
       statSections,
       attackProfiles,
       source: {

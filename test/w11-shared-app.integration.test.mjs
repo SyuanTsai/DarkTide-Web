@@ -197,6 +197,11 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
       await page.goto(routeFor(hosted.origin, `/weapons/?family=${encodeURIComponent(mark.familyId)}&mark=${encodeURIComponent(mark.markId)}`));
       await page.locator('.shared-official-text').waitFor({ state: 'visible' });
       assert.equal(await page.locator('main h1').innerText(), mark.name);
+      assert.equal(await page.locator('.shared-erratum').count(), mark.errata.length,
+        'only the weapon view’s exact official-source errata are visible');
+      const expectedTermsBlock = mark.terms.length || mark.termRules.length ? 1 : 0;
+      assert.equal(await page.locator('main details.shared-expandable > summary').filter({ hasText: '術語' }).count(), expectedTermsBlock,
+        'weapon terminology renders only when the verified typed-context view contains terms');
       assert.ok(await page.locator('.shared-stat-list').allInnerTexts().then(rows => rows.join('\n').includes(mark.statSections[0].claims[0].payload.displayValue.decimal)));
       assert.ok(await page.locator('.shared-expandable summary').allInnerTexts().then(rows => rows.includes('其他來源數值、素質語意與連段條件')));
       const sourceDetails = page.locator('details.shared-source-details');

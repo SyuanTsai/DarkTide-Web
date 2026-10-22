@@ -555,6 +555,7 @@ function renderWeapon(main, result, view, familyMarks, url) {
   main.append(tabs);
   if (view.note) main.append(node('p', view.note, 'shared-callout'));
   renderOfficial(main, view.official);
+  renderErrata(main, view.errata);
   for (const section of view.statSections) {
     const block = detailBlock(section.label);
     const list = node('dl', null, 'shared-stat-list');
@@ -605,6 +606,7 @@ function renderWeapon(main, result, view, familyMarks, url) {
   main.append(attacks);
   renderWeaponSourceDetails(main, view);
   renderSections(main, view.sections);
+  renderTerms(main, view);
 }
 function renderWeapons(main, result, url) {
   const domain = result.domains.find(row => row.kind === 'weapons');
