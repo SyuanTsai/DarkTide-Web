@@ -16,6 +16,8 @@ import {
   resolveCatalogRoute,
   writeListState
 } from './client.mjs';
+import { createSharedClient, hasSharedContext } from './shared-client.mjs';
+import { renderSharedPage } from './shared-render.mjs';
 
 const main = document.getElementById('main');
 const buildMeta = document.getElementById('build-meta');
@@ -920,8 +922,36 @@ async function loadCurrentLocation(request, { isCurrent } = {}) {
 }
 
 const navigation = createNavigationController({ load: loadCurrentLocation, render: renderState });
+const sharedMode = hasSharedContext(build);
+const sharedClient = sharedMode ? createSharedClient({ build }) : null;
+let sharedLoadPromise = null;
+let sharedNavigationGeneration = 0;
+
+async function showSharedPage(force = false) {
+  const generation = ++sharedNavigationGeneration;
+  const url = new URL(window.location.href);
+  if (force || !sharedLoadPromise) sharedLoadPromise = sharedClient.load();
+  if (!sharedLoadPromise) {
+    renderSharedPage({ main, buildMeta, url, error: new Error('shared load unavailable') });
+    return;
+  }
+  if (sharedLoadPromise && !sharedLoadPromise.result) {
+    renderSharedPage({ main, buildMeta, url, result: { status: 'loading' } });
+  }
+  try {
+    const result = await sharedLoadPromise;
+    if (generation !== sharedNavigationGeneration) return;
+    sharedLoadPromise.result = result;
+    renderSharedPage({ main, buildMeta, result, url });
+  } catch (error) {
+    if (generation !== sharedNavigationGeneration) return;
+    sharedLoadPromise = null;
+    renderSharedPage({ main, buildMeta, url, error });
+  }
+}
 
 function showCurrentPage(force = false) {
+  if (sharedMode) return showSharedPage(force);
   const request = { href: window.location.href, force };
   return navigation.navigate(request);
 }
@@ -939,7 +969,7 @@ document.addEventListener('click', event => {
   showCurrentPage();
 });
 
-if (buildMeta && build && typeof build.data_revision === 'string') {
+if (!sharedMode && buildMeta && build && typeof build.data_revision === 'string') {
   buildMeta.textContent = `遊戲版本 ${unknownText(build.game_version)} · 資料版本 ${build.data_revision.slice(0, 12)}`;
 }
 showCurrentPage();
