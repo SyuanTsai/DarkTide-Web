@@ -10,6 +10,7 @@ import {
   resolveW09CompositionContext,
   rollbackW09SharedComposition,
 } from './content/contract-w09-release.mjs';
+import { createW09SourceFetch } from './content/contract-w09-source-fetch.mjs';
 import { validateW09SelectedComposition } from './content/contract-w09-compose.mjs';
 import { createW09StateBranchStore } from './content/contract-w09-state-branch.mjs';
 
@@ -117,7 +118,11 @@ try {
       ? { expectedCompositionCommit: process.env.W09_EXPECTED_COMPOSITION_COMMIT }
       : {}),
   };
-  if (!rollbackArguments) await resolveW09CompositionContext({ repoRoot, ...compositionOptions });
+  let sourceFetchImpl = null;
+  if (!rollbackArguments) {
+    await resolveW09CompositionContext({ repoRoot, ...compositionOptions });
+    sourceFetchImpl = createW09SourceFetch({ token: process.env.W09_GIT_TOKEN });
+  }
 
   const stateStore = await createW09StateBranchStore({
     repoRoot,
@@ -146,6 +151,7 @@ try {
       sourceReleaseIds: selected.proposals.map(row => row.releaseId),
       expectedCurrent: currentW09ActiveSnapshot(state),
       ...compositionOptions,
+      fetchImpl: sourceFetchImpl,
       siteOrigin,
       promoteVerifiedArtifact: deployExactArtifact,
       persistDurableState: stateStore.persist,
