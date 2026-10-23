@@ -20,19 +20,23 @@ test('UnitT10_loads_exact_manifest_pinned_optional_game_changes_index', async t 
   assert.equal(calls.filter(call => call.url.endsWith('/game-changes.json')).length, 1);
 });
 
-// Scenario: The selected manifest has no optional game-changes index.
-// Purpose: Preserve the legal empty-index release without probing for undeclared files.
+// Scenario: The selected manifest lists a game-changes file but leaves changeIndexPath null.
+// Purpose: Preserve the legal empty-index release without treating an unselected file as the optional index.
 // Given changeIndexPath is null, When the release is loaded, Then only the manifest and four core files are requested.
 test('UnitT20_keeps_null_change_index_empty_without_extra_requests', async t => {
   installTestLocation(t);
-  const pack = makeSharedPackage();
+  const pack = makeSharedPackage({ unselectedGameChanges: true });
   const calls = [];
 
   const result = await loadSharedRelease({ build: pack.build, fetchImpl: responseFetch(pack.responses, { calls }) });
 
   assert.equal(result.status, 'ready');
+  assert.equal(pack.manifest.changeIndexPath, null);
+  assert.equal(pack.manifest.files.some(file => file.kind === 'game-changes'), true,
+    'the manifest may list an unselected optional file');
   assert.equal(result.domains.length, 4);
   assert.equal(calls.length, 5);
+  assert.equal(result.rawFiles.has(`/data/${pack.manifest.dataRevision}/game-changes.json`), false);
   assert.ok(calls.every(call => !call.url.endsWith('/game-changes.json')));
 });
 
