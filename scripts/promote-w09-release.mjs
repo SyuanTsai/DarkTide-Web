@@ -7,6 +7,7 @@ import {
   currentW09ActiveSnapshot,
   promoteW09SelectedComposition,
   readW09ReleaseState,
+  resolveW09CompositionContext,
   rollbackW09SharedComposition,
 } from './content/contract-w09-release.mjs';
 import { validateW09SelectedComposition } from './content/contract-w09-compose.mjs';
@@ -110,6 +111,14 @@ try {
   if (args[0] === '--rollback') rollbackArguments = await readRollbackArguments(args.slice(1));
   else if (args.length !== 0) throw new Error(USAGE);
 
+  const compositionOptions = {
+    ...(process.env.W09_COMPOSITION_ROOT !== undefined ? { compositionRepoRoot: process.env.W09_COMPOSITION_ROOT } : {}),
+    ...(process.env.W09_EXPECTED_COMPOSITION_COMMIT !== undefined
+      ? { expectedCompositionCommit: process.env.W09_EXPECTED_COMPOSITION_COMMIT }
+      : {}),
+  };
+  if (!rollbackArguments) await resolveW09CompositionContext({ repoRoot, ...compositionOptions });
+
   const stateStore = await createW09StateBranchStore({
     repoRoot,
     branch: process.env.W09_STATE_BRANCH ?? 'w09-release-state',
@@ -136,6 +145,7 @@ try {
       sourceRoot: process.env.W09_SOURCE_ROOT ?? path.resolve(repoRoot, '..', 'source'),
       sourceReleaseIds: selected.proposals.map(row => row.releaseId),
       expectedCurrent: currentW09ActiveSnapshot(state),
+      ...compositionOptions,
       siteOrigin,
       promoteVerifiedArtifact: deployExactArtifact,
       persistDurableState: stateStore.persist,
