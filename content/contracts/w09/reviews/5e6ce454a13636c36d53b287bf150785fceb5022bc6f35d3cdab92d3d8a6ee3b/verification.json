@@ -1,0 +1,67 @@
+{
+  "schema": "w09-web-approved-correction-verification/1",
+  "priorApprovalRecordHead": "653602e83d2a965410ebc97a44508d8638459bca",
+  "correctionScopeSha256": "5e6ce454a13636c36d53b287bf150785fceb5022bc6f35d3cdab92d3d8a6ee3b",
+  "exactChangedTargetDigestPairsMatched": 5,
+  "otherTargetDigestsUnchanged": 67,
+  "dependencyDigestsUnchanged": 72,
+  "newWebHumanReceipts": 5,
+  "historicalWebHumanReceiptsPreserved": 72,
+  "currentWebReceiptCount": 77,
+  "authoringModes": {
+    "w06": {
+      "valid": true,
+      "issues": [],
+      "targetCount": 34,
+      "receiptCount": 39
+    },
+    "w07": {
+      "valid": true,
+      "issues": [],
+      "targetCount": 38,
+      "receiptCount": 38
+    }
+  },
+  "recomposedReview": {
+    "states": {
+      "approved": 869,
+      "pending": 0,
+      "rejected": 0,
+      "stale": 0
+    },
+    "targetCount": 869,
+    "receiptCount": 874,
+    "sourceTargetCount": 797,
+    "webTargetCount": 72
+  },
+  "resolvedContentFindings": [
+    {
+      "id": "A",
+      "targets": [
+        "04",
+        "05",
+        "06"
+      ],
+      "result": "Approved text limits the Peril estimates to the stated charge/lock phases."
+    },
+    {
+      "id": "B",
+      "targets": [
+        "11",
+        "17"
+      ],
+      "result": "Approved text uses valid-target attack execution instead of actual HP damage as the condition."
+    }
+  ],
+  "contentGate": {
+    "status": "ready-for-release-allocation",
+    "publicationEligible": false,
+    "blockers": []
+  },
+  "selected": false,
+  "allocationReserved": false,
+  "actualContentVersion": null,
+  "publicationEligible": false,
+  "evidenceLimits": "Static fixed-source review; no gameplay execution or new historical bundle identity claim. Existing Source success/retry evidence is inherited after exact packet-byte checks.",
+  "newRepositoryTestsAdded": false
+}

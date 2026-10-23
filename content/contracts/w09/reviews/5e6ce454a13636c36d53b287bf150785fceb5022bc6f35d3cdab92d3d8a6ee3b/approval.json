@@ -1,0 +1,101 @@
+{
+  "schema": "w09-web-content-correction-approval/1",
+  "pullRequest": 15,
+  "approvedContentHead": "ad9c36819d4f2d86d88eda61542c3ed2a99b5ab8",
+  "priorApprovalRecordHead": "653602e83d2a965410ebc97a44508d8638459bca",
+  "priorApprovalScopeSha256": "7c2e8bba7b53629af1a7938b5b47108054290a76fbf322b3a7d47f56d4977dd6",
+  "correctionScopeSha256": "5e6ce454a13636c36d53b287bf150785fceb5022bc6f35d3cdab92d3d8a6ee3b",
+  "correctionProposalIndexSha256": "d9975366155ec60998743fa5fa4d418a6074cecc199fc4a067f4f8d64cb38cbe",
+  "reviewer": {
+    "kind": "human",
+    "id": "SyuanTsai"
+  },
+  "recordedAtUtc": "2026-10-22T13:47:26Z",
+  "timestampMeaning": "Receipt recording time after direct human authorization; not a claim about the exact message/click time.",
+  "humanAuthorization": {
+    "kind": "direct-human-question-reply",
+    "questionItemId": "[\"request_user_input_async\",\"call_86e8f41e54df4a8399624fb7ae65ff90\",0]",
+    "questionScope": "Approve 04, 05, 06, 11, 17 under fixed correction scope 5e6ce454…; preserve the original 72 receipts and all operation restrictions.",
+    "answer": "核准這5項最小修訂，仍維持所有操作限制"
+  },
+  "changedTargetCount": 5,
+  "changedTargetNumbers": [
+    "04",
+    "05",
+    "06",
+    "11",
+    "17"
+  ],
+  "originalWebHumanReceiptsPreserved": 72,
+  "otherTargetsUnchanged": 67,
+  "dependencyDigestsUnchanged": 72,
+  "source": {
+    "sourceCommit": "fccda635f392b5259c883b85603acdf639bb83fb",
+    "sourceRevision": "1fdd0881633c623ed8f5ad294613a0747d675e1dad2266b844ce42bf72f73520",
+    "archiveSha256": "5ffd4bf8a15803a1c319a94114f43f8ca3350dfcb18c13dc6e8557a48fcf8603",
+    "manifestSha256": "eed060d50871b8cde26510b100ff76c1479863e9c7e52001993af252c11d0118",
+    "requestId": "0c18b1e4f18392982efa0d54ad23f4f8e2758cf42780fb0019b6b15a565c1578",
+    "packetFiles": [
+      {
+        "path": "analysis.md",
+        "sha256": "2bef4710f2d810f02dbf82262b9a5b3252c84f12dcf525f64c1d506a5b65c155",
+        "sizeBytes": 131502
+      },
+      {
+        "path": "source-revision.json",
+        "sha256": "b63452b25a8aa0a5bfec6f82f2cbfde907bf8b203df9f7c5656fd95a55dcb5f8",
+        "sizeBytes": 28231
+      },
+      {
+        "path": "source-revision.md",
+        "sha256": "56ea10ddfdfa9db44d942c7757680e62aaba0760e0863bb2610d7df89d40c6f1",
+        "sizeBytes": 15540
+      },
+      {
+        "path": "source-manifest.json",
+        "sha256": "eed060d50871b8cde26510b100ff76c1479863e9c7e52001993af252c11d0118",
+        "sizeBytes": 26802
+      },
+      {
+        "path": "source-receipt.json",
+        "sha256": "30b3e638f28c2597fe5e8818e28c1e398cdaf2159ae981a2d8d42c60c0fcd7de",
+        "sizeBytes": 980
+      },
+      {
+        "path": "technical.json",
+        "sha256": "eb275a2088d2e1fa4e9e71842be22d71207197a22b61d7cb25c9a3361ae6453d",
+        "sizeBytes": 6513034
+      }
+    ],
+    "targetsApproved": 797
+  },
+  "web": {
+    "authoringCommit": "40c477835353bd9513f202d6b82609a580afeabd",
+    "compilerCommit": "1aadf6652838bcee4c282c884b5363be8d0ecb87",
+    "compilerFileSetSha256": "0b76696403ab5c5ff419c7226d25255367c82b20a62c089ea9f255f78f175e15",
+    "inputDigest": "9215de900f141d7829c5e1ae3b4953b0d4bfc870190141f1e7e61010cbe25b72"
+  },
+  "authoringOverlay": [
+    {
+      "mode": "w06",
+      "target": "authoring",
+      "path": "content/contracts/w09/authoring-overlays/w06/authoring/5e6ce454a13636c36d53b287bf150785fceb5022bc6f35d3cdab92d3d8a6ee3b.json",
+      "sizeBytes": 62706,
+      "sha256": "e4cea874d9215448f65011b08e9a2a23ad900f31fa30c220d63a4731b16cb0be"
+    },
+    {
+      "mode": "w07",
+      "target": "authoring",
+      "path": "content/contracts/w09/authoring-overlays/w07/authoring/7c2e8bba7b53629af1a7938b5b47108054290a76fbf322b3a7d47f56d4977dd6.json",
+      "sizeBytes": 53652,
+      "sha256": "49a86b2f748f05f955e37f70acd313fd864e12e6da35f3e4b9799f46ee1a5a5d"
+    }
+  ],
+  "operationalAuthorization": {
+    "mergePR15": false,
+    "selected": false,
+    "allocationReserved": false,
+    "formalWebsitePublication": false,
+    "productionRollback": false
+  }
+}

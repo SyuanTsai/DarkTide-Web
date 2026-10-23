@@ -1,0 +1,1449 @@
+{
+  "schemaVersion": "2.0.0",
+  "contractKind": "web-authoring",
+  "fixtureOnly": false,
+  "publicationEligible": false,
+  "sourcePin": {
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "commit": "fccda635f392b5259c883b85603acdf639bb83fb",
+    "schemaId": "https://github.com/SyuanTsai/DarkTide-Source-Data/content/schema/v2/source-contract.schema.json",
+    "schemaSha256": "0ad2f64ecfb6a7d542e7f502d8d7ba776ee525f24fceb878209a8162b50d24f5",
+    "dataSha256": "cc7975845b98eb3b82e24357c29f72e47569f063efd4f4ab10bd701798057d77",
+    "validatorSha256": "48511a378ff00019a09a098ef466e43f4964c79a5b9509fd4d0d925d798e7b54"
+  },
+  "officialInputsSha256": "f81406e85643fc0cdcf618d5a092b6dc6379404b0679d9b080a92b77510d504e",
+  "presentations": [
+    {
+      "authoringId": "web:presentation:chainaxe-p1-m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:chainaxe:p1-m1",
+        "gameReleaseId": "darktide:1.13.2",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "突擊鏈斧",
+      "nameOfficialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:zh-tw",
+      "nameOfficialLocaleRefs": [
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:en",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:zh-tw",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "official": {
+        "officialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:zh-tw",
+        "entityRef": {
+          "recordId": "darktide:weapon:chainaxe:p1-m1",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "weapon"
+        },
+        "origin": "game-localization",
+        "sourceLocale": "zh-TW",
+        "resource": "items",
+        "key": "loc_weapon_family_chainaxe_p1_m1",
+        "sourceHash": "ca7da17a",
+        "occurrence": 1,
+        "sourceText": "突擊鏈斧",
+        "sourceTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89",
+        "segments": [
+          {
+            "segmentId": "segment-1",
+            "kind": "text",
+            "text": "突擊鏈斧",
+            "sha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+          }
+        ],
+        "params": [],
+        "resolvedText": "突擊鏈斧",
+        "resolvedTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+      },
+      "officialLocaleRefs": [
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:en",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m1:weapon-name:zh-tw",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "Mk IV",
+        "attackHeading": "遊戲顯示的攻擊段定位",
+        "comparisonHeading": "素質比較點（60% → 80%）",
+        "note": "60% 與 80% 是比較點，不代表掉落上下限；攻擊威力和鋸擊威力不等於實際扣血。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:chainaxe:p1-m1",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "weapon"
+        },
+        "statSections": [
+          {
+            "sourceStat": "chainaxe_dps_stat",
+            "label": "傷害",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-default-light-attack-power-comparison-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-damage-heavy-attack-power-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [
+              {
+                "recordId": "darktide:stat-definition:chainaxe-p1-m1-default-light-attack-power-table",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-definition"
+              }
+            ],
+            "curveRefs": [
+              {
+                "recordId": "darktide:stat-curve:chainaxe-p1-m1-default-light-attack-power-table",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-curve"
+              }
+            ]
+          },
+          {
+            "sourceStat": "chainaxe_armor_pierce_stat",
+            "label": "護甲穿透",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-default-light-armored-modifier-comparison-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-super_armor-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-light-resistant-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-armored-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-armor-penetration-heavy-super_armor-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [
+              {
+                "recordId": "darktide:stat-definition:chainaxe-p1-m1-default-light-armored-parameter-table",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-definition"
+              }
+            ],
+            "curveRefs": [
+              {
+                "recordId": "darktide:stat-curve:chainaxe-p1-m1-default-light-armored-parameter-table",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-curve"
+              }
+            ]
+          },
+          {
+            "sourceStat": "chainaxe_defence_stat",
+            "label": "防禦",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-stamina-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-stamina-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-sprint-cost-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-push-cost-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-defence-push-cost-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          },
+          {
+            "sourceStat": "chainaxe_sawing_stat",
+            "label": "鏈鋸",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-first-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-active-final-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-light-ordinary-light-final-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-first-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-sawing-heavy-active-final-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          },
+          {
+            "sourceStat": "chainaxe_mobility_stat",
+            "label": "移動性",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-distance-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-effective-dodges-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-dodge-speed-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m1-mobility-sprint-speed-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          }
+        ],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_heavy_special",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_left_down_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_left_heavy",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_right_diagonal_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_right_heavy",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_left_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_right_down_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_right_heavy_2",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_right_light_pushfollow",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m1:action_push",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          }
+        ]
+      }
+    },
+    {
+      "authoringId": "web:presentation:chainaxe-p1-m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:chainaxe:p1-m2",
+        "gameReleaseId": "darktide:1.13.2",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "突擊鏈斧",
+      "nameOfficialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:zh-tw",
+      "nameOfficialLocaleRefs": [
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:en",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:zh-tw",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "official": {
+        "officialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:zh-tw",
+        "entityRef": {
+          "recordId": "darktide:weapon:chainaxe:p1-m2",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "weapon"
+        },
+        "origin": "game-localization",
+        "sourceLocale": "zh-TW",
+        "resource": "items",
+        "key": "loc_weapon_family_chainaxe_p1_m1",
+        "sourceHash": "ca7da17a",
+        "occurrence": 1,
+        "sourceText": "突擊鏈斧",
+        "sourceTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89",
+        "segments": [
+          {
+            "segmentId": "segment-1",
+            "kind": "text",
+            "text": "突擊鏈斧",
+            "sha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+          }
+        ],
+        "params": [],
+        "resolvedText": "突擊鏈斧",
+        "resolvedTextSha256": "6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89"
+      },
+      "officialLocaleRefs": [
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:en",
+          "sourceLocale": "en"
+        },
+        {
+          "officialSourceId": "official:w07:chainaxe-p1-m2:weapon-name:zh-tw",
+          "sourceLocale": "zh-TW"
+        }
+      ],
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "Mk XII",
+        "attackHeading": "遊戲顯示的攻擊段定位",
+        "comparisonHeading": "素質比較點（60% → 80%）",
+        "note": "60% 與 80% 是比較點，不代表掉落上下限；攻擊威力和鋸擊威力不等於實際扣血。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:chainaxe:p1-m2",
+          "gameReleaseId": "darktide:1.13.2",
+          "kind": "weapon"
+        },
+        "statSections": [
+          {
+            "sourceStat": "chainaxe_dps_stat",
+            "label": "傷害",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-damage-light-attack-power-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-damage-heavy-attack-power-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [
+              {
+                "recordId": "darktide:stat-definition:chainaxe-p1-m2:light-chainaxe-tank-attack-power",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-definition"
+              }
+            ],
+            "curveRefs": [
+              {
+                "recordId": "darktide:stat-curve:chainaxe-p1-m2:light-chainaxe-tank-attack-power",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-curve"
+              }
+            ]
+          },
+          {
+            "sourceStat": "chainaxe_armor_pierce_stat",
+            "label": "護甲穿透",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-armored-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-super_armor-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-resistant-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-light-disgustingly_resilient-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-armored-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-armor-penetration-heavy-super_armor-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [
+              {
+                "recordId": "darktide:stat-definition:chainaxe-p1-m2:light-chainaxe-tank-armored-modifier",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-definition"
+              }
+            ],
+            "curveRefs": [
+              {
+                "recordId": "darktide:stat-curve:chainaxe-p1-m2:light-chainaxe-tank-armored-modifier",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "stat-curve"
+              }
+            ]
+          },
+          {
+            "sourceStat": "chainaxe_defence_stat",
+            "label": "防禦",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-stamina-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-stamina-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-sprint-cost-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-push-cost-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-defence-push-cost-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          },
+          {
+            "sourceStat": "chainaxe_sawing_stat",
+            "label": "鏈鋸",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-first-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-light-active-final-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-first-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-sawing-heavy-active-final-saw-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          },
+          {
+            "sourceStat": "chainaxe_mobility_stat",
+            "label": "移動性",
+            "claimRefs": [
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-distance-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-effective-dodges-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-dodge-speed-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-60",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              },
+              {
+                "recordId": "darktide:claim:chainaxe:p1-m2-mobility-sprint-speed-80",
+                "gameReleaseId": "darktide:1.13.2",
+                "kind": "claim"
+              }
+            ],
+            "statDefinitionRefs": [],
+            "curveRefs": []
+          }
+        ],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_left_down_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_heavy_1",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_right_diagonal_light",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_heavy_2",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_right_light_pushfollow",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:chainaxe:p1:chainaxe_p1_m2:action_push",
+            "gameReleaseId": "darktide:1.13.2",
+            "kind": "attack-profile"
+          }
+        ]
+      }
+    }
+  ],
+  "termLocalizations": [],
+  "announcements": [],
+  "gameChanges": [],
+  "officialTextChanges": [],
+  "reviewTargets": [
+    {
+      "targetId": "review:w07:p1-m1:official-name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/official",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w07:p1-m1:name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:note",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_dps_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/statSections/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_armor_pierce_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/statSections/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_defence_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/statSections/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_sawing_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/statSections/3",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_mobility_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/statSections/4",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-01",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-02",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-03",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-04",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/3",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-05",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/4",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-06",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/5",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-07",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/6",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-08",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/7",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-09",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/8",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-10",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m1",
+      "fieldPath": "/weaponView/attackProfileRefs/9",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:official-name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/official",
+      "dimension": "official"
+    },
+    {
+      "targetId": "review:w07:p1-m2:name",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:note",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_dps_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/statSections/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_armor_pierce_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/statSections/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_defence_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/statSections/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_sawing_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/statSections/3",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_mobility_stat",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/statSections/4",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-01",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-02",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-03",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/2",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-04",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/3",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-05",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/4",
+      "dimension": "content"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-06",
+      "ownerKind": "presentation",
+      "ownerId": "web:presentation:chainaxe-p1-m2",
+      "fieldPath": "/weaponView/attackProfileRefs/5",
+      "dimension": "content"
+    }
+  ],
+  "reviewReceipts": [
+    {
+      "targetId": "review:w07:p1-m1:official-name",
+      "targetDigest": "594f109273987512919999b81a24743c5e85c06bf5287b719c65cd770839c919",
+      "dependenciesDigest": "24fac34a61e756a3eda065ff4de284016f16972ebafe2a7d4fd5a3ffb6e06cf4",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:name",
+      "targetDigest": "1275ed23228938929219194fb76fe3f654fcad702ec1819c4d216e84fabeb4ac",
+      "dependenciesDigest": "aecfb237bca87d27c9c84ead868903ddc07c7faad3be742a0b2dd904dd4a8350",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:mark-label",
+      "targetDigest": "2821d6549e56957b1dafc3bffe16ab009e42325b22774305c328f7ee298c9c45",
+      "dependenciesDigest": "9cad80fe1c0cda939621449cf5e9f1302ca4cb3ff1a58a2486d0083683bd35b3",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:attack-heading",
+      "targetDigest": "78cc4f5119dd8aea4cbf3929a11f94fc601bf570d782cad00c0a9e21d40d4e81",
+      "dependenciesDigest": "9cad80fe1c0cda939621449cf5e9f1302ca4cb3ff1a58a2486d0083683bd35b3",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:comparison-heading",
+      "targetDigest": "6123dc52309f8c2392adbe9227de3d1c65d760b81f4a4a1fb08c64180bb7f708",
+      "dependenciesDigest": "9cad80fe1c0cda939621449cf5e9f1302ca4cb3ff1a58a2486d0083683bd35b3",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:note",
+      "targetDigest": "cea0fca05dd98446fdc51abb3aabdcd6e7da97c6bec5086bae192647ec91654a",
+      "dependenciesDigest": "9cad80fe1c0cda939621449cf5e9f1302ca4cb3ff1a58a2486d0083683bd35b3",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_dps_stat",
+      "targetDigest": "fcb1bd9ad9add065790609551021f82bb8dac9c780a4778e4b1f561186d7b3fe",
+      "dependenciesDigest": "1ee5e79737a9bf93370aaedab55a927363b4024ec06cfca35f9ccf18413ae24f",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_armor_pierce_stat",
+      "targetDigest": "721ef10c8edfb08aef6772183a8d63bc637ac110960ff1a9c2d98047c76d880c",
+      "dependenciesDigest": "c1e16b3ea2d27ed6a00a501f094e7d3a35765825e740195230e7c89a482e23df",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_defence_stat",
+      "targetDigest": "a75f7b206b47c2643162a324806f2e91dce855635c5b6588182563cae28096c0",
+      "dependenciesDigest": "74434a4752e799ed176b9673be1a462633fda9d3ec1a80dd2a8adb02b6f5d5b8",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_sawing_stat",
+      "targetDigest": "1a00b55175d7320fd85347a713a4daab1669fadf6c3971de3f1c870d80b213bb",
+      "dependenciesDigest": "22339c8adc47da0e936dd9f8ab23ae85a64fcbcb75309df41eaf100a87aa0bfd",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:stat-chainaxe_mobility_stat",
+      "targetDigest": "d39483647767dd2d7fbcdeedc0cd2e5b5f29c1697d56dca8f18fed745d472d0a",
+      "dependenciesDigest": "322d052289036ebd92a1a90fbcda080c87a8b7e2f76a81be9cf22c3f80d01467",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-01",
+      "targetDigest": "4bbca61738bc85e7133fa0cf91746bb5cef6bddd632ca3c79d457a60e706907a",
+      "dependenciesDigest": "5b96a5286d0569e35f83259f12fa8668f7ee4d8f88c9ae901e52d8df32e53e08",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-02",
+      "targetDigest": "ec5c5fdd446c1e54076c0b824d13e44683c4bf81fd2c1fcbd82ebd11e0200dd2",
+      "dependenciesDigest": "fdcca4b8e9360e4eac2c96eef75aa95679367baeeaac8ff7b33f0e3e7f66707e",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-03",
+      "targetDigest": "ad53897dd518609aebbcb0d24560d31e607b09cd231848ae851032409c3b82f4",
+      "dependenciesDigest": "9e16337163a805e2584c9a253c89681272cc41db589f2c5004c864be0ca66d46",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-04",
+      "targetDigest": "f6caf895bf32b1701936541e8d28305b3b1310ebd18307a447135a31d5667ca2",
+      "dependenciesDigest": "19fa6c31e42634644bb4d7a20f96a14fc54af03531be9c13a9d7220d6f352004",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-05",
+      "targetDigest": "6a16c41e928f5414c73198c24badc7be4d9051ffdcbb47fb09570f48fefcf127",
+      "dependenciesDigest": "01dc4b16c6a81e864de66caec9d0fa974f49ea24ad11bba88e1c0a7cf9548c1d",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-06",
+      "targetDigest": "e20996cc464f00d0a7f2394b2ef4f7eb2980c3a7849802f5705331ef040fdc50",
+      "dependenciesDigest": "b318b937e294686ac81983ddf97af742ac4081f3a56dc67cf11c1173885941e4",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-07",
+      "targetDigest": "c7900af652aa390064a69ac5b5a71cb1a3c6e1c3fc48c75311077ae3eadf3c26",
+      "dependenciesDigest": "8e41c504dc00bac98482f54d6312d92320d7e7c1cba58b6b4a8c662959d1f2e3",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-08",
+      "targetDigest": "3f0433dd56cc9cd549126886d78baa16e11e16c3dc08441eb4c5d66ee712cf70",
+      "dependenciesDigest": "167448bcfe168bacdb13de8d321701b97215aa4681375d217701968428f24507",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-09",
+      "targetDigest": "ce31ce908909e93f77c127a0759203efc9c738ba9862a0e8c62eb43bc87d1bd5",
+      "dependenciesDigest": "32096cb98fb7a32b3de1db7127a5aeb3d2acd8c7f6092974cb452041adc4de62",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m1:action-10",
+      "targetDigest": "271c5115d2960195315d3a10a8d12e8c38958edafa8cbad682af78960b4797d8",
+      "dependenciesDigest": "e788879f5853eca44ca32c997829ef12f618497b23c06645644d082c06d17230",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:official-name",
+      "targetDigest": "f049abfd6e43b4fd815e250c0775bd5f09cbb08cac384ac47449c251f00848d8",
+      "dependenciesDigest": "3ec4b6c964e5fca427ed9b6de377c9f191db4a64a9358fe5dcaf88963543ed67",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:name",
+      "targetDigest": "3a3dd85078c883f2028e93ae98ff31eaa41e7f88a64365efef14dd6d42dadd39",
+      "dependenciesDigest": "6ea129f1d59fb05c409c92e91cc6ee9b3bc756d19ce2e91e32a2ded6863cb090",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:mark-label",
+      "targetDigest": "f4ce4b114cc34cf87451ef36fb39c20a9aea3cfd267718ffc46e917e792df53b",
+      "dependenciesDigest": "fc72b7570832d93d2cadafdaf1d3365456ac40fef8047dc7910f8bba40c5a9a9",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:attack-heading",
+      "targetDigest": "ca8c4876e1029329493c93dc9adabd8297079fc93ccb369882b1a489dcef58d7",
+      "dependenciesDigest": "fc72b7570832d93d2cadafdaf1d3365456ac40fef8047dc7910f8bba40c5a9a9",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:comparison-heading",
+      "targetDigest": "4301fa690aa83394795c96b8de57020148f89080c5cf18fa348def9e4b877f42",
+      "dependenciesDigest": "fc72b7570832d93d2cadafdaf1d3365456ac40fef8047dc7910f8bba40c5a9a9",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:note",
+      "targetDigest": "857700bfaa7952f30d924f18c6c99064ddec7614307d8776f20415931e8ec146",
+      "dependenciesDigest": "fc72b7570832d93d2cadafdaf1d3365456ac40fef8047dc7910f8bba40c5a9a9",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_dps_stat",
+      "targetDigest": "120d0842294c1cfdf37740b356743119a6afca6d7ae6511f620c9a75dda50e88",
+      "dependenciesDigest": "7cf49b1808774a0e317b776e4cfa1a3791aea5a8c8528d72406ab53690b1a2cc",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_armor_pierce_stat",
+      "targetDigest": "829cdeb8974d13171c9cb4ea5573e1355976e3d0b05eb15989a91c052f5efd64",
+      "dependenciesDigest": "411e23369b44ff61c909d3f2ac08ed4391261a310cca98be7ecffc16c418ed60",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_defence_stat",
+      "targetDigest": "5160addc1e65e3382f9e721da3e79142d78dd28edcf18c3ceffe892d1a934c8e",
+      "dependenciesDigest": "043ed9c4fffe875a68d313d8961de51441d2287a0d6f789450567a72414f4dcd",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_sawing_stat",
+      "targetDigest": "15bf1a33ac0ed6f2e996758f7f489b215e14d49d3e0c6bc756dc137552920aa4",
+      "dependenciesDigest": "3a9b319659ae06a1d1a63b0b6ed5da43adae7bb047a1edfb3419e1a3e66509aa",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:stat-chainaxe_mobility_stat",
+      "targetDigest": "9e84b5b991f79ed0dc1c3964b9a80b0c9c7b2311d33520bdd0ef7ac5d9e92761",
+      "dependenciesDigest": "77590cc409f4cc6cf113695b3640f762969e61d115d1a1ba36968c11328327a9",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-01",
+      "targetDigest": "9e319a0cb8ec5020ec11cbf34eeffd761f9565d60063391a46791c7e3b43ba1b",
+      "dependenciesDigest": "0c7603c0eab8463aa9ad0f9f551dc2de1652e7edaaa4cca214a1f47a1a40624e",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-02",
+      "targetDigest": "2878411f328b0b2d4ca4fe7e4b4861ffadbd426c31f2c0d63cbf688e887c6b0b",
+      "dependenciesDigest": "4ea8b998f93c40ff00aad1ced679b01ea469c0aaf4aca7d998491e2b3a8f1004",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-03",
+      "targetDigest": "3a677e28eae03834d1c7e363295d3b8127e249495f96b9933c54489b45da5bc8",
+      "dependenciesDigest": "8a38639cd367f31089ec78f464869f349d658adf737ece72eb06682e892ad63b",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-04",
+      "targetDigest": "66c6ac0ff3942586560a30e099a9d0d8961fe0a67a8d6ce3df3342a420009fb9",
+      "dependenciesDigest": "bb62f0ab71e14e6af611f198a5ad880670b5ddf596779a1a0eb0f0a9fdce3095",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-05",
+      "targetDigest": "9b2736b5de92b61df73e426c04491d1b171a3fdde8f23fb36a271bded1211a07",
+      "dependenciesDigest": "5caea861b759ea9ec919900241255199a36013aa674197c7e2a5a5932c8c80fa",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    },
+    {
+      "targetId": "review:w07:p1-m2:action-06",
+      "targetDigest": "c5527b941f247eb8386b4b644506d58c42032e1f3e3017f5acf520a5251e8fbd",
+      "dependenciesDigest": "eab0ff7a327706d8ee37bc281fc600abd00b85f75753e663bfe51fd1ac1bcd78",
+      "decision": "approved",
+      "reviewer": {
+        "kind": "human",
+        "id": "SyuanTsai"
+      },
+      "reviewedAt": "2026-10-22T12:33:42Z"
+    }
+  ]
+}
