@@ -44,6 +44,7 @@ const W09_COMPILER_FILE_PATHS = [
   'scripts/content/contract-w09-compose.mjs',
   'scripts/content/contract-w09-release.mjs',
 ];
+const W09_SELECTED_COMPOSITION_PATH = 'content/contracts/w09/source-handoff/selected.json';
 
 async function installW09CompilerFilesInFixture(webRoot) {
   for (const relativePath of W09_COMPILER_FILE_PATHS) {
@@ -57,6 +58,25 @@ async function installW09CompilerFilesInFixture(webRoot) {
     const bytes = await readFile(sourcePath);
     await writeFile(destination, bytes, existing ? undefined : { flag: 'wx' });
   }
+}
+
+async function removeSelectedCompositionFromFixture(webRoot) {
+  const absoluteRoot = path.resolve(webRoot);
+  const relativeToTemp = path.relative(path.resolve(os.tmpdir()), absoluteRoot);
+  if (!relativeToTemp || relativeToTemp.startsWith('..') || path.isAbsolute(relativeToTemp)) {
+    throw new Error('selected composition may only be removed from a disposable test clone under the OS temp directory');
+  }
+  const selectedPath = path.join(absoluteRoot, ...W09_SELECTED_COMPOSITION_PATH.split('/'));
+  const selectedStat = await lstat(selectedPath).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
+  if (!selectedStat || selectedStat.isSymbolicLink() || !selectedStat.isFile()) {
+    throw new Error('disposable test clone must contain a regular selected composition marker');
+  }
+  await rm(selectedPath);
+  git(absoluteRoot, ['add', '--', W09_SELECTED_COMPOSITION_PATH]);
+  git(absoluteRoot, ['commit', '-m', 'W09 isolated fixture without selected composition']);
+  assert.equal(git(absoluteRoot, ['ls-tree', '-r', '--name-only', 'HEAD', '--', W09_SELECTED_COMPOSITION_PATH]), '',
+    'the disposable fixture commit must not contain the selected marker');
+  assert.equal(git(absoluteRoot, ['status', '--porcelain']), '', 'the isolated no-selection fixture must be committed and clean');
 }
 
 const sha = character => character.repeat(64);
@@ -226,10 +246,19 @@ test('UnitT13_production-release-entry-rejects-forged-approval-flags', async () 
 
 // Scenario: no reviewed Source/Web selection exists in the tracked input revision.
 // Purpose: ensure the production entry exits pending before allocating a slot or writing a package, even in dry-run mode.
-test('InterT13_missing-selected-composition-is-pending-without-allocation-or-package-write', async () => {
+test('InterT13_missing-selected-composition-is-pending-without-allocation-or-package-write', async t => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'w09-no-selection-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const repoRoot = path.join(root, 'web');
+  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--quiet', '--no-hardlinks', REPO_ROOT, repoRoot], { encoding: 'utf8', windowsHide: true });
+  git(repoRoot, ['config', 'core.autocrlf', 'false']);
+  git(repoRoot, ['config', 'user.name', 'W09 isolated fixture']);
+  git(repoRoot, ['config', 'user.email', 'w09-fixture@example.invalid']);
+  git(repoRoot, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
+  await removeSelectedCompositionFromFixture(repoRoot);
   const { prepareW09SharedRelease } = await import('../scripts/content/contract-w09-release.mjs');
   const result = await prepareW09SharedRelease({
-    repoRoot: process.cwd(),
+    repoRoot,
     sourceRoot: path.join(os.tmpdir(), 'w09-source-root-not-consulted-without-selection'),
     releaseId: 'w09-' + 'a'.repeat(32),
     dryRun: true,
@@ -416,12 +445,13 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   assert.equal(sourceBundleLock.publicationEligible, false);
   assert.equal(sourceBundleLock.repository, 'SyuanTsai/DarkTide-Source-Data');
 
-  execFileSync('git', ['clone', '--quiet', '--no-hardlinks', REPO_ROOT, webRoot], { encoding: 'utf8', windowsHide: true });
+  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--quiet', '--no-hardlinks', REPO_ROOT, webRoot], { encoding: 'utf8', windowsHide: true });
   git(webRoot, ['checkout', '-b', 'main']);
   git(webRoot, ['config', 'core.autocrlf', 'false']);
   git(webRoot, ['config', 'user.name', 'W09 isolated fixture']);
   git(webRoot, ['config', 'user.email', 'w09-fixture@example.invalid']);
   git(webRoot, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
+  await removeSelectedCompositionFromFixture(webRoot);
 
   await mkdir(sourceRoot, { recursive: true });
   for (const row of sourceBundleLock.files) {
