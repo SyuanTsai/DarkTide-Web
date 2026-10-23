@@ -10,7 +10,7 @@
       "contentVersion": "1.13.2.1",
       "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57",
       "status": "approved",
-      "runtimeSnapshotBuildId": "25d6f76f2e5474ed8675dc3ff258284ee853e8f93760e912d89acab01ce73d30"
+      "runtimeSnapshotBuildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95"
     }
   ],
   "activeByGame": [
@@ -29,9 +29,18 @@
           "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
         }
       ]
+    },
+    {
+      "buildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95",
+      "activeByGame": [
+        {
+          "gameReleaseId": "darktide:1.13.2",
+          "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
+        }
+      ]
     }
   ],
-  "activeRuntimeSnapshotBuildId": "25d6f76f2e5474ed8675dc3ff258284ee853e8f93760e912d89acab01ce73d30",
+  "activeRuntimeSnapshotBuildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95",
   "publicationReceipts": [
     {
       "schema": "w09-publication-receipt/1",
@@ -55,30 +64,35 @@
           "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
         }
       ]
-    }
-  ],
-  "pendingPromotion": {
-    "schema": "w09-promotion-journal/1",
-    "transactionId": "82129966557e73d9ff78491602b1b12ef9757700d388b10f8f2bedb3544f2726",
-    "releaseIds": [
-      "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
-    ],
-    "sourceReleaseIds": [
-      "w09-a3cef743b81b4eb2d3931fa82ec820dc"
-    ],
-    "expectedActive": {
+    },
+    {
+      "schema": "w09-publication-receipt/1",
+      "status": "verified",
+      "action": "promote",
+      "transactionId": "82129966557e73d9ff78491602b1b12ef9757700d388b10f8f2bedb3544f2726",
+      "releaseIds": [
+        "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
+      ],
+      "expectedActive": {
+        "activeByGame": [
+          {
+            "gameReleaseId": "darktide:1.13.2",
+            "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
+          }
+        ],
+        "runtimeSnapshotBuildId": "25d6f76f2e5474ed8675dc3ff258284ee853e8f93760e912d89acab01ce73d30"
+      },
+      "buildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95",
+      "dataRevision": "808c815b78f71adaefe2c29095e9bafbeb8c69415d50f6de50a41093664dbd62",
+      "artifactManifestSha256": "2a45cd78505a6c7d90adcb23de77440e55c0ff988860552d4972a7c928d49a12",
+      "productionOrigin": "https://darktide.tw-syuan.com",
       "activeByGame": [
         {
           "gameReleaseId": "darktide:1.13.2",
           "releaseId": "w09-842bd75f2d73ec2c6a0aa3e181c2ee57"
         }
-      ],
-      "runtimeSnapshotBuildId": "25d6f76f2e5474ed8675dc3ff258284ee853e8f93760e912d89acab01ce73d30"
-    },
-    "buildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95",
-    "dataRevision": "808c815b78f71adaefe2c29095e9bafbeb8c69415d50f6de50a41093664dbd62",
-    "artifactManifestSha256": "2a45cd78505a6c7d90adcb23de77440e55c0ff988860552d4972a7c928d49a12",
-    "runtimeSnapshotBuildId": "5b4c5827f037c9e8a6485ab7bab8a5843f4a7aaccc7f4c12edad741733802a95",
-    "phase": "prepared"
-  }
+      ]
+    }
+  ],
+  "pendingPromotion": null
 }
