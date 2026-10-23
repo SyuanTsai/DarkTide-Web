@@ -139,6 +139,14 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     assert.equal((await page.locator('#build-meta').innerText()).includes('遊戲版本 1.13.2'), true);
     assert.equal(await page.locator('body').innerText().then(text => text.includes('演示防護')), false,
       'shared context must not render legacy fixture records');
+    await page.goto(routeFor(hosted.origin, '/game-changes/?version=1.13.2&type=weapon'));
+    await page.locator('.shared-change-empty').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.shared-change-empty').innerText(), '目前篩選條件下沒有已確認的遊戲變動。',
+      'the approved package with changeIndexPath=null keeps valid current-version/type filters');
+    assert.equal(await page.locator('select[name="version"] option:checked').textContent(), '1.13.2');
+    assert.equal(await page.locator('select[name="type"] option:checked').textContent(), '武器');
+    assert.deepEqual(await page.locator('select[name="type"] option').allTextContents(), ['全部類型', '技能', '祝福', '武器']);
+
     const domains = [...packageInput.domainBytes].map(([filePath, bytes]) => JSON.parse(bytes.toString('utf8')));
     const view = createSharedViewModel({ domains, gameReleaseId: packageInput.manifest.gameReleaseId });
     const skillDomain = domains.find(domain => domain.kind === 'skills');

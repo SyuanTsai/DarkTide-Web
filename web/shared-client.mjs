@@ -213,6 +213,19 @@ function selectConsumerFiles(manifest, filesByPath) {
   return [...selected.values()].sort((a, b) => compareUtf8(a.path, b.path));
 }
 
+function selectOptionalGameChangesFile(manifest, filesByPath) {
+  if (manifest.changeIndexPath === null) return null;
+  const file = filesByPath.get(manifest.changeIndexPath);
+  if (!file || file.kind !== 'game-changes') fail('manifest changeIndexPath does not identify a game-changes file');
+  for (const dependency of file.dependencies) {
+    const dependencyFile = filesByPath.get(dependency);
+    if (!dependencyFile || !CORE_KINDS.includes(dependencyFile.kind)) {
+      fail('game-changes index has an unsupported dependency');
+    }
+  }
+  return file;
+}
+
 function typedPointers(value, result = []) {
   if (Array.isArray(value)) { for (const item of value) typedPointers(item, result); return result; }
   if (!isObject(value)) return result;
@@ -403,6 +416,24 @@ export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.b
     const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, file.sizeBytes), lifecycle);
     if (response.bytes.byteLength !== file.sizeBytes || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== file.sha256) fail(`shared domain bytes do not match manifest: ${file.path}`);
     validateDomain(response.value, file, manifest.gameReleaseId);
+    domains.push(response.value);
+    rawFiles.set(path, response.bytes);
+  }
+  const changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
+  if (changeIndex) {
+    const path = `/data/${manifest.dataRevision}/${changeIndex.path}`;
+    const pinned = staticFiles.get(path);
+    if (!pinned || pinned.sha256 !== changeIndex.sha256 || pinned.size_bytes !== changeIndex.sizeBytes) {
+      fail('build does not pin the optional game-changes index');
+    }
+    totalBytes += changeIndex.sizeBytes;
+    if (totalBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+    const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, changeIndex.sizeBytes), lifecycle);
+    if (response.bytes.byteLength !== changeIndex.sizeBytes
+        || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== changeIndex.sha256) {
+      fail(`shared domain bytes do not match manifest: ${changeIndex.path}`);
+    }
+    validateDomain(response.value, changeIndex, manifest.gameReleaseId);
     domains.push(response.value);
     rawFiles.set(path, response.bytes);
   }

@@ -23,10 +23,10 @@ test('UnitT10_selects_only_the_exact_shared_build_tuple', () => {
   assert.deepEqual(selectSharedRelease(build).pointer, build.game_releases[0]);
 });
 
-// Scenario: A valid build has a selected patch, an unrelated higher patch, an extra game-changes row, and a null change index.
-// Purpose: Fetch only the exact patch's required four-domain closure without requesting unrelated release pointers or optional files.
-// Given one verified same-origin package, When it is loaded, Then the raw manifest and four required domains are returned together.
-test('UnitT20_loads_exact_same_origin_manifest_and_core_domains', async t => {
+// Scenario: A valid build has a selected patch, an unrelated higher patch, four core domains, and a declared optional game-changes index.
+// Purpose: Fetch only the exact manifest, required core domains, and the optional file selected by changeIndexPath.
+// Given a verified same-origin package, When it is loaded, Then raw bytes, hashes, pins, and URLs cover exactly those files.
+test('UnitT20_loads_exact_same_origin_core_domains_and_declared_index', async t => {
   installTestLocation(t);
   const pack = makeSharedPackage({ extraGameChanges: true });
   const calls = [];
@@ -34,12 +34,33 @@ test('UnitT20_loads_exact_same_origin_manifest_and_core_domains', async t => {
 
   assert.equal(result.status, 'ready');
   assert.equal(result.manifest.gameVersion, '1.13.2');
-  assert.equal(result.domains.length, 4);
-  assert.equal(result.manifestBytes.byteLength, pack.manifestBytes.byteLength);
-  assert.equal(calls.length, 5);
+  assert.equal(result.manifest.changeIndexPath, 'game-changes.json');
+  const coreKinds = ['skills', 'blessings', 'weapons', 'terms'];
+  assert.deepEqual(result.domains.filter(domain => coreKinds.includes(domain.kind)).map(domain => domain.kind).sort(), coreKinds.sort());
+  assert.equal(result.domains.filter(domain => domain.kind === 'game-changes').length, 1);
+
+  const expectedPaths = [pack.pointer.manifest_path,
+    ...pack.manifest.files.map(file => `/data/${pack.manifest.dataRevision}/${file.path}`)].sort();
+  assert.deepEqual(pack.build.shared_files.map(file => file.path).sort(), expectedPaths,
+    'the build pins the complete manifest and selected package, including the optional index');
+  assert.deepEqual([...result.rawFiles.keys()].sort(), expectedPaths,
+    'the returned raw package contains every declared core and selected optional file exactly once');
+  assert.deepEqual(Buffer.from(result.manifestBytes), pack.manifestBytes,
+    'the raw manifest bytes remain available for exact identity checks');
+  for (const file of pack.manifest.files) {
+    const rawPath = `/data/${pack.manifest.dataRevision}/${file.path}`;
+    const rawBytes = Buffer.from(result.rawFiles.get(rawPath));
+    assert.deepEqual(rawBytes, pack.domainBytes.get(file.path), `${file.kind} returns its pinned raw bytes`);
+    assert.equal(rawBytes.byteLength, file.sizeBytes);
+    assert.equal(createHash('sha256').update(rawBytes).digest('hex'), file.sha256);
+  }
+  assert.equal(calls.length, expectedPaths.length);
+  assert.deepEqual(calls.map(call => new URL(call.url).pathname).sort(), expectedPaths,
+    'requests target only the exact selected manifest and its declared file paths');
+  assert.deepEqual(calls.map(call => call.url).sort(), expectedPaths.map(filePath => `https://web.test${filePath}`).sort(),
+    'all requests use the exact configured same-origin URLs');
   assert.ok(calls.every(call => new URL(call.url).origin === 'https://web.test'));
   assert.ok(calls.every(call => call.init.redirect === 'error' && call.init.credentials === 'omit'));
-  assert.ok(calls.every(call => !call.url.includes('game-changes')));
 });
 
 // Scenario: A response differs from the manifest hash pinned into the build even though it is valid JSON.

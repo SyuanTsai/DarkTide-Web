@@ -480,13 +480,34 @@ function recordClosure(seedRecords, sourceContract) {
   return [...selected.values()].sort((left, right) => compareUtf8(sourceRecordKey(left), sourceRecordKey(right)));
 }
 
-function sourceRegistryForRecords(records, sourceContract, releaseId, additionalSourcePointers = []) {
+function sourceRegistryForRecords(records, sourceContract, releaseId, additionalSourcePointers = [], additionalGameReleaseIds = []) {
   const sourceRefMap = new Map(sourceContract.sourceRefs.map(ref => [sourceRefKey(ref), ref]));
   const selectedSourceRefs = new Map();
   const sourceSnapshotIds = new Set();
   const releaseIds = new Set([releaseId]);
+  const comparisonSnapshotIds = new Set();
+  const knownReleases = new Map(sourceContract.gameReleases.map(release => [release.gameReleaseId, release]));
+  const includeComparisonRelease = (comparisonReleaseId, snapshotId = null) => {
+    if (typeof comparisonReleaseId !== 'string' || !knownReleases.has(comparisonReleaseId)) {
+      fail('comparison references an unknown Source game release: ' + String(comparisonReleaseId));
+    }
+    releaseIds.add(comparisonReleaseId);
+    if (snapshotId !== null) {
+      if (typeof snapshotId !== 'string' || snapshotId.length === 0) fail('comparison snapshot identity is invalid for ' + comparisonReleaseId);
+      comparisonSnapshotIds.add(comparisonReleaseId + '\u0000' + snapshotId);
+    }
+  };
   for (const record of records) {
     releaseIds.add(record.gameReleaseId);
+    if (record.kind === 'game-change') {
+      const comparison = record.payload?.comparison;
+      if (!isRecord(comparison)) fail('Source game-change record has no comparison release identity: ' + record.recordId);
+      includeComparisonRelease(comparison.fromGameReleaseId, comparison.fromSnapshotId);
+      includeComparisonRelease(comparison.toGameReleaseId, comparison.toSnapshotId);
+    }
+  }
+  for (const comparisonReleaseId of additionalGameReleaseIds) {
+    includeComparisonRelease(comparisonReleaseId);
   }
   for (const ref of [...collectSourcePointers(records), ...additionalSourcePointers]) {
       const found = sourceRefMap.get(sourceRefKey(ref));
@@ -498,6 +519,7 @@ function sourceRegistryForRecords(records, sourceContract, releaseId, additional
   }
   const releases = sourceContract.gameReleases.filter(release => releaseIds.has(release.gameReleaseId));
   for (const release of releases) if (release.snapshot?.snapshotId) sourceSnapshotIds.add(release.gameReleaseId + '\u0000' + release.snapshot.snapshotId);
+  for (const key of comparisonSnapshotIds) sourceSnapshotIds.add(key);
   const snapshots = (sourceContract.sourceSnapshots ?? []).filter(snapshot => releaseIds.has(snapshot.gameReleaseId)
     && sourceSnapshotIds.has(sourceSnapshotKey(snapshot)));
   const snapshotKeys = new Set(snapshots.map(sourceSnapshotKey));
@@ -715,7 +737,8 @@ function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, mo
     ? modeRows.flatMap(({ mode }) => mode.authoring.officialTextChanges ?? [])
     : [];
   const webItems = [...presentations, ...termLocalizations, ...announcements, ...gameChanges, ...officialTextChanges];
-  const source = sourceRegistryForRecords(sourceRecords, sourceContract, releaseId, collectSourcePointers(webItems));
+  const comparisonReleaseIds = officialTextChanges.flatMap(change => [change.fromGameReleaseId, change.toGameReleaseId]);
+  const source = sourceRegistryForRecords(sourceRecords, sourceContract, releaseId, collectSourcePointers(webItems), comparisonReleaseIds);
   const ownerIds = new Set([
     ...presentations.flatMap(item => [item.authoringId, item.entityRef.recordId]),
     ...termLocalizations.map(item => item.authoringId),

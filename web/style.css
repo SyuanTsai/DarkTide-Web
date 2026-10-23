@@ -259,8 +259,31 @@ p { margin: .45rem 0 1rem; }
 .shared-stat-list .shared-source-profile-key,
 .shared-stat-list .shared-source-property-key { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; }
 .shared-displayed-attack-segment code { color: #f3dfad; }
+.shared-change-filters { display: flex; flex-wrap: wrap; align-items: end; gap: .8rem; margin-block: 1.25rem; }
+.shared-change-filters label { display: grid; gap: .35rem; color: #d1dbd2; font-size: .87rem; font-weight: 700; }
+.shared-change-filters select { min-height: 2.8rem; min-width: 11rem; padding: .45rem .7rem; border: 1px solid #56665b; border-radius: .35rem; background: #111815; color: #f0f2ed; font: inherit; }
+.shared-change-filters button { min-height: 2.8rem; padding: .45rem .9rem; }
+.shared-change-empty { margin-block: 1.5rem; padding: 1rem; border-left: 3px solid var(--gold); background: #222a25; }
+.shared-change-entry { display: grid; align-content: start; gap: .45rem; }
+.shared-change-entry > p { margin: 0; }
+.shared-change-summary { max-width: 56rem; font-size: 1.08rem; }
+.shared-change-value { margin-block: .65rem; padding: .75rem; border-left: 3px solid var(--gold); background: #222a25; overflow-wrap: anywhere; }
+.shared-change-value h3 { margin: 0 0 .45rem; }
+.shared-change-before-after { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.shared-change-before-after p { margin: 0; }
+.shared-change-comparison summary { cursor: pointer; color: var(--accent); font-weight: 800; }
+.shared-change-identities { display: grid; grid-template-columns: minmax(8rem, auto) minmax(0, 1fr); gap: .35rem .8rem; margin: .8rem 0 0; }
+.shared-change-identities dt { color: var(--muted); }
+.shared-change-identities dd { margin: 0; overflow-wrap: anywhere; }
+.shared-change-evidence { margin-block: .6rem; overflow-wrap: anywhere; }
+.shared-change-evidence h3 { font-size: 1rem; }
+.shared-change-evidence .shared-change-identities { font-size: .9rem; }
+.shared-source-link { display: inline-block; margin-block: .2rem; }
+.shared-change-corrections { padding-left: 1.25rem; }
 [hidden] { display: none !important; }
 @media (max-width: 760px) {
   .shared-entry-list { grid-template-columns: 1fr; }
   .shared-stat-list { grid-template-columns: minmax(0, 1fr) auto; }
+  .shared-change-before-after { grid-template-columns: 1fr; }
+  .shared-change-identities { grid-template-columns: minmax(0, 1fr); }
 }

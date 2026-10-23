@@ -39,6 +39,18 @@ const QUANTITY_LABELS = Object.freeze({
   'attack-power-distribution': '攻擊威力分布', 'armor-damage-modifier': '護甲傷害修正',
   'damage-profile': '傷害設定', 'dodge-count': '閃避次數',
 });
+const GAME_CHANGE_TYPE_LABELS = Object.freeze({ skill: '技能', blessing: '祝福', weapon: '武器' });
+const GAME_CHANGE_OPERATION_LABELS = Object.freeze({
+  added: '新增', removed: '移除', modified: '調整', correction: '更正',
+});
+const GAME_CHANGE_UNIT_LABELS = Object.freeze({
+  ratio: '比例', percent: '%', s: '秒', m: '公尺', damage: '傷害', impact: '衝擊', point: '點',
+  rating: '評級', 'attack-power-point': '攻擊威力點', 'stamina-point': '耐力點',
+  'stamina-point-per-second': '耐力點／秒', 'dodge-count': '次閃避',
+  'instance-count': '次', 'normalized-speed-per-second': '標準化速度／秒',
+  'item-stat-rating': '物品素質評級', 'expertise-level': '專精等級',
+  'expertise-level-per-rank': '每階專精等級',
+});
 
 function node(tag, value = null, className = '') {
   const result = document.createElement(tag);
@@ -50,6 +62,24 @@ function link(href, label, className = '') {
   const result = node('a', label, className);
   result.href = href;
   return result;
+}
+function safeOfficialResourceUrl(value) {
+  if (typeof value !== 'string' || value.length > 2048 || /[\u0000-\u001f\u007f]/u.test(value)) return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || !url.hostname || url.username || url.password
+        || [...url.searchParams.keys()].some(key => /(?:token|secret|password|signature|auth|api[-_]?key)/iu.test(key))) return null;
+    return url.href;
+  } catch { return null; }
+}
+function sharedChangeIndexHref(result) {
+  const revision = result?.pointer?.data_revision;
+  const filePath = result?.manifest?.changeIndexPath;
+  if (!/^[a-f0-9]{64}$/u.test(revision ?? '') || typeof filePath !== 'string'
+      || !/^[A-Za-z0-9][A-Za-z0-9._/-]*\.json$/u.test(filePath)
+      || filePath.includes('%') || filePath.includes('\\')
+      || filePath.split('/').some(part => !part || part === '.' || part === '..')) return null;
+  return `/data/${revision}/${filePath.split('/').map(encodeURIComponent).join('/')}`;
 }
 function paramsUrl(path, values) {
   const params = new URLSearchParams();
@@ -70,7 +100,7 @@ function setMetadata(title, description, url) {
   let canonical = document.querySelector('link[rel="canonical"]');
   if (!canonical) { canonical = node('link'); canonical.rel = 'canonical'; document.head.append(canonical); }
   const canonicalParams = new URLSearchParams();
-  for (const key of ['id', 'variant', 'tier', 'family', 'mark']) {
+  for (const key of ['id', 'variant', 'tier', 'family', 'mark', 'version', 'type']) {
     const value = url.searchParams.get(key);
     if (value !== null) canonicalParams.set(key, value);
   }
@@ -178,7 +208,7 @@ function renderHome(main, result) {
   hero.append(node('h1', '查閱技能、武器與祝福資料'));
   hero.append(node('p', '資料先按遊戲版本與完整修訂驗證，再呈現各自的官方文字、數值與條件。', 'shared-lead'));
   const links = node('div', null, 'shared-home-links');
-  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福']]) links.append(link(href, label, 'button-link'));
+  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄']]) links.append(link(href, label, 'button-link'));
   hero.append(links);
   main.append(hero);
   const note = node('p', `遊戲版本 ${result.pointer.game_version} · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`, 'version-line');
@@ -651,6 +681,307 @@ function renderWeapons(main, result, url) {
   applySearch();
 }
 
+function gameChangeType(item) {
+  const kind = item?.displayEntityRef?.kind;
+  return Object.hasOwn(GAME_CHANGE_TYPE_LABELS, kind) ? kind : null;
+}
+
+const DECIMAL_VALUE = /^-?(?:0|[1-9]\d*)(?:\.\d+)?$/u;
+function formatGameChangeValue(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return '未提供可比較值';
+  if (value.status === 'unknown') return '尚未確認';
+  if (value.status === 'not-applicable') return '不適用';
+  if (value.status !== 'known') return '數值格式未能確認';
+  const unitLabel = GAME_CHANGE_UNIT_LABELS[value.unit];
+  if (!unitLabel) return '單位未能確認';
+  const formatDecimal = decimal => `${decimal}${unitLabel === '%' ? '%' : ''}`;
+  const suffix = unitLabel === '%' ? '' : ` ${unitLabel}`;
+  if (typeof value.decimal === 'string' && DECIMAL_VALUE.test(value.decimal)) {
+    return `${formatDecimal(value.decimal)}${suffix}`;
+  }
+  if (typeof value.min === 'string' && DECIMAL_VALUE.test(value.min)
+      && typeof value.max === 'string' && DECIMAL_VALUE.test(value.max)
+      && value.inclusive && typeof value.inclusive.min === 'boolean'
+      && typeof value.inclusive.max === 'boolean'
+      && typeof value.step === 'string' && DECIMAL_VALUE.test(value.step)) {
+    const min = formatDecimal(value.min);
+    const max = formatDecimal(value.max);
+    const step = formatDecimal(value.step);
+    const interval = `${value.inclusive.min ? '含下限' : '不含下限'}、${value.inclusive.max ? '含上限' : '不含上限'}`;
+    return `${min}–${max}${suffix}（${interval}；步進 ${step}）`;
+  }
+  return '數值格式未能確認';
+}
+
+export { formatGameChangeValue };
+
+function renderChangeComparison(parent, comparison) {
+  const details = node('details', null, 'shared-card shared-change-comparison');
+  details.append(node('summary', '比較版本與來源身分'));
+  const list = node('dl', null, 'shared-change-identities');
+  const pairs = [
+    ['前版遊戲版本', comparison.fromGameVersion], ['前版遊戲 build', comparison.fromGameBuild],
+    ['前版 snapshot', comparison.fromSnapshotId], ['前版 commit', comparison.fromSnapshotCommit],
+    ['後版遊戲版本', comparison.toGameVersion], ['後版遊戲 build', comparison.toGameBuild],
+    ['後版 snapshot', comparison.toSnapshotId], ['後版 commit', comparison.toSnapshotCommit],
+  ];
+  for (const [label, value] of pairs) {
+    if (typeof value !== 'string' || !value.trim()) continue;
+    list.append(node('dt', label), node('dd', value, 'shared-change-identity-value'));
+  }
+  details.append(list);
+  parent.append(details);
+}
+
+function renderChangeEvidence(parent, evidence) {
+  const block = detailBlock('公開來源證據');
+  const rows = Array.isArray(evidence) ? evidence : [];
+  if (!rows.length) block.append(node('p', '此筆紀錄沒有可公開連結的來源位置。', 'shared-muted'));
+  for (const row of rows) {
+    const article = node('article', null, 'shared-change-evidence');
+    article.append(node('h3', row.kindLabel ?? '來源證據'));
+    const source = row.source;
+    if (!source?.publicUrl) {
+      article.append(node('p', '來源位置未公開。', 'shared-muted'));
+    } else {
+      const url = (() => { try { return new URL(source.publicUrl); } catch { return null; } })();
+      if (url?.protocol === 'https:' && !url.username && !url.password) {
+        const anchor = link(url.href, '開啟公開來源', 'shared-source-link');
+        anchor.target = '_blank'; anchor.rel = 'noopener noreferrer';
+        article.append(anchor);
+      } else article.append(node('p', '來源連結未能確認。', 'shared-muted'));
+      const metadata = [];
+      if (source.repository) metadata.push(['來源儲存庫', source.repository]);
+      if (source.path) metadata.push(['來源檔案', source.path]);
+      if (source.gameBuild) metadata.push(['來源 build', source.gameBuild]);
+      if (source.snapshot?.snapshotId) metadata.push(['來源 snapshot', source.snapshot.snapshotId]);
+      if (source.snapshot?.commit ?? source.commit) metadata.push(['來源 commit', source.snapshot?.commit ?? source.commit]);
+      if (metadata.length) {
+        const list = node('dl', null, 'shared-change-identities');
+        for (const [label, value] of metadata) list.append(node('dt', label), node('dd', value, 'shared-change-identity-value'));
+        article.append(list);
+      }
+    }
+    block.append(article);
+  }
+  parent.append(block);
+}
+
+function renderChangeFields(parent, item, result) {
+  if (item.changeKind === 'official-text') {
+    const block = detailBlock('官方原文字串變化');
+    const fixedDataHref = sharedChangeIndexHref(result);
+    const originLabels = {
+      'game-localization': '遊戲本地化資料',
+      'official-patch-notes': '官方更新說明',
+      'official-ui': '官方介面資料',
+    };
+    for (const [label, value] of [['前版官方原文', item.officialText?.before], ['後版官方原文', item.officialText?.after]]) {
+      if (!value || typeof value.resolvedText !== 'string') continue;
+      const row = node('article', null, 'shared-change-value');
+      row.append(node('h3', label), node('p', value.resolvedText, 'shared-official-text'));
+      const params = Array.isArray(value.params) ? value.params : [];
+      if (value.text !== value.resolvedText || params.length) {
+        const template = node('details', null, 'shared-official-template');
+        template.append(node('summary', '原始字串模板與參數定位'));
+        if (typeof value.text === 'string') template.append(node('p', value.text, 'shared-source-template'));
+        if (params.length) {
+          const parameterList = node('dl', null, 'shared-change-identities');
+          for (const parameter of params) {
+            parameterList.append(
+              node('dt', '參數識別'), node('dd', parameter.parameterId, 'shared-change-identity-value'),
+              node('dt', '來源鍵'), node('dd', parameter.sourceKey, 'shared-change-identity-value'),
+              node('dt', '固定代入值'), node('dd', parameter.value, 'shared-change-identity-value'),
+            );
+          }
+          template.append(parameterList);
+        }
+        row.append(template);
+      }
+      row.append(node('p', `來源識別：${value.officialSourceId}`, 'shared-muted'));
+      const identity = value.sourceIdentity ?? {};
+      const metadata = node('dl', null, 'shared-change-identities');
+      const addMetadata = (caption, text) => {
+        if (text === undefined || text === null || text === '') return;
+        metadata.append(node('dt', caption), node('dd', String(text), 'shared-change-identity-value'));
+      };
+      addMetadata('來源類別', originLabels[identity.origin] ?? '官方輸入來源');
+      const resourceUrl = safeOfficialResourceUrl(identity.resource);
+      metadata.append(node('dt', '來源資源'));
+      const resourceValue = node('dd', null, 'shared-change-identity-value');
+      if (resourceUrl) {
+        const anchor = link(resourceUrl, '開啟固定來源資源', 'shared-source-link');
+        anchor.target = '_blank'; anchor.rel = 'noopener noreferrer';
+        resourceValue.append(anchor);
+      } else resourceValue.textContent = identity.resource ?? '未提供';
+      metadata.append(resourceValue);
+      addMetadata('來源鍵', identity.key === null ? '未使用固定鍵' : identity.key);
+      addMetadata('來源 hash', identity.sourceHash);
+      addMetadata('來源出現序號', Number.isSafeInteger(identity.occurrence) ? identity.occurrence : null);
+      addMetadata('原文字串 SHA-256', identity.sourceTextSha256);
+      addMetadata('解析文字 SHA-256', identity.resolvedTextSha256);
+      row.append(metadata);
+      if (fixedDataHref) {
+        const fixedDataLink = link(fixedDataHref, '檢視同版固定共享資料檔', 'shared-source-link');
+        fixedDataLink.target = '_blank'; fixedDataLink.rel = 'noopener noreferrer';
+        row.append(fixedDataLink);
+      }
+      block.append(row);
+    }
+    parent.append(block);
+    return;
+  }
+  const block = detailBlock('變更前後');
+  const fields = Array.isArray(item.changedFields) ? item.changedFields : [];
+  if (!fields.length) block.append(node('p', '此紀錄沒有可顯示的欄位值。', 'shared-muted'));
+  for (const field of fields) {
+    const row = node('article', null, 'shared-change-value');
+    row.append(node('h3', field.summary));
+    const values = node('div', null, 'shared-change-before-after');
+    const before = node('p'); before.append(node('strong', '前：'), document.createTextNode(formatGameChangeValue(field.before)));
+    const after = node('p'); after.append(node('strong', '後：'), document.createTextNode(formatGameChangeValue(field.after)));
+    values.append(before, after);
+    row.append(values);
+    if (field.context?.locale === 'zh-TW' && typeof field.context.text === 'string' && field.context.text.trim()) {
+      row.append(node('p', field.context.text, 'shared-change-context'));
+    }
+    block.append(row);
+  }
+  parent.append(block);
+}
+
+function renderCorrectionChain(parent, item) {
+  const chain = Array.isArray(item.correctionChain) ? item.correctionChain : [];
+  if (!item.supersedesChangeId && !chain.length) return;
+  const block = detailBlock('紀錄更正鏈');
+  if (chain.length) {
+    const list = node('ul', null, 'shared-change-corrections');
+    for (const previous of chain) {
+      const row = node('li');
+      row.append(link(paramsUrl('/game-changes/', { id: previous.changeId }), `前一筆紀錄：${previous.summary}`));
+      list.append(row);
+    }
+    block.append(list);
+  } else if (item.supersedesChangeId) {
+    block.append(link(paramsUrl('/game-changes/', { id: item.supersedesChangeId }), '查看被更正的前一筆紀錄'));
+  }
+  parent.append(block);
+}
+
+function renderBlessingVariantContext(parent, context) {
+  if (!context || !Array.isArray(context.definedTiers) || context.definedTiers.length === 0) return;
+  const section = node('section', null, 'shared-change-blessing-variant');
+  section.append(node('h2', '祝福變體來源資料'));
+  section.append(node('p', `來源定義階級：${context.definedTiers.map(tier => `LV${tier}`).join('、')}`));
+  if (context.obtainableTiers?.status === 'known' && Array.isArray(context.obtainableTiers.tiers)) {
+    section.append(node('p', `來源列出的可取得階級：${context.obtainableTiers.tiers.map(tier => `LV${tier}`).join('、')}`));
+  } else {
+    section.append(node('p', '可取得階級尚未確認。', 'shared-muted'));
+  }
+  if (context.weaponApplicability?.status === 'identified' && Array.isArray(context.weaponApplicability.weapons)) {
+    const names = context.weaponApplicability.weapons.map(weapon => weapon.name).filter(value => typeof value === 'string' && value);
+    if (names.length) section.append(node('p', `來源列出的適用武器：${names.join('、')}`));
+    else section.append(node('p', '適用武器關係尚未確認。', 'shared-muted'));
+  } else {
+    section.append(node('p', '適用武器關係尚未確認。', 'shared-muted'));
+  }
+  parent.append(section);
+}
+
+function renderGameChangeDetail(main, result, url, item) {
+  if (!item) {
+    setMetadata('遊戲變動紀錄未能確認', '目前沒有可驗證的繁體中文遊戲變動紀錄。', url);
+    return renderUnavailable(main, { statusText: '找不到這筆已確認的遊戲變動紀錄。' });
+  }
+  setMetadata(item.entityName, `${item.gameVersion} 遊戲內容變動：${item.summary}`, url);
+  const header = node('header', null, 'page-intro');
+  header.append(node('p', '遊戲版本更新紀錄', 'eyebrow'), node('h1', item.entityName));
+  main.append(link('/game-changes/', '返回更新紀錄', 'secondary-link'), header);
+  main.append(node('p', item.summary, 'shared-change-summary'));
+  renderBlessingVariantContext(main, item.blessingVariant);
+  const facts = detailBlock('紀錄摘要');
+  const category = GAME_CHANGE_TYPE_LABELS[gameChangeType(item)] ?? item.entityKindLabel;
+  facts.append(node('p', `類型：${category} · ${item.entityKindLabel}`));
+  facts.append(node('p', `遊戲版本：${item.comparison.fromGameVersion} → ${item.comparison.toGameVersion}`));
+  facts.append(node('p', `變動類型：${GAME_CHANGE_OPERATION_LABELS[item.operation] ?? '內容變更'}`));
+  facts.append(node('p', `驗證方式：${item.verificationLabel ?? '驗證方式未確認'}`));
+  facts.append(node('p', `網站資料版本：${result.pointer.content_version}`));
+  main.append(facts);
+  renderChangeFields(main, item, result);
+  renderChangeComparison(main, item.comparison);
+  renderChangeEvidence(main, item.evidence);
+  renderCorrectionChain(main, item);
+}
+
+function compareGameVersions(left, right) {
+  const a = left.split('.').map(Number); const b = right.split('.').map(Number);
+  for (let index = 0; index < 3; index += 1) if (a[index] !== b[index]) return b[index] - a[index];
+  return 0;
+}
+
+function renderGameChanges(main, result, url) {
+  const allItems = result.view.getGameChanges({}).items;
+  const id = url.searchParams.get('id');
+  if (id !== null) {
+    const item = allItems.find(row => row.changeId === id);
+    return renderGameChangeDetail(main, result, url, item);
+  }
+
+  const requestedVersion = url.searchParams.get('version') ?? '';
+  const requestedType = url.searchParams.get('type') ?? '';
+  const versions = [...new Set([result.pointer.game_version, ...allItems.map(row => row.gameVersion)])].sort(compareGameVersions);
+  const types = [...new Set([...Object.keys(GAME_CHANGE_TYPE_LABELS), ...allItems.map(gameChangeType).filter(Boolean)])];
+  if ((requestedVersion && !versions.includes(requestedVersion)) || (requestedType && !types.includes(requestedType))) {
+    setMetadata('遊戲更新篩選未能確認', '目前無法確認這個版本或項目類型篩選。', url);
+    return renderUnavailable(main, { statusText: '請選擇清單中可用的遊戲版本與項目類型。' });
+  }
+  setMetadata('遊戲版本更新紀錄', '查閱已確認的官方遊戲內容差異、比較版本與公開來源。', url);
+  const header = node('header', null, 'page-intro');
+  header.append(node('p', '同版共享資料 · 已確認內容', 'eyebrow'), node('h1', '遊戲版本更新紀錄'));
+  main.append(header);
+  const form = node('form', null, 'shared-change-filters');
+  form.method = 'get'; form.action = '/game-changes/';
+  const versionLabel = node('label', '遊戲版本');
+  const versionSelect = node('select'); versionSelect.name = 'version'; versionSelect.setAttribute('aria-label', '遊戲版本');
+  versionSelect.append(node('option', '全部版本')); versionSelect.options[0].value = '';
+  for (const version of versions) {
+    const option = node('option', version); option.value = version;
+    if (version === requestedVersion) option.selected = true;
+    versionSelect.append(option);
+  }
+  versionLabel.append(versionSelect);
+  const typeLabel = node('label', '項目類型');
+  const typeSelect = node('select'); typeSelect.name = 'type'; typeSelect.setAttribute('aria-label', '項目類型');
+  typeSelect.append(node('option', '全部類型')); typeSelect.options[0].value = '';
+  for (const type of types) {
+    const option = node('option', GAME_CHANGE_TYPE_LABELS[type]); option.value = type;
+    if (type === requestedType) option.selected = true;
+    typeSelect.append(option);
+  }
+  typeLabel.append(typeSelect);
+  form.append(versionLabel, typeLabel);
+  const submit = node('button', '套用篩選', 'button'); submit.type = 'submit'; form.append(submit);
+  main.append(form);
+
+  const filtered = allItems.filter(item => (!requestedVersion || item.gameVersion === requestedVersion)
+    && (!requestedType || gameChangeType(item) === requestedType));
+  if (!filtered.length) {
+    main.append(node('p', allItems.length || requestedVersion || requestedType
+      ? '目前篩選條件下沒有已確認的遊戲變動。' : '本次無新增已確認的遊戲變動。', 'shared-change-empty'));
+    return;
+  }
+  const list = node('ul', null, 'shared-entry-list shared-change-list');
+  for (const item of filtered) {
+    const entry = node('li', null, 'shared-entry shared-change-entry');
+    const href = paramsUrl('/game-changes/', { id: item.changeId, ...(requestedVersion ? { version: requestedVersion } : {}), ...(requestedType ? { type: requestedType } : {}) });
+    entry.append(link(href, item.entityName));
+    entry.append(node('p', `${item.gameVersion} · ${GAME_CHANGE_TYPE_LABELS[gameChangeType(item)]} · ${item.verificationLabel ?? '驗證方式未確認'}`, 'shared-muted'));
+    entry.append(node('p', item.summary));
+    list.append(entry);
+  }
+  main.append(list);
+}
+
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
@@ -669,6 +1000,7 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   if (url.pathname.startsWith('/skills/')) renderSkillPage(main, result, url);
   else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
   else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
+  else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
   else renderHome(main, result);
   main.focus();
 }

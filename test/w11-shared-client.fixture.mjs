@@ -24,7 +24,7 @@ const emptyDomain = (kind, presentation = null) => Buffer.from(JSON.stringify({
   },
 }));
 
-export function makeSharedPackage({ wrongKind = null, extraGameChanges = false, wrongManifestHash = false } = {}) {
+export function makeSharedPackage({ wrongKind = null, extraGameChanges = false, unselectedGameChanges = false, wrongManifestHash = false } = {}) {
   const dataRevisionPlaceholder = 'f'.repeat(64);
   const manifest = {
     schemaVersion: '2.0.0',
@@ -55,12 +55,12 @@ export function makeSharedPackage({ wrongKind = null, extraGameChanges = false, 
     domainBytes.set(path, bytes);
     manifest.files.push({ kind, path, sizeBytes: bytes.byteLength, sha256: sha256(bytes), dependencies: [] });
   }
-  if (extraGameChanges) {
+  if (extraGameChanges || unselectedGameChanges) {
     const path = 'game-changes.json';
     const bytes = emptyDomain('game-changes');
     domainBytes.set(path, bytes);
     manifest.files.push({ kind: 'game-changes', path, sizeBytes: bytes.byteLength, sha256: sha256(bytes), dependencies: [] });
-    manifest.changeIndexPath = path;
+    if (extraGameChanges) manifest.changeIndexPath = path;
   }
   manifest.dataRevision = computeDataRevision(manifest);
   const manifestBytes = Buffer.from(JSON.stringify(manifest));

@@ -302,11 +302,11 @@ test('InterT20_thousand_public_records_keep_cloudflare_headers_within_fixed_limi
     const headers = await readFile(join(root, 'dist', '_headers'), 'utf8');
     const ruleLines = headers.trimEnd().split(/\r?\n/).filter(line => line.startsWith('/'));
     assert.equal(data.weapons.length, 1000);
-    assert.equal(ruleLines.length, 10);
+    assert.equal(ruleLines.length, 11);
     assert.ok(ruleLines.length <= 100);
     assert.ok(headers.split(/\r?\n/).every(line => line.length <= 2000));
     assert.deepEqual([...ruleLines].sort(), [
-      '/', '/assets/*', '/blessings/*', '/data/*', '/index.html', '/old-practice-rifle/', '/robots.txt', '/skills/*', '/version.json', '/weapons/*'
+      '/', '/assets/*', '/blessings/*', '/data/*', '/game-changes/*', '/index.html', '/old-practice-rifle/', '/robots.txt', '/skills/*', '/version.json', '/weapons/*'
     ]);
     assert.ok(!ruleLines.includes('/weapons/old-practice-rifle/'), 'in-prefix aliases should be covered by /weapons/*');
   } finally {
