@@ -1,9 +1,10 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { gzipSync, gunzipSync } from 'node:zlib';
-import { lstat, mkdir, mkdtemp, open, readFile, readdir, rename, rm, unlink, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, mkdtemp, open, readFile, readdir, realpath, rename, rm, unlink, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { safeRelativePath } from '../../src/static/common.mjs';
 
 const STATE_SCHEMA = 'w09-release-ledger/1';
@@ -12,6 +13,216 @@ const GAME_VERSION_RE = /^\d+\.\d+\.\d+$/;
 const SLOT_RE = /^(\d+\.\d+\.\d+)\.(\d+)$/;
 const RELEASE_STATUSES = new Set(['reserved', 'prepared', 'approved', 'failed']);
 const INTERNAL_PUBLICATION_LOCK = Symbol('w09-internal-publication-lock');
+const W09_WEB_ORIGINS = new Set([
+  'https://github.com/SyuanTsai/DarkTide-Web',
+  'https://github.com/SyuanTsai/DarkTide-Web.git',
+]);
+const W09_SELECTED_PATH = 'content/contracts/w09/source-handoff/selected.json';
+const W09_COMPOSITION_LOCK_ROOT = 'content/contracts/w09/source-handoff/locks/';
+const W09_COMPOSER_MODULE_PATH = 'scripts/content/contract-w09-compose.mjs';
+const W09_COMPILER_LOCK_PATH = 'content/contracts/w09/compiler.lock.json';
+
+function releaseGitText(repoRoot, args, label) {
+  try {
+    return execFileSync('git', ['-C', repoRoot, ...args], {
+      encoding: 'utf8',
+      maxBuffer: 16 * 1024 * 1024,
+      windowsHide: true,
+    }).trim();
+  } catch (error) {
+    throw new Error(label + ' failed: ' + (error.stderr?.toString('utf8').trim() || error.message));
+  }
+}
+
+function releaseGitBlob(repoRoot, commit, relativePath) {
+  try {
+    return Buffer.from(execFileSync('git', ['-C', repoRoot, 'show', commit + ':' + relativePath], {
+      encoding: null,
+      maxBuffer: 16 * 1024 * 1024,
+      windowsHide: true,
+    }));
+  } catch (error) {
+    throw new Error('tracked W09 composition input is unavailable: ' + relativePath + ' ('
+      + (error.stderr?.toString('utf8').trim() || error.message) + ')');
+  }
+}
+
+async function readExactTrackedInput(repoRoot, relativePath, trackedBytes) {
+  let cursor = repoRoot;
+  const parts = relativePath.split('/');
+  for (const [index, part] of parts.entries()) {
+    cursor = path.join(cursor, part);
+    let info;
+    try { info = await lstat(cursor); }
+    catch (error) {
+      if (error.code === 'ENOENT') throw new Error('tracked W09 composition input is missing: ' + relativePath);
+      throw error;
+    }
+    if (info.isSymbolicLink() || (index === parts.length - 1 ? !info.isFile() : !info.isDirectory())) {
+      throw new Error('tracked W09 composition input must be a regular non-symlink path: ' + relativePath);
+    }
+  }
+  const workingBytes = await readFile(cursor);
+  if (!workingBytes.equals(trackedBytes)) {
+    throw new Error('tracked W09 composition input differs from its committed bytes: ' + relativePath);
+  }
+}
+
+function assertOfficialW09WebOrigin(repoRoot) {
+  const origin = releaseGitText(repoRoot, ['remote', 'get-url', 'origin'], 'W09 Web origin check').replace(/\/$/u, '');
+  if (!W09_WEB_ORIGINS.has(origin)) throw new Error('W09 Web origin must be the fixed official repository');
+}
+
+async function validateSelectedBytesMatch(runtimeRoot, runtimeHead, historyRoot, historyHead, composer) {
+  const runtimeBytes = releaseGitBlob(runtimeRoot, runtimeHead, W09_SELECTED_PATH);
+  const historyBytes = releaseGitBlob(historyRoot, historyHead, W09_SELECTED_PATH);
+  await readExactTrackedInput(runtimeRoot, W09_SELECTED_PATH, runtimeBytes);
+  await readExactTrackedInput(historyRoot, W09_SELECTED_PATH, historyBytes);
+  if (!runtimeBytes.equals(historyBytes)) {
+    throw new Error('current main selected W09 marker differs from the pinned historical composition input');
+  }
+
+  let selection;
+  try {
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(runtimeBytes);
+    selection = composer.validateW09SelectedComposition(JSON.parse(decoded));
+  } catch (error) {
+    throw new Error('current main selected W09 marker is invalid: ' + error.message);
+  }
+  for (const proposal of selection.proposals) {
+    const relativePath = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+    const runtimeLock = releaseGitBlob(runtimeRoot, runtimeHead, relativePath);
+    const historyLock = releaseGitBlob(historyRoot, historyHead, relativePath);
+    await readExactTrackedInput(runtimeRoot, relativePath, runtimeLock);
+    await readExactTrackedInput(historyRoot, relativePath, historyLock);
+    if (!runtimeLock.equals(historyLock)) {
+      throw new Error('current main W09 request lock differs from the pinned historical composition input: ' + proposal.requestId);
+    }
+  }
+}
+
+/**
+ * Resolve the exact compiler module used for Source/W08/overlay replay. In dual-root
+ * promotion, runtime state remains in repoRoot while the original composition module
+ * is imported only after both tracked code pins and all selected input bytes agree.
+ */
+export async function resolveW09CompositionContext(options = {}) {
+  if (!options || typeof options !== 'object' || Array.isArray(options)) {
+    throw new TypeError('W09 composition context options must be an object');
+  }
+  const hasCompositionRoot = options.compositionRepoRoot !== undefined;
+  const hasExpectedCommit = options.expectedCompositionCommit !== undefined;
+  if (hasCompositionRoot !== hasExpectedCommit) {
+    throw new Error('compositionRepoRoot and expectedCompositionCommit must be provided together');
+  }
+  if (typeof options.repoRoot !== 'string' || options.repoRoot.trim() === '') {
+    throw new Error('repoRoot is required to resolve the W09 composition context');
+  }
+
+  const runtimeRoot = await realpath(path.resolve(options.repoRoot));
+  if (!hasCompositionRoot) {
+    const moduleUrl = new URL('./contract-w09-compose.mjs', import.meta.url).href;
+    const composer = await import(moduleUrl);
+    const runtimeHead = releaseGitText(runtimeRoot, ['rev-parse', 'HEAD'], 'current W09 Web HEAD check');
+    if (typeof composer.loadW09VerifiedComposition !== 'function') {
+      throw new Error('current W09 composer does not expose the verified composition loader');
+    }
+    const context = {
+      runtimeRoot,
+      runtimeHead,
+      dualRoot: false,
+      compositionRoot: runtimeRoot,
+      expectedCompositionCommit: null,
+      moduleUrl,
+      loadW09VerifiedComposition: composer.loadW09VerifiedComposition,
+    };
+    return Object.freeze(context);
+  }
+
+  if (typeof options.compositionRepoRoot !== 'string' || options.compositionRepoRoot.trim() === '') {
+    throw new TypeError('compositionRepoRoot must be a non-empty local path');
+  }
+  if (typeof options.expectedCompositionCommit !== 'string'
+      || !/^[a-f0-9]{40}$/u.test(options.expectedCompositionCommit)) {
+    throw new TypeError('expectedCompositionCommit must be a full lowercase Git commit SHA');
+  }
+  const compositionRoot = await realpath(path.resolve(options.compositionRepoRoot));
+  if (runtimeRoot.toLowerCase() === compositionRoot.toLowerCase()) {
+    throw new Error('runtime and historical W09 composition roots must be separate checkouts');
+  }
+
+  assertOfficialW09WebOrigin(runtimeRoot);
+  assertOfficialW09WebOrigin(compositionRoot);
+  const runtimeHead = releaseGitText(runtimeRoot, ['rev-parse', 'HEAD'], 'current W09 Web HEAD check');
+  const compositionHead = releaseGitText(compositionRoot, ['rev-parse', 'HEAD'], 'historical W09 Web HEAD check');
+  if (compositionHead !== options.expectedCompositionCommit) {
+    throw new Error('historical W09 composition checkout does not match expectedCompositionCommit');
+  }
+  try {
+    execFileSync('git', ['-C', runtimeRoot, 'merge-base', '--is-ancestor', compositionHead, runtimeHead], {
+      stdio: 'ignore',
+      windowsHide: true,
+    });
+  } catch (error) {
+    if (error.status === 1) throw new Error('historical W09 composition commit must be an ancestor of current main');
+    throw new Error('historical W09 composition ancestry check failed');
+  }
+
+  const currentComposer = await import(new URL('./contract-w09-compose.mjs', import.meta.url).href);
+  if (typeof currentComposer.loadW09CompilerCodePin !== 'function'
+      || typeof currentComposer.validateW09SelectedComposition !== 'function') {
+    throw new Error('current W09 compiler verifier is unavailable');
+  }
+  const runtimePin = currentComposer.loadW09CompilerCodePin({ repoRoot: runtimeRoot, head: runtimeHead });
+  const historyPin = currentComposer.loadW09CompilerCodePin({ repoRoot: compositionRoot, head: compositionHead });
+  await validateSelectedBytesMatch(runtimeRoot, runtimeHead, compositionRoot, compositionHead, currentComposer);
+
+  const composerPin = historyPin.files.find(row => row.path === W09_COMPOSER_MODULE_PATH);
+  if (!composerPin) throw new Error('historical W09 code pin omits the composition module');
+  const historicalComposerPath = path.join(compositionRoot, ...W09_COMPOSER_MODULE_PATH.split('/'));
+  const historicalComposerInfo = await lstat(historicalComposerPath);
+  if (historicalComposerInfo.isSymbolicLink() || !historicalComposerInfo.isFile()) {
+    throw new Error('historical W09 composition module must be a regular pinned file');
+  }
+  const historicalComposerBytes = await readFile(historicalComposerPath);
+  if (historicalComposerBytes.byteLength !== composerPin.sizeBytes
+      || createHash('sha256').update(historicalComposerBytes).digest('hex') !== composerPin.sha256) {
+    throw new Error('historical W09 composition module differs from its verified code pin');
+  }
+
+  const moduleUrl = pathToFileURL(historicalComposerPath).href;
+  const historicalComposer = await import(moduleUrl);
+  if (typeof historicalComposer.loadW09VerifiedComposition !== 'function'
+      || typeof historicalComposer.loadW09CompilerCodePin !== 'function') {
+    throw new Error('pinned historical W09 composer does not expose the verified loader');
+  }
+  const importedHistoryPin = historicalComposer.loadW09CompilerCodePin({ repoRoot: compositionRoot, head: compositionHead });
+  if (importedHistoryPin.lockSha256 !== historyPin.lockSha256
+      || importedHistoryPin.fileSetSha256 !== historyPin.fileSetSha256) {
+    throw new Error('imported historical W09 composer disagrees with the pre-import code-pin verification');
+  }
+
+  const context = {
+    runtimeRoot,
+    runtimeHead,
+    dualRoot: true,
+    runtimePin,
+    compositionRoot,
+    expectedCompositionCommit: compositionHead,
+    historyPin,
+    moduleUrl,
+    loadW09VerifiedComposition: historicalComposer.loadW09VerifiedComposition,
+  };
+  return Object.freeze(context);
+}
+
+async function revalidateW09CompositionContext(options, initialContext, stage) {
+  const latest = await resolveW09CompositionContext(options);
+  if (initialContext.dualRoot && latest.runtimeHead !== initialContext.runtimeHead) {
+    throw new Error('current main changed during W09 ' + stage + '; refusing to use historical composition inputs with a different runtime checkout');
+  }
+  return latest;
+}
 
 function assertText(value, label) {
   if (typeof value !== 'string' || value.trim() === '') {
@@ -598,15 +809,17 @@ export async function prepareW09SharedRelease(options = {}) {
     throw new Error('caller-supplied readiness flags, request, packet, or lock are not accepted by the formal release entry');
   }
 
-  const { loadW09VerifiedComposition } = await import('./contract-w09-compose.mjs');
   const repoRoot = path.resolve(options.repoRoot);
+  const contextOptions = { ...options, repoRoot };
+  const compositionContext = await resolveW09CompositionContext(contextOptions);
   const dryRun = options.dryRun === true;
-  const firstPass = await loadW09VerifiedComposition({
-    repoRoot,
+  const firstPass = await compositionContext.loadW09VerifiedComposition({
+    repoRoot: compositionContext.compositionRoot,
     sourceRoot: options.sourceRoot,
     releaseId: options.releaseId,
     ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
   });
+  await revalidateW09CompositionContext(contextOptions, compositionContext, 'preflight replay');
   if (firstPass.status !== 'verified') return firstPass;
   if (firstPass.gate.status !== 'ready-for-release-allocation') {
     return { status: 'blocked', releaseId: options.releaseId, inputDigest: firstPass.inputDigest, gate: firstPass.gate };
@@ -648,8 +861,8 @@ export async function prepareW09SharedRelease(options = {}) {
 
   const publicationLockPath = path.join(repoRoot, 'content/contracts/w09/publication.lock');
   const runLocked = async () => {
-      const composition = await loadW09VerifiedComposition({
-        repoRoot,
+      const composition = await compositionContext.loadW09VerifiedComposition({
+        repoRoot: compositionContext.compositionRoot,
         sourceRoot: options.sourceRoot,
         releaseId: options.releaseId,
         ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
@@ -658,6 +871,7 @@ export async function prepareW09SharedRelease(options = {}) {
       if (composition.gate.status !== 'ready-for-release-allocation') {
         return { status: 'blocked', releaseId: options.releaseId, inputDigest: composition.inputDigest, gate: composition.gate };
       }
+      await revalidateW09CompositionContext(contextOptions, compositionContext, 'serialized allocation replay');
       if (composition.inputDigest !== firstPass.inputDigest || composition.repositoryHead !== firstPass.repositoryHead) {
         throw new Error('W09 composition inputs changed between the preflight and serialized allocation');
       }
@@ -1228,11 +1442,12 @@ export async function promoteW09SelectedComposition(options = {}) {
   if (typeof options.promoteVerifiedArtifact !== 'function') throw new TypeError('promoteVerifiedArtifact must deploy and origin-verify the exact static artifact');
   const expectedCurrent = canonicalActiveSnapshot(options.expectedCurrent);
   const repoRoot = path.resolve(options.repoRoot);
+  const compositionOptions = { ...options, repoRoot };
+  const compositionContext = await resolveW09CompositionContext(compositionOptions);
   const branch = execFileSync('git', ['-C', repoRoot, 'branch', '--show-current'], { encoding: 'utf8', windowsHide: true }).trim();
   if (branch !== 'main' && process.env.GITHUB_REF !== 'refs/heads/main') throw new Error('W09 shared promotion is restricted to reviewed Web main');
   const statePath = path.join(repoRoot, 'content/contracts/w09/release-state.json');
   const lockPath = path.join(repoRoot, 'content/contracts/w09/publication.lock');
-  const { loadW09VerifiedComposition } = await import('./contract-w09-compose.mjs');
 
   return withW09PublicationLock({
     lockPath,
@@ -1257,12 +1472,13 @@ export async function promoteW09SelectedComposition(options = {}) {
           [INTERNAL_PUBLICATION_LOCK]: true,
         });
         if (result.status !== 'prepared') return result;
-        const composition = await loadW09VerifiedComposition({
-          repoRoot,
+        const composition = await compositionContext.loadW09VerifiedComposition({
+          repoRoot: compositionContext.compositionRoot,
           sourceRoot: options.sourceRoot,
           releaseId: sourceReleaseId,
           ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
         });
+        await revalidateW09CompositionContext(compositionOptions, compositionContext, 'verified Source replay');
         if (composition.status !== 'verified' || composition.gate.status !== 'ready-for-release-allocation') {
           return { status: 'pending', sourceReleaseId, gate: composition.gate ?? { status: composition.status, reason: composition.reason } };
         }
@@ -1272,6 +1488,7 @@ export async function promoteW09SelectedComposition(options = {}) {
         preparedBySourceRelease.push({ sourceReleaseId, webReleaseId: result.releaseId, composition });
       }
 
+      await revalidateW09CompositionContext(compositionOptions, compositionContext, 'shared artifact build');
       state = await readW09ReleaseState(statePath);
       if (!sameJson(currentW09ActiveSnapshot(state), current)) throw new Error('active W09 pointer changed during serialized preparation');
       const transactionIds = preparedBySourceRelease.map(row => row.webReleaseId).sort();

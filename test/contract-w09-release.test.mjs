@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { lstat, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
-import { execFile, execFileSync } from 'node:child_process';
+import { lstat, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { execFile, execFileSync, spawnSync } from 'node:child_process';
 import { promisify } from 'node:util';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { gzipSync, gunzipSync } from 'node:zlib';
@@ -1690,6 +1690,249 @@ test('InterT25_explicit-retention-reference-changes-use-the-durable-owner-state-
   assert.equal(checkpoints[0].phase, 'retention-references');
   assert.equal(checkpoints[0].statePath, statePath);
   assert.deepEqual((await readW09ReleaseState(statePath)).referenceReleaseIds, [releaseId]);
+});
+
+const W09_HISTORICAL_COMPOSITION_COMMIT = '08c25ff58a01bac1a52a0531cde99288f68cfa31';
+const W09_COMPILER_LOCK_PATH = 'content/contracts/w09/compiler.lock.json';
+const W09_COMPOSITION_LOCK_ROOT = 'content/contracts/w09/source-handoff/locks/';
+
+function gitCommitFixture(repoRoot, message, { allowEmpty = false } = {}) {
+  execFileSync('git', [
+    '-C', repoRoot,
+    '-c', 'user.name=Codex W09 Fixture',
+    '-c', 'user.email=codex-w09-fixture@example.invalid',
+    'commit', '--quiet', ...(allowEmpty ? ['--allow-empty'] : []), '-m', message,
+  ], { encoding: 'utf8', windowsHide: true });
+}
+
+function cloneW09Fixture(sourceRoot, destination) {
+  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--shared', '--quiet', sourceRoot, destination], {
+    encoding: 'utf8',
+    maxBuffer: 32 * 1024 * 1024,
+    windowsHide: true,
+  });
+  git(destination, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
+}
+
+async function createDualRootW09Fixture(t) {
+  const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-dual-root-'));
+  t.after(() => rm(fixtureRoot, { recursive: true, force: true }));
+  const runtimeRoot = path.join(fixtureRoot, 'runtime');
+  const compositionRoot = path.join(fixtureRoot, 'composition-inputs');
+  cloneW09Fixture(REPO_ROOT, runtimeRoot);
+  cloneW09Fixture(REPO_ROOT, compositionRoot);
+  await symlink(path.join(REPO_ROOT, 'node_modules'), path.join(compositionRoot, 'node_modules'), 'junction');
+  git(runtimeRoot, ['checkout', '--quiet', '-B', 'main', 'HEAD']);
+  git(compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
+
+  const pinCommit = git(runtimeRoot, ['rev-parse', 'HEAD']);
+  const compilerLock = JSON.parse(gitBytes(runtimeRoot, ['show', 'HEAD:' + W09_COMPILER_LOCK_PATH]).toString('utf8'));
+  compilerLock.commit = pinCommit;
+  compilerLock.files = W09_COMPILER_FILE_PATHS.map(relativePath => {
+    const bytes = gitBytes(runtimeRoot, ['show', pinCommit + ':' + relativePath]);
+    return { path: relativePath, sizeBytes: bytes.byteLength, sha256: sha256(bytes) };
+  });
+  compilerLock.fileSetSha256 = sha256(Buffer.from(canonicalW09Json(compilerLock.files), 'utf8'));
+  await writeFile(path.join(runtimeRoot, ...W09_COMPILER_LOCK_PATH.split('/')), jsonBytes(compilerLock));
+  git(runtimeRoot, ['add', W09_COMPILER_LOCK_PATH]);
+  gitCommitFixture(runtimeRoot, 'test fixture: pin current runtime code');
+
+  return {
+    fixtureRoot,
+    runtimeRoot,
+    compositionRoot,
+    runtimeHead: git(runtimeRoot, ['rev-parse', 'HEAD']),
+  };
+}
+
+async function readOptionalBytes(filePath) {
+  try { return await readFile(filePath); }
+  catch (error) { if (error.code === 'ENOENT') return null; throw error; }
+}
+
+// Scenario: publication replays a fixed historical W09 composition while current main owns every runtime artifact.
+// Purpose: prevent stale or mismatched historical inputs from reaching Source replay, allocation, build, or rollback.
+// Given current/history roots with independent valid pins, When promotion resolves the composition context,
+// Then only exact official ancestor inputs import and runtime state remains owned by current main.
+test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-by-main', async t => {
+  const releaseApi = await import('../scripts/content/contract-w09-release.mjs');
+  const fixture = await createDualRootW09Fixture(t);
+  const options = {
+    repoRoot: fixture.runtimeRoot,
+    compositionRepoRoot: fixture.compositionRoot,
+    expectedCompositionCommit: W09_HISTORICAL_COMPOSITION_COMMIT,
+  };
+  const runtimeStatePath = path.join(fixture.runtimeRoot, 'content/contracts/w09/release-state.json');
+  const historyStatePath = path.join(fixture.compositionRoot, 'content/contracts/w09/release-state.json');
+  const runtimeStateBefore = await readOptionalBytes(runtimeStatePath);
+  const historyStateBefore = await readOptionalBytes(historyStatePath);
+
+  await t.test('InterT26_01_valid-roots-import-the-exact-historical-module-before-source-replay', async () => {
+    const context = await releaseApi.resolveW09CompositionContext(options);
+    assert.equal(context.dualRoot, true);
+    assert.equal(context.runtimeHead, fixture.runtimeHead);
+    assert.equal(context.expectedCompositionCommit, W09_HISTORICAL_COMPOSITION_COMMIT);
+    assert.equal(context.moduleUrl, pathToFileURL(path.join(fixture.compositionRoot, 'scripts/content/contract-w09-compose.mjs')).href);
+    assert.equal(context.historyPin.commit, '1aadf6652838bcee4c282c884b5363be8d0ecb87');
+    assert.ok(context.runtimePin.commit !== context.historyPin.commit,
+      'the current runtime pin and historical composition pin are verified independently');
+
+    const selected = JSON.parse(gitBytes(fixture.runtimeRoot, ['show', 'HEAD:' + W09_SELECTED_COMPOSITION_PATH]).toString('utf8'));
+    const stateSource = path.join(fixture.runtimeRoot, 'content/contracts/w09/release-state.json');
+    const historySource = path.join(fixture.compositionRoot, 'content/contracts/w09/release-state.json');
+    const requests = [];
+    const result = await context.loadW09VerifiedComposition({
+      repoRoot: context.compositionRoot,
+      sourceRoot: fixture.runtimeRoot,
+      releaseId: selected.proposals[0].releaseId,
+      fetchImpl: async url => {
+        requests.push(String(url));
+        return new Response(null, { status: 404 });
+      },
+    });
+    assert.equal(result.status, 'pending', 'the real historical loader ran and received the controlled unavailable-archive response');
+    assert.equal(result.releaseId, selected.proposals[0].releaseId, 'the existing selected release identity passes through unchanged');
+    assert.equal(requests.length, 1);
+    assert.match(requests[0], /^https:\/\/api\.github\.com\/repos\/SyuanTsai\/DarkTide-Source-Data\//u);
+    assert.deepEqual(await readOptionalBytes(stateSource), runtimeStateBefore,
+      'resolving and replaying a pending historical composition does not allocate or write runtime state');
+    assert.deepEqual(await readOptionalBytes(historySource), historyStateBefore,
+      'historical composition input remains read-only');
+  });
+
+  await t.test('InterT26_02_root-options-must-be-paired-and-the-expected-commit-must-match', async () => {
+    await assert.rejects(releaseApi.resolveW09CompositionContext({
+      repoRoot: fixture.runtimeRoot,
+      compositionRepoRoot: fixture.compositionRoot,
+    }), /compositionRepoRoot and expectedCompositionCommit must be provided together/u);
+    await assert.rejects(releaseApi.resolveW09CompositionContext({
+      ...options,
+      expectedCompositionCommit: 'f'.repeat(40),
+    }), /does not match expectedCompositionCommit/u);
+  });
+
+  await t.test('InterT26_03_official-origin-and-ancestor-are-required', async () => {
+    git(fixture.compositionRoot, ['remote', 'set-url', 'origin', 'https://example.invalid/DarkTide-Web.git']);
+    await assert.rejects(releaseApi.resolveW09CompositionContext(options), /fixed official repository/u);
+    git(fixture.compositionRoot, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
+
+    const tree = git(fixture.runtimeRoot, ['rev-parse', 'HEAD^{tree}']);
+    const siblingHead = execFileSync('git', [
+      '-C', fixture.runtimeRoot,
+      '-c', 'user.name=Codex W09 Fixture',
+      '-c', 'user.email=codex-w09-fixture@example.invalid',
+      'commit-tree', tree, '-m', 'isolated unrelated history fixture',
+    ], { encoding: 'utf8', windowsHide: true }).trim();
+    git(fixture.runtimeRoot, ['update-ref', 'refs/heads/fixture-unrelated', siblingHead]);
+    execFileSync('git', [
+      '-C', fixture.compositionRoot, 'fetch', '--quiet', fixture.runtimeRoot,
+      'refs/heads/fixture-unrelated:refs/heads/fixture-unrelated',
+    ], { encoding: 'utf8', windowsHide: true });
+    git(fixture.compositionRoot, ['checkout', '--quiet', '--detach', siblingHead]);
+    await assert.rejects(releaseApi.resolveW09CompositionContext({
+      ...options,
+      expectedCompositionCommit: siblingHead,
+    }), /must be an ancestor of current main/u);
+    git(fixture.compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
+  });
+
+  await t.test('InterT26_04_both-current-and-historical-code-pins-must-match-their-worktrees', async () => {
+    const compilerLockPath = path.join(fixture.runtimeRoot, ...W09_COMPILER_LOCK_PATH.split('/'));
+    const currentLock = await readFile(compilerLockPath);
+    try {
+      await writeFile(compilerLockPath, Buffer.concat([currentLock, Buffer.from(' ')]));
+      await assert.rejects(releaseApi.resolveW09CompositionContext(options), /working file differs|committed bytes/u);
+    } finally {
+      await writeFile(compilerLockPath, currentLock);
+    }
+
+    const historyLockPath = path.join(fixture.compositionRoot, ...W09_COMPILER_LOCK_PATH.split('/'));
+    const historicalLock = await readFile(historyLockPath);
+    try {
+      await writeFile(historyLockPath, Buffer.concat([historicalLock, Buffer.from(' ')]));
+      await assert.rejects(releaseApi.resolveW09CompositionContext(options), /working file differs|committed bytes/u);
+    } finally {
+      await writeFile(historyLockPath, historicalLock);
+    }
+  });
+
+  await t.test('InterT26_05_committed-selected-marker-and-request-lock-bytes-must-match', async () => {
+    const baseHead = git(fixture.runtimeRoot, ['rev-parse', 'HEAD']);
+    const selectedBytes = gitBytes(fixture.runtimeRoot, ['show', baseHead + ':' + W09_SELECTED_COMPOSITION_PATH]);
+    const selected = JSON.parse(selectedBytes.toString('utf8'));
+    selected.sourceRevision = sha256(Buffer.from('different selected revision', 'utf8'));
+    await writeFile(path.join(fixture.runtimeRoot, ...W09_SELECTED_COMPOSITION_PATH.split('/')), jsonBytes(selected));
+    git(fixture.runtimeRoot, ['add', W09_SELECTED_COMPOSITION_PATH]);
+    gitCommitFixture(fixture.runtimeRoot, 'test fixture: mismatch selected marker');
+    await assert.rejects(releaseApi.resolveW09CompositionContext(options), /selected W09 marker differs/u);
+    git(fixture.runtimeRoot, ['reset', '--quiet', '--hard', baseHead]);
+
+    const proposal = JSON.parse(selectedBytes.toString('utf8')).proposals[0];
+    const lockRelative = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+    const lockBytes = gitBytes(fixture.runtimeRoot, ['show', baseHead + ':' + lockRelative]);
+    await writeFile(path.join(fixture.runtimeRoot, ...lockRelative.split('/')), Buffer.concat([lockBytes, Buffer.from(' ')]));
+    git(fixture.runtimeRoot, ['add', lockRelative]);
+    gitCommitFixture(fixture.runtimeRoot, 'test fixture: mismatch composition lock bytes');
+    await assert.rejects(releaseApi.resolveW09CompositionContext(options), /request lock differs/u);
+    git(fixture.runtimeRoot, ['reset', '--quiet', '--hard', baseHead]);
+  });
+
+  await t.test('InterT26_06_runtime-head-drift-during-replay-stops-before-allocation', async () => {
+    const releaseId = JSON.parse(gitBytes(fixture.runtimeRoot, [
+      'show', 'HEAD:' + W09_SELECTED_COMPOSITION_PATH,
+    ]).toString('utf8')).proposals[0].releaseId;
+    await assert.rejects(releaseApi.prepareW09SharedRelease({
+      ...options,
+      sourceRoot: fixture.runtimeRoot,
+      releaseId,
+      fetchImpl: async () => {
+        gitCommitFixture(fixture.runtimeRoot, 'test fixture: runtime advanced during source replay', { allowEmpty: true });
+        return new Response(null, { status: 404 });
+      },
+    }), /current main changed during W09 preflight replay/u);
+    git(fixture.runtimeRoot, ['reset', '--quiet', '--hard', fixture.runtimeHead]);
+    assert.deepEqual(await readOptionalBytes(runtimeStatePath), runtimeStateBefore,
+      'runtime drift is rejected before reading or writing an allocation');
+  });
+
+  await t.test('InterT26_07_workflow-pins-readonly-composition-checkout-only-for-promotion', async () => {
+    const workflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/shared-release.yml'), 'utf8'));
+    const steps = workflow.jobs['shared-release'].steps;
+    const checkout = steps.find(step => step.name === 'Check out the pinned historical W09 composition inputs');
+    assert.ok(checkout);
+    assert.equal(checkout.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
+    assert.equal(checkout.with.repository, 'SyuanTsai/DarkTide-Web');
+    assert.equal(checkout.with.ref, W09_HISTORICAL_COMPOSITION_COMMIT);
+    assert.equal(checkout.with.path, 'composition-inputs');
+    assert.equal(checkout.with['persist-credentials'], false);
+    assert.match(checkout.if, /inputs\.action != 'rollback'/u);
+    const promote = steps.find(step => step.name === 'Promote the selected shared composition');
+    assert.equal(promote.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
+    assert.equal(promote.env.W09_EXPECTED_COMPOSITION_COMMIT, W09_HISTORICAL_COMPOSITION_COMMIT);
+    const rollback = steps.find(step => step.name === 'Restore the explicit approved whole-site snapshot');
+    assert.equal(Object.hasOwn(rollback.env, 'W09_COMPOSITION_ROOT'), false,
+      'rollback remains on the exact-snapshot path and does not replay composition inputs');
+  });
+
+  await t.test('InterT26_08_cli-rejects-an-incomplete-root-pair-before-state-branch-restore', async () => {
+    const childEnv = { ...process.env, W09_COMPOSITION_ROOT: fixture.compositionRoot };
+    delete childEnv.W09_EXPECTED_COMPOSITION_COMMIT;
+    const result = spawnSync(process.execPath, ['scripts/promote-w09-release.mjs'], {
+      cwd: REPO_ROOT,
+      env: childEnv,
+      encoding: 'utf8',
+      windowsHide: true,
+    });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /compositionRepoRoot and expectedCompositionCommit must be provided together/u);
+    assert.equal(result.stderr.includes('owner state branch'), false,
+      'the malformed configuration is rejected before the durable owner state store can be restored');
+  });
+
+  assert.deepEqual(await readOptionalBytes(runtimeStatePath), runtimeStateBefore,
+    'all guard failures occur before any current-root state allocation');
+  assert.deepEqual(await readOptionalBytes(historyStatePath), historyStateBefore,
+    'no guard path writes the historical checkout');
 });
 
 test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route', async () => {
