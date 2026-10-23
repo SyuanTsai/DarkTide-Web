@@ -297,7 +297,9 @@ test('UnitT22_public-source-lock-files-match-the-static-verifier', async () => {
   }
 });
 
-test('UnitT23_runtime-snapshot-archive-preserves-crlf-and-binary-through-a-fresh-git-checkout', async t => {
+// Scenario: a runtime archive contains the full prepared-domain size and is restored from a fresh checkout.
+// Purpose: prevent large canonical base64 validation from overflowing while retaining byte and tamper checks.
+test('UnitT23_runtime-snapshot-archive-preserves-large-domains-and-rejects-noncanonical-base64', async t => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'w09-runtime-archive-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   const repo = path.join(root, 'repo');
@@ -313,12 +315,29 @@ test('UnitT23_runtime-snapshot-archive-preserves-crlf-and-binary-through-a-fresh
   const longAssetPath = 'assets/' + 'a'.repeat(150) + '.mjs';
   const sourceBytes = Buffer.from('first\r\nsecond\r\n', 'utf8');
   const binaryBytes = Buffer.from([0, 13, 10, 255, 128, 65]);
+  const largeDomainBytes = Buffer.alloc(6_662_191, 0x5a);
+  const largeDomainSha256 = sha256(largeDomainBytes);
   const files = new Map([
     ['artifact-manifest.json', Buffer.from('{"fixtureOnly":true}\n', 'utf8')],
     [longAssetPath, sourceBytes],
     ['assets/opaque.bin', binaryBytes],
+    ['data/shared/domains/weapons.json', largeDomainBytes],
   ]);
   const archiveBytes = encodeW09RuntimeSnapshotArchive(buildId, files);
+  assert.equal(sha256(largeDomainBytes), largeDomainSha256, 'encoding must not mutate source domain bytes');
+  const canonicalByteArchive = encodeW09RuntimeSnapshotArchive(buildId, new Map([
+    ['artifact-manifest.json', Buffer.from('{"fixtureOnly":true}\n', 'utf8')],
+    ['assets/pad.bin', Buffer.from('f', 'utf8')],
+  ]));
+  const canonicalEnvelope = gunzipSync(canonicalByteArchive).toString('utf8');
+  const canonicalBase64 = JSON.parse(canonicalEnvelope).files.find(row => row.path === 'assets/pad.bin').base64;
+  assert.equal(canonicalBase64, 'Zg==');
+  for (const forgedBase64 of ['Zh==', 'Zg=!', 'Zg=']) {
+    const forgedEnvelope = JSON.parse(canonicalEnvelope);
+    forgedEnvelope.files.find(row => row.path === 'assets/pad.bin').base64 = forgedBase64;
+    const forgedBytes = gzipSync(Buffer.from(JSON.stringify(sortJsonForTest(forgedEnvelope), null, 2) + '\n', 'utf8'), { level: 9, mtime: 0 });
+    await assert.rejects(materializeW09RuntimeSnapshotArchive(forgedBytes, buildId), /base64|metadata|canonical/i);
+  }
   assert.throws(() => encodeW09RuntimeSnapshotArchive(buildId, new Map([['C:/escape.txt', Buffer.from('x')]])), /unsafe file path/);
   assert.throws(() => encodeW09RuntimeSnapshotArchive(buildId, new Map([['assets/unsafe\0name', Buffer.from('x')]])), /unsafe file path/);
   for (const unsafePath of ['C:/escape.txt', 'assets/unsafe\0name']) {
@@ -342,6 +361,9 @@ test('UnitT23_runtime-snapshot-archive-preserves-crlf-and-binary-through-a-fresh
   try {
     assert.deepEqual(await readFile(path.join(restored, ...longAssetPath.split('/'))), sourceBytes);
     assert.deepEqual(await readFile(path.join(restored, 'assets/opaque.bin')), binaryBytes);
+    const restoredLargeDomain = await readFile(path.join(restored, 'data/shared/domains/weapons.json'));
+    assert.equal(restoredLargeDomain.byteLength, 6_662_191);
+    assert.equal(sha256(restoredLargeDomain), largeDomainSha256, 'runtime snapshot must preserve prepared-size domain bytes');
   } finally {
     await rm(restored, { recursive: true, force: true });
   }

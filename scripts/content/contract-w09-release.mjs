@@ -913,6 +913,30 @@ export function encodeW09RuntimeSnapshotArchive(buildId, files) {
   return archiveBytes;
 }
 
+function isCanonicalRuntimeSnapshotBase64(value) {
+  if (typeof value !== 'string' || value.length % 4 !== 0) return false;
+  const padding = value.endsWith('==') ? 2 : value.endsWith('=') ? 1 : 0;
+  const payloadLength = value.length - padding;
+  if ((padding === 2 && payloadLength % 4 !== 2)
+      || (padding === 1 && payloadLength % 4 !== 3)
+      || (padding === 0 && payloadLength % 4 !== 0)) return false;
+  let finalSextet = -1;
+  for (let index = 0; index < payloadLength; index += 1) {
+    const code = value.charCodeAt(index);
+    let sextet = -1;
+    if (code >= 65 && code <= 90) sextet = code - 65;
+    else if (code >= 97 && code <= 122) sextet = code - 71;
+    else if (code >= 48 && code <= 57) sextet = code + 4;
+    else if (code === 43) sextet = 62;
+    else if (code === 47) sextet = 63;
+    if (sextet < 0) return false;
+    finalSextet = sextet;
+  }
+  if ((padding === 2 && (finalSextet & 0x0f) !== 0)
+      || (padding === 1 && (finalSextet & 0x03) !== 0)) return false;
+  return true;
+}
+
 function parseRuntimeSnapshotArchive(archiveBytes, expectedBuildId) {
   let archive;
   let decoded;
@@ -945,7 +969,8 @@ function parseRuntimeSnapshotArchive(archiveBytes, expectedBuildId) {
       throw new Error('approved W09 runtime snapshot archive contains an unsafe or unsorted path');
     }
     if (!Number.isSafeInteger(row.sizeBytes) || row.sizeBytes < 0 || !SHA256_RE.test(row.sha256)
-        || typeof row.base64 !== 'string' || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/u.test(row.base64)) {
+        || typeof row.base64 !== 'string' || row.base64.length !== Math.ceil(row.sizeBytes / 3) * 4
+        || !isCanonicalRuntimeSnapshotBase64(row.base64)) {
       throw new Error('approved W09 runtime snapshot archive contains invalid file metadata');
     }
     const bytes = Buffer.from(row.base64, 'base64');
