@@ -79,6 +79,17 @@ async function removeSelectedCompositionFromFixture(webRoot) {
   assert.equal(git(absoluteRoot, ['status', '--porcelain']), '', 'the isolated no-selection fixture must be committed and clean');
 }
 
+function initializeW09ReplayCloneBranch(webRoot) {
+  assert.equal(git(webRoot, ['status', '--porcelain']), '', 'a disposable replay clone must be clean before branch initialization');
+  const headBefore = git(webRoot, ['rev-parse', 'HEAD']);
+  const indexTreeBefore = git(webRoot, ['write-tree']);
+  git(webRoot, ['checkout', '-B', 'main', 'HEAD']);
+  assert.equal(git(webRoot, ['branch', '--show-current']), 'main');
+  assert.equal(git(webRoot, ['rev-parse', 'HEAD']), headBefore, 'branch initialization must preserve the checked-out commit');
+  assert.equal(git(webRoot, ['write-tree']), indexTreeBefore, 'branch initialization must preserve the index tree');
+  assert.equal(git(webRoot, ['status', '--porcelain']), '', 'branch initialization must leave the clone clean');
+}
+
 const sha = character => character.repeat(64);
 const source = (gameVersion, gameReleaseId, inputDigest, manifestSha256 = sha('b')) => ({
   gameVersion, gameReleaseId, inputDigest, manifestSha256,
@@ -426,6 +437,45 @@ test('UnitT14_replaces-only-regular-pinned-files-in-a-disposable-clone', async t
   await assert.rejects(installW09CompilerFilesInFixture(nonFileRoot), /must be a regular file/i);
 });
 
+// Scenario: the isolated replay clone begins on main, another branch, or detached HEAD while a main ref exists.
+// Purpose: prove fixture initialization is repeatable without changing the checked-out commit or tree.
+test('UnitT15_replay-fixture-main-initialization-preserves-HEAD-and-tree-across-branch-states', async t => {
+  for (const [testName, state] of [
+    ['UnitT10_main-already-checked-out', 'main-already-checked-out'],
+    ['UnitT20_other-branch-checked-out', 'other-branch-checked-out'],
+    ['UnitT30_detached-head', 'detached-head'],
+  ]) {
+    await t.test(testName, async t => {
+      const root = await mkdtemp(path.join(os.tmpdir(), 'w09-branch-init-'));
+      t.after(() => rm(root, { recursive: true, force: true }));
+      git(root, ['init', '-b', 'main']);
+      git(root, ['config', 'core.autocrlf', 'false']);
+      git(root, ['config', 'user.name', 'W09 branch fixture']);
+      git(root, ['config', 'user.email', 'w09-branch-fixture@example.invalid']);
+      await writeFile(path.join(root, 'tracked.txt'), 'base\n', 'utf8');
+      git(root, ['add', '--', 'tracked.txt']);
+      git(root, ['commit', '-m', 'W09 branch fixture base']);
+
+      if (state === 'other-branch-checked-out') {
+        git(root, ['checkout', '-b', 'fixture-other']);
+        await writeFile(path.join(root, 'other.txt'), 'other branch\n', 'utf8');
+        git(root, ['add', '--', 'other.txt']);
+        git(root, ['commit', '-m', 'W09 branch fixture other branch']);
+      } else if (state === 'detached-head') {
+        git(root, ['checkout', '--detach', 'HEAD']);
+      }
+
+      const headBefore = git(root, ['rev-parse', 'HEAD']);
+      const treeBefore = git(root, ['write-tree']);
+      initializeW09ReplayCloneBranch(root);
+
+      assert.equal(git(root, ['rev-parse', 'HEAD']), headBefore);
+      assert.equal(git(root, ['write-tree']), treeBefore);
+      assert.equal(git(root, ['status', '--porcelain']), '');
+    });
+  }
+});
+
 // Scenario: pinned formal Source bytes are published through the resolver and combined with reviewed Web overlays.
 // Purpose: exercise W05 build/replay, source lock validation, W08 projection, allocation and immutable nested package retry.
 // All synthetic human approvals and fake archive HTTP responses are confined to disposable local Git fixtures.
@@ -446,11 +496,11 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   assert.equal(sourceBundleLock.repository, 'SyuanTsai/DarkTide-Source-Data');
 
   execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--quiet', '--no-hardlinks', REPO_ROOT, webRoot], { encoding: 'utf8', windowsHide: true });
-  git(webRoot, ['checkout', '-b', 'main']);
   git(webRoot, ['config', 'core.autocrlf', 'false']);
   git(webRoot, ['config', 'user.name', 'W09 isolated fixture']);
   git(webRoot, ['config', 'user.email', 'w09-fixture@example.invalid']);
   git(webRoot, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
+  initializeW09ReplayCloneBranch(webRoot);
   await removeSelectedCompositionFromFixture(webRoot);
 
   await mkdir(sourceRoot, { recursive: true });
