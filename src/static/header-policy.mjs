@@ -3,7 +3,7 @@ import { compareUtf8 } from './common.mjs';
 export const CLOUDFLARE_HEADER_RULE_LIMIT = 100;
 export const CLOUDFLARE_HEADER_LINE_LIMIT = 2000;
 
-const DOCUMENT_PREFIXES = ['/skills/*', '/weapons/*', '/blessings/*'];
+const DOCUMENT_PREFIXES = ['/skills/*', '/weapons/*', '/blessings/*', '/game-changes/*'];
 const IMMUTABLE_PREFIXES = ['/assets/*', '/data/*'];
 const DOCUMENT_POLICY = 'no-cache, must-revalidate';
 const IMMUTABLE_POLICY = 'public, max-age=31536000, immutable';

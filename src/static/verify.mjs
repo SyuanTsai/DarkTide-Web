@@ -30,11 +30,13 @@ function normalizePrivateKey(key) {
   return key.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-const OFFICIAL_INPUT_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.officialInputs\.sources\[\d+\]$/u;
-const OFFICIAL_PRESENTATION_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.presentations\[\d+\]\.official$/u;
-const OFFICIAL_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings)\.json)\.web\.(?:officialInputs\.sources\[\d+\]|presentations\[\d+\]\.official)\.segments\[\d+\]\.token$/u;
+const OFFICIAL_INPUT_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.officialInputs\.sources\[\d+\]$/u;
+const OFFICIAL_PRESENTATION_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings|weapons)\.json)\.web\.presentations\[\d+\]\.official$/u;
+const OFFICIAL_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings|weapons)\.json)\.web\.(?:officialInputs\.sources\[\d+\]|presentations\[\d+\]\.official)\.segments\[\d+\]\.token$/u;
+const GAME_CHANGE_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.officialInputs\.sources\[\d+\]\.segments\[\d+\]\.token$/u;
+const WEAPON_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?weapons\.json)\.web\.officialInputs\.sources\[\d+\]\.segments\[\d+\]\.token$/u;
 
-function validatePublicOfficialInput(source, location) {
+function validatePublicOfficialInput(source, location, validatedParameterSegments = null) {
   const sourceRequired = [
     'officialSourceId', 'entityRef', 'origin', 'sourceLocale', 'resource', 'key', 'occurrence',
     'sourceText', 'sourceTextSha256', 'segments', 'params', 'resolvedText', 'resolvedTextSha256',
@@ -102,6 +104,7 @@ function validatePublicOfficialInput(source, location) {
         fail('public official parameter segment does not match its formal binding at ' + location);
       }
       usedParameters.add(segment.parameterId);
+      validatedParameterSegments?.add(segment);
       sourceParts.push(segment.token);
       renderedParts.push(parameters.get(segment.parameterId));
     } else {
@@ -140,21 +143,48 @@ function collectOfficialInputSources(filePath, value, officialInputFiles) {
   return byId;
 }
 
-function scanPublicBoundary(value, location = '$', { officialInputFiles = new Set(), officialInputSources = new Map() } = {}) {
+function collectOfficialPresentationObjects(filePath, value, officialInputFiles) {
+  const objects = new WeakSet();
+  if (!officialInputFiles.has(filePath)) return objects;
+  const presentations = value?.web?.presentations;
+  if (Array.isArray(presentations)) {
+    for (const presentation of presentations) {
+      const official = presentation?.official;
+      if (official && typeof official === 'object' && !Array.isArray(official)) objects.add(official);
+    }
+  }
+  return objects;
+}
+
+function scanPublicBoundary(value, location = '$', {
+  officialInputFiles = new Set(), gameChangeInputFiles = new Set(), weaponInputFiles = new Set(),
+  validatedParameterSegments = new WeakSet(), officialInputSources = new Map(), officialPresentationObjects = new WeakSet()
+} = {}) {
   if (typeof value === 'string') {
     if (/(?:^|[\s"'(])[A-Za-z]:[\\/]/.test(value)) fail('public JSON contains an absolute source path at ' + location);
     return;
   }
   if (Array.isArray(value)) {
-    value.forEach((item, index) => scanPublicBoundary(item, location + '[' + index + ']', { officialInputFiles, officialInputSources }));
+    value.forEach((item, index) => scanPublicBoundary(item, location + '[' + index + ']', {
+      officialInputFiles, gameChangeInputFiles, weaponInputFiles, validatedParameterSegments, officialInputSources, officialPresentationObjects,
+    }));
     return;
   }
   if (!value || typeof value !== 'object') return;
   const officialInputMatch = OFFICIAL_INPUT_SOURCE_PATH.exec(location);
   const officialPresentationMatch = OFFICIAL_PRESENTATION_SOURCE_PATH.exec(location);
-  if (officialInputMatch && officialInputFiles.has(officialInputMatch[1])) validatePublicOfficialInput(value, location);
+  if (officialInputMatch && officialInputFiles.has(officialInputMatch[1])) {
+    const pinnedSource = officialInputSources.get(officialInputMatch[1])?.get(value.officialSourceId);
+    if (!pinnedSource || pinnedSource !== value) {
+      fail('public official input source is not the canonical object from its sources array at ' + location);
+    }
+    validatePublicOfficialInput(value, location, validatedParameterSegments);
+  }
   if (officialPresentationMatch && officialInputFiles.has(officialPresentationMatch[1])) {
-    validatePublicOfficialInput(value, location);
+    if (!officialPresentationObjects.has(value)) {
+      fail('public presentation official input is not from its actual presentations array at ' + location);
+    }
+    validatePublicOfficialInput(value, location, validatedParameterSegments);
     const pinnedSource = officialInputSources.get(officialPresentationMatch[1])?.get(value.officialSourceId);
     if (!pinnedSource || JSON.stringify(sortedJsonValue(pinnedSource)) !== JSON.stringify(sortedJsonValue(value))) {
       fail('public presentation official input does not match its validated official source identity at ' + location);
@@ -162,29 +192,46 @@ function scanPublicBoundary(value, location = '$', { officialInputFiles = new Se
   }
   for (const [key, item] of Object.entries(value)) {
     const childLocation = location + '.' + key;
-    const allowedOfficialParameterToken = key === 'token' && OFFICIAL_PARAMETER_TOKEN_PATH.test(childLocation) &&
-      officialInputFiles.has(OFFICIAL_PARAMETER_TOKEN_PATH.exec(childLocation)[1]);
+    const coreOfficialParameterMatch = key === 'token' ? OFFICIAL_PARAMETER_TOKEN_PATH.exec(childLocation) : null;
+    const gameChangeParameterMatch = key === 'token' ? GAME_CHANGE_PARAMETER_TOKEN_PATH.exec(childLocation) : null;
+    const weaponParameterMatch = key === 'token' ? WEAPON_PARAMETER_TOKEN_PATH.exec(childLocation) : null;
+    const allowedOfficialParameterToken = Boolean(
+      (coreOfficialParameterMatch && officialInputFiles.has(coreOfficialParameterMatch[1]) && validatedParameterSegments.has(value)) ||
+      (gameChangeParameterMatch && gameChangeInputFiles.has(gameChangeParameterMatch[1]) && validatedParameterSegments.has(value)) ||
+      (weaponParameterMatch && weaponInputFiles.has(weaponParameterMatch[1]) && validatedParameterSegments.has(value))
+    );
     if (PRIVATE_KEYS.has(normalizePrivateKey(key)) && !allowedOfficialParameterToken) fail('public JSON contains a private field: ' + key);
-    scanPublicBoundary(item, childLocation, { officialInputFiles, officialInputSources });
+    scanPublicBoundary(item, childLocation, {
+      officialInputFiles, gameChangeInputFiles, weaponInputFiles, validatedParameterSegments, officialInputSources, officialPresentationObjects,
+    });
   }
 }
 
 function collectOfficialInputDomainFiles(sharedBundle) {
   const files = new Set();
-  if (!sharedBundle) return files;
+  const gameChangeFiles = new Set();
+  const weaponFiles = new Set();
+  if (!sharedBundle) return { files, gameChangeFiles, weaponFiles };
   for (const pointer of sharedBundle.metadata.retained_releases) {
     const manifestPath = pointer.manifest_path.slice(1);
     const bytes = sharedBundle.files.get(manifestPath);
     if (!bytes) continue;
     const manifest = parseJson(bytes, manifestPath);
     for (const row of manifest.files) {
-      if ((row.kind === 'skills' || row.kind === 'blessings') &&
-          (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json')) {
-        files.add('data/' + pointer.data_revision + '/' + row.path);
+      const isCoreDomain = (row.kind === 'skills' || row.kind === 'blessings') &&
+        (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json');
+      const isWeaponDomain = row.kind === 'weapons' && (row.path === 'weapons.json' || row.path === 'domains/weapons.json');
+      // Optional game-change official inputs are trusted only at the exact manifest-declared index path.
+      const isDeclaredChangeIndex = row.kind === 'game-changes' && manifest.changeIndexPath === row.path;
+      if (isCoreDomain || isWeaponDomain || isDeclaredChangeIndex) {
+        const publicPath = 'data/' + pointer.data_revision + '/' + row.path;
+        files.add(publicPath);
+        if (isDeclaredChangeIndex) gameChangeFiles.add(publicPath);
+        if (isWeaponDomain) weaponFiles.add(publicPath);
       }
     }
   }
-  return files;
+  return { files, gameChangeFiles, weaponFiles };
 }
 
 async function collectDirectory(root) {
@@ -469,12 +516,25 @@ export async function verifyStaticPackage(directory) {
   }
   validateOutputPaths(files, version.data_revision, { sharedBundle, runtimeRevision });
 
-  const officialInputFiles = collectOfficialInputDomainFiles(sharedBundle);
+  const {
+    files: officialInputFiles,
+    gameChangeFiles: gameChangeInputFiles,
+    weaponFiles: weaponInputFiles,
+  } = collectOfficialInputDomainFiles(sharedBundle);
+  const validatedParameterSegments = new WeakSet();
   for (const [name, bytes] of files) {
     if (name.endsWith('.json') && name !== 'artifact-manifest.json') {
       const parsed = parseJson(bytes, name);
       const officialInputSources = collectOfficialInputSources(name, parsed, officialInputFiles);
-      scanPublicBoundary(parsed, name, { officialInputFiles, officialInputSources: new Map([[name, officialInputSources]]) });
+      const officialPresentationObjects = collectOfficialPresentationObjects(name, parsed, officialInputFiles);
+      scanPublicBoundary(parsed, name, {
+        officialInputFiles,
+        gameChangeInputFiles,
+        weaponInputFiles,
+        validatedParameterSegments,
+        officialInputSources: new Map([[name, officialInputSources]]),
+        officialPresentationObjects,
+      });
     }
   }
 
