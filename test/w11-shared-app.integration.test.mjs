@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -113,6 +114,12 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
   let browser;
   try {
     await build(root, packageInput.bundle);
+    const smoke = spawnSync(process.execPath, [
+      path.join(TEST_ROOT, 'scripts', 'browser-smoke.mjs'),
+      path.join(root, 'dist'),
+    ], { encoding: 'utf8', timeout: 120000 });
+    assert.equal(smoke.status, 0,
+      `The ordinary browser-smoke CLI must accept the verified W11 shared artifact.\n${smoke.stdout}\n${smoke.stderr}`);
     const hosted = await listen(path.join(root, 'dist'));
     server = hosted.server;
     browser = await chromium.launch({ headless: true, executablePath: chromePath });

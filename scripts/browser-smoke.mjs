@@ -5,6 +5,7 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 import { createStaticServer } from './serve.mjs';
 import { verifyStaticPackage } from '../src/static/verify.mjs';
+import { runSharedBrowserSmoke } from './shared-browser-smoke.mjs';
 
 const REQUIRED_KINDS = ['skill', 'mechanics', 'weapon', 'mark', 'blessing', 'variant'];
 const LIST_PAGES = [
@@ -528,6 +529,10 @@ async function closeServer(server) {
 async function run(distArgument) {
   const distPath = path.resolve(distArgument);
   const verification = await verifyStaticPackage(distPath);
+  if (typeof verification.shared_data_revision === 'string') {
+    await runSharedBrowserSmoke(distPath, verification);
+    return;
+  }
   const { catalog, details, representatives, hasGamesLanternAsset, talentTrees } =
     await readVerifiedData(distPath, verification);
 

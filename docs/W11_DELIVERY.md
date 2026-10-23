@@ -1,5 +1,11 @@
 # W11 Web 顯示工程交付｜SYP-343
 
+**2026-10-23 最新驗收範圍與授權：** 使用者要求只完成 W11 主要目標，外部 Games Lantern 快照與 Source 精確版本對應不再作為本包收尾阻擋項，停止延伸調查。使用者已授權必要 PR／main 合併、此單一既有批准候選 selected、必要配號與正式網站部署供驗收。以下隔離交付時的操作限制作歷史記錄，以上述最新授權為準；測試結果與真站未通過項不改寫。外掛 unknown 保留原站；W12–W17／全量遷移／商店發行不在本輪。正式 shared artifact 的部署檢查另補本輪實測收據，不能以舊 legacy CI 取代。
+
+本輪發布前修復：原 `scripts/browser-smoke.mjs` 只認 legacy 目錄與 DOM，對真批准 shared artifact 重現「技能與天賦 !== 技能」的語意失敗。現於 `verifyStaticPackage` 成功後按 shared metadata 執行新的 shared smoke，legacy 全部檢查保留。真原始 manifest／四域、技能官方與五節、LV1–4、兩型號 Source 數值／連段、直接刷新、390px 與資料中斷不退 legacy 均通過；同名型號以已選 mark 標籤等待，避免舊 DOM 造成錯判。既有 InterT10 加入同一 CLI 後 1/1 通過，Root 另獨立執行 CLI 通過；私有 legacy artifact 的 2,269 entries／646 skills／7 trees 亦通過。Windows Node／Playwright／Chromium 版本沿前述收據，不新增依賴。
+
+單一批准候選的 `selected.json` 經既有 validator 驗證，與固定提案逐 bytes 相同（SHA-256 `10581f7c753f6a0147897841f603d4b5191b00aa6726cdad45d49bedbfdd9bf2`），納入本次發布提交；Source archive、批准四域及人類收據不改。此 commit 尚未分配正式 contentVersion 或宣稱部署成功，實際 main CI／配號／HTTPS 與使用者驗收另記收據。本機本輪證據在 `.tmp/w11-acceptance-deploy-20261023/`，保留原失敗與後續成功收據，不回造 Red。
+
 Web 工程切片已完成；W11 整體仍在進行中。Extension 的可逆 DOM／MV3 接線另由[草稿 PR3](https://github.com/SyuanTsai/Darktide-GamesLantern-Assisted-Translation/pull/3)記錄，Games Lantern 原站與 W08 `1.13.2` 完整身分的可靠對應仍缺。受控瀏覽器成功不能取代真站正向適配。
 
 ## 固定範圍
