@@ -219,6 +219,10 @@ test('UnitT60_keeps_each_weapon_mark_source_bundle_together', () => {
   assert.equal(markXii.statSections[0].curves[0].payload.knots[0].output, '96');
   assert.equal(markIv.statSections[0].statDefinitions[0].payload.quantity, 'source-quantity:mark-iv');
   assert.equal(markXii.statSections[0].statDefinitions[0].payload.quantity, 'source-quantity:mark-xii');
+  assert.equal(markIv.source.statDefinitions[0].curve.recordId, refs.weaponCurveIv.recordId);
+  assert.equal(markXii.source.statDefinitions[0].curve.recordId, refs.weaponCurveXii.recordId);
+  assert.equal(markIv.source.statDefinitions[0].curve.payload.knots[0].output, '80');
+  assert.equal(markXii.source.statDefinitions[0].curve.payload.knots[0].output, '96');
   assert.equal(markIv.source.statBindings[0].binding, '80');
   assert.equal(markXii.source.statBindings[0].binding, '96');
   assert.deepEqual(markIv.source.statTables[0].values, ['80']);

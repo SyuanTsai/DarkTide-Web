@@ -88,6 +88,154 @@ function safePublicHttps(value) {
   }
 }
 
+const ANNOUNCEMENT_ID = /^[a-z0-9][a-z0-9:._-]{1,127}$/u;
+const ANNOUNCEMENT_SHA256 = /^[a-f0-9]{64}$/u;
+const ANNOUNCEMENT_ASSET_TYPES = new Set(['image/avif', 'image/gif', 'image/jpeg', 'image/png', 'image/webp']);
+
+function announcementKeys(value, keys, label) {
+  if (!isObject(value)) throw new Error(`${label} must be an object`);
+  const allowed = new Set(keys);
+  if (keys.some(key => !Object.hasOwn(value, key)) || Object.keys(value).some(key => !allowed.has(key))) {
+    throw new Error(`${label} contains an invalid shape`);
+  }
+}
+
+function announcementText(value, label) {
+  if (typeof value !== 'string' || !value.trim() || value.length > 20_000
+      || /<!--|-->|<!doctype\b|<\s*\/?\s*[a-z][^>]*>/iu.test(value)) {
+    throw new Error(`${label} must be safe plain text`);
+  }
+  return value;
+}
+
+function announcementBlockId(value, seen, label) {
+  if (typeof value !== 'string' || !ANNOUNCEMENT_ID.test(value) || seen.has(value)) {
+    throw new Error(`${label} is invalid or duplicated`);
+  }
+  seen.add(value);
+  return value;
+}
+
+function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
+  if (!Array.isArray(blocks) || blocks.length === 0 || blocks.length > 500 || depth > 8) {
+    throw new Error('announcement blocks exceed the supported structure');
+  }
+  return blocks.map((block, index) => {
+    const label = `announcement block ${index}`;
+    if (!isObject(block) || typeof block.kind !== 'string') throw new Error(`${label} is invalid`);
+    const blockId = announcementBlockId(block.blockId, seenIds, `${label} id`);
+    if (block.kind === 'heading' || block.kind === 'paragraph') {
+      announcementKeys(block, ['blockId', 'kind', 'text'], label);
+      return { blockId, kind: block.kind, text: announcementText(block.text, `${label} text`) };
+    }
+    if (block.kind === 'link') {
+      announcementKeys(block, ['blockId', 'kind', 'text', 'href'], label);
+      const href = safePublicHttps(block.href);
+      if (!href) throw new Error(`${label} has an unsafe URL`);
+      return { blockId, kind: 'link', text: announcementText(block.text, `${label} text`), href };
+    }
+    if (block.kind === 'list') {
+      announcementKeys(block, ['blockId', 'kind', 'ordered', 'items'], label);
+      if (typeof block.ordered !== 'boolean' || !Array.isArray(block.items) || block.items.length === 0 || block.items.length > 500) {
+        throw new Error(`${label} list is invalid`);
+      }
+      return {
+        blockId, kind: 'list', ordered: block.ordered,
+        items: block.items.map((item, itemIndex) => {
+          const itemLabel = `${label} item ${itemIndex}`;
+          announcementKeys(item, ['blockId', 'text'], itemLabel);
+          return { blockId: announcementBlockId(item.blockId, seenIds, `${itemLabel} id`), text: announcementText(item.text, `${itemLabel} text`) };
+        }),
+      };
+    }
+    if (block.kind === 'table') {
+      announcementKeys(block, ['blockId', 'kind', 'rows'], label);
+      if (!Array.isArray(block.rows) || block.rows.length === 0 || block.rows.length > 200) throw new Error(`${label} table is invalid`);
+      return {
+        blockId, kind: 'table',
+        rows: block.rows.map((row, rowIndex) => {
+          const rowLabel = `${label} row ${rowIndex}`;
+          announcementKeys(row, ['cells'], rowLabel);
+          if (!Array.isArray(row.cells) || row.cells.length === 0 || row.cells.length > 40) throw new Error(`${rowLabel} cells are invalid`);
+          return { cells: row.cells.map((cell, cellIndex) => {
+            const cellLabel = `${rowLabel} cell ${cellIndex}`;
+            announcementKeys(cell, ['blockId', 'text'], cellLabel);
+            return { blockId: announcementBlockId(cell.blockId, seenIds, `${cellLabel} id`), text: announcementText(cell.text, `${cellLabel} text`) };
+          }) };
+        }),
+      };
+    }
+    if (block.kind === 'image') {
+      announcementKeys(block, ['blockId', 'kind', 'assetRef', 'alt'], label);
+      announcementKeys(block.assetRef, ['assetId'], `${label} asset reference`);
+      if (typeof block.assetRef.assetId !== 'string' || !assets.has(block.assetRef.assetId)) {
+        throw new Error(`${label} references an undeclared asset`);
+      }
+      return { blockId, kind: 'image', assetId: block.assetRef.assetId, alt: announcementText(block.alt, `${label} alt`) };
+    }
+    if (block.kind === 'spoiler') {
+      announcementKeys(block, ['blockId', 'kind', 'label', 'blocks'], label);
+      return {
+        blockId, kind: 'spoiler', label: announcementText(block.label, `${label} label`),
+        blocks: validateAnnouncementBlocks(block.blocks, assets, seenIds, depth + 1),
+      };
+    }
+    throw new Error(`${label} has an unsupported kind`);
+  });
+}
+
+function validateAnnouncement(row, gameReleaseId) {
+  announcementKeys(row, ['announcementId', 'scope', 'publishedOn', 'revision', 'source', 'blocks', 'assets', ...(row?.scope === 'gameplay' ? ['gameReleaseId'] : [])], 'announcement');
+  if (typeof row.announcementId !== 'string' || !ANNOUNCEMENT_ID.test(row.announcementId)) throw new Error('announcement id is invalid');
+  if (row.scope !== 'site' && row.scope !== 'gameplay') throw new Error('announcement scope is invalid');
+  if (row.scope === 'gameplay' && row.gameReleaseId !== gameReleaseId) throw new Error('announcement targets a different game release');
+  if (row.scope === 'site' && Object.hasOwn(row, 'gameReleaseId')) throw new Error('site announcement contains a game release pin');
+  const date = row.publishedOn;
+  if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/u.test(date)
+      || !Number.isFinite(Date.parse(`${date}T00:00:00Z`))
+      || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) throw new Error('announcement date is invalid');
+  if (!Number.isSafeInteger(row.revision) || row.revision < 1) throw new Error('announcement revision is invalid');
+  announcementKeys(row.source, ['kind', 'locator', 'sha256'], 'announcement source');
+  if ((row.scope === 'site' && row.source.kind !== 'site-owner')
+      || (row.scope === 'gameplay' && row.source.kind !== 'official-game-source')
+      || !ANNOUNCEMENT_SHA256.test(row.source.sha256)) throw new Error('announcement source identity is invalid');
+  const sourceLocator = announcementText(row.source.locator, 'announcement source locator');
+  if (!Array.isArray(row.assets) || row.assets.length > 100) throw new Error('announcement assets are invalid');
+  const assets = new Map();
+  for (const asset of row.assets) {
+    announcementKeys(asset, ['assetId', 'mediaType', 'alt', 'sourceUri', 'sha256', 'sizeBytes'], 'announcement asset');
+    if (typeof asset.assetId !== 'string' || !ANNOUNCEMENT_ID.test(asset.assetId) || assets.has(asset.assetId)
+        || !ANNOUNCEMENT_ASSET_TYPES.has(asset.mediaType) || !ANNOUNCEMENT_SHA256.test(asset.sha256)
+        || !Number.isSafeInteger(asset.sizeBytes) || asset.sizeBytes < 1) throw new Error('announcement asset identity is invalid');
+    const sourceUri = safePublicHttps(asset.sourceUri);
+    if (!sourceUri) throw new Error('announcement asset URL is unsafe');
+    assets.set(asset.assetId, {
+      assetId: asset.assetId, mediaType: asset.mediaType,
+      alt: announcementText(asset.alt, 'announcement asset alt'), sourceUri,
+      sha256: asset.sha256, sizeBytes: asset.sizeBytes,
+    });
+  }
+  const blocks = validateAnnouncementBlocks(row.blocks, assets, new Set());
+  return {
+    announcementId: row.announcementId,
+    scope: row.scope,
+    ...(row.scope === 'gameplay' ? { gameReleaseId: row.gameReleaseId } : {}),
+    publishedOn: date,
+    revision: row.revision,
+    source: { kind: row.source.kind, locator: sourceLocator, sha256: row.source.sha256 },
+    blocks,
+    assets: [...assets.values()],
+  };
+}
+
+function deepFreeze(value) {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    for (const child of Object.values(value)) deepFreeze(child);
+    Object.freeze(value);
+  }
+  return value;
+}
+
 function verificationLabel(method) {
   return ({
     'code-observed': '程式觀察',
@@ -249,10 +397,11 @@ function resolveRecords(refs, expectedKind, gameReleaseId, recordByKey) {
  * Build a read-only consumer view over validated W08 shared-domain objects.
  * The caller supplies one already-validated game release; no source metadata is fetched or executed.
  */
-export function createSharedViewModel({ domains, gameReleaseId } = {}) {
+export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = false } = {}) {
   if (!Array.isArray(domains) || typeof gameReleaseId !== 'string' || !gameReleaseId) {
     throw new TypeError('domains and gameReleaseId are required');
   }
+  if (typeof fixtureOnly !== 'boolean') throw new TypeError('fixtureOnly must be a boolean');
 
   const recordByKey = new Map();
   const sourceRecordByKey = new Map();
@@ -265,6 +414,7 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
   const termRules = new Map();
   const gameChangeRows = [];
   const officialTextChangeRows = [];
+  const announcementRows = [];
   const sourceGameReleases = new Map();
   const sourceGameReleaseConflicts = new Set();
   const sourceSnapshots = new Map();
@@ -296,6 +446,7 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
     if (Array.isArray(domain.web?.termLocalizations)) termLocalizations.push(...domain.web.termLocalizations);
     if (Array.isArray(domain.web?.gameChanges)) gameChangeRows.push(...domain.web.gameChanges);
     if (Array.isArray(domain.web?.officialTextChanges)) officialTextChangeRows.push(...domain.web.officialTextChanges);
+    if (Array.isArray(domain.web?.announcements)) announcementRows.push(...domain.web.announcements);
     if (Array.isArray(domain.web?.reviewTargets)) webReviewTargets.push(...domain.web.reviewTargets);
     if (Array.isArray(domain.web?.reviewReceipts)) webReviewReceipts.push(...domain.web.reviewReceipts);
     if (Array.isArray(domain.source?.reviewReceipts)) sourceReviewReceipts.push(...domain.source.reviewReceipts);
@@ -379,6 +530,21 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
         && receiptRow.receipt.dependenciesDigest === row.dependenciesDigest
         && isHumanReceipt(receiptRow.receipt)));
   };
+
+  const announcementIds = new Set();
+  const announcements = announcementRows.map(row => {
+    const item = validateAnnouncement(row, gameReleaseId);
+    if (announcementIds.has(item.announcementId)) throw new Error('announcement identity is duplicated');
+    announcementIds.add(item.announcementId);
+    if (!fixtureOnly && !hasApprovedWebOwner('announcement', item.announcementId, '/blocks')) {
+      throw new Error(`formal announcement is not approved: ${item.announcementId}`);
+    }
+    return deepFreeze(item);
+  }).sort((left, right) => right.publishedOn.localeCompare(left.publishedOn)
+    || right.revision - left.revision || left.announcementId.localeCompare(right.announcementId));
+
+  const getAnnouncements = () => ({ status: 'ready', items: announcements.slice() });
+  const getAnnouncement = announcementId => announcements.find(item => item.announcementId === announcementId) ?? null;
 
   const getEntityPresentation = (ref) => {
     const matches = presentations.filter(row => row?.locale === 'zh-TW' && sameRef(row.entityRef, ref)
@@ -672,6 +838,19 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
     }
     const attackProfiles = resolveRecords(view.attackProfileRefs, 'attack-profile', gameReleaseId, recordByKey);
     if (!attackProfiles) return unavailable('incomplete-weapon-attack-bundle', 'weapon');
+    if (!Array.isArray(weapon.payload.statRefs) || weapon.payload.statRefs.length === 0) {
+      return unavailable('incomplete-weapon-stat-definition-bundle', 'weapon');
+    }
+    const weaponStatDefinitions = resolveRecords(weapon.payload.statRefs, 'stat-definition', gameReleaseId, recordByKey);
+    if (!weaponStatDefinitions) return unavailable('incomplete-weapon-stat-definition-bundle', 'weapon');
+    const sourceStatDefinitions = [];
+    for (const definition of weaponStatDefinitions) {
+      const curveRef = definition.payload?.curveRef;
+      if (!curveRef) return unavailable('incomplete-weapon-stat-curve-bundle', 'weapon');
+      const curves = resolveRecords([{ ...curveRef, kind: 'stat-curve' }], 'stat-curve', gameReleaseId, recordByKey);
+      if (!curves) return unavailable('incomplete-weapon-stat-curve-bundle', 'weapon');
+      sourceStatDefinitions.push({ definition, curve: curves[0] ?? null });
+    }
     const termViews = new Map();
     addTerms(termViews, weapon.payload.termRefs, recordByKey, termLocalizations, gameReleaseId);
     const sectionResult = orderedSections(presentation.detailSections ?? [], {
@@ -695,10 +874,12 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
       statSections,
       attackProfiles,
       source: {
+        dataCoverage: weapon.dataCoverage,
         displayedAttacks: weapon.payload.displayedAttacks,
         actionContinuations: weapon.payload.actionContinuations,
         statBindings: weapon.payload.statBindings,
         statTables: weapon.payload.statTables,
+        statDefinitions: sourceStatDefinitions,
         statTableSemantics: weapon.payload.statTableSemantics,
         sourceRows: weapon.payload.sourceRows,
       },
@@ -946,7 +1127,7 @@ export function createSharedViewModel({ domains, gameReleaseId } = {}) {
     return { status: 'ready', items: filtered };
   };
 
-  return Object.freeze({ gameReleaseId, getSkill, getBlessing, getWeapon, getWeaponFamily, getGameChanges });
+  return Object.freeze({ gameReleaseId, getSkill, getBlessing, getWeapon, getWeaponFamily, getGameChanges, getAnnouncements, getAnnouncement });
 }
 
 function exactErrata(errata, officialSource) {

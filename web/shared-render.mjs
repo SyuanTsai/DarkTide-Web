@@ -3,20 +3,25 @@ const SECTION_LABELS = Object.freeze({ effects: '效果', conditions: '條件', 
 const INPUT_LABELS = Object.freeze({
   light_attack: '輕攻擊', heavy_attack: '重攻擊', special_action: '特殊動作', block: '格擋',
   start_attack: '開始攻擊', dodge: '閃避', push: '推擊', push_follow_up: '推擊後續',
-  light_push: '輕推擊', heavy_push: '重推擊',
+  light_push: '輕推擊', heavy_push: '重推擊', shoot_pressed: '射擊輸入', zoom_shoot: '機瞄射擊輸入', weapon_special: '特殊動作輸入',
 });
 const UNIT_LABELS = Object.freeze({
   percent: '%', ratio: '比例', seconds: '秒', s: '秒', count: '次', meters: '公尺',
   point: '點', 'dodge-count': '次閃避', 'stamina-point': '耐力點',
-  'stamina-point-per-second': '耐力點／秒', 'normalized-speed-per-second': '標準化速度／秒',
+  'stamina-point-per-second': '耐力點／秒', 'normalized-speed-per-second': '標準化速度／秒', 'instance-count': '彈藥單位',
   'attack-power-point': '攻擊威力點', 'cleave-power-point': '鋸擊威力點',
 });
 const SOURCE_STAT_LABELS = Object.freeze({
   chainaxe_dps_stat: '傷害輸出', chainaxe_armor_pierce_stat: '破甲',
   chainaxe_mobility_stat: '移動性', chainaxe_defence_stat: '防禦', chainaxe_sawing_stat: '鏈鋸階段',
   damage_stat: '傷害', cleave_stat: '劈砍', impact_stat: '衝擊',
+  ammunition_clips: '彈匣容量', ammunition_reserve: '備用彈藥容量',
 });
 const SOURCE_PROPERTY_LABELS = Object.freeze({
+  ammunition_usage: '每次射擊消耗', allow_shots_with_less_than_required_ammo: '彈藥不足需求量時仍允許射擊',
+  activation_time: '特殊動作啟動時間', total_time: '動作總時長', chain_time: '動作銜接時間',
+  range: '來源 range 欄位', fire_mode: '射擊模式',
+  ammunition_clips: '彈匣容量', ammunition_reserve: '備用彈藥容量',
   consecutive_dodges_reset: '連續閃避重置時間', distance_scale: '閃避距離係數',
   diminishing_return_distance_modifier: '閃避距離衰減係數', diminishing_return_start: '衰減起始閃避次數',
   diminishing_return_limit: '衰減閃避上限', speed_modifier: '移動速度修正',
@@ -30,7 +35,7 @@ const SOURCE_PROPERTY_LABELS = Object.freeze({
 const TARGET_ROLE_LABELS = Object.freeze({
   'single-target': '單一目標', 'multi-target-cleave': '多目標劈砍',
 });
-const ATTACK_MODE_LABELS = Object.freeze({ light: '輕攻擊', heavy: '重攻擊', push: '推擊', block: '格擋', special: '特殊動作' });
+const ATTACK_MODE_LABELS = Object.freeze({ light: '輕攻擊', heavy: '重攻擊', push: '推擊', block: '格擋', special: '特殊動作', hipfire: '腰射', ads: '機瞄' });
 const BRANCH_LABELS = Object.freeze({
   normal: '一般分支', abort: '中止分支', 'special-active': '特殊動作啟動分支',
   inner: '內側分支', outer: '外側分支',
@@ -39,6 +44,7 @@ const QUANTITY_LABELS = Object.freeze({
   'attack-power-distribution': '攻擊威力分布', 'armor-damage-modifier': '護甲傷害修正',
   'damage-profile': '傷害設定', 'dodge-count': '閃避次數',
 });
+export const SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY = 'shared-announcement-routing-v1';
 const GAME_CHANGE_TYPE_LABELS = Object.freeze({ skill: '技能', blessing: '祝福', weapon: '武器' });
 const GAME_CHANGE_OPERATION_LABELS = Object.freeze({
   added: '新增', removed: '移除', modified: '調整', correction: '更正',
@@ -208,7 +214,7 @@ function renderHome(main, result) {
   hero.append(node('h1', '查閱技能、武器與祝福資料'));
   hero.append(node('p', '資料先按遊戲版本與完整修訂驗證，再呈現各自的官方文字、數值與條件。', 'shared-lead'));
   const links = node('div', null, 'shared-home-links');
-  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄']]) links.append(link(href, label, 'button-link'));
+  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄'], ['/announcements/', '閱讀公告']]) links.append(link(href, label, 'button-link'));
   hero.append(links);
   main.append(hero);
   const note = node('p', `遊戲版本 ${result.pointer.game_version} · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`, 'version-line');
@@ -418,14 +424,14 @@ function sourceClaimLabelParts(claim, index) {
   if (typeof payload.property === 'string') parts.push(sourcePropertyLocationNode(payload.property));
   return parts.length ? parts : [`來源數值 ${index + 1}`];
 }
-function renderSourceConditions(rows) {
+function renderSourceConditions(rows, ranged = false) {
   if (!Array.isArray(rows) || !rows.length) return '未記載額外來源條件';
   return rows.map(condition => {
     const key = typeof condition?.fieldPath === 'string' ? condition.fieldPath.split('.').at(-1) : '';
     const value = typeof condition?.rawValue === 'string' && /^[+-]?(?:\d+\.?\d*|\.\d+)$/u.test(condition.rawValue)
       ? condition.rawValue : null;
-    if (value !== null && key === 'chain_time') return `連段時間 ${value} 秒`;
-    if (value !== null && key === 'chain_until') return `連段窗口 ${value} 秒`;
+    if (value !== null && key === 'chain_time') return `${ranged ? '動作銜接時間' : '連段時間'} ${value} 秒`;
+    if (value !== null && key === 'chain_until') return `${ranged ? '動作銜接窗口' : '連段窗口'} ${value} 秒`;
     if (value !== null) return `其他來源條件值 ${value}`;
     return '另有來源條件（原始值不作程式解讀）';
   }).join('；');
@@ -436,9 +442,81 @@ function rangeText(range, type = 'range') {
   if (range.status !== 'known' || typeof range.min !== 'string' || typeof range.max !== 'string') return '來源範圍未確認';
   return `${range.min} 至 ${range.max}${sourceUnit(range.unit)}`;
 }
+function decodedSourceRowValue(rawValue) {
+  if (typeof rawValue !== 'string') return rawValue;
+  if (rawValue.startsWith('"')) {
+    try {
+      const value = JSON.parse(rawValue);
+      if (typeof value === 'string') return value;
+    } catch { /* Keep source text literal; never evaluate it. */ }
+  }
+  if (rawValue === 'true') return true;
+  if (rawValue === 'false') return false;
+  return rawValue;
+}
+function rangedSourceRowDisplay(row) {
+  const fieldPath = row?.sourceLocator?.fieldPath;
+  if (typeof fieldPath !== 'string' || typeof row.rawValue !== 'string') return null;
+  const value = decodedSourceRowValue(row.rawValue);
+  const number = typeof value === 'number' || (typeof value === 'string' && /^[+-]?(?:\d+\.?\d*|\.\d+)$/u.test(value))
+    ? String(value) : null;
+  const mode = fieldPath.includes('.action_shoot_hip.') ? '腰射' : fieldPath.includes('.action_shoot_zoomed.') ? '機瞄' : null;
+  const property = fieldPath.split('.').at(-1);
+  if (fieldPath.startsWith('weapon_template.displayed_attacks.') && property === 'fire_mode') {
+    return { label: '射擊模式', text: value === 'semi_auto' ? '半自動' : null, value: String(value) };
+  }
+  if (fieldPath.startsWith('weapon_template.displayed_attacks.') && property === 'type') {
+    const labels = { hipfire: '腰射', ads: '機瞄', flashlight: '手電筒' };
+    return { label: fieldPath.includes('.special.') ? '特殊動作' : '射擊姿勢', text: labels[value] ?? null, value: String(value) };
+  }
+  if (mode && property === 'ammunition_usage' && number !== null) {
+    return { label: `${mode}每次射擊消耗`, text: `${number} 彈藥單位`, value: number };
+  }
+  if (mode && property === 'allow_shots_with_less_than_required_ammo' && typeof value === 'boolean') {
+    return { label: `${mode}彈藥不足需求量時仍允許射擊`, text: value ? '是' : '否', value: String(value) };
+  }
+  if (mode && property === 'total_time' && number !== null) {
+    return { label: `${mode}動作總時長`, text: `${number} 秒`, value: number };
+  }
+  if (mode && property === 'chain_time' && number !== null) {
+    return { label: `${mode}動作銜接時間`, text: `${number} 秒`, value: number };
+  }
+  if (property === 'activation_time' && number !== null) {
+    return { label: '特殊動作啟動時間', text: `${number} 秒`, value: number };
+  }
+  if (/^hitscan_templates\.[A-Za-z0-9_]+\.range$/u.test(fieldPath) && number !== null) {
+    return { label: '命中掃描範圍', text: `${number}（來源未提供單位）`, value: number };
+  }
+  const labels = { kind: '動作種類', start_input: '動作輸入', primary_action: '主要攻擊動作', secondary_action: '次要攻擊動作',
+    weapon_handling_template: '武器處理模板', ammo_template: '彈藥模板', flashlight_template: '手電筒模板' };
+  const enumLabels = { shoot_hit_scan: '命中掃描射擊', immediate_single_shot: '單次即時射擊', shoot_pressed: '射擊輸入',
+    zoom_shoot: '機瞄射擊輸入', weapon_special: '特殊動作輸入', action_shoot_hip: '腰射動作',
+    action_shoot_zoomed: '機瞄動作', action_toggle_flashlight: '切換手電筒動作' };
+  return { label: labels[property] ?? '來源欄位', text: enumLabels[value] ?? null, value: String(value) };
+}
+function renderRangedSourceRows(parent, view) {
+  if (!(view.attackProfiles ?? []).some(profile => ['hipfire', 'ads'].includes(profile.payload?.mode))) return;
+  const rows = (view.source.sourceRows ?? []).map(row => ({ row, display: rangedSourceRowDisplay(row) })).filter(item => item.display);
+  if (!rows.length) return;
+  const section = node('section', null, 'shared-ranged-source-rows');
+  section.append(node('h3', '射擊、彈藥與動作來源欄位'));
+  const list = node('ul', null, 'shared-detail-list');
+  for (const { row, display } of rows) {
+    const item = node('li', null, 'shared-ranged-source-row');
+    item.append(document.createTextNode(`${display.label}：`));
+    if (display.text !== null) item.append(document.createTextNode(display.text));
+    else item.append(node('code', display.value, 'shared-source-row-value'));
+    const locator = row.sourceLocator?.fieldPath;
+    if (typeof locator === 'string') item.append(document.createTextNode(' · '), node('code', locator, 'shared-source-property-key'));
+    list.append(item);
+  }
+  section.append(list);
+  parent.append(section);
+}
 function renderWeaponSourceDetails(parent, view) {
+  const hasRangedProfile = (view.attackProfiles ?? []).some(profile => ['hipfire', 'ads'].includes(profile.payload?.mode));
   const block = node('details', null, 'shared-card shared-expandable shared-source-details');
-  block.append(node('summary', '其他來源數值、素質語意與連段條件'));
+  block.append(node('summary', hasRangedProfile ? '其他來源數值、素質語意與射擊條件' : '其他來源數值、素質語意與連段條件'));
   const tables = view.source.statTables ?? [];
   if (tables.length) {
     const section = node('section', null, 'shared-source-tables');
@@ -453,17 +531,42 @@ function renderWeaponSourceDetails(parent, view) {
       article.append(heading);
       const list = node('ul', null, 'shared-detail-list');
       for (const property of table.properties ?? []) {
-        const values = (property.orderedValues ?? []).map(value => typeof value.decimal === 'string' ? value.decimal : null).filter(Boolean);
+        const values = (property.orderedValues ?? []).map(value => {
+          const decimal = typeof value.decimal === 'string' ? value.decimal : null;
+          if (!decimal) return null;
+          if (value.key === 'lerp_basic') return `基礎模板端點 ${decimal}`;
+          if (value.key === 'lerp_perfect') return `完美模板端點 ${decimal}`;
+          return `來源值 ${value.key} ${decimal}`;
+        }).filter(Boolean);
         if (!values.length) continue;
         const item = node('li', null, 'shared-source-table-property');
         const armor = armorClassKey(property.property);
         const parts = armor ? [sourceArmorClassNode(armor)] : [];
         parts.push(sourceTokenNode('來源欄位', property.property, 'shared-source-property-key'));
-        parts.push(`${localizedSourceProperty(property.property)}：${values.join('、')}${sourceUnit(property.unit)}`);
+        const hasTemplateEndpoints = (property.orderedValues ?? []).some(value => value.key === 'lerp_basic' || value.key === 'lerp_perfect');
+        const qualifier = hasTemplateEndpoints ? '（模板端點不代表實際可取得範圍）' : '';
+        parts.push(`${localizedSourceProperty(property.property)}${qualifier}：${values.join('；')}${sourceUnit(property.unit)}`);
         appendLabelParts(item, parts);
         list.append(item);
       }
       if (list.children.length) article.append(list);
+      section.append(article);
+    }
+    block.append(section);
+  }
+  const definitions = view.source.statDefinitions ?? [];
+  if (definitions.length) {
+    const section = node('section', null, 'shared-source-stat-definitions');
+    section.append(node('h3', '來源素質定義與曲線'));
+    for (const { definition, curve } of definitions) {
+      const payload = definition.payload ?? {};
+      const article = node('article', null, 'shared-source-stat-definition');
+      article.append(node('h4', SOURCE_STAT_LABELS[payload.quantity] ?? '來源素質'));
+      if (payload.theoreticalInputRange) article.append(node('p', `理論輸入範圍：${rangeText(payload.theoreticalInputRange, 'theoretical')}。`));
+      if (payload.obtainableInputRange) article.append(node('p', `實際可取得範圍：${rangeText(payload.obtainableInputRange, 'obtainable')}。`, 'shared-muted'));
+      for (const knot of curve?.payload?.knots ?? []) {
+        article.append(node('p', `來源曲線節點：輸入 ${knot.input}${sourceUnit(curve.payload.inputUnit)}，輸出 ${knot.output}${sourceUnit(curve.payload.outputUnit)}。`));
+      }
       section.append(article);
     }
     block.append(section);
@@ -493,6 +596,21 @@ function renderWeaponSourceDetails(parent, view) {
     }
     block.append(section);
   }
+  renderRangedSourceRows(block, view);
+  const missingRows = view.source.dataCoverage?.missing ?? [];
+  if (missingRows.length) {
+    const section = node('section', null, 'shared-source-coverage');
+    section.append(node('h3', '來源涵蓋與未匯入欄位'));
+    const list = node('ul', null, 'shared-detail-list');
+    for (const row of missingRows) {
+      const item = node('li', null, 'shared-source-coverage-row');
+      item.append(document.createTextNode(row.reasonCode === 'NOT_IMPORTED' ? '來源明示未匯入' : '來源欄位未完整提供'));
+      if (typeof row.field === 'string') item.append(document.createTextNode(' · '), node('code', row.field));
+      list.append(item);
+    }
+    section.append(list);
+    block.append(section);
+  }
   const displayedAttacks = view.source.displayedAttacks ?? [];
   if (displayedAttacks.length) {
     const section = node('section', null, 'shared-displayed-attacks');
@@ -514,11 +632,11 @@ function renderWeaponSourceDetails(parent, view) {
   const continuations = view.source.actionContinuations ?? [];
   if (continuations.length) {
     const section = node('section', null, 'shared-source-continuations');
-    section.append(node('h3', '來源連段與條件'));
+    section.append(node('h3', hasRangedProfile ? '來源動作銜接與條件' : '來源連段與條件'));
     const list = node('ul', null, 'shared-detail-list');
     for (const row of continuations) {
       const item = node('li', null, 'shared-action-continuation');
-      appendLabelParts(item, [sourceActionRouteNode(row.fromAction, row.toAction), sourceInputNode(row.inputKey), renderSourceConditions(row.conditions)]);
+      appendLabelParts(item, [sourceActionRouteNode(row.fromAction, row.toAction), sourceInputNode(row.inputKey), renderSourceConditions(row.conditions, hasRangedProfile)]);
       list.append(item);
     }
     section.append(list);
@@ -540,7 +658,7 @@ function renderWeaponSourceDetails(parent, view) {
       const entries = resolution.entryBindings ?? [];
       for (const entry of entries) {
         const item = node('p', null, 'shared-attack-profile-binding shared-attack-profile-entry');
-        appendLabelParts(item, [sourceActionRouteNode(entry.fromAction, entry.toAction), sourceInputNode(entry.inputKey), renderSourceConditions(entry.conditions)]);
+        appendLabelParts(item, [sourceActionRouteNode(entry.fromAction, entry.toAction), sourceInputNode(entry.inputKey), renderSourceConditions(entry.conditions, hasRangedProfile)]);
         article.append(item);
       }
       const branches = resolution.branchBindings ?? [];
@@ -560,7 +678,7 @@ function renderWeaponSourceDetails(parent, view) {
       }
       const runtimeConditions = resolution.runtimeConditions ?? [];
       for (const condition of runtimeConditions) {
-        article.append(node('p', `來源條件（未執行判定）：${renderSourceConditions([condition])}`, 'shared-attack-runtime-condition'));
+        article.append(node('p', `來源條件（未執行判定）：${renderSourceConditions([condition], hasRangedProfile)}`, 'shared-attack-runtime-condition'));
       }
       section.append(article);
     }
@@ -569,6 +687,7 @@ function renderWeaponSourceDetails(parent, view) {
   parent.append(block);
 }
 function renderWeapon(main, result, view, familyMarks, url) {
+  const hasRangedProfile = (view.attackProfiles ?? []).some(profile => ['hipfire', 'ads'].includes(profile.payload?.mode));
   const weaponCanonicalUrl = new URL(url.href);
   weaponCanonicalUrl.searchParams.set('family', view.familyId);
   weaponCanonicalUrl.searchParams.set('mark', view.markId);
@@ -626,12 +745,14 @@ function renderWeapon(main, result, view, familyMarks, url) {
       const input = sourceInputLabel(entry.inputKey);
       if (!input) continue;
       const condition = (entry.conditions ?? []).map(row => row.fieldPath?.endsWith('chain_time') && /^\d+(?:\.\d+)?$/u.test(row.rawValue)
-        ? `連段時間 ${row.rawValue} 秒` : null).filter(Boolean).join('、');
-      chainList.append(node('li', `連段輸入：${input}${condition ? `；${condition}` : ''}`));
+        ? `${hasRangedProfile ? '動作銜接時間' : '連段時間'} ${row.rawValue} 秒` : null).filter(Boolean).join('、');
+      chainList.append(node('li', `${hasRangedProfile ? '動作銜接輸入' : '連段輸入'}：${input}${condition ? `；${condition}` : ''}`));
       chainCount += 1;
     }
   }
-  if (!chainCount) chainList.append(node('li', '來源尚未提供可讀的繁體中文連段條件。'));
+  if (!chainCount) chainList.append(node('li', hasRangedProfile
+    ? '此版本尚未匯入高階動作解析；下方保留已固定的攻擊模式與來源欄位。'
+    : '來源尚未提供可讀的繁體中文連段條件。'));
   attacks.append(chainList);
   main.append(attacks);
   renderWeaponSourceDetails(main, view);
@@ -657,7 +778,7 @@ function renderWeapons(main, result, url) {
     }
     return renderWeapon(main, result, view, family.marks, url);
   }
-  setMetadata('武器', '依武器家族與型號查閱完整素質、曲線與攻擊連段。', url);
+  setMetadata('武器', '依武器家族與型號查閱素質、來源表與動作資料。', url);
   const header = node('header', null, 'page-intro');
   header.append(node('p', '武器', 'eyebrow'), node('h1', '武器'));
   main.append(header);
@@ -669,7 +790,7 @@ function renderWeapons(main, result, url) {
     const first = view.marks[0];
     const item = node('li', null, 'shared-entry'); item.dataset.searchName = first.name;
     item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${view.marks.length} 個型號`));
-    item.append(node('p', '依武器家族選取型號，查看各自的素質、來源曲線與連段資料。', 'shared-muted'));
+    item.append(node('p', '依武器家族選取型號，查看各自的素質、來源表與動作資料。', 'shared-muted'));
     list.append(item);
   }
   main.append(list);
@@ -982,6 +1103,145 @@ function renderGameChanges(main, result, url) {
   main.append(list);
 }
 
+function announcementTitle(item) {
+  return item.blocks.find(block => block.kind === 'heading')?.text ?? `公告 ${item.publishedOn}`;
+}
+
+function renderAnnouncementMetadata(parent, item) {
+  const list = node('dl', null, 'shared-announcement-meta');
+  const sourceKind = item.source.kind === 'site-owner' ? '網站維護者' : '官方遊戲來源';
+  for (const [label, value] of [
+    ['發布日期', item.publishedOn],
+    ['來源', `${sourceKind} · ${item.source.locator}`],
+    ['修訂版本', String(item.revision)],
+  ]) {
+    const row = node('div');
+    row.append(node('dt', label), node('dd', value));
+    list.append(row);
+  }
+  parent.append(list);
+}
+
+function renderAnnouncementBlocks(parent, blocks, assets, headingState = { firstHeading: true }) {
+  for (const block of blocks) {
+    if (block.kind === 'heading') {
+      const heading = node(headingState.firstHeading ? 'h1' : 'h2', block.text, 'shared-announcement-heading');
+      headingState.firstHeading = false;
+      heading.dataset.blockId = block.blockId;
+      parent.append(heading);
+    } else if (block.kind === 'paragraph') {
+      const paragraph = node('p', block.text, 'shared-announcement-paragraph');
+      paragraph.dataset.blockId = block.blockId;
+      parent.append(paragraph);
+    } else if (block.kind === 'link') {
+      const href = safeOfficialResourceUrl(block.href);
+      if (!href) throw new Error('validated announcement contains an unsafe link');
+      const anchor = link(href, block.text, 'shared-announcement-link');
+      anchor.dataset.blockId = block.blockId;
+      anchor.rel = 'noopener noreferrer';
+      parent.append(anchor);
+    } else if (block.kind === 'list') {
+      const list = node(block.ordered ? 'ol' : 'ul', null, 'shared-announcement-items');
+      list.dataset.blockId = block.blockId;
+      for (const item of block.items) {
+        const row = node('li', item.text);
+        row.dataset.blockId = item.blockId;
+        list.append(row);
+      }
+      parent.append(list);
+    } else if (block.kind === 'table') {
+      const wrapper = node('div', null, 'shared-announcement-table-wrap');
+      wrapper.dataset.blockId = block.blockId;
+      const table = node('table', null, 'shared-announcement-table');
+      const body = node('tbody');
+      for (const row of block.rows) {
+        const tableRow = node('tr');
+        for (const cell of row.cells) {
+          const tableCell = node('td', cell.text);
+          tableCell.dataset.blockId = cell.blockId;
+          tableRow.append(tableCell);
+        }
+        body.append(tableRow);
+      }
+      table.append(body);
+      wrapper.append(table);
+      parent.append(wrapper);
+    } else if (block.kind === 'image') {
+      const asset = assets.get(block.assetId);
+      if (!asset) throw new Error('validated announcement image lost its asset reference');
+      const sourceUri = safeOfficialResourceUrl(asset.sourceUri);
+      if (!sourceUri) throw new Error('validated announcement contains an unsafe image URL');
+      const figure = node('figure', null, 'shared-announcement-figure');
+      figure.dataset.blockId = block.blockId;
+      figure.dataset.assetId = asset.assetId;
+      const image = node('img');
+      image.src = sourceUri;
+      image.alt = block.alt;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      figure.append(image);
+      parent.append(figure);
+    } else if (block.kind === 'spoiler') {
+      const details = node('details', null, 'shared-announcement-spoiler');
+      details.dataset.blockId = block.blockId;
+      const summary = node('summary', block.label);
+      const content = node('div', null, 'shared-announcement-spoiler-content');
+      content.id = `announcement-${block.blockId}-content`;
+      summary.setAttribute('aria-controls', content.id);
+      details.append(summary, content);
+      renderAnnouncementBlocks(content, block.blocks, assets, headingState);
+      parent.append(details);
+    } else {
+      throw new Error('announcement renderer received an unsupported block');
+    }
+  }
+}
+
+function renderAnnouncements(main, result, url) {
+  const announcementResult = result.view.getAnnouncements();
+  const items = announcementResult.status === 'ready' ? announcementResult.items : [];
+  if (url.searchParams.has('id')) {
+    const id = url.searchParams.get('id');
+    const item = result.view.getAnnouncement(id);
+    if (!item) {
+      setMetadata('公告未能確認', '目前沒有可確認的同版公告。', url);
+      main.append(node('h1', '公告未能確認'), node('p', '目前沒有可確認的同版公告。', 'shared-announcement-empty'));
+      main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
+      return;
+    }
+    const title = announcementTitle(item);
+    setMetadata(title, `${item.publishedOn} · 修訂版本 ${item.revision} · ${item.source.locator}`, url);
+    main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
+    renderAnnouncementMetadata(main, item);
+    const article = node('article', null, 'shared-announcement-content');
+    article.dataset.announcementId = item.announcementId;
+    const assets = new Map(item.assets.map(asset => [asset.assetId, asset]));
+    renderAnnouncementBlocks(article, item.blocks, assets);
+    if (!article.querySelector('h1')) article.prepend(node('h1', title, 'shared-announcement-heading'));
+    main.append(article);
+    return;
+  }
+
+  setMetadata('公告', '查閱已驗證的公告、發布日期、來源與修訂資料。', url);
+  const header = node('header', null, 'page-intro');
+  header.append(node('p', '網站公告', 'eyebrow'), node('h1', '公告'));
+  main.append(header);
+  if (items.length === 0) {
+    main.append(node('p', '目前沒有已確認的公告。', 'shared-announcement-empty'));
+    return;
+  }
+  const list = node('ul', null, 'shared-entry-list shared-announcement-list');
+  for (const item of items) {
+    const entry = node('li', null, 'shared-entry shared-announcement-entry');
+    entry.dataset.announcementId = item.announcementId;
+    entry.append(link(paramsUrl('/announcements/', { id: item.announcementId }), announcementTitle(item)));
+    entry.append(node('p', `${item.publishedOn} · 修訂版本 ${item.revision}`, 'shared-muted'));
+    entry.append(node('p', item.source.locator, 'shared-announcement-source'));
+    list.append(entry);
+  }
+  main.append(list);
+}
+
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
@@ -997,10 +1257,16 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
     return;
   }
   buildMeta.textContent = `遊戲版本 ${result.pointer.game_version} · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`;
+  if (result.fixtureOnly === true) {
+    const notice = node('p', '不可發布的資料預覽；此處版本標記僅供驗證。', 'shared-muted shared-preview-notice');
+    notice.setAttribute('role', 'status');
+    main.append(notice);
+  }
   if (url.pathname.startsWith('/skills/')) renderSkillPage(main, result, url);
   else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
   else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
   else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
+  else if (url.pathname === '/announcements' || url.pathname.startsWith('/announcements/')) renderAnnouncements(main, result, url);
   else renderHome(main, result);
   main.focus();
 }

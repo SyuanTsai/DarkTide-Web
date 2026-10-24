@@ -9,6 +9,7 @@ import { verifyHashedModuleGraph } from './module-graph.mjs';
 import { validatePublicFiles } from '../published/contract.mjs';
 import { validateVersion as validateW02Version } from '../../scripts/content/contract-release.mjs';
 import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
+import { SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY } from '../../web/shared-render.mjs';
 
 const MANIFEST_FIELDS = ['schema_version', 'package_kind', 'build_id', 'data_revision', 'files'];
 const FILE_FIELDS = ['path', 'size_bytes', 'sha256'];
@@ -334,12 +335,20 @@ function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevi
   if (html.length !== 1 || html[0] !== 'index.html') fail('artifact must contain exactly one HTML file named index.html');
 }
 
-function validateHeaders(bytes, catalog, hasSitemap) {
+function validateHeaders(bytes, catalog, hasSitemap, includeAnnouncements = false) {
   try {
-    validateCacheHeaders(bytes, catalog, { hasSitemap });
+    validateCacheHeaders(bytes, catalog, { hasSitemap, includeAnnouncements });
   } catch (error) {
     fail(error.message);
   }
+}
+
+function hasAnnouncementRoutingCapability(assetFiles) {
+  const marker = Buffer.from(SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY, 'utf8');
+  const matches = [...assetFiles].filter(([name, bytes]) => /^assets\/[a-f0-9]{64}\.(?:mjs|js)$/u.test(name)
+    && Buffer.from(bytes).includes(marker));
+  if (matches.length > 1) fail('artifact duplicates the announcement routing capability marker');
+  return matches.length === 1;
 }
 
 function validateRobotsAndSitemap(files, catalog) {
@@ -563,8 +572,6 @@ export async function verifyStaticPackage(directory) {
   }
   const { catalog } = validatePublicFiles(validationFiles);
 
-  if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog)) fail('Cloudflare document rewrites do not match catalog');
-  validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'));
   const siteOrigin = validateRobotsAndSitemap(files, catalog);
   const { index, normalized, context } = validateBuildContext(files.get('index.html'), version, {
     sharedBundle,
@@ -573,6 +580,10 @@ export async function verifyStaticPackage(directory) {
   validateInitialGamesLanternCredit(index, catalog, dataFiles);
   const assetFiles = new Map([...files].filter(([name]) => name.startsWith('assets/')));
   verifyHashedModuleGraph(Buffer.from(files.get('index.html')).toString('utf8'), assetFiles);
+  const includeAnnouncements = hasSharedRelease && hasAnnouncementRoutingCapability(assetFiles);
+  if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog,
+    { includeAnnouncements })) fail('Cloudflare document rewrites do not match catalog');
+  validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'), includeAnnouncements);
 
   const buildInputs = new Map(assetFiles);
   buildInputs.set('index.html', normalized);

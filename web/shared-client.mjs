@@ -226,6 +226,20 @@ function selectOptionalGameChangesFile(manifest, filesByPath) {
   return file;
 }
 
+function selectOptionalAnnouncementsFile(manifest, filesByPath) {
+  const rows = manifest.files.filter(file => file.kind === 'announcements');
+  if (rows.length > 1) fail('manifest contains multiple announcements domains');
+  const file = rows[0] ?? null;
+  if (!file) return null;
+  for (const dependency of file.dependencies) {
+    const dependencyFile = filesByPath.get(dependency);
+    if (!dependencyFile || !CORE_KINDS.includes(dependencyFile.kind)) {
+      fail('announcements domain has an unsupported dependency');
+    }
+  }
+  return file;
+}
+
 function typedPointers(value, result = []) {
   if (Array.isArray(value)) { for (const item of value) typedPointers(item, result); return result; }
   if (!isObject(value)) return result;
@@ -387,6 +401,18 @@ async function readBoundedJson(fetchImpl, url, limit, lifecycle) {
 
 export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.bind(globalThis), cryptoApi = globalThis.crypto, signal } = {}) {
   const { pointer, staticFiles } = selectSharedRelease(build);
+  if (Object.hasOwn(build, 'shared_package_kind')
+      && !['fixture', 'published'].includes(build.shared_package_kind)) {
+    fail('shared package kind is unsupported');
+  }
+  const fixtureOnly = build.shared_package_kind === 'fixture';
+  if (fixtureOnly && (build.shared_fixture_only !== true || typeof build.fixture_id !== 'string' || !build.fixture_id.trim())) {
+    fail('shared fixture package is missing its non-publishable marker');
+  }
+  if (build.shared_package_kind === 'published'
+      && (Object.hasOwn(build, 'shared_fixture_only') || Object.hasOwn(build, 'fixture_id'))) {
+    fail('published shared package contains fixture-only markers');
+  }
   if (typeof fetchImpl !== 'function' || !cryptoApi?.subtle || !globalThis.location?.origin) fail('shared data runtime is unavailable');
   const lifecycle = makeLoadLifecycle(signal);
   try {
@@ -404,6 +430,7 @@ export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.b
   const material = utf8Json(dataRevisionMaterial(manifest));
   if (await lifecycle.race(sha256(material, cryptoApi)) !== manifest.dataRevision) fail('shared manifest canonical data revision is invalid');
   const selectedFiles = selectConsumerFiles(manifest, filesByPath);
+  const announcementsFile = selectOptionalAnnouncementsFile(manifest, filesByPath);
   const domains = [];
   const rawFiles = new Map([[pointer.manifest_path, manifestResponse.bytes]]);
   let totalBytes = manifestResponse.bytes.byteLength;
@@ -437,9 +464,28 @@ export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.b
     domains.push(response.value);
     rawFiles.set(path, response.bytes);
   }
-  const view = createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId });
+  if (announcementsFile) {
+    const path = `/data/${manifest.dataRevision}/${announcementsFile.path}`;
+    const pinned = staticFiles.get(path);
+    if (!pinned || pinned.sha256 !== announcementsFile.sha256 || pinned.size_bytes !== announcementsFile.sizeBytes) {
+      fail('build does not pin the optional announcements domain');
+    }
+    totalBytes += announcementsFile.sizeBytes;
+    if (totalBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+    const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, announcementsFile.sizeBytes), lifecycle);
+    if (response.bytes.byteLength !== announcementsFile.sizeBytes
+        || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== announcementsFile.sha256) {
+      fail(`shared domain bytes do not match manifest: ${announcementsFile.path}`);
+    }
+    validateDomain(response.value, announcementsFile, manifest.gameReleaseId);
+    domains.push(response.value);
+    rawFiles.set(path, response.bytes);
+  }
+  const view = createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId, fixtureOnly });
   return Object.freeze({
     status: 'ready',
+    fixtureOnly,
+    fixtureId: fixtureOnly ? build.fixture_id : null,
     pointer,
     manifest,
     manifestBytes: manifestResponse.bytes,
