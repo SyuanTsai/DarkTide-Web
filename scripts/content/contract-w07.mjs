@@ -134,7 +134,6 @@ export function buildW07Candidate(inputs) {
   if (inputs?.mode !== 'w07') throw new Error('W07 candidate generation requires mode w07');
   const validation = validateWebAuthoring(inputs.authoring, inputs);
   if (!validation.valid) throw new Error('W07 Web contract is invalid:\n' + validation.issues.map(item => item.path + ': ' + item.message).join('\n'));
-  if (inputs.authoring.reviewReceipts.length !== 0) throw new Error('W07 candidate inputs must not contain human review receipts');
 
   const sourceContract = inputs.sourceContract;
   const sourceRecordsByKind = kind => sourceContract.records.filter(record => record.kind === kind);
@@ -432,14 +431,14 @@ function createReviewMarkdown(matrix) {
   const actionCount = matrix.presentations.reduce((count, presentation) => count + presentation.actionBindings.length, 0);
   const sourceWeapons = matrix.presentations.map(presentation => presentation.sourceWeapon.sourceFact);
   const sourceRowCount = sourceWeapons.reduce((count, weapon) => count + (weapon.payload.sourceRows?.length ?? 0), 0);
-  const weaponLocatorFields = new Set(sourceWeapons.flatMap(weapon => weapon.payload.statBindings.flatMap(binding => binding.bindings.map(item =>
+  const weaponLocatorFields = new Set(sourceWeapons.flatMap(weapon => (weapon.payload.statBindings ?? []).flatMap(binding => binding.bindings.map(item =>
     item.weaponLocator.sourceRef.sourceId + '\u0000' + item.weaponLocator.path + '\u0000' + item.weaponLocator.fieldPath))));
   const stickyDefinitions = new Set(matrix.presentations.flatMap(presentation => presentation.actionBindings.flatMap(action =>
     (action.stickyBindings ?? []).filter(binding => binding.state === 'defined').map(binding => presentation.sourceWeaponRef.recordId + '\u0000' + (binding.definition?.templateKey ?? binding.tableKey)))));
   const emptyCount = sourceWeapons.reduce((count, weapon) => count + (weapon.payload.emptyTables?.length ?? 0), 0)
     + sourceProfiles.reduce((count, profile) => count + (profile.payload.rawSourceDefinition?.emptyTables?.length ?? 0), 0);
   const lines = [
-    '# W07 鏈斧武器審閱候選',
+    '# W07 武器資料審閱候選',
     '',
     '這是待人工檢查的正式化資料候選，不代表內容已核准、已發布或已確認遊戲版本相容。',
     '',
@@ -927,9 +926,10 @@ async function main() {
     if (!validation.valid) throw new Error(validation.issues.map(item => item.path + ': ' + item.message).join('\n'));
     if (outRoot) {
       const output = await writeW07Candidate(inputs, outRoot);
-      process.stdout.write('W07 authoring validation passed; wrote deterministic candidate files: ' + path.relative(REPO_ROOT, output.outputRoot).replaceAll(path.sep, '/') + ' (review-candidate.md, review-matrix.json). No receipt or publication eligibility was created.\n');
+      process.stdout.write('W07 authoring validation passed; wrote deterministic candidate files: ' + path.relative(REPO_ROOT, output.outputRoot).replaceAll(path.sep, '/') + ' (review-candidate.md, review-matrix.json). No new receipt or publication was created.\n');
     } else {
-      process.stdout.write('W07 authoring contract validation passed: presentations=' + inputs.authoring.presentations.length + ' statGroups=' + inputs.authoring.presentations.reduce((count, item) => count + item.weaponView.statSections.length, 0) + ' actionBindings=' + inputs.authoring.presentations.reduce((count, item) => count + item.weaponView.attackProfileRefs.length, 0) + ' reviewTargets=' + inputs.authoring.reviewTargets.length + ' receipts=0 publicationEligible=false.\n');
+      const candidate = buildW07Candidate(inputs);
+      process.stdout.write('W07 authoring contract validation passed: presentations=' + inputs.authoring.presentations.length + ' statGroups=' + inputs.authoring.presentations.reduce((count, item) => count + (item.weaponView.statSections?.length ?? 0), 0) + ' actionBindings=' + inputs.authoring.presentations.reduce((count, item) => count + item.weaponView.attackProfileRefs.length, 0) + ' reviewTargets=' + inputs.authoring.reviewTargets.length + ' receipts=' + candidate.matrix.review.receiptCount + ' publicationEligible=' + candidate.matrix.publicationEligible + '.\n');
     }
   } catch (error) {
     process.stderr.write('W07 authoring contract validation failed: ' + (error instanceof Error ? error.message : String(error)) + '\n');

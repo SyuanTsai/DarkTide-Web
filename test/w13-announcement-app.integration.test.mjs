@@ -48,7 +48,7 @@ test('InterT10_compiled_announcement_renders_on_static_list_route', { timeout: 1
     assert.equal(await page.locator('.shared-announcement-list > li').count(), 1);
     assert.match(await page.locator('.shared-announcement-list').innerText(), /W13 公告展示測試（不可發布）/u);
     assert.equal(await page.locator('.primary-nav a[aria-current="page"]').getAttribute('href'), '/announcements/');
-    assert.match(await page.locator('.shared-announcement-fixture').innerText(), /不可發布/u);
+    assert.equal(await page.locator('.shared-preview-notice').innerText(), '不可發布的資料預覽；此處版本標記僅供驗證。');
 
     const detailLink = page.locator('.shared-announcement-list a').first();
     await detailLink.focus();

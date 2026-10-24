@@ -1096,6 +1096,18 @@ function validateW07R6ActionProfileClosure(weapon, profiles, releaseId, inputs, 
 function validateW07ActionProfileClosure(weapon, profiles, releaseId, inputs, issues, at) {
   const resolution = weapon.payload.actionProfileResolution;
   if (!resolution) {
+    const hasNotImported = (record, field) => {
+      if (record?.dataCoverage?.status !== 'partial' || !Array.isArray(record.dataCoverage.missing)) return false;
+      const markers = record.dataCoverage.missing.filter(item => item?.field === field);
+      return markers.length === 1 && markers[0]?.reasonCode === 'NOT_IMPORTED';
+    };
+    const rangedModes = new Set(['hipfire', 'ads']);
+    const supportsExplicitlyUnresolvedRangedProfile = hasNotImported(weapon, '/payload/actionProfileResolution')
+      && profiles.length > 0
+      && profiles.every(profile => rangedModes.has(profile.payload.mode)
+        && !profile.payload.actionResolution
+        && hasNotImported(profile, '/payload/actionResolution'));
+    if (supportsExplicitlyUnresolvedRangedProfile) return;
     issue(issues, at + '/actionProfileResolution', 'W07 weapon facts require the pinned Source action-resolution closure', 'weapon-resolution-required');
     return;
   }

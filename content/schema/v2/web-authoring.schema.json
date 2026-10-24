@@ -324,7 +324,7 @@
         "comparisonHeading": { "$ref": "#/$defs/text" },
         "note": { "$ref": "#/$defs/text" },
         "sourceWeaponRef": { "$ref": "#/$defs/recordRef" },
-        "statSections": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/weaponStatSection" } },
+        "statSections": { "type": "array", "minItems": 0, "items": { "$ref": "#/$defs/weaponStatSection" } },
         "attackProfileRefs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/recordRef" } }
       },
       "additionalProperties": false
