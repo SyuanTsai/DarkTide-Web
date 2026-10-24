@@ -16,6 +16,7 @@ import {
 } from '../published/contract.mjs';
 import { verifyStaticPackage } from './verify.mjs';
 import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
+import { SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY } from '../../web/shared-render.mjs';
 
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const BUILD_CONTEXT_MARKER = '__BUILD_CONTEXT__';
@@ -177,9 +178,16 @@ function escapeScriptJson(value) {
     '<': '\\u003c', '>': '\\u003e', '&': '\\u0026', '\u2028': '\\u2028', '\u2029': '\\u2029'
   })[character]);
 }
-function makeHeaders(publicFiles, siteOrigin) {
+function makeHeaders(publicFiles, siteOrigin, includeAnnouncements = false) {
   const catalog = JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8'));
-  return renderCacheHeaders(catalog, { hasSitemap: Boolean(siteOrigin) });
+  return renderCacheHeaders(catalog, { hasSitemap: Boolean(siteOrigin), includeAnnouncements });
+}
+function hasAnnouncementRoutingCapability(assets) {
+  const marker = Buffer.from(SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY, 'utf8');
+  const matches = [...assets].filter(([name, bytes]) => /^assets\/[a-f0-9]{64}\.(?:mjs|js)$/u.test(name)
+    && Buffer.from(bytes).includes(marker));
+  if (matches.length > 1) throw new Error('website asset graph duplicates the announcement routing capability marker');
+  return matches.length === 1;
 }
 function escapeXml(text) {
   return String(text).replace(/[&<>"']/g, character => ({
@@ -394,12 +402,13 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   const hashed = snapshot
     ? { assets: snapshot.assetFiles }
     : await buildHashedAssets(await collectStaticSources(projectRoot));
+  const includeAnnouncements = Boolean(sharedBundle && hasAnnouncementRoutingCapability(hashed.assets));
   let indexTemplate = snapshot
     ? snapshot.indexTemplate
     : replaceSiteReferences(hashed.index, hashed.moduleEntry, hashed.styleEntry);
   if (!snapshot) indexTemplate = injectInitialGamesLanternCredit(indexTemplate, usesGamesLanternAssets(publicData));
   const normalizedIndex = indexTemplate;
-  const headers = makeHeaders(publicFiles, normalizedSiteOrigin);
+  const headers = makeHeaders(publicFiles, normalizedSiteOrigin, includeAnnouncements);
   const buildInputs = new Map([...hashed.assets]);
   buildInputs.set('index.html', normalizedIndex);
   if (sharedBundle) {
@@ -409,7 +418,8 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   } else {
     for (const [name, value] of publicFiles) buildInputs.set('data/' + name, value);
   }
-  const rewrites = renderStaticRewrites(JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8')));
+  const rewrites = renderStaticRewrites(JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8')),
+    { includeAnnouncements });
   buildInputs.set('_redirects', rewrites);
   buildInputs.set('_headers', headers);
   const sitemap = makeSitemap(publicFiles, normalizedSiteOrigin);

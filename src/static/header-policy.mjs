@@ -16,22 +16,26 @@ function isWithinPattern(path, pattern) {
   return path === base || path.startsWith(base + '/');
 }
 
-function isHandledAsDocument(path) {
-  return DOCUMENT_PREFIXES.some(pattern => isWithinPattern(path, pattern));
+function documentPrefixes(includeAnnouncements) {
+  return includeAnnouncements ? [...DOCUMENT_PREFIXES, '/announcements/*'] : DOCUMENT_PREFIXES;
+}
+
+function isHandledAsDocument(path, includeAnnouncements) {
+  return documentPrefixes(includeAnnouncements).some(pattern => isWithinPattern(path, pattern));
 }
 
 function isImmutablePath(path) {
   return IMMUTABLE_PREFIXES.some(pattern => isWithinPattern(path, pattern));
 }
 
-export function expectedCacheRules(catalog, { hasSitemap = false } = {}) {
+export function expectedCacheRules(catalog, { hasSitemap = false, includeAnnouncements = false } = {}) {
   if (!catalog || !Array.isArray(catalog.redirects)) throw new Error('catalog redirects are required for the cache policy');
   const rules = new Map([
     ['/', DOCUMENT_POLICY],
     ['/index.html', DOCUMENT_POLICY],
     ['/version.json', DOCUMENT_POLICY],
     ['/robots.txt', DOCUMENT_POLICY],
-    ...DOCUMENT_PREFIXES.map(pattern => [pattern, DOCUMENT_POLICY]),
+    ...documentPrefixes(includeAnnouncements).map(pattern => [pattern, DOCUMENT_POLICY]),
     ...IMMUTABLE_PREFIXES.map(pattern => [pattern, IMMUTABLE_POLICY])
   ]);
   if (hasSitemap) rules.set('/sitemap.xml', DOCUMENT_POLICY);
@@ -40,7 +44,7 @@ export function expectedCacheRules(catalog, { hasSitemap = false } = {}) {
     const route = redirect.source_route;
     if (typeof route !== 'string' || !route.startsWith('/')) throw new Error('catalog redirect source route is invalid for cache policy');
     if (isImmutablePath(route)) throw new Error('catalog redirect overlaps an immutable asset/data cache prefix');
-    if (isHandledAsDocument(route)) continue;
+    if (isHandledAsDocument(route, includeAnnouncements)) continue;
     if (RESERVED_DOCUMENT_PATHS.has(route)) throw new Error('catalog redirect collides with a generated document path');
     rules.set(route, DOCUMENT_POLICY);
   }

@@ -39,6 +39,7 @@ const QUANTITY_LABELS = Object.freeze({
   'attack-power-distribution': '攻擊威力分布', 'armor-damage-modifier': '護甲傷害修正',
   'damage-profile': '傷害設定', 'dodge-count': '閃避次數',
 });
+export const SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY = 'shared-announcement-routing-v1';
 const GAME_CHANGE_TYPE_LABELS = Object.freeze({ skill: '技能', blessing: '祝福', weapon: '武器' });
 const GAME_CHANGE_OPERATION_LABELS = Object.freeze({
   added: '新增', removed: '移除', modified: '調整', correction: '更正',
@@ -208,7 +209,7 @@ function renderHome(main, result) {
   hero.append(node('h1', '查閱技能、武器與祝福資料'));
   hero.append(node('p', '資料先按遊戲版本與完整修訂驗證，再呈現各自的官方文字、數值與條件。', 'shared-lead'));
   const links = node('div', null, 'shared-home-links');
-  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄']]) links.append(link(href, label, 'button-link'));
+  for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄'], ['/announcements/', '閱讀公告']]) links.append(link(href, label, 'button-link'));
   hero.append(links);
   main.append(hero);
   const note = node('p', `遊戲版本 ${result.pointer.game_version} · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`, 'version-line');
@@ -982,6 +983,154 @@ function renderGameChanges(main, result, url) {
   main.append(list);
 }
 
+function announcementTitle(item) {
+  return item.blocks.find(block => block.kind === 'heading')?.text ?? `公告 ${item.publishedOn}`;
+}
+
+function renderAnnouncementFixtureNotice(main, result) {
+  if (!result.fixtureOnly) return;
+  const notice = node('p', '不可發布的測試資料，僅供公告呈現驗證。', 'shared-announcement-fixture');
+  notice.setAttribute('role', 'status');
+  main.append(notice);
+}
+
+function renderAnnouncementMetadata(parent, item) {
+  const list = node('dl', null, 'shared-announcement-meta');
+  const sourceKind = item.source.kind === 'site-owner' ? '網站維護者' : '官方遊戲來源';
+  for (const [label, value] of [
+    ['發布日期', item.publishedOn],
+    ['來源', `${sourceKind} · ${item.source.locator}`],
+    ['修訂版本', String(item.revision)],
+  ]) {
+    const row = node('div');
+    row.append(node('dt', label), node('dd', value));
+    list.append(row);
+  }
+  parent.append(list);
+}
+
+function renderAnnouncementBlocks(parent, blocks, assets, headingState = { firstHeading: true }) {
+  for (const block of blocks) {
+    if (block.kind === 'heading') {
+      const heading = node(headingState.firstHeading ? 'h1' : 'h2', block.text, 'shared-announcement-heading');
+      headingState.firstHeading = false;
+      heading.dataset.blockId = block.blockId;
+      parent.append(heading);
+    } else if (block.kind === 'paragraph') {
+      const paragraph = node('p', block.text, 'shared-announcement-paragraph');
+      paragraph.dataset.blockId = block.blockId;
+      parent.append(paragraph);
+    } else if (block.kind === 'link') {
+      const href = safeOfficialResourceUrl(block.href);
+      if (!href) throw new Error('validated announcement contains an unsafe link');
+      const anchor = link(href, block.text, 'shared-announcement-link');
+      anchor.dataset.blockId = block.blockId;
+      anchor.rel = 'noopener noreferrer';
+      parent.append(anchor);
+    } else if (block.kind === 'list') {
+      const list = node(block.ordered ? 'ol' : 'ul', null, 'shared-announcement-items');
+      list.dataset.blockId = block.blockId;
+      for (const item of block.items) {
+        const row = node('li', item.text);
+        row.dataset.blockId = item.blockId;
+        list.append(row);
+      }
+      parent.append(list);
+    } else if (block.kind === 'table') {
+      const wrapper = node('div', null, 'shared-announcement-table-wrap');
+      wrapper.dataset.blockId = block.blockId;
+      const table = node('table', null, 'shared-announcement-table');
+      const body = node('tbody');
+      for (const row of block.rows) {
+        const tableRow = node('tr');
+        for (const cell of row.cells) {
+          const tableCell = node('td', cell.text);
+          tableCell.dataset.blockId = cell.blockId;
+          tableRow.append(tableCell);
+        }
+        body.append(tableRow);
+      }
+      table.append(body);
+      wrapper.append(table);
+      parent.append(wrapper);
+    } else if (block.kind === 'image') {
+      const asset = assets.get(block.assetId);
+      if (!asset) throw new Error('validated announcement image lost its asset reference');
+      const sourceUri = safeOfficialResourceUrl(asset.sourceUri);
+      if (!sourceUri) throw new Error('validated announcement contains an unsafe image URL');
+      const figure = node('figure', null, 'shared-announcement-figure');
+      figure.dataset.blockId = block.blockId;
+      figure.dataset.assetId = asset.assetId;
+      const image = node('img');
+      image.src = sourceUri;
+      image.alt = block.alt;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      figure.append(image);
+      parent.append(figure);
+    } else if (block.kind === 'spoiler') {
+      const details = node('details', null, 'shared-announcement-spoiler');
+      details.dataset.blockId = block.blockId;
+      const summary = node('summary', block.label);
+      const content = node('div', null, 'shared-announcement-spoiler-content');
+      content.id = `announcement-${block.blockId}-content`;
+      summary.setAttribute('aria-controls', content.id);
+      details.append(summary, content);
+      renderAnnouncementBlocks(content, block.blocks, assets, headingState);
+      parent.append(details);
+    } else {
+      throw new Error('announcement renderer received an unsupported block');
+    }
+  }
+}
+
+function renderAnnouncements(main, result, url) {
+  const announcementResult = result.view.getAnnouncements();
+  const items = announcementResult.status === 'ready' ? announcementResult.items : [];
+  if (url.searchParams.has('id')) {
+    const id = url.searchParams.get('id');
+    const item = result.view.getAnnouncement(id);
+    if (!item) {
+      setMetadata('公告未能確認', '目前沒有可確認的同版公告。', url);
+      main.append(node('h1', '公告未能確認'), node('p', '目前沒有可確認的同版公告。', 'shared-announcement-empty'));
+      main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
+      return;
+    }
+    const title = announcementTitle(item);
+    setMetadata(title, `${item.publishedOn} · 修訂版本 ${item.revision} · ${item.source.locator}`, url);
+    main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
+    renderAnnouncementFixtureNotice(main, result);
+    renderAnnouncementMetadata(main, item);
+    const article = node('article', null, 'shared-announcement-content');
+    article.dataset.announcementId = item.announcementId;
+    const assets = new Map(item.assets.map(asset => [asset.assetId, asset]));
+    renderAnnouncementBlocks(article, item.blocks, assets);
+    if (!article.querySelector('h1')) article.prepend(node('h1', title, 'shared-announcement-heading'));
+    main.append(article);
+    return;
+  }
+
+  setMetadata('公告', '查閱已驗證的公告、發布日期、來源與修訂資料。', url);
+  const header = node('header', null, 'page-intro');
+  header.append(node('p', '網站公告', 'eyebrow'), node('h1', '公告'));
+  main.append(header);
+  renderAnnouncementFixtureNotice(main, result);
+  if (items.length === 0) {
+    main.append(node('p', '目前沒有已確認的公告。', 'shared-announcement-empty'));
+    return;
+  }
+  const list = node('ul', null, 'shared-entry-list shared-announcement-list');
+  for (const item of items) {
+    const entry = node('li', null, 'shared-entry shared-announcement-entry');
+    entry.dataset.announcementId = item.announcementId;
+    entry.append(link(paramsUrl('/announcements/', { id: item.announcementId }), announcementTitle(item)));
+    entry.append(node('p', `${item.publishedOn} · 修訂版本 ${item.revision}`, 'shared-muted'));
+    entry.append(node('p', item.source.locator, 'shared-announcement-source'));
+    list.append(entry);
+  }
+  main.append(list);
+}
+
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
@@ -1001,6 +1150,7 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
   else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
   else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
+  else if (url.pathname === '/announcements' || url.pathname.startsWith('/announcements/')) renderAnnouncements(main, result, url);
   else renderHome(main, result);
   main.focus();
 }
