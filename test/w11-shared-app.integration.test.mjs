@@ -94,7 +94,11 @@ async function listen(distPath) {
   return { server, origin: `http://127.0.0.1:${server.address().port}` };
 }
 async function closeServer(server) {
-  if (server?.listening) await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+  if (!server?.listening) return;
+  await new Promise((resolve, reject) => {
+    server.close(error => error ? reject(error) : resolve());
+    server.closeAllConnections();
+  });
 }
 async function build(root, sharedRelease) {
   return buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease });
@@ -445,8 +449,8 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     }
     await context.close();
   } finally {
-    await closeServer(server);
     await browser?.close();
+    await closeServer(server);
     await disposeBuildRoot(root);
   }
 });
