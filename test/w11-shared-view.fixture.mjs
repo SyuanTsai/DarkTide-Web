@@ -238,6 +238,7 @@ export function makeWeaponDomain({ withAnnotations = false } = {}) {
       asRecord(row.weaponRef, {
         familyId: 'chainaxe-p1',
         markId: row.markId,
+        statRefs: [row.definitionRef],
         displayedAttacks: [{ key: 'primary', mode: 'light', segments: [{ index: 1, attackType: 'smiter', targetRole: 'single-target' }] }],
         actionContinuations: { primary: [{ action: `action-${row.markId}`, condition: `condition-${row.markId}` }] },
         statBindings: [{ stat: `source-stat:${row.markId}`, binding: row.damage }],
@@ -246,7 +247,7 @@ export function makeWeaponDomain({ withAnnotations = false } = {}) {
       asRecord(claim60, { comparisonPoint: 60, value: { status: 'known', decimal: row.damage, unit: 'attack-power-point' } }),
       asRecord(claim80, { comparisonPoint: 80, value: { status: 'known', decimal: String(Number(row.damage) + 20), unit: 'attack-power-point' } }),
       asRecord(row.curveRef, { knots: [{ input: '0', output: row.damage }, { input: '1', output: String(Number(row.damage) + 20) }], panelInputRange: { status: 'not-applicable' } }),
-      asRecord(row.definitionRef, { quantity: `source-quantity:${row.markId}`, unit: 'attack-power-point' }),
+      asRecord(row.definitionRef, { quantity: `source-quantity:${row.markId}`, unit: 'attack-power-point', curveRef: sourceRef(row.curveRef) }),
       asRecord(row.attackRef, { weaponRef: sourceRef(row.weaponRef), chain: [`light-${row.markId}`, `heavy-${row.markId}`], condition: `native-condition-${row.markId}` }),
     );
     presentations.push({
