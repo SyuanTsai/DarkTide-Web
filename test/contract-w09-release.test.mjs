@@ -1557,6 +1557,26 @@ function gitBytes(root, args) {
   return Buffer.from(execFileSync('git', ['-C', root, ...args], { encoding: null, maxBuffer: 64 * 1024 * 1024, windowsHide: true }));
 }
 
+function assertCompositionInputsMatchCurrentHead(repoRoot, pinnedCommit) {
+  assert.match(pinnedCommit, /^[0-9a-f]{40}$/u, 'the workflow must pin a full Git commit SHA');
+  const currentHead = git(repoRoot, ['rev-parse', 'HEAD']);
+  const currentSelectedBytes = gitBytes(repoRoot, ['show', currentHead + ':' + W09_SELECTED_COMPOSITION_PATH]);
+  const pinnedSelectedBytes = gitBytes(repoRoot, ['show', pinnedCommit + ':' + W09_SELECTED_COMPOSITION_PATH]);
+  assert.deepEqual(pinnedSelectedBytes, currentSelectedBytes,
+    'pinned selected marker bytes must match current HEAD');
+
+  const selected = JSON.parse(currentSelectedBytes.toString('utf8'));
+  assert.ok(Array.isArray(selected.proposals) && selected.proposals.length > 0,
+    'current selected marker must identify at least one composition request');
+  for (const proposal of selected.proposals) {
+    const lockPath = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+    const currentLockBytes = gitBytes(repoRoot, ['show', currentHead + ':' + lockPath]);
+    const pinnedLockBytes = gitBytes(repoRoot, ['show', pinnedCommit + ':' + lockPath]);
+    assert.deepEqual(pinnedLockBytes, currentLockBytes,
+      'pinned request lock bytes must match current HEAD: ' + proposal.requestId);
+  }
+}
+
 function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
 }
@@ -1725,6 +1745,19 @@ async function createDualRootW09Fixture(t) {
   git(runtimeRoot, ['checkout', '--quiet', '-B', 'main', 'HEAD']);
   git(compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
 
+  const historicalSelectedBytes = gitBytes(compositionRoot, [
+    'show', 'HEAD:' + W09_SELECTED_COMPOSITION_PATH,
+  ]);
+  const historicalSelected = JSON.parse(historicalSelectedBytes.toString('utf8'));
+  await writeFile(path.join(runtimeRoot, ...W09_SELECTED_COMPOSITION_PATH.split('/')), historicalSelectedBytes);
+  const historicalRequestLockPaths = [];
+  for (const proposal of historicalSelected.proposals ?? []) {
+    const lockPath = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+    const lockBytes = gitBytes(compositionRoot, ['show', 'HEAD:' + lockPath]);
+    await writeFile(path.join(runtimeRoot, ...lockPath.split('/')), lockBytes);
+    historicalRequestLockPaths.push(lockPath);
+  }
+
   const pinCommit = git(runtimeRoot, ['rev-parse', 'HEAD']);
   const compilerLock = JSON.parse(gitBytes(runtimeRoot, ['show', 'HEAD:' + W09_COMPILER_LOCK_PATH]).toString('utf8'));
   compilerLock.commit = pinCommit;
@@ -1734,7 +1767,7 @@ async function createDualRootW09Fixture(t) {
   });
   compilerLock.fileSetSha256 = sha256(Buffer.from(canonicalW09Json(compilerLock.files), 'utf8'));
   await writeFile(path.join(runtimeRoot, ...W09_COMPILER_LOCK_PATH.split('/')), jsonBytes(compilerLock));
-  git(runtimeRoot, ['add', W09_COMPILER_LOCK_PATH]);
+  git(runtimeRoot, ['add', '--', W09_COMPILER_LOCK_PATH, W09_SELECTED_COMPOSITION_PATH, ...historicalRequestLockPaths]);
   gitCommitFixture(runtimeRoot, 'test fixture: pin current runtime code');
 
   return {
@@ -1902,13 +1935,20 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     assert.ok(checkout);
     assert.equal(checkout.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
     assert.equal(checkout.with.repository, 'SyuanTsai/DarkTide-Web');
-    assert.equal(checkout.with.ref, W09_HISTORICAL_COMPOSITION_COMMIT);
+    assert.match(checkout.with.ref, /^[0-9a-f]{40}$/u, 'the workflow checkout must use a full pinned commit SHA');
     assert.equal(checkout.with.path, 'composition-inputs');
     assert.equal(checkout.with['persist-credentials'], false);
     assert.match(checkout.if, /inputs\.action != 'rollback'/u);
     const promote = steps.find(step => step.name === 'Promote the selected shared composition');
     assert.equal(promote.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
-    assert.equal(promote.env.W09_EXPECTED_COMPOSITION_COMMIT, W09_HISTORICAL_COMPOSITION_COMMIT);
+    assert.equal(promote.env.W09_EXPECTED_COMPOSITION_COMMIT, checkout.with.ref,
+      'checkout ref and runtime-verified expected commit must name the same immutable input');
+    assertCompositionInputsMatchCurrentHead(REPO_ROOT, checkout.with.ref);
+    assert.throws(
+      () => assertCompositionInputsMatchCurrentHead(REPO_ROOT, W09_HISTORICAL_COMPOSITION_COMMIT),
+      /pinned selected marker bytes must match current HEAD/u,
+      'both workflow fields pointing at the old composition commit must fail the selected/lock content relationship check',
+    );
     const rollback = steps.find(step => step.name === 'Restore the explicit approved whole-site snapshot');
     assert.equal(Object.hasOwn(rollback.env, 'W09_COMPOSITION_ROOT'), false,
       'rollback remains on the exact-snapshot path and does not replay composition inputs');
