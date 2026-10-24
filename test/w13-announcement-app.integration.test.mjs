@@ -20,7 +20,11 @@ async function listen(distPath) {
 }
 
 async function closeServer(server) {
-  if (server?.listening) await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+  if (!server?.listening) return;
+  await new Promise((resolve, reject) => {
+    server.close(error => error ? reject(error) : resolve());
+    server.closeAllConnections();
+  });
 }
 
 // Scenario: The actual W08 compiler emits one schema-valid but non-publishable site announcement.
@@ -92,8 +96,8 @@ test('InterT10_compiled_announcement_renders_on_static_list_route', { timeout: 1
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
     assert.deepEqual(pageErrors, []);
   } finally {
-    await closeServer(server);
     await browser?.close();
+    await closeServer(server);
     await disposeBuildRoot(root);
   }
 });

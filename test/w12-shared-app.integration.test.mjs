@@ -113,7 +113,11 @@ async function listen(distPath) {
 }
 
 async function closeServer(server) {
-  if (server?.listening) await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+  if (!server?.listening) return;
+  await new Promise((resolve, reject) => {
+    server.close(error => error ? reject(error) : resolve());
+    server.closeAllConnections();
+  });
 }
 
 // Scenario: The actual W08 compiler emits an isolated but schema-valid W12 game-change package.
@@ -241,9 +245,9 @@ test('InterT20_compiled_game_changes_render_in_static_app_and_preserve_source_id
       '祝福變體來源資料 來源定義階級：LV1、LV2、LV3、LV4 可取得階級尚未確認。 來源列出的適用武器：合成武器範例');
     assert.deepEqual(pageErrors, []);
   } finally {
+    await browser?.close();
     await closeServer(variantServer);
     await closeServer(server);
-    await browser?.close();
     if (variantRoot) await disposeBuildRoot(variantRoot);
     await disposeBuildRoot(root);
   }
