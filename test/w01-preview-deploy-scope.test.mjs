@@ -322,8 +322,8 @@ test('InterT60_git-before-head-evidence-drives-cli-output-and-fails-on-missing-h
   }
 });
 
-// Scenario: Git history changes .gitattributes from absent to the exact contract LF rules, then adds a wildcard rule.
-// Purpose: prove classification reads both committed blobs and treats only the bounded rule change as contract-only.
+// Scenario: Git history changes .gitattributes from absent to contract LF rules, then adds exact history byte pins and a wildcard rule.
+// Purpose: prove contract-only classification remains narrow while history-byte pins continue to count as runtime changes.
 test('InterT70_git-attribute-blobs-bound-contract-eol-scope', async t => {
   const fs = await import('node:fs/promises');
   const os = await import('node:os');
@@ -347,8 +347,7 @@ test('InterT70_git-attribute-blobs-bound-contract-eol-scope', async t => {
   await fs.writeFile(path.join(tempRoot, 'base.txt'), 'base');
   const base = commit('base');
 
-  const attributesPath = path.join(repoRoot, '.gitattributes');
-  const exactRules = await fs.readFile(attributesPath, 'utf8');
+  const exactRules = contractEolAttributes;
   await fs.writeFile(path.join(tempRoot, '.gitattributes'), exactRules);
   const boundedHead = commit('contract LF rules');
   assert.deepEqual(resolveDeploymentScope({ base, head: boundedHead, cwd: tempRoot }), {
@@ -357,9 +356,23 @@ test('InterT70_git-attribute-blobs-bound-contract-eol-scope', async t => {
     changedPathCount: 1,
   });
 
+  const historyByteRules = [
+    '/content/history/1.13.1/manifest.json -text !eol',
+    '/content/history/1.13.1/player-index.json -text !eol',
+    '/content/history/1.13.1/source-content.json -text !eol',
+  ].join('\n') + '\n';
+  await fs.appendFile(path.join(tempRoot, '.gitattributes'), historyByteRules);
+  const historyHead = commit('exact history byte pins');
+  assert.deepEqual(resolveDeploymentScope({ base: boundedHead, head: historyHead, cwd: tempRoot }), {
+    shouldDeploy: true,
+    reason: 'runtime-change',
+    changedPathCount: 1,
+  });
+  assert.equal(isSafeContractGitattributesChange(exactRules, exactRules + historyByteRules), false);
+
   await fs.appendFile(path.join(tempRoot, '.gitattributes'), '* text eol=lf\n');
   const wildcardHead = commit('global wildcard rule');
-  assert.deepEqual(resolveDeploymentScope({ base: boundedHead, head: wildcardHead, cwd: tempRoot }), {
+  assert.deepEqual(resolveDeploymentScope({ base: historyHead, head: wildcardHead, cwd: tempRoot }), {
     shouldDeploy: true,
     reason: 'runtime-change',
     changedPathCount: 1,
