@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "w14.historical-player-index.v1",
+  "gameVersion": "1.13.1",
+  "source": {
+    "repository": "SyuanTsai/DarkTide-Web",
+    "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+    "path": "content/published/content.json",
+    "gameVersion": "1.13.1",
+    "packageKind": "published",
+    "schemaVersion": 2,
+    "byteLength": 3956394,
+    "sha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+    "staticBackup": {
+      "releaseTag": "site-61f1dcda6cb80fb1ee2bf595b3b9a082825a912f-39541306251-1",
+      "deploymentRun": "https://github.com/SyuanTsai/DarkTide-Web/actions/runs/39541306251",
+      "buildId": "75a9a5bbb34153ef8d891a56401d3c457819b32482b54adf288419b7e51efff8",
+      "dataRevision": "0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b",
+      "archiveName": "static-site.tar.gz",
+      "archiveByteLength": 1288950,
+      "archiveSha256": "7db6888ded82f3442f2d37f8a6cf7c10cf90bf80cd58476c6557ba444c72a555",
+      "releaseUrl": "https://github.com/SyuanTsai/DarkTide-Web/releases/tag/site-61f1dcda6cb80fb1ee2bf595b3b9a082825a912f-39541306251-1",
+      "archiveUrl": "https://github.com/SyuanTsai/DarkTide-Web/releases/download/site-61f1dcda6cb80fb1ee2bf595b3b9a082825a912f-39541306251-1/static-site.tar.gz"
+    }
+  },
+  "projection": {
+    "path": "player-index.json",
+    "byteLength": 766979,
+    "sha256": "0a9d143d7174f7516bd59b0928c4e06b372480e408ffe7e2fe52f4906a34c6bb",
+    "counts": {
+      "skills": 645,
+      "weapons": 68,
+      "blessings": 167,
+      "marks": 132,
+      "variants": 605
+    },
+    "excludedCounts": {
+      "skills": 1,
+      "weapons": 2,
+      "blessings": 0,
+      "marks": 3,
+      "variants": 0
+    },
+    "excludedReasons": {
+      "skills": {
+        "missingTraditionalChineseName": 1,
+        "missingLocalizedParent": 0
+      },
+      "weapons": {
+        "missingTraditionalChineseName": 2,
+        "missingLocalizedParent": 0
+      },
+      "blessings": {
+        "missingTraditionalChineseName": 0,
+        "missingLocalizedParent": 0
+      },
+      "marks": {
+        "missingTraditionalChineseName": 3,
+        "missingLocalizedParent": 0
+      },
+      "variants": {
+        "missingTraditionalChineseName": 0,
+        "missingLocalizedParent": 0
+      }
+    },
+    "fieldAllowlist": {
+      "skills": [
+        "skill_id",
+        "name_zh_tw",
+        "category",
+        "effect_zh_tw"
+      ],
+      "weapons": [
+        "weapon_id",
+        "name_zh_tw",
+        "category",
+        "mark_ids->marks.name_zh_tw"
+      ],
+      "blessings": [
+        "blessing_id",
+        "name_zh_tw",
+        "category",
+        "effect_zh_tw",
+        "trigger_zh_tw",
+        "variant_ids->variants"
+      ],
+      "marks": [
+        "mark_id",
+        "name_zh_tw",
+        "weapon_id->weapons.name_zh_tw"
+      ],
+      "variants": [
+        "variant_id",
+        "blessing_id->blessings.name_zh_tw",
+        "weapon_id->weapons.name_zh_tw",
+        "effect_zh_tw",
+        "defined_tiers"
+      ]
+    },
+    "excludedFields": [
+      "claims",
+      "tier_claims",
+      "assets",
+      "bindings",
+      "routes",
+      "sources",
+      "talent_trees",
+      "source_ids",
+      "archetype"
+    ]
+  },
+  "fullPlayerSnapshot": "https://github.com/SyuanTsai/DarkTide-Web/releases/download/site-61f1dcda6cb80fb1ee2bf595b3b9a082825a912f-39541306251-1/static-site.tar.gz",
+  "technicalSourceRepository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+  "projectionReport": {
+    "sourceCounts": {
+      "skills": 646,
+      "weapons": 70,
+      "blessings": 167,
+      "marks": 135,
+      "variants": 605
+    },
+    "projectedCounts": {
+      "skills": 645,
+      "weapons": 68,
+      "blessings": 167,
+      "marks": 132,
+      "variants": 605
+    },
+    "excluded": {
+      "skills": 1,
+      "weapons": 2,
+      "blessings": 0,
+      "marks": 3,
+      "variants": 0
+    },
+    "excludedReasons": {
+      "skills": {
+        "missingTraditionalChineseName": 1,
+        "missingLocalizedParent": 0
+      },
+      "weapons": {
+        "missingTraditionalChineseName": 2,
+        "missingLocalizedParent": 0
+      },
+      "blessings": {
+        "missingTraditionalChineseName": 0,
+        "missingLocalizedParent": 0
+      },
+      "marks": {
+        "missingTraditionalChineseName": 3,
+        "missingLocalizedParent": 0
+      },
+      "variants": {
+        "missingTraditionalChineseName": 0,
+        "missingLocalizedParent": 0
+      }
+    }
+  }
+}
