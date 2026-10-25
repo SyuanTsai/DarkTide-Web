@@ -253,14 +253,22 @@ test('UnitT55_history_player_projection_is_hashed_as_an_artifact_but_not_current
     assert.ok(!paths.includes('history/1.13.1/source-content.json'), 'technical source package must not be deployed');
     const redirects = await readFile(join(root, 'dist', '_redirects'), 'utf8');
     assert.match(redirects, /^\/history\/1\.13\.1 \/ 200$/m);
-    assert.match(redirects, /^\/history\/1\.13\.1\/\* \/ 200$/m);
+    assert.match(redirects, /^\/history\/1\.13\.1\/ \/ 200$/m);
+    assert.doesNotMatch(redirects, /^\/history\/1\.13\.1\/\* \/ 200$/m, 'history JSON and unknown nested paths must not be rewritten as HTML');
     const headers = await readFile(join(root, 'dist', '_headers'), 'utf8');
+    assert.match(headers, /^\/history\/1\.13\.1\r?\n  Cache-Control: no-cache, must-revalidate$/m);
     assert.match(headers, /^\/history\/1\.13\.1\/\*\r?\n  Cache-Control: no-cache, must-revalidate$/m);
-    const manifest = JSON.parse(await readFile(join(root, 'dist', 'history/1.13.1/manifest.json'), 'utf8'));
+    const manifestOutputBytes = await readFile(join(root, 'dist', 'history/1.13.1/manifest.json'));
+    const manifest = JSON.parse(manifestOutputBytes.toString('utf8'));
     const projection = await readFile(join(root, 'dist', 'history/1.13.1/player-index.json'));
     assert.equal(manifest.source.sha256, '3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc');
     assert.equal(manifest.projection.sha256, createHash('sha256').update(projection).digest('hex'));
     assert.ok(projection.length < 2_000_000, 'history output remains the bounded player projection');
+    const verified = await verifyStaticPackage(join(root, 'dist'));
+    assert.deepEqual(verified.history_files, [
+      { path: '/history/1.13.1/manifest.json', size_bytes: manifestOutputBytes.byteLength, sha256: createHash('sha256').update(manifestOutputBytes).digest('hex') },
+      { path: '/history/1.13.1/player-index.json', size_bytes: projection.byteLength, sha256: createHash('sha256').update(projection).digest('hex') },
+    ]);
   } finally {
     await disposeBuildRoot(root);
   }

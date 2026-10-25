@@ -158,3 +158,37 @@ test('InterT10_shared_origin_verifies_legacy_catalog_and_every_retained_W02_URL_
  for(const row of sharedFiles)assert.ok(calls.includes(row.path),row.path);
  assert.ok(calls.includes('/data/'+runtimeRevision+'/not-present.json'));
 });
+
+// Scenario: A deployment contains the fixed historical player package.
+// Purpose: Verify both history documents and exact manifest/index bytes at the public origin without following a routing fallback.
+test('InterT20_origin_verifies_history_documents_files_and_missing_paths', async () => {
+ const historyManifest=Buffer.from('{"history":"manifest"}\n');
+ const playerIndex=Buffer.from('{"entries":[]}\n');
+ const historyFiles=[
+  {path:'/history/1.13.1/manifest.json',size_bytes:historyManifest.byteLength,sha256:sha256(historyManifest)},
+  {path:'/history/1.13.1/player-index.json',size_bytes:playerIndex.byteLength,sha256:sha256(playerIndex)},
+ ];
+ const historyBodies=new Map(historyFiles.map((row,index)=>[row.path,index===0?historyManifest:playerIndex]));
+ const version={schema_version:2,data_revision:artifact.data_revision,build_id:artifact.build_id,game_version:'1.13.2',package_kind:'published'};
+ const catalog={game_version:'1.13.2',entries:[
+  {kind:'skill',id:'skill-a',detail_path:'details/skill-a.json'},
+  {kind:'weapon',id:'weapon-a',detail_path:'details/weapon-a.json'},
+  {kind:'blessing',id:'blessing-a',detail_path:'details/blessing-a.json'},
+ ]};
+ const calls=[];
+ const fetch=async(url,init={})=>{
+  const path=new URL(url).pathname;calls.push({path,redirect:init.redirect});
+  if(path==='/version.json')return new Response(JSON.stringify(version),{headers:{'content-type':'application/json','cache-control':'no-store'}});
+  if(path==='/data/'+artifact.data_revision+'/catalog.json')return new Response(JSON.stringify(catalog),{headers:{'content-type':'application/json','cache-control':'public,max-age=31536000,immutable'}});
+  if(path.startsWith('/data/'+artifact.data_revision+'/details/'))return new Response('{}',{headers:{'content-type':'application/json'}});
+  if(path==='/history/1.13.1'||path==='/history/1.13.1/')return new Response('<html>'+artifact.build_id+' Games Lantern</html>',{headers:{'content-type':'text/html','cache-control':'no-cache'}});
+  if(historyBodies.has(path))return new Response(historyBodies.get(path),{headers:{'content-type':'application/json','cache-control':'no-cache'}});
+  if(path.startsWith('/history/1.13.1/'))return new Response('missing',{status:404,headers:{'content-type':'application/json'}});
+  if(path.startsWith('/data/')||path.startsWith('/assets/'))return new Response('missing',{status:404});
+  return new Response('<html><body>Games Lantern '+artifact.build_id+'</body></html>',{headers:{'content-type':'text/html'}});
+ };
+ await verifyOrigin('https://example.test',{...artifact,history_files:historyFiles},{fetch});
+ for(const path of ['/history/1.13.1','/history/1.13.1/'])assert.ok(calls.some(call=>call.path===path),'missing history document check '+path);
+ for(const row of historyFiles)assert.ok(calls.some(call=>call.path===row.path&&call.redirect==='error'),'missing redirect:error pinned history request '+row.path);
+ for(const path of ['/history/1.13.1/source-content.json','/history/1.13.1/missing.json'])assert.ok(calls.some(call=>call.path===path&&call.redirect==='error'),'missing history 404 check '+path);
+});

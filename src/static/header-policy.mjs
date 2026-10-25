@@ -25,7 +25,8 @@ function documentPrefixes(includeAnnouncements, includeHistory) {
 }
 
 function isHandledAsDocument(path, includeAnnouncements, includeHistory) {
-  return documentPrefixes(includeAnnouncements, includeHistory).some(pattern => isWithinPattern(path, pattern));
+  return (includeHistory && path === '/history/1.13.1') ||
+    documentPrefixes(includeAnnouncements, includeHistory).some(pattern => isWithinPattern(path, pattern));
 }
 
 function isImmutablePath(path) {
@@ -40,6 +41,7 @@ export function expectedCacheRules(catalog, { hasSitemap = false, includeAnnounc
     ['/version.json', DOCUMENT_POLICY],
     ['/robots.txt', DOCUMENT_POLICY],
     ...documentPrefixes(includeAnnouncements, includeHistory).map(pattern => [pattern, DOCUMENT_POLICY]),
+    ...(includeHistory ? [['/history/1.13.1', DOCUMENT_POLICY]] : []),
     ...IMMUTABLE_PREFIXES.map(pattern => [pattern, IMMUTABLE_POLICY])
   ]);
   if (hasSitemap) rules.set('/sitemap.xml', DOCUMENT_POLICY);

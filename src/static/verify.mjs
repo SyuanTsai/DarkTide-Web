@@ -642,6 +642,12 @@ export async function verifyStaticPackage(directory) {
     build_id: version.build_id,
     file_count: files.size,
     catalog_counts: catalog.counts,
-    site_origin: siteOrigin
+    site_origin: siteOrigin,
+    ...(hasHistory ? {
+      history_files: [historyManifestPath, historyProjectionPath].map(filePath => {
+        const bytes = files.get(filePath);
+        return { path: '/' + filePath, size_bytes: bytes.byteLength, sha256: sha256(bytes) };
+      }),
+    } : {}),
   };
 }

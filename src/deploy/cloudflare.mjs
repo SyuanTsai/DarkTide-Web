@@ -53,6 +53,35 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
   assert.ok(body.includes(expected.build_id),'document is stale '+route);
   assert.match(body,/Games Lantern/,'missing initial attribution');
  }
+ if(expected.history_files){
+  const fixedHistoryPaths=['/history/1.13.1/manifest.json','/history/1.13.1/player-index.json'];
+  assert.ok(Array.isArray(expected.history_files),'verified history file closure is missing');
+  assert.deepEqual(expected.history_files.map(row=>row.path),fixedHistoryPaths,'verified history file closure differs from the fixed player package');
+  for(const route of ['/history/1.13.1','/history/1.13.1/']){
+   const response=await get(route,{redirect:'error',headers:{'Sec-Fetch-Mode':'navigate'}});
+   assert.equal(response.status,200,'historical document status '+route);
+   assert.match(response.headers.get('content-type')??'',/text\/html/i,'historical document MIME '+route);
+   assert.match(response.headers.get('cache-control')??'',/no-cache|no-store|must-revalidate/i,'historical document must revalidate '+route);
+   const body=await response.text();
+   assert.ok(body.includes(expected.build_id),'historical document is stale '+route);
+   assert.match(body,/Games Lantern/,'missing initial attribution on '+route);
+  }
+  for(const row of expected.history_files){
+   assert.ok(Number.isSafeInteger(row.size_bytes)&&row.size_bytes>=0,'verified history file size is invalid');
+   assert.match(row.sha256,/^[a-f0-9]{64}$/,'verified history file hash is invalid');
+   const response=await get(row.path,{redirect:'error'});
+   assert.equal(response.status,200,'historical player file status '+row.path);
+   assert.match(response.headers.get('content-type')??'',/application\/json/i,'historical player file MIME '+row.path);
+   const bytes=Buffer.from(await response.arrayBuffer());
+   assert.equal(bytes.byteLength,row.size_bytes,'historical player file size '+row.path);
+   assert.equal(sha256(bytes),row.sha256,'historical player file hash '+row.path);
+  }
+  for(const route of ['/history/1.13.1/source-content.json','/history/1.13.1/missing.json']){
+   const response=await get(route,{redirect:'error'});
+   assert.equal(response.status,404,'unpublished history file must be 404 '+route);
+   assert.doesNotMatch(await response.text(),/<!doctype html|<html/i,'missing history file returned an HTML shell '+route);
+  }
+ }
  const catalogResponse=await get('/data/'+runtimeRevision+'/catalog.json');
  assert.equal(catalogResponse.status,200);
  assert.match(catalogResponse.headers.get('content-type')??'',/application\/json/i);

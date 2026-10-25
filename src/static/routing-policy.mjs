@@ -1,7 +1,7 @@
 import {compareUtf8} from './common.mjs';
 export function renderStaticRewrites(catalog, { includeAnnouncements = false, includeHistory = false } = {}) {
  const historyPrefixes = includeHistory ? ['/history/1.13.1/'] : [];
- const historyRules = includeHistory ? ['/history/1.13.1', '/history/1.13.1/*'] : [];
+ const historyRules = includeHistory ? ['/history/1.13.1', '/history/1.13.1/'] : [];
  const prefixes = ['/skills/','/weapons/','/blessings/','/game-changes/', ...(includeAnnouncements ? ['/announcements/'] : []), ...historyPrefixes];
  const rules=new Map(['/skills/*','/weapons/*','/blessings/*','/game-changes/*', ...(includeAnnouncements ? ['/announcements/*'] : []), ...historyRules].map(p=>[p,'/']));
  for(const row of catalog.redirects??[]){
