@@ -96,6 +96,8 @@ export async function createStaticServer({ distPath = path.join(ROOT, 'dist') } 
     catch { return send(response, 400, 'Bad Request\n', 'text/plain; charset=utf-8', 'no-store', method); }
     const pathname = safeUrlPath(url.pathname);
     if (pathname === null) return send(response, 400, 'Bad Request\n', 'text/plain; charset=utf-8', 'no-store', method);
+    const historyBase = '/history/1.13.1';
+    const isHistoryDocumentPath = pathname === historyBase || pathname === historyBase + '/';
     const isDataPath = pathname.startsWith('/data/');
     const relativePath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
     if (available.has(relativePath)) {
@@ -106,6 +108,13 @@ export async function createStaticServer({ distPath = path.join(ROOT, 'dist') } 
     }
     if (isDataPath && pathname.toLowerCase().endsWith('.json')) {
       return send(response, 404, '{"error":"not_found"}\n', 'application/json; charset=utf-8', 'no-store', method);
+    }
+    if (isHistoryDocumentPath && acceptsHtml(request)) {
+      const bytes = await readRegularFile(resolvedDist, 'index.html');
+      if (bytes) return send(response, 200, bytes, contentType('index.html'), cacheControl('index.html', true), method);
+    }
+    if (pathname.startsWith(historyBase + '/')) {
+      return send(response, 404, 'Not Found\n', 'text/plain; charset=utf-8', 'no-store', method);
     }
     if (relativePath.startsWith('assets/') || relativePath.startsWith('data/') ||
         path.posix.extname(relativePath) !== '') {

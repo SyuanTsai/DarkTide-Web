@@ -17,6 +17,7 @@ import {
 import { verifyStaticPackage } from './verify.mjs';
 import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
 import { SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY } from '../../web/shared-render.mjs';
+import { loadW14HistoryStaticFiles, W14_HISTORY_DIRECTORY } from '../../scripts/content/contract-w14-history.mjs';
 
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const BUILD_CONTEXT_MARKER = '__BUILD_CONTEXT__';
@@ -178,9 +179,9 @@ function escapeScriptJson(value) {
     '<': '\\u003c', '>': '\\u003e', '&': '\\u0026', '\u2028': '\\u2028', '\u2029': '\\u2029'
   })[character]);
 }
-function makeHeaders(publicFiles, siteOrigin, includeAnnouncements = false) {
+function makeHeaders(publicFiles, siteOrigin, includeAnnouncements = false, includeHistory = false) {
   const catalog = JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8'));
-  return renderCacheHeaders(catalog, { hasSitemap: Boolean(siteOrigin), includeAnnouncements });
+  return renderCacheHeaders(catalog, { hasSitemap: Boolean(siteOrigin), includeAnnouncements, includeHistory });
 }
 function hasAnnouncementRoutingCapability(assets) {
   const marker = Buffer.from(SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY, 'utf8');
@@ -204,10 +205,10 @@ function normalizeSiteOrigin(value) {
   }
   return url.origin;
 }
-function makeSitemap(publicFiles, siteOrigin) {
+function makeSitemap(publicFiles, siteOrigin, includeHistory = false) {
   if (!siteOrigin) return null;
   const catalog = JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8'));
-  const routes = [...new Set(['/', ...catalog.entries.map(entry => entry.route)])].sort(compareUtf8);
+  const routes = [...new Set(['/', ...catalog.entries.map(entry => entry.route), ...(includeHistory ? ['/history/1.13.1/'] : [])])].sort(compareUtf8);
   return '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     routes.map(route => '  <url><loc>' + escapeXml(siteOrigin + route) + '</loc></url>').join('\n') +
@@ -377,6 +378,10 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   const publicFiles = input.publicFiles ?? createPublicFiles(publicData, { assetBytes });
   validatePublicFiles(publicFiles);
   validateGeneratedPublicFiles(publicFiles);
+  const historyDirectory = path.join(projectRoot, ...W14_HISTORY_DIRECTORY.split('/'));
+  const historyDirectoryInfo = await lstat(historyDirectory).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
+  const historyOutputFiles = historyDirectoryInfo ? await loadW14HistoryStaticFiles(projectRoot) : new Map();
+  const includeHistory = historyOutputFiles.size > 0;
   if (mode === 'published' && [...publicFiles.keys()].some(name => !name.endsWith('.json'))) {
     throw new Error('formal published data output must contain JSON only; image bytes are hosted externally');
   }
@@ -408,7 +413,7 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
     : replaceSiteReferences(hashed.index, hashed.moduleEntry, hashed.styleEntry);
   if (!snapshot) indexTemplate = injectInitialGamesLanternCredit(indexTemplate, usesGamesLanternAssets(publicData));
   const normalizedIndex = indexTemplate;
-  const headers = makeHeaders(publicFiles, normalizedSiteOrigin, includeAnnouncements);
+  const headers = makeHeaders(publicFiles, normalizedSiteOrigin, includeAnnouncements, includeHistory);
   const buildInputs = new Map([...hashed.assets]);
   buildInputs.set('index.html', normalizedIndex);
   if (sharedBundle) {
@@ -418,11 +423,12 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
   } else {
     for (const [name, value] of publicFiles) buildInputs.set('data/' + name, value);
   }
+  for (const [name, value] of historyOutputFiles) buildInputs.set(name, value);
   const rewrites = renderStaticRewrites(JSON.parse(Buffer.from(publicFiles.get('catalog.json')).toString('utf8')),
-    { includeAnnouncements });
+    { includeAnnouncements, includeHistory });
   buildInputs.set('_redirects', rewrites);
   buildInputs.set('_headers', headers);
-  const sitemap = makeSitemap(publicFiles, normalizedSiteOrigin);
+  const sitemap = makeSitemap(publicFiles, normalizedSiteOrigin, includeHistory);
   const robots = makeRobots(normalizedSiteOrigin);
   if (sitemap !== null) buildInputs.set('sitemap.xml', sitemap);
   buildInputs.set('robots.txt', robots);
@@ -440,6 +446,7 @@ export async function buildStaticSite({ root = DEFAULT_ROOT, mode = 'published',
     ...hashed.assets,
     ...outputData,
     ...sharedOutputFiles,
+    ...historyOutputFiles,
     ['version.json', Buffer.from(JSON.stringify(version, null, 2) + '\n', 'utf8')],
     ['_headers', headers],
     ['_redirects', rewrites],

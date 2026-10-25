@@ -1,7 +1,9 @@
 import {compareUtf8} from './common.mjs';
-export function renderStaticRewrites(catalog, { includeAnnouncements = false } = {}) {
- const prefixes = ['/skills/','/weapons/','/blessings/','/game-changes/', ...(includeAnnouncements ? ['/announcements/'] : [])];
- const rules=new Map(['/skills/*','/weapons/*','/blessings/*','/game-changes/*', ...(includeAnnouncements ? ['/announcements/*'] : [])].map(p=>[p,'/']));
+export function renderStaticRewrites(catalog, { includeAnnouncements = false, includeHistory = false } = {}) {
+ const historyPrefixes = includeHistory ? ['/history/1.13.1/'] : [];
+ const historyRules = includeHistory ? ['/history/1.13.1', '/history/1.13.1/'] : [];
+ const prefixes = ['/skills/','/weapons/','/blessings/','/game-changes/', ...(includeAnnouncements ? ['/announcements/'] : []), ...historyPrefixes];
+ const rules=new Map(['/skills/*','/weapons/*','/blessings/*','/game-changes/*', ...(includeAnnouncements ? ['/announcements/*'] : []), ...historyRules].map(p=>[p,'/']));
  for(const row of catalog.redirects??[]){
   const p=row.source_route;
   if(typeof p!=='string'||!p.startsWith('/')||/[\s*?#]/.test(p)||p.startsWith('/data/')||p.startsWith('/assets/'))throw new Error('unsafe document alias for Cloudflare rewrite');

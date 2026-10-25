@@ -10,6 +10,7 @@ import { validatePublicFiles } from '../published/contract.mjs';
 import { validateVersion as validateW02Version } from '../../scripts/content/contract-release.mjs';
 import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
 import { SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY } from '../../web/shared-render.mjs';
+import { verifyW14HistoryPublicFiles, W14_HISTORY_OUTPUT_PREFIX } from '../../scripts/content/contract-w14-history.mjs';
 
 const MANIFEST_FIELDS = ['schema_version', 'package_kind', 'build_id', 'data_revision', 'files'];
 const FILE_FIELDS = ['path', 'size_bytes', 'sha256'];
@@ -312,7 +313,7 @@ function validateDirectorySet(files, directories) {
   }
 }
 
-function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevision = revision } = {}) {
+function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevision = revision, hasHistory = false } = {}) {
   for (const required of FIXED_REQUIRED) if (!files.has(required)) fail('static artifact is missing ' + required);
   const allowedDataRoots = new Set(['data/' + revision + '/', 'data/' + runtimeRevision + '/']);
   if (sharedBundle) for (const relativePath of sharedBundle.files.keys()) {
@@ -320,9 +321,13 @@ function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevi
     if (match) allowedDataRoots.add(match[1]);
   }
   const allowedSourceLocks = new Set(sharedBundle ? [...sharedBundle.files.keys()].filter(name => name.startsWith('source-locks/')) : []);
+  const historyPaths = new Set([
+    `${W14_HISTORY_OUTPUT_PREFIX}/manifest.json`, `${W14_HISTORY_OUTPUT_PREFIX}/player-index.json`,
+  ]);
   for (const name of files.keys()) {
     if (FIXED_REQUIRED.has(name) || name === 'sitemap.xml' || HASHED_ASSET.test(name)) continue;
     if (name === 'shared-fixture.json' && sharedBundle?.packageKind === 'fixture') continue;
+    if (hasHistory && historyPaths.has(name)) continue;
     const prefix = [...allowedDataRoots].find(value => name.startsWith(value));
     if (prefix) {
       safeRelativePath(name.slice(prefix.length), 'published data path');
@@ -335,9 +340,9 @@ function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevi
   if (html.length !== 1 || html[0] !== 'index.html') fail('artifact must contain exactly one HTML file named index.html');
 }
 
-function validateHeaders(bytes, catalog, hasSitemap, includeAnnouncements = false) {
+function validateHeaders(bytes, catalog, hasSitemap, includeAnnouncements = false, includeHistory = false) {
   try {
-    validateCacheHeaders(bytes, catalog, { hasSitemap, includeAnnouncements });
+    validateCacheHeaders(bytes, catalog, { hasSitemap, includeAnnouncements, includeHistory });
   } catch (error) {
     fail(error.message);
   }
@@ -351,7 +356,7 @@ function hasAnnouncementRoutingCapability(assetFiles) {
   return matches.length === 1;
 }
 
-function validateRobotsAndSitemap(files, catalog) {
+function validateRobotsAndSitemap(files, catalog, includeHistory = false) {
   const robots = Buffer.from(files.get('robots.txt') ?? []).toString('utf8');
   const lines = robots.split(/\r?\n/);
   const sitemapLines = lines.filter(line => line.startsWith('Sitemap: '));
@@ -368,7 +373,7 @@ function validateRobotsAndSitemap(files, catalog) {
   const xml = Buffer.from(sitemapBytes).toString('utf8');
   if (!xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>\n') || !xml.includes('<urlset ')) fail('sitemap.xml is invalid');
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  const routes = ['/', ...catalog.entries.map(entry => entry.route)].sort(compareUtf8);
+  const routes = ['/', ...catalog.entries.map(entry => entry.route), ...(includeHistory ? ['/history/1.13.1/'] : [])].sort(compareUtf8);
   if (locations.length !== routes.length || new Set(locations).size !== locations.length) fail('sitemap routes do not match the public catalog');
   let origin = null;
   const actualRoutes = [];
@@ -523,7 +528,22 @@ export async function verifyStaticPackage(directory) {
     catch (error) { fail('shared version.json violates the closed W02 version contract: ' + error.message); }
     if (sharedBundle.packageKind !== version.package_kind) fail('shared package kind differs from its validated marker');
   }
-  validateOutputPaths(files, version.data_revision, { sharedBundle, runtimeRevision });
+  const historyManifestPath = `${W14_HISTORY_OUTPUT_PREFIX}/manifest.json`;
+  const historyProjectionPath = `${W14_HISTORY_OUTPUT_PREFIX}/player-index.json`;
+  const hasHistoryManifest = files.has(historyManifestPath);
+  const hasHistoryProjection = files.has(historyProjectionPath);
+  if (hasHistoryManifest !== hasHistoryProjection) fail('static artifact must contain both fixed history player files');
+  const hasHistory = hasHistoryManifest && hasHistoryProjection;
+  if ([...files.keys()].some(name => name.startsWith(W14_HISTORY_OUTPUT_PREFIX + '/') &&
+      name !== historyManifestPath && name !== historyProjectionPath)) {
+    fail('static artifact contains an unsupported history output path');
+  }
+  if (hasHistory) {
+    try {
+      verifyW14HistoryPublicFiles({ manifestBytes: files.get(historyManifestPath), projectionBytes: files.get(historyProjectionPath) });
+    } catch (error) { fail('historical player files failed fixed verification: ' + error.message); }
+  }
+  validateOutputPaths(files, version.data_revision, { sharedBundle, runtimeRevision, hasHistory });
 
   const {
     files: officialInputFiles,
@@ -572,7 +592,7 @@ export async function verifyStaticPackage(directory) {
   }
   const { catalog } = validatePublicFiles(validationFiles);
 
-  const siteOrigin = validateRobotsAndSitemap(files, catalog);
+  const siteOrigin = validateRobotsAndSitemap(files, catalog, hasHistory);
   const { index, normalized, context } = validateBuildContext(files.get('index.html'), version, {
     sharedBundle,
     ...(sharedBundle ? { runtimeGameVersion: catalog.game_version, runtimePackageKind: catalog.package_kind } : {}),
@@ -582,8 +602,8 @@ export async function verifyStaticPackage(directory) {
   verifyHashedModuleGraph(Buffer.from(files.get('index.html')).toString('utf8'), assetFiles);
   const includeAnnouncements = hasSharedRelease && hasAnnouncementRoutingCapability(assetFiles);
   if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog,
-    { includeAnnouncements })) fail('Cloudflare document rewrites do not match catalog');
-  validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'), includeAnnouncements);
+    { includeAnnouncements, includeHistory: hasHistory })) fail('Cloudflare document rewrites do not match catalog');
+  validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'), includeAnnouncements, hasHistory);
 
   const buildInputs = new Map(assetFiles);
   buildInputs.set('index.html', normalized);
@@ -594,6 +614,10 @@ export async function verifyStaticPackage(directory) {
     buildInputs.set('shared-release-identity.json', createSharedReleaseIdentity(sharedBundle));
   } else {
     for (const [name, bytes] of dataFiles) buildInputs.set('data/' + name, bytes);
+  }
+  if (hasHistory) {
+    buildInputs.set(historyManifestPath, files.get(historyManifestPath));
+    buildInputs.set(historyProjectionPath, files.get(historyProjectionPath));
   }
   buildInputs.set('_redirects', files.get('_redirects'));
   buildInputs.set('_headers', files.get('_headers'));
@@ -618,6 +642,12 @@ export async function verifyStaticPackage(directory) {
     build_id: version.build_id,
     file_count: files.size,
     catalog_counts: catalog.counts,
-    site_origin: siteOrigin
+    site_origin: siteOrigin,
+    ...(hasHistory ? {
+      history_files: [historyManifestPath, historyProjectionPath].map(filePath => {
+        const bytes = files.get(filePath);
+        return { path: '/' + filePath, size_bytes: bytes.byteLength, sha256: sha256(bytes) };
+      }),
+    } : {}),
   };
 }

@@ -16,26 +16,32 @@ function isWithinPattern(path, pattern) {
   return path === base || path.startsWith(base + '/');
 }
 
-function documentPrefixes(includeAnnouncements) {
-  return includeAnnouncements ? [...DOCUMENT_PREFIXES, '/announcements/*'] : DOCUMENT_PREFIXES;
+function documentPrefixes(includeAnnouncements, includeHistory) {
+  return [
+    ...DOCUMENT_PREFIXES,
+    ...(includeAnnouncements ? ['/announcements/*'] : []),
+    ...(includeHistory ? ['/history/1.13.1/*'] : []),
+  ];
 }
 
-function isHandledAsDocument(path, includeAnnouncements) {
-  return documentPrefixes(includeAnnouncements).some(pattern => isWithinPattern(path, pattern));
+function isHandledAsDocument(path, includeAnnouncements, includeHistory) {
+  return (includeHistory && path === '/history/1.13.1') ||
+    documentPrefixes(includeAnnouncements, includeHistory).some(pattern => isWithinPattern(path, pattern));
 }
 
 function isImmutablePath(path) {
   return IMMUTABLE_PREFIXES.some(pattern => isWithinPattern(path, pattern));
 }
 
-export function expectedCacheRules(catalog, { hasSitemap = false, includeAnnouncements = false } = {}) {
+export function expectedCacheRules(catalog, { hasSitemap = false, includeAnnouncements = false, includeHistory = false } = {}) {
   if (!catalog || !Array.isArray(catalog.redirects)) throw new Error('catalog redirects are required for the cache policy');
   const rules = new Map([
     ['/', DOCUMENT_POLICY],
     ['/index.html', DOCUMENT_POLICY],
     ['/version.json', DOCUMENT_POLICY],
     ['/robots.txt', DOCUMENT_POLICY],
-    ...documentPrefixes(includeAnnouncements).map(pattern => [pattern, DOCUMENT_POLICY]),
+    ...documentPrefixes(includeAnnouncements, includeHistory).map(pattern => [pattern, DOCUMENT_POLICY]),
+    ...(includeHistory ? [['/history/1.13.1', DOCUMENT_POLICY]] : []),
     ...IMMUTABLE_PREFIXES.map(pattern => [pattern, IMMUTABLE_POLICY])
   ]);
   if (hasSitemap) rules.set('/sitemap.xml', DOCUMENT_POLICY);
@@ -44,7 +50,7 @@ export function expectedCacheRules(catalog, { hasSitemap = false, includeAnnounc
     const route = redirect.source_route;
     if (typeof route !== 'string' || !route.startsWith('/')) throw new Error('catalog redirect source route is invalid for cache policy');
     if (isImmutablePath(route)) throw new Error('catalog redirect overlaps an immutable asset/data cache prefix');
-    if (isHandledAsDocument(route, includeAnnouncements)) continue;
+    if (isHandledAsDocument(route, includeAnnouncements, includeHistory)) continue;
     if (RESERVED_DOCUMENT_PATHS.has(route)) throw new Error('catalog redirect collides with a generated document path');
     rules.set(route, DOCUMENT_POLICY);
   }

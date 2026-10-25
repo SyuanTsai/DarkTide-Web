@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildStaticSite, replaceDirectory } from '../src/static/build.mjs';
@@ -11,6 +12,7 @@ import { verifyStaticPackage } from '../src/static/verify.mjs';
 
 const BUILD_CLI = fileURLToPath(new URL('../scripts/build.mjs', import.meta.url));
 const VERIFY_CLI = fileURLToPath(new URL('../scripts/verify-static.mjs', import.meta.url));
+const REPO_ROOT = fileURLToPath(new URL('../', import.meta.url));
 
 test('UnitT10_repeats_data_revision_and_changes_build_id_for_code_only_change', async () => {
   // Scenario: The same published fixture and web source are built twice, then one web module changes.
@@ -223,6 +225,50 @@ test('UnitT50_origin_is_optional_absolute_and_part_of_build_identity_only', asyn
 
     await assert.rejects(buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), siteOrigin: 'http://example.test' }), /HTTPS origin/i);
     assert.equal((await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), siteOrigin: 'https://other.test' })).build_id, secondOrigin.build_id);
+  } finally {
+    await disposeBuildRoot(root);
+  }
+});
+
+test('UnitT55_history_player_projection_is_hashed_as_an_artifact_but_not_current_data', async () => {
+  // Scenario: A fixture build is repeated after the fixed historical source package is added to its input root.
+  // Purpose: Ship only the verified player projection while keeping old history independent from current data_revision.
+  const root = await createBuildRoot();
+  try {
+    const before = await buildFixture(root);
+    const sourceDirectory = join(REPO_ROOT, 'content', 'history', '1.13.1');
+    const targetDirectory = join(root, 'content', 'history', '1.13.1');
+    await mkdir(targetDirectory, { recursive: true });
+    for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
+      await copyFile(join(sourceDirectory, name), join(targetDirectory, name));
+    }
+
+    const after = await buildFixture(root);
+    assert.equal(after.data_revision, before.data_revision, 'historical bytes must not alter current runtime data revision');
+    assert.notEqual(after.build_id, before.build_id, 'history artifacts are part of the static build identity');
+    const artifact = JSON.parse(await readFile(join(root, 'dist', 'artifact-manifest.json'), 'utf8'));
+    const paths = artifact.files.map(file => file.path);
+    assert.ok(paths.includes('history/1.13.1/manifest.json'));
+    assert.ok(paths.includes('history/1.13.1/player-index.json'));
+    assert.ok(!paths.includes('history/1.13.1/source-content.json'), 'technical source package must not be deployed');
+    const redirects = await readFile(join(root, 'dist', '_redirects'), 'utf8');
+    assert.match(redirects, /^\/history\/1\.13\.1 \/ 200$/m);
+    assert.match(redirects, /^\/history\/1\.13\.1\/ \/ 200$/m);
+    assert.doesNotMatch(redirects, /^\/history\/1\.13\.1\/\* \/ 200$/m, 'history JSON and unknown nested paths must not be rewritten as HTML');
+    const headers = await readFile(join(root, 'dist', '_headers'), 'utf8');
+    assert.match(headers, /^\/history\/1\.13\.1\r?\n  Cache-Control: no-cache, must-revalidate$/m);
+    assert.match(headers, /^\/history\/1\.13\.1\/\*\r?\n  Cache-Control: no-cache, must-revalidate$/m);
+    const manifestOutputBytes = await readFile(join(root, 'dist', 'history/1.13.1/manifest.json'));
+    const manifest = JSON.parse(manifestOutputBytes.toString('utf8'));
+    const projection = await readFile(join(root, 'dist', 'history/1.13.1/player-index.json'));
+    assert.equal(manifest.source.sha256, '3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc');
+    assert.equal(manifest.projection.sha256, createHash('sha256').update(projection).digest('hex'));
+    assert.ok(projection.length < 2_000_000, 'history output remains the bounded player projection');
+    const verified = await verifyStaticPackage(join(root, 'dist'));
+    assert.deepEqual(verified.history_files, [
+      { path: '/history/1.13.1/manifest.json', size_bytes: manifestOutputBytes.byteLength, sha256: createHash('sha256').update(manifestOutputBytes).digest('hex') },
+      { path: '/history/1.13.1/player-index.json', size_bytes: projection.byteLength, sha256: createHash('sha256').update(projection).digest('hex') },
+    ]);
   } finally {
     await disposeBuildRoot(root);
   }

@@ -305,8 +305,25 @@ p { margin: .45rem 0 1rem; }
 .shared-announcement-spoiler { margin-block: 1rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .45rem; background: var(--surface); }
 .shared-announcement-spoiler > summary { cursor: pointer; color: #e5d8b7; font-weight: 800; }
 .shared-announcement-spoiler-content { padding-top: .65rem; }
+.history-page { max-width: 72rem; min-width: 0; margin-inline: auto; }
+.history-page h1, .history-page h2, .history-page p, .history-results a { overflow-wrap: anywhere; }
+.history-badge { display: inline-block; margin: 0 0 .6rem; padding: .25rem .55rem; border: 1px solid #a77b37; border-radius: 999px; color: #ffe4a6; font-size: .9rem; font-weight: 800; }
+.history-notice, .history-coverage-note { padding: .8rem 1rem; border-left: 3px solid var(--gold); background: #222a25; color: #d7dfd6; }
+.history-filters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(10rem, .35fr) auto; align-items: end; gap: .65rem; margin-block: 1.2rem; }
+.history-filters label { display: grid; gap: .3rem; color: var(--muted); font-weight: 700; }
+.history-filters input, .history-filters select, .history-filters button { min-width: 0; min-height: 2.7rem; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: .35rem; background: var(--surface); color: inherit; font: inherit; }
+.history-filters button { cursor: pointer; color: #fff3ce; font-weight: 800; }
+.history-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; padding: 0; list-style: none; }
+.history-results li { min-width: 0; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: .45rem; background: var(--surface); }
+.history-results li > a { font-weight: 800; text-decoration: none; }
+.history-results p { margin: .35rem 0 0; color: var(--muted); }
+.history-sources { display: grid; gap: .4rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.history-sources h2 { margin: 0 0 .2rem; font-size: 1.1rem; }
+.history-sources a { width: fit-content; max-width: 100%; overflow-wrap: anywhere; }
+.history-empty, .history-error { padding: 1rem; border: 1px solid var(--line); border-radius: .45rem; background: var(--surface); }
 [hidden] { display: none !important; }
 @media (max-width: 760px) {
+  .history-filters, .history-results { grid-template-columns: minmax(0, 1fr); }
   .shared-entry-list { grid-template-columns: 1fr; }
   .shared-stat-list { grid-template-columns: minmax(0, 1fr) auto; }
   .shared-change-before-after { grid-template-columns: 1fr; }

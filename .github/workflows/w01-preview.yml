@@ -165,6 +165,9 @@ jobs:
       - name: Install locked Web dependencies
         working-directory: web
         run: npm ci
+      - name: Install the locked Playwright Chromium browser
+        working-directory: web
+        run: npx playwright install --with-deps chromium
       - name: Rebuild the pinned production baseline data
         working-directory: baseline
         run: npm run build

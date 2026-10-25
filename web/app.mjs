@@ -18,6 +18,7 @@ import {
 } from './client.mjs';
 import { createSharedClient, hasSharedContext } from './shared-client.mjs';
 import { renderSharedPage } from './shared-render.mjs';
+import { loadW14HistoryPackage, renderW14HistoryPage, W14_HISTORY_PATH } from './history-page.mjs';
 
 const main = document.getElementById('main');
 const buildMeta = document.getElementById('build-meta');
@@ -926,6 +927,27 @@ const sharedMode = hasSharedContext(build);
 const sharedClient = sharedMode ? createSharedClient({ build }) : null;
 let sharedLoadPromise = null;
 let sharedNavigationGeneration = 0;
+let historyLoadPromise = null;
+
+async function showW14HistoryPage(force = false) {
+  const generation = ++sharedNavigationGeneration;
+  const url = new URL(window.location.href);
+  if (force || !historyLoadPromise) {
+    historyLoadPromise = loadW14HistoryPackage({ pageUrl: url.href });
+  }
+  renderW14HistoryPage({ main, buildMeta, url, result: historyLoadPromise.result ?? null });
+  try {
+    const result = await historyLoadPromise;
+    if (generation !== sharedNavigationGeneration) return;
+    historyLoadPromise.result = result;
+    renderW14HistoryPage({ main, buildMeta, url: new URL(window.location.href), result });
+  } catch (error) {
+    if (generation !== sharedNavigationGeneration) return;
+    historyLoadPromise = null;
+    renderW14HistoryPage({ main, buildMeta, url: new URL(window.location.href), error });
+  }
+  main.focus();
+}
 
 async function showSharedPage(force = false) {
   const generation = ++sharedNavigationGeneration;
@@ -951,6 +973,8 @@ async function showSharedPage(force = false) {
 }
 
 function showCurrentPage(force = false) {
+  const pathname = new URL(window.location.href).pathname;
+  if (pathname === W14_HISTORY_PATH.slice(0, -1) || pathname.startsWith(W14_HISTORY_PATH)) return showW14HistoryPage(force);
   if (sharedMode) return showSharedPage(force);
   const request = { href: window.location.href, force };
   return navigation.navigate(request);
