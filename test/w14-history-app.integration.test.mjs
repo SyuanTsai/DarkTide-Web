@@ -61,6 +61,27 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
     assert.match(await page.locator('.history-notice').innerText(), /不是目前遊戲版本/u);
     assert.doesNotMatch(await page.locator('main').innerText(), /演示步槍/u, 'current fixture data must not appear in the history reader');
     assert.equal(await page.locator('.primary-nav a[aria-current="page"]').getAttribute('href'), '/history/1.13.1/');
+    const filterGeometry = await page.evaluate(() => {
+      const measure = (labelFor, controlId) => {
+        const label = document.querySelector(`label[for="${labelFor}"]`);
+        const control = document.getElementById(controlId);
+        const textNode = [...label.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        const range = document.createRange();
+        range.selectNodeContents(textNode);
+        const textRect = range.getBoundingClientRect();
+        const controlRect = control.getBoundingClientRect();
+        return { textLeft: textRect.left, controlLeft: controlRect.left, controlRight: controlRect.right, controlWidth: controlRect.width };
+      };
+      return {
+        search: measure('history-query', 'history-query'),
+        kind: measure('history-kind', 'history-kind'),
+        viewportWidth: document.documentElement.clientWidth,
+      };
+    });
+    for (const field of [filterGeometry.search, filterGeometry.kind]) {
+      assert.ok(Math.abs(field.textLeft - field.controlLeft) <= 1, 'each filter label must align with its visible control');
+      assert.ok(field.controlWidth > 0 && field.controlRight <= filterGeometry.viewportWidth, 'each filter control must fit the viewport');
+    }
     assert.ok(historyResponses.length >= 2);
     assert.ok(historyResponses.every(item => item.status() === 200));
     assert.equal((await page.request.get(`${hosted.origin}/history/1.13.1/missing.json`)).status(), 404);
@@ -81,6 +102,10 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
 
     await page.goto(`${hosted.origin}/history/1.13.1/?type=weapon`, { waitUntil: 'domcontentloaded' });
     await page.locator('.history-results a').first().waitFor({ state: 'visible' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+      'the actual history list should fit a 390px viewport');
+    await page.setViewportSize({ width: 1280, height: 900 });
     const firstLink = page.locator('.history-results a').first();
     const historyName = await firstLink.innerText();
     await firstLink.focus();
@@ -88,6 +113,10 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
     await page.waitForURL(url => url.pathname === '/history/1.13.1/' && Boolean(url.searchParams.get('id')));
     await page.getByRole('heading', { name: historyName, exact: true }).waitFor({ state: 'visible' });
     assert.equal(await page.locator('.history-page h1').innerText(), historyName);
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+      'the actual history detail should fit a 390px viewport');
+    await page.setViewportSize({ width: 1280, height: 900 });
     assert.match(await page.locator('.history-badge').innerText(), /1\.13\.1/u);
     const historyLinks = page.locator('.history-sources a');
     assert.equal(await historyLinks.count(), 4);

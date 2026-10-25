@@ -258,14 +258,16 @@ export function renderW14HistoryPage({ main, buildMeta, documentImpl = globalThi
     searchLabel.htmlFor = 'history-query';
     const search = textElement(documentImpl, 'input');
     search.id = 'history-query'; search.name = 'q'; search.type = 'search'; search.value = query; search.autocomplete = 'off';
+    searchLabel.append(search);
     const kindLabel = textElement(documentImpl, 'label', '資料類型');
     kindLabel.htmlFor = 'history-kind';
     const select = documentImpl.createElement('select'); select.id = 'history-kind'; select.name = 'type';
     for (const [value, label] of [['all', '全部'], ...Object.entries(KIND_LABELS)]) {
       const option = textElement(documentImpl, 'option', label); option.value = value; option.selected = kind === value; select.append(option);
     }
+    kindLabel.append(select);
     const submit = textElement(documentImpl, 'button', '搜尋'); submit.type = 'submit';
-    form.append(searchLabel, search, kindLabel, select, submit);
+    form.append(searchLabel, kindLabel, submit);
     section.append(form);
     const normalizedQuery = query.toLocaleLowerCase('zh-TW');
     const rows = result.projection.entries.filter(entry => findKind(entry, kind) &&
