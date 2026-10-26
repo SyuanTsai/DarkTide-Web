@@ -1245,6 +1245,7 @@ function renderAnnouncements(main, result, url) {
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
+  buildMeta.textContent = '';
   if (result?.status === 'loading') {
     main.append(node('p', '正在驗證同版共享資料…', 'loading-note'));
     main.setAttribute('aria-busy', 'true');

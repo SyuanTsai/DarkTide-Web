@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { webcrypto } from 'node:crypto';
 
-import { loadW14HistoryPackage } from '../web/history-page.mjs';
+import { loadW14HistoryPackage, renderW14HistoryPage } from '../web/history-page.mjs';
 
 const REPO_ROOT = fileURLToPath(new URL('../', import.meta.url));
 const HISTORY_ROOT = path.join(REPO_ROOT, 'content', 'history', '1.13.1');
@@ -22,6 +22,48 @@ function response(bytes, url, contentType = 'application/json; charset=utf-8', s
   const result = new Response(bytes, { status, headers: { 'content-type': contentType } });
   Object.defineProperty(result, 'url', { value: url });
   return result;
+}
+
+class FakeElement {
+  constructor(tagName = 'div') {
+    this.tagName = tagName;
+    this.childNodes = [];
+    this.attributes = new Map();
+    this._textContent = '';
+  }
+  append(...nodes) { this.childNodes.push(...nodes); }
+  replaceChildren(...nodes) { this.childNodes = nodes; }
+  setAttribute(name, value) { this.attributes.set(name, String(value)); }
+  removeAttribute(name) { this.attributes.delete(name); }
+  set textContent(value) { this._textContent = String(value); this.childNodes = []; }
+  get textContent() { return this._textContent || this.childNodes.map(node => node.textContent ?? '').join(''); }
+}
+
+function historyRenderContext() {
+  const main = new FakeElement('main');
+  const buildMeta = new FakeElement('p');
+  buildMeta.textContent = '遊戲版本 1.13.2 · 資料版本 82b79e47e887';
+  const head = new FakeElement('head');
+  const documentImpl = {
+    head,
+    title: '',
+    createElement: tag => new FakeElement(tag),
+    querySelector: () => null,
+    querySelectorAll: () => [],
+  };
+  return { main, buildMeta, documentImpl };
+}
+
+function emptyHistoryResult() {
+  return {
+    manifest: {
+      projection: { excludedCounts: { skills: 0, weapons: 0, marks: 0 } },
+      source: { staticBackup: { releaseUrl: 'https://example.test/archive' }, repository: 'owner/repo', commit: 'abc', path: 'content.json' },
+      fullPlayerSnapshot: 'https://example.test/snapshot',
+      technicalSourceRepository: 'https://example.test/source',
+    },
+    projection: { entries: [] },
+  };
 }
 
 // Scenario: The actual fixed 1.13.1 history files are served at their same-origin manifest paths.
@@ -72,4 +114,21 @@ test('UnitT20_rejects-redirects-http-errors-and-projection-byte-tampering', asyn
     return response(url.pathname.endsWith('/manifest.json') ? fixed.manifest : projectionBytes, url.href);
   };
   await assert.rejects(loadW14HistoryPackage({ fetchImpl: tamperedFetch, cryptoApi: webcrypto, pageUrl: PAGE_URL }), /digest|byte length|fixed projection/u);
+});
+
+// Scenario: A current-page footer is already populated before the history renderer handles loading, error, invalid, or ready state.
+// Purpose: Ensure every history route owns its footer immediately and never advertises the current data revision as historical data.
+test('UnitT30_history-rendering-replaces-current-footer-before-every-route-state', () => {
+  const cases = [
+    { name: 'loading', options: { result: null } },
+    { name: 'error', options: { error: new Error('offline') } },
+    { name: 'invalid-history-query', options: { result: emptyHistoryResult(), url: new URL('https://example.test/history/1.13.1/?version=1.13.2') } },
+    { name: 'ready', options: { result: emptyHistoryResult() } },
+  ];
+  for (const { name, options } of cases) {
+    const context = historyRenderContext();
+    renderW14HistoryPage({ ...context, url: new URL('https://example.test/history/1.13.1/'), ...options });
+    assert.equal(context.buildMeta.textContent, '歷史版本 1.13.1', `${name} state must replace current footer metadata`);
+    assert.doesNotMatch(context.buildMeta.textContent, /1\.13\.2|82b79e47e887/u, `${name} state must clear the current revision`);
+  }
 });

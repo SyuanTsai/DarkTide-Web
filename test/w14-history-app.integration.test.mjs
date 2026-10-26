@@ -1,16 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { copyFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { buildStaticSite } from '../src/static/build.mjs';
+import { validateSharedStaticFiles } from '../src/static/shared-release.mjs';
 import { createStaticServer } from '../scripts/serve.mjs';
 import { fixturePublicContent } from '../src/static/fixture.mjs';
 import { createBuildRoot, disposeBuildRoot } from './static-test-helpers.mjs';
+import { makeCompiledGameChangesPackage } from './w12-shared-view.fixture.mjs';
 
 const REPO_ROOT = fileURLToPath(new URL('../', import.meta.url));
 const chromePath = process.env.SYP_W10_CHROMIUM_EXE;
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function listen(distPath) {
   const server = await createStaticServer({ distPath });
@@ -29,8 +33,47 @@ async function closeServer(server) {
   });
 }
 
-// Scenario: A built static site contains an independent 1.13.1 player history package and a separate fixture catalog.
-// Purpose: Verify direct routes, keyboard filtering, reloadable details, mobile layout, and strict history/current separation.
+async function compiledSharedFixture() {
+  const compiled = await makeCompiledGameChangesPackage();
+  const manifest = compiled.manifest;
+  const manifestBytes = Buffer.from(JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+  const pointer = {
+    game_version: manifest.gameVersion,
+    content_version: manifest.contentVersion,
+    data_revision: manifest.dataRevision,
+    manifest_path: `/data/${manifest.dataRevision}/manifest.json`,
+    manifest_sha256: sha256(manifestBytes),
+  };
+  const version = {
+    schema_version: 2,
+    data_revision: manifest.dataRevision,
+    build_id: 'a'.repeat(64),
+    game_version: manifest.gameVersion,
+    package_kind: 'fixture',
+    game_releases: [pointer],
+  };
+  const files = new Map([[`data/${manifest.dataRevision}/manifest.json`, manifestBytes]]);
+  for (const [relativePath, bytes] of compiled.files) files.set(`data/${manifest.dataRevision}/${relativePath}`, bytes);
+  const sourceLock = {
+    schema: 'w09-public-source-lock/1',
+    repository: manifest.source.repository,
+    source_revision: manifest.source.sourceRevision,
+    source_manifest_sha256: manifest.source.manifestSha256,
+    game_release_id: manifest.gameReleaseId,
+    game_version: manifest.gameVersion,
+    content_version: manifest.contentVersion,
+  };
+  const sourceLockBytes = Buffer.from(JSON.stringify(sourceLock, null, 2) + '\n', 'utf8');
+  files.set(`source-locks/${manifest.source.sourceRevision}/${sha256(sourceLockBytes)}.json`, sourceLockBytes);
+  return validateSharedStaticFiles({
+    version,
+    fixtureMarker: { fixtureOnly: true, publicationEligible: false, fixtureId: 'synthetic-w14-history-navigation' },
+    files,
+  });
+}
+
+// Scenario: A built static site contains an independent 1.13.1 player history package and a shared current-release fixture.
+// Purpose: Verify current/history footer ownership through real in-app and browser-history navigation, plus history search, reload, and mobile layout.
 test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout', { timeout: 120000 }, async () => {
   const root = await createBuildRoot({ productionWeb: true });
   let server;
@@ -42,7 +85,8 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
     for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
       await copyFile(path.join(sourceDirectory, name), path.join(targetDirectory, name));
     }
-    await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent() });
+    const sharedRelease = await compiledSharedFixture();
+    await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease });
     const hosted = await listen(path.join(root, 'dist'));
     server = hosted.server;
     browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });
@@ -53,6 +97,82 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
     page.on('response', response => {
       if (new URL(response.url()).pathname.startsWith('/history/1.13.1/')) historyResponses.push(response);
     });
+
+    for (const viewportWidth of [1280, 390]) {
+      await page.setViewportSize({ width: viewportWidth, height: viewportWidth === 390 ? 844 : 900 });
+      await page.goto(hosted.origin, { waitUntil: 'domcontentloaded' });
+      await page.locator('.shared-hero h1').waitFor({ state: 'visible' });
+      const currentFooter = await page.locator('#build-meta').innerText();
+      assert.ok(currentFooter.includes(`遊戲版本 ${sharedRelease.version.game_version}`),
+        'shared current rendering must populate its footer');
+      assert.ok(currentFooter.includes(sharedRelease.version.data_revision.slice(0, 12)),
+        'the shared current footer must be populated before in-app navigation');
+
+      await page.locator('.primary-nav a[href="/history/1.13.1/"]').click();
+      await page.waitForURL(url => url.pathname === '/history/1.13.1/');
+      await page.getByRole('heading', { name: '1.13.1 歷史資料', exact: true }).waitFor({ state: 'visible' });
+      const historyFooter = await page.locator('#build-meta').innerText();
+      assert.equal(historyFooter, '歷史版本 1.13.1');
+      assert.doesNotMatch(historyFooter, new RegExp(`${sharedRelease.version.game_version}|${sharedRelease.version.data_revision.slice(0, 12)}`, 'u'));
+      if (viewportWidth === 390) {
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+          'the in-app historical list and footer must fit a 390px viewport');
+      }
+
+      await page.goBack();
+      await page.locator('.shared-hero h1').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#build-meta').innerText(), currentFooter,
+        'browser back must restore current shared version metadata');
+      await page.goForward();
+      await page.getByRole('heading', { name: '1.13.1 歷史資料', exact: true }).waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#build-meta').innerText(), '歷史版本 1.13.1',
+        'browser forward must restore historical footer metadata');
+      await page.locator('.brand').click();
+      await page.locator('.shared-hero h1').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#build-meta').innerText(), currentFooter,
+        'in-app navigation back to current content must restore the shared build footer');
+    }
+
+    const currentFailureFooters = [];
+    for (const viewportWidth of [1280, 390]) {
+      await page.setViewportSize({ width: viewportWidth, height: viewportWidth === 390 ? 844 : 900 });
+      await page.goto(`${hosted.origin}/history/1.13.1/`, { waitUntil: 'domcontentloaded' });
+      await page.getByRole('heading', { name: '1.13.1 歷史資料', exact: true }).waitFor({ state: 'visible' });
+      const historyFooter = await page.locator('#build-meta').innerText();
+      let releaseBlocked;
+      let resolveIntercepted;
+      const blocked = new Promise(resolve => { releaseBlocked = resolve; });
+      const intercepted = new Promise(resolve => { resolveIntercepted = resolve; });
+      const interceptedUrls = [];
+      const blockSharedData = async route => {
+        interceptedUrls.push(route.request().url());
+        resolveIntercepted();
+        await blocked;
+        await route.abort();
+      };
+      await page.route('**/data/**', blockSharedData);
+      try {
+        await page.locator('.brand').click();
+        await page.locator('.loading-note').waitFor({ state: 'visible' });
+        await intercepted;
+        const loadingFooter = await page.locator('#build-meta').innerText();
+        releaseBlocked();
+        await page.locator('.shared-failure').waitFor({ state: 'visible' });
+        const errorFooter = await page.locator('#build-meta').innerText();
+        currentFailureFooters.push({ viewportWidth, historyFooter, loadingFooter, errorFooter, interceptedCount: interceptedUrls.length });
+      } finally {
+        releaseBlocked();
+        await page.unroute('**/data/**', blockSharedData);
+      }
+      if (viewportWidth === 390) {
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+          'the current shared error and footer must fit a 390px viewport');
+      }
+    }
+    assert.deepEqual(currentFailureFooters, [
+      { viewportWidth: 1280, historyFooter: '歷史版本 1.13.1', loadingFooter: '', errorFooter: '', interceptedCount: 1 },
+      { viewportWidth: 390, historyFooter: '歷史版本 1.13.1', loadingFooter: '', errorFooter: '', interceptedCount: 1 },
+    ], 'a fresh current loading/error view must not retain the previously rendered historical footer');
 
     const response = await page.goto(`${hosted.origin}/history/1.13.1`, { waitUntil: 'domcontentloaded' });
     assert.equal(response.status(), 200);

@@ -185,6 +185,7 @@ export function renderW14HistoryPage({ main, buildMeta, documentImpl = globalThi
   main.replaceChildren();
   for (const link of documentImpl.querySelectorAll('.primary-nav a[aria-current="page"]')) link.removeAttribute('aria-current');
   documentImpl.querySelector('.primary-nav a[href="/history/1.13.1/"]')?.setAttribute('aria-current', 'page');
+  if (buildMeta) buildMeta.textContent = '歷史版本 1.13.1';
 
   if (error) {
     const title = '歷史資料目前無法載入';
