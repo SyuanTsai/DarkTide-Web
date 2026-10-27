@@ -174,10 +174,36 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
       { viewportWidth: 390, historyFooter: '歷史版本 1.13.1', loadingFooter: '', errorFooter: '', interceptedCount: 1 },
     ], 'a fresh current loading/error view must not retain the previously rendered historical footer');
 
-    const response = await page.goto(`${hosted.origin}/history/1.13.1`, { waitUntil: 'domcontentloaded' });
-    assert.equal(response.status(), 200);
-    await page.locator('.history-page h1').waitFor({ state: 'visible' });
-    assert.equal(await page.locator('.history-page h1').innerText(), '1.13.1 歷史資料');
+    let releaseHistoryManifest;
+    let resolveHistoryManifestRequest;
+    let resolveHistoryManifestResponse;
+    const historyManifestGate = new Promise(resolve => { releaseHistoryManifest = resolve; });
+    const historyManifestRequested = new Promise(resolve => { resolveHistoryManifestRequest = resolve; });
+    const historyManifestReleased = new Promise(resolve => { resolveHistoryManifestResponse = resolve; });
+    const holdHistoryManifest = async route => {
+      const response = await route.fetch();
+      resolveHistoryManifestRequest();
+      await historyManifestGate;
+      try { await route.fulfill({ response }); }
+      finally { resolveHistoryManifestResponse(); }
+    };
+    const historyManifestUrl = '**/history/1.13.1/manifest.json';
+    await page.route(historyManifestUrl, holdHistoryManifest);
+    try {
+      const response = await page.goto(`${hosted.origin}/history/1.13.1`, { waitUntil: 'domcontentloaded' });
+      assert.equal(response.status(), 200);
+      await historyManifestRequested;
+      await page.getByRole('heading', { name: '正在載入 1.13.1 歷史資料…', exact: true }).waitFor({ state: 'visible' });
+      assert.equal(await page.locator('.history-page h1').innerText(), '正在載入 1.13.1 歷史資料…',
+        'the held history response must keep the loading heading visible until verified data arrives');
+      releaseHistoryManifest();
+      await page.getByRole('heading', { name: '1.13.1 歷史資料', exact: true }).waitFor({ state: 'visible' });
+      assert.equal(await page.locator('.history-page h1').innerText(), '1.13.1 歷史資料');
+    } finally {
+      releaseHistoryManifest();
+      await historyManifestReleased;
+      await page.unroute(historyManifestUrl, holdHistoryManifest);
+    }
     assert.match(await page.locator('.history-notice').innerText(), /不是目前遊戲版本/u);
     assert.doesNotMatch(await page.locator('main').innerText(), /演示步槍/u, 'current fixture data must not appear in the history reader');
     assert.equal(await page.locator('.primary-nav a[aria-current="page"]').getAttribute('href'), '/history/1.13.1/');
