@@ -55,7 +55,12 @@ test('UnitT10_maps_fixed_M07_tools_to_their_owner_replacements', async () => {
   assert.equal(validatorTests.target.path, validatorTests.source.path);
   const runbook = privateTools.find(row => row.source.path.endsWith('/README.md'));
   assert.equal(runbook.status, 'private-owner-runbook-extended-for-m07');
-  assert.equal(runbook.destinationEvidence.currentWorktreeBytes, 9252);
+  assert.equal(runbook.destinationEvidence.sourceFixedCommit, report.privateToolBundle.fixedCommit);
+  assert.equal(runbook.destinationEvidence.destinationCommit, '9069a5959e0e8cb7950e08930738d8d5da52e308');
+  assert.equal(runbook.destinationEvidence.destinationGitBlobOid, '8711c0e54731b1726149716bc6f31dc93f8efdaa');
+  assert.equal(runbook.destinationEvidence.destinationSha256, '27ded7c2bf649b5c4f16a197a753daea14d3c00715f12604275d5d17dfa8b244');
+  assert.equal(runbook.destinationEvidence.destinationBytes, 9468);
+  assert.equal(Object.hasOwn(runbook.destinationEvidence, 'currentWorktreeSha256'), false);
   assert.equal(report.publicationEligible, false);
   assert.equal(report.rows.find(row => row.source.path.endsWith('render_skill_pages.mjs')).target.path, 'web/shared-render.mjs');
   assert.equal(report.rows.find(row => row.source.path.endsWith('/validate_game_info.py')).target.path, 'scripts/game-info/validate_game_info.py');

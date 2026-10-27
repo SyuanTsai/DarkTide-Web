@@ -96,7 +96,15 @@ const M07_TOOL_TARGETS = Object.freeze({
   'scripts/game-info/README.md': Object.freeze({
     owner: 'private', path: 'tools/game-data/README.md', status: 'private-owner-runbook-extended-for-m07',
     note: 'The existing Private runbook is retained and extended with M07 scope, fixed tool provenance, and compatibility limits; it is not a byte-for-byte copy of this older Mods README.',
-    destinationEvidence: Object.freeze({ fixedCommit: PRIVATE_TOOL_FIXED_COMMIT, fixedBlobOid: 'f0987d26588993b85b5c74172446adba1c558b81', fixedSha256: 'a26aece8081511381bb3b5e668d2d70b9702d9b937235867ae38dee14c210b13', currentWorktreeSha256: 'dddca98d3fd8bd3f60c0c9fb5ccea8dda76c9c148f9f17073d041f1425e5ffa4', currentWorktreeBytes: 9252 }),
+    destinationEvidence: Object.freeze({
+      sourceFixedCommit: PRIVATE_TOOL_FIXED_COMMIT,
+      sourceFixedBlobOid: 'f0987d26588993b85b5c74172446adba1c558b81',
+      sourceFixedSha256: 'a26aece8081511381bb3b5e668d2d70b9702d9b937235867ae38dee14c210b13',
+      destinationCommit: '9069a5959e0e8cb7950e08930738d8d5da52e308',
+      destinationGitBlobOid: '8711c0e54731b1726149716bc6f31dc93f8efdaa',
+      destinationSha256: '27ded7c2bf649b5c4f16a197a753daea14d3c00715f12604275d5d17dfa8b244',
+      destinationBytes: 9468,
+    }),
   }),
   'scripts/game-info/compare_text_exports.py': Object.freeze({
     owner: 'private', path: 'tools/game-data/compare_text_exports.py', status: 'private-fixed-tool-reused-line-endings-only',
