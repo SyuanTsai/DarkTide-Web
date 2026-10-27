@@ -1,14 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { buildStaticSite } from '../src/static/build.mjs';
 import { fixturePublicContent } from '../src/static/fixture.mjs';
+import { verifyStaticPackage } from '../src/static/verify.mjs';
+import { readVerifiedCoreDomains } from '../scripts/shared-browser-smoke.mjs';
 import { createStaticServer } from '../scripts/serve.mjs';
 import { createBuildRoot, disposeBuildRoot } from './static-test-helpers.mjs';
 import { makeCompiledAnnouncementFixture } from './w13-announcement-fixture.mjs';
 
 const chromePath = process.env.SYP_W10_CHROMIUM_EXE;
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function listen(distPath) {
   const server = await createStaticServer({ distPath });
@@ -39,6 +44,59 @@ test('InterT10_compiled_announcement_renders_on_static_list_route', { timeout: 1
   let browser;
   try {
     await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease: fixture.bundle });
+    const distPath = path.join(root, 'dist');
+    const verification = await verifyStaticPackage(distPath);
+    const verifiedShared = await readVerifiedCoreDomains(distPath, verification);
+    const dataRoot = `/data/${verification.shared_data_revision}`;
+    assert.deepEqual(verifiedShared.domains.map(domain => domain.kind).sort(),
+      ['announcements', 'blessings', 'skills', 'terms', 'weapons']);
+    assert.deepEqual(verifiedShared.requestedPaths, [
+      `${dataRoot}/domains/announcements.json`,
+      `${dataRoot}/domains/blessings.json`,
+      `${dataRoot}/domains/skills.json`,
+      `${dataRoot}/domains/terms.json`,
+      `${dataRoot}/domains/weapons.json`,
+      `${dataRoot}/manifest.json`,
+    ].sort());
+    assert.equal(verifiedShared.view.getAnnouncements().items.length, 1);
+
+    const manifestFile = path.join(distPath, ...verifiedShared.pointer.manifest_path.slice(1).split('/'));
+    const originalManifestBytes = await readFile(manifestFile);
+    const originalManifest = JSON.parse(originalManifestBytes.toString('utf8'));
+    const withManifestFiles = async files => {
+      const bytes = Buffer.from(JSON.stringify({ ...originalManifest, files }, null, 2) + '\n', 'utf8');
+      await writeFile(manifestFile, bytes);
+      const alteredVerification = {
+        ...verification,
+        game_releases: verification.game_releases.map(pointer => pointer.manifest_path === verifiedShared.pointer.manifest_path
+          ? { ...pointer, manifest_sha256: sha256(bytes) }
+          : pointer),
+      };
+      try { return await readVerifiedCoreDomains(distPath, alteredVerification); }
+      finally { await writeFile(manifestFile, originalManifestBytes); }
+    };
+    await assert.rejects(withManifestFiles([
+      ...originalManifest.files,
+      { kind: 'legacy', path: 'legacy/content.json', sizeBytes: 1, sha256: '0'.repeat(64) },
+    ]), /unsupported domain kind/u);
+    await assert.rejects(withManifestFiles([
+      ...originalManifest.files,
+      { ...originalManifest.files.find(row => row.kind === 'announcements'), path: 'domains/announcements-copy.json' },
+    ]), /multiple announcements domains/u);
+
+    const announcementPin = verification.shared_files.find(row => row.path === `${dataRoot}/domains/announcements.json`);
+    assert.ok(announcementPin, 'the static verifier supplies an exact optional announcement byte pin');
+    for (const tamper of [
+      { ...announcementPin, size_bytes: announcementPin.size_bytes + 1 },
+      { ...announcementPin, sha256: '0'.repeat(64) },
+    ]) {
+      const alteredVerification = {
+        ...verification,
+        shared_files: verification.shared_files.map(row => row.path === announcementPin.path ? tamper : row),
+      };
+      await assert.rejects(readVerifiedCoreDomains(distPath, alteredVerification), /pin|size|digest|SHA/u);
+    }
+
     const hosted = await listen(path.join(root, 'dist'));
     server = hosted.server;
     browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });
