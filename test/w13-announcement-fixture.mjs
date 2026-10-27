@@ -64,6 +64,7 @@ function makeAnnouncementInput(donor, announcement) {
   if (!release) throw new Error('W13 fixture donor has no fixture-r2 release');
 
   const authoring = structuredClone(donor.authoring);
+  const previousAnnouncementIds = new Set(authoring.announcements.map(item => item.announcementId));
   authoring.presentations = authoring.presentations.filter(item => item.entityRef.gameReleaseId === RELEASE_ID
     && ['skill', 'blessing', 'weapon'].includes(item.entityRef.kind));
   authoring.termLocalizations = authoring.termLocalizations.filter(item => item.termRef.gameReleaseId === RELEASE_ID);
@@ -71,7 +72,7 @@ function makeAnnouncementInput(donor, announcement) {
   authoring.gameChanges = [];
   authoring.officialTextChanges = [];
   for (const target of authoring.reviewTargets) {
-    if (target.ownerKind === 'announcement' && target.ownerId === 'fixture:announcement:site') {
+    if (target.ownerKind === 'announcement' && previousAnnouncementIds.has(target.ownerId)) {
       target.ownerId = announcement.announcementId;
       target.targetId = 'fixture:review:w13-announcement:blocks';
     }
@@ -239,9 +240,9 @@ function makeSharedStaticFixture(compiled) {
   return { version, bundle, build, responses };
 }
 
-export async function makeCompiledAnnouncementFixture({ announcementDependencies } = {}) {
+export async function makeCompiledAnnouncementFixture({ announcementDependencies, announcement: suppliedAnnouncement } = {}) {
   const donor = await loadWebAuthoringInputs({ repoRoot: REPO_ROOT });
-  const announcement = makeFixtureAnnouncement(donor);
+  const announcement = suppliedAnnouncement ? structuredClone(suppliedAnnouncement) : makeFixtureAnnouncement(donor);
   const compiled = compileW08Candidate(makeAnnouncementInput(donor, announcement));
   const announcementFile = compiled.manifest.files.find(file => file.kind === 'announcements');
   if (!announcementFile) throw new Error('W08 compiler omitted its announcement domain');

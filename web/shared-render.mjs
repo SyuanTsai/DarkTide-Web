@@ -78,6 +78,20 @@ function safeOfficialResourceUrl(value) {
     return url.href;
   } catch { return null; }
 }
+function safeAnnouncementResourceUrl(value) {
+  if (typeof value === 'string' && value.startsWith('/') && !value.startsWith('//')) {
+    try {
+      const url = new URL(value, 'https://darktide.invalid');
+      if (url.origin !== 'https://darktide.invalid' || url.hash) return null;
+      if (url.pathname === '/terms/' && !url.search) return value;
+      if (url.pathname === '/announcements/' && [...url.searchParams.keys()].every(key => key === 'id')
+          && url.searchParams.getAll('id').length === 1
+          && /^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(url.searchParams.get('id') ?? '')) return value;
+      return null;
+    } catch { return null; }
+  }
+  return safeOfficialResourceUrl(value);
+}
 function sharedChangeIndexHref(result) {
   const revision = result?.pointer?.data_revision;
   const filePath = result?.manifest?.changeIndexPath;
@@ -1104,7 +1118,7 @@ function renderGameChanges(main, result, url) {
 }
 
 function announcementTitle(item) {
-  return item.blocks.find(block => block.kind === 'heading')?.text ?? `公告 ${item.publishedOn}`;
+  return item.title ?? item.blocks.find(block => block.kind === 'heading')?.text ?? `公告 ${item.publishedOn}`;
 }
 
 function renderAnnouncementMetadata(parent, item) {
@@ -1116,25 +1130,75 @@ function renderAnnouncementMetadata(parent, item) {
     ['修訂版本', String(item.revision)],
   ]) {
     const row = node('div');
-    row.append(node('dt', label), node('dd', value));
+    const detail = node('dd');
+    if (label === '來源') {
+      const sourceHref = safeOfficialResourceUrl(item.source.locator);
+      detail.append(document.createTextNode(sourceKind + ' · '));
+      if (sourceHref) {
+        const sourceAnchor = link(sourceHref, item.source.locator);
+        sourceAnchor.rel = 'noopener noreferrer';
+        detail.append(sourceAnchor);
+      } else detail.append(document.createTextNode(item.source.locator));
+    } else detail.textContent = value;
+    row.append(node('dt', label), detail);
     list.append(row);
   }
   parent.append(list);
 }
 
+function appendAnnouncementInline(parent, runs) {
+  for (const run of runs) {
+    if (run.kind === 'break') {
+      parent.append(document.createElement('br'));
+      continue;
+    }
+    if (run.kind === 'text') {
+      parent.append(document.createTextNode(run.text));
+      continue;
+    }
+    if (run.kind === 'link') {
+      const href = safeAnnouncementResourceUrl(run.href);
+      if (!href) throw new Error('validated announcement contains an unsafe inline link');
+      const anchor = document.createElement('a');
+      anchor.href = href;
+      anchor.rel = 'noopener noreferrer';
+      if (run.children) appendAnnouncementInline(anchor, run.children);
+      else anchor.textContent = run.text;
+      parent.append(anchor);
+      continue;
+    }
+    const tag = ({ strong: 'strong', emphasis: 'em', code: 'code' })[run.kind];
+    if (!tag) throw new Error('announcement renderer received an unsupported inline run');
+    const element = document.createElement(tag);
+    if (run.children) appendAnnouncementInline(element, run.children);
+    else element.textContent = run.text;
+    parent.append(element);
+  }
+}
+
 function renderAnnouncementBlocks(parent, blocks, assets, headingState = { firstHeading: true }) {
   for (const block of blocks) {
     if (block.kind === 'heading') {
-      const heading = node(headingState.firstHeading ? 'h1' : 'h2', block.text, 'shared-announcement-heading');
+      if (headingState.titlePending && block.text === headingState.title) {
+        headingState.titlePending = false;
+        continue;
+      }
+      headingState.titlePending = false;
+      const headingLevel = headingState.firstHeading ? 1 : Math.min(6, Math.max(2, (block.level ?? 1) + (headingState.hasTitle ? 1 : 0)));
+      const heading = node('h' + headingLevel, null, 'shared-announcement-heading');
+      if (block.inline) appendAnnouncementInline(heading, block.inline);
+      else heading.textContent = block.text;
       headingState.firstHeading = false;
       heading.dataset.blockId = block.blockId;
       parent.append(heading);
     } else if (block.kind === 'paragraph') {
-      const paragraph = node('p', block.text, 'shared-announcement-paragraph');
+      const paragraph = node('p', null, 'shared-announcement-paragraph');
+      if (block.inline) appendAnnouncementInline(paragraph, block.inline);
+      else paragraph.textContent = block.text;
       paragraph.dataset.blockId = block.blockId;
       parent.append(paragraph);
     } else if (block.kind === 'link') {
-      const href = safeOfficialResourceUrl(block.href);
+      const href = safeAnnouncementResourceUrl(block.href);
       if (!href) throw new Error('validated announcement contains an unsafe link');
       const anchor = link(href, block.text, 'shared-announcement-link');
       anchor.dataset.blockId = block.blockId;
@@ -1144,8 +1208,11 @@ function renderAnnouncementBlocks(parent, blocks, assets, headingState = { first
       const list = node(block.ordered ? 'ol' : 'ul', null, 'shared-announcement-items');
       list.dataset.blockId = block.blockId;
       for (const item of block.items) {
-        const row = node('li', item.text);
+        const row = node('li');
+        if (item.inline) appendAnnouncementInline(row, item.inline);
+        else row.textContent = item.text;
         row.dataset.blockId = item.blockId;
+        if (item.children?.length) renderAnnouncementBlocks(row, item.children, assets, headingState);
         list.append(row);
       }
       parent.append(list);
@@ -1153,19 +1220,30 @@ function renderAnnouncementBlocks(parent, blocks, assets, headingState = { first
       const wrapper = node('div', null, 'shared-announcement-table-wrap');
       wrapper.dataset.blockId = block.blockId;
       const table = node('table', null, 'shared-announcement-table');
+      const head = node('thead');
       const body = node('tbody');
-      for (const row of block.rows) {
+      for (const [rowIndex, row] of block.rows.entries()) {
         const tableRow = node('tr');
         for (const cell of row.cells) {
-          const tableCell = node('td', cell.text);
+          const tableCell = node(row.header ? 'th' : 'td');
+          if (row.header) tableCell.scope = 'col';
+          if (cell.inline) appendAnnouncementInline(tableCell, cell.inline);
+          else tableCell.textContent = cell.text;
           tableCell.dataset.blockId = cell.blockId;
           tableRow.append(tableCell);
         }
-        body.append(tableRow);
+        if (row.header && rowIndex === 0) head.append(tableRow);
+        else body.append(tableRow);
       }
+      if (head.childElementCount) table.append(head);
       table.append(body);
       wrapper.append(table);
       parent.append(wrapper);
+    } else if (block.kind === 'quote') {
+      const quote = node('blockquote', null, 'shared-announcement-quote');
+      quote.dataset.blockId = block.blockId;
+      renderAnnouncementBlocks(quote, block.blocks, assets, headingState);
+      parent.append(quote);
     } else if (block.kind === 'image') {
       const asset = assets.get(block.assetId);
       if (!asset) throw new Error('validated announcement image lost its asset reference');
@@ -1197,7 +1275,7 @@ function renderAnnouncementBlocks(parent, blocks, assets, headingState = { first
   }
 }
 
-function renderAnnouncements(main, result, url) {
+function renderAnnouncements(main, result, url, buildMeta) {
   const announcementResult = result.view.getAnnouncements();
   const items = announcementResult.status === 'ready' ? announcementResult.items : [];
   if (url.searchParams.has('id')) {
@@ -1211,12 +1289,18 @@ function renderAnnouncements(main, result, url) {
     }
     const title = announcementTitle(item);
     setMetadata(title, `${item.publishedOn} · 修訂版本 ${item.revision} · ${item.source.locator}`, url);
+    if (item.scope === 'official-document') buildMeta.textContent = `歷史公告 · 發布日期 ${item.publishedOn}`;
     main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
     renderAnnouncementMetadata(main, item);
     const article = node('article', null, 'shared-announcement-content');
     article.dataset.announcementId = item.announcementId;
     const assets = new Map(item.assets.map(asset => [asset.assetId, asset]));
-    renderAnnouncementBlocks(article, item.blocks, assets);
+    const headingState = item.title
+      ? { firstHeading: false, hasTitle: true, title: item.title, titlePending: true }
+      : { firstHeading: true, hasTitle: false, title: null, titlePending: false };
+    if (item.title) article.append(node('h1', item.title, 'shared-announcement-heading'));
+    if (item.scope === 'official-document') article.append(node('p', '歷史公告', 'shared-announcement-scope-note'));
+    renderAnnouncementBlocks(article, item.blocks, assets, headingState);
     if (!article.querySelector('h1')) article.prepend(node('h1', title, 'shared-announcement-heading'));
     main.append(article);
     return;
@@ -1267,7 +1351,10 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
   else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
   else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
-  else if (url.pathname === '/announcements' || url.pathname.startsWith('/announcements/')) renderAnnouncements(main, result, url);
+  else if (url.pathname === '/announcements' || url.pathname.startsWith('/announcements/')) {
+    buildMeta.textContent = `公告資料 · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`;
+    renderAnnouncements(main, result, url, buildMeta);
+  }
   else renderHome(main, result);
   main.focus();
 }

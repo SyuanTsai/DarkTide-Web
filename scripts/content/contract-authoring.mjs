@@ -187,9 +187,13 @@ export function assertWebAuthoringSchemaParity(schema) {
   if (canonical(schema?.$defs?.detailSection?.properties?.sectionId?.enum ?? []) !== canonical(DETAIL_SECTION_ORDER)) errors.push('schema detail section order vocabulary differs from the validator');
   const detailSections = schema?.$defs?.presentation?.properties?.detailSections;
   if (detailSections?.maxItems !== DETAIL_SECTION_ORDER.length || hasOwn(detailSections ?? {}, 'minItems')) errors.push('schema detail sections must permit an ordered subset of the fixed section vocabulary');
-  for (const kind of ['list', 'table', 'image', 'spoiler']) {
+  for (const kind of ['list', 'table', 'image', 'spoiler', 'quote']) {
     const blockSchema = schema?.$defs?.announcementBlock?.oneOf?.find(branch => branch.properties?.kind?.const === kind);
     if (!blockSchema) errors.push('schema announcement blocks omit the ' + kind + ' occurrence type');
+  }
+  if (!schema?.$defs?.announcementInlineRun?.oneOf?.length
+      || !schema?.$defs?.announcement?.properties?.scope?.enum?.includes('official-document')) {
+    errors.push('schema announcements omit the closed official-document rich-text scope');
   }
   const kinds = schema?.$defs?.presentationEntityRef?.properties?.kind?.enum ?? [];
   if (canonical([...kinds].sort(compareLexical)) !== canonical([...PRESENTATION_KINDS].sort(compareLexical))) errors.push('schema presentation kinds differ from the validated owner set');
@@ -545,17 +549,91 @@ function collectAnnouncementOccurrences(blocks, blockIds, assetRefs, at) {
     const blockAt = at + '/' + index;
     blockIds.push({ blockId: block.blockId, path: blockAt + '/blockId' });
     if (block.kind === 'list') {
-      for (const [itemIndex, item] of block.items.entries()) blockIds.push({ blockId: item.blockId, path: blockAt + '/items/' + itemIndex + '/blockId' });
+      for (const [itemIndex, item] of block.items.entries()) {
+        const itemAt = blockAt + '/items/' + itemIndex;
+        blockIds.push({ blockId: item.blockId, path: itemAt + '/blockId' });
+        if (item.children?.length) collectAnnouncementOccurrences(item.children, blockIds, assetRefs, itemAt + '/children');
+      }
     } else if (block.kind === 'table') {
       for (const [rowIndex, row] of block.rows.entries()) {
         for (const [cellIndex, cell] of row.cells.entries()) blockIds.push({ blockId: cell.blockId, path: blockAt + '/rows/' + rowIndex + '/cells/' + cellIndex + '/blockId' });
       }
     } else if (block.kind === 'image') {
       assetRefs.push({ assetId: block.assetRef.assetId, path: blockAt + '/assetRef/assetId' });
-    } else if (block.kind === 'spoiler') {
+    } else if (block.kind === 'spoiler' || block.kind === 'quote') {
       collectAnnouncementOccurrences(block.blocks, blockIds, assetRefs, blockAt + '/blocks');
     }
   }
+}
+
+function safeAnnouncementHref(value) {
+  if (typeof value !== 'string' || value.length > 2048 || /[\u0000-\u001f\u007f\\]/u.test(value)) return false;
+  if (value.startsWith('/') && !value.startsWith('//')) {
+    let url;
+    try { url = new URL(value, 'https://darktide.invalid'); } catch { return false; }
+    if (url.origin !== 'https://darktide.invalid' || url.hash) return false;
+    if (url.pathname === '/terms/') return url.search === '';
+    if (url.pathname !== '/announcements/' || [...url.searchParams.keys()].some(key => key !== 'id')
+        || url.searchParams.getAll('id').length !== 1) return false;
+    return /^[a-z0-9][a-z0-9:._-]{1,127}$/u.test(url.searchParams.get('id') ?? '');
+  }
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && Boolean(url.hostname) && !url.username && !url.password
+      && ![...url.searchParams.keys()].some(key => /(?:token|secret|password|signature|auth|api[-_]?key)/iu.test(key));
+  } catch { return false; }
+}
+
+function safeOfficialAnnouncementSource(value) {
+  if (typeof value !== 'string' || value.length > 2048 || /[\u0000-\u001f\u007f\\]/u.test(value)
+      || !/^https:\/\//iu.test(value)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && Boolean(url.hostname) && !url.username && !url.password
+      && ![...url.searchParams.keys()].some(key => /(?:token|secret|password|signature|auth|api[-_]?key)/iu.test(key));
+  } catch { return false; }
+}
+
+function validateAnnouncementRichContent(announcement, issues, at) {
+  const plainInline = runs => runs.map(run => run.kind === 'break' ? '\n'
+    : run.children ? plainInline(run.children) : run.text ?? '').join('');
+  const validateInline = (runs, runAt, depth = 0) => {
+    if (!Array.isArray(runs) || depth > 16) return;
+    for (const [index, run] of runs.entries()) {
+      const current = runAt + '/' + index;
+      if (run.kind === 'link' && !safeAnnouncementHref(run.href)) issue(issues, current + '/href', 'announcement link URL is unsafe', 'announcement-url');
+      if (run.children) validateInline(run.children, current + '/children', depth + 1);
+    }
+  };
+  const visit = (blocks, blockAt) => {
+    for (const [index, block] of blocks.entries()) {
+      const current = blockAt + '/' + index;
+      if (block.inline) {
+        validateInline(block.inline, current + '/inline');
+        if (plainInline(block.inline) !== block.text) issue(issues, current + '/inline', 'announcement inline runs differ from their plain-text value', 'announcement-inline-text');
+      }
+      if (block.kind === 'link' && !safeAnnouncementHref(block.href)) issue(issues, current + '/href', 'announcement link URL is unsafe', 'announcement-url');
+      if (block.kind === 'image') {
+        const asset = announcement.assets.find(item => item.assetId === block.assetRef.assetId);
+        if (asset && !safeAnnouncementHref(asset.sourceUri)) issue(issues, current + '/assetRef', 'announcement image URL is unsafe', 'announcement-url');
+      }
+      if (block.kind === 'list') for (const [itemIndex, item] of block.items.entries()) {
+        if (item.inline) {
+          validateInline(item.inline, current + '/items/' + itemIndex + '/inline');
+          if (plainInline(item.inline) !== item.text) issue(issues, current + '/items/' + itemIndex + '/inline', 'announcement inline runs differ from their plain-text value', 'announcement-inline-text');
+        }
+        if (item.children?.length) visit(item.children, current + '/items/' + itemIndex + '/children');
+      }
+      if (block.kind === 'table') for (const [rowIndex, row] of block.rows.entries()) for (const [cellIndex, cell] of row.cells.entries()) {
+        if (cell.inline) {
+          validateInline(cell.inline, current + '/rows/' + rowIndex + '/cells/' + cellIndex + '/inline');
+          if (plainInline(cell.inline) !== cell.text) issue(issues, current + '/rows/' + rowIndex + '/cells/' + cellIndex + '/inline', 'announcement inline runs differ from their plain-text value', 'announcement-inline-text');
+        }
+      }
+      if ((block.kind === 'spoiler' || block.kind === 'quote') && block.blocks) visit(block.blocks, current + '/blocks');
+    }
+  };
+  visit(announcement.blocks, at + '/blocks');
 }
 
 function officialTextContent(source) {
@@ -1854,12 +1932,18 @@ function validateWebSemantic(contract, inputs, issues) {
     if (announcement.scope === 'gameplay') {
       if (announcement.source.kind !== 'official-game-source') issue(issues, at + '/source/kind', 'gameplay announcements must cite an official game source', 'announcement-owner');
       if (!inputs.sourceReleaseMap.has(announcement.gameReleaseId)) issue(issues, at + '/gameReleaseId', 'gameplay announcement references an unknown release', 'unknown-release');
+    } else if (announcement.scope === 'official-document') {
+      if (announcement.source.kind !== 'official-game-source') issue(issues, at + '/source/kind', 'official-document announcements must cite an official game source', 'announcement-owner');
+      if (Object.hasOwn(announcement, 'gameReleaseId')) issue(issues, at + '/gameReleaseId', 'official documents cannot claim a gameplay release identity', 'announcement-release');
+      if (!hasNonemptyText(announcement.title)) issue(issues, at + '/title', 'official-document title is required', 'announcement-title');
+      if (!safeOfficialAnnouncementSource(announcement.source.locator)) issue(issues, at + '/source/locator', 'official-document source locator must be a safe public HTTPS URL', 'announcement-url');
     }
     if (!Number.isFinite(Date.parse(announcement.publishedOn + 'T00:00:00Z'))) issue(issues, at + '/publishedOn', 'announcement date is invalid', 'announcement-date');
     uniqueBy(announcement.assets, asset => asset.assetId, 'announcement asset id', issues, at + '/assets');
     const nestedBlockIds = [];
     const assetRefs = [];
     collectAnnouncementOccurrences(announcement.blocks, nestedBlockIds, assetRefs, at + '/blocks');
+    validateAnnouncementRichContent(announcement, issues, at);
     uniqueBy(nestedBlockIds, item => item.blockId, 'announcement block id', issues, at + '/blocks');
     const assetIds = new Set(announcement.assets.map(asset => asset.assetId));
     for (const ref of assetRefs) if (!assetIds.has(ref.assetId)) issue(issues, ref.path, 'announcement image references an undeclared asset', 'dangling-asset');
@@ -2175,7 +2259,9 @@ function announcementAssetOccurrences(blocks, assets, output = []) {
   const assetMap = new Map(assets.map(asset => [asset.assetId, asset]));
   for (const block of blocks) {
     if (block.kind === 'image') output.push(assetMap.get(block.assetRef.assetId) ?? { assetId: block.assetRef.assetId });
-    else if (block.kind === 'spoiler') announcementAssetOccurrences(block.blocks, assets, output);
+    else if (block.kind === 'list') {
+      for (const item of block.items) if (item.children?.length) announcementAssetOccurrences(item.children, assets, output);
+    } else if (block.kind === 'spoiler' || block.kind === 'quote') announcementAssetOccurrences(block.blocks, assets, output);
   }
   return output;
 }
@@ -2240,6 +2326,9 @@ export function computeReviewDigests(contract, target, inputs) {
     dependencies.push({ kind: 'announcement-source', scope: owner.scope, source: owner.source });
     if (owner.scope === 'gameplay') dependencies.push({ kind: 'game-release', value: releaseReviewProjection(sourceContract, owner.gameReleaseId) });
     if (target.fieldPath === '/blocks') dependencies.push({ kind: 'announcement-assets', value: announcementAssetOccurrences(owner.blocks, owner.assets) });
+    if (owner.scope === 'official-document' && target.fieldPath === '/blocks') {
+      dependencies.push({ kind: 'official-document-publication-context', title: owner.title, publishedOn: owner.publishedOn });
+    }
   }
   if (target.ownerKind === 'official-text-change') {
     const from = inputs.officialInputs.sources.find(source => source.officialSourceId === owner.fromOfficialSourceId);

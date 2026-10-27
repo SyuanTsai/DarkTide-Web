@@ -381,7 +381,28 @@
       "oneOf": [
         {
           "type": "object", "required": [ "blockId", "kind", "text" ],
-          "properties": { "blockId": { "$ref": "#/$defs/stableId" }, "kind": { "enum": [ "heading", "paragraph" ] }, "text": { "$ref": "#/$defs/text" } },
+          "properties": {
+            "blockId": { "$ref": "#/$defs/stableId" }, "kind": { "const": "heading" },
+            "text": { "$ref": "#/$defs/text" }, "level": { "type": "integer", "minimum": 1, "maximum": 6 },
+            "inline": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "blockId", "kind", "text" ],
+          "properties": {
+            "blockId": { "$ref": "#/$defs/stableId" }, "kind": { "const": "paragraph" },
+            "text": { "$ref": "#/$defs/text" },
+            "inline": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "blockId", "kind", "blocks" ],
+          "properties": {
+            "blockId": { "$ref": "#/$defs/stableId" }, "kind": { "const": "quote" },
+            "blocks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementBlock" } }
+          },
           "additionalProperties": false
         },
         {
@@ -427,18 +448,57 @@
     },
     "announcementListItem": {
       "type": "object", "required": [ "blockId", "text" ],
-      "properties": { "blockId": { "$ref": "#/$defs/stableId" }, "text": { "$ref": "#/$defs/text" } },
+      "properties": {
+        "blockId": { "$ref": "#/$defs/stableId" }, "text": { "$ref": "#/$defs/text" },
+        "inline": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/announcementBlock" } }
+      },
       "additionalProperties": false
     },
     "announcementTableCell": {
       "type": "object", "required": [ "blockId", "text" ],
-      "properties": { "blockId": { "$ref": "#/$defs/stableId" }, "text": { "$ref": "#/$defs/text" } },
+      "properties": {
+        "blockId": { "$ref": "#/$defs/stableId" }, "text": { "$ref": "#/$defs/text" },
+        "inline": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } }
+      },
       "additionalProperties": false
     },
     "announcementTableRow": {
       "type": "object", "required": [ "cells" ],
-      "properties": { "cells": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementTableCell" } } },
+      "properties": {
+        "header": { "type": "boolean" },
+        "cells": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementTableCell" } }
+      },
       "additionalProperties": false
+    },
+    "announcementInlineRun": {
+      "oneOf": [
+        {
+          "type": "object", "required": [ "kind", "text" ],
+          "properties": { "kind": { "enum": [ "text", "strong", "emphasis", "code" ] }, "text": { "type": "string", "maxLength": 20000 } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "kind", "children" ],
+          "properties": { "kind": { "enum": [ "strong", "emphasis" ] }, "children": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "kind", "href", "text" ],
+          "properties": { "kind": { "const": "link" }, "href": { "type": "string", "pattern": "^(?:https://[^\\s]+|/(?!/)[^\\s]+)$" }, "text": { "type": "string", "maxLength": 20000 } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "kind", "href", "children" ],
+          "properties": { "kind": { "const": "link" }, "href": { "type": "string", "pattern": "^(?:https://[^\\s]+|/(?!/)[^\\s]+)$" }, "children": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/announcementInlineRun" } } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object", "required": [ "kind" ],
+          "properties": { "kind": { "const": "break" } },
+          "additionalProperties": false
+        }
+      ]
     },
     "assetRef": {
       "type": "object", "required": [ "assetId" ],
@@ -463,7 +523,8 @@
       "required": [ "announcementId", "scope", "publishedOn", "revision", "source", "blocks", "assets" ],
       "properties": {
         "announcementId": { "$ref": "#/$defs/stableId" },
-        "scope": { "enum": [ "site", "gameplay" ] },
+        "scope": { "enum": [ "site", "gameplay", "official-document" ] },
+        "title": { "$ref": "#/$defs/text" },
         "gameReleaseId": { "$ref": "#/$defs/gameReleaseId" },
         "publishedOn": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
         "revision": { "type": "integer", "minimum": 1 },
