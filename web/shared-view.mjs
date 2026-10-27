@@ -108,12 +108,72 @@ function announcementText(value, label) {
   return value;
 }
 
+function announcementRunText(value, label) {
+  if (typeof value !== 'string' || value.length > 20_000
+      || /<!--|-->|<!doctype\b|<\s*\/?\s*[a-z][^>]*>/iu.test(value)) {
+    throw new Error(`${label} must be safe announcement text`);
+  }
+  return value;
+}
+
+function safeAnnouncementHref(value) {
+  if (!isDisplayText(value) || value.length > 2048 || /[\u0000-\u001f\u007f\\]/u.test(value)) return null;
+  if (value.startsWith('/') && !value.startsWith('//')) {
+    try {
+      const url = new URL(value, 'https://darktide.invalid');
+      if (url.origin !== 'https://darktide.invalid' || url.hash) return null;
+      if (url.pathname === '/terms/' && !url.search) return value;
+      if (url.pathname !== '/announcements/' || [...url.searchParams.keys()].some(key => key !== 'id')
+          || url.searchParams.getAll('id').length !== 1
+          || !ANNOUNCEMENT_ID.test(url.searchParams.get('id') ?? '')) return null;
+      return value;
+    } catch { return null; }
+  }
+  return safePublicHttps(value);
+}
+
 function announcementBlockId(value, seen, label) {
   if (typeof value !== 'string' || !ANNOUNCEMENT_ID.test(value) || seen.has(value)) {
     throw new Error(`${label} is invalid or duplicated`);
   }
   seen.add(value);
   return value;
+}
+
+function validateAnnouncementInline(runs, label, depth = 0) {
+  if (!Array.isArray(runs) || runs.length === 0 || depth > 16) throw new Error(`${label} inline runs are invalid`);
+  return runs.map((run, index) => {
+    const runLabel = `${label} inline run ${index}`;
+    if (!isObject(run) || typeof run.kind !== 'string') throw new Error(`${runLabel} is invalid`);
+    if (['text', 'strong', 'emphasis', 'code'].includes(run.kind) && Object.hasOwn(run, 'text')) {
+      announcementKeys(run, ['kind', 'text'], runLabel);
+      return { kind: run.kind, text: announcementRunText(run.text, `${runLabel} text`) };
+    }
+    if (['strong', 'emphasis'].includes(run.kind) && Array.isArray(run.children)) {
+      announcementKeys(run, ['kind', 'children'], runLabel);
+      return { kind: run.kind, children: validateAnnouncementInline(run.children, runLabel, depth + 1) };
+    }
+    if (run.kind === 'link' && Object.hasOwn(run, 'href')) {
+      const href = safeAnnouncementHref(run.href);
+      if (!href) throw new Error(`${runLabel} has an unsafe URL`);
+      if (Object.hasOwn(run, 'text')) {
+        announcementKeys(run, ['kind', 'href', 'text'], runLabel);
+        return { kind: 'link', href, text: announcementText(run.text, `${runLabel} text`) };
+      }
+      announcementKeys(run, ['kind', 'href', 'children'], runLabel);
+      return { kind: 'link', href, children: validateAnnouncementInline(run.children, runLabel, depth + 1) };
+    }
+    if (run.kind === 'break') {
+      announcementKeys(run, ['kind'], runLabel);
+      return { kind: 'break' };
+    }
+    throw new Error(`${runLabel} has an unsupported kind`);
+  });
+}
+
+function flattenAnnouncementInline(runs) {
+  return runs.map(run => run.kind === 'break' ? '\n'
+    : run.children ? flattenAnnouncementInline(run.children) : run.text ?? '').join('');
 }
 
 function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
@@ -125,8 +185,19 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
     if (!isObject(block) || typeof block.kind !== 'string') throw new Error(`${label} is invalid`);
     const blockId = announcementBlockId(block.blockId, seenIds, `${label} id`);
     if (block.kind === 'heading' || block.kind === 'paragraph') {
-      announcementKeys(block, ['blockId', 'kind', 'text'], label);
-      return { blockId, kind: block.kind, text: announcementText(block.text, `${label} text`) };
+      const allowed = block.kind === 'heading' ? ['blockId', 'kind', 'text', 'level', 'inline'] : ['blockId', 'kind', 'text', 'inline'];
+      announcementKeys(block, allowed.filter(key => key === 'blockId' || key === 'kind' || key === 'text' || Object.hasOwn(block, key)), label);
+      const text = announcementText(block.text, `${label} text`);
+      const inline = block.inline ? validateAnnouncementInline(block.inline, label) : undefined;
+      if (inline && flattenAnnouncementInline(inline) !== text) throw new Error(`${label} inline runs differ from their plain-text value`);
+      if (block.kind === 'heading' && block.level !== undefined && (!Number.isInteger(block.level) || block.level < 1 || block.level > 6)) {
+        throw new Error(`${label} heading level is invalid`);
+      }
+      return { blockId, kind: block.kind, text, ...(block.kind === 'heading' && block.level !== undefined ? { level: block.level } : {}), ...(inline ? { inline } : {}) };
+    }
+    if (block.kind === 'quote') {
+      announcementKeys(block, ['blockId', 'kind', 'blocks'], label);
+      return { blockId, kind: 'quote', blocks: validateAnnouncementBlocks(block.blocks, assets, seenIds, depth + 1) };
     }
     if (block.kind === 'link') {
       announcementKeys(block, ['blockId', 'kind', 'text', 'href'], label);
@@ -143,8 +214,12 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
         blockId, kind: 'list', ordered: block.ordered,
         items: block.items.map((item, itemIndex) => {
           const itemLabel = `${label} item ${itemIndex}`;
-          announcementKeys(item, ['blockId', 'text'], itemLabel);
-          return { blockId: announcementBlockId(item.blockId, seenIds, `${itemLabel} id`), text: announcementText(item.text, `${itemLabel} text`) };
+          announcementKeys(item, ['blockId', 'text', ...(Object.hasOwn(item, 'inline') ? ['inline'] : []), ...(Object.hasOwn(item, 'children') ? ['children'] : [])], itemLabel);
+          const text = announcementText(item.text, `${itemLabel} text`);
+          const inline = item.inline ? validateAnnouncementInline(item.inline, itemLabel) : undefined;
+          if (inline && flattenAnnouncementInline(inline) !== text) throw new Error(`${itemLabel} inline runs differ from their plain-text value`);
+          const children = item.children?.length ? validateAnnouncementBlocks(item.children, assets, seenIds, depth + 1) : undefined;
+          return { blockId: announcementBlockId(item.blockId, seenIds, `${itemLabel} id`), text, ...(inline ? { inline } : {}), ...(children ? { children } : {}) };
         }),
       };
     }
@@ -155,12 +230,16 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
         blockId, kind: 'table',
         rows: block.rows.map((row, rowIndex) => {
           const rowLabel = `${label} row ${rowIndex}`;
-          announcementKeys(row, ['cells'], rowLabel);
+          announcementKeys(row, ['cells', ...(Object.hasOwn(row, 'header') ? ['header'] : [])], rowLabel);
+          if (row.header !== undefined && typeof row.header !== 'boolean') throw new Error(`${rowLabel} header marker is invalid`);
           if (!Array.isArray(row.cells) || row.cells.length === 0 || row.cells.length > 40) throw new Error(`${rowLabel} cells are invalid`);
-          return { cells: row.cells.map((cell, cellIndex) => {
+          return { ...(row.header !== undefined ? { header: row.header === true } : {}), cells: row.cells.map((cell, cellIndex) => {
             const cellLabel = `${rowLabel} cell ${cellIndex}`;
-            announcementKeys(cell, ['blockId', 'text'], cellLabel);
-            return { blockId: announcementBlockId(cell.blockId, seenIds, `${cellLabel} id`), text: announcementText(cell.text, `${cellLabel} text`) };
+            announcementKeys(cell, ['blockId', 'text', ...(Object.hasOwn(cell, 'inline') ? ['inline'] : [])], cellLabel);
+            const text = announcementText(cell.text, `${cellLabel} text`);
+            const inline = cell.inline ? validateAnnouncementInline(cell.inline, cellLabel) : undefined;
+            if (inline && flattenAnnouncementInline(inline) !== text) throw new Error(`${cellLabel} inline runs differ from their plain-text value`);
+            return { blockId: announcementBlockId(cell.blockId, seenIds, `${cellLabel} id`), text, ...(inline ? { inline } : {}) };
           }) };
         }),
       };
@@ -185,11 +264,15 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
 }
 
 function validateAnnouncement(row, gameReleaseId) {
-  announcementKeys(row, ['announcementId', 'scope', 'publishedOn', 'revision', 'source', 'blocks', 'assets', ...(row?.scope === 'gameplay' ? ['gameReleaseId'] : [])], 'announcement');
+  announcementKeys(row, ['announcementId', 'scope', 'publishedOn', 'revision', 'source', 'blocks', 'assets', ...(Object.hasOwn(row ?? {}, 'title') ? ['title'] : []), ...(row?.scope === 'gameplay' ? ['gameReleaseId'] : [])], 'announcement');
   if (typeof row.announcementId !== 'string' || !ANNOUNCEMENT_ID.test(row.announcementId)) throw new Error('announcement id is invalid');
-  if (row.scope !== 'site' && row.scope !== 'gameplay') throw new Error('announcement scope is invalid');
+  if (!['site', 'gameplay', 'official-document'].includes(row.scope)) throw new Error('announcement scope is invalid');
   if (row.scope === 'gameplay' && row.gameReleaseId !== gameReleaseId) throw new Error('announcement targets a different game release');
-  if (row.scope === 'site' && Object.hasOwn(row, 'gameReleaseId')) throw new Error('site announcement contains a game release pin');
+  if (row.scope !== 'gameplay' && Object.hasOwn(row, 'gameReleaseId')) throw new Error('non-gameplay announcement contains a game release pin');
+  if (row.scope === 'site' && row.source?.kind !== 'site-owner') throw new Error('site announcement source owner is invalid');
+  if (row.scope !== 'site' && row.source?.kind !== 'official-game-source') throw new Error('official game announcement source owner is invalid');
+  if (row.scope === 'official-document' && !safePublicHttps(row.source?.locator)) throw new Error('official game announcement source locator is invalid');
+  if (row.scope === 'official-document' && !isDisplayText(row.title)) throw new Error('official-document title is invalid');
   const date = row.publishedOn;
   if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/u.test(date)
       || !Number.isFinite(Date.parse(`${date}T00:00:00Z`))
@@ -219,6 +302,7 @@ function validateAnnouncement(row, gameReleaseId) {
   return {
     announcementId: row.announcementId,
     scope: row.scope,
+    ...(row.title !== undefined ? { title: announcementText(row.title, 'announcement title') } : {}),
     ...(row.scope === 'gameplay' ? { gameReleaseId: row.gameReleaseId } : {}),
     publishedOn: date,
     revision: row.revision,

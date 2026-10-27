@@ -858,6 +858,7 @@ function announcementHasRequiredText(announcement) {
   return isRecord(announcement)
     && Array.isArray(announcement.blocks) && announcement.blocks.length > 0
     && announcement.blocks.every(announcementBlockHasRequiredText)
+    && (announcement.scope !== 'official-document' || nonemptyText(announcement.title))
     && Array.isArray(announcement.assets)
     && announcement.assets.every(asset => isRecord(asset) && nonemptyText(asset.alt));
 }
@@ -867,7 +868,8 @@ function announcementBlockHasRequiredText(block) {
   if (['heading', 'paragraph', 'link'].includes(block.kind)) return nonemptyText(block.text);
   if (block.kind === 'list') {
     return Array.isArray(block.items) && block.items.length > 0
-      && block.items.every(item => isRecord(item) && nonemptyText(item.text));
+      && block.items.every(item => isRecord(item) && nonemptyText(item.text)
+        && (!item.children || (Array.isArray(item.children) && item.children.every(announcementBlockHasRequiredText))));
   }
   if (block.kind === 'table') {
     return Array.isArray(block.rows) && block.rows.length > 0
@@ -875,6 +877,10 @@ function announcementBlockHasRequiredText(block) {
         && row.cells.every(cell => isRecord(cell) && nonemptyText(cell.text)));
   }
   if (block.kind === 'image') return nonemptyText(block.alt);
+  if (block.kind === 'quote') {
+    return Array.isArray(block.blocks) && block.blocks.length > 0
+      && block.blocks.every(announcementBlockHasRequiredText);
+  }
   if (block.kind === 'spoiler') {
     return nonemptyText(block.label) && Array.isArray(block.blocks) && block.blocks.length > 0
       && block.blocks.every(announcementBlockHasRequiredText);

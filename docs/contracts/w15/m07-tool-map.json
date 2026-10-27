@@ -1,0 +1,364 @@
+{
+  "format": "w15.m07-tool-migration.v1",
+  "candidateOnly": true,
+  "publicationEligible": false,
+  "source": {
+    "repository": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+    "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+    "indexPath": "docs/contracts/w03/mods/mapping-ledger.json",
+    "indexSha256": "90d1d27ed7673db16ff3c5b82640f2af7847466fc5a7a4fcd7d1f9795ee9af16",
+    "groupId": "M07",
+    "entryCount": 8
+  },
+  "destinationOwners": [
+    {
+      "repoId": "source",
+      "rowCount": 2
+    },
+    {
+      "repoId": "web",
+      "rowCount": 1
+    },
+    {
+      "repoId": "private",
+      "rowCount": 5
+    }
+  ],
+  "privateToolBundle": {
+    "fixedCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+    "files": [
+      {
+        "path": "tools/game-data/.gitattributes",
+        "gitBlobOid": "a0003043c3fc17e265ad91d924c439bb5d99dc74",
+        "sha256": "21496524b31497586f8e3670b3d409c7bca059bde1fb13b9aad6b2d608dbdb43",
+        "bytes": 499
+      },
+      {
+        "path": "tools/game-data/.gitignore",
+        "gitBlobOid": "509e998cf9fb3d8be39e2356afb91619d0e800ca",
+        "sha256": "764b12c43e715cf3f6b7bb20052f8036064d570519ea119e7dc02ab330b6ca08",
+        "bytes": 241
+      },
+      {
+        "path": "tools/game-data/README.md",
+        "gitBlobOid": "f0987d26588993b85b5c74172446adba1c558b81",
+        "sha256": "a26aece8081511381bb3b5e668d2d70b9702d9b937235867ae38dee14c210b13",
+        "bytes": 8194
+      },
+      {
+        "path": "tools/game-data/SOURCE.json",
+        "gitBlobOid": "563f904fa9f0e6c7990d7b66268b93e6df9a17b7",
+        "sha256": "850e2c41e387e153635c6be53960a4bc76dcff86c11f23138b588194e5728360",
+        "bytes": 1038
+      },
+      {
+        "path": "tools/game-data/decode_strings.py",
+        "gitBlobOid": "624e377f6fdeb18ee16eb7ca26ad90c6e10d4cd9",
+        "sha256": "fcc7fbac2b2e4cf51440388b496eafa85ac10cbea549c0af6dce03d90a18c230",
+        "bytes": 6786
+      },
+      {
+        "path": "tools/game-data/compare_text_exports.py",
+        "gitBlobOid": "d05698916e6d6022bd825653890d53686e243f59",
+        "sha256": "d3142596091e02dce186fc3cf05cc513d94c77237c591ec9eae2246d89e59784",
+        "bytes": 4974
+      },
+      {
+        "path": "tools/game-data/verify_exports.py",
+        "gitBlobOid": "2a4d75b99913530dd52cb54c26a3d7ece280d228",
+        "sha256": "99717f100eb3b0cee40cdc0b326d673e74c3172e93114b146fff41c0a5dfdc98",
+        "bytes": 2271
+      },
+      {
+        "path": "tools/game-data/export_w04_candidate.py",
+        "gitBlobOid": "5f43aba5784401ff3fbade106458699205862d0d",
+        "sha256": "c927804f7845ae8c888c59aa14cc9e3c5156bbb5032f188104f72d0944fa49d5",
+        "bytes": 21214
+      },
+      {
+        "path": "tools/game-data/test_export_w04_candidate.py",
+        "gitBlobOid": "af65be66c770b97feb5c67fa184af6c1bf33a64c",
+        "sha256": "99a1f5c2702c37aff67287d72a87241090db83ff8b269e73f5d8191362d1685c",
+        "bytes": 24019
+      }
+    ],
+    "totalBytes": 69236
+  },
+  "decisions": {
+    "status": "owner-mapped-with-explicit-compatibility-limits",
+    "reviewState": "not-applicable",
+    "gameContentApprovalCreated": false,
+    "gitOrPublicationAction": false,
+    "privateToolReadbackCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+    "privateToolReadbackStatus": "fixed-private-export-byte-verified",
+    "privateToolReadbackFileCount": 9
+  },
+  "rows": [
+    {
+      "entryId": "mods-m07-0000001",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/README.md",
+        "gitBlobOid": "b6a68770aef2f75a5b2beba035cba8f7c1ef82e3",
+        "fragmentGitBlobOid": "b6a68770aef2f75a5b2beba035cba8f7c1ef82e3",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/README.md"
+      },
+      "status": "private-owner-runbook-extended-for-m07",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "private",
+        "path": "tools/game-data/README.md",
+        "note": "The existing Private runbook is retained and extended with M07 scope, fixed tool provenance, and compatibility limits; it is not a byte-for-byte copy of this older Mods README."
+      },
+      "destinationEvidence": {
+        "sourceFixedCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+        "sourceFixedBlobOid": "f0987d26588993b85b5c74172446adba1c558b81",
+        "sourceFixedSha256": "a26aece8081511381bb3b5e668d2d70b9702d9b937235867ae38dee14c210b13",
+        "destinationCommit": "9069a5959e0e8cb7950e08930738d8d5da52e308",
+        "destinationGitBlobOid": "8711c0e54731b1726149716bc6f31dc93f8efdaa",
+        "destinationSha256": "27ded7c2bf649b5c4f16a197a753daea14d3c00715f12604275d5d17dfa8b244",
+        "destinationBytes": 9468
+      }
+    },
+    {
+      "entryId": "mods-m07-0000002",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/compare_text_exports.py",
+        "gitBlobOid": "573267edbc2099f950b2721d23a51602db3f35c9",
+        "fragmentGitBlobOid": "573267edbc2099f950b2721d23a51602db3f35c9",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/compare_text_exports.py"
+      },
+      "status": "private-fixed-tool-reused-line-endings-only",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "private",
+        "path": "tools/game-data/compare_text_exports.py",
+        "note": "Existing fixed Private W04 comparator is retained; the pinned M07 source and destination are identical after CRLF/LF normalization."
+      },
+      "sourceComparison": {
+        "sourceSha256": "e6cc60d14004e494ddbb1d37c5bba69f87e713580adec28eac0022d1fc9db71e",
+        "sourceBytes": 4901,
+        "targetSha256": "d3142596091e02dce186fc3cf05cc513d94c77237c591ec9eae2246d89e59784",
+        "targetBytes": 4974,
+        "targetBlobOid": "d05698916e6d6022bd825653890d53686e243f59",
+        "method": "crlf-lf-normalization",
+        "normalizedContentEqual": true
+      },
+      "destinationEvidence": {
+        "fixedCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+        "fixedBlobOid": "d05698916e6d6022bd825653890d53686e243f59",
+        "sha256": "d3142596091e02dce186fc3cf05cc513d94c77237c591ec9eae2246d89e59784",
+        "bytes": 4974
+      }
+    },
+    {
+      "entryId": "mods-m07-0000003",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/decode_strings.py",
+        "gitBlobOid": "2492da20741a32fdb7481aabcb1e87032b667431",
+        "fragmentGitBlobOid": "2492da20741a32fdb7481aabcb1e87032b667431",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/decode_strings.py"
+      },
+      "status": "private-fixed-tool-reused-line-endings-only",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "private",
+        "path": "tools/game-data/decode_strings.py",
+        "note": "Existing fixed Private W04 decoder is retained so the pinned exporter decoder SHA remains valid; source behavior is identical after CRLF/LF normalization."
+      },
+      "sourceComparison": {
+        "sourceSha256": "06f9604ef036b2ce47a2442709be94620a51ef511ab9f1869dfd2d9f232dc51b",
+        "sourceBytes": 6656,
+        "targetSha256": "fcc7fbac2b2e4cf51440388b496eafa85ac10cbea549c0af6dce03d90a18c230",
+        "targetBytes": 6786,
+        "targetBlobOid": "624e377f6fdeb18ee16eb7ca26ad90c6e10d4cd9",
+        "method": "crlf-lf-normalization",
+        "normalizedContentEqual": true
+      },
+      "destinationEvidence": {
+        "fixedCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+        "fixedBlobOid": "624e377f6fdeb18ee16eb7ca26ad90c6e10d4cd9",
+        "sha256": "fcc7fbac2b2e4cf51440388b496eafa85ac10cbea549c0af6dce03d90a18c230",
+        "bytes": 6786
+      }
+    },
+    {
+      "entryId": "mods-m07-0000004",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/render_skill_pages.mjs",
+        "gitBlobOid": "0e0a28cbdaa3c3ed66bcdb97e669da6bfca0c641",
+        "fragmentGitBlobOid": "0e0a28cbdaa3c3ed66bcdb97e669da6bfca0c641",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/render_skill_pages.mjs"
+      },
+      "status": "replaced-with-scoped-player-renderer",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "web",
+        "path": "web/shared-render.mjs",
+        "note": "The shared renderer presents validated player content; it does not recreate full mechanics HTML or TSV exports."
+      }
+    },
+    {
+      "entryId": "mods-m07-0000005",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/tests/test_validate_game_info.py",
+        "gitBlobOid": "783c33b6b6fd5a2e4af16342cd147434a0ee548b",
+        "fragmentGitBlobOid": "783c33b6b6fd5a2e4af16342cd147434a0ee548b",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/tests/test_validate_game_info.py"
+      },
+      "status": "migrated-existing-synthetic-local-reference-tests",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "source",
+        "path": "scripts/game-info/tests/test_validate_game_info.py",
+        "note": "Preserves the two existing synthetic tests for explicit history exclusions and source inclusion; it is not a game-content approval test."
+      },
+      "sourceComparison": {
+        "method": "byte-identical",
+        "sourceSha256": "3101239bc15555b6f673048211f0b5a71b8dc750df2294b55d3dfee3ffec82ce",
+        "targetSha256": "3101239bc15555b6f673048211f0b5a71b8dc750df2294b55d3dfee3ffec82ce",
+        "sourceBytes": 2490,
+        "targetBytes": 2490
+      },
+      "destinationEvidence": {
+        "gitBlobOid": "783c33b6b6fd5a2e4af16342cd147434a0ee548b",
+        "sha256": "3101239bc15555b6f673048211f0b5a71b8dc750df2294b55d3dfee3ffec82ce",
+        "bytes": 2490
+      }
+    },
+    {
+      "entryId": "mods-m07-0000006",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/validate_game_info.py",
+        "gitBlobOid": "0d0babf7ebcef8c486c3387209a713a85d6b5b16",
+        "fragmentGitBlobOid": "0d0babf7ebcef8c486c3387209a713a85d6b5b16",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/validate_game_info.py"
+      },
+      "status": "migrated-exact-local-markdown-reference-check",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "source",
+        "path": "scripts/game-info/validate_game_info.py",
+        "note": "Preserves the separate local Markdown link/image/anchor check; it does not replace the typed Source content validator and does not fetch remote references."
+      },
+      "sourceComparison": {
+        "method": "byte-identical",
+        "sourceSha256": "3743e6a7bac14768a5bae64fe0c78e70803d0c1c8e74a280a8229bf9f37b7ec3",
+        "targetSha256": "3743e6a7bac14768a5bae64fe0c78e70803d0c1c8e74a280a8229bf9f37b7ec3",
+        "sourceBytes": 3597,
+        "targetBytes": 3597
+      },
+      "destinationEvidence": {
+        "gitBlobOid": "0d0babf7ebcef8c486c3387209a713a85d6b5b16",
+        "sha256": "3743e6a7bac14768a5bae64fe0c78e70803d0c1c8e74a280a8229bf9f37b7ec3",
+        "bytes": 3597
+      }
+    },
+    {
+      "entryId": "mods-m07-0000007",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/vendor/limn/README.md",
+        "gitBlobOid": "87b20c77d20067e1db2411abaae458d5826200a7",
+        "fragmentGitBlobOid": "87b20c77d20067e1db2411abaae458d5826200a7",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/vendor/limn/README.md"
+      },
+      "status": "private-limn-readme-copied-byte-exact",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "private",
+        "path": "tools/game-data/vendor/limn/README.md",
+        "note": "The fixed Limn README is retained as documentation only; no executable, DLL, dictionary, or game data is copied."
+      },
+      "sourceComparison": {
+        "method": "byte-identical",
+        "sourceSha256": "1687543a46def668a7c7f74232e8e2bcbf3d7509984a5b13c16b154efb50eb32",
+        "targetSha256": "1687543a46def668a7c7f74232e8e2bcbf3d7509984a5b13c16b154efb50eb32",
+        "sourceBytes": 2680,
+        "targetBytes": 2680
+      },
+      "destinationEvidence": {
+        "gitBlobOid": "87b20c77d20067e1db2411abaae458d5826200a7",
+        "sha256": "1687543a46def668a7c7f74232e8e2bcbf3d7509984a5b13c16b154efb50eb32",
+        "bytes": 2680
+      }
+    },
+    {
+      "entryId": "mods-m07-0000008",
+      "source": {
+        "repoId": "mods",
+        "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+        "path": "scripts/game-info/verify_exports.py",
+        "gitBlobOid": "518f8b65b24822a911b47f94aefb3cb6ad5ed07a",
+        "fragmentGitBlobOid": "518f8b65b24822a911b47f94aefb3cb6ad5ed07a",
+        "selector": {
+          "kind": "file",
+          "locator": "file"
+        },
+        "url": "https://github.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/blob/241ad76ce62330472aa423055a5b85db59bb6c0d/scripts/game-info/verify_exports.py"
+      },
+      "status": "private-fixed-tool-reused-line-endings-only",
+      "reviewState": "not-applicable",
+      "target": {
+        "repoId": "private",
+        "path": "tools/game-data/verify_exports.py",
+        "note": "Existing fixed Private W04 verifier is retained; the pinned M07 source and destination are identical after CRLF/LF normalization."
+      },
+      "sourceComparison": {
+        "sourceSha256": "7d030495d2c9c2bea6d56d2cc84b95992f6008ec557eab45bd56c2295b9e1dd9",
+        "sourceBytes": 2233,
+        "targetSha256": "99717f100eb3b0cee40cdc0b326d673e74c3172e93114b146fff41c0a5dfdc98",
+        "targetBytes": 2271,
+        "targetBlobOid": "2a4d75b99913530dd52cb54c26a3d7ece280d228",
+        "method": "crlf-lf-normalization",
+        "normalizedContentEqual": true
+      },
+      "destinationEvidence": {
+        "fixedCommit": "194e8b043f18f9f3c877ed6790118add47401a5e",
+        "fixedBlobOid": "2a4d75b99913530dd52cb54c26a3d7ece280d228",
+        "sha256": "99717f100eb3b0cee40cdc0b326d673e74c3172e93114b146fff41c0a5dfdc98",
+        "bytes": 2271
+      }
+    }
+  ]
+}
