@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
+import { DOMAIN_KINDS, validateManifest } from './content/contract-release.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
 import { createStaticServer } from './serve.mjs';
 
@@ -22,7 +23,7 @@ function expectedSectionRows(sections) {
     Array.isArray(item.parts) ? item.parts.map(part => part.text ?? part.value ?? '').join('') : item.text ?? ''));
 }
 
-async function readVerifiedCoreDomains(distPath, verification) {
+export async function readVerifiedCoreDomains(distPath, verification) {
   assert.equal(typeof verification.shared_data_revision, 'string', 'shared smoke requires verified shared metadata');
   const pointers = verification.game_releases.filter(row => row.game_version === verification.shared_game_version
     && row.data_revision === verification.shared_data_revision);
@@ -33,20 +34,32 @@ async function readVerifiedCoreDomains(distPath, verification) {
   const manifestBytes = await readFile(manifestPath);
   assert.equal(sha256(manifestBytes), pointer.manifest_sha256, 'published manifest retains the exact version pointer digest');
   const manifest = parseJson(manifestBytes, 'Shared manifest');
+  assert.ok(Array.isArray(manifest.files), 'verified shared manifest lists its domain files');
+  for (const row of manifest.files) {
+    assert.ok(row && DOMAIN_KINDS.includes(row.kind), `shared manifest contains unsupported domain kind: ${row?.kind}`);
+  }
+  for (const kind of CORE_KINDS) {
+    assert.equal(manifest.files.filter(row => row.kind === kind).length, 1,
+      `verified shared manifest has one ${kind} core file`);
+  }
+  const announcementRows = manifest.files.filter(row => row.kind === 'announcements');
+  assert.ok(announcementRows.length <= 1, 'verified shared manifest contains multiple announcements domains');
+  validateManifest(manifest);
   assert.equal(manifest.dataRevision, verification.shared_data_revision);
   assert.equal(manifest.gameVersion, verification.shared_game_version);
 
   const domains = [];
   const requestedPaths = [pointer.manifest_path];
-  for (const kind of CORE_KINDS) {
-    const rows = manifest.files.filter(row => row.kind === kind);
-    assert.equal(rows.length, 1, `verified shared manifest has one ${kind} core file`);
-    const row = rows[0];
+  const selectedKinds = [...CORE_KINDS, ...(announcementRows.length ? ['announcements'] : [])];
+  for (const kind of selectedKinds) {
+    const row = manifest.files.find(file => file.kind === kind);
     const urlPath = `/data/${manifest.dataRevision}/${row.path}`;
-    const pinned = verification.shared_files.find(file => file.path === urlPath);
+    const pins = verification.shared_files.filter(file => file.path === urlPath);
+    assert.equal(pins.length, 1, `static artifact has one exact pin for ${urlPath}`);
+    const [pinned] = pins;
     assert.ok(pinned, `static artifact pins ${urlPath}`);
-    assert.equal(pinned.sha256, row.sha256);
-    assert.equal(pinned.size_bytes, row.sizeBytes);
+    assert.equal(pinned.sha256, row.sha256, `${kind} pinned digest matches the manifest`);
+    assert.equal(pinned.size_bytes, row.sizeBytes, `${kind} pinned size matches the manifest`);
     const fileBytes = await readFile(path.join(distPath, ...urlPath.slice(1).split('/')));
     assert.equal(fileBytes.byteLength, row.sizeBytes, `${kind} raw byte length matches the manifest`);
     assert.equal(sha256(fileBytes), row.sha256, `${kind} raw digest matches the manifest`);
@@ -61,7 +74,7 @@ async function readVerifiedCoreDomains(distPath, verification) {
     manifest,
     domains,
     requestedPaths: requestedPaths.sort(),
-    view: createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId }),
+    view: createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId, fixtureOnly: verification.package_kind === 'fixture' }),
   };
 }
 
@@ -277,7 +290,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     const expectedPaths = [...shared.requestedPaths].sort();
     assert.deepEqual([...requestedPaths].sort(), expectedPaths,
-      'the app loads exactly the pinned manifest and four shared core domains, without legacy data files');
+      'the app loads exactly the pinned manifest, core domains, and declared announcements domain without legacy data files');
     assert.deepEqual(dataFailures, [], 'the valid shared artifact has no failed same-origin data requests');
     assert.deepEqual(pageErrors, [], 'valid shared pages have no uncaught browser errors');
 
@@ -293,7 +306,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     process.stdout.write(
       `Shared browser smoke passed: ${shared.pointer.game_version} / ${shared.pointer.data_revision.slice(0, 12)}, ` +
-      'four exact core-domain bytes, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
+      'four exact core-domain bytes, any pinned announcements bytes, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
       'direct refresh, 390px layout, and failed-data fail-closed behavior.\n'
     );
   } finally {
