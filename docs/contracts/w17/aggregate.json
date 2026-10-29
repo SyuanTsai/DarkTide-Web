@@ -1,0 +1,100 @@
+{
+  "schema": "w17.mods-retirement-summary.v1",
+  "status": "read-only-preflight; preserve-all-source-paths",
+  "inputs": {
+    "w03ModsLedger": {
+      "path": "docs/contracts/w03/mods/mapping-ledger.json",
+      "sha256": "90d1d27ed7673db16ff3c5b82640f2af7847466fc5a7a4fcd7d1f9795ee9af16",
+      "rows": 191861,
+      "shards": 45
+    },
+    "w14ModsOverlay": {
+      "path": "docs/contracts/w14/outcomes/final-20261025/mods/manifest.json",
+      "sha256": "b213b785a7cca4dfb70d6795c778a51066d54fb1143ebf29887ff76fc2d762e5",
+      "rows": 191861,
+      "gaps": 0
+    },
+    "w15FinalCompletion": {
+      "sha256": "e226eea711b46141e5d42c9836b76b8a0a2a7babc78038c3ddca2c6e0171552a",
+      "bytes": 7198934,
+      "status": "deployed-awaiting-user-acceptance",
+      "contentVersion": "1.13.2.3",
+      "build": "6872aee741cef7f150bd79fc25ad251276b15f6a81a9c287f5e3623b6df422dc",
+      "rowsByGroup": {
+        "M05": 1291,
+        "M06": 771,
+        "M07": 8,
+        "M08": 2623,
+        "A17": 17
+      }
+    },
+    "m01SourceArchive": {
+      "repository": "SyuanTsai/DarkTide-Source-Data",
+      "commit": "805fa5ea3df2482419c967b4e82d019b65338065",
+      "manifestPath": "content/legacy/mods/241ad76/m01-manifest.json",
+      "manifestSha256": "9437100b28c375d2a49df1f8e65d8848d61ed7187a3fb104d60ec63d03d1fd99",
+      "files": 3071,
+      "rawBytes": 25070107,
+      "manifestScopedGitBlobsIncludingManifest": 3072,
+      "unrelatedSiblingGitTreeEntries": 4
+    },
+    "privateArchiveProof": {
+      "sourcePaths": 79014,
+      "scopeInventorySha256": "d279f907b38ae414a6f693812a267c24c7246ed8c20e4a0a630bac9ce47faac6",
+      "evidence": "Reuses the fixed W14 public-safe proof of remote retrieval, member verification, and 11 sampled restores.",
+      "fullRestoreClaimed": false,
+      "freshPrivateArchiveByteReadbackByW17Cli": false
+    }
+  },
+  "results": {
+    "sourcePathCount": 83260,
+    "selectorCount": 191861,
+    "candidateAfterW16PathCount": 82105,
+    "preserveSourcePathCount": 1155,
+    "mixedSelectorPathCount": 1,
+    "deletionReady": false,
+    "w16Acceptance": "not-completed",
+    "w14OutcomeRows": {
+      "kept": 1094,
+      "deferredToW15": 4693,
+      "privateRestorable": 79014,
+      "archivedReadable": 107060
+    },
+    "w15ReferenceAndPreservation": {
+      "m08AuthoringReferenceOnly": 2545,
+      "m08RetainedSelectors": 78,
+      "m08RetainedPaths": 61,
+      "a17OriginalW01PendingRows": 17
+    },
+    "mixedPath": {
+      "sourcePath": "Referneces/Translation.md",
+      "selectorCount": 2446,
+      "transferredSelectors": 2428,
+      "retainedSelectors": 18,
+      "deletionReady": false
+    },
+    "modsWorktreeObserved": {
+      "fixedSourceCommit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+      "head": "09a64d75df2e94fb0fb749b0c9671d568081926f",
+      "managedWorktreeStatusEntries": 0,
+      "trackedTreeDelta": {
+        "added": [".hash/readme-acquisition-records.json"],
+        "modified": ["README.md"],
+        "removed": []
+      },
+      "scopeNote": "This is the isolated managed worktree passed to the CLI. The protected original checkout and its pre-existing untracked documents were not read as file content or used as migration input."
+    },
+    "fullPerPathArtifact": {
+      "storedOutsideRepository": true,
+      "mediaType": "application/gzip; newline-delimited JSON",
+      "paths": 83260,
+      "selectors": 191861,
+      "gzipBytes": 11981816,
+      "gzipSha256": "d40968c3c09d3ca7ff7056a7495b593ebf4de4c91c5fb8e5df5b9a3dc32f5e7a",
+      "uncompressedBytes": 312480683,
+      "uncompressedSha256": "8edf67fc81f30a3577409007b9f1849290923c711073b06d6a95a4896996eeb8",
+      "reportManifestSha256": "73391ecb6137d5e4a618126b00dd408689fd0041e817c659820c1f5446d6b495",
+      "identicalInputRerunMatched": true
+    }
+  }
+}
