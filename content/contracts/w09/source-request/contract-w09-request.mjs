@@ -15,6 +15,13 @@ export const W09_APPROVED_SOURCE_RUNTIME_FILES = Object.freeze([
   Object.freeze({ path: 'scripts/content/contract-w05-build.mjs', sizeBytes: 26306, sha256: '5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac' }),
   Object.freeze({ path: 'scripts/content/contract-w05-merge.mjs', sizeBytes: 10794, sha256: '4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b' })
 ]);
+export const W09_APPROVED_SOURCE_RUNTIME_NEXT_COMMIT = '30b8a5744a4c41c56c73ffd5b83d00fa48b0599b';
+export const W09_APPROVED_SOURCE_RUNTIME_NEXT_FILES = Object.freeze([
+  Object.freeze({ path: 'content/schema/v2/source-contract.schema.json', sizeBytes: 128106, sha256: '79039dee3d35b0d2d2525ef69631fe6c32afcca0259e58adff520828e844ee2a' }),
+  Object.freeze({ path: 'scripts/content/contract-validator.mjs', sizeBytes: 142586, sha256: '1d90375753505e21cf6d2e145f3eeb51df4fb45836234c2a630833c8c00eff97' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-build.mjs', sizeBytes: 26306, sha256: '5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-merge.mjs', sizeBytes: 10794, sha256: '4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b' })
+]);
 export const W09_ACCEPTED_W07_BASELINE_COMMIT = '8e48334619f448794aab666f1805cb2bd6adf11a';
 export const W09_ACCEPTED_W07_BASELINE_SHA256 = 'a728b2e8dc65078ade88b01f87537323eb781fc8665f16c8166140292eb63acb';
 export const W09_SOURCE_PACKET_FILES = Object.freeze([
@@ -508,17 +515,36 @@ function readGitBlob(sourceRoot, commit, relativePath) {
   return gitResult(sourceRoot, ['show', `${commit}:${relativePath}`], { maxBuffer: 32 * 1024 * 1024 });
 }
 
+function readApprovedRuntimePinSet(sourceRoot, sourceCommit) {
+  const approvedSets = [
+    { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_FILES },
+    { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_NEXT_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_NEXT_FILES }
+  ];
+  for (const runtimeSet of approvedSets) {
+    const verifiedFiles = [];
+    let matches = true;
+    for (const expected of runtimeSet.files) {
+      let bytes;
+      try {
+        bytes = readGitBlob(sourceRoot, sourceCommit, expected.path);
+      } catch {
+        matches = false;
+        break;
+      }
+      if (bytes.length !== expected.sizeBytes || sha256(bytes) !== expected.sha256) {
+        matches = false;
+        break;
+      }
+      verifiedFiles.push({ ...expected, bytes });
+    }
+    if (matches && verifiedFiles.length === runtimeSet.files.length) return { runtimeSet, verifiedFiles };
+  }
+  throw new Error('pinned Source runtime does not match an exact approved W09 code hash set');
+}
+
 export async function loadW09ApprovedSourceRuntime({ sourceRoot, sourceCommit } = {}) {
   const repository = await assertSourceRepository(sourceRoot, sourceCommit);
-  const verifiedFiles = [];
-  for (const expected of W09_APPROVED_SOURCE_RUNTIME_FILES) {
-    const bytes = readGitBlob(repository.sourceRoot, repository.sourceCommit, expected.path);
-    const actualSha256 = sha256(bytes);
-    if (bytes.length !== expected.sizeBytes || actualSha256 !== expected.sha256) {
-      throw new Error(`pinned Source runtime does not match the approved W09 code hash: ${expected.path}`);
-    }
-    verifiedFiles.push({ ...expected, bytes });
-  }
+  const { runtimeSet, verifiedFiles } = readApprovedRuntimePinSet(repository.sourceRoot, repository.sourceCommit);
 
   const runtimeRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-approved-source-runtime-'));
   let cleaned = false;
@@ -549,7 +575,7 @@ export async function loadW09ApprovedSourceRuntime({ sourceRoot, sourceCommit } 
     const files = verifiedFiles.map(({ path: relativePath, sizeBytes, sha256: digest }) => ({ path: relativePath, sizeBytes, sha256: digest }));
     const identityCore = {
       schema: 'w09-approved-source-runtime/1',
-      approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_COMMIT,
+      approvedAtCommit: runtimeSet.approvedAtCommit,
       sourceCommit: repository.sourceCommit,
       files
     };
@@ -788,9 +814,27 @@ async function fetchSourceRelease({ releaseId, fetchImpl, token, allowDraft = fa
   const response = await fetchImpl(`${SOURCE_RELEASES_ENDPOINT}/tags/${encodeURIComponent(tagName)}`, {
     method: 'GET', headers: githubHeaders(token), redirect: 'error'
   });
-  if (response?.status === 404) return null;
-  if (!response || response.ok !== true) throw new Error(`Source release lookup failed with HTTP ${response?.status ?? 'unknown'}`);
-  const release = await responseJson(response, 'Source release lookup');
+  let release;
+  if (response?.status === 404) {
+    if (!allowDraft) return null;
+    const matches = [];
+    for (let page = 1; ; page += 1) {
+      const listed = await fetchImpl(`${SOURCE_RELEASES_ENDPOINT}?per_page=100&page=${page}`, {
+        method: 'GET', headers: githubHeaders(token), redirect: 'error'
+      });
+      if (!listed || listed.ok !== true) throw new Error(`Source draft release lookup failed with HTTP ${listed?.status ?? 'unknown'}`);
+      const releases = await responseJson(listed, 'Source draft release lookup');
+      if (!Array.isArray(releases)) throw new Error('Source draft release lookup must return an array');
+      matches.push(...releases.filter((item) => item?.tag_name === tagName));
+      if (matches.length > 1) throw new Error('Source draft release lookup returned duplicate matching tags');
+      if (releases.length < 100) break;
+    }
+    if (matches.length === 0) return null;
+    [release] = matches;
+  } else {
+    if (!response || response.ok !== true) throw new Error(`Source release lookup failed with HTTP ${response?.status ?? 'unknown'}`);
+    release = await responseJson(response, 'Source release lookup');
+  }
   const draftAllowed = allowDraft && release?.draft === true;
   if (!isPlainObject(release) || release.tag_name !== tagName || (!draftAllowed && release.draft !== false) || release.prerelease !== true
       || !Number.isSafeInteger(release.id) || release.id <= 0 || !Array.isArray(release.assets)) {
