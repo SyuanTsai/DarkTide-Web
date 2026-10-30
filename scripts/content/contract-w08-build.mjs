@@ -829,10 +829,18 @@ function assertModeShape(mode, name) {
 }
 
 function collectWebContentRows(modes) {
-  return modes.flatMap(({ mode }) => collectRequiredContentFromWeb(mode.authoring));
+  const localizedSubjects = collectLocalizedSubjectWeb(modes.map(({ mode }) => mode.authoring));
+  return modes.flatMap(({ mode }) => collectRequiredContentFromWeb(mode.authoring, mode.sourceContract, localizedSubjects));
 }
 
-function collectRequiredContentFromWeb(web) {
+function collectLocalizedSubjectWeb(webDocuments) {
+  return {
+    presentations: webDocuments.flatMap(web => web.presentations ?? []),
+    termLocalizations: webDocuments.flatMap(web => web.termLocalizations ?? []),
+  };
+}
+
+export function collectRequiredContentFromWeb(web, sourceContract = null, localizedSubjects = web) {
   const content = [];
   for (const item of web.presentations ?? []) {
     content.push({ id: item.authoringId, present: item.locale === 'zh-TW' && nonemptyText(item.name) });
@@ -845,13 +853,64 @@ function collectRequiredContentFromWeb(web) {
   }
   for (const item of web.gameChanges ?? []) {
     const fieldSummariesPresent = Array.isArray(item.fieldSummaries) && item.fieldSummaries.length > 0
-      && item.fieldSummaries.every(field => isRecord(field) && nonemptyText(field.summary));
-    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) && fieldSummariesPresent });
+      && item.fieldSummaries.every(field => isRecord(field) && nonemptyText(field.summary)
+        && ((field.beforeRule === undefined && field.afterRule === undefined)
+          || (localizedSummaryHasRequiredText(field.beforeRule) && localizedSummaryHasRequiredText(field.afterRule))));
+    const entityNamePresent = item.entityName === undefined
+      ? gameChangeHasExistingLocalizedSubject(item, localizedSubjects, sourceContract)
+      : localizedSummaryHasRequiredText(item.entityName);
+    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) && fieldSummariesPresent && entityNamePresent });
   }
   for (const item of web.officialTextChanges ?? []) {
     content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) });
   }
   return content;
+}
+
+function gameChangeHasExistingLocalizedSubject(change, web, sourceContract) {
+  if (!isRecord(sourceContract) || !Array.isArray(sourceContract.records) || !isRecord(change.sourceRef)) return false;
+  const keyFor = ref => isRecord(ref) && typeof ref.gameReleaseId === 'string' && typeof ref.recordId === 'string'
+    ? sourceRecordKey(ref) : null;
+  const records = new Map(sourceContract.records.map(record => [sourceRecordKey(record), record]));
+  const sourceChange = records.get(keyFor(change.sourceRef));
+  if (sourceChange?.kind !== 'game-change' || sourceChange.recordId !== change.changeId) return false;
+  const target = records.get(keyFor(sourceChange.payload?.entityRef));
+  const resolve = (record, visited = new Set()) => {
+    if (!isRecord(record)) return false;
+    const key = sourceRecordKey(record);
+    if (visited.has(key)) return false;
+    const next = new Set(visited).add(key);
+    if (['skill', 'blessing', 'weapon'].includes(record.kind)) {
+      const matches = (web.presentations ?? []).filter(row => row?.locale === 'zh-TW' && row.entityRef?.recordId === record.recordId
+        && row.entityRef?.gameReleaseId === record.gameReleaseId && row.entityRef?.kind === record.kind && nonemptyText(row.name));
+      return matches.length === 1;
+    }
+    if (record.kind === 'term') {
+      const matches = (web.termLocalizations ?? []).filter(row => row?.locale === 'zh-TW' && row.termRef?.recordId === record.recordId
+        && row.termRef?.gameReleaseId === record.gameReleaseId && nonemptyText(row.label));
+      return matches.length === 1;
+    }
+    let parents = [];
+    if (record.kind === 'claim') {
+      const parent = records.get(keyFor(record.payload?.targetRef));
+      if (parent) parents = [parent];
+    } else if (record.kind === 'blessing-variant') {
+      const parent = records.get(keyFor(record.payload?.blessingRef));
+      if (parent) parents = [parent];
+    } else if (record.kind === 'stat-definition') {
+      parents = sourceContract.records.filter(candidate => candidate.kind === 'weapon'
+        && (candidate.payload.statRefs ?? []).some(ref => keyFor(ref) === key));
+    } else if (record.kind === 'stat-curve') {
+      const definitions = sourceContract.records.filter(candidate => candidate.kind === 'stat-definition'
+        && keyFor(candidate.payload?.curveRef) === key);
+      const definitionKeys = new Set(definitions.map(sourceRecordKey));
+      parents = sourceContract.records.filter(candidate => candidate.kind === 'weapon'
+        && (candidate.payload.statRefs ?? []).some(ref => definitionKeys.has(keyFor(ref))));
+    }
+    const uniqueParents = new Map(parents.map(parent => [sourceRecordKey(parent), parent]));
+    return uniqueParents.size === 1 && resolve([...uniqueParents.values()][0], next);
+  };
+  return resolve(target);
 }
 
 function announcementHasRequiredText(announcement) {
@@ -1451,7 +1510,8 @@ export function validateW08Candidate(candidate, options = {}) {
     }
   }
 
-  const requiredContent = documents.flatMap(document => collectRequiredContentFromWeb(document.web));
+  const localizedSubjects = collectLocalizedSubjectWeb(documents.map(document => document.web));
+  const requiredContent = documents.flatMap(document => collectRequiredContentFromWeb(document.web, document.source, localizedSubjects));
   const expectedGate = evaluateW08PublicationGate({
     sourceBuild: candidate.envelope.sourceBuild,
     review: candidate.envelope.review,

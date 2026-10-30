@@ -45,7 +45,7 @@ const QUANTITY_LABELS = Object.freeze({
   'damage-profile': '傷害設定', 'dodge-count': '閃避次數',
 });
 export const SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY = 'shared-announcement-routing-v1';
-const GAME_CHANGE_TYPE_LABELS = Object.freeze({ skill: '技能', blessing: '祝福', weapon: '武器' });
+const GAME_CHANGE_TYPE_LABELS = Object.freeze({ skill: '技能', blessing: '祝福', weapon: '武器', other: '其他' });
 const GAME_CHANGE_OPERATION_LABELS = Object.freeze({
   added: '新增', removed: '移除', modified: '調整', correction: '更正',
 });
@@ -818,7 +818,8 @@ function renderWeapons(main, result, url) {
 
 function gameChangeType(item) {
   const kind = item?.displayEntityRef?.kind;
-  return Object.hasOwn(GAME_CHANGE_TYPE_LABELS, kind) ? kind : null;
+  if (['skill', 'blessing', 'weapon'].includes(kind)) return kind;
+  return typeof item?.entityKindLabel === 'string' && item.entityKindLabel.trim() ? 'other' : null;
 }
 
 const DECIMAL_VALUE = /^-?(?:0|[1-9]\d*)(?:\.\d+)?$/u;
@@ -848,7 +849,12 @@ function formatGameChangeValue(value) {
   return '數值格式未能確認';
 }
 
-export { formatGameChangeValue };
+function formatGameChangeSide(field, side) {
+  const wording = field?.valueKind === 'modifier-rule-reference' ? field?.[side + 'Rule'] : null;
+  return typeof wording === 'string' && wording.trim() ? wording : formatGameChangeValue(field?.[side]);
+}
+
+export { formatGameChangeSide, formatGameChangeValue };
 
 function renderChangeComparison(parent, comparison) {
   const details = node('details', null, 'shared-card shared-change-comparison');
@@ -973,8 +979,8 @@ function renderChangeFields(parent, item, result) {
     const row = node('article', null, 'shared-change-value');
     row.append(node('h3', field.summary));
     const values = node('div', null, 'shared-change-before-after');
-    const before = node('p'); before.append(node('strong', '前：'), document.createTextNode(formatGameChangeValue(field.before)));
-    const after = node('p'); after.append(node('strong', '後：'), document.createTextNode(formatGameChangeValue(field.after)));
+    const before = node('p'); before.append(node('strong', '前：'), document.createTextNode(formatGameChangeSide(field, 'before')));
+    const after = node('p'); after.append(node('strong', '後：'), document.createTextNode(formatGameChangeSide(field, 'after')));
     values.append(before, after);
     row.append(values);
     if (field.context?.locale === 'zh-TW' && typeof field.context.text === 'string' && field.context.text.trim()) {
@@ -1065,7 +1071,8 @@ function renderGameChanges(main, result, url) {
   const requestedVersion = url.searchParams.get('version') ?? '';
   const requestedType = url.searchParams.get('type') ?? '';
   const versions = [...new Set([result.pointer.game_version, ...allItems.map(row => row.gameVersion)])].sort(compareGameVersions);
-  const types = [...new Set([...Object.keys(GAME_CHANGE_TYPE_LABELS), ...allItems.map(gameChangeType).filter(Boolean)])];
+  const types = ['skill', 'blessing', 'weapon'];
+  if (allItems.some(item => gameChangeType(item) === 'other')) types.push('other');
   if ((requestedVersion && !versions.includes(requestedVersion)) || (requestedType && !types.includes(requestedType))) {
     setMetadata('遊戲更新篩選未能確認', '目前無法確認這個版本或項目類型篩選。', url);
     return renderUnavailable(main, { statusText: '請選擇清單中可用的遊戲版本與項目類型。' });
@@ -1110,7 +1117,7 @@ function renderGameChanges(main, result, url) {
     const entry = node('li', null, 'shared-entry shared-change-entry');
     const href = paramsUrl('/game-changes/', { id: item.changeId, ...(requestedVersion ? { version: requestedVersion } : {}), ...(requestedType ? { type: requestedType } : {}) });
     entry.append(link(href, item.entityName));
-    entry.append(node('p', `${item.gameVersion} · ${GAME_CHANGE_TYPE_LABELS[gameChangeType(item)]} · ${item.verificationLabel ?? '驗證方式未確認'}`, 'shared-muted'));
+    entry.append(node('p', `${item.gameVersion} · ${GAME_CHANGE_TYPE_LABELS[gameChangeType(item)] ?? '其他'} · ${item.verificationLabel ?? '驗證方式未確認'}`, 'shared-muted'));
     entry.append(node('p', item.summary));
     list.append(entry);
   }

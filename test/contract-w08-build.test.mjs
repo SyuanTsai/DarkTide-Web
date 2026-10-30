@@ -7,6 +7,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { loadWebAuthoringInputs, validateWebAuthoring } from '../scripts/content/contract-authoring.mjs';
 import {
+  collectRequiredContentFromWeb,
   compileW08Candidate,
   evaluateW08PublicationGate,
   validateW08Candidate,
@@ -33,6 +34,53 @@ const COMPILER_FILES = [
   'scripts/content/contract-release.mjs',
   'scripts/content/contract-w08-build.mjs',
 ].map((filePath, index) => ({ path: filePath, sizeBytes: index + 1, sha256: String(index + 2).repeat(64) }));
+
+// Scenario: A W08 game change targets a Source rule with no existing Web presentation.
+// Purpose: Require reviewed identity and complete zh-TW before/after rule wording before the publication content gate can pass.
+test('UnitT76_required-content-gate-needs-reviewed-subject-and-both-rule-sides', () => {
+  const changeId = 'fixture:game-change:rule-change';
+  const ruleRef = { gameReleaseId: RELEASE_ID, recordId: 'fixture:rule:new', kind: 'modifier-rule' };
+  const sourceContract = { records: [
+    { recordId: changeId, gameReleaseId: RELEASE_ID, kind: 'game-change', payload: { entityRef: ruleRef } },
+    { recordId: ruleRef.recordId, gameReleaseId: RELEASE_ID, kind: 'modifier-rule', payload: { triggerText: 'Synthetic rule.' } },
+  ] };
+  const local = text => ({ locale: 'zh-TW', text });
+  const web = {
+    presentations: [],
+    termLocalizations: [],
+    gameChanges: [{
+      changeId,
+      sourceRef: { gameReleaseId: RELEASE_ID, recordId: changeId, kind: 'game-change' },
+      summary: local('更新規則。'),
+      fieldSummaries: [{ field: 'modifier_rule_trigger', summary: '觸發條件更新。', beforeRule: local('舊條件。'), afterRule: local('新條件。') }],
+    }],
+  };
+
+  const requiredChangeRow = () => collectRequiredContentFromWeb(web, sourceContract).find(row => row.id === changeId);
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: false },
+    'a non-presented Source subject must have a reviewed Web identity before it can count as present');
+  web.gameChanges[0].entityName = local('新規則名稱');
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: true });
+  delete web.gameChanges[0].fieldSummaries[0].afterRule;
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: false },
+    'one missing rule side must block content readiness');
+
+  const presented = structuredClone(web);
+  delete presented.gameChanges[0].entityName;
+  sourceContract.records[0].payload.entityRef = { gameReleaseId: RELEASE_ID, recordId: 'fixture:weapon:presented', kind: 'weapon' };
+  sourceContract.records.push({ recordId: 'fixture:weapon:presented', gameReleaseId: RELEASE_ID, kind: 'weapon', payload: {} });
+  presented.presentations.push({ authoringId: 'fixture:presentation:weapon', locale: 'zh-TW', name: '已呈現武器',
+    entityRef: sourceContract.records.at(-1) });
+  assert.deepEqual(collectRequiredContentFromWeb(presented, sourceContract).find(row => row.id === changeId), { id: changeId, present: false },
+    'existing subject names do not waive missing before/after rule text');
+  presented.gameChanges[0].fieldSummaries[0].afterRule = local('新條件。');
+  assert.deepEqual(collectRequiredContentFromWeb(presented, sourceContract).find(row => row.id === changeId), { id: changeId, present: true },
+    'an exact existing Web presentation can supply the subject name without a duplicate identity target');
+  const ambiguousPresentation = structuredClone(presented);
+  ambiguousPresentation.presentations.push({ ...structuredClone(ambiguousPresentation.presentations[0]), authoringId: 'fixture:presentation:weapon-duplicate' });
+  assert.deepEqual(collectRequiredContentFromWeb(ambiguousPresentation, sourceContract).find(row => row.id === changeId), { id: changeId, present: false },
+    'ambiguous subject presentations cannot satisfy the publication content gate');
+});
 
 function makeSourceRecord(recordId, kind, payload = {}, dimension = 'technical') {
   return {
@@ -237,6 +285,24 @@ async function makeFormalCompilerInput(donor, {
   authoring.presentations = authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
     && ['skill', 'blessing', 'weapon'].includes(item.entityRef.kind));
   authoring.termLocalizations = authoring.termLocalizations.filter(item => item.termRef.gameReleaseId === releaseId);
+  for (const change of authoring.gameChanges) {
+    const sourceChange = sourceContract.records.find(record => record.kind === 'game-change'
+      && record.recordId === change.sourceRef?.recordId && record.gameReleaseId === change.sourceRef?.gameReleaseId);
+    const subjectRef = sourceChange?.payload?.entityRef;
+    const hasCandidatePresentation = authoring.presentations.some(item => item.entityRef?.recordId === subjectRef?.recordId
+      && item.entityRef?.gameReleaseId === subjectRef?.gameReleaseId);
+    if (!hasCandidatePresentation) {
+      const sourcePresentation = donor.authoring.presentations.find(item => item.entityRef?.recordId === subjectRef?.recordId
+        && item.entityRef?.gameReleaseId === subjectRef?.gameReleaseId);
+      if (sourcePresentation) {
+        change.entityName = { locale: 'zh-TW', text: sourcePresentation.name };
+        authoring.reviewTargets.push({
+          targetId: 'target:' + change.changeId + ':entity-name', ownerKind: 'game-change', ownerId: change.changeId,
+          fieldPath: '/entityName', dimension: 'identity',
+        });
+      }
+    }
+  }
   if (!announcements) authoring.announcements = [];
   if (!gameChanges) authoring.gameChanges = [];
   if (!officialTextChanges) authoring.officialTextChanges = [];

@@ -889,3 +889,131 @@ test('UnitT75_game-change-per-field-review-binds-exact-field-identity', async ()
   wrongField.gameChanges[0].fieldSummaries[0].field = 'not-in-source';
   assert.equal(validate(wrongField, reviewInputs).valid, false);
 });
+
+// Scenario: A Source game-change compares two release-bound modifier-rule records.
+// Purpose: Require reviewed zh-TW identity and before/after wording, and stale those reviews when their exact Source context changes.
+test('UnitT78_game-change-rule-wording-requires-source-bound-reviews', async () => {
+  const inputs = await loadInputs();
+  const sourceContract = structuredClone(inputs.sourceContract);
+  const sourceChange = sourceContract.records.find(item => item.kind === 'game-change' && item.recordId === 'fixture:game-change:curve');
+  const beforeRule = sourceContract.records.find(item => item.kind === 'modifier-rule' && item.gameReleaseId === 'fixture-r1');
+  const afterRule = structuredClone(beforeRule);
+  afterRule.recordId = 'fixture:rule:alpha-r2';
+  afterRule.gameReleaseId = 'fixture-r2';
+  afterRule.payload.triggerText = 'Changed synthetic trigger.';
+  sourceContract.records.push(afterRule);
+  sourceChange.payload.changedFields = [{
+    field: 'rule.trigger_text',
+    valueKind: 'modifier-rule-reference',
+    before: { recordId: beforeRule.recordId, gameReleaseId: beforeRule.gameReleaseId },
+    after: { recordId: afterRule.recordId, gameReleaseId: afterRule.gameReleaseId },
+  }];
+  const sourceRecordMap = new Map(sourceContract.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item]));
+  const ruleInputs = {
+    ...inputs,
+    sourceContract,
+    sourceValidation: { ...inputs.sourceValidation, valid: true },
+    sourceRecordMap,
+  };
+  const contract = structuredClone(inputs.authoring);
+  const owner = contract.gameChanges.find(item => item.changeId === sourceChange.recordId);
+  const local = text => ({ locale: 'zh-TW', text, textSha256: hash(Buffer.from(text, 'utf8')) });
+  owner.entityName = local('合成武器名稱');
+  owner.fieldSummaries = [{
+    field: 'rule.trigger_text',
+    summary: '調整規則的觸發條件。',
+    beforeRule: local('舊版觸發條件。'),
+    afterRule: local('新版觸發條件。'),
+  }];
+  const targets = [
+    { targetId: 'fixture:review:game-change-entity-name', ownerKind: 'game-change', ownerId: owner.changeId, fieldPath: '/entityName', dimension: 'identity' },
+    { targetId: 'fixture:review:game-change-rule-before', ownerKind: 'game-change', ownerId: owner.changeId, fieldPath: '/fieldSummaries/0/beforeRule', dimension: 'content' },
+    { targetId: 'fixture:review:game-change-rule-after', ownerKind: 'game-change', ownerId: owner.changeId, fieldPath: '/fieldSummaries/0/afterRule', dimension: 'content' },
+  ];
+  contract.reviewTargets.push(...targets);
+
+  const initial = validate(contract, ruleInputs);
+  assert.equal(initial.valid, true, JSON.stringify(initial.issues));
+  for (const target of targets) contract.reviewReceipts.push(createReviewReceipt(contract, target, {
+    ...ruleInputs,
+    reviewer: { kind: 'human', id: 'synthetic-rule-reviewer' },
+    reviewedAt: '2026-10-24T00:00:00Z',
+  }));
+  for (const target of targets) assert.equal(getReviewState(contract, target.targetId, ruleInputs), 'approved');
+
+  const collectionOnly = structuredClone(contract);
+  const collectionTarget = collectionOnly.reviewTargets.find(target => target.ownerKind === 'game-change'
+    && target.ownerId === owner.changeId && target.fieldPath === '/fieldSummaries' && target.dimension === 'content');
+  assert.ok(collectionTarget);
+  collectionOnly.reviewTargets = collectionOnly.reviewTargets.filter(target => !targets.slice(1).some(item => item.targetId === target.targetId));
+  collectionOnly.reviewReceipts = collectionOnly.reviewReceipts.filter(receipt => !targets.slice(1).some(item => item.targetId === receipt.targetId)
+    && receipt.targetId !== collectionTarget.targetId);
+  collectionOnly.reviewReceipts.push(createReviewReceipt(collectionOnly, collectionTarget, {
+    ...ruleInputs,
+    reviewer: { kind: 'human', id: 'synthetic-rule-collection-reviewer' },
+    reviewedAt: '2026-10-24T00:00:01Z',
+  }));
+  assert.equal(validate(collectionOnly, ruleInputs).valid, true, 'a reviewed whole fieldSummaries collection covers both translated rule sides');
+  assert.equal(getReviewState(collectionOnly, collectionTarget.targetId, ruleInputs), 'approved');
+
+  const exactOnly = structuredClone(contract);
+  const collectionTargetId = exactOnly.reviewTargets.find(target => target.ownerKind === 'game-change'
+    && target.ownerId === owner.changeId && target.fieldPath === '/fieldSummaries' && target.dimension === 'content')?.targetId;
+  exactOnly.reviewTargets = exactOnly.reviewTargets.filter(target => target.targetId !== collectionTargetId);
+  exactOnly.reviewReceipts = exactOnly.reviewReceipts.filter(receipt => receipt.targetId !== collectionTargetId);
+  const summaryTarget = {
+    targetId: 'fixture:review:game-change-rule-summary', ownerKind: 'game-change', ownerId: owner.changeId,
+    fieldPath: '/fieldSummaries/0/summary', dimension: 'content',
+  };
+  exactOnly.reviewTargets.push(summaryTarget);
+  exactOnly.reviewReceipts.push(createReviewReceipt(exactOnly, summaryTarget, {
+    ...ruleInputs,
+    reviewer: { kind: 'human', id: 'synthetic-rule-summary-reviewer' },
+    reviewedAt: '2026-10-24T00:00:02Z',
+  }));
+  assert.equal(validate(exactOnly, ruleInputs).valid, true, 'exact summary plus before/after targets cover the field without a collection target');
+
+  const changedSource = structuredClone(ruleInputs.sourceContract);
+  changedSource.records.find(item => item.recordId === afterRule.recordId).payload.triggerText = 'A later Source trigger.';
+  const changedInputs = {
+    ...ruleInputs,
+    sourceContract: changedSource,
+    sourceRecordMap: new Map(changedSource.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item])),
+  };
+  assert.equal(getReviewState(contract, targets[1].targetId, changedInputs), 'stale');
+  assert.equal(getReviewState(contract, targets[2].targetId, changedInputs), 'stale');
+  assert.equal(getReviewState(collectionOnly, collectionTarget.targetId, changedInputs), 'stale',
+    'the collection digest also includes both exact Source rule dependencies');
+
+  const changedEntity = structuredClone(ruleInputs.sourceContract);
+  changedEntity.records.find(item => item.recordId === sourceChange.payload.entityRef.recordId
+    && item.gameReleaseId === sourceChange.payload.entityRef.gameReleaseId).payload.templateKey = 'fixture_template_revised';
+  const entityInputs = {
+    ...ruleInputs,
+    sourceContract: changedEntity,
+    sourceRecordMap: new Map(changedEntity.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item])),
+  };
+  assert.equal(getReviewState(contract, targets[0].targetId, entityInputs), 'stale');
+
+  const missingAfter = structuredClone(contract);
+  delete missingAfter.gameChanges[0].fieldSummaries[0].afterRule;
+  assert.equal(validate(missingAfter, ruleInputs).valid, false);
+  const missingTarget = structuredClone(contract);
+  missingTarget.reviewTargets = missingTarget.reviewTargets.filter(target => target.targetId !== targets[1].targetId);
+  assert.equal(validate(missingTarget, ruleInputs).valid, false);
+
+  const numericSource = structuredClone(ruleInputs.sourceContract);
+  const numericChange = numericSource.records.find(item => item.kind === 'game-change');
+  numericChange.payload.changedFields = [{
+    field: 'synthetic-damage',
+    before: { status: 'known', decimal: '1', unit: 'damage' },
+    after: { status: 'known', decimal: '2', unit: 'damage' },
+    unit: 'damage',
+  }];
+  const numericInputs = {
+    ...ruleInputs,
+    sourceContract: numericSource,
+    sourceRecordMap: new Map(numericSource.records.map(item => [item.gameReleaseId + '\u0000' + item.recordId, item])),
+  };
+  assert.equal(validate(contract, numericInputs).valid, false, 'rule wording cannot be attached to a numeric field');
+});
