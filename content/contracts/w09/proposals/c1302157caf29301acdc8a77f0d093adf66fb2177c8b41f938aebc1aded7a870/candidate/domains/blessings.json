@@ -1,0 +1,326 @@
+{
+  "gameReleaseId": "darktide:1.13.3",
+  "kind": "blessings",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "gameVersion": "1.13.3",
+        "releaseOrder": 3,
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.17",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.19",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "a2d7deab99f2e87d3ccc1afbbbb73ab64bfc4ad9f2509bbc753ea3a48367da7c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "4b37851848119d57032242185906a942c4229219c162de9207b2d46b06c2bc09"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "79cf699d0971467e370a77152428ffe7518a5a406a8d48e8f750f4d43968b179",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "79cf699d0971467e370a77152428ffe7518a5a406a8d48e8f750f4d43968b179",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "a0e9c6145db9b127021af597a618498339de210bb8812672d2d97a796ed12936"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "555cb142923641ebce2c014641272597175623a4f7a457fced63404d025ddf10",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 9670e08685d0aa90ddbc1b4577756a0b0365b610, 9029 bytes, SHA-256 555cb142923641ebce2c014641272597175623a4f7a457fced63404d025ddf10. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:chainaxe-p1-traits-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.3",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": []
+    },
+    "officialTextChanges": [],
+    "presentations": [],
+    "reviewReceipts": [],
+    "reviewTargets": [],
+    "termLocalizations": []
+  }
+}
