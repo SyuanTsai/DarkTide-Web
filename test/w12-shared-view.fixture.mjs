@@ -67,6 +67,7 @@ function makeCompilerInput(donor, {
   changeTargetKind = null,
   knownRangeChange = false,
   includeCorrectionChain = false,
+  subjectPresentationInW06 = false,
 } = {}) {
   const sourceContract = structuredClone(donor.sourceContract);
   sourceContract.fixtureOnly = false;
@@ -233,9 +234,22 @@ function makeCompilerInput(donor, {
   if (!sourceValidation.valid) throw new Error('W12 synthetic Source review fixture is invalid: '
     + sourceValidation.issues.map(issue => issue.message).join('; '));
 
-  const w06 = makeMode('w06', []);
+  let w06Presentations = [];
+  if (subjectPresentationInW06) {
+    const targetRef = sourceChange?.payload?.entityRef;
+    const index = authoring.presentations.findIndex(item => item.entityRef?.recordId === targetRef?.recordId
+      && item.entityRef?.gameReleaseId === targetRef?.gameReleaseId
+      && (!targetRef?.kind || item.entityRef?.kind === targetRef.kind));
+    if (index < 0) throw new Error('W12 fixture has no localized subject presentation to place in W06');
+    const [presentation] = authoring.presentations.splice(index, 1);
+    w06Presentations = [presentation];
+    authoring.reviewTargets = authoring.reviewTargets.filter(target => target.ownerId !== presentation.authoringId);
+    const retainedTargetIds = new Set(authoring.reviewTargets.map(target => target.targetId));
+    authoring.reviewReceipts = authoring.reviewReceipts.filter(receipt => retainedTargetIds.has(receipt.targetId));
+  }
+  const w06 = makeMode('w06', w06Presentations);
   w06.sourceContract = structuredClone(sourceContract);
-  w06.officialInputs = { sources: [] };
+  w06.officialInputs = subjectPresentationInW06 ? structuredClone(donor.officialInputs) : { sources: [] };
   w06.termRules = structuredClone(donor.termRules);
   const w07 = makeMode('w07', []);
   w07.authoring = authoring;

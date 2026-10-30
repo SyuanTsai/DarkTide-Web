@@ -511,13 +511,16 @@ function validateReceiptAndTargetShapes(contract, issues) {
         || /^\/tierPresentations\/options\/\d+(?:\/detailSections(?:\/\d+\/items(?:\/\d+(?:\/text|\/parts(?:\/\d+(?:\/text)?)?)?)?)?)?$/.test(target.fieldPath)
         || /^\/errata\/\d+\/text$/.test(target.fieldPath)
       )) || (target.ownerKind === 'term-localization' && ['/label', '/definition'].includes(target.fieldPath))
-        || (target.ownerKind === 'game-change' && (target.fieldPath === '/fieldSummaries' || /^\/fieldSummaries\/\d+\/summary$/.test(target.fieldPath))),
+        || (target.ownerKind === 'game-change' && (target.fieldPath === '/fieldSummaries'
+          || /^\/fieldSummaries\/\d+\/(?:summary|beforeRule|afterRule)$/.test(target.fieldPath))),
       context: (target.ownerKind === 'presentation' && (target.fieldPath === '/tierApplicability' || /^\/errata\/\d+\/context(?:\/description)?$/.test(target.fieldPath)))
         || (target.ownerKind === 'term-localization' && target.fieldPath === '/contextKey'),
       errata: target.ownerKind === 'presentation' && target.fieldPath === '/errata',
       announcement: target.ownerKind === 'announcement' && target.fieldPath === '/blocks',
       'game-change': ['game-change', 'official-text-change'].includes(target.ownerKind) && target.fieldPath === '/summary',
-      identity: (target.ownerKind === 'presentation' && target.fieldPath === '/entityRef') || (target.ownerKind === 'term-localization' && target.fieldPath === '/termRef'),
+      identity: (target.ownerKind === 'presentation' && target.fieldPath === '/entityRef')
+        || (target.ownerKind === 'term-localization' && target.fieldPath === '/termRef')
+        || (target.ownerKind === 'game-change' && target.fieldPath === '/entityName'),
     }[target.dimension] ?? false;
     if (!allowed) issue(issues, at + '/dimension', 'review dimension does not match an allowed owner field', 'review-dimension');
   }
@@ -1442,7 +1445,7 @@ function detailSectionsHaveReviewCoverage(contract, ownerId, sections, basePath)
   return true;
 }
 
-function validateRequiredReviewCoverage(contract, issues) {
+function validateRequiredReviewCoverage(contract, issues, sourceRecordMap) {
   const requireTarget = (ownerKind, ownerId, fieldPaths, dimension, issuePath, description) => {
     if (!hasAnyUniqueReviewTarget(contract, ownerKind, ownerId, fieldPaths, dimension)) {
       issue(issues, issuePath, description, 'review-coverage');
@@ -1533,6 +1536,9 @@ function validateRequiredReviewCoverage(contract, issues) {
 
   for (const [index, change] of contract.gameChanges.entries()) {
     const at = '/gameChanges/' + index;
+    if (hasNonemptyText(change.entityName?.text)) {
+      requireTarget('game-change', change.changeId, ['/entityName'], 'identity', at + '/entityName', 'non-empty game-change entity names require an identity review target');
+    }
     if (hasNonemptyText(change.summary?.text)) {
       requireTarget('game-change', change.changeId, ['/summary'], 'game-change', at + '/summary', 'non-empty game-change summaries require a matching review target');
     }
@@ -1543,6 +1549,17 @@ function validateRequiredReviewCoverage(contract, issues) {
       ));
       if (!wholeCollection && !everyField) {
         issue(issues, at + '/fieldSummaries', 'non-empty game-change field summaries require a whole-collection or complete per-field review target set', 'review-coverage');
+      }
+    }
+    const sourceChange = change.sourceRef && sourceRecordMap?.get(keyOf(change.sourceRef));
+    const wholeFieldSummaryReview = hasUniqueReviewTarget(contract, 'game-change', change.changeId, '/fieldSummaries', 'content');
+    for (const [fieldIndex, summary] of (change.fieldSummaries ?? []).entries()) {
+      const sourceField = sourceChange?.payload?.changedFields?.find(field => field.field === summary.field);
+      if (sourceField?.valueKind !== 'modifier-rule-reference') continue;
+      if (wholeFieldSummaryReview) continue;
+      for (const side of ['beforeRule', 'afterRule']) if (hasNonemptyText(summary[side]?.text)) {
+        const fieldPath = '/fieldSummaries/' + fieldIndex + '/' + side;
+        requireTarget('game-change', change.changeId, [fieldPath], 'content', at + fieldPath, 'each translated before/after rule requires its own content review target');
       }
     }
   }
@@ -1959,9 +1976,24 @@ function validateWebSemantic(contract, inputs, issues) {
       if (change.sourceRef.gameReleaseId !== sourceChange.gameReleaseId) issue(issues, at + '/sourceRef/gameReleaseId', 'game-change summary points to a different Source release', 'game-change-owner');
       sourceChangeIds.add(sourceChange.recordId);
       const sourceFields = new Set((sourceChange.payload.changedFields ?? []).map(item => item.field));
+      const sourceFieldsByName = new Map((sourceChange.payload.changedFields ?? []).map(item => [item.field, item]));
       for (const [fieldIndex, fieldSummary] of change.fieldSummaries.entries()) {
         if (!sourceFields.has(fieldSummary.field)) issue(issues, at + '/fieldSummaries/' + fieldIndex + '/field', 'field summary must name a field present in the referenced Source game change', 'game-change-field');
+        const sourceField = sourceFieldsByName.get(fieldSummary.field);
+        if (sourceField?.valueKind === 'modifier-rule-reference') {
+          for (const side of ['beforeRule', 'afterRule']) {
+            const wording = fieldSummary[side];
+            if (!isObject(wording) || wording.locale !== 'zh-TW' || !textHashMatches(wording.text, wording.textSha256)) {
+              issue(issues, at + '/fieldSummaries/' + fieldIndex + '/' + side, 'modifier-rule changes require a hashed zh-TW translation for both compared releases', 'game-change-rule-translation');
+            }
+          }
+        } else if (fieldSummary.beforeRule !== undefined || fieldSummary.afterRule !== undefined) {
+          issue(issues, at + '/fieldSummaries/' + fieldIndex, 'before/after rule translations are only valid for a Source modifier-rule reference field', 'game-change-rule-translation');
+        }
       }
+    }
+    if (change.entityName !== undefined && !textHashMatches(change.entityName?.text, change.entityName?.textSha256)) {
+      issue(issues, at + '/entityName/textSha256', 'game-change entity name hash mismatch', 'hash-mismatch');
     }
     if (!textHashMatches(change.summary.text, change.summary.textSha256)) issue(issues, at + '/summary/textSha256', 'game-change summary hash mismatch', 'hash-mismatch');
     uniqueBy(change.fieldSummaries, item => item.field, 'game-change field summary', issues, at + '/fieldSummaries');
@@ -2006,7 +2038,7 @@ function validateWebSemantic(contract, inputs, issues) {
     }
   }
 
-  validateRequiredReviewCoverage(contract, issues);
+  validateRequiredReviewCoverage(contract, issues, inputs.sourceRecordMap);
   validateReceiptAndTargetShapes(contract, issues);
   isForbiddenRemoteKey(contract, '', issues);
 }
@@ -2288,6 +2320,49 @@ export function computeReviewDigests(contract, target, inputs) {
       throw new Error('Game-change field summary review dependency has no field identity: ' + target.targetId);
     }
     dependencies.push({ kind: 'game-change-field-summary-binding', field: fieldSummary.field });
+  }
+  if (target.ownerKind === 'game-change' && target.fieldPath === '/entityName') {
+    const sourceChange = sourceRecordMap.get(keyOf(owner.sourceRef));
+    const entityRef = sourceChange?.payload?.entityRef;
+    const entity = entityRef && sourceRecordMap.get(keyOf(entityRef));
+    if (sourceChange?.kind !== 'game-change' || !entityRef || !entity) {
+      throw new Error('Game-change entity-name review must resolve the exact Source entity identity: ' + target.targetId);
+    }
+    const digest = inputs.sourceValidator.computeReviewDigests(sourceContract, {
+      recordId: entity.recordId, gameReleaseId: entity.gameReleaseId, fieldPath: '/payload',
+    });
+    dependencies.push({
+      kind: 'game-change-entity-identity-binding',
+      changeRef: owner.sourceRef,
+      entityRef: { recordId: entity.recordId, gameReleaseId: entity.gameReleaseId, kind: entity.kind },
+      targetDigest: digest.targetDigest,
+      dependenciesDigest: digest.dependenciesDigest,
+    });
+  }
+  const ruleTranslationMatch = target.ownerKind === 'game-change'
+    && target.fieldPath.match(/^\/fieldSummaries\/(\d+)\/(beforeRule|afterRule)$/);
+  if (ruleTranslationMatch) {
+    const fieldSummary = owner.fieldSummaries?.[Number(ruleTranslationMatch[1])];
+    const side = ruleTranslationMatch[2] === 'beforeRule' ? 'before' : 'after';
+    const sourceChange = sourceRecordMap.get(keyOf(owner.sourceRef));
+    const sourceField = sourceChange?.payload?.changedFields?.find(item => item.field === fieldSummary?.field);
+    const ruleRef = sourceField?.valueKind === 'modifier-rule-reference' ? sourceField[side] : null;
+    const rule = ruleRef && sourceRecordMap.get(keyOf(ruleRef));
+    if (!sourceChange || sourceChange.kind !== 'game-change' || !sourceField || !ruleRef || rule?.kind !== 'modifier-rule') {
+      throw new Error('Game-change rule translation review must resolve the exact Source before/after rule: ' + target.targetId);
+    }
+    const digest = inputs.sourceValidator.computeReviewDigests(sourceContract, {
+      recordId: rule.recordId, gameReleaseId: rule.gameReleaseId, fieldPath: '/payload',
+    });
+    dependencies.push({
+      kind: 'game-change-rule-translation-binding',
+      field: fieldSummary.field,
+      side,
+      changeRef: owner.sourceRef,
+      ruleRef: { recordId: rule.recordId, gameReleaseId: rule.gameReleaseId, kind: rule.kind },
+      targetDigest: digest.targetDigest,
+      dependenciesDigest: digest.dependenciesDigest,
+    });
   }
   for (const ruleId of collectTermRuleIds(reviewSourceValue(target, owner, value))) {
     const rule = inputs.termRules?.rules?.find(item => item.ruleId === ruleId);

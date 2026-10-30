@@ -7,6 +7,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { loadWebAuthoringInputs, validateWebAuthoring } from '../scripts/content/contract-authoring.mjs';
 import {
+  collectRequiredContentFromWeb,
   compileW08Candidate,
   evaluateW08PublicationGate,
   validateW08Candidate,
@@ -33,6 +34,53 @@ const COMPILER_FILES = [
   'scripts/content/contract-release.mjs',
   'scripts/content/contract-w08-build.mjs',
 ].map((filePath, index) => ({ path: filePath, sizeBytes: index + 1, sha256: String(index + 2).repeat(64) }));
+
+// Scenario: A W08 game change targets a Source rule with no existing Web presentation.
+// Purpose: Require reviewed identity and complete zh-TW before/after rule wording before the publication content gate can pass.
+test('UnitT76_required-content-gate-needs-reviewed-subject-and-both-rule-sides', () => {
+  const changeId = 'fixture:game-change:rule-change';
+  const ruleRef = { gameReleaseId: RELEASE_ID, recordId: 'fixture:rule:new', kind: 'modifier-rule' };
+  const sourceContract = { records: [
+    { recordId: changeId, gameReleaseId: RELEASE_ID, kind: 'game-change', payload: { entityRef: ruleRef } },
+    { recordId: ruleRef.recordId, gameReleaseId: RELEASE_ID, kind: 'modifier-rule', payload: { triggerText: 'Synthetic rule.' } },
+  ] };
+  const local = text => ({ locale: 'zh-TW', text });
+  const web = {
+    presentations: [],
+    termLocalizations: [],
+    gameChanges: [{
+      changeId,
+      sourceRef: { gameReleaseId: RELEASE_ID, recordId: changeId, kind: 'game-change' },
+      summary: local('更新規則。'),
+      fieldSummaries: [{ field: 'modifier_rule_trigger', summary: '觸發條件更新。', beforeRule: local('舊條件。'), afterRule: local('新條件。') }],
+    }],
+  };
+
+  const requiredChangeRow = () => collectRequiredContentFromWeb(web, sourceContract).find(row => row.id === changeId);
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: false },
+    'a non-presented Source subject must have a reviewed Web identity before it can count as present');
+  web.gameChanges[0].entityName = local('新規則名稱');
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: true });
+  delete web.gameChanges[0].fieldSummaries[0].afterRule;
+  assert.deepEqual(requiredChangeRow(), { id: changeId, present: false },
+    'one missing rule side must block content readiness');
+
+  const presented = structuredClone(web);
+  delete presented.gameChanges[0].entityName;
+  sourceContract.records[0].payload.entityRef = { gameReleaseId: RELEASE_ID, recordId: 'fixture:weapon:presented', kind: 'weapon' };
+  sourceContract.records.push({ recordId: 'fixture:weapon:presented', gameReleaseId: RELEASE_ID, kind: 'weapon', payload: {} });
+  presented.presentations.push({ authoringId: 'fixture:presentation:weapon', locale: 'zh-TW', name: '已呈現武器',
+    entityRef: sourceContract.records.at(-1) });
+  assert.deepEqual(collectRequiredContentFromWeb(presented, sourceContract).find(row => row.id === changeId), { id: changeId, present: false },
+    'existing subject names do not waive missing before/after rule text');
+  presented.gameChanges[0].fieldSummaries[0].afterRule = local('新條件。');
+  assert.deepEqual(collectRequiredContentFromWeb(presented, sourceContract).find(row => row.id === changeId), { id: changeId, present: true },
+    'an exact existing Web presentation can supply the subject name without a duplicate identity target');
+  const ambiguousPresentation = structuredClone(presented);
+  ambiguousPresentation.presentations.push({ ...structuredClone(ambiguousPresentation.presentations[0]), authoringId: 'fixture:presentation:weapon-duplicate' });
+  assert.deepEqual(collectRequiredContentFromWeb(ambiguousPresentation, sourceContract).find(row => row.id === changeId), { id: changeId, present: false },
+    'ambiguous subject presentations cannot satisfy the publication content gate');
+});
 
 function makeSourceRecord(recordId, kind, payload = {}, dimension = 'technical') {
   return {
@@ -237,6 +285,24 @@ async function makeFormalCompilerInput(donor, {
   authoring.presentations = authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
     && ['skill', 'blessing', 'weapon'].includes(item.entityRef.kind));
   authoring.termLocalizations = authoring.termLocalizations.filter(item => item.termRef.gameReleaseId === releaseId);
+  for (const change of authoring.gameChanges) {
+    const sourceChange = sourceContract.records.find(record => record.kind === 'game-change'
+      && record.recordId === change.sourceRef?.recordId && record.gameReleaseId === change.sourceRef?.gameReleaseId);
+    const subjectRef = sourceChange?.payload?.entityRef;
+    const hasCandidatePresentation = authoring.presentations.some(item => item.entityRef?.recordId === subjectRef?.recordId
+      && item.entityRef?.gameReleaseId === subjectRef?.gameReleaseId);
+    if (!hasCandidatePresentation) {
+      const sourcePresentation = donor.authoring.presentations.find(item => item.entityRef?.recordId === subjectRef?.recordId
+        && item.entityRef?.gameReleaseId === subjectRef?.gameReleaseId);
+      if (sourcePresentation) {
+        change.entityName = { locale: 'zh-TW', text: sourcePresentation.name };
+        authoring.reviewTargets.push({
+          targetId: 'target:' + change.changeId + ':entity-name', ownerKind: 'game-change', ownerId: change.changeId,
+          fieldPath: '/entityName', dimension: 'identity',
+        });
+      }
+    }
+  }
   if (!announcements) authoring.announcements = [];
   if (!gameChanges) authoring.gameChanges = [];
   if (!officialTextChanges) authoring.officialTextChanges = [];
@@ -394,6 +460,143 @@ test('UnitT03_W08CountsEverySourceReviewTupleExactlyOnce', () => {
   assert.equal(result.envelope.review.sourceTargets.length, expectedSourceCount);
   assert.ok(result.envelope.review.sourceTargets.every(row => row.gameReleaseId && row.recordId && row.fieldPath && row.dimension));
   assert.ok(result.envelope.review.sourceTargets.every(row => !Object.hasOwn(row, 'targetId')));
+});
+
+test('UnitT78_W08ReviewCoverageMatchesEmittedReleaseDomains', () => {
+  // Scenario: one W06/W07 authoring input retains 1.13.2 and 1.13.3 rows while W08 emits only the selected 1.13.3 domains.
+  // Purpose: review targets/receipts follow emitted owners, while approved Source digests still use the complete cross-release contract.
+  const input = makeInput();
+  const previousReleaseId = RELEASE_ID;
+  const selectedReleaseId = 'darktide:1.13.3';
+  const selectedSnapshot = {
+    snapshotId: 'source-snapshot-1-13-3', commit: SOURCE_COMMIT,
+    manifestSha256: '2'.repeat(64), contentSha256: '3'.repeat(64),
+  };
+  input.sourceContract.gameReleases.push({
+    gameReleaseId: selectedReleaseId,
+    gameVersion: '1.13.3',
+    gameBuild: 'UNVERIFIED',
+    releaseOrder: 2,
+    snapshot: selectedSnapshot,
+  });
+  const selectedRecords = input.sourceContract.records.map(record => ({
+    ...structuredClone(record),
+    gameReleaseId: selectedReleaseId,
+  }));
+  input.sourceContract.records.push(...selectedRecords);
+  const previousSkill = input.sourceContract.records.find(record => record.gameReleaseId === previousReleaseId && record.recordId === 'skill:one');
+  const selectedSkill = input.sourceContract.records.find(record => record.gameReleaseId === selectedReleaseId && record.recordId === 'skill:one');
+  previousSkill.reviewState = 'approved';
+  selectedSkill.reviewState = 'approved';
+  const digestPair = { targetDigest: 'a'.repeat(64), dependenciesDigest: 'b'.repeat(64) };
+  const sourceReceipt = gameReleaseId => ({
+    target: { gameReleaseId, recordId: 'skill:one', fieldPath: '/payload', dimension: 'technical' },
+    ...digestPair,
+    decision: 'approved',
+    reviewer: { kind: 'human', id: 'synthetic-w08-fixture' },
+    reviewedAt: '2026-10-30T12:00:00Z',
+  });
+  input.sourceContract.reviewReceipts = [sourceReceipt(previousReleaseId), sourceReceipt(selectedReleaseId)];
+  input.w06.sourceContract = structuredClone(input.sourceContract);
+  input.w07.sourceContract = structuredClone(input.sourceContract);
+
+  const versionedPresentation = (kind, releaseId) => {
+    const suffix = releaseId === selectedReleaseId ? 'r3' : 'r2';
+    const item = makePresentation(kind + ':one', kind, 'presentation:' + kind + ':' + suffix);
+    item.entityRef.gameReleaseId = releaseId;
+    return item;
+  };
+  const presentationTarget = item => ({
+    targetId: 'target:' + item.authoringId + ':name', ownerId: item.authoringId,
+    fieldPath: '/name', dimension: 'content',
+  });
+  const versionedTerm = releaseId => {
+    const suffix = releaseId === selectedReleaseId ? 'r3' : 'r2';
+    return {
+      authoringId: 'term:combat:' + suffix,
+      termRef: { gameReleaseId: releaseId, recordId: 'term:one', kind: 'term' },
+      locale: 'zh-TW', label: '戰鬥', definition: '戰鬥用語。',
+    };
+  };
+  const termTargets = item => ['label', 'definition'].map(fieldPath => ({
+    targetId: 'target:' + item.authoringId + ':' + fieldPath,
+    ownerId: item.authoringId,
+    fieldPath: '/' + fieldPath,
+    dimension: 'content',
+  }));
+  const previousSkillPresentation = versionedPresentation('skill', previousReleaseId);
+  const previousBlessingPresentation = versionedPresentation('blessing', previousReleaseId);
+  const selectedSkillPresentation = versionedPresentation('skill', selectedReleaseId);
+  const selectedBlessingPresentation = versionedPresentation('blessing', selectedReleaseId);
+  const previousWeaponPresentation = versionedPresentation('weapon', previousReleaseId);
+  const selectedWeaponPresentation = versionedPresentation('weapon', selectedReleaseId);
+  const previousTerm = versionedTerm(previousReleaseId);
+  const selectedTerm = versionedTerm(selectedReleaseId);
+  input.w06.authoring.presentations = [previousSkillPresentation, previousBlessingPresentation, selectedSkillPresentation, selectedBlessingPresentation];
+  input.w06.authoring.termLocalizations = [previousTerm, selectedTerm];
+  input.w06.authoring.reviewTargets = [
+    ...input.w06.authoring.presentations.map(presentationTarget),
+    ...input.w06.authoring.termLocalizations.flatMap(termTargets),
+  ];
+  input.w06.reviewStates = Object.fromEntries(input.w06.authoring.reviewTargets.map(target => [target.targetId, 'pending']));
+  input.w06.officialInputs.sources = input.w06.authoring.presentations.map(item => ({
+    officialSourceId: item.nameOfficialSourceId, locale: 'en', text: 'Immutable source text',
+  }));
+  input.w07.authoring.presentations = [previousWeaponPresentation, selectedWeaponPresentation];
+  input.w07.authoring.reviewTargets = input.w07.authoring.presentations.map(presentationTarget);
+  input.w07.reviewStates = Object.fromEntries(input.w07.authoring.reviewTargets.map(target => [target.targetId, 'pending']));
+  input.w07.officialInputs.sources = input.w07.authoring.presentations.map(item => ({
+    officialSourceId: item.nameOfficialSourceId, locale: 'en', text: 'Immutable source text',
+  }));
+  const digestInputs = [];
+  input.w07.sourceValidator = {
+    computeReviewDigests(contract, target) {
+      assert.equal(contract.records.length, 8, 'Source digest calculation must retain both releases');
+      assert.equal(contract.gameReleases.length, 2, 'Source digest calculation must retain both release identities');
+      digestInputs.push({ gameReleaseId: target.gameReleaseId, recordId: target.recordId });
+      assert.equal(target.gameReleaseId, selectedReleaseId, 'only emitted Source targets need a candidate digest');
+      assert.equal(target.fieldPath, '/payload');
+      return digestPair;
+    },
+  };
+  input.gameReleaseId = selectedReleaseId;
+  input.proposedContentVersion = '1.13.3.1';
+
+  const result = compileW08Candidate(input);
+  assert.equal(input.w06.authoring.presentations.length, 4, 'compilation must not delete previous-release authoring');
+  assert.equal(input.w07.authoring.presentations.length, 2, 'compilation must not delete previous-release authoring');
+  assert.equal(result.envelope.review.webTargetCount, 5);
+  assert.equal(result.envelope.review.sourceTargetCount, 4);
+  assert.equal(result.envelope.review.targetCount, 9);
+  assert.deepEqual(digestInputs, [{ gameReleaseId: selectedReleaseId, recordId: 'skill:one' }],
+    'approved selected-release digests must use the full multi-release Source contract');
+  assert.deepEqual([...new Set(result.envelope.review.sourceTargets.map(row => row.gameReleaseId))], [selectedReleaseId]);
+  assert.deepEqual(result.envelope.review.targets.map(row => row.target.targetId).sort(), [
+    ...[selectedSkillPresentation, selectedBlessingPresentation].map(presentationTarget).map(target => target.targetId),
+    ...termTargets(selectedTerm).map(target => target.targetId),
+    ...[selectedWeaponPresentation].map(presentationTarget).map(target => target.targetId),
+  ].sort());
+  const sourceReceipts = result.envelope.review.receipts.filter(row => row.mode === 'source');
+  assert.equal(sourceReceipts.length, 1, 'only the selected release receipt should be retained');
+  assert.equal(sourceReceipts[0].receipt.target.gameReleaseId, selectedReleaseId);
+  assert.deepEqual(requiredContentBlockers(result), []);
+  assert.doesNotThrow(() => validateW08Candidate(result));
+
+  input.sourceContract.reviewReceipts = [sourceReceipt(previousReleaseId)];
+  input.w06.sourceContract = structuredClone(input.sourceContract);
+  input.w07.sourceContract = structuredClone(input.sourceContract);
+  const missingSelectedReceipt = compileW08Candidate(input);
+  assert.ok(missingSelectedReceipt.envelope.publicationGate.blockers.includes('approved-review-target-lacks-matching-receipt'),
+    'filtering must not let a prior-release receipt approve the selected release');
+
+  input.sourceContract.reviewReceipts.push({
+    ...sourceReceipt(selectedReleaseId),
+    target: { gameReleaseId: selectedReleaseId, recordId: 'skill:missing', fieldPath: '/payload', dimension: 'technical' },
+  });
+  input.w06.sourceContract = structuredClone(input.sourceContract);
+  input.w07.sourceContract = structuredClone(input.sourceContract);
+  assert.throws(() => compileW08Candidate(input), /points to a missing review target/,
+    'valid but non-emitted receipts are filtered, while undeclared Source targets remain rejected');
 });
 
 test('UnitT04_W08GateDerivesStateFromReviewTargetsInsteadOfClaimedCounts', () => {

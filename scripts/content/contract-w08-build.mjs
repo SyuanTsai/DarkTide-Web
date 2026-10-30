@@ -715,11 +715,6 @@ export function evaluateW08PublicationGate({ sourceBuild, review, requiredConten
   };
 }
 
-function allModeTargets(modes) {
-  return modes.flatMap(({ mode, name }) => (mode.authoring.reviewTargets ?? []).map(target => reviewRow(mode, name, target)))
-    .sort((left, right) => compareUtf8(left.mode + '\u0000' + left.target.targetId, right.mode + '\u0000' + right.target.targetId));
-}
-
 function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, modeRows, termRules = null }) {
   const presentations = modeRows.flatMap(({ mode }) => mode.authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
     && ((kind === 'skills' && item.entityRef.kind === 'skill') || (kind === 'blessings' && item.entityRef.kind === 'blessing')
@@ -828,11 +823,20 @@ function assertModeShape(mode, name) {
   if (!isRecord(mode.officialInputs) || !Array.isArray(mode.officialInputs.sources)) fail(name + ' official inputs are incomplete');
 }
 
-function collectWebContentRows(modes) {
-  return modes.flatMap(({ mode }) => collectRequiredContentFromWeb(mode.authoring));
+function collectWebContentRows(domainDocuments, sourceContract) {
+  const documents = [...domainDocuments];
+  const localizedSubjects = collectLocalizedSubjectWeb(documents.map(document => document.web));
+  return documents.flatMap(document => collectRequiredContentFromWeb(document.web, sourceContract, localizedSubjects));
 }
 
-function collectRequiredContentFromWeb(web) {
+function collectLocalizedSubjectWeb(webDocuments) {
+  return {
+    presentations: webDocuments.flatMap(web => web.presentations ?? []),
+    termLocalizations: webDocuments.flatMap(web => web.termLocalizations ?? []),
+  };
+}
+
+export function collectRequiredContentFromWeb(web, sourceContract = null, localizedSubjects = web) {
   const content = [];
   for (const item of web.presentations ?? []) {
     content.push({ id: item.authoringId, present: item.locale === 'zh-TW' && nonemptyText(item.name) });
@@ -845,13 +849,64 @@ function collectRequiredContentFromWeb(web) {
   }
   for (const item of web.gameChanges ?? []) {
     const fieldSummariesPresent = Array.isArray(item.fieldSummaries) && item.fieldSummaries.length > 0
-      && item.fieldSummaries.every(field => isRecord(field) && nonemptyText(field.summary));
-    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) && fieldSummariesPresent });
+      && item.fieldSummaries.every(field => isRecord(field) && nonemptyText(field.summary)
+        && ((field.beforeRule === undefined && field.afterRule === undefined)
+          || (localizedSummaryHasRequiredText(field.beforeRule) && localizedSummaryHasRequiredText(field.afterRule))));
+    const entityNamePresent = item.entityName === undefined
+      ? gameChangeHasExistingLocalizedSubject(item, localizedSubjects, sourceContract)
+      : localizedSummaryHasRequiredText(item.entityName);
+    content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) && fieldSummariesPresent && entityNamePresent });
   }
   for (const item of web.officialTextChanges ?? []) {
     content.push({ id: item.changeId, present: localizedSummaryHasRequiredText(item.summary) });
   }
   return content;
+}
+
+function gameChangeHasExistingLocalizedSubject(change, web, sourceContract) {
+  if (!isRecord(sourceContract) || !Array.isArray(sourceContract.records) || !isRecord(change.sourceRef)) return false;
+  const keyFor = ref => isRecord(ref) && typeof ref.gameReleaseId === 'string' && typeof ref.recordId === 'string'
+    ? sourceRecordKey(ref) : null;
+  const records = new Map(sourceContract.records.map(record => [sourceRecordKey(record), record]));
+  const sourceChange = records.get(keyFor(change.sourceRef));
+  if (sourceChange?.kind !== 'game-change' || sourceChange.recordId !== change.changeId) return false;
+  const target = records.get(keyFor(sourceChange.payload?.entityRef));
+  const resolve = (record, visited = new Set()) => {
+    if (!isRecord(record)) return false;
+    const key = sourceRecordKey(record);
+    if (visited.has(key)) return false;
+    const next = new Set(visited).add(key);
+    if (['skill', 'blessing', 'weapon'].includes(record.kind)) {
+      const matches = (web.presentations ?? []).filter(row => row?.locale === 'zh-TW' && row.entityRef?.recordId === record.recordId
+        && row.entityRef?.gameReleaseId === record.gameReleaseId && row.entityRef?.kind === record.kind && nonemptyText(row.name));
+      return matches.length === 1;
+    }
+    if (record.kind === 'term') {
+      const matches = (web.termLocalizations ?? []).filter(row => row?.locale === 'zh-TW' && row.termRef?.recordId === record.recordId
+        && row.termRef?.gameReleaseId === record.gameReleaseId && nonemptyText(row.label));
+      return matches.length === 1;
+    }
+    let parents = [];
+    if (record.kind === 'claim') {
+      const parent = records.get(keyFor(record.payload?.targetRef));
+      if (parent) parents = [parent];
+    } else if (record.kind === 'blessing-variant') {
+      const parent = records.get(keyFor(record.payload?.blessingRef));
+      if (parent) parents = [parent];
+    } else if (record.kind === 'stat-definition') {
+      parents = sourceContract.records.filter(candidate => candidate.kind === 'weapon'
+        && (candidate.payload.statRefs ?? []).some(ref => keyFor(ref) === key));
+    } else if (record.kind === 'stat-curve') {
+      const definitions = sourceContract.records.filter(candidate => candidate.kind === 'stat-definition'
+        && keyFor(candidate.payload?.curveRef) === key);
+      const definitionKeys = new Set(definitions.map(sourceRecordKey));
+      parents = sourceContract.records.filter(candidate => candidate.kind === 'weapon'
+        && (candidate.payload.statRefs ?? []).some(ref => definitionKeys.has(keyFor(ref))));
+    }
+    const uniqueParents = new Map(parents.map(parent => [sourceRecordKey(parent), parent]));
+    return uniqueParents.size === 1 && resolve([...uniqueParents.values()][0], next);
+  };
+  return resolve(target);
 }
 
 function announcementHasRequiredText(announcement) {
@@ -967,9 +1022,41 @@ function createDomainBytes(sourceContract, modes, releaseId) {
   return docs;
 }
 
-function reviewCoverage(modes) {
-  const targets = allModeTargets(modes);
-  const receipts = modes.flatMap(({ mode, name }) => mode.authoring.reviewReceipts.map(receipt => ({ mode: name, receipt: structuredClone(receipt) })));
+function emittedWebReviewTargets(domainDocuments) {
+  const targetsByKey = new Map();
+  for (const document of domainDocuments) {
+    for (const row of document.web.reviewTargets) {
+      const key = row.mode + '\u0000' + row.target.targetId;
+      const prior = targetsByKey.get(key);
+      if (prior && canonicalJson(prior) !== canonicalJson(row)) fail('emitted Web domains contain conflicting review targets: ' + row.target.targetId);
+      targetsByKey.set(key, row);
+    }
+  }
+  return [...targetsByKey.values()]
+    .sort((left, right) => compareUtf8(left.mode + '\u0000' + left.target.targetId, right.mode + '\u0000' + right.target.targetId));
+}
+
+function emittedSourceRecords(domainDocuments) {
+  const recordsByKey = new Map();
+  for (const document of domainDocuments) {
+    for (const record of document.source.records) {
+      const key = sourceRecordKey(record);
+      const prior = recordsByKey.get(key);
+      if (prior && canonicalJson(prior) !== canonicalJson(record)) fail('emitted Source domains contain conflicting records: ' + key.replace('\u0000', ':'));
+      recordsByKey.set(key, record);
+    }
+  }
+  return [...recordsByKey.values()];
+}
+
+function reviewCoverage(domainDocuments) {
+  const targets = emittedWebReviewTargets(domainDocuments);
+  const receiptsByCanonicalJson = new Map();
+  for (const document of domainDocuments) {
+    for (const row of document.web.reviewReceipts) receiptsByCanonicalJson.set(canonicalJson(row), row);
+  }
+  const receipts = [...receiptsByCanonicalJson.values()]
+    .sort((left, right) => compareUtf8(canonicalJson(left), canonicalJson(right)));
   const rowsWithStates = stateCounts(targets);
   return {
     receiptCount: receipts.length,
@@ -983,11 +1070,14 @@ function reviewCoverage(modes) {
   };
 }
 
-function sourceReviewTargets(sourceContract, sourceValidator = null) {
+function sourceReviewTargets(sourceContract, sourceValidator = null, emittedRecords = sourceContract.records) {
   if (!Array.isArray(sourceContract.records)) fail('W08 Source records must be an array');
+  if (!Array.isArray(emittedRecords)) fail('W08 emitted Source records must be an array');
+  const emittedRecordKeys = new Set(emittedRecords.map(sourceRecordKey));
   const targets = [];
   const seen = new Set();
   for (const record of sourceContract.records) {
+    if (!emittedRecordKeys.has(sourceRecordKey(record))) continue;
     if (!['approved', 'pending', 'stale', 'rejected'].includes(record.reviewState)) fail('W08 Source record has an invalid reviewState: ' + record.recordId);
     for (const target of record.reviewTargets ?? []) {
       if (typeof target.fieldPath !== 'string' || !target.fieldPath.startsWith('/') || typeof target.dimension !== 'string' || target.dimension.length === 0) {
@@ -1024,12 +1114,22 @@ function sourceReviewTargets(sourceContract, sourceValidator = null) {
 
 function sourceReviewReceipts(sourceContract, targets) {
   const targetKeys = new Set(targets.map(sourceReviewTargetKey));
-  return (sourceContract.reviewReceipts ?? []).map(receipt => {
-    if (!isRecord(receipt.target) || !targetKeys.has(sourceReviewTargetKey(receipt.target))) {
-      fail('W08 Source review receipt points to a missing review target');
+  const declaredTargetKeys = new Set(sourceContract.records.flatMap(record => (record.reviewTargets ?? []).map(target => sourceReviewTargetKey({
+    gameReleaseId: record.gameReleaseId,
+    recordId: record.recordId,
+    fieldPath: target.fieldPath,
+    dimension: target.dimension,
+  }))));
+  const receipts = [];
+  for (const receipt of sourceContract.reviewReceipts ?? []) {
+    if (!isRecord(receipt.target) || ['gameReleaseId', 'recordId', 'fieldPath', 'dimension'].some(key => typeof receipt.target[key] !== 'string')) {
+      fail('W08 Source review receipt has an invalid target');
     }
-    return { mode: 'source', receipt: structuredClone(receipt) };
-  });
+    const key = sourceReviewTargetKey(receipt.target);
+    if (!declaredTargetKeys.has(key)) fail('W08 Source review receipt points to a missing review target');
+    if (targetKeys.has(key)) receipts.push({ mode: 'source', receipt: structuredClone(receipt) });
+  }
+  return receipts;
 }
 
 function utf8JsonDocument(value, label) {
@@ -1055,6 +1155,7 @@ export function compileW08Candidate(input) {
   if (input.proposedContentVersion && input.proposedContentVersion !== gameVersion + '.1') fail('W08 proposed content version must be a candidate identifier for the selected game release');
 
   const builtDomainDocuments = createDomainBytes(sourceContract, modes, requestedReleaseId);
+  const emittedDomainDocuments = [...builtDomainDocuments.values()];
   const domainBytes = new Map([...builtDomainDocuments].map(([kind, document]) => [
     'domains/' + kind + '.json',
     utf8JsonDocument(document, kind + ' domain'),
@@ -1095,9 +1196,9 @@ export function compileW08Candidate(input) {
   validateManifest(manifest);
   const manifestBytes = utf8JsonDocument(manifest, 'shared manifest');
   const manifestPath = buildManifestPath(manifest.dataRevision);
-  const webReview = reviewCoverage(modes);
-  const sourceRecords = sourceContract.records;
-  const sourceStateRows = sourceReviewTargets(sourceContract, input.w07.sourceValidator);
+  const webReview = reviewCoverage(emittedDomainDocuments);
+  const emittedRecords = emittedSourceRecords(emittedDomainDocuments);
+  const sourceStateRows = sourceReviewTargets(sourceContract, input.w07.sourceValidator, emittedRecords);
   const sourceStates = stateCounts(sourceStateRows.map(row => ({ state: row.state })));
   const combinedStates = {
     approved: webReview.states.approved + sourceStates.approved,
@@ -1116,7 +1217,7 @@ export function compileW08Candidate(input) {
     sourceTargets: sourceStateRows,
     receipts: [...webReview.receipts, ...retainedSourceReceipts],
   };
-  const requiredContent = collectWebContentRows(modes);
+  const requiredContent = collectWebContentRows(emittedDomainDocuments, sourceContract);
   const gate = evaluateW08PublicationGate({ sourceBuild: input.sourceBuild, review: { ...review, states: combinedStates }, requiredContent });
   const limitations = makeLimitations(sourceContract, modes);
   const compilerFiles = input.compilerIdentity.files.map(row => ({ path: row.path, sizeBytes: row.sizeBytes, sha256: row.sha256 }))
@@ -1394,8 +1495,7 @@ export function validateW08Candidate(candidate, options = {}) {
   if (candidate.envelope.review.receiptCount !== candidate.envelope.review.receipts.length) fail('candidate receipt count does not match retained receipts');
 
   const documents = [...domainDocuments.values()];
-  const webTargets = documents.flatMap(document => document.web.reviewTargets)
-    .sort((left, right) => compareUtf8(left.mode + '\u0000' + left.target.targetId, right.mode + '\u0000' + right.target.targetId))
+  const webTargets = emittedWebReviewTargets(documents)
     .map(row => ({ mode: row.mode, target: row.target, state: row.state, targetDigest: row.targetDigest, dependenciesDigest: row.dependenciesDigest }));
   if (canonicalJson(webTargets) !== canonicalJson(candidate.envelope.review.targets)) fail('candidate Web review target coverage differs from domain documents');
 
@@ -1451,7 +1551,9 @@ export function validateW08Candidate(candidate, options = {}) {
     }
   }
 
-  const requiredContent = documents.flatMap(document => collectRequiredContentFromWeb(document.web));
+  const localizedSubjects = collectLocalizedSubjectWeb(documents.map(document => document.web));
+  const emittedSourceContract = { records: emittedSourceRecords(documents) };
+  const requiredContent = documents.flatMap(document => collectRequiredContentFromWeb(document.web, emittedSourceContract, localizedSubjects));
   const expectedGate = evaluateW08PublicationGate({
     sourceBuild: candidate.envelope.sourceBuild,
     review: candidate.envelope.review,

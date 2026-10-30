@@ -555,12 +555,18 @@
         "owner": { "const": "source" },
         "changeKind": { "const": "source-technical" },
         "sourceRef": { "$ref": "#/$defs/recordRef" },
+        "entityName": { "$ref": "#/$defs/localizedSummary" },
         "summary": { "$ref": "#/$defs/localizedSummary" },
         "fieldSummaries": {
           "type": "array", "minItems": 1,
           "items": {
             "type": "object", "required": [ "field", "summary" ],
-            "properties": { "field": { "$ref": "#/$defs/stableId" }, "summary": { "$ref": "#/$defs/text" } },
+            "properties": {
+              "field": { "$ref": "#/$defs/stableId" },
+              "summary": { "$ref": "#/$defs/text" },
+              "beforeRule": { "$ref": "#/$defs/localizedSummary" },
+              "afterRule": { "$ref": "#/$defs/localizedSummary" }
+            },
             "additionalProperties": false
           }
         },

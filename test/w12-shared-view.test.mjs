@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { loadWebAuthoringInputs } from '../scripts/content/contract-authoring.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
 import { makeCompiledGameChangesPackage } from './w12-shared-view.fixture.mjs';
 
@@ -95,6 +96,115 @@ test('UnitT10_projects_compiler_emitted_changes_with_version_and_kind_filters', 
   assert.equal(officialTextChange.officialText.before.sourceLocale, 'en');
   assert.equal(officialTextChange.officialText.after.sourceLocale, 'en');
   assert.deepEqual(view.getGameChanges({ gameVersion: '1.0.1', entityKind: 'skill' }).items, []);
+});
+
+// Scenario: A rule-change subject has no existing presentation name but receives a reviewed Web-owned identity and rule translations.
+// Purpose: Render only authenticated zh-TW wording while keeping the exact Source rule references out of consumer display values.
+test('UnitT81_projects_reviewed_rule-change-subject-without-fabricating-a-presentation', async () => {
+  const packageData = await makeCompiledGameChangesPackage();
+  const domain = packageData.domains.find(row => row.kind === 'game-changes');
+  const sourceInputs = await loadWebAuthoringInputs();
+  const sourceChange = domain.source.records.find(record => record.kind === 'game-change' && record.recordId === CHANGE_ID);
+  const beforeRule = domain.source.records.find(record => record.kind === 'modifier-rule' && record.gameReleaseId === 'fixture-r1');
+  assert.ok(sourceChange && beforeRule);
+  const afterRule = structuredClone(beforeRule);
+  afterRule.recordId = 'fixture:rule:after-r2';
+  afterRule.gameReleaseId = 'fixture-r2';
+  afterRule.payload.triggerText = 'Synthetic after-rule trigger.';
+  const subject = {
+    recordId: 'fixture:target-profile:revised-rule', gameReleaseId: 'fixture-r2', kind: 'target-profile',
+    owner: 'source', payload: { displayKey: 'synthetic-target' }, reviewState: 'approved',
+    reviewTargets: [{ fieldPath: '/payload', dimension: 'technical' }],
+  };
+  domain.source.records.push(afterRule, subject);
+  sourceChange.payload.entityRef = { recordId: subject.recordId, gameReleaseId: subject.gameReleaseId, kind: subject.kind };
+  sourceChange.payload.changedFields = [{
+    field: 'modifier_rule_trigger',
+    valueKind: 'modifier-rule-reference',
+    before: { recordId: beforeRule.recordId, gameReleaseId: beforeRule.gameReleaseId, kind: beforeRule.kind },
+    after: { recordId: afterRule.recordId, gameReleaseId: afterRule.gameReleaseId, kind: afterRule.kind },
+  }];
+  const sourceTarget = sourceChange.reviewTargets[0];
+  domain.source.reviewReceipts = domain.source.reviewReceipts.filter(receipt => receipt.target?.recordId !== sourceChange.recordId);
+  domain.source.reviewReceipts.push(sourceInputs.sourceValidator.createReviewReceipt(domain.source, {
+    recordId: sourceChange.recordId, gameReleaseId: sourceChange.gameReleaseId,
+    fieldPath: sourceTarget.fieldPath, dimension: sourceTarget.dimension,
+  }, { decision: 'approved', reviewer: { kind: 'human', id: 'synthetic-view-test' }, reviewedAt: '2026-10-24T00:00:00Z' }));
+
+  const webChange = domain.web.gameChanges.find(row => row.changeId === CHANGE_ID);
+  webChange.entityName = { locale: 'zh-TW', text: '合成規則主體', textSha256: 'a'.repeat(64) };
+  webChange.fieldSummaries = [{
+    field: 'modifier_rule_trigger', summary: '調整規則觸發條件。',
+    beforeRule: { locale: 'zh-TW', text: '舊版觸發條件。', textSha256: 'b'.repeat(64) },
+    afterRule: { locale: 'zh-TW', text: '新版觸發條件。', textSha256: 'c'.repeat(64) },
+  }];
+  const addApprovedWebTarget = (fieldPath, targetId) => {
+    const targetDigest = 'd'.repeat(64);
+    const dependenciesDigest = 'e'.repeat(64);
+    domain.web.reviewTargets.push({
+      mode: 'w07', state: 'approved', targetDigest, dependenciesDigest,
+      target: { targetId, ownerKind: 'game-change', ownerId: CHANGE_ID, fieldPath, dimension: fieldPath === '/entityName' ? 'identity' : 'content' },
+    });
+    domain.web.reviewReceipts.push({ mode: 'w07', receipt: {
+      targetId, targetDigest, dependenciesDigest, decision: 'approved',
+      reviewer: { kind: 'human', id: 'synthetic-view-test' }, reviewedAt: '2026-10-24T00:00:00Z',
+    } });
+  };
+  const collectionRow = domain.web.reviewTargets.find(row => row.target?.ownerId === CHANGE_ID && row.target.fieldPath === '/fieldSummaries');
+  assert.ok(collectionRow);
+  collectionRow.targetDigest = 'f'.repeat(64);
+  collectionRow.dependenciesDigest = '1'.repeat(64);
+  const collectionReceipt = domain.web.reviewReceipts.find(row => row.receipt?.targetId === collectionRow.target.targetId);
+  assert.ok(collectionReceipt);
+  Object.assign(collectionReceipt.receipt, {
+    targetDigest: collectionRow.targetDigest, dependenciesDigest: collectionRow.dependenciesDigest,
+  });
+  addApprovedWebTarget('/entityName', 'fixture:review:rule-subject-name');
+
+  const view = createSharedViewModel({ domains: packageData.domains, gameReleaseId: domain.gameReleaseId });
+  const change = view.getGameChanges({ gameVersion: '1.0.1' }).items.find(row => row.changeId === CHANGE_ID);
+  assert.ok(change);
+  assert.equal(change.entityName, '合成規則主體');
+  assert.equal(change.entityKind, 'target-profile');
+  assert.equal(change.displayEntityRef.kind, 'target-profile');
+  assert.deepEqual(change.changedFields, [{
+    field: 'modifier_rule_trigger', valueKind: 'modifier-rule-reference',
+    beforeRule: '舊版觸發條件。', afterRule: '新版觸發條件。', summary: '調整規則觸發條件。',
+  }]);
+
+  const withoutNameReview = structuredClone(packageData.domains);
+  const noNameDomain = withoutNameReview.find(row => row.kind === 'game-changes');
+  noNameDomain.web.reviewTargets = noNameDomain.web.reviewTargets.filter(row => row.target?.targetId !== 'fixture:review:rule-subject-name');
+  noNameDomain.web.reviewReceipts = noNameDomain.web.reviewReceipts.filter(row => row.receipt?.targetId !== 'fixture:review:rule-subject-name');
+  const missingNameView = createSharedViewModel({ domains: withoutNameReview, gameReleaseId: domain.gameReleaseId });
+  assert.equal(missingNameView.getGameChanges({ gameVersion: '1.0.1' }).items.some(row => row.changeId === CHANGE_ID), false);
+
+  const withoutRuleReview = structuredClone(packageData.domains);
+  const noRuleDomain = withoutRuleReview.find(row => row.kind === 'game-changes');
+  noRuleDomain.web.reviewTargets = noRuleDomain.web.reviewTargets.filter(row => row.target?.targetId !== collectionRow.target.targetId);
+  noRuleDomain.web.reviewReceipts = noRuleDomain.web.reviewReceipts.filter(row => row.receipt?.targetId !== collectionRow.target.targetId);
+  const missingRuleView = createSharedViewModel({ domains: withoutRuleReview, gameReleaseId: domain.gameReleaseId });
+  assert.equal(missingRuleView.getGameChanges({ gameVersion: '1.0.1' }).items.some(row => row.changeId === CHANGE_ID), false);
+});
+
+// Scenario: Revalidation rebuilds required-content state from emitted domain files, where game changes and subject presentations live in different domains.
+// Purpose: Keep valid game-change candidates compilable when their localized subject name comes from an existing blessing or weapon presentation.
+test('UnitT82_revalidates_game-change_content_with_cross-domain_subject_names', async () => {
+  for (const [options, expectedKind] of [
+    [{ subjectPresentationInW06: true }, 'weapon'],
+    [{ changeTargetKind: 'blessing-variant' }, 'blessing-variant'],
+    [{ changeTargetKind: 'stat-definition' }, 'stat-definition'],
+  ]) {
+    const candidate = await makeCompiledGameChangesPackage(options);
+    const domain = candidate.domains.find(row => row.kind === 'game-changes');
+    const sourceChange = domain?.source.records.find(row => row.recordId === CHANGE_ID);
+    assert.ok(domain, 'the compiler must emit its validated game-changes domain');
+    assert.ok(sourceChange, 'the emitted domain must retain the Source game-change record');
+    const subject = domain.source.records.find(row => row.recordId === sourceChange.payload.entityRef.recordId
+      && row.gameReleaseId === sourceChange.payload.entityRef.gameReleaseId);
+    assert.equal(subject?.kind, expectedKind,
+      'the compiler must revalidate the existing localized subject across modes and core domains for ' + JSON.stringify(options));
+  }
 });
 
 // Scenario: A Source game change targets a fact record rather than a page-level weapon record.
@@ -202,12 +312,82 @@ test('UnitT45_projects_safe_evidence_and_correction_links', async () => {
     'conflicting Source and Web correction targets fail closed');
 });
 
+// Scenario: A verified public-code ref uses a second registered snapshot ID for the same release bytes.
+// Purpose: Project evidence only when a registered alias has complete, matching snapshot pins; keep unknown, conflicting, or incomplete aliases hidden.
+test('UnitT60_projects_evidence_for_only_fully_pinned_snapshot_aliases', async () => {
+  const sourcePackage = await makeCompiledGameChangesPackage();
+  const makeEvidence = ({ registerAlias = true, registerRelease = 'fixture-r2', mutateSnapshot = () => {}, addConflict = false } = {}) => {
+    const domains = structuredClone(sourcePackage.domains);
+    const index = domains.find(row => row.kind === 'game-changes');
+    const change = index.source.records.find(record => record.kind === 'game-change');
+    const comparison = change.payload.comparison;
+    const evidenceRecord = index.source.records.find(record => record.kind === 'evidence'
+      && record.recordId === change.payload.evidenceRefs[0].recordId
+      && record.gameReleaseId === change.payload.evidenceRefs[0].gameReleaseId);
+    const sourcePointer = evidenceRecord.payload.sourceRef;
+    const sourceRef = index.source.sourceRefs.find(row => row.sourceId === sourcePointer.sourceId
+      && row.gameReleaseId === sourcePointer.gameReleaseId);
+    assert.ok(sourceRef, 'the compiler fixture must include the exact public source ref');
+    const aliasId = 'fixture-snapshot-r2-source-files';
+    const aliasSnapshot = { ...sourceRef.snapshot, snapshotId: aliasId };
+    mutateSnapshot(aliasSnapshot);
+    for (const domain of domains) {
+      for (const duplicateRef of domain.source?.sourceRefs ?? []) {
+        if (duplicateRef.sourceId === sourcePointer.sourceId && duplicateRef.gameReleaseId === sourcePointer.gameReleaseId) {
+          duplicateRef.snapshot = structuredClone(aliasSnapshot);
+        }
+      }
+    }
+    if (registerAlias) {
+      index.source.sourceSnapshots.push({ gameReleaseId: registerRelease, snapshot: structuredClone(aliasSnapshot) });
+      if (addConflict) {
+        index.source.sourceSnapshots.push({
+          gameReleaseId: registerRelease,
+          snapshot: { ...structuredClone(aliasSnapshot), contentSha256: 'f'.repeat(64) },
+        });
+      }
+    }
+    const view = createSharedViewModel({ domains, gameReleaseId: index.gameReleaseId });
+    const row = view.getGameChanges({ gameVersion: comparison.toGameVersion }).items.find(item => item.owner === 'source');
+    return row?.evidence ?? [];
+  };
+
+  const exactView = createSharedViewModel({
+    domains: sourcePackage.domains,
+    gameReleaseId: sourcePackage.domains.find(row => row.kind === 'game-changes').gameReleaseId,
+  });
+  assert.equal(exactView.getGameChanges({ gameVersion: '1.0.1' }).items
+    .find(item => item.owner === 'source')?.evidence.length, 1,
+  'the existing exact snapshot ID path remains supported');
+
+  const aliasedEvidence = makeEvidence();
+  assert.equal(aliasedEvidence.length, 1, 'a registered same-release alias with complete identical pins may project its evidence');
+  assert.equal(aliasedEvidence[0].source.snapshot.snapshotId, 'fixture-snapshot-r2-source-files');
+
+  assert.equal(makeEvidence({ registerAlias: false }).length, 0, 'an unknown alias is not accepted');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.commit = 'e'.repeat(40); } }).length, 0,
+    'a different commit is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.manifestSha256 = 'e'.repeat(64); } }).length, 0,
+    'a different manifest hash is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.contentSha256 = 'e'.repeat(64); } }).length, 0,
+    'a different content hash is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { delete snapshot.manifestSha256; } }).length, 0,
+    'an incomplete alias pin is not accepted');
+  assert.equal(makeEvidence({ registerRelease: 'fixture-r1' }).length, 0,
+    'an alias registered under a different release is not accepted');
+  assert.equal(makeEvidence({ addConflict: true }).length, 0,
+    'a conflicting registration for the alias is not accepted');
+});
+
 // Scenario: A W08-compiled Source game change compares a typed range with inclusive bounds and a step.
 // Purpose: Present every valid knownRange component and every Source schema unit with a clear Traditional Chinese label.
 // Given actual compiler output containing a knownRange typedValue, When its detail value is formatted, Then bounds, inclusivity, step, and unit remain visible without invented condition fields.
 test('UnitT50_formats_compiler_emitted_known_ranges_and_schema_units', async () => {
-  const { formatGameChangeValue } = await import('../web/shared-render.mjs');
+  const { formatGameChangeSide, formatGameChangeValue } = await import('../web/shared-render.mjs');
   assert.equal(typeof formatGameChangeValue, 'function');
+  assert.equal(formatGameChangeSide({ valueKind: 'modifier-rule-reference', beforeRule: '舊規則文字。' }, 'before'), '舊規則文字。');
+  assert.equal(formatGameChangeSide({ valueKind: 'typed-value', beforeRule: '不應覆寫數值。', before: { status: 'known', decimal: '1', unit: 'damage' } }, 'before'), '1 傷害');
+  assert.equal(formatGameChangeSide({ before: { status: 'known', decimal: '0', unit: 'damage' } }, 'before'), '0 傷害');
   const sourcePackage = await makeCompiledGameChangesPackage({ knownRangeChange: true });
   const domain = sourcePackage.domains.find(row => row.kind === 'game-changes');
   const sourceRecord = domain.source.records.find(record => record.kind === 'game-change');

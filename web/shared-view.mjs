@@ -692,6 +692,25 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     return getLocalizedSubject([...uniqueParents.values()][0], nextVisiting);
   };
 
+  const sameCompleteSnapshotPins = (left, right) => isObject(left) && isObject(right)
+    && /^[a-f0-9]{40}$/u.test(left.commit ?? '')
+    && left.commit === right.commit
+    && isSha256(left.manifestSha256) && left.manifestSha256 === right.manifestSha256
+    && isSha256(left.contentSha256) && left.contentSha256 === right.contentSha256;
+
+  const matchesComparisonSnapshot = (releaseId, snapshot, targetReleaseId, targetSnapshotId) => {
+    if (releaseId !== targetReleaseId || !isDisplayText(snapshot?.snapshotId)) return false;
+    if (snapshot.snapshotId === targetSnapshotId) return true;
+
+    const aliasKey = `${releaseId}\u0000${snapshot.snapshotId}`;
+    const targetKey = `${targetReleaseId}\u0000${targetSnapshotId}`;
+    if (sourceSnapshotConflicts.has(aliasKey) || sourceSnapshotConflicts.has(targetKey)) return false;
+    const registeredAlias = sourceSnapshots.get(aliasKey);
+    const registeredTarget = sourceSnapshots.get(targetKey);
+    return sameCompleteSnapshotPins(snapshot, registeredAlias)
+      && sameCompleteSnapshotPins(registeredAlias, registeredTarget);
+  };
+
   const projectEvidence = (refs, comparison) => {
     if (!Array.isArray(refs)) return [];
     const output = [];
@@ -705,10 +724,14 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
       if (sourceRefConflicts.has(sourceKey)) continue;
       const source = sourceRefByKey.get(sourceKey);
       if (!source) continue;
-      const snapshotId = source.snapshot?.snapshotId;
+      const sourceSnapshot = source.snapshot;
+      const snapshotId = sourceSnapshot?.snapshotId;
       const releaseId = source.gameReleaseId;
-      const matchesComparison = (releaseId === comparison.fromGameReleaseId && snapshotId === comparison.fromSnapshotId)
-        || (releaseId === comparison.toGameReleaseId && snapshotId === comparison.toSnapshotId);
+      const matchesComparison = matchesComparisonSnapshot(
+        releaseId, sourceSnapshot, comparison.fromGameReleaseId, comparison.fromSnapshotId,
+      ) || matchesComparisonSnapshot(
+        releaseId, sourceSnapshot, comparison.toGameReleaseId, comparison.toSnapshotId,
+      );
       if (!matchesComparison) continue;
       const publicUrl = safePublicHttps(source.publicUrl);
       output.push({
@@ -1068,18 +1091,55 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
       if (!target) continue;
       const targetRef = { gameReleaseId: target.gameReleaseId, kind: target.kind, recordId: target.recordId };
       const displaySubject = getLocalizedSubject(target);
-      if (!target || !displaySubject) continue;
+      const rowEntityName = row.entityName;
+      const hasReviewedEntityName = isObject(rowEntityName) && rowEntityName.locale === 'zh-TW'
+        && isDisplayText(rowEntityName.text) && isSha256(rowEntityName.textSha256)
+        && hasApprovedWebOwner('game-change', row.changeId, '/entityName');
+      if ((!displaySubject && !hasReviewedEntityName) || (rowEntityName !== undefined && !hasReviewedEntityName)) continue;
       const changedFields = Array.isArray(payload.changedFields) ? payload.changedFields : [];
       const fieldSummaries = Array.isArray(row.fieldSummaries) ? row.fieldSummaries : [];
       const summariesByField = new Map();
       for (const field of fieldSummaries) {
         if (!isObject(field) || !isDisplayText(field.field) || !isDisplayText(field.summary)
             || summariesByField.has(field.field)) { summariesByField.clear(); break; }
-        summariesByField.set(field.field, field.summary);
+        summariesByField.set(field.field, field);
       }
       if (summariesByField.size !== changedFields.length
           || changedFields.some(field => !isObject(field) || !summariesByField.has(field.field))) continue;
-      const fields = changedFields.map(field => ({ ...field, summary: summariesByField.get(field.field) }));
+      const collectionReviewed = hasApprovedWebOwner('game-change', row.changeId, '/fieldSummaries');
+      const fields = [];
+      let fieldTranslationsValid = true;
+      for (const field of changedFields) {
+        const wording = summariesByField.get(field.field);
+        if (field.valueKind === 'modifier-rule-reference') {
+          const beforePath = '/fieldSummaries/' + fieldSummaries.indexOf(wording) + '/beforeRule';
+          const afterPath = '/fieldSummaries/' + fieldSummaries.indexOf(wording) + '/afterRule';
+          const beforeApproved = collectionReviewed || hasApprovedWebOwner('game-change', row.changeId, beforePath);
+          const afterApproved = collectionReviewed || hasApprovedWebOwner('game-change', row.changeId, afterPath);
+          if (!beforeApproved || !afterApproved
+              || !isObject(wording.beforeRule) || wording.beforeRule.locale !== 'zh-TW'
+              || !isDisplayText(wording.beforeRule.text) || !isSha256(wording.beforeRule.textSha256)
+              || !isObject(wording.afterRule) || wording.afterRule.locale !== 'zh-TW'
+              || !isDisplayText(wording.afterRule.text) || !isSha256(wording.afterRule.textSha256)) {
+            fieldTranslationsValid = false;
+            break;
+          }
+          fields.push({
+            field: field.field,
+            valueKind: field.valueKind,
+            beforeRule: wording.beforeRule.text,
+            afterRule: wording.afterRule.text,
+            summary: wording.summary,
+          });
+        } else {
+          if (wording.beforeRule !== undefined || wording.afterRule !== undefined) {
+            fieldTranslationsValid = false;
+            break;
+          }
+          fields.push({ ...field, summary: wording.summary });
+        }
+      }
+      if (!fieldTranslationsValid) continue;
       const sourceSupersedes = payload.supersedesChangeRef;
       const sourceSupersedesId = sourceSupersedes === undefined ? null
         : isObject(sourceSupersedes) && (!sourceSupersedes.kind || sourceSupersedes.kind === 'game-change')
@@ -1101,8 +1161,8 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
           weapon: '武器', 'stat-definition': '武器素質', 'stat-curve': '武器曲線', term: '術語',
         })[target.kind] ?? '遊戲內容',
         entityRef: targetRef,
-        entityName: displaySubject.name,
-        displayEntityRef: { ...displaySubject.ref },
+        entityName: hasReviewedEntityName ? rowEntityName.text : displaySubject.name,
+        displayEntityRef: { ...(displaySubject?.ref ?? targetRef) },
         operation: payload.operation,
         comparison: {
           ...comparison,

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { buildStaticSite } from '../src/static/build.mjs';
+import { loadWebAuthoringInputs } from '../scripts/content/contract-authoring.mjs';
 import { computeDataRevision } from '../scripts/content/contract-release.mjs';
 import { validateSharedStaticFiles } from '../src/static/shared-release.mjs';
 import { fixturePublicContent } from '../src/static/fixture.mjs';
@@ -17,7 +18,7 @@ const chromePath = process.env.SYP_W10_CHROMIUM_EXE;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 async function compiledBundle({ unrelatedPrivateToken = false, spoofOfficialTokenPath = false, mismatchedWeaponOfficialCopy = false,
-  spoofWeaponPresentationPath = false, changeTargetKind = null, includeCorrectionChain = false } = {}) {
+  spoofWeaponPresentationPath = false, changeTargetKind = null, includeCorrectionChain = false, modifierRuleChange = false } = {}) {
   const emitted = await makeCompiledGameChangesPackage({ knownRangeChange: true, changeTargetKind, includeCorrectionChain });
   const compiled = { ...emitted, manifest: structuredClone(emitted.manifest), files: new Map(emitted.files) };
   const manifest = compiled.manifest;
@@ -38,6 +39,9 @@ async function compiledBundle({ unrelatedPrivateToken = false, spoofOfficialToke
     compiled.files.set(weaponRow.path, changedBytes);
     weaponRow.sizeBytes = changedBytes.byteLength;
     weaponRow.sha256 = sha256(changedBytes);
+  }
+  if (modifierRuleChange) {
+    await addModifierRuleWordingFixture(compiled);
   }
   if (unrelatedPrivateToken) {
     const indexPath = manifest.changeIndexPath;
@@ -103,6 +107,64 @@ async function compiledBundle({ unrelatedPrivateToken = false, spoofOfficialToke
   return { compiled, bundle };
 }
 
+// Scenario: A compiler-emitted numeric game change is transformed into the new reviewed modifier-rule reference shape.
+// Purpose: Exercise the production static loader and browser renderer with before/after wording instead of a unit-only view model.
+async function addModifierRuleWordingFixture(compiled) {
+  const domain = compiled.domains.find(row => row.kind === 'game-changes');
+  const sourceChange = domain?.source?.records.find(row => row.kind === 'game-change');
+  const beforeRule = domain?.source?.records.find(row => row.kind === 'modifier-rule' && row.gameReleaseId === 'fixture-r1');
+  if (!domain || !sourceChange || !beforeRule) throw new Error('W12 fixture cannot construct a modifier-rule game change');
+  const afterRule = structuredClone(beforeRule);
+  afterRule.recordId = 'fixture:rule:after-r2';
+  afterRule.gameReleaseId = 'fixture-r2';
+  afterRule.payload.triggerText = 'Synthetic after-rule trigger.';
+  domain.source.records.push(afterRule);
+  sourceChange.payload.changedFields = [{
+    field: 'modifier_rule_trigger',
+    valueKind: 'modifier-rule-reference',
+    before: { recordId: beforeRule.recordId, gameReleaseId: beforeRule.gameReleaseId, kind: beforeRule.kind },
+    after: { recordId: afterRule.recordId, gameReleaseId: afterRule.gameReleaseId, kind: afterRule.kind },
+  }];
+  const sourceInputs = await loadWebAuthoringInputs();
+  const sourceTarget = sourceChange.reviewTargets?.[0];
+  if (!sourceTarget) throw new Error('W12 fixture game change has no Source review target');
+  domain.source.reviewReceipts = domain.source.reviewReceipts.filter(receipt => receipt.target?.recordId !== sourceChange.recordId);
+  domain.source.reviewReceipts.push(sourceInputs.sourceValidator.createReviewReceipt(domain.source, {
+    recordId: sourceChange.recordId,
+    gameReleaseId: sourceChange.gameReleaseId,
+    fieldPath: sourceTarget.fieldPath,
+    dimension: sourceTarget.dimension,
+  }, { decision: 'approved', reviewer: { kind: 'human', id: 'synthetic-rule-browser-test' }, reviewedAt: '2026-10-24T00:00:00Z' }));
+
+  const webChange = domain.web.gameChanges.find(row => row.changeId === sourceChange.recordId);
+  if (!webChange) throw new Error('W12 fixture has no Web-owned game-change wording');
+  webChange.fieldSummaries = [{
+    field: 'modifier_rule_trigger',
+    summary: '規則觸發條件已調整。',
+    beforeRule: { locale: 'zh-TW', text: '舊版觸發條件。', textSha256: 'b'.repeat(64) },
+    afterRule: { locale: 'zh-TW', text: '新版觸發條件。', textSha256: 'c'.repeat(64) },
+  }];
+  const collectionRow = domain.web.reviewTargets.find(row => row.target?.ownerId === sourceChange.recordId
+    && row.target.fieldPath === '/fieldSummaries');
+  if (!collectionRow) throw new Error('W12 fixture has no field-summary review target');
+  collectionRow.targetDigest = 'f'.repeat(64);
+  collectionRow.dependenciesDigest = '1'.repeat(64);
+  const collectionReceipt = domain.web.reviewReceipts.find(row => row.receipt?.targetId === collectionRow.target.targetId);
+  if (!collectionReceipt) throw new Error('W12 fixture has no field-summary receipt');
+  Object.assign(collectionReceipt.receipt, {
+    targetDigest: collectionRow.targetDigest,
+    dependenciesDigest: collectionRow.dependenciesDigest,
+  });
+
+  const indexPath = compiled.manifest.changeIndexPath;
+  const changedBytes = Buffer.from(JSON.stringify(domain, null, 2) + '\n', 'utf8');
+  compiled.files.set(indexPath, changedBytes);
+  const indexRow = compiled.manifest.files.find(row => row.path === indexPath);
+  if (!indexRow) throw new Error('W12 fixture manifest omits its game-change index');
+  indexRow.sizeBytes = changedBytes.byteLength;
+  indexRow.sha256 = sha256(changedBytes);
+}
+
 async function listen(distPath) {
   const server = await createStaticServer({ distPath });
   await new Promise((resolve, reject) => {
@@ -154,6 +216,9 @@ test('InterT20_compiled_game_changes_render_in_static_app_and_preserve_source_id
     assert.equal(await page.locator('.shared-change-list > li').count(), 2);
 
     await page.goto(`${hosted.origin}/game-changes/`);
+    await page.locator('select[name="type"]').waitFor({ state: 'visible' });
+    assert.deepEqual(await page.locator('select[name="type"] option').allTextContents(),
+      ['全部類型', '技能', '祝福', '武器'], 'the filter must not offer an empty Other category');
     const versionFilter = page.locator('select[name="version"]');
     await versionFilter.focus();
     await page.keyboard.press('ArrowDown');
@@ -249,6 +314,47 @@ test('InterT20_compiled_game_changes_render_in_static_app_and_preserve_source_id
     await closeServer(variantServer);
     await closeServer(server);
     if (variantRoot) await disposeBuildRoot(variantRoot);
+    await disposeBuildRoot(root);
+  }
+});
+
+// Scenario: A fixed W08 compiler fixture carries a modifier-rule reference with reviewed before/after Traditional Chinese wording.
+// Purpose: Verify rule wording survives the ordinary static bundle loader and remains readable at desktop and mobile widths.
+test('InterT21_reviewed_modifier_rule_wording_renders_in_browser_at_desktop_and_mobile', {
+  timeout: 120000,
+}, async () => {
+  const { compiled, bundle } = await compiledBundle({ modifierRuleChange: true });
+  const domain = compiled.domains.find(row => row.kind === 'game-changes');
+  const sourceChange = domain.source.records.find(row => row.kind === 'game-change');
+  assert.equal(compiled.publicationEligible, false);
+  const root = await createBuildRoot({ productionWeb: true });
+  let server;
+  let browser;
+  const pageErrors = [];
+  try {
+    await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease: bundle });
+    const hosted = await listen(path.join(root, 'dist'));
+    server = hosted.server;
+    browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    page.on('pageerror', error => pageErrors.push(error.message));
+    await page.goto(`${hosted.origin}/game-changes/?id=${encodeURIComponent(sourceChange.recordId)}`);
+    const values = page.locator('.shared-change-before-after');
+    await values.waitFor({ state: 'visible' });
+    assert.equal((await values.innerText()).replace(/\s+/gu, ' ').trim(), '前：舊版觸發條件。 後：新版觸發條件。');
+    assert.equal(await page.locator('.shared-change-value h3').textContent(), '規則觸發條件已調整。');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+      'desktop rule wording must fit the viewport');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.equal(await values.isVisible(), true);
+    assert.equal((await values.innerText()).replace(/\s+/gu, ' ').trim(), '前：舊版觸發條件。 後：新版觸發條件。');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false,
+      'mobile rule wording must not create horizontal overflow');
+    assert.deepEqual(pageErrors, []);
+  } finally {
+    await browser?.close();
+    await closeServer(server);
     await disposeBuildRoot(root);
   }
 });
