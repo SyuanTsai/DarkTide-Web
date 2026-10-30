@@ -786,7 +786,9 @@ async function createW09CompilerProjection({ repoRoot, request, packet, replay, 
   const w08SourceProjection = structuredClone(sourceContract);
   // The verified Source gate and original validation stay in W09. Only the root eligibility flag is projected for W08.
   w08SourceProjection.publicationEligible = false;
-  assertW09SourceProjectionPreservesReviewProof(sourceContract, w08SourceProjection, sourcePin.validator);
+  assertW09SourceProjectionPreservesReviewProof(
+    sourceContract, w08SourceProjection, sourcePin.validator, sourcePin.schema, sourceValidation,
+  );
 
   for (const modeName of ['w06', 'w07']) {
     const mode = compilerInput[modeName];
@@ -904,32 +906,35 @@ async function createW09CompilerProjection({ repoRoot, request, packet, replay, 
   }
 }
 
-function sourceReviewDigestRows(contract, validator) {
-  return contract.records.flatMap(record => (record.reviewTargets ?? []).map(target => {
-    const identity = {
-      gameReleaseId: record.gameReleaseId,
-      recordId: record.recordId,
-      fieldPath: target.fieldPath,
-      dimension: target.dimension,
-    };
-    return { ...identity, ...validator.computeReviewDigests(contract, identity) };
-  })).sort((left, right) => canonicalJson(left).localeCompare(canonicalJson(right), 'en'));
-}
-
-function assertW09SourceProjectionPreservesReviewProof(original, projection, validator) {
+export function assertW09SourceProjectionPreservesReviewProof(original, projection, validator, schema, originalValidation) {
   if (projection.publicationEligible !== false || original.fixtureOnly !== false || original.publicationEligible !== true) {
     throw new Error('W09 Source projection must only lower the root publicationEligible flag');
+  }
+  if (!isRecord(originalValidation) || originalValidation.valid !== true || originalValidation.publicationEligible !== true
+      || !Array.isArray(originalValidation.issues) || originalValidation.issues.length !== 0) {
+    throw new Error('W09 original Source review proof must be valid and publication eligible');
   }
   const restored = structuredClone(projection);
   restored.publicationEligible = original.publicationEligible;
   if (canonicalJson(restored) !== canonicalJson(original)) {
     throw new Error('W09 Source candidate projection changed content, review state, or receipts');
   }
-  const originalDigests = sourceReviewDigestRows(original, validator);
-  const projectedDigests = sourceReviewDigestRows(projection, validator);
-  if (canonicalJson(originalDigests) !== canonicalJson(projectedDigests)) {
-    throw new Error('W09 Source candidate projection changed a source-review dependency digest');
+
+  if (!schema || typeof validator?.validateSourceContract !== 'function') {
+    throw new Error('W09 Source projection requires the pinned validator and schema');
   }
+  const projectedValidation = validator.validateSourceContract(projection, { schema });
+  const expectedFlagIssue = {
+    path: '/publicationEligible',
+    code: 'publication-state-mismatch',
+    message: 'publicationEligible must be true based on fixture and review state',
+  };
+  if (!isRecord(projectedValidation) || projectedValidation.valid !== false || projectedValidation.publicationEligible !== true
+      || !Array.isArray(projectedValidation.issues) || projectedValidation.issues.length !== 1
+      || canonicalJson(projectedValidation.issues[0]) !== canonicalJson(expectedFlagIssue)) {
+    throw new Error('W09 Source candidate projection review proof is invalid or has an unexpected validation issue');
+  }
+  return projectedValidation;
 }
 
 async function writeW09ProposalDirectory(directory, files) {

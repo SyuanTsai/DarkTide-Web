@@ -7,6 +7,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { loadWebAuthoringInputs, validateWebAuthoring } from '../scripts/content/contract-authoring.mjs';
 import {
+  assertW09SourceProjectionPreservesReviewProof,
   createW09AuthoringSourcePin,
   deriveW09CandidateBranch,
   ensureW09CandidatePullRequest,
@@ -121,6 +122,95 @@ test('UnitT03_generated-W09-Source-pin-validates-formal-W07-authoring-shape', as
   const result = validateWebAuthoring(authoring, { ...mode, sourceLock });
   assert.equal(result.valid, true, JSON.stringify(result.issues));
   assert.equal(authoring.sourcePin.repository, 'https://github.com/SyuanTsai/DarkTide-Source-Data');
+});
+
+// Scenario: W09 creates a compiler projection by changing only the root publicationEligible flag.
+// Purpose: Independently revalidate every receipt through the pinned validator's scoped cache, accepting only its one exact expected flag-consistency issue.
+test('UnitT04_source-projection-revalidates-complete-receipt-proof_and_fails_closed', () => {
+  const expectedFlagIssue = {
+    path: '/publicationEligible',
+    code: 'publication-state-mismatch',
+    message: 'publicationEligible must be true based on fixture and review state',
+  };
+  const originalValidation = { valid: true, publicationEligible: true, issues: [] };
+  const projectedValidation = { valid: false, publicationEligible: true, issues: [expectedFlagIssue] };
+  const makeCase = ({ projectionResult = projectedValidation, originalResult = originalValidation, mutateProjection = false } = {}) => {
+    const original = {
+      fixtureOnly: false,
+      publicationEligible: true,
+      records: [{
+        recordId: 'fixture:record',
+        gameReleaseId: 'fixture:release',
+        payload: { label: 'fixed content' },
+        reviewTargets: [{ fieldPath: '/payload/label', dimension: 'content' }],
+      }],
+      tombstones: [],
+      reviewReceipts: [{
+        target: { recordId: 'fixture:record', gameReleaseId: 'fixture:release', fieldPath: '/payload/label', dimension: 'content' },
+        targetDigest: 'a'.repeat(64),
+        dependenciesDigest: 'b'.repeat(64),
+        decision: 'approved',
+        reviewer: { kind: 'human', id: 'fixture-reviewer' },
+      }],
+    };
+    const projection = structuredClone(original);
+    projection.publicationEligible = false;
+    if (mutateProjection) projection.records[0].payload.label = 'changed content';
+    const schema = { fixtureSchema: true };
+    const validationCalls = [];
+    let publicDigestCalls = 0;
+    const validator = {
+      computeReviewDigests() {
+        publicDigestCalls += 1;
+        return { targetDigest: 'a'.repeat(64), dependenciesDigest: 'b'.repeat(64) };
+      },
+      validateSourceContract(contract, options) {
+        validationCalls.push({ contract, schema: options.schema });
+        return structuredClone(contract.publicationEligible === false ? projectionResult : originalResult);
+      },
+    };
+    return { original, projection, schema, validator, validationCalls, get publicDigestCalls() { return publicDigestCalls; }, originalValidation: originalResult };
+  };
+
+  const valid = makeCase();
+  const projectedResult = assertW09SourceProjectionPreservesReviewProof(
+    valid.original, valid.projection, valid.validator, valid.schema, valid.originalValidation,
+  );
+  assert.deepEqual(projectedResult, projectedValidation);
+  assert.deepEqual(valid.validationCalls, [{ contract: valid.projection, schema: valid.schema }]);
+  assert.equal(valid.publicDigestCalls, 0, 'the projection proof uses the validator-scoped receipt cache, not fresh public digest contexts per target');
+
+  const changedContent = makeCase({ mutateProjection: true });
+  assert.throws(() => assertW09SourceProjectionPreservesReviewProof(
+    changedContent.original, changedContent.projection, changedContent.validator, changedContent.schema, changedContent.originalValidation,
+  ), /projection changed content|review state|receipts/i);
+  assert.equal(changedContent.validationCalls.length, 0, 'structural mismatch fails before projected validation');
+
+  const invalidOriginal = makeCase({ originalResult: { valid: false, publicationEligible: false, issues: [{ path: '/reviewReceipts/0', code: 'stale', message: 'stale receipt' }] } });
+  assert.throws(() => assertW09SourceProjectionPreservesReviewProof(
+    invalidOriginal.original, invalidOriginal.projection, invalidOriginal.validator, invalidOriginal.schema, invalidOriginal.originalValidation,
+  ), /original.*valid|review proof/i);
+
+  const withExtraIssue = makeCase({ projectionResult: {
+    ...projectedValidation,
+    issues: [expectedFlagIssue, { path: '/reviewReceipts/0', code: 'stale-review', message: 'receipt no longer matches' }],
+  } });
+  assert.throws(() => assertW09SourceProjectionPreservesReviewProof(
+    withExtraIssue.original, withExtraIssue.projection, withExtraIssue.validator, withExtraIssue.schema, withExtraIssue.originalValidation,
+  ), /projection.*review|validation/i);
+
+  for (const badProjectionResult of [
+    { valid: true, publicationEligible: true, issues: [] },
+    { valid: false, publicationEligible: false, issues: [expectedFlagIssue] },
+    { valid: false, publicationEligible: true, issues: [{ ...expectedFlagIssue, path: '/records/0' }] },
+    { valid: false, publicationEligible: true, issues: [{ ...expectedFlagIssue, code: 'other-mismatch' }] },
+    { valid: false, publicationEligible: true, issues: [{ ...expectedFlagIssue, message: 'publicationEligible must be false' }] },
+  ]) {
+    const invalid = makeCase({ projectionResult: badProjectionResult });
+    assert.throws(() => assertW09SourceProjectionPreservesReviewProof(
+      invalid.original, invalid.projection, invalid.validator, invalid.schema, invalid.originalValidation,
+    ), /projection.*review|validation/i);
+  }
 });
 
 // Scenario: a request is retried after a Web runner restart.
