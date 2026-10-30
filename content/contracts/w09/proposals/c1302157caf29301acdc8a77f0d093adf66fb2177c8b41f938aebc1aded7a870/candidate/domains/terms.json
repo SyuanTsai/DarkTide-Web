@@ -1,0 +1,1904 @@
+{
+  "gameReleaseId": "darktide:1.13.3",
+  "kind": "terms",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "gameVersion": "1.13.3",
+        "releaseOrder": 3,
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-multiplier-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:psyker:brain-burst-improved-description-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:skill:psyker:brain-burst-improved"
+          },
+          "value": {
+            "decimal": "50",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-talents-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:talent-layout-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-observed",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time-release-code-normal-charge-1-13-3"
+            }
+          ],
+          "property": "action.psyker_smite.action_charge_target.default_charge_time",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:skill:psyker:brain-burst-improved"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-abilities-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-smite-targeting-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-targeting-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:charge-action-module-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed release-bound Psyker ability, Smite action, and charge-template sources retain the 3-second normal charge default under smite_attack_speed=1. This is a template-level source value and does not assert universal runtime timing. Upstream path membership and every cited file identity are bound to commit e840592880fdd5f253c6633e081633808c7e0bd2; this evidence and its claim remain pending review.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-abilities-ba6c148"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time-release-code-normal-charge-1-13-3",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-abilities-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-smite-targeting-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-targeting-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:charge-action-module-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-observed",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-multiplier-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-calculation-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:psyker:smite-action-damage-type-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier-release-code-smite-multiplier-1-13-3"
+            }
+          ],
+          "property": "template.stat_buffs.smite_damage_multiplier",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:skill:psyker:brain-burst-improved"
+          },
+          "value": {
+            "decimal": "1.5",
+            "status": "known",
+            "unit": "ratio"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:damage-calculation-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "At this pinned release, the Brain Burst Improved buff template assigns 1.5 to the Smite damage multiplier. The separate damage branch applies that parameter when damage type is Smite. This supports the bounded source parameter and branch only, not final runtime damage. Upstream path membership and every cited file identity are bound to commit e840592880fdd5f253c6633e081633808c7e0bd2; this evidence and its claim remain pending review.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier-release-code-smite-multiplier-1-13-3",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:damage-calculation-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-observed",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time-release-code-sticky-charge-1-13-3"
+            }
+          ],
+          "property": "action.psyker_smite.action_charge_target_sticky.charge_time",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:skill:psyker:brain-burst-improved"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-smite-targeting-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-targeting-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:shared-overheat-warp-charge-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed release-bound target-locked charge path retains the 2-second sticky-charge default under smite_attack_speed=1; the target-lock branch resets charge timing when its target changes. This is bounded source behavior, not a universal runtime timing claim. Upstream path membership and every cited file identity are bound to commit e840592880fdd5f253c6633e081633808c7e0bd2; this evidence and its claim remain pending review.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time-release-code-sticky-charge-1-13-3",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-smite-targeting-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-targeting-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:shared-overheat-warp-charge-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-observed",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio-release-code-successful-hit-peril-1-13-3"
+            }
+          ],
+          "property": "charge_template.psyker_smite_use_power.warp_charge_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:skill:psyker:brain-burst-improved"
+          },
+          "value": {
+            "decimal": "0.25",
+            "status": "known",
+            "unit": "ratio"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-damage-target-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:shared-overheat-warp-charge-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The release-bound Smite action and damage-target path retain a 0.25 base Peril parameter on successful damage; an empty cast or miss does not enter that payment branch. This records the parameter and branch only, not measured runtime Peril. Upstream path membership and every cited file identity are bound to commit e840592880fdd5f253c6633e081633808c7e0bd2; this evidence and its claim remain pending review.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        },
+        "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio-release-code-successful-hit-peril-1-13-3",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:weapon-charge-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:action-damage-target-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-action-module-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:warp-charge-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:shared-overheat-warp-charge-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The talent definition binds the improved brain-burst description's damage format value to smite_damage_multiplier and applies (value - 1) * 100; the pinned talent layout parser renders the percentage with its configured prefix. With source parameter 1.5, the description-format value is 50 percent. This is a code-derived display parameter, not a final damage value; Steam build and localized-description compatibility are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-talents-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:psyker:brain-burst-improved-description-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-talents-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:talent-layout-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "At the fixed upstream commit, the damage calculation checks damage_type == damage_types.smite, reads attacker_stat_buffs.smite_damage_multiplier on that branch, and multiplies the parameter into damage_multiplier (lines 506-514). This records the bounded conditional and multiplication relation only; other calculation stages and final damage are not resolved.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:damage-calculation-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-calculation-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:damage-calculation-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "At the fixed upstream commit, the psyker_brain_burst_improved template assigns the code literal 1.5 to stat_buffs[stat_buffs.smite_damage_multiplier]. This evidence supports only the parameter value; downstream damage outcome and runtime application are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-multiplier-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "At the fixed upstream commit, the psyker_smite_kill damage target in the psyker_smite action uses damage_types.smite (lines 538-562). This links the selected action to the shared calculation branch condition only; it does not establish runtime resolution or final damage.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:psyker:smite-action-damage-type-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "skill",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+            }
+          ],
+          "nameKey": "loc_talent_psyker_brain_burst_improved",
+          "termRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:term:psyker:smite-damage-multiplier-parameter"
+            }
+          ]
+        },
+        "recordId": "darktide:skill:psyker:brain-burst-improved",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/termRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-talents-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "term",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+            }
+          ],
+          "contextKey": "psyker_brain_burst_improved.stat_buffs",
+          "technicalDefinitionEn": "The stat_buffs parameter key used by the Psyker brain-burst-improved buff template. In this pinned source snapshot, the shared damage calculation reads it on the damage_types.smite branch and multiplies it into damage_multiplier; the pinned Psyker Smite action uses that damage type. This bounded linkage does not resolve other calculation stages or a final damage outcome.",
+          "termKey": "smite_damage_multiplier"
+        },
+        "recordId": "darktide:term:psyker:smite-damage-multiplier-parameter",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-buff-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:damage-calculation-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:psyker-smite-action-ba6c148"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d36aa06515bc84015f64714f2ffc4cda5d0c94e410e20cf3d11ea0da315c1ccb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d36aa06515bc84015f64714f2ffc4cda5d0c94e410e20cf3d11ea0da315c1ccb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d36aa06515bc84015f64714f2ffc4cda5d0c94e410e20cf3d11ea0da315c1ccb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+        },
+        "targetDigest": "0b4f77e5134bb4267df2a0aababfb7c556cf38cea8f4d7825347daa7a41cbc70"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d36aa06515bc84015f64714f2ffc4cda5d0c94e410e20cf3d11ea0da315c1ccb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+        },
+        "targetDigest": "b31e61f24d9b21aee2a04b064d3fe80d55264c0274f30ce6c0b85d207b5cf1e6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d36aa06515bc84015f64714f2ffc4cda5d0c94e410e20cf3d11ea0da315c1ccb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-description-display-percent"
+        },
+        "targetDigest": "612b43b54d511cbf2a51283b5916035b35b23f2ab2c78e77bd3e36206b22b053"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7362da2ed48b88af22c6652dedcb9386570b4adbee55115ba7ba03f77dac3130",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+        },
+        "targetDigest": "2e9580b8a948c00c9099752f5a84d8775b2e1a3adf7e3891aff7b8be214f805a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7362da2ed48b88af22c6652dedcb9386570b4adbee55115ba7ba03f77dac3130",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7362da2ed48b88af22c6652dedcb9386570b4adbee55115ba7ba03f77dac3130",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+        },
+        "targetDigest": "0aa80889a84bbb689fed72132f9a1fca91c41fcbcd3cdefde1e2c2e9d09f2746"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7362da2ed48b88af22c6652dedcb9386570b4adbee55115ba7ba03f77dac3130",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+        },
+        "targetDigest": "b31e61f24d9b21aee2a04b064d3fe80d55264c0274f30ce6c0b85d207b5cf1e6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7362da2ed48b88af22c6652dedcb9386570b4adbee55115ba7ba03f77dac3130",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time"
+        },
+        "targetDigest": "893950895fc1f2b8cb8eebc3751601dcf00d3bac06001938578100258c40645e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e69188a97c7aa14e88086d5e07a977067aa43b6140d37bb5cc0b1639dc0acd01",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-normal-charge-base-time-release-code-normal-charge-1-13-3"
+        },
+        "targetDigest": "c979b475e221d3eb1446c2bde037fba80119edba066c45912a0a4e82cefa9cc4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9de179acb697ac66970fb5d18a20e5a0441ecabb9715c4bbdc30bbe8606e406c",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+        },
+        "targetDigest": "2e9580b8a948c00c9099752f5a84d8775b2e1a3adf7e3891aff7b8be214f805a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9de179acb697ac66970fb5d18a20e5a0441ecabb9715c4bbdc30bbe8606e406c",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9de179acb697ac66970fb5d18a20e5a0441ecabb9715c4bbdc30bbe8606e406c",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+        },
+        "targetDigest": "ff19eed8f9aa3522acc02aa4a5c51b9ea9548966ef1676aaa4276284f524ff1f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9de179acb697ac66970fb5d18a20e5a0441ecabb9715c4bbdc30bbe8606e406c",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+        },
+        "targetDigest": "b31e61f24d9b21aee2a04b064d3fe80d55264c0274f30ce6c0b85d207b5cf1e6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9de179acb697ac66970fb5d18a20e5a0441ecabb9715c4bbdc30bbe8606e406c",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier"
+        },
+        "targetDigest": "1972b8bcea46d05b5050aea61f7ec550ce79c61abf8e58885c8df0fd3ab6187f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9473a295b41bf8971a9a7b261da5b29ff10745809a51448142b17a780ebfdd56",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-smite-damage-multiplier-release-code-smite-multiplier-1-13-3"
+        },
+        "targetDigest": "cab5e7f4a086ce26b29ba798deecf66adf8ec781a265c479a87d536125b525a9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "90bd128901e9ce2fe11af38056fcca5ba5c889e5d105c36204b75151d22bf3f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+        },
+        "targetDigest": "2e9580b8a948c00c9099752f5a84d8775b2e1a3adf7e3891aff7b8be214f805a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "90bd128901e9ce2fe11af38056fcca5ba5c889e5d105c36204b75151d22bf3f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "90bd128901e9ce2fe11af38056fcca5ba5c889e5d105c36204b75151d22bf3f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+        },
+        "targetDigest": "603a4d3932e3e95a37160ad9996d9d55d800103ee4dbf618716273ff06ad3d42"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "90bd128901e9ce2fe11af38056fcca5ba5c889e5d105c36204b75151d22bf3f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+        },
+        "targetDigest": "b31e61f24d9b21aee2a04b064d3fe80d55264c0274f30ce6c0b85d207b5cf1e6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "90bd128901e9ce2fe11af38056fcca5ba5c889e5d105c36204b75151d22bf3f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time"
+        },
+        "targetDigest": "bd16c124baed78c2457dced43ff0006eab2e732d717059149ebca2078be4e9d7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf2385c2743defe54984f6f3584c96ae5abac0481cc535f15f6f61795a016c6b",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-sticky-charge-base-time-release-code-sticky-charge-1-13-3"
+        },
+        "targetDigest": "206b85b5e308e244b1c8196b5feb6361ab54444d95208d4dcb5081a1c0e5cd23"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddb782fb666faad392363d78fc3caad422620822bf3794317e09d3d408135fca",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+        },
+        "targetDigest": "2e9580b8a948c00c9099752f5a84d8775b2e1a3adf7e3891aff7b8be214f805a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddb782fb666faad392363d78fc3caad422620822bf3794317e09d3d408135fca",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddb782fb666faad392363d78fc3caad422620822bf3794317e09d3d408135fca",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+        },
+        "targetDigest": "8943bc121f843e0a0a413cdb9b61000241c2e7762b18bbbec081b5d3f5db5990"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddb782fb666faad392363d78fc3caad422620822bf3794317e09d3d408135fca",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+        },
+        "targetDigest": "b31e61f24d9b21aee2a04b064d3fe80d55264c0274f30ce6c0b85d207b5cf1e6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddb782fb666faad392363d78fc3caad422620822bf3794317e09d3d408135fca",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio"
+        },
+        "targetDigest": "c22bbd95168ef1f8b96ecfdc505c7a47e8bd126a0be886e4880a4ddc131f0fe9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0df298240d689375b4be5bc43b4eb83881eba66aad0a4494b4f3b477e42bc418",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:psyker:brain-burst-improved-successful-hit-base-peril-ratio-release-code-successful-hit-peril-1-13-3"
+        },
+        "targetDigest": "d7ce3172cb0d154043e58858749f2dfc1d09f1dd66113002590778ddabe28d64"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13c8a9eeab0ab23b2cc3f0c869b5c5c3dffec0024e706a21a10cfd13560babf8",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:psyker:brain-burst-improved-description-display-percent-code"
+        },
+        "targetDigest": "bdb5086ad2e3996078624e1c72952663f3b3cdf9fcc99d6de8d4ebc0ade676b1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7095e154c6c35d071154cc2fe9582045427b1bfe788d57ff5fe501e0d2a03f85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-calculation-code"
+        },
+        "targetDigest": "1350837e893c1ab8297362b2a3cc870eaad632da129377228a7b82fbcb81545d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c11f43df231411496bb4df2cf63c58a4268c0a6d1ace70868e6fb9114193232e",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:psyker:brain-burst-improved-smite-damage-multiplier-code"
+        },
+        "targetDigest": "f6afddf22964efb0caa8080b635ac42c89b5039570a225576943ca3071506989"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d6b3ec30ca63807013e04f5570b8731b3c0ced65d8ae8b8e9c9376ce8e51099",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:psyker:smite-action-damage-type-code"
+        },
+        "targetDigest": "f3c9b00d8b60134fbf5f32fd4f576740605121401b1a51f341509195aecd2b3c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d7cdfc50e57ad2956cd110d9fa6c468e825e3939013b986851bd6d21a10d6f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:skill:psyker:brain-burst-improved"
+        },
+        "targetDigest": "0d251fb67c24fe01b9606a6198009df4afa17d34b8902e144051f98374701b86"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d7cdfc50e57ad2956cd110d9fa6c468e825e3939013b986851bd6d21a10d6f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:skill:psyker:brain-burst-improved"
+        },
+        "targetDigest": "3d2a7aa3cbfaff3cf867bc9fa96e736f1d5afea65456b0b2d7f18476fc2997c0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d7cdfc50e57ad2956cd110d9fa6c468e825e3939013b986851bd6d21a10d6f7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/termRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:skill:psyker:brain-burst-improved"
+        },
+        "targetDigest": "247956e3b82517b5aef8741e171fb51fa514f7efcbda5a75bf8cc45353a11b05"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dc75f93749d107b76fcda7424275ef7d7b34d9e82a23cba90d9cbd46c05682eb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:term:psyker:smite-damage-multiplier-parameter"
+        },
+        "targetDigest": "3ccdf655bc2b9ce7dba20a26f3fe3ebc7db254a35510384d19aca55e7e56f31b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dc75f93749d107b76fcda7424275ef7d7b34d9e82a23cba90d9cbd46c05682eb",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:term:psyker:smite-damage-multiplier-parameter"
+        },
+        "targetDigest": "9141b9de8c43b20e541d1846193e2c28998c4467e005ce215ff846c852366402"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "d5de5cbe6da6799fce363add729f8b50adf5c76e87bc445540fa69d1736a4625",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/extension_systems/weapon/actions/action_damage_target.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/extension_systems/weapon/actions/action_damage_target.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/actions/action_damage_target.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 893011d7446d0ee3b4e6791bb8f5845c8daf4265, 8335 bytes, SHA-256 d5de5cbe6da6799fce363add729f8b50adf5c76e87bc445540fa69d1736a4625. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:action-damage-target-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "0afa04420eacef88aa7e6046bd5a7f1f5bea1c288cd0b0d6e30aa78556e386b4",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/extension_systems/weapon/actions/action_smite_targeting.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/extension_systems/weapon/actions/action_smite_targeting.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/actions/action_smite_targeting.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 47c655fe4fe405532c417cdbd1122c400220744b, 7156 bytes, SHA-256 0afa04420eacef88aa7e6046bd5a7f1f5bea1c288cd0b0d6e30aa78556e386b4. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:action-smite-targeting-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "5b52ee91566fffe6093f95d63f065767a6d7c2a7eaf1f587f340f54ac855cc5f",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/extension_systems/weapon/actions/modules/charge_action_module.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/extension_systems/weapon/actions/modules/charge_action_module.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/actions/modules/charge_action_module.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 97a088567030c6dcfee114158ab9a065a8e7a923, 5299 bytes, SHA-256 5b52ee91566fffe6093f95d63f065767a6d7c2a7eaf1f587f340f54ac855cc5f. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:charge-action-module-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "0619a6fb71e770a72979747fd63f8f0a6919422f9bf8697c30923ede13c0b55d",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/utilities/attack/damage_calculation.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/utilities/attack/damage_calculation.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/attack/damage_calculation.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 0befe848712f85d0ae723168d8807d04b6aa280c, 50718 bytes, SHA-256 0619a6fb71e770a72979747fd63f8f0a6919422f9bf8697c30923ede13c0b55d. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:damage-calculation-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "37d7b5a55795eb13401496d9918fbdef053abd2b9688e7e38aba3f06b44f8b41",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/ability/player_abilities/abilities/psyker_abilities.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/ability/player_abilities/abilities/psyker_abilities.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/ability/player_abilities/abilities/psyker_abilities.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob fb1626cbfe5dcc01f6733434557515fa3026e26a, 5569 bytes, SHA-256 37d7b5a55795eb13401496d9918fbdef053abd2b9688e7e38aba3f06b44f8b41. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:psyker-abilities-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "401cc7761d1aa3693f211c1b7c1bd30a84cdbbe78ffadf1d8f3e8f3975e925f1",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/buff/archetype_buff_templates/psyker_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/buff/archetype_buff_templates/psyker_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/buff/archetype_buff_templates/psyker_buff_templates.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob e4662dd38cb60b44a9e4773e5243db2cf6a44264, 143454 bytes, SHA-256 401cc7761d1aa3693f211c1b7c1bd30a84cdbbe78ffadf1d8f3e8f3975e925f1. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:psyker-buff-templates-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "20bfcffee8fbfcffe0e9a54b699cade17064ddc2a3ad0469e7e5e6607b2f8912",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/equipment/weapon_templates/grenades/psyker_smite.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/equipment/weapon_templates/grenades/psyker_smite.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/equipment/weapon_templates/grenades/psyker_smite.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 09bae668c991438b9b72e9ef0549cc650bcd6ccd, 17508 bytes, SHA-256 20bfcffee8fbfcffe0e9a54b699cade17064ddc2a3ad0469e7e5e6607b2f8912. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:psyker-smite-action-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "2193328969ffbe2a5e6308bdfc9f4b10d9d19bb4759620731922a8ef2c3c4f88",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/extension_systems/weapon/actions/modules/psyker_smite_targeting_action_module.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/extension_systems/weapon/actions/modules/psyker_smite_targeting_action_module.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/actions/modules/psyker_smite_targeting_action_module.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 383d5b48cc38be66730bb1e31ea597c1cd675e61, 3045 bytes, SHA-256 2193328969ffbe2a5e6308bdfc9f4b10d9d19bb4759620731922a8ef2c3c4f88. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:psyker-smite-targeting-module-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "30579fbf2807c1e3ca9bb6fff71aaa11b16c304776d388dde9398d58d7e87cca",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/ability/archetype_talents/talents/psyker_talents.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/ability/archetype_talents/talents/psyker_talents.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/ability/archetype_talents/talents/psyker_talents.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 10c18111bd0aa5283511a6b78b8244d041182c33, 94173 bytes, SHA-256 30579fbf2807c1e3ca9bb6fff71aaa11b16c304776d388dde9398d58d7e87cca. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:psyker-talents-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "01abab597c8c6d088757d6650037259e9494c3a539337793b9825e6a63644fc6",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/utilities/shared_overheat_and_warp_charge_functions.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/utilities/shared_overheat_and_warp_charge_functions.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/shared_overheat_and_warp_charge_functions.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob b55bc8f7fa0235e81d4df4c02e6c7323f3f4f2d2, 3108 bytes, SHA-256 01abab597c8c6d088757d6650037259e9494c3a539337793b9825e6a63644fc6. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:shared-overheat-warp-charge-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b178d9ef211c6d6a52db9c74feedf3cc0b83b6f916de1eaffe9f893072e2a790",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/ui/views/talent_builder_view/utilities/talent_layout_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/ui/views/talent_builder_view/utilities/talent_layout_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/ui/views/talent_builder_view/utilities/talent_layout_parser.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 1cd7b67b1069b12325b58f48f5c8f66afbbbaff1, 24186 bytes, SHA-256 b178d9ef211c6d6a52db9c74feedf3cc0b83b6f916de1eaffe9f893072e2a790. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:talent-layout-parser-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "bdf8fed3d1911de504fb1f1bdb024efb80c61c0a07004a4bb7c165ed38fd2dd2",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/extension_systems/weapon/actions/modules/warp_charge_action_module.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/extension_systems/weapon/actions/modules/warp_charge_action_module.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/actions/modules/warp_charge_action_module.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob f2e3f34a6a0f8859dd7ea14f4647daf2e936fb95, 2132 bytes, SHA-256 bdf8fed3d1911de504fb1f1bdb024efb80c61c0a07004a4bb7c165ed38fd2dd2. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:warp-charge-action-module-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "ac53a24303fc73a00a5e9c796e693f72c2f377e3c51d2e251df7729607f25890",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/utilities/warp_charge.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/utilities/warp_charge.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/warp_charge.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 18b479af32968f8ba5f5e93b042fb3da616b7389, 17675 bytes, SHA-256 ac53a24303fc73a00a5e9c796e693f72c2f377e3c51d2e251df7729607f25890. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:warp-charge-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "781af55855ec0b9e0483dd2bee266c3c03856c9708daac3067835db5b9c57055",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/equipment/weapon_handling_templates/weapon_charge_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/equipment/weapon_handling_templates/weapon_charge_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/equipment/weapon_handling_templates/weapon_charge_templates.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 8c0d08ae230c2db8b9fd28741daa57a188e544e7, 10009 bytes, SHA-256 781af55855ec0b9e0483dd2bee266c3c03856c9708daac3067835db5b9c57055. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:weapon-charge-templates-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.3",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": []
+    },
+    "officialTextChanges": [],
+    "presentations": [],
+    "reviewReceipts": [],
+    "reviewTargets": [],
+    "termLocalizations": [],
+    "termRules": {
+      "fixtureOnly": false,
+      "publicationEligible": false,
+      "rules": [
+        {
+          "ruleId": "peril-general",
+          "sourceLine": "- Peril - 反噬",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 9,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Peril",
+          "targetText": "反噬"
+        },
+        {
+          "ruleId": "staggering",
+          "sourceLine": "- Staggering - 踉蹌",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 55,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Staggering",
+          "targetText": "踉蹌"
+        },
+        {
+          "ruleId": "stagger",
+          "sourceLine": "- Stagger - 踉蹌",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 107,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Stagger",
+          "targetText": "踉蹌"
+        },
+        {
+          "ruleId": "rev-it-up",
+          "sourceLine": "- Rev it Up - 提速",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 420,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Rev it Up",
+          "targetText": "提速"
+        },
+        {
+          "ruleId": "peril-psyker",
+          "sourceLine": "- Peril - 靈能反噬、反噬",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 653,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Peril",
+          "targetText": "靈能反噬、反噬"
+        },
+        {
+          "ruleId": "brain-burst",
+          "sourceLine": "- Brain Burst - 顱腦爆裂",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 665,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Brain Burst",
+          "targetText": "顱腦爆裂"
+        },
+        {
+          "ruleId": "brain-rupture",
+          "sourceLine": "- Brain Rupture - 顱腦崩裂",
+          "sourceRef": {
+            "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+            "fileSha256": "fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0",
+            "line": 666,
+            "path": "Referneces/Translation.md"
+          },
+          "sourceText": "Brain Rupture",
+          "targetText": "顱腦崩裂"
+        }
+      ],
+      "schemaVersion": "1.0.0"
+    }
+  }
+}
