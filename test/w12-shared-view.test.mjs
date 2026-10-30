@@ -312,6 +312,73 @@ test('UnitT45_projects_safe_evidence_and_correction_links', async () => {
     'conflicting Source and Web correction targets fail closed');
 });
 
+// Scenario: A verified public-code ref uses a second registered snapshot ID for the same release bytes.
+// Purpose: Project evidence only when a registered alias has complete, matching snapshot pins; keep unknown, conflicting, or incomplete aliases hidden.
+test('UnitT60_projects_evidence_for_only_fully_pinned_snapshot_aliases', async () => {
+  const sourcePackage = await makeCompiledGameChangesPackage();
+  const makeEvidence = ({ registerAlias = true, registerRelease = 'fixture-r2', mutateSnapshot = () => {}, addConflict = false } = {}) => {
+    const domains = structuredClone(sourcePackage.domains);
+    const index = domains.find(row => row.kind === 'game-changes');
+    const change = index.source.records.find(record => record.kind === 'game-change');
+    const comparison = change.payload.comparison;
+    const evidenceRecord = index.source.records.find(record => record.kind === 'evidence'
+      && record.recordId === change.payload.evidenceRefs[0].recordId
+      && record.gameReleaseId === change.payload.evidenceRefs[0].gameReleaseId);
+    const sourcePointer = evidenceRecord.payload.sourceRef;
+    const sourceRef = index.source.sourceRefs.find(row => row.sourceId === sourcePointer.sourceId
+      && row.gameReleaseId === sourcePointer.gameReleaseId);
+    assert.ok(sourceRef, 'the compiler fixture must include the exact public source ref');
+    const aliasId = 'fixture-snapshot-r2-source-files';
+    const aliasSnapshot = { ...sourceRef.snapshot, snapshotId: aliasId };
+    mutateSnapshot(aliasSnapshot);
+    for (const domain of domains) {
+      for (const duplicateRef of domain.source?.sourceRefs ?? []) {
+        if (duplicateRef.sourceId === sourcePointer.sourceId && duplicateRef.gameReleaseId === sourcePointer.gameReleaseId) {
+          duplicateRef.snapshot = structuredClone(aliasSnapshot);
+        }
+      }
+    }
+    if (registerAlias) {
+      index.source.sourceSnapshots.push({ gameReleaseId: registerRelease, snapshot: structuredClone(aliasSnapshot) });
+      if (addConflict) {
+        index.source.sourceSnapshots.push({
+          gameReleaseId: registerRelease,
+          snapshot: { ...structuredClone(aliasSnapshot), contentSha256: 'f'.repeat(64) },
+        });
+      }
+    }
+    const view = createSharedViewModel({ domains, gameReleaseId: index.gameReleaseId });
+    const row = view.getGameChanges({ gameVersion: comparison.toGameVersion }).items.find(item => item.owner === 'source');
+    return row?.evidence ?? [];
+  };
+
+  const exactView = createSharedViewModel({
+    domains: sourcePackage.domains,
+    gameReleaseId: sourcePackage.domains.find(row => row.kind === 'game-changes').gameReleaseId,
+  });
+  assert.equal(exactView.getGameChanges({ gameVersion: '1.0.1' }).items
+    .find(item => item.owner === 'source')?.evidence.length, 1,
+  'the existing exact snapshot ID path remains supported');
+
+  const aliasedEvidence = makeEvidence();
+  assert.equal(aliasedEvidence.length, 1, 'a registered same-release alias with complete identical pins may project its evidence');
+  assert.equal(aliasedEvidence[0].source.snapshot.snapshotId, 'fixture-snapshot-r2-source-files');
+
+  assert.equal(makeEvidence({ registerAlias: false }).length, 0, 'an unknown alias is not accepted');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.commit = 'e'.repeat(40); } }).length, 0,
+    'a different commit is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.manifestSha256 = 'e'.repeat(64); } }).length, 0,
+    'a different manifest hash is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { snapshot.contentSha256 = 'e'.repeat(64); } }).length, 0,
+    'a different content hash is not accepted as the same snapshot');
+  assert.equal(makeEvidence({ mutateSnapshot: snapshot => { delete snapshot.manifestSha256; } }).length, 0,
+    'an incomplete alias pin is not accepted');
+  assert.equal(makeEvidence({ registerRelease: 'fixture-r1' }).length, 0,
+    'an alias registered under a different release is not accepted');
+  assert.equal(makeEvidence({ addConflict: true }).length, 0,
+    'a conflicting registration for the alias is not accepted');
+});
+
 // Scenario: A W08-compiled Source game change compares a typed range with inclusive bounds and a step.
 // Purpose: Present every valid knownRange component and every Source schema unit with a clear Traditional Chinese label.
 // Given actual compiler output containing a knownRange typedValue, When its detail value is formatted, Then bounds, inclusivity, step, and unit remain visible without invented condition fields.

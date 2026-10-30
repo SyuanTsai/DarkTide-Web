@@ -692,6 +692,25 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     return getLocalizedSubject([...uniqueParents.values()][0], nextVisiting);
   };
 
+  const sameCompleteSnapshotPins = (left, right) => isObject(left) && isObject(right)
+    && /^[a-f0-9]{40}$/u.test(left.commit ?? '')
+    && left.commit === right.commit
+    && isSha256(left.manifestSha256) && left.manifestSha256 === right.manifestSha256
+    && isSha256(left.contentSha256) && left.contentSha256 === right.contentSha256;
+
+  const matchesComparisonSnapshot = (releaseId, snapshot, targetReleaseId, targetSnapshotId) => {
+    if (releaseId !== targetReleaseId || !isDisplayText(snapshot?.snapshotId)) return false;
+    if (snapshot.snapshotId === targetSnapshotId) return true;
+
+    const aliasKey = `${releaseId}\u0000${snapshot.snapshotId}`;
+    const targetKey = `${targetReleaseId}\u0000${targetSnapshotId}`;
+    if (sourceSnapshotConflicts.has(aliasKey) || sourceSnapshotConflicts.has(targetKey)) return false;
+    const registeredAlias = sourceSnapshots.get(aliasKey);
+    const registeredTarget = sourceSnapshots.get(targetKey);
+    return sameCompleteSnapshotPins(snapshot, registeredAlias)
+      && sameCompleteSnapshotPins(registeredAlias, registeredTarget);
+  };
+
   const projectEvidence = (refs, comparison) => {
     if (!Array.isArray(refs)) return [];
     const output = [];
@@ -705,10 +724,14 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
       if (sourceRefConflicts.has(sourceKey)) continue;
       const source = sourceRefByKey.get(sourceKey);
       if (!source) continue;
-      const snapshotId = source.snapshot?.snapshotId;
+      const sourceSnapshot = source.snapshot;
+      const snapshotId = sourceSnapshot?.snapshotId;
       const releaseId = source.gameReleaseId;
-      const matchesComparison = (releaseId === comparison.fromGameReleaseId && snapshotId === comparison.fromSnapshotId)
-        || (releaseId === comparison.toGameReleaseId && snapshotId === comparison.toSnapshotId);
+      const matchesComparison = matchesComparisonSnapshot(
+        releaseId, sourceSnapshot, comparison.fromGameReleaseId, comparison.fromSnapshotId,
+      ) || matchesComparisonSnapshot(
+        releaseId, sourceSnapshot, comparison.toGameReleaseId, comparison.toSnapshotId,
+      );
       if (!matchesComparison) continue;
       const publicUrl = safePublicHttps(source.publicUrl);
       output.push({
