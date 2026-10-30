@@ -41,11 +41,21 @@ async function closeServer(server) {
   });
 }
 
-// Scenario: A current gameplay page navigates to a pending historical official document in an optional-domain fixture.
-// Purpose: Keep the current package footer distinct from an announcement's publication context across SPA navigation.
-test('InterT10_official_announcement_renders_typed_source_without_implying_current_game_version', { timeout: 120000 }, async () => {
+// Scenario: A current gameplay page navigates to a synthetic, pending official-document fixture dated 2026-10-22.
+// Purpose: Keep official-document scope neutral and separate its publication date from the current package footer.
+test('InterT10_official_document_uses_neutral_scope_label_without_claiming_game_version', { timeout: 120000 }, async () => {
   const candidate = await buildW15AnnouncementCandidate();
-  const source = candidate.announcements[2];
+  const source = {
+    ...candidate.announcements[2],
+    scope: 'official-document',
+    title: '官方公告呈現測試（不可發布）',
+    publishedOn: '2026-10-22',
+    source: {
+      kind: 'official-game-source',
+      locator: 'https://example.invalid/fixture/official-document/2026-10-22',
+      sha256: 'a'.repeat(64),
+    },
+  };
   const fixture = await makeCompiledAnnouncementFixture({ announcement: authoringRow(source) });
   const root = await createBuildRoot({ productionWeb: true });
   let server;
@@ -66,7 +76,7 @@ test('InterT10_official_announcement_renders_typed_source_without_implying_curre
     assert.equal(await page.locator('h1').first().innerText(), '查閱技能、武器與祝福資料');
     assert.equal(await page.locator('#build-meta').innerText(), currentFooter);
     const announcementListFooter = `公告資料 · 資料修訂 ${fixture.version.data_revision.slice(0, 12)}`;
-    const historicalAnnouncementFooter = `歷史公告 · 發布日期 ${source.publishedOn}`;
+    const officialAnnouncementFooter = `官方公告 · 發布日期 ${source.publishedOn}`;
     await page.locator('.shared-home-links a[href="/announcements/"]').focus();
     await page.keyboard.press('Enter');
     await page.waitForURL(url => url.pathname === '/announcements/' && !url.search);
@@ -83,8 +93,8 @@ test('InterT10_official_announcement_renders_typed_source_without_implying_curre
     await article.locator('h1').waitFor({ state: 'visible' });
     assert.equal(await article.locator('h1').innerText(), source.title);
     const scopeNote = await article.locator('.shared-announcement-scope-note').innerText();
-    assert.equal(scopeNote, '歷史公告');
-    assert.equal(await page.locator('#build-meta').innerText(), historicalAnnouncementFooter);
+    assert.equal(scopeNote, '官方公告');
+    assert.equal(await page.locator('#build-meta').innerText(), officialAnnouncementFooter);
     assert.doesNotMatch(await page.locator('#build-meta').innerText(), /遊戲版本\s*1\.13\.[012]/u);
     assert.equal(await article.locator('iframe').count(), 0);
     assert.equal(await article.locator('thead th').count(), 9);
@@ -102,10 +112,10 @@ test('InterT10_official_announcement_renders_typed_source_without_implying_curre
 
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
-    assert.equal(await page.locator('#build-meta').innerText(), historicalAnnouncementFooter);
+    assert.equal(await page.locator('#build-meta').innerText(), officialAnnouncementFooter);
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.locator('.shared-announcement-content h1').waitFor({ state: 'visible' });
-    assert.equal(await page.locator('#build-meta').innerText(), historicalAnnouncementFooter);
+    assert.equal(await page.locator('#build-meta').innerText(), officialAnnouncementFooter);
     await page.goBack();
     await page.locator('.shared-announcement-list').waitFor({ state: 'visible' });
     assert.equal(await page.locator('#build-meta').innerText(), announcementListFooter);
@@ -117,7 +127,7 @@ test('InterT10_official_announcement_renders_typed_source_without_implying_curre
     assert.equal(await page.locator('#build-meta').innerText(), announcementListFooter);
     await page.goForward();
     await page.locator('.shared-announcement-content h1').waitFor({ state: 'visible' });
-    assert.equal(await page.locator('#build-meta').innerText(), historicalAnnouncementFooter);
+    assert.equal(await page.locator('#build-meta').innerText(), officialAnnouncementFooter);
     assert.deepEqual(pageErrors, []);
   } finally {
     await browser?.close();
