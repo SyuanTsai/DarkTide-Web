@@ -1,0 +1,2832 @@
+{
+  "gameReleaseId": "darktide:1.13.3",
+  "kind": "blessings",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "gameVersion": "1.13.3",
+        "releaseOrder": 3,
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.17",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.19",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-observed",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+            }
+          ],
+          "property": "template.buff_override.active_duration",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier1-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.movement_speed.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          },
+          "value": {
+            "decimal": "17",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier2-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.movement_speed.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier3-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.movement_speed.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          },
+          "value": {
+            "decimal": "19",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.3",
+              "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier4-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.movement_speed.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed P1 traits table defines movement_speed values 0.17, 0.18, 0.19, and 0.2; each relevant override has active_duration = 2 (lines 119-143). This supports the literal template parameter only and does not establish actual in-game effect duration.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed trait definition configures movement_speed as a percentage format with a + prefix and its defined tier 1 is 0.17. The pinned trait value parser applies default percentage scaling because no custom value manipulation is configured, so the description-format value is 17 percent. This covers defined tier 1 only, not verified obtainable or game-tested; runtime movement outcome and localized-description compatibility are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier1-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed trait definition configures movement_speed as a percentage format with a + prefix; its defined tier 2 is 0.18. The pinned trait value parser applies default percentage scaling with no custom value manipulation for this descriptor, so the description-format value is 18 percent. This covers defined tier 2 only, not verified obtainable or game-tested; runtime movement outcome and localized-description compatibility are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier2-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed trait definition configures movement_speed as a percentage format with a + prefix; its defined tier 3 is 0.19. The pinned trait value parser applies default percentage scaling with no custom value manipulation for this descriptor, so the description-format value is 19 percent. This covers defined tier 3 only, not verified obtainable or game-tested; runtime movement outcome and localized-description compatibility are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier3-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.3",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "The fixed trait definition configures movement_speed as a percentage format with a + prefix; its defined tier 4 is 0.2. The pinned trait value parser applies default percentage scaling with no custom value manipulation for this descriptor, so the description-format value is 20 percent. This covers defined tier 4 only, not verified obtainable or game-tested; runtime movement outcome and localized-description compatibility are unverified.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          }
+        },
+        "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier4-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:chainaxe-p1-traits-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.3",
+            "sourceId": "public-code:trait-value-parser-ba6c148"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "a2d7deab99f2e87d3ccc1afbbbb73ab64bfc4ad9f2509bbc753ea3a48367da7c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "4b37851848119d57032242185906a942c4229219c162de9207b2d46b06c2bc09"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0a11576853e1aec2388e7f3000cb6eda1bed319476dc6f1feb3da966ca7ecb85",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "79cf699d0971467e370a77152428ffe7518a5a406a8d48e8f750f4d43968b179",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "79cf699d0971467e370a77152428ffe7518a5a406a8d48e8f750f4d43968b179",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+        },
+        "targetDigest": "a0e9c6145db9b127021af597a618498339de210bb8812672d2d97a796ed12936"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf10a08ae87eb11837ff6d9dde34900367ebdabdc680efc251b4fbc784af7ad",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+        },
+        "targetDigest": "2e9580b8a948c00c9099752f5a84d8775b2e1a3adf7e3891aff7b8be214f805a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf10a08ae87eb11837ff6d9dde34900367ebdabdc680efc251b4fbc784af7ad",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf10a08ae87eb11837ff6d9dde34900367ebdabdc680efc251b4fbc784af7ad",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+        },
+        "targetDigest": "7954643eb00348203bdfe18d2ecae7f66221f0698e44883433ab4bb512a56864"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf10a08ae87eb11837ff6d9dde34900367ebdabdc680efc251b4fbc784af7ad",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+        },
+        "targetDigest": "30a7338b9565a027378193b2ff2709d26336512903162d5331129a664d2df5d6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf10a08ae87eb11837ff6d9dde34900367ebdabdc680efc251b4fbc784af7ad",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+        },
+        "targetDigest": "bd16c124baed78c2457dced43ff0006eab2e732d717059149ebca2078be4e9d7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "20d9ac69c61fff58c02afb9937945b36d4725da07890232d8a162d16b1f1bc15",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "20d9ac69c61fff58c02afb9937945b36d4725da07890232d8a162d16b1f1bc15",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "20d9ac69c61fff58c02afb9937945b36d4725da07890232d8a162d16b1f1bc15",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+        },
+        "targetDigest": "d3b2662118f2d237391fabf9c646bee2a6543ee92767e95b0d764f6e6cd2e710"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "20d9ac69c61fff58c02afb9937945b36d4725da07890232d8a162d16b1f1bc15",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+        },
+        "targetDigest": "30a7338b9565a027378193b2ff2709d26336512903162d5331129a664d2df5d6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "20d9ac69c61fff58c02afb9937945b36d4725da07890232d8a162d16b1f1bc15",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+        },
+        "targetDigest": "12dde64427897578662e7775d40b2cadfbc7e5ff0d70782b40c534a326936ab8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4e57cf28acf7e0d224f6d1c952a2b2af1e71d81b2089a5d58ec8c79b959859c7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4e57cf28acf7e0d224f6d1c952a2b2af1e71d81b2089a5d58ec8c79b959859c7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4e57cf28acf7e0d224f6d1c952a2b2af1e71d81b2089a5d58ec8c79b959859c7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+        },
+        "targetDigest": "e1462d8ed0c50532790a5548fa0cb3936fdc4d0e2db36cb33e7c102d77aa2846"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4e57cf28acf7e0d224f6d1c952a2b2af1e71d81b2089a5d58ec8c79b959859c7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+        },
+        "targetDigest": "30a7338b9565a027378193b2ff2709d26336512903162d5331129a664d2df5d6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4e57cf28acf7e0d224f6d1c952a2b2af1e71d81b2089a5d58ec8c79b959859c7",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd785affd4f1aaecad58d885b16986591dfd5577af67ece5b310279293b04468",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd785affd4f1aaecad58d885b16986591dfd5577af67ece5b310279293b04468",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd785affd4f1aaecad58d885b16986591dfd5577af67ece5b310279293b04468",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+        },
+        "targetDigest": "bcdcc833420fd72c7eb798e393f81eba97a56444164a14071cbd4f70c04ebd5f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd785affd4f1aaecad58d885b16986591dfd5577af67ece5b310279293b04468",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+        },
+        "targetDigest": "30a7338b9565a027378193b2ff2709d26336512903162d5331129a664d2df5d6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd785affd4f1aaecad58d885b16986591dfd5577af67ece5b310279293b04468",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+        },
+        "targetDigest": "84de48a73364a983307a56e4297f8d59462ec401b1fd7b91799e33f4f0d8ee97"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5bfa57bb94bdeccad1775247b4d9fef95d1cc8d28dfaed2020a206c6b6ee2908",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5bfa57bb94bdeccad1775247b4d9fef95d1cc8d28dfaed2020a206c6b6ee2908",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5bfa57bb94bdeccad1775247b4d9fef95d1cc8d28dfaed2020a206c6b6ee2908",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+        },
+        "targetDigest": "bc115d2a8197b61f215e1549e197f1c1d336a7cb864428faa38dcd7811ef2545"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5bfa57bb94bdeccad1775247b4d9fef95d1cc8d28dfaed2020a206c6b6ee2908",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+        },
+        "targetDigest": "30a7338b9565a027378193b2ff2709d26336512903162d5331129a664d2df5d6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5bfa57bb94bdeccad1775247b4d9fef95d1cc8d28dfaed2020a206c6b6ee2908",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fc0e93c87b6174ec12d89bc96e90b13b40dbda13aefd6e771c9db9557997a5e9",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-code"
+        },
+        "targetDigest": "92016e034ddf2127b3783164cb4c56ce7bb326893d91c4b25270e29e61985e80"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f863d86396dfc62ea8902a4036ecf4eba833f79dd0d69c2141e3801522c58105",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier1-display-percent-code"
+        },
+        "targetDigest": "97f01b69a51fab044565d7276a750f5065df46e2f20b73100a78bce8e146a93c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81e09157b250d93871ded143c9a28281ddf35698e8329ce1bf59051215349d69",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier2-display-percent-code"
+        },
+        "targetDigest": "daa7b6198a193d170cabf196a1c8b5a030d08bfd9763e366906ba0ff309956d8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f333aa24b48821c4871e00969896995687620ceaced7ca076330d215e93f393",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier3-display-percent-code"
+        },
+        "targetDigest": "8dc9a000b562994e5784cfced15bbf67cc6e27c8bfb4c139fb70b8bd01fe7b73"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "10647a7788db9dbce90b3c1f7e6a6111e0657a014365334dfd388537f4ef2b0d",
+        "reviewedAt": "2026-10-30T15:26:04.763Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.3",
+          "recordId": "darktide:evidence:chainaxe:p1-movement-speed-on-activation-tier4-display-percent-code"
+        },
+        "targetDigest": "f53b6095732c9daf8082b0292ef225ea8188dc7af9d824e4567815e3f2cf54b0"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "555cb142923641ebce2c014641272597175623a4f7a457fced63404d025ddf10",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainaxe_p1.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 9670e08685d0aa90ddbc1b4577756a0b0365b610, 9029 bytes, SHA-256 555cb142923641ebce2c014641272597175623a4f7a457fced63404d025ddf10. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:chainaxe-p1-traits-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+        "gameBuild": "25956323",
+        "gameReleaseId": "darktide:1.13.3",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e840592880fdd5f253c6633e081633808c7e0bd2/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/trait_value_parser.lua at e840592880fdd5f253c6633e081633808c7e0bd2; Git blob 6b72f166b74f834256c79736059a03401087baa5, 6929 bytes, SHA-256 29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        },
+        "sourceId": "public-code:trait-value-parser-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.3",
+        "snapshot": {
+          "commit": "e840592880fdd5f253c6633e081633808c7e0bd2",
+          "contentSha256": "52170b23fe993ad770fc5bec3be073889e77e123a5d5b361a0a5ba254b4b0fc1",
+          "manifestSha256": "b7ed3cdc4925a6579d4e0180d0e37e08393c053bea9edc165061967d927ae60d",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-3-e840592880fd-source-files"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:5d0fe023:key-unknown:en:1:r1133",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Rev it Up",
+          "resolvedTextSha256": "e90277aaf6113e9dc42ab801264a0b4ab1945eac75794636e73ed93ebbf89fa1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "name",
+              "sha256": "e90277aaf6113e9dc42ab801264a0b4ab1945eac75794636e73ed93ebbf89fa1",
+              "text": "Rev it Up"
+            }
+          ],
+          "sourceHash": "5d0fe023",
+          "sourceLocale": "en",
+          "sourceText": "Rev it Up",
+          "sourceTextSha256": "e90277aaf6113e9dc42ab801264a0b4ab1945eac75794636e73ed93ebbf89fa1"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:5d0fe023:key-unknown:zh-tw:1:r1133",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "提速",
+          "resolvedTextSha256": "e250174b67bd1691c61a74c5d5ed5253e0a42fbed4c475b00919d57b557a48cc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "name",
+              "sha256": "e250174b67bd1691c61a74c5d5ed5253e0a42fbed4c475b00919d57b557a48cc",
+              "text": "提速"
+            }
+          ],
+          "sourceHash": "5d0fe023",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提速",
+          "sourceTextSha256": "e250174b67bd1691c61a74c5d5ed5253e0a42fbed4c475b00919d57b557a48cc"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-1:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+              "value": "+17%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "+17% Movement Speed for 2s on Weapon Special Activation.",
+          "resolvedTextSha256": "133a1adafd4e4a9ff20974f55d5370bdee1841fcc18febb13cf2e97aff903f77",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-1",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "7f47160b7314a333091793fbe9407bd4267ba9c7a6b14905a44f7598cff24260",
+              "text": " Movement Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "525eb71710e7860298e46cc25bff75f82bb800e32125c3e96ddc4d50bd3b2901",
+              "text": "s on Weapon Special Activation."
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "en",
+          "sourceText": "{movement_speed:%s} Movement Speed for {time:%s}s on Weapon Special Activation.",
+          "sourceTextSha256": "0b9996580a4b90df38fc200551c45c6b21f0a58819793b9e228df8b598d88518"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-2:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "+18% Movement Speed for 2s on Weapon Special Activation.",
+          "resolvedTextSha256": "9fc706af794c9804b7cbdb89714f13302f43ccc50e668b88790990f4992978c2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-1",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "7f47160b7314a333091793fbe9407bd4267ba9c7a6b14905a44f7598cff24260",
+              "text": " Movement Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "525eb71710e7860298e46cc25bff75f82bb800e32125c3e96ddc4d50bd3b2901",
+              "text": "s on Weapon Special Activation."
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "en",
+          "sourceText": "{movement_speed:%s} Movement Speed for {time:%s}s on Weapon Special Activation.",
+          "sourceTextSha256": "0b9996580a4b90df38fc200551c45c6b21f0a58819793b9e228df8b598d88518"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-3:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+              "value": "+19%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "+19% Movement Speed for 2s on Weapon Special Activation.",
+          "resolvedTextSha256": "87cb88991b50436763b51a44de8ed0300f8b091fc7913570a85be5f62f92a18e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-1",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "7f47160b7314a333091793fbe9407bd4267ba9c7a6b14905a44f7598cff24260",
+              "text": " Movement Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "525eb71710e7860298e46cc25bff75f82bb800e32125c3e96ddc4d50bd3b2901",
+              "text": "s on Weapon Special Activation."
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "en",
+          "sourceText": "{movement_speed:%s} Movement Speed for {time:%s}s on Weapon Special Activation.",
+          "sourceTextSha256": "0b9996580a4b90df38fc200551c45c6b21f0a58819793b9e228df8b598d88518"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-4:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "+20% Movement Speed for 2s on Weapon Special Activation.",
+          "resolvedTextSha256": "6e2dda87057e98e40d0ff9e4a3984cd0994d67b4c78a63e39f64bfebe3d60dde",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-1",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "7f47160b7314a333091793fbe9407bd4267ba9c7a6b14905a44f7598cff24260",
+              "text": " Movement Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "525eb71710e7860298e46cc25bff75f82bb800e32125c3e96ddc4d50bd3b2901",
+              "text": "s on Weapon Special Activation."
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "en",
+          "sourceText": "{movement_speed:%s} Movement Speed for {time:%s}s on Weapon Special Activation.",
+          "sourceTextSha256": "0b9996580a4b90df38fc200551c45c6b21f0a58819793b9e228df8b598d88518"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-1:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent",
+              "value": "+17%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "武器特殊啟動後+17%移動速度，持續2秒。",
+          "resolvedTextSha256": "3ba8130bb0a70b8ea8f945e327c3b27e18d2324a3252a03c6d7f9afd0b923aa3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78",
+              "text": "武器特殊啟動後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-2",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7",
+              "text": "移動速度，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+          "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-2:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "武器特殊啟動後+18%移動速度，持續2秒。",
+          "resolvedTextSha256": "d54e39ca1c83184369f143f8b419017a4121f8cfae42a4de83e619a9a2ed655f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78",
+              "text": "武器特殊啟動後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-2",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7",
+              "text": "移動速度，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+          "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-3:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent",
+              "value": "+19%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "武器特殊啟動後+19%移動速度，持續2秒。",
+          "resolvedTextSha256": "bf798cbf9d6e7a77fd7aeae53c6fac16e04cb5af86fc1adc3bbb0ae833a30465",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78",
+              "text": "武器特殊啟動後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-2",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7",
+              "text": "移動速度，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+          "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "武器特殊啟動後+20%移動速度，持續2秒。",
+          "resolvedTextSha256": "6d696d2a37fb7dbebe0e9433ed6e3b4facdaf25550f896eeefb5a69e6cad3d9d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78",
+              "text": "武器特殊啟動後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-2",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7",
+              "text": "移動速度，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+          "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+        "detailSections": [
+          {
+            "items": [
+              {
+                "claimRefs": [
+                  {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                  }
+                ],
+                "itemId": "chainaxe-tier-display-parameter",
+                "parts": [
+                  {
+                    "kind": "literal",
+                    "text": "你的移動速度提高 "
+                  },
+                  {
+                    "bindingRef": {
+                      "gameReleaseId": "darktide:1.13.3",
+                      "kind": "claim",
+                      "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                    },
+                    "kind": "unsigned-percent"
+                  },
+                  {
+                    "kind": "literal",
+                    "text": "。"
+                  }
+                ],
+                "termRefs": [],
+                "termRuleRefs": []
+              }
+            ],
+            "sectionId": "effects"
+          },
+          {
+            "items": [
+              {
+                "claimRefs": [],
+                "itemId": "chainaxe-special-activation-condition",
+                "termRefs": [],
+                "termRuleRefs": [],
+                "text": "使用武器特殊動作後生效，持續 2 秒。"
+              }
+            ],
+            "sectionId": "conditions"
+          }
+        ],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.3",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "提速",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:5d0fe023:key-unknown:en:1:r1133",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:5d0fe023:key-unknown:zh-tw:1:r1133",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:5d0fe023:key-unknown:zh-tw:1:r1133",
+        "nameTermRuleRefs": [
+          "rev-it-up"
+        ],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainaxe:p1-movement-speed-on-activation"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4:r1133",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "movement_speed",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "武器特殊啟動後+20%移動速度，持續2秒。",
+          "resolvedTextSha256": "6d696d2a37fb7dbebe0e9433ed6e3b4facdaf25550f896eeefb5a69e6cad3d9d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e7ce7bad747cd7f5f80ed55eb4fa2ce406dfcfcf1896d4ee771ab92d1d085b78",
+              "text": "武器特殊啟動後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "movement_speed",
+              "segmentId": "segment-2",
+              "sha256": "462b943c39b5ab6a7a00679c92dba99eacf2718be5b43b2751593d621aa33577",
+              "token": "{movement_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6f41bab92512b0124f65f3730685f0f131f7feb07033ab3900090c13daabfdf7",
+              "text": "移動速度，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "863b83e4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "武器特殊啟動後{movement_speed:%s}移動速度，持續{time:%s}秒。",
+          "sourceTextSha256": "f8979997fa65c7effa8d0abb7ec69e2eefecc53e057caaab104174dce131a887"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-4:r1133",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4:r1133",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.3",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [
+                {
+                  "items": [
+                    {
+                      "claimRefs": [
+                        {
+                          "gameReleaseId": "darktide:1.13.3",
+                          "kind": "claim",
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                        }
+                      ],
+                      "itemId": "chainaxe-tier-display-parameter",
+                      "parts": [
+                        {
+                          "kind": "literal",
+                          "text": "你的移動速度提高 "
+                        },
+                        {
+                          "bindingRef": {
+                            "gameReleaseId": "darktide:1.13.3",
+                            "kind": "claim",
+                            "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                          },
+                          "kind": "unsigned-percent"
+                        },
+                        {
+                          "kind": "literal",
+                          "text": "。"
+                        }
+                      ],
+                      "termRefs": [],
+                      "termRuleRefs": []
+                    }
+                  ],
+                  "sectionId": "effects"
+                },
+                {
+                  "items": [
+                    {
+                      "claimRefs": [],
+                      "itemId": "chainaxe-special-activation-condition",
+                      "termRefs": [],
+                      "termRuleRefs": [],
+                      "text": "使用武器特殊動作後生效，持續 2 秒。"
+                    }
+                  ],
+                  "sectionId": "conditions"
+                }
+              ],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-1:r1133",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-1:r1133",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [
+                {
+                  "items": [
+                    {
+                      "claimRefs": [
+                        {
+                          "gameReleaseId": "darktide:1.13.3",
+                          "kind": "claim",
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+                        }
+                      ],
+                      "itemId": "chainaxe-tier-display-parameter",
+                      "parts": [
+                        {
+                          "kind": "literal",
+                          "text": "你的移動速度提高 "
+                        },
+                        {
+                          "bindingRef": {
+                            "gameReleaseId": "darktide:1.13.3",
+                            "kind": "claim",
+                            "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+                          },
+                          "kind": "unsigned-percent"
+                        },
+                        {
+                          "kind": "literal",
+                          "text": "。"
+                        }
+                      ],
+                      "termRefs": [],
+                      "termRuleRefs": []
+                    }
+                  ],
+                  "sectionId": "effects"
+                },
+                {
+                  "items": [
+                    {
+                      "claimRefs": [],
+                      "itemId": "chainaxe-special-activation-condition",
+                      "termRefs": [],
+                      "termRuleRefs": [],
+                      "text": "使用武器特殊動作後生效，持續 2 秒。"
+                    }
+                  ],
+                  "sectionId": "conditions"
+                }
+              ],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-2:r1133",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-2:r1133",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [
+                {
+                  "items": [
+                    {
+                      "claimRefs": [
+                        {
+                          "gameReleaseId": "darktide:1.13.3",
+                          "kind": "claim",
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+                        }
+                      ],
+                      "itemId": "chainaxe-tier-display-parameter",
+                      "parts": [
+                        {
+                          "kind": "literal",
+                          "text": "你的移動速度提高 "
+                        },
+                        {
+                          "bindingRef": {
+                            "gameReleaseId": "darktide:1.13.3",
+                            "kind": "claim",
+                            "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+                          },
+                          "kind": "unsigned-percent"
+                        },
+                        {
+                          "kind": "literal",
+                          "text": "。"
+                        }
+                      ],
+                      "termRefs": [],
+                      "termRuleRefs": []
+                    }
+                  ],
+                  "sectionId": "effects"
+                },
+                {
+                  "items": [
+                    {
+                      "claimRefs": [],
+                      "itemId": "chainaxe-special-activation-condition",
+                      "termRefs": [],
+                      "termRuleRefs": [],
+                      "text": "使用武器特殊動作後生效，持續 2 秒。"
+                    }
+                  ],
+                  "sectionId": "conditions"
+                }
+              ],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-3:r1133",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-3:r1133",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [
+                {
+                  "items": [
+                    {
+                      "claimRefs": [
+                        {
+                          "gameReleaseId": "darktide:1.13.3",
+                          "kind": "claim",
+                          "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                        }
+                      ],
+                      "itemId": "chainaxe-tier-display-parameter",
+                      "parts": [
+                        {
+                          "kind": "literal",
+                          "text": "你的移動速度提高 "
+                        },
+                        {
+                          "bindingRef": {
+                            "gameReleaseId": "darktide:1.13.3",
+                            "kind": "claim",
+                            "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                          },
+                          "kind": "unsigned-percent"
+                        },
+                        {
+                          "kind": "literal",
+                          "text": "。"
+                        }
+                      ],
+                      "termRefs": [],
+                      "termRuleRefs": []
+                    }
+                  ],
+                  "sectionId": "effects"
+                },
+                {
+                  "items": [
+                    {
+                      "claimRefs": [],
+                      "itemId": "chainaxe-special-activation-condition",
+                      "termRefs": [],
+                      "termRuleRefs": [],
+                      "text": "使用武器特殊動作後生效，持續 2 秒。"
+                    }
+                  ],
+                  "sectionId": "conditions"
+                }
+              ],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:en:1:tier-4:r1133",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:863b83e4:key-unknown:zh-tw:1:tier-4:r1133",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "movement_speed",
+                  "placeholder": "{movement_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.3",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainaxe:p1-movement-speed-on-activation-duration"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.3",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:chainaxe:p1-movement-speed-on-activation"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "77a28cd665cad95e1ca91aa2f53ff789a84c3ce5f39a04a168513163c9f9622a",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3f9e4bfa49e1b5c509224d87f229236168aecc4606875201d0d1bd1b9011a1e6",
+          "targetId": "review:w06:chainaxe:official:tier-1:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "203b201f65fb61432128a0fd265801666a57cbd1017e86144e8c821b230f95af",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f78275870cc2e2fd27e2e0ebec6515ecc1ae0481f54f8ea32e05813338b0164f",
+          "targetId": "review:w06:chainaxe:content:tier-0:effects:chainaxe-tier-display-parameter:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "69e9cb250c622262cb68531a54af36617f0f3f3e6cf2c5c8e5221cc0e904b232",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "43793a54c53daf19f97efc1daf4f43b50128dea68edf0fd52f37b487c31719ba",
+          "targetId": "review:w06:chainaxe:content:tier-0:conditions:chainaxe-special-activation-condition:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "376459236a73c7b1296b4e01d3e59b3a83b549c68c230b22ed7f3b4a202050d7",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "783250841246c8a640c3b82c21b60fbac34cb88b5af76d068b933db206ac3db7",
+          "targetId": "review:w06:chainaxe:official:tier-2:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "cbb553597384bff9150a734d7196f4998375bf2ecad55189bc071b5042d2c00e",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "86285592968b5e14e0dcd67247d989b30dc5caf2eb3628edb39906d231858113",
+          "targetId": "review:w06:chainaxe:content:tier-1:effects:chainaxe-tier-display-parameter:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "6b79c7306005fe42b9c223f0063411e36cea986eefe369188f565b8c10d3f355",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "47c325f6f76944cb66db2175d716d803576ba1c3836914adebc9f18196fab5b8",
+          "targetId": "review:w06:chainaxe:content:tier-1:conditions:chainaxe-special-activation-condition:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "846c81e3f421ff3f1f9c1c91a5695d6d16a3116c54959d2d57b36be1f92c0bf3",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "89f05061cb3c16bedc76bdb4e4b3cae649d34426c304d1ec0eb6b00e11fd3a5c",
+          "targetId": "review:w06:chainaxe:official:tier-3:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "448bfc514f02ece048383bea7cacf866730719af8a105cf7f3b8cab8bb84b264",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7d5fadfeaf847375ef2e8a88d2fe98ebd7a366322643fdf8198c3a5ac2e2b8ca",
+          "targetId": "review:w06:chainaxe:content:tier-2:effects:chainaxe-tier-display-parameter:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3979fd9bfbb43def1810f2f1e5d34ba214fcf0f466c28c73002199ce47737d89",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2a91bd20d2d253bce27cdb633c6ba7bd44f8e4e9bc6caaca2c5a8ce759c93495",
+          "targetId": "review:w06:chainaxe:content:tier-2:conditions:chainaxe-special-activation-condition:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "342c5018672977397a83e4058ed580cd8d8b13a6c8760f6144db5eca7cdd34fd",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "53a7314ece3d417dd8fad18d298f0b8a2c9372e4e0a453e87c266779d7f82d24",
+          "targetId": "review:w06:chainaxe:official:tier-4:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "9eaf3878e779af2a24366ff3d806786ebeab3d8929da1e1ff3ba6be1b2b73b0d",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6ff8a3a7df358043b53932ef75f6a51b27f7fb5c171735591267ad84b41daf83",
+          "targetId": "review:w06:chainaxe:content:tier-3:effects:chainaxe-tier-display-parameter:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4b6266969c426d2bbcce770c65651a8fc2a71caa87222b930db9532a4948ebab",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "aa9f484cbe891dcb267b9fbf4600af8f851b6986dfc5d3c76eb360a1e07113ac",
+          "targetId": "review:w06:chainaxe:content:tier-3:conditions:chainaxe-special-activation-condition:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1e341442221a0bea8c373e82cb44b590e5daa6fc1a942fe5d55b83d4c81651b3",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a9c7775328c20660169504bc3744fedd927a9cfcf8fe4e689f689b892abf4011",
+          "targetId": "review:w06:p1-movement-speed-on-activation:name:r1133"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "07877b40e663638abe5707a650f60b66b4df4715bc41b1fd4cb89eb0b0c60869",
+          "reviewedAt": "2026-10-30T15:28:12.154Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7ffb67dd94064f332c2fdd367f9f2f336fd8c2eae3b0c7e5b8ebdabd3e13fc46",
+          "targetId": "review:w06:chainaxe:tier-applicability-context:r1133"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "69e9cb250c622262cb68531a54af36617f0f3f3e6cf2c5c8e5221cc0e904b232",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/0/detailSections/1/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-0:conditions:chainaxe-special-activation-condition:r1133"
+        },
+        "targetDigest": "43793a54c53daf19f97efc1daf4f43b50128dea68edf0fd52f37b487c31719ba"
+      },
+      {
+        "dependenciesDigest": "203b201f65fb61432128a0fd265801666a57cbd1017e86144e8c821b230f95af",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/0/detailSections/0/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-0:effects:chainaxe-tier-display-parameter:r1133"
+        },
+        "targetDigest": "f78275870cc2e2fd27e2e0ebec6515ecc1ae0481f54f8ea32e05813338b0164f"
+      },
+      {
+        "dependenciesDigest": "6b79c7306005fe42b9c223f0063411e36cea986eefe369188f565b8c10d3f355",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/1/detailSections/1/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-1:conditions:chainaxe-special-activation-condition:r1133"
+        },
+        "targetDigest": "47c325f6f76944cb66db2175d716d803576ba1c3836914adebc9f18196fab5b8"
+      },
+      {
+        "dependenciesDigest": "cbb553597384bff9150a734d7196f4998375bf2ecad55189bc071b5042d2c00e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/1/detailSections/0/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-1:effects:chainaxe-tier-display-parameter:r1133"
+        },
+        "targetDigest": "86285592968b5e14e0dcd67247d989b30dc5caf2eb3628edb39906d231858113"
+      },
+      {
+        "dependenciesDigest": "3979fd9bfbb43def1810f2f1e5d34ba214fcf0f466c28c73002199ce47737d89",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/2/detailSections/1/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-2:conditions:chainaxe-special-activation-condition:r1133"
+        },
+        "targetDigest": "2a91bd20d2d253bce27cdb633c6ba7bd44f8e4e9bc6caaca2c5a8ce759c93495"
+      },
+      {
+        "dependenciesDigest": "448bfc514f02ece048383bea7cacf866730719af8a105cf7f3b8cab8bb84b264",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/2/detailSections/0/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-2:effects:chainaxe-tier-display-parameter:r1133"
+        },
+        "targetDigest": "7d5fadfeaf847375ef2e8a88d2fe98ebd7a366322643fdf8198c3a5ac2e2b8ca"
+      },
+      {
+        "dependenciesDigest": "4b6266969c426d2bbcce770c65651a8fc2a71caa87222b930db9532a4948ebab",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/3/detailSections/1/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-3:conditions:chainaxe-special-activation-condition:r1133"
+        },
+        "targetDigest": "aa9f484cbe891dcb267b9fbf4600af8f851b6986dfc5d3c76eb360a1e07113ac"
+      },
+      {
+        "dependenciesDigest": "9eaf3878e779af2a24366ff3d806786ebeab3d8929da1e1ff3ba6be1b2b73b0d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/tierPresentations/options/3/detailSections/0/items/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:content:tier-3:effects:chainaxe-tier-display-parameter:r1133"
+        },
+        "targetDigest": "6ff8a3a7df358043b53932ef75f6a51b27f7fb5c171735591267ad84b41daf83"
+      },
+      {
+        "dependenciesDigest": "77a28cd665cad95e1ca91aa2f53ff789a84c3ce5f39a04a168513163c9f9622a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:official:tier-1:r1133"
+        },
+        "targetDigest": "3f9e4bfa49e1b5c509224d87f229236168aecc4606875201d0d1bd1b9011a1e6"
+      },
+      {
+        "dependenciesDigest": "376459236a73c7b1296b4e01d3e59b3a83b549c68c230b22ed7f3b4a202050d7",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:official:tier-2:r1133"
+        },
+        "targetDigest": "783250841246c8a640c3b82c21b60fbac34cb88b5af76d068b933db206ac3db7"
+      },
+      {
+        "dependenciesDigest": "846c81e3f421ff3f1f9c1c91a5695d6d16a3116c54959d2d57b36be1f92c0bf3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:official:tier-3:r1133"
+        },
+        "targetDigest": "89f05061cb3c16bedc76bdb4e4b3cae649d34426c304d1ec0eb6b00e11fd3a5c"
+      },
+      {
+        "dependenciesDigest": "342c5018672977397a83e4058ed580cd8d8b13a6c8760f6144db5eca7cdd34fd",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:official:tier-4:r1133"
+        },
+        "targetDigest": "53a7314ece3d417dd8fad18d298f0b8a2c9372e4e0a453e87c266779d7f82d24"
+      },
+      {
+        "dependenciesDigest": "07877b40e663638abe5707a650f60b66b4df4715bc41b1fd4cb89eb0b0c60869",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:chainaxe:tier-applicability-context:r1133"
+        },
+        "targetDigest": "7ffb67dd94064f332c2fdd367f9f2f336fd8c2eae3b0c7e5b8ebdabd3e13fc46"
+      },
+      {
+        "dependenciesDigest": "1e341442221a0bea8c373e82cb44b590e5daa6fc1a942fe5d55b83d4c81651b3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:chainaxe-p1-movement-speed:r1133",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:p1-movement-speed-on-activation:name:r1133"
+        },
+        "targetDigest": "a9c7775328c20660169504bc3744fedd927a9cfcf8fe4e689f689b892abf4011"
+      }
+    ],
+    "termLocalizations": []
+  }
+}
