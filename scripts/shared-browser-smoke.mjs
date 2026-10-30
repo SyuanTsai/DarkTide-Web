@@ -10,6 +10,11 @@ import { createStaticServer } from './serve.mjs';
 const CORE_KINDS = ['skills', 'blessings', 'weapons', 'terms'];
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
+export function assertExactRequestedPaths(requestedPaths, expectedPaths) {
+  assert.deepEqual([...requestedPaths].sort(), [...expectedPaths].sort(),
+    'the app loads exactly the pinned manifest, core domains, announcements, and manifest-declared game-changes index without legacy data files');
+}
+
 function parseJson(bytes, label) {
   let text;
   try { text = new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
@@ -50,9 +55,16 @@ export async function readVerifiedCoreDomains(distPath, verification) {
 
   const domains = [];
   const requestedPaths = [pointer.manifest_path];
-  const selectedKinds = [...CORE_KINDS, ...(announcementRows.length ? ['announcements'] : [])];
-  for (const kind of selectedKinds) {
-    const row = manifest.files.find(file => file.kind === kind);
+  const selectedRows = CORE_KINDS.map(kind => manifest.files.find(file => file.kind === kind));
+  if (announcementRows.length) selectedRows.push(announcementRows[0]);
+  if (manifest.changeIndexPath !== null) {
+    const changeIndex = manifest.files.find(file => file.path === manifest.changeIndexPath);
+    assert.ok(changeIndex, 'verified shared manifest changeIndexPath names a listed file');
+    assert.equal(changeIndex.kind, 'game-changes', 'verified shared manifest changeIndexPath names a game-changes file');
+    selectedRows.push(changeIndex);
+  }
+  for (const row of selectedRows) {
+    const { kind } = row;
     const urlPath = `/data/${manifest.dataRevision}/${row.path}`;
     const pins = verification.shared_files.filter(file => file.path === urlPath);
     assert.equal(pins.length, 1, `static artifact has one exact pin for ${urlPath}`);
@@ -289,8 +301,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
       'expanded source details fit the mobile viewport');
 
     const expectedPaths = [...shared.requestedPaths].sort();
-    assert.deepEqual([...requestedPaths].sort(), expectedPaths,
-      'the app loads exactly the pinned manifest, core domains, and declared announcements domain without legacy data files');
+    assertExactRequestedPaths(requestedPaths, expectedPaths);
     assert.deepEqual(dataFailures, [], 'the valid shared artifact has no failed same-origin data requests');
     assert.deepEqual(pageErrors, [], 'valid shared pages have no uncaught browser errors');
 
@@ -306,7 +317,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     process.stdout.write(
       `Shared browser smoke passed: ${shared.pointer.game_version} / ${shared.pointer.data_revision.slice(0, 12)}, ` +
-      'four exact core-domain bytes, any pinned announcements bytes, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
+      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
       'direct refresh, 390px layout, and failed-data fail-closed behavior.\n'
     );
   } finally {
