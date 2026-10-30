@@ -22,6 +22,13 @@ export const W09_APPROVED_SOURCE_RUNTIME_NEXT_FILES = Object.freeze([
   Object.freeze({ path: 'scripts/content/contract-w05-build.mjs', sizeBytes: 26306, sha256: '5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac' }),
   Object.freeze({ path: 'scripts/content/contract-w05-merge.mjs', sizeBytes: 10794, sha256: '4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b' })
 ]);
+export const W09_APPROVED_SOURCE_RUNTIME_THIRD_COMMIT = '47d260bcaa2b3bff338137b4ba962015c95cf16b';
+export const W09_APPROVED_SOURCE_RUNTIME_THIRD_FILES = Object.freeze([
+  Object.freeze({ path: 'content/schema/v2/source-contract.schema.json', sizeBytes: 128106, sha256: '79039dee3d35b0d2d2525ef69631fe6c32afcca0259e58adff520828e844ee2a' }),
+  Object.freeze({ path: 'scripts/content/contract-validator.mjs', sizeBytes: 144276, sha256: '3bae4ff8ba6b00c9038d3baf925a4347a7606e47e7e78cfeb331982c364a1a9a' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-build.mjs', sizeBytes: 26306, sha256: '5e06ec7866cd7b34493312a59f141493166e5686929f7d760de3c0b2ff4fa8ac' }),
+  Object.freeze({ path: 'scripts/content/contract-w05-merge.mjs', sizeBytes: 10794, sha256: '4358882ab207e5e753674f3527eec0cf2c62b0cec3d09b0506260ac2d5bae40b' })
+]);
 export const W09_ACCEPTED_W07_BASELINE_COMMIT = '8e48334619f448794aab666f1805cb2bd6adf11a';
 export const W09_ACCEPTED_W07_BASELINE_SHA256 = 'a728b2e8dc65078ade88b01f87537323eb781fc8665f16c8166140292eb63acb';
 export const W09_SOURCE_PACKET_FILES = Object.freeze([
@@ -518,7 +525,8 @@ function readGitBlob(sourceRoot, commit, relativePath) {
 function readApprovedRuntimePinSet(sourceRoot, sourceCommit) {
   const approvedSets = [
     { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_FILES },
-    { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_NEXT_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_NEXT_FILES }
+    { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_NEXT_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_NEXT_FILES },
+    { approvedAtCommit: W09_APPROVED_SOURCE_RUNTIME_THIRD_COMMIT, files: W09_APPROVED_SOURCE_RUNTIME_THIRD_FILES }
   ];
   for (const runtimeSet of approvedSets) {
     const verifiedFiles = [];
