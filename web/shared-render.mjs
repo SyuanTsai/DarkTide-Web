@@ -1289,7 +1289,7 @@ function renderAnnouncements(main, result, url, buildMeta) {
     }
     const title = announcementTitle(item);
     setMetadata(title, `${item.publishedOn} · 修訂版本 ${item.revision} · ${item.source.locator}`, url);
-    if (item.scope === 'official-document') buildMeta.textContent = `歷史公告 · 發布日期 ${item.publishedOn}`;
+    if (item.scope === 'official-document') buildMeta.textContent = `官方公告 · 發布日期 ${item.publishedOn}`;
     main.append(link('/announcements/', '返回公告清單', 'secondary-link'));
     renderAnnouncementMetadata(main, item);
     const article = node('article', null, 'shared-announcement-content');
@@ -1299,7 +1299,7 @@ function renderAnnouncements(main, result, url, buildMeta) {
       ? { firstHeading: false, hasTitle: true, title: item.title, titlePending: true }
       : { firstHeading: true, hasTitle: false, title: null, titlePending: false };
     if (item.title) article.append(node('h1', item.title, 'shared-announcement-heading'));
-    if (item.scope === 'official-document') article.append(node('p', '歷史公告', 'shared-announcement-scope-note'));
+    if (item.scope === 'official-document') article.append(node('p', '官方公告', 'shared-announcement-scope-note'));
     renderAnnouncementBlocks(article, item.blocks, assets, headingState);
     if (!article.querySelector('h1')) article.prepend(node('h1', title, 'shared-announcement-heading'));
     main.append(article);
