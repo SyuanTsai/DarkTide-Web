@@ -1,18 +1,28 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
 import { DOMAIN_KINDS, validateManifest } from './content/contract-release.mjs';
+import { FIXED_HISTORY_SOURCE } from './content/contract-w14-history.mjs';
+import { hashNamedFiles } from '../src/static/common.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
+import { revisionAssetUrl, validateCatalog, validateTalentTree } from '../web/client.mjs';
 import { createStaticServer } from './serve.mjs';
 
 const CORE_KINDS = ['skills', 'blessings', 'weapons', 'terms'];
+const RETAINED_TREE_ARCHETYPES = ['arbites', 'ogryn', 'psyker', 'scum', 'skitarii', 'veteran', 'zealot'];
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
 export function assertExactRequestedPaths(requestedPaths, expectedPaths) {
   assert.deepEqual([...requestedPaths].sort(), [...expectedPaths].sort(),
     'the app loads exactly the pinned manifest, core domains, announcements, and manifest-declared game-changes index without legacy data files');
+}
+
+export function assertExactDataRequestPaths(requestedPaths, currentPaths, retainedPaths) {
+  const expectedPaths = [...new Set([...currentPaths, ...retainedPaths])];
+  assert.deepEqual([...requestedPaths].sort(), expectedPaths.sort(),
+    'the app loads exactly the current pinned data files plus the fixed retained catalog, trees, and assets');
 }
 
 function parseJson(bytes, label) {
@@ -26,6 +36,59 @@ function parseJson(bytes, label) {
 function expectedSectionRows(sections) {
   return sections.filter(section => section.items?.length).flatMap(section => section.items.map(item =>
     Array.isArray(item.parts) ? item.parts.map(part => part.text ?? part.value ?? '').join('') : item.text ?? ''));
+}
+
+async function readVerifiedRetainedTreeData(distPath, verification) {
+  const dataRevision = verification.runtime_data_revision;
+  assert.equal(dataRevision, FIXED_HISTORY_SOURCE.staticBackup.dataRevision,
+    'shared smoke requires the exact pinned retained 1.13.1 static data revision');
+  assert.equal(verification.runtime_package_kind, FIXED_HISTORY_SOURCE.packageKind,
+    'retained talent tree data must come from the pinned published package');
+  const dataRoot = path.join(distPath, 'data', dataRevision);
+  const files = new Map();
+  async function collect(directory, relative = '') {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const name = relative ? `${relative}/${entry.name}` : entry.name;
+      const filePath = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) throw new Error(`retained data package contains a link: ${name}`);
+      if (entry.isDirectory()) await collect(filePath, name);
+      else if (entry.isFile()) files.set(name, await readFile(filePath));
+      else throw new Error(`retained data package contains a non-regular entry: ${name}`);
+    }
+  }
+  await collect(dataRoot);
+  assert.equal(hashNamedFiles(files), dataRevision,
+    'retained static data file names and bytes match the exact revision pin');
+  const catalog = parseJson(files.get('catalog.json'), 'Retained skill catalog');
+  validateCatalog(catalog, {
+    schema_version: 2,
+    game_version: FIXED_HISTORY_SOURCE.gameVersion,
+    package_kind: FIXED_HISTORY_SOURCE.packageKind,
+    data_revision: dataRevision,
+    build_id: verification.build_id,
+  });
+  const treeMetadata = catalog.talent_trees ?? [];
+  assert.deepEqual(treeMetadata.map(row => row.archetype).sort(), [...RETAINED_TREE_ARCHETYPES].sort(),
+    'the retained catalog declares exactly the seven expected tree archetypes');
+
+  const prefix = `/data/${dataRevision}/`;
+  const requestedPaths = new Set([`${prefix}catalog.json`]);
+  for (const metadata of treeMetadata) {
+    const tree = validateTalentTree(
+      parseJson(files.get(metadata.tree_path), `Retained tree ${metadata.archetype}`), metadata, catalog,
+    );
+    requestedPaths.add(`${prefix}${metadata.tree_path}`);
+    const details = new Map(tree.details.map(detail => [detail.record.skill_id, detail]));
+    for (const node of tree.nodes) {
+      const asset = details.get(node.skill_id)?.assets?.[0];
+      if (!asset || asset.path === null) continue;
+      const requestPath = revisionAssetUrl(dataRevision, asset.path);
+      assert.ok(files.has(asset.path.replace(/^\//u, '')),
+        `tree ${metadata.archetype} references an asset in its fixed data revision`);
+      requestedPaths.add(requestPath);
+    }
+  }
+  return { requestedPaths: [...requestedPaths].sort() };
 }
 
 export async function readVerifiedCoreDomains(distPath, verification) {
@@ -218,6 +281,7 @@ async function assertWeaponView(page, mark) {
 
 export async function runSharedBrowserSmoke(distPath, verification) {
   const shared = await readVerifiedCoreDomains(distPath, verification);
+  const retained = await readVerifiedRetainedTreeData(distPath, verification);
   const skill = selectSkill(shared.domains, shared.view);
   const blessing = selectBlessing(shared.domains, shared.view);
   const weapon = selectWeapon(shared.domains, shared.view);
@@ -243,13 +307,17 @@ export async function runSharedBrowserSmoke(distPath, verification) {
     const pageErrors = [];
     const dataFailures = [];
     const requestedPaths = new Set();
+    const requestedDataPaths = new Set();
     const historyFailures = [];
     const requestedHistoryPaths = new Set();
     const localOrigin = new URL(origin).origin;
     page.on('pageerror', error => pageErrors.push(error.message));
     page.on('request', request => {
       const url = new URL(request.url());
-      if (url.origin === localOrigin && url.pathname.startsWith('/data/')) requestedPaths.add(url.pathname);
+      if (url.origin === localOrigin && url.pathname.startsWith('/data/')) {
+        requestedDataPaths.add(url.pathname);
+        if (url.pathname.startsWith(`/data/${shared.pointer.data_revision}/`)) requestedPaths.add(url.pathname);
+      }
       if (url.origin === localOrigin && url.pathname.startsWith('/history/1.13.1/')) requestedHistoryPaths.add(url.pathname);
     });
     page.on('response', response => {
@@ -274,14 +342,40 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     await page.goto(new URL('/skills/', origin).href, { waitUntil: 'domcontentloaded' });
     await page.getByRole('heading', { name: '技能與天賦', exact: true }).waitFor({ state: 'visible' });
-    await page.locator('.shared-entry[data-version="1.13.1"]').first().waitFor({ state: 'visible' });
-    const historicalSkills = page.locator('.shared-entry[data-version="1.13.1"]');
-    const currentSkills = page.locator(`.shared-entry[data-version="${shared.pointer.game_version}"]`);
-    assert.equal(await historicalSkills.count(), 645, 'the existing verified 1.13.1 index makes all historical skills searchable on the default page');
-    assert.equal(await currentSkills.count(), shared.domains.find(domain => domain.kind === 'skills').web.presentations
-      .filter(row => row.locale === 'zh-TW' && row.entityRef?.kind === 'skill').length,
-    'the current list remains sourced only from the verified current release');
-    assert.match(await page.locator('.shared-skill-version-note').textContent(), /歷史摘要不是目前遊戲版本/u);
+    await page.locator('.shared-talent-tree-links').waitFor({ state: 'visible' });
+    await page.locator('.shared-entry:visible').first().waitFor({ state: 'visible' });
+    const currentSkillCount = shared.domains.find(domain => domain.kind === 'skills').web.presentations
+      .filter(row => row.locale === 'zh-TW' && row.entityRef?.kind === 'skill').length;
+    assert.equal(await page.locator('.shared-entry:visible').count(), 645 + currentSkillCount - 1,
+      'the true current Brain Burst identity merges into the verified retained skill list');
+    assert.equal(await page.locator('select[name="version"]').count(), 0,
+      'skill search has one list without a current/history version filter');
+    assert.equal(await page.locator('.shared-skill-version').count(), 0,
+      'unverified retained skills have no blanket historical badge');
+    assert.equal(await page.locator('.shared-entry[data-skill-id="darktide:skill:psyker:brain-burst-improved"]').count(), 1,
+      'the evidence-backed current/legacy identity appears once');
+    assert.equal(await page.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').count(), 1,
+      'old-only results use their canonical detail route');
+    assert.match(await page.locator('.shared-skill-version-note').textContent(), /已驗證的 1\.13\.1 索引.*已逐項核對/u);
+    const visibleTreeLinks = page.locator('.shared-talent-tree-links a');
+    assert.deepEqual(await visibleTreeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), [
+      '/skills/arbites/?view=tree', '/skills/ogryn/?view=tree', '/skills/psyker/?view=tree',
+      '/skills/scum/?view=tree', '/skills/skitarii/?view=tree', '/skills/veteran/?view=tree',
+      '/skills/zealot/?view=tree',
+    ], 'the skill directory exposes all seven retained tree routes');
+    await page.locator('.shared-talent-tree-links a[href="/skills/psyker/?view=tree"]').click();
+    await page.waitForURL(url => url.pathname === '/skills/psyker/' && url.searchParams.get('view') === 'tree');
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    await page.goBack();
+    await page.waitForURL(url => url.pathname === '/skills/');
+    await page.locator('.shared-talent-tree-links a').first().waitFor({ state: 'visible' });
+
+    for (const archetype of ['arbites', 'scum', 'skitarii', 'ogryn', 'psyker', 'veteran', 'zealot']) {
+      await page.goto(new URL(`/skills/${archetype}/?view=tree`, origin).href, { waitUntil: 'domcontentloaded' });
+      await page.locator('.tree-layout').waitFor({ state: 'visible' });
+      assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${shared.pointer.game_version}`));
+      assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u);
+    }
 
     const blessingPath = `/blessings/?id=${encodeURIComponent(blessing.presentation.entityRef.recordId)}&variant=${encodeURIComponent(blessing.applicability.variantRef.recordId)}`;
     await page.goto(new URL(blessingPath, origin).href, { waitUntil: 'domcontentloaded' });
@@ -319,6 +413,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     const expectedPaths = [...shared.requestedPaths].sort();
     assertExactRequestedPaths(requestedPaths, expectedPaths);
+    assertExactDataRequestPaths(requestedDataPaths, expectedPaths, retained.requestedPaths);
     assert.deepEqual([...requestedHistoryPaths].sort(), [
       '/history/1.13.1/manifest.json', '/history/1.13.1/player-index.json',
     ], 'the searchable history list requests exactly the existing fixed manifest and player index');
@@ -330,16 +425,17 @@ export async function runSharedBrowserSmoke(distPath, verification) {
     const manifestRoute = `**${shared.pointer.manifest_path}`;
     await failedPage.route(manifestRoute, route => route.abort('internetdisconnected'), { times: 1 });
     await failedPage.goto(new URL('/skills/', origin).href, { waitUntil: 'domcontentloaded' });
-    await failedPage.locator('.shared-failure').waitFor({ state: 'visible' });
-    assert.equal(await failedPage.locator('.detail-grid, .detail-heading, .entry-card').count(), 0,
-      'a failed shared request does not fall through to legacy-rendered content');
-    assert.match(await failedPage.locator('.shared-failure').innerText(), /共享資料|驗證/u);
+    await failedPage.locator('.shared-skill-current-unavailable').waitFor({ state: 'visible' });
+    assert.equal(await failedPage.locator('.shared-entry:visible').count(), 645,
+      'the fixed verified index remains searchable when current shared data is unavailable');
+    assert.equal(await failedPage.locator('.shared-failure').count(), 0,
+      'the retained skill list remains independent of the current shared release');
     await failedPage.close();
 
     process.stdout.write(
       `Shared browser smoke passed: ${shared.pointer.game_version} / ${shared.pointer.data_revision.slice(0, 12)}, ` +
-      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, the existing verified 1.13.1 search index, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
-      'direct refresh, 390px layout, and failed-data fail-closed behavior.\n'
+      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, the unified skills index, seven retained talent trees, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
+      'direct refresh, 390px layout, and independent current/legacy failure behavior.\n'
     );
   } finally {
     if (browser) await browser.close();

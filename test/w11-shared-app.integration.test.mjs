@@ -9,7 +9,6 @@ import { chromium } from 'playwright';
 import { computeDataRevision } from '../scripts/content/contract-release.mjs';
 import { buildStaticSite } from '../src/static/build.mjs';
 import { validateSharedStaticFiles } from '../src/static/shared-release.mjs';
-import { fixturePublicContent } from '../src/static/fixture.mjs';
 import { createStaticServer } from '../scripts/serve.mjs';
 import { createBuildRoot, disposeBuildRoot } from './static-test-helpers.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
@@ -101,7 +100,7 @@ async function closeServer(server) {
   });
 }
 async function build(root, sharedRelease) {
-  return buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease });
+  return buildStaticSite({ root, mode: 'published', sharedRelease });
 }
 function routeFor(origin, route) { return new URL(route, origin).href; }
 
@@ -123,6 +122,9 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
       await copyFile(path.join(historySource, name), path.join(historyTarget, name));
     }
+    const publishedDirectory = path.join(root, 'content', 'published');
+    await mkdir(publishedDirectory, { recursive: true });
+    await copyFile(path.join(historySource, 'source-content.json'), path.join(publishedDirectory, 'content.json'));
     await build(root, packageInput.bundle);
     const smoke = spawnSync(process.execPath, [
       path.join(TEST_ROOT, 'scripts', 'browser-smoke.mjs'),
@@ -149,6 +151,21 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     assert.equal((await page.locator('#build-meta').innerText()).includes('遊戲版本 1.13.2'), true);
     assert.equal(await page.locator('body').innerText().then(text => text.includes('演示防護')), false,
       'shared context must not render legacy fixture records');
+    const treeLinks = page.locator('.shared-talent-tree-links a');
+    await treeLinks.first().waitFor({ state: 'visible' });
+    assert.deepEqual(await treeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), [
+      '/skills/arbites/?view=tree', '/skills/ogryn/?view=tree', '/skills/psyker/?view=tree',
+      '/skills/scum/?view=tree', '/skills/skitarii/?view=tree', '/skills/veteran/?view=tree',
+      '/skills/zealot/?view=tree',
+    ], 'the skill directory exposes each retained tree through verified catalog metadata');
+    await page.locator('.shared-talent-tree-links a[href="/skills/scum/?view=tree"]').click();
+    await page.waitForURL(url => url.pathname === '/skills/scum/' && url.searchParams.get('view') === 'tree');
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    assert.ok((await page.locator('#build-meta').innerText()).includes('遊戲版本 1.13.2'));
+    assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u);
+    await page.goBack();
+    await page.waitForURL(url => url.pathname === '/skills/');
+    await page.locator('.shared-talent-tree-links').waitFor({ state: 'visible' });
     await page.goto(routeFor(hosted.origin, '/game-changes/?version=1.13.2&type=weapon'));
     await page.locator('.shared-change-empty').waitFor({ state: 'visible' });
     assert.equal(await page.locator('.shared-change-empty').innerText(), '目前篩選條件下沒有已確認的遊戲變動。',
@@ -404,7 +421,26 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     const searchUrl = routeFor(hosted.origin, `/skills/?q=${encodeURIComponent(skill.name)}`);
     await page.goto(searchUrl);
     await page.locator('.shared-search-label input').waitFor({ state: 'visible' });
-    assert.equal(await page.locator('.shared-entry:visible').count(), 1, 'initial search query is applied before interaction');
+    await page.locator('.shared-talent-tree-links').waitFor({ state: 'visible' });
+    const searchTerm = skill.name.toLocaleLowerCase('zh-Hant-TW');
+    const [allSearchRows, visibleSearchRows] = await Promise.all([
+      page.locator('.shared-entry').evaluateAll(rows => rows.map(row => ({
+        id: row.dataset.skillId,
+        searchText: row.dataset.searchText,
+      }))),
+      page.locator('.shared-entry:visible').evaluateAll(rows => rows.map(row => ({
+        id: row.dataset.skillId,
+        searchText: row.dataset.searchText,
+      }))),
+    ]);
+    const expectedSearchRows = allSearchRows.filter(row => row.searchText.includes(searchTerm));
+    assert.ok(visibleSearchRows.some(row => row.id === skillRef.recordId),
+      'the current skill matching the query remains visible in the unified list');
+    assert.equal(visibleSearchRows.length, expectedSearchRows.length,
+      'initial search results include every actual name, ID, and summary match');
+    assert.ok(visibleSearchRows.every(row => row.searchText.includes(searchTerm)),
+      'every displayed result has the query in its searchable name, ID, or summary index');
+    assert.equal(await page.locator('.shared-skill-result-count').innerText(), `找到 ${expectedSearchRows.length} 項技能`);
     assert.equal(new URL(await page.locator('link[rel="canonical"]').getAttribute('href')).search, '', 'pure search query is excluded from canonical URL');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(routeFor(hosted.origin, `/weapons/?family=${encodeURIComponent(markViews[1].familyId)}&mark=${encodeURIComponent(markViews[1].markId)}`));
