@@ -55,10 +55,20 @@ async function closeServer(server) {
   });
 }
 
-async function compiledSharedFixture() {
+async function compiledSharedFixture({ retainedWeaponCrosswalk = false } = {}) {
   const compiled = await makeCompiledGameChangesPackage();
   const manifest = structuredClone(compiled.manifest);
   const domainFiles = new Map(compiled.files);
+  if (retainedWeaponCrosswalk) {
+    const weaponsFile = manifest.files.find(row => row.kind === 'weapons');
+    const weapons = JSON.parse(domainFiles.get(weaponsFile.path).toString('utf8'));
+    const currentWeapon = weapons.source.records.find(row => row.kind === 'weapon'
+      && row.gameReleaseId === manifest.gameReleaseId);
+    assert.ok(currentWeapon, 'the compiled fixture has a current weapon identity to crosswalk');
+    currentWeapon.payload.familyId = 'chainaxe_p1';
+    currentWeapon.payload.templateKey = 'chainaxe_p1_m1';
+    domainFiles.set(weaponsFile.path, Buffer.from(JSON.stringify(weapons, null, 2) + '\n', 'utf8'));
+  }
   const skillsFile = manifest.files.find(row => row.kind === 'skills');
   const skills = JSON.parse(domainFiles.get(skillsFile.path).toString('utf8'));
   const skillRef = {
@@ -634,6 +644,196 @@ test('InterT20_unified-skills-restored-trees-legacy-routes-and-independent-curre
     await failedIndex.close();
 
     process.stdout.write('Unified skills, seven legacy talent trees, exact current alias, canonical skill details, SPA history and independent data failure tests passed.\n');
+  } finally {
+    await browser?.close();
+    await closeServer(server);
+    await disposeBuildRoot(root);
+  }
+});
+
+// Scenario: The current weapon and blessing pages share the exact retained 1.13.1 catalog and per-entry detail routes.
+// Purpose: Verify all retained identities, current-first loading, exact-family deduplication, safe unresolved-current fallback, search, direct legacy details, tiers, applicability links, and mobile width.
+test('InterT30_weapons-and-blessings-restore-full-catalog-and-details', { timeout: 180000 }, async () => {
+  const root = await createBuildRoot({ productionWeb: true });
+  let server;
+  let browser;
+  try {
+    const sourceDirectory = path.join(REPO_ROOT, 'content', 'history', '1.13.1');
+    const targetDirectory = path.join(root, 'content', 'history', '1.13.1');
+    await mkdir(targetDirectory, { recursive: true });
+    for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
+      await copyFile(path.join(sourceDirectory, name), path.join(targetDirectory, name));
+    }
+    const historicalSource = await readFile(path.join(sourceDirectory, 'source-content.json'));
+    const publishedDirectory = path.join(root, 'content', 'published');
+    await mkdir(publishedDirectory, { recursive: true });
+    await writeFile(path.join(publishedDirectory, 'content.json'), historicalSource);
+    const sharedRelease = await compiledSharedFixture({ retainedWeaponCrosswalk: true });
+    await buildStaticSite({ root, mode: 'published', sharedRelease });
+    const hosted = await listen(path.join(root, 'dist'));
+    server = hosted.server;
+    browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    const pageErrors = [];
+    page.on('pageerror', error => pageErrors.push(error.message));
+
+    let releaseHistoryManifest;
+    let resolveManifestRequest;
+    const historyGate = new Promise(resolve => { releaseHistoryManifest = resolve; });
+    const manifestRequested = new Promise(resolve => { resolveManifestRequest = resolve; });
+    const delayedManifestBytes = await readFile(path.join(root, 'dist', 'history', '1.13.1', 'manifest.json'));
+    const delayedManifest = async route => {
+      resolveManifestRequest();
+      await historyGate;
+      await route.fulfill({ status: 200, contentType: 'application/json; charset=utf-8', body: delayedManifestBytes }).catch(() => {});
+    };
+    await page.route('**/history/1.13.1/manifest.json', delayedManifest);
+    try {
+      await page.goto(`${hosted.origin}/weapons/`, { waitUntil: 'domcontentloaded' });
+      await manifestRequested;
+      const currentFamily = page.locator('.shared-weapon-family[data-current-family-id="chainaxe_p1"]');
+      await currentFamily.waitFor({ state: 'visible', timeout: 10000 });
+      assert.equal(await currentFamily.count(), 1,
+        `current data should render while the manifest is held; main text: ${await page.locator('main').innerText()}`);
+      assert.match(await page.locator('.shared-history-catalog').innerText(), /正在讀取 1\.13\.1/u,
+        'the unified page shows current data while its retained manifest is deliberately held');
+      assert.equal(await page.locator('[data-retained-weapon-id]').count(), 0,
+        'no retained rows appear before their catalog is verified');
+      await page.locator('#shared-search').fill('chainaxe_p1');
+      await page.waitForURL(url => url.searchParams.get('q') === 'chainaxe_p1');
+      assert.match(page.url(), /[?&]q=chainaxe_p1(?:&|$)/u,
+        `a search typed before the retained data finishes loading is preserved in the URL; input=${await page.locator('#shared-search').inputValue()} url=${page.url()}`);
+      releaseHistoryManifest();
+      await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#shared-search').inputValue(), 'chainaxe_p1',
+        'the delayed catalog render preserves the entered query');
+      assert.equal(await page.evaluate(() => document.activeElement?.id), 'shared-search',
+        'the delayed catalog render restores search focus');
+      await page.locator('#shared-search').fill('');
+      await page.waitForURL(url => !url.searchParams.has('q'));
+    } finally {
+      releaseHistoryManifest();
+      await page.unroute('**/history/1.13.1/manifest.json', delayedManifest);
+    }
+
+    const retainedWeaponIds = await page.locator('[data-retained-weapon-id]').evaluateAll(nodes => nodes.map(row => row.dataset.retainedWeaponId));
+    assert.equal(retainedWeaponIds.length, 70, 'all 70 retained weapon identities are visible exactly once');
+    assert.equal(new Set(retainedWeaponIds).size, 70, 'retained weapon IDs are not duplicated');
+    const retainedMarkIds = await page.locator('[data-retained-mark-id]').evaluateAll(nodes => nodes.map(row => row.dataset.retainedMarkId));
+    assert.equal(retainedMarkIds.length, 135, 'all 135 retained mark identities remain linked');
+    assert.equal(new Set(retainedMarkIds).size, 135, 'retained mark IDs are not duplicated');
+    assert.equal(await page.locator('.shared-weapon-family[data-current-family-id="chainaxe_p1"][data-retained-weapon-id="chainaxe_p1"]').count(), 1,
+      'the matching current and retained family IDs merge into one current row');
+    assert.equal(await page.locator('.shared-weapon-family[data-current-family-id="chainaxe_p1"] .shared-current-weapon-name').count(), 1,
+      'an unverified synthetic current detail remains visible by identity without inventing a current detail link');
+    assert.equal(await page.locator('[data-retained-mark-id="chainaxe_p1_m1"] a[href="/weapons/chainaxe_p1/marks/chainaxe_p1_m1/"]').count(), 1,
+      'when no current detail is verified, the retained model keeps its working legacy route');
+    assert.equal(await page.locator('[data-retained-mark-id="chainaxe_p1_m2"] a[href="/weapons/chainaxe_p1/marks/chainaxe_p1_m2/"]').count(), 1,
+      'the old-only mark keeps its original 1.13.1 detail route');
+    assert.match(await page.locator('[data-retained-weapon-id="transonic_knife_p1"]').innerText(), /名稱待確認（transonic_knife_p1）/u,
+      'the retained weapon without a Traditional Chinese name remains searchable by ID');
+    assert.equal(await page.locator('[data-retained-mark-id="transonic_knife_p1_m1"]').count(), 1,
+      'the retained mark without a localized name is not silently filtered out');
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${sharedRelease.version.game_version}`));
+    assert.match(await page.locator('.shared-history-note').innerText(), /部分武器的數值資料尚未整理/u,
+      'the retained weapon catalog states the known limits of the source data');
+
+    const sharedPointer = sharedRelease.version.game_releases.find(row => row.game_version === sharedRelease.version.game_version);
+    const sharedManifest = JSON.parse(await readFile(path.join(root, 'dist', sharedPointer.manifest_path.slice(1)), 'utf8'));
+    const currentWeaponsFile = sharedManifest.files.find(row => row.kind === 'weapons');
+    assert.ok(currentWeaponsFile, 'the current fixture manifest identifies its weapons domain file');
+    const currentWeaponsBytes = await readFile(path.join(root, 'dist', 'data', sharedRelease.version.data_revision, currentWeaponsFile.path));
+    const delayedCurrent = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    let releaseCurrentData;
+    let resolveCurrentRequest;
+    const currentGate = new Promise(resolve => { releaseCurrentData = resolve; });
+    const currentRequested = new Promise(resolve => { resolveCurrentRequest = resolve; });
+    const delayedCurrentPath = `**/data/${sharedRelease.version.data_revision}/${currentWeaponsFile.path}`;
+    const delayedCurrentResponse = async route => {
+      resolveCurrentRequest();
+      await currentGate;
+      await route.fulfill({ status: 200, contentType: 'application/json; charset=utf-8', body: currentWeaponsBytes }).catch(() => {});
+    };
+    await delayedCurrent.route(delayedCurrentPath, delayedCurrentResponse);
+    try {
+      await delayedCurrent.goto(`${hosted.origin}/weapons/`, { waitUntil: 'domcontentloaded' });
+      await currentRequested;
+      await delayedCurrent.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+      assert.equal(await delayedCurrent.locator('[data-retained-weapon-id]').count(), 70,
+        'the full retained weapon list becomes usable while current data is deliberately held');
+      assert.match(await delayedCurrent.locator('#build-meta').innerText(), /目前資料載入中/u,
+        'the page reports that current data is still loading rather than labelling retained rows as current');
+      await delayedCurrent.locator('#shared-search').fill('transonic_knife_p1');
+      await delayedCurrent.waitForURL(url => url.searchParams.get('q') === 'transonic_knife_p1');
+      assert.equal(await delayedCurrent.locator('[data-retained-weapon-id="transonic_knife_p1"]:visible').count(), 1,
+        'the retained catalogue remains searchable while current data is held');
+      releaseCurrentData();
+      await delayedCurrent.locator('.shared-weapon-family[data-current-family-id="chainaxe_p1"]').waitFor({ state: 'attached' });
+      assert.equal(await delayedCurrent.locator('#shared-search').inputValue(), 'transonic_knife_p1',
+        'late current data rendering preserves the retained search query');
+      assert.equal(await delayedCurrent.evaluate(() => document.activeElement?.id), 'shared-search',
+        'late current data rendering restores search focus');
+    } finally {
+      releaseCurrentData();
+      await delayedCurrent.unroute(delayedCurrentPath, delayedCurrentResponse);
+      await delayedCurrent.close();
+    }
+
+    await page.locator('#shared-search').fill('transonic_knife_p1');
+    assert.equal(await page.locator('[data-retained-weapon-id="transonic_knife_p1"]:visible').count(), 1,
+      'weapon search matches the fallback ID for an untranslated weapon');
+    await page.locator('#shared-search').fill('');
+    await page.locator('[data-retained-mark-id="chainaxe_p1_m2"] a').click();
+    await page.waitForURL(url => url.pathname === '/weapons/chainaxe_p1/marks/chainaxe_p1_m2/');
+    await page.getByRole('heading', { name: '突擊鏈斧 奧瑞斯特斯 Mk XII', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.detail-grid').count(), 1, 'the retained mark deep route restores its legacy detail');
+    assert.match(await page.locator('#build-meta').innerText(), /遊戲版本 .*資料基準 1\.13\.1/u,
+      'the old detail is labelled with its actual 1.13.1 baseline');
+    await page.goto(`${hosted.origin}/weapons/transonic_knife_p1/`, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '名稱待確認（transonic_knife_p1）', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.detail-grid').count(), 1, 'an untranslated retained family still has a direct detail route');
+
+    await page.goto(`${hosted.origin}/blessings/`, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '祝福', exact: true }).waitFor({ state: 'visible' });
+    await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+    const retainedBlessingIds = await page.locator('[data-retained-blessing-id]').evaluateAll(nodes => nodes.map(row => row.dataset.retainedBlessingId));
+    assert.equal(retainedBlessingIds.length, 167, 'all 167 retained blessings, including any exact current alias, are represented once');
+    assert.equal(new Set(retainedBlessingIds).size, 167, 'retained blessing IDs are not duplicated');
+    const retainedVariantIds = await page.locator('[data-retained-variant-id]').evaluateAll(nodes => nodes.map(row => row.dataset.retainedVariantId));
+    assert.equal(retainedVariantIds.length, 605, 'all 605 retained variant detail routes remain linked');
+    assert.equal(new Set(retainedVariantIds).size, 605, 'retained variant IDs are not duplicated');
+
+    await page.goto(`${hosted.origin}/blessings/rev-it-up/`, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '提速', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.blessing-levels').count(), 1, 'retained blessing detail restores its tier view');
+    assert.equal(await page.locator('.relation-list a[href^="/weapons/"]').count(), 3,
+      'retained blessing detail restores its three linked weapon applicability relations');
+    await page.goto(`${hosted.origin}/blessings/rev-it-up/variants/weapon_trait_bespoke_chainaxe_p1_movement_speed_on_activation/`, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '提速', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.blessing-levels').count(), 1, 'a direct retained variant route restores level detail');
+    assert.match(await page.locator('.blessing-levels').innerText(), /等級 1、2、3、4/u,
+      'the retained variant shows only its recorded tier availability');
+    assert.equal(await page.locator('.relation-list a[href^="/weapons/"]').count(), 3,
+      'the variant page restores its weapon and two model applicability links');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    const detailLayout = await page.evaluate(() => ({
+      viewportWidth: document.documentElement.clientWidth,
+      documentWidth: document.documentElement.scrollWidth,
+    }));
+    assert.equal(detailLayout.viewportWidth, 390);
+    assert.ok(detailLayout.documentWidth <= detailLayout.viewportWidth, 'the retained blessing detail has no horizontal overflow at 390px');
+    await page.goto(`${hosted.origin}/blessings/`, { waitUntil: 'domcontentloaded' });
+    await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+    const layout = await page.evaluate(() => ({
+      viewportWidth: document.documentElement.clientWidth,
+      documentWidth: document.documentElement.scrollWidth,
+      search: document.querySelector('#shared-search')?.getBoundingClientRect().toJSON(),
+    }));
+    assert.equal(layout.viewportWidth, 390);
+    assert.ok(layout.documentWidth <= layout.viewportWidth, 'the unified blessing directory has no horizontal overflow at 390px');
+    assert.ok(layout.search?.width > 0 && layout.search.right <= layout.viewportWidth, 'the unified search input fits the mobile viewport');
+    assert.deepEqual(pageErrors, [], 'the SPA emitted no uncaught browser exceptions');
   } finally {
     await browser?.close();
     await closeServer(server);
