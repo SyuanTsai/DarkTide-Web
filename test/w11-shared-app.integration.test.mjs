@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
-import { readFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -117,6 +117,12 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
   let server;
   let browser;
   try {
+    const historySource = path.join(TEST_ROOT, 'content', 'history', '1.13.1');
+    const historyTarget = path.join(root, 'content', 'history', '1.13.1');
+    await mkdir(historyTarget, { recursive: true });
+    for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
+      await copyFile(path.join(historySource, name), path.join(historyTarget, name));
+    }
     await build(root, packageInput.bundle);
     const smoke = spawnSync(process.execPath, [
       path.join(TEST_ROOT, 'scripts', 'browser-smoke.mjs'),

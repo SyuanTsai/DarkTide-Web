@@ -929,21 +929,24 @@ let sharedLoadPromise = null;
 let sharedNavigationGeneration = 0;
 let historyLoadPromise = null;
 
+function readHistoryPackage(url, force = false) {
+  if (force || !historyLoadPromise) historyLoadPromise = loadW14HistoryPackage({ pageUrl: url.href });
+  return historyLoadPromise;
+}
+
 async function showW14HistoryPage(force = false) {
   const generation = ++sharedNavigationGeneration;
   const url = new URL(window.location.href);
-  if (force || !historyLoadPromise) {
-    historyLoadPromise = loadW14HistoryPackage({ pageUrl: url.href });
-  }
-  renderW14HistoryPage({ main, buildMeta, url, result: historyLoadPromise.result ?? null });
+  const historyRequest = readHistoryPackage(url, force);
+  renderW14HistoryPage({ main, buildMeta, url, result: historyRequest.result ?? null });
   try {
-    const result = await historyLoadPromise;
+    const result = await historyRequest;
     if (generation !== sharedNavigationGeneration) return;
-    historyLoadPromise.result = result;
+    historyRequest.result = result;
     renderW14HistoryPage({ main, buildMeta, url: new URL(window.location.href), result });
   } catch (error) {
     if (generation !== sharedNavigationGeneration) return;
-    historyLoadPromise = null;
+    if (historyLoadPromise === historyRequest) historyLoadPromise = null;
     renderW14HistoryPage({ main, buildMeta, url: new URL(window.location.href), error });
   }
   main.focus();
@@ -964,7 +967,27 @@ async function showSharedPage(force = false) {
     const result = await sharedLoadPromise;
     if (generation !== sharedNavigationGeneration) return;
     sharedLoadPromise.result = result;
-    renderSharedPage({ main, buildMeta, result, url });
+    const isSkillDirectory = url.pathname === '/skills/' && !url.searchParams.has('id');
+    let historyPackage = null;
+    let historyError = null;
+    let historyLoading = false;
+    if (isSkillDirectory) {
+      const historyRequest = readHistoryPackage(url, force);
+      historyPackage = historyRequest.result ?? null;
+      historyLoading = historyPackage === null;
+      renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href), historyPackage, historyLoading });
+      try {
+        historyPackage = await historyRequest;
+        historyRequest.result = historyPackage;
+        historyLoading = false;
+      } catch (error) {
+        if (historyLoadPromise === historyRequest) historyLoadPromise = null;
+        historyError = error;
+        historyLoading = false;
+      }
+    }
+    if (generation !== sharedNavigationGeneration) return;
+    renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href), historyPackage, historyError, historyLoading });
   } catch (error) {
     if (generation !== sharedNavigationGeneration) return;
     sharedLoadPromise = null;

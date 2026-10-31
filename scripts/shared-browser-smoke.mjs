@@ -243,16 +243,22 @@ export async function runSharedBrowserSmoke(distPath, verification) {
     const pageErrors = [];
     const dataFailures = [];
     const requestedPaths = new Set();
+    const historyFailures = [];
+    const requestedHistoryPaths = new Set();
     const localOrigin = new URL(origin).origin;
     page.on('pageerror', error => pageErrors.push(error.message));
     page.on('request', request => {
       const url = new URL(request.url());
       if (url.origin === localOrigin && url.pathname.startsWith('/data/')) requestedPaths.add(url.pathname);
+      if (url.origin === localOrigin && url.pathname.startsWith('/history/1.13.1/')) requestedHistoryPaths.add(url.pathname);
     });
     page.on('response', response => {
       const url = new URL(response.url());
       if (url.origin === localOrigin && url.pathname.startsWith('/data/') && response.status() >= 400) {
         dataFailures.push(`${url.pathname} returned ${response.status()}`);
+      }
+      if (url.origin === localOrigin && url.pathname.startsWith('/history/1.13.1/') && response.status() >= 400) {
+        historyFailures.push(`${url.pathname} returned ${response.status()}`);
       }
     });
 
@@ -265,6 +271,17 @@ export async function runSharedBrowserSmoke(distPath, verification) {
     await assertSections(page, skill.result.sections);
     assert.ok((await page.locator('#build-meta').textContent()).includes(shared.pointer.game_version));
     assert.ok((await page.locator('#build-meta').textContent()).includes(shared.pointer.data_revision.slice(0, 12)));
+
+    await page.goto(new URL('/skills/', origin).href, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '技能與天賦', exact: true }).waitFor({ state: 'visible' });
+    await page.locator('.shared-entry[data-version="1.13.1"]').first().waitFor({ state: 'visible' });
+    const historicalSkills = page.locator('.shared-entry[data-version="1.13.1"]');
+    const currentSkills = page.locator(`.shared-entry[data-version="${shared.pointer.game_version}"]`);
+    assert.equal(await historicalSkills.count(), 645, 'the existing verified 1.13.1 index makes all historical skills searchable on the default page');
+    assert.equal(await currentSkills.count(), shared.domains.find(domain => domain.kind === 'skills').web.presentations
+      .filter(row => row.locale === 'zh-TW' && row.entityRef?.kind === 'skill').length,
+    'the current list remains sourced only from the verified current release');
+    assert.match(await page.locator('.shared-skill-version-note').textContent(), /歷史摘要不是目前遊戲版本/u);
 
     const blessingPath = `/blessings/?id=${encodeURIComponent(blessing.presentation.entityRef.recordId)}&variant=${encodeURIComponent(blessing.applicability.variantRef.recordId)}`;
     await page.goto(new URL(blessingPath, origin).href, { waitUntil: 'domcontentloaded' });
@@ -302,6 +319,10 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     const expectedPaths = [...shared.requestedPaths].sort();
     assertExactRequestedPaths(requestedPaths, expectedPaths);
+    assert.deepEqual([...requestedHistoryPaths].sort(), [
+      '/history/1.13.1/manifest.json', '/history/1.13.1/player-index.json',
+    ], 'the searchable history list requests exactly the existing fixed manifest and player index');
+    assert.deepEqual(historyFailures, [], 'the verified historical package has no failed same-origin requests');
     assert.deepEqual(dataFailures, [], 'the valid shared artifact has no failed same-origin data requests');
     assert.deepEqual(pageErrors, [], 'valid shared pages have no uncaught browser errors');
 
@@ -317,7 +338,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     process.stdout.write(
       `Shared browser smoke passed: ${shared.pointer.game_version} / ${shared.pointer.data_revision.slice(0, 12)}, ` +
-      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
+      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, the existing verified 1.13.1 search index, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
       'direct refresh, 390px layout, and failed-data fail-closed behavior.\n'
     );
   } finally {

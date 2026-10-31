@@ -234,6 +234,15 @@ p { margin: .45rem 0 1rem; }
 .shared-entry p { margin-bottom: 0; }
 .shared-search-label { display: grid; gap: .35rem; max-width: 32rem; margin-block: 1rem; color: #d1dbd2; font-size: .87rem; font-weight: 700; }
 .shared-search-label input { min-height: 2.8rem; padding: .5rem .7rem; border: 1px solid #56665b; border-radius: .35rem; background: #111815; color: #f0f2ed; font: inherit; }
+.shared-skill-version-note, .shared-skill-history-unavailable, .shared-skill-history-loading { padding: .75rem 1rem; border-left: 3px solid var(--gold); background: #222a25; }
+.shared-skill-history-unavailable { border-color: #e2a68d; background: #2a2421; }
+.shared-skill-filters { display: grid; grid-template-columns: minmax(14rem, 2fr) repeat(2, minmax(10rem, 1fr)) auto; align-items: end; gap: .75rem; margin-block: 1rem; }
+.shared-skill-filters .shared-search-label { max-width: none; margin: 0; }
+.shared-skill-filter-label { display: grid; gap: .35rem; color: #d1dbd2; font-size: .87rem; font-weight: 700; }
+.shared-skill-filter-label select { min-height: 2.8rem; width: 100%; padding: .5rem .7rem; border: 1px solid #56665b; border-radius: .35rem; background: #111815; color: #f0f2ed; font: inherit; }
+.shared-skill-search-submit { min-height: 2.8rem; padding: .5rem 1rem; border: 1px solid #7d8a6c; border-radius: .35rem; background: #303c32; color: #f0f2ed; font: inherit; font-weight: 700; cursor: pointer; }
+.shared-skill-version { display: inline-block; margin-bottom: .5rem; padding: .15rem .45rem; border: 1px solid #526258; border-radius: 999px; color: #dce8dc; font-size: .75rem; }
+.shared-skill-result-count { color: #c6d1c8; font-size: .9rem; }
 .shared-tab-list a { display: inline-flex; align-items: center; min-height: 2.7rem; padding: .45rem .8rem; border: 1px solid #526258; border-radius: .35rem; color: #dce8dc; text-decoration: none; }
 .shared-tab-list a[aria-current="page"] { border-color: var(--gold); background: #332f23; color: #fff2c8; }
 .shared-muted, .shared-applicability { color: var(--muted); }
@@ -324,6 +333,9 @@ p { margin: .45rem 0 1rem; }
 [hidden] { display: none !important; }
 @media (max-width: 760px) {
   .history-filters, .history-results { grid-template-columns: minmax(0, 1fr); }
+  .shared-skill-filters { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .shared-skill-filters .shared-search-label { grid-column: 1 / -1; }
+  .shared-skill-search-submit { grid-column: 1 / -1; }
   .shared-entry-list { grid-template-columns: 1fr; }
   .shared-stat-list { grid-template-columns: minmax(0, 1fr) auto; }
   .shared-change-before-after { grid-template-columns: 1fr; }
