@@ -525,6 +525,47 @@ function retainedMarksByFamily(catalog) {
   return groups;
 }
 
+export function countUnifiedWeaponMarks(currentTemplateKeys, retainedMarks) {
+  const identities = new Set();
+  for (const key of Array.isArray(currentTemplateKeys) ? currentTemplateKeys : []) {
+    if (typeof key === 'string' && key.trim()) identities.add(key);
+  }
+  for (const mark of Array.isArray(retainedMarks) ? retainedMarks : []) {
+    if (typeof mark?.id === 'string' && mark.id.trim()) identities.add(mark.id);
+  }
+  return identities.size;
+}
+
+export function currentWeaponMarkIdentities(familyRecords, currentMarks) {
+  const templateKeysByMark = new Map();
+  for (const record of Array.isArray(familyRecords) ? familyRecords : []) {
+    const markId = record?.payload?.markId;
+    const templateKey = record?.payload?.templateKey;
+    if (typeof markId !== 'string' || !markId.trim()
+        || typeof templateKey !== 'string' || !templateKey.trim()) continue;
+    const keys = templateKeysByMark.get(markId) ?? new Set();
+    keys.add(templateKey);
+    templateKeysByMark.set(markId, keys);
+  }
+  const marks = Array.isArray(currentMarks) ? currentMarks : [];
+  const uniqueTemplateKeys = new Map();
+  const candidateKeys = marks.map(mark => {
+    const markId = mark?.markId;
+    if (typeof markId !== 'string' || !markId.trim()) return null;
+    const keys = templateKeysByMark.get(markId);
+    if (!keys || keys.size !== 1) return null;
+    const [key] = keys;
+    uniqueTemplateKeys.set(key, (uniqueTemplateKeys.get(key) ?? 0) + 1);
+    return key;
+  });
+  return marks.map((mark, index) => {
+    const markId = mark?.markId;
+    if (typeof markId !== 'string' || !markId.trim()) return null;
+    const key = candidateKeys[index];
+    return key && uniqueTemplateKeys.get(key) === 1 ? key : markId;
+  }).filter(Boolean);
+}
+
 function currentNativeMarkIndexByFamily(records, result) {
   const groups = new Map();
   for (const record of records) {
@@ -1261,7 +1302,9 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
     if (retainedFamily) item.dataset.retainedWeaponId = retainedFamily.id;
     if (currentReady) {
       const first = view.marks[0];
-      item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${view.marks.length} 個型號`));
+      const currentMarkIdentities = currentWeaponMarkIdentities(familyRecords, view.marks);
+      const markCount = countUnifiedWeaponMarks(currentMarkIdentities, retainedMarks);
+      item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${markCount} 個型號`));
       item.append(node('p', retainedFamily
         ? '此家族的目前版與 1.13.1 識別相同；型號依已核對的武器識別對應。'
         : '依武器家族選取型號，查看目前版本已驗證的素質、來源表與動作資料。', 'shared-muted'));
@@ -1284,7 +1327,8 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
       item.dataset.retainedWeaponId = entry.id;
       item.dataset.searchName = entrySearchText(entry, marks.flatMap(mark => [mark.name_zh_tw, mark.id]));
       item.append(link(entry.route, retainedName(entry), 'shared-history-link'));
-      item.append(node('small', `資料基準 1.13.1 · 未逐項核對目前版本 · ${marks.length} 個留存型號`, 'shared-history-basis'));
+      const markCount = countUnifiedWeaponMarks([], marks);
+      item.append(node('small', `資料基準 1.13.1 · 未逐項核對目前版本 · ${markCount} 個留存型號`, 'shared-history-basis'));
       renderHistoryWeaponLinks(item, null, marks);
       list.append(item);
     }

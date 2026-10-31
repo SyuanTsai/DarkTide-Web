@@ -12,6 +12,7 @@ import { validateSharedStaticFiles } from '../src/static/shared-release.mjs';
 import { createStaticServer } from '../scripts/serve.mjs';
 import { createBuildRoot, disposeBuildRoot } from './static-test-helpers.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
+import { countUnifiedWeaponMarks, currentWeaponMarkIdentities } from '../web/shared-render.mjs';
 
 const TEST_ROOT = fileURLToPath(new URL('../', import.meta.url));
 const TASK_ROOT = path.dirname(TEST_ROOT);
@@ -122,6 +123,8 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
       await copyFile(path.join(historySource, name), path.join(historyTarget, name));
     }
+    const retainedHistoryManifest = JSON.parse(await readFile(path.join(historySource, 'manifest.json'), 'utf8'));
+    const retainedRevision = retainedHistoryManifest.source.staticBackup.dataRevision;
     const publishedDirectory = path.join(root, 'content', 'published');
     await mkdir(publishedDirectory, { recursive: true });
     await copyFile(path.join(historySource, 'source-content.json'), path.join(publishedDirectory, 'content.json'));
@@ -248,6 +251,53 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     for (const familyId of expectedFamilyIds) {
       assert.equal(familyRows.filter(row => row.current === familyId || row.retained === familyId).length, 1,
         `the unified directory contains one row for ${familyId}`);
+    }
+    const currentOnlyFamilyIds = currentFamilyIds.filter(id => !retainedFamilyIds.includes(id));
+    for (const familyId of currentOnlyFamilyIds) {
+      const row = page.locator(`.shared-weapon-family[data-current-family-id="${familyId}"]`);
+      const familyRecords = weaponDomain.source.records.filter(record => record.kind === 'weapon'
+        && record.payload.familyId === familyId);
+      const familyView = view.getWeaponFamily(familyId);
+      assert.equal(familyView.status, 'ready', `current-only family ${familyId} has a ready view`);
+      const currentIdentities = currentWeaponMarkIdentities(familyRecords, familyView.marks);
+      const expectedCount = countUnifiedWeaponMarks(currentIdentities, []);
+      assert.match(await row.locator('a').first().innerText(), new RegExp(`${expectedCount} 個型號`),
+        `current-only family ${familyId} keeps its distinct current marks`);
+    }
+    const retainedOnlyFamilyId = retainedFamilyIds.find(id => !currentFamilyIds.includes(id));
+    assert.ok(retainedOnlyFamilyId, 'the W11 package has a retained-only family for count verification');
+    const retainedOnlyRow = page.locator(`.shared-retained-weapon[data-retained-weapon-id="${retainedOnlyFamilyId}"]`);
+    const retainedOnlyMarkIds = await retainedOnlyRow.locator('[data-retained-mark-id]')
+      .evaluateAll(rows => rows.map(row => row.dataset.retainedMarkId));
+    const retainedOnlyCount = countUnifiedWeaponMarks([], retainedOnlyMarkIds.map(id => ({ id })));
+    assert.match(await retainedOnlyRow.locator('small.shared-history-basis').first().innerText(),
+      new RegExp(`${retainedOnlyCount} 個留存型號`),
+      `retained-only family ${retainedOnlyFamilyId} shows the deduplicated retained count`);
+    const overlapFamilyId = currentFamilyIds.find(id => retainedFamilyIds.includes(id));
+    assert.ok(overlapFamilyId, 'the W11 package has an exact-ID overlap for count verification');
+    const overlapRow = page.locator(`.shared-weapon-family[data-current-family-id="${overlapFamilyId}"]`);
+    const overlapRecords = weaponDomain.source.records.filter(record => record.kind === 'weapon'
+      && record.payload.familyId === overlapFamilyId);
+    const overlapView = view.getWeaponFamily(overlapFamilyId);
+    assert.equal(overlapView.status, 'ready', `overlapping family ${overlapFamilyId} has a ready view`);
+    const currentIdentities = currentWeaponMarkIdentities(overlapRecords, overlapView.marks);
+    const retainedMarkIds = await overlapRow.locator('[data-retained-mark-id]')
+      .evaluateAll(rows => rows.map(row => row.dataset.retainedMarkId));
+    const overlapCount = countUnifiedWeaponMarks(currentIdentities, retainedMarkIds.map(id => ({ id })));
+    assert.match(await overlapRow.locator('a').first().innerText(), new RegExp(`${overlapCount} 個型號`),
+      `overlapping family ${overlapFamilyId} counts each exact template identity once`);
+    const currentOnlyContext = await browser.newContext({ viewport: { width: 1365, height: 1000 } });
+    const currentOnlyPage = await currentOnlyContext.newPage();
+    await currentOnlyPage.route(`**/data/${retainedRevision}/**`, route => route.abort());
+    try {
+      await currentOnlyPage.goto(familyListUrl);
+      const currentOnlyRow = currentOnlyPage.locator(`.shared-weapon-family[data-current-family-id="${overlapFamilyId}"]`);
+      await currentOnlyRow.locator('a').first().waitFor({ state: 'visible' });
+      const currentOnlyCount = countUnifiedWeaponMarks(currentIdentities, []);
+      assert.match(await currentOnlyRow.locator('a').first().innerText(), new RegExp(`${currentOnlyCount} 個型號`),
+        'when retained data is unavailable, the current-only view still counts every distinct current template');
+    } finally {
+      await currentOnlyContext.close();
     }
     assert.match(await page.locator('[data-retained-weapon-id="transonic_knife_p1"]').innerText(), /名稱待確認（transonic_knife_p1）/u,
       'an untranslated retained family remains available by its ID');
@@ -475,8 +525,6 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
       assert.match(await page.title(), /型號.*確認/u, 'unknown mark has current Traditional Chinese metadata');
     }
 
-    const retainedHistoryManifest = JSON.parse(await readFile(path.join(historySource, 'manifest.json'), 'utf8'));
-    const retainedRevision = retainedHistoryManifest.source.staticBackup.dataRevision;
     const retainedDataRoot = path.join(root, 'dist', 'data', retainedRevision);
     const retainedCatalog = JSON.parse(await readFile(path.join(retainedDataRoot, 'catalog.json'), 'utf8'));
     const retainedFamilyEntry = retainedCatalog.entries.find(row => row.kind === 'weapon' && row.id === family.familyId);
