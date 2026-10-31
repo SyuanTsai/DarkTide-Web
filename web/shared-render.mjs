@@ -221,6 +221,43 @@ function displayRef(ref) { return ref?.recordId; }
 function getPresentations(domain, kind) {
   return (domain?.web?.presentations ?? []).filter(row => row?.locale === 'zh-TW' && row.entityRef?.kind === kind);
 }
+const SKILL_ARCHETYPE_LABELS = Object.freeze({
+  veteran: '老兵', zealot: '狂信徒', psyker: '靈能者', ogryn: '歐格林', arbites: '法務官',
+  scum: '巢都渣滓', skitarii: '護教軍',
+});
+
+export function skillArchetypeFromId(id) {
+  if (typeof id !== 'string') return null;
+  return /^([a-z0-9_-]+)\/[a-z0-9_-]+$/u.exec(id)?.[1]
+    ?? /^darktide:skill:([a-z0-9_-]+):[a-z0-9_-]+$/u.exec(id)?.[1]
+    ?? null;
+}
+
+export function historySkillSearchRows(projection) {
+  if (projection?.gameVersion !== '1.13.1' || !Array.isArray(projection.entries)) return [];
+  return projection.entries.filter(entry => entry?.kind === 'skill').map(entry => {
+    const archetype = skillArchetypeFromId(entry.id);
+    if (!archetype || typeof entry.name !== 'string') return null;
+    return {
+      version: '1.13.1',
+      archetype,
+      id: entry.id,
+      name: entry.name,
+      category: typeof entry.category === 'string' ? entry.category : '',
+      summary: typeof entry.summary === 'string' ? entry.summary : '',
+      searchText: [entry.name, entry.id, entry.category, entry.summary].filter(Boolean).join(' '),
+      href: paramsUrl('/history/1.13.1/', { id: entry.id, type: 'skill' }),
+    };
+  }).filter(Boolean);
+}
+
+export function filterSkillSearchRows(rows, { query = '', version = '', archetype = '' } = {}) {
+  const normalizedQuery = String(query).trim().toLocaleLowerCase('zh-Hant-TW');
+  return rows.filter(row => (!version || row.version === version)
+    && (!archetype || row.archetype === archetype)
+    && (!normalizedQuery || row.searchText.toLocaleLowerCase('zh-Hant-TW').includes(normalizedQuery)));
+}
+
 function renderHome(main, result) {
   setMetadata('首頁', '查閱同版技能、武器與祝福的繁體中文官方資料。', new URL(location.href));
   const hero = node('section', null, 'shared-hero');
@@ -234,7 +271,7 @@ function renderHome(main, result) {
   const note = node('p', `遊戲版本 ${result.pointer.game_version} · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`, 'version-line');
   main.append(note);
 }
-function renderSkillPage(main, result, url) {
+function renderSkillPage(main, result, url, historyPackage = null, historyError = null, historyLoading = false) {
   const domain = result.domains.find(row => row.kind === 'skills');
   const presentations = getPresentations(domain, 'skill');
   const id = url.searchParams.get('id');
@@ -255,28 +292,137 @@ function renderSkillPage(main, result, url) {
     renderTerms(main, view);
     return;
   }
-  setMetadata('技能與天賦', '依繁體中文名稱查閱已驗證的同版技能資料。', url);
+  const currentVersion = result.pointer.game_version;
+  const historyRows = historySkillSearchRows(historyPackage?.projection);
+  const currentRows = presentations.flatMap(presentation => {
+    const view = result.view.getSkill(presentation.entityRef);
+    if (view.status !== 'ready') return [];
+    const skillId = displayRef(presentation.entityRef);
+    return [{
+      version: currentVersion,
+      archetype: skillArchetypeFromId(skillId),
+      id: skillId,
+      name: view.name,
+      category: '',
+      summary: view.official.resolvedText,
+      searchText: [view.name, skillId, view.official.resolvedText].filter(Boolean).join(' '),
+      href: paramsUrl('/skills/', { id: skillId }),
+    }];
+  });
+  const rows = [...currentRows, ...historyRows];
+  setMetadata('技能與天賦', '同頁搜尋目前遊戲版本與明確標記的 1.13.1 歷史技能摘要。', url);
   const header = node('header', null, 'page-intro');
   header.append(node('p', '技能／天賦', 'eyebrow'), node('h1', '技能與天賦'));
   main.append(header);
-  const input = renderSearch(main, url.searchParams.get('q') ?? '');
-  const list = node('ul', null, 'shared-entry-list');
-  for (const presentation of presentations) {
-    const view = result.view.getSkill(presentation.entityRef);
-    if (view.status !== 'ready') continue;
-    const item = node('li', null, 'shared-entry');
-    item.dataset.searchName = view.name;
-    const anchor = link(paramsUrl('/skills/', { id: presentation.entityRef.recordId }), view.name);
-    item.append(anchor, node('p', view.official.resolvedText, 'shared-muted'));
-    list.append(item);
+  const versionNote = node('p',
+    `目前資料版本 ${currentVersion}；另提供 1.13.1 歷史摘要。歷史摘要不是目前遊戲版本，詳情各自連至所屬版本。`,
+    'shared-skill-version-note');
+  versionNote.setAttribute('role', 'note');
+  main.append(versionNote);
+  if (historyError) {
+    const unavailable = node('p', '1.13.1 歷史索引未能驗證，目前版本技能仍可搜尋。', 'shared-skill-history-unavailable');
+    unavailable.setAttribute('role', 'status');
+    main.append(unavailable);
+  } else if (historyLoading) {
+    const loading = node('p', '正在驗證 1.13.1 歷史技能索引…', 'shared-skill-history-loading');
+    loading.setAttribute('role', 'status');
+    main.append(loading);
   }
+
+  const filters = node('form', null, 'shared-skill-filters');
+  filters.method = 'get';
+  filters.action = '/skills/';
+  const searchLabel = node('label', '搜尋技能名稱或摘要', 'shared-search-label');
+  const input = node('input');
+  input.id = 'shared-skill-query'; input.name = 'q'; input.type = 'search';
+  input.value = url.searchParams.get('q') ?? ''; input.autocomplete = 'off';
+  input.setAttribute('aria-label', '搜尋技能名稱或摘要');
+  searchLabel.append(input);
+
+  const versionLabel = node('label', '資料版本', 'shared-skill-filter-label');
+  const versionSelect = node('select');
+  versionSelect.id = 'shared-skill-version'; versionSelect.name = 'version';
+  versionSelect.setAttribute('aria-label', '資料版本');
+  const requestedVersion = url.searchParams.get('version') ?? '';
+  const versionOptions = [['', '全部版本'] , [currentVersion, `目前版本 ${currentVersion}`]];
+  if (historyRows.length || historyError || historyLoading) {
+    versionOptions.push(['1.13.1', historyError ? '歷史版本 1.13.1（未能驗證）' : '歷史版本 1.13.1']);
+  }
+  for (const [value, label] of versionOptions) {
+    const option = node('option', label); option.value = value;
+    if (value === requestedVersion) option.selected = true;
+    if (value === '1.13.1' && !historyRows.length) option.disabled = true;
+    versionSelect.append(option);
+  }
+  versionLabel.append(versionSelect);
+
+  const archetypeLabel = node('label', '職業', 'shared-skill-filter-label');
+  const archetypeSelect = node('select');
+  archetypeSelect.id = 'shared-skill-archetype'; archetypeSelect.name = 'archetype';
+  archetypeSelect.setAttribute('aria-label', '職業');
+  const requestedArchetype = url.searchParams.get('archetype') ?? '';
+  const allArchetypes = [...new Set(rows.map(row => row.archetype).filter(Boolean))].sort();
+  const archetypeOptions = [['', '全部職業'], ...allArchetypes.map(archetype => [archetype, SKILL_ARCHETYPE_LABELS[archetype] ?? `職業：${archetype}`])];
+  for (const [value, label] of archetypeOptions) {
+    const option = node('option', label); option.value = value;
+    if (value === requestedArchetype) option.selected = true;
+    archetypeSelect.append(option);
+  }
+  archetypeLabel.append(archetypeSelect);
+  const submit = node('button', '搜尋', 'shared-skill-search-submit');
+  submit.type = 'submit';
+  filters.append(searchLabel, versionLabel, archetypeLabel, submit);
+  main.append(filters);
+
+  const list = node('ul', null, 'shared-entry-list');
+  const listItems = rows.map(row => {
+    const item = node('li', null, 'shared-entry');
+    item.dataset.version = row.version;
+    item.dataset.archetype = row.archetype ?? '';
+    item.dataset.searchText = row.searchText.toLocaleLowerCase('zh-Hant-TW');
+    item.append(node('span', row.version === currentVersion ? `目前版本 ${currentVersion}` : `歷史版本 ${row.version}`, 'shared-skill-version'));
+    item.append(link(row.href, row.name));
+    const details = row.version === currentVersion ? row.summary : [row.category, row.summary].filter(Boolean).join(' · ');
+    if (details) item.append(node('p', details, 'shared-muted'));
+    list.append(item);
+    return { row, item };
+  });
   main.append(list);
-  const applySearch = () => {
-    const query = input.value.trim().toLocaleLowerCase('zh-Hant-TW');
-    for (const row of list.querySelectorAll('.shared-entry')) row.hidden = !row.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+  const count = node('p', '', 'shared-skill-result-count');
+  count.setAttribute('role', 'status');
+  main.insertBefore(count, list);
+  const applyFilters = () => {
+    const matches = filterSkillSearchRows(rows, {
+      query: input.value,
+      version: versionSelect.value,
+      archetype: archetypeSelect.value,
+    });
+    const matchSet = new Set(matches);
+    for (const { row, item } of listItems) item.hidden = !matchSet.has(row);
+    const currentCount = matches.filter(row => row.version === currentVersion).length;
+    const historyCount = matches.filter(row => row.version === '1.13.1').length;
+    count.textContent = `找到 ${matches.length} 筆技能（目前版本 ${currentVersion}：${currentCount}；歷史版本 1.13.1：${historyCount}）`;
   };
-  input.addEventListener('input', applySearch);
-  applySearch();
+  const updateUrl = push => {
+    const next = new URL(window.location.href);
+    const values = { q: input.value.trim(), version: versionSelect.value, archetype: archetypeSelect.value };
+    for (const [key, value] of Object.entries(values)) {
+      if (value) next.searchParams.set(key, value);
+      else next.searchParams.delete(key);
+    }
+    const nextPath = `${next.pathname}${next.search}${next.hash}`;
+    const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (nextPath !== currentPath) {
+      if (push) history.pushState(null, '', nextPath);
+      else history.replaceState(null, '', nextPath);
+    }
+    applyFilters();
+  };
+  input.addEventListener('input', () => updateUrl(false));
+  versionSelect.addEventListener('change', () => updateUrl(true));
+  archetypeSelect.addEventListener('change', () => updateUrl(true));
+  filters.addEventListener('submit', event => { event.preventDefault(); updateUrl(true); });
+  applyFilters();
 }
 function renderBlessingPage(main, result, url) {
   const domain = result.domains.find(row => row.kind === 'blessings');
@@ -1333,7 +1479,8 @@ function renderAnnouncements(main, result, url, buildMeta) {
   main.append(list);
 }
 
-export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null } = {}) {
+export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null,
+  historyPackage = null, historyError = null, historyLoading = false } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
   buildMeta.textContent = '';
@@ -1354,7 +1501,7 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
     notice.setAttribute('role', 'status');
     main.append(notice);
   }
-  if (url.pathname.startsWith('/skills/')) renderSkillPage(main, result, url);
+  if (url.pathname.startsWith('/skills/')) renderSkillPage(main, result, url, historyPackage, historyError, historyLoading);
   else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
   else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
   else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
