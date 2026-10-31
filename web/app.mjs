@@ -17,12 +17,13 @@ import {
   writeListState
 } from './client.mjs';
 import { createSharedClient, hasSharedContext } from './shared-client.mjs';
-import { renderSharedPage } from './shared-render.mjs';
+import { currentSkillIdForLegacyId, renderSharedPage } from './shared-render.mjs';
 import { loadW14HistoryPackage, renderW14HistoryPage, W14_HISTORY_PATH } from './history-page.mjs';
 
 const main = document.getElementById('main');
 const buildMeta = document.getElementById('build-meta');
 const build = window.__BUILD__;
+if (buildMeta && typeof build?.shared_game_version === 'string') buildMeta.dataset.currentVersion = build.shared_game_version;
 const pageSize = 18;
 const labels = {
   skill: '技能／天賦', mechanics: '技能機制', weapon: '武器', mark: '武器型號',
@@ -207,7 +208,12 @@ function mechanicsList(value) {
 
 function buildFooter(catalog) {
   const counts = catalog.counts;
-  buildMeta.textContent = `遊戲版本 ${build.game_version} · 資料版本 ${build.data_revision.slice(0, 12)} · 技能 ${counts.skills} · 武器 ${counts.weapons} · 祝福 ${counts.blessings}`;
+  const gameVersion = build.shared_game_version ?? build.game_version;
+  const revision = build.shared_data_revision ?? build.data_revision;
+  const basis = build.shared_game_version && catalog.game_version !== gameVersion
+    ? `資料基準 ${catalog.game_version}`
+    : `資料版本 ${revision.slice(0, 12)}`;
+  buildMeta.textContent = `遊戲版本 ${gameVersion} · ${basis} · 技能 ${counts.skills} · 武器 ${counts.weapons} · 祝福 ${counts.blessings}`;
 }
 
 function renderHome(catalog) {
@@ -278,11 +284,11 @@ function renderListIcon(item, group, entry) {
   item.dataset.iconState = entry.asset_ids.length ? 'loading' : 'generic';
   visual.title = entry.asset_ids.length ? '正在載入技能圖片' : '通用技能圖示（尚無對應的專屬圖示）';
   if (!entry.asset_ids.length) return;
-  dataClient.loadDetail(entry).then(detail => {
+  renderingDataClient.loadDetail(entry).then(detail => {
     if (!item.isConnected) return;
     const asset = detail.assets[0];
     if (!asset) { item.dataset.iconState = 'generic'; return; }
-    const presentation = assetPresentation(build.data_revision, entry, detail.record, asset);
+    const presentation = assetPresentation(renderingDataRevision, entry, detail.record, asset);
     const image = element('img');
     image.alt = presentation.alt; image.loading = 'eager'; image.decoding = 'async'; image.hidden = true;
     image.addEventListener('load', () => {
@@ -333,7 +339,7 @@ function renderSkillDirectory(catalog, url) {
   return { entries: classRows, matches, shown, state: { ...state, page }, grid, countLabel: '職業' };
 }
 
-function renderListPage(page, catalog, locationUrl) {
+function renderListPage(page, catalog, locationUrl, currentResult = null) {
   const { kind, archetype } = page;
   const pageTitle = kind === 'skills' ? (archetype ? archetypeTitle(archetype) : '技能') : kind === 'weapons' ? '武器' : '祝福';
   setSeo(pageTitle, listDescription(kind, archetype));
@@ -352,7 +358,7 @@ function renderListPage(page, catalog, locationUrl) {
         views.append(link);
       }
       main.append(views);
-      if (page.tree) { renderTalentTree(page.tree, catalog); buildFooter(catalog); return; }
+      if (page.tree) { renderTalentTree(page.tree, catalog, currentResult); buildFooter(catalog); return; }
     }
   }
   let listResult;
@@ -517,7 +523,7 @@ function renderAssets(parent, detail, record, entry) {
   const section = panel('相關圖示');
   const grid = element('div', null, 'asset-grid');
   for (const asset of detail.assets) {
-    const presentation = assetPresentation(build.data_revision, entry, record, asset);
+    const presentation = assetPresentation(renderingDataRevision, entry, record, asset);
     const figure = element('figure', null, 'asset-figure');
     const name = presentation.alt;
     const image = element('img');
@@ -650,7 +656,16 @@ function renderBlessingLevels(parent, levels, catalog, commonEffect) {
   show(groups[0]);section.append(content);parent.append(section);
 }
 
-function renderTalentTree(tree, catalog) {
+function findCurrentSkillView(result, id) {
+  if (result?.status !== 'ready' || typeof id !== 'string') return null;
+  const domain = result.domains.find(row => row.kind === 'skills');
+  const presentation = domain?.web?.presentations?.find(row => row?.locale === 'zh-TW'
+    && row?.entityRef?.kind === 'skill' && row.entityRef.recordId === id);
+  const view = presentation && result.view.getSkill(presentation.entityRef);
+  return view?.status === 'ready' ? view : null;
+}
+
+function renderTalentTree(tree, catalog, currentResult = null) {
   const controls = element('div', null, 'tree-controls');
   const zoomLabel = element('label', '縮放');
   zoomLabel.htmlFor = 'tree-zoom';
@@ -659,7 +674,7 @@ function renderTalentTree(tree, catalog) {
   const zoomValue = element('output', '100%');
   zoomValue.htmlFor = zoom.id;
   controls.append(zoomLabel, zoom, zoomValue);
-  main.append(controls, element('p', '點選節點查看效果與機制。可縮放或在樹內捲動；連線顯示原始天賦結構。', 'result-note'));
+  main.append(controls, element('p', '此樹圖依已驗證的 1.13.1 原始資料保留；只有已逐項核對的現版技能才顯示現版文字。點選節點查看詳情，可縮放或在樹內捲動。', 'result-note'));
   const layout = element('div', null, 'tree-layout');
   const viewport = element('div', null, 'tree-viewport');
   viewport.tabIndex = 0;
@@ -698,9 +713,12 @@ function renderTalentTree(tree, catalog) {
   }
   canvas.append(lines);
   for (const node of tree.nodes) {
-    const entry = node.skill_id ? entryMap.get(tree.archetype + '/' + node.skill_id) : null;
+    const legacyId = node.skill_id ? tree.archetype + '/' + node.skill_id : null;
+    const entry = legacyId ? entryMap.get(legacyId) : null;
     const detail = details.get(node.skill_id);
-    const name = entry ? displayName(entry.name_zh_tw, entry.id) : node.type === 'start' ? '天賦樹起點' : displayName(null, node.skill_id ?? node.node_id);
+    const currentId = legacyId ? currentSkillIdForLegacyId(legacyId) : null;
+    const currentView = currentId ? findCurrentSkillView(currentResult, currentId) : null;
+    const name = currentView?.name ?? (entry ? displayName(entry.name_zh_tw, entry.id) : node.type === 'start' ? '天賦樹起點' : displayName(null, node.skill_id ?? node.node_id));
     const button = element('button', null, 'talent-node');
     button.type = 'button';
     button.dataset.nodeId = node.node_id;
@@ -724,13 +742,17 @@ function renderTalentTree(tree, catalog) {
       image.alt = ''; image.loading = 'eager'; image.decoding = 'async'; image.hidden = true;
       image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.hidden = false; }, { once: true });
       image.addEventListener('error', () => { image.hidden = true; }, { once: true });
-      image.src = assetPresentation(build.data_revision, entry, detail.record, asset).src;
+      image.src = assetPresentation(renderingDataRevision, entry, detail.record, asset).src;
       button.append(image);
     }
     button.addEventListener('click', () => {
       for (const row of buttons) row.button.setAttribute('aria-pressed', row.button === button ? 'true' : 'false');
       selectedPanel.replaceChildren(element('h2', name));
-      if (detail && entry) {
+      if (currentView && currentId) {
+        selectedPanel.append(element('p', `遊戲版本 ${currentResult.pointer.game_version}`, 'eyebrow'));
+        selectedPanel.append(element('h3', '目前版本技能效果'), mechanicsList(currentView.official.resolvedText));
+        selectedPanel.append(makeLink(`/skills/?id=${encodeURIComponent(currentId)}`, '開啟目前版本技能詳情', 'button secondary'));
+      } else if (detail && entry) {
         selectedPanel.append(element('h3', '技能效果'), mechanicsList(detail.record.effect_zh_tw));
         if (detail.record.mechanics_zh_tw) selectedPanel.append(element('h3', '機制說明'), mechanicsList(detail.record.mechanics_zh_tw));
         selectedPanel.append(makeLink(entry.route, '開啟技能詳情', 'button secondary'));
@@ -877,13 +899,84 @@ function renderState(state) {
     return;
   }
   if (page.type === 'home') renderHome(page.catalog);
-  else if (page.type === 'list') renderListPage(page, page.catalog, new URL(window.location.href));
+  else if (page.type === 'list') renderListPage(page, page.catalog, new URL(window.location.href), page.currentResult);
   else renderDetailPage(page, page.catalog);
   main.focus();
 }
 
 let loadedCatalog = null;
 const dataClient = createDataClient({ build });
+let renderingDataClient = dataClient;
+let renderingDataRevision = build.data_revision;
+let legacyDataClient = null;
+let legacyDataRevision = null;
+let legacyCatalogPromise = null;
+
+function legacyBuildFromHistory(manifest) {
+  const source = manifest?.source;
+  const backup = source?.staticBackup;
+  if (source?.schemaVersion !== 2 || source?.packageKind !== 'published' || source?.gameVersion !== '1.13.1' ||
+      !/^[a-f0-9]{64}$/u.test(backup?.dataRevision ?? '') || !/^[a-f0-9]{64}$/u.test(backup?.buildId ?? '')) {
+    throw new Error('verified historical build metadata is incomplete');
+  }
+  return {
+    schema_version: source.schemaVersion,
+    game_version: source.gameVersion,
+    data_revision: backup.dataRevision,
+    build_id: backup.buildId,
+    package_kind: source.packageKind,
+  };
+}
+
+async function readLegacyPackage(historyPackage, force = false) {
+  const historicalBuild = legacyBuildFromHistory(historyPackage.manifest);
+  if (!legacyDataClient || legacyDataRevision !== historicalBuild.data_revision) {
+    legacyDataClient = createDataClient({ build: historicalBuild });
+    legacyDataRevision = historicalBuild.data_revision;
+    legacyCatalogPromise = null;
+  }
+  renderingDataClient = legacyDataClient;
+  renderingDataRevision = historicalBuild.data_revision;
+  if (force || !legacyCatalogPromise) {
+    legacyCatalogPromise = legacyDataClient.loadCatalog({ force });
+  }
+  try {
+    const catalog = await legacyCatalogPromise;
+    return { ...historyPackage, catalog };
+  } catch (error) {
+    if (legacyCatalogPromise) legacyCatalogPromise = null;
+    throw error;
+  }
+}
+
+function setSharedBuildMeta(result = null) {
+  const version = result?.pointer?.game_version ?? build.shared_game_version ?? build.game_version;
+  const revision = result?.pointer?.data_revision ?? build.shared_data_revision ?? build.data_revision;
+  if (buildMeta && typeof version === 'string' && typeof revision === 'string') {
+    buildMeta.textContent = `遊戲版本 ${version} · 資料修訂 ${revision.slice(0, 12)}`;
+    buildMeta.dataset.currentVersion = version;
+  }
+}
+
+function renderLegacyLoadError(error) {
+  main.replaceChildren();
+  setSeo('技能資料暫時無法載入', '已留存的技能詳情或天賦樹目前無法讀取。', { noindex: true });
+  const section = element('section', null, 'error-state');
+  section.append(element('p', '暫時無法讀取', 'eyebrow'));
+  section.append(element('h1', '已留存的技能資料目前無法載入'));
+  section.append(element('p', error?.name === 'UpdateAvailableError'
+    ? '這份 1.13.1 詳情未能從已留存的資料修訂讀取；目前版本資料與其他技能頁仍可使用。'
+    : '技能詳情或天賦樹暫時無法讀取。請重試，或返回技能搜尋。'));
+  section.append(makeButton('重試', () => showCurrentPage(true)));
+  section.append(makeLink('/skills/', '返回技能搜尋', 'button secondary'));
+  main.append(section);
+}
+
+function isLegacySkillPath(url) {
+  const segments = url.pathname.split('/').filter(Boolean);
+  return segments[0] === 'skills' && (segments.length === 2 || segments.length === 3 ||
+    (segments.length === 4 && segments[3] === 'mechanics'));
+}
 
 async function readCatalog(force) {
   if (!force && loadedCatalog) return loadedCatalog;
@@ -952,6 +1045,84 @@ async function showW14HistoryPage(force = false) {
   main.focus();
 }
 
+async function showLegacySkillPage(url, force = false) {
+  const generation = ++sharedNavigationGeneration;
+  main.replaceChildren(element('p', '正在讀取技能詳情與天賦樹…', 'loading-note'));
+  setSharedBuildMeta(sharedLoadPromise?.result ?? null);
+  if (force || !sharedLoadPromise) sharedLoadPromise = sharedClient.load();
+  const currentRequest = sharedLoadPromise;
+  const historyRequest = readHistoryPackage(url, force);
+  let currentResult = currentRequest.result ?? null;
+  let currentError = null;
+  let historyPackage = historyRequest.result ?? null;
+  try {
+    const [currentOutcome, historyOutcome] = await Promise.allSettled([currentRequest, historyRequest]);
+    if (generation !== sharedNavigationGeneration) return;
+    if (currentOutcome.status === 'fulfilled') {
+      currentResult = currentOutcome.value;
+      currentRequest.result = currentResult;
+    } else {
+      currentError = currentOutcome.reason;
+      if (sharedLoadPromise === currentRequest) sharedLoadPromise = null;
+    }
+    if (historyOutcome.status === 'fulfilled') {
+      historyPackage = historyOutcome.value;
+      historyRequest.result = historyPackage;
+      historyPackage = await readLegacyPackage(historyPackage, force);
+    } else {
+      if (historyLoadPromise === historyRequest) historyLoadPromise = null;
+      throw historyOutcome.reason;
+    }
+    if (generation !== sharedNavigationGeneration) return;
+
+    let route = resolveCatalogRoute(url.pathname, historyPackage.catalog);
+    if (route.type === 'redirect') {
+      const destination = makeRedirectUrl(url, route.target_route);
+      history.replaceState(null, '', `${destination.pathname}${destination.search}${destination.hash}`);
+      route = resolveCatalogRoute(destination.pathname, historyPackage.catalog);
+    }
+    if (route.type === 'entry' && route.entry.kind === 'skill') {
+      const currentId = currentSkillIdForLegacyId(route.entry.id);
+      if (currentId && findCurrentSkillView(currentResult, currentId)) {
+        const destination = new URL(window.location.href);
+        destination.pathname = '/skills/';
+        destination.search = '';
+        destination.searchParams.set('id', currentId);
+        history.replaceState(null, '', `${destination.pathname}${destination.search}`);
+        renderSharedPage({ main, buildMeta, result: currentResult, url: destination });
+        return;
+      }
+    }
+
+    if (route.type === 'list') {
+      const metadata = route.kind === 'skills' && route.archetype && preferredSkillView(url, true) === 'tree'
+        ? historyPackage.catalog.talent_trees?.find(row => row.archetype === route.archetype) : null;
+      const tree = metadata ? await legacyDataClient.loadTree(metadata, { force }) : null;
+      if (generation !== sharedNavigationGeneration) return;
+      renderState({ type: 'loaded', value: { ...route, catalog: historyPackage.catalog, tree, currentResult } });
+    } else if (route.type === 'entry') {
+      const detail = await legacyDataClient.loadDetail(route.entry, { force });
+      if (generation !== sharedNavigationGeneration) return;
+      const levels = route.entry.kind === 'blessing'
+        ? await legacyDataClient.loadBlessingLevels(detail, { force }) : null;
+      if (generation !== sharedNavigationGeneration) return;
+      renderState({ type: 'loaded', value: { type: 'detail', entry: route.entry, detail, catalog: historyPackage.catalog, levels } });
+    } else {
+      renderState({ type: 'loaded', value: { type: 'not-found', catalog: historyPackage.catalog } });
+    }
+    if (currentError && url.searchParams.has('view')) {
+      const note = element('p', '目前版本技能資料未能載入；樹圖保留已驗證的 1.13.1 結構。', 'shared-skill-current-unavailable');
+      note.setAttribute('role', 'status');
+      main.prepend(note);
+    }
+    if (route.type === 'not-found') setSharedBuildMeta(currentResult);
+  } catch (error) {
+    if (generation !== sharedNavigationGeneration) return;
+    renderLegacyLoadError(error);
+    setSharedBuildMeta(currentResult);
+  }
+}
+
 async function showSharedPage(force = false) {
   const generation = ++sharedNavigationGeneration;
   const url = new URL(window.location.href);
@@ -963,31 +1134,54 @@ async function showSharedPage(force = false) {
   if (sharedLoadPromise && !sharedLoadPromise.result) {
     renderSharedPage({ main, buildMeta, url, result: { status: 'loading' } });
   }
-  try {
-    const result = await sharedLoadPromise;
-    if (generation !== sharedNavigationGeneration) return;
-    sharedLoadPromise.result = result;
-    const isSkillDirectory = url.pathname === '/skills/' && !url.searchParams.has('id');
-    let historyPackage = null;
+  const isSkillDirectory = url.pathname === '/skills/' && !url.searchParams.has('id');
+  if (isSkillDirectory) {
+    const currentRequest = sharedLoadPromise;
+    const historyRequest = readHistoryPackage(url, force);
+    let result = currentRequest.result ?? null;
+    let historyPackage = historyRequest.result ?? null;
+    let currentError = null;
     let historyError = null;
-    let historyLoading = false;
-    if (isSkillDirectory) {
-      const historyRequest = readHistoryPackage(url, force);
-      historyPackage = historyRequest.result ?? null;
-      historyLoading = historyPackage === null;
-      renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href), historyPackage, historyLoading });
-      try {
-        historyPackage = await historyRequest;
-        historyRequest.result = historyPackage;
-        historyLoading = false;
-      } catch (error) {
-        if (historyLoadPromise === historyRequest) historyLoadPromise = null;
-        historyError = error;
-        historyLoading = false;
-      }
-    }
+    let historyLoading = !historyPackage?.catalog;
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'loading' }, url,
+      historyPackage: historyPackage?.catalog ? historyPackage : null, historyLoading });
+    const [currentOutcome, historyOutcome] = await Promise.allSettled([currentRequest, historyRequest]);
     if (generation !== sharedNavigationGeneration) return;
-    renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href), historyPackage, historyError, historyLoading });
+    if (currentOutcome.status === 'fulfilled') {
+      result = currentOutcome.value;
+      currentRequest.result = result;
+    } else {
+      currentError = currentOutcome.reason;
+      if (sharedLoadPromise === currentRequest) sharedLoadPromise = null;
+    }
+    if (historyOutcome.status === 'fulfilled') {
+      historyPackage = historyOutcome.value;
+      historyRequest.result = historyPackage;
+      try {
+        historyPackage = await readLegacyPackage(historyPackage, force);
+        historyError = null;
+      } catch (error) {
+        historyPackage = null;
+        historyError = error;
+      }
+    } else {
+      historyError = historyOutcome.reason;
+      if (historyLoadPromise === historyRequest) historyLoadPromise = null;
+    }
+    historyLoading = false;
+    if (generation !== sharedNavigationGeneration) return;
+    renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href),
+      error: currentError, currentError, historyPackage, historyError, historyLoading });
+    if (result) setSharedBuildMeta(result);
+    return;
+  }
+
+  try {
+    const currentRequest = sharedLoadPromise;
+    const result = currentRequest.result ?? await currentRequest;
+    if (generation !== sharedNavigationGeneration) return;
+    currentRequest.result = result;
+    renderSharedPage({ main, buildMeta, result, url: new URL(window.location.href) });
   } catch (error) {
     if (generation !== sharedNavigationGeneration) return;
     sharedLoadPromise = null;
@@ -996,9 +1190,10 @@ async function showSharedPage(force = false) {
 }
 
 function showCurrentPage(force = false) {
-  const pathname = new URL(window.location.href).pathname;
+  const url = new URL(window.location.href);
+  const pathname = url.pathname;
   if (pathname === W14_HISTORY_PATH.slice(0, -1) || pathname.startsWith(W14_HISTORY_PATH)) return showW14HistoryPage(force);
-  if (sharedMode) return showSharedPage(force);
+  if (sharedMode) return isLegacySkillPath(url) ? showLegacySkillPage(url, force) : showSharedPage(force);
   const request = { href: window.location.href, force };
   return navigation.navigate(request);
 }

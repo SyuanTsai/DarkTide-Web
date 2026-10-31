@@ -5,7 +5,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { makeSharedPackage } from './w11-shared-client.fixture.mjs';
-import { assertExactRequestedPaths, readVerifiedCoreDomains } from '../scripts/shared-browser-smoke.mjs';
+import { assertExactDataRequestPaths, assertExactRequestedPaths, readVerifiedCoreDomains } from '../scripts/shared-browser-smoke.mjs';
 
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -107,4 +107,30 @@ test('UnitT40_shared_smoke_checks_game_changes_size_and_digest_pins', async () =
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+});
+
+// Scenario: The browser smoke observes current and fixed retained-version data requests together.
+// Purpose: Reject requests for any undeclared file, including a second data revision that must not be hidden by filtering.
+test('UnitT50_shared_smoke_rejects_unknown_data_revisions_and_unlisted_retained_files', () => {
+  const currentRevision = 'a'.repeat(64);
+  const retainedRevision = 'b'.repeat(64);
+  const currentPaths = [
+    `/data/${currentRevision}/manifest.json`,
+    `/data/${currentRevision}/domains/skills.json`,
+  ];
+  const retainedPaths = [
+    `/data/${retainedRevision}/catalog.json`,
+    `/data/${retainedRevision}/trees/psyker.json`,
+    `/data/${retainedRevision}/assets/psyker-icon.webp`,
+  ];
+  const expected = [...currentPaths, ...retainedPaths];
+  assertExactDataRequestPaths(expected, currentPaths, retainedPaths);
+  assert.throws(() => assertExactDataRequestPaths([
+    ...expected, `/data/${'c'.repeat(64)}/domains/skills.json`,
+  ], currentPaths, retainedPaths), /current pinned data/u,
+  'an unexpected data revision cannot be hidden by the current-revision collection');
+  assert.throws(() => assertExactDataRequestPaths([
+    ...expected, `/data/${retainedRevision}/details/skills/psyker/unrequested.json`,
+  ], currentPaths, retainedPaths), /current pinned data/u,
+  'a file outside the retained catalog, trees, and requested assets is rejected');
 });

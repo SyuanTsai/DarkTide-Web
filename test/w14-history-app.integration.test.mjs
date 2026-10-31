@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { copyFile, mkdir } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -15,6 +15,8 @@ import { makeCompiledGameChangesPackage } from './w12-shared-view.fixture.mjs';
 
 const REPO_ROOT = fileURLToPath(new URL('../', import.meta.url));
 const chromePath = process.env.SYP_W10_CHROMIUM_EXE;
+const HISTORY_DATA_REVISION = '0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b';
+const CURRENT_BRAIN_BURST_ID = 'darktide:skill:psyker:brain-burst-improved';
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const officialInput = (officialSourceId, key, entityRef, text) => {
   const bytes = Buffer.from(text, 'utf8');
@@ -67,6 +69,14 @@ async function compiledSharedFixture() {
   const nameSource = officialInput('fixture:official:current-search-name', 'fixture:current-skill-name', skillRef, '目前版本測試技能');
   const descriptionSource = officialInput('fixture:official:current-search-description', 'fixture:current-skill-description', skillRef, '隔離測試用 current skill。');
   skills.source.records.push({ ...skillRef, payload: {} });
+  const currentBrainBurstRef = {
+    gameReleaseId: manifest.gameReleaseId,
+    kind: 'skill',
+    recordId: CURRENT_BRAIN_BURST_ID,
+  };
+  const currentBrainBurstName = officialInput('fixture:official:brain-burst-name', 'fixture:brain-burst-name', currentBrainBurstRef, '顱腦崩裂');
+  const currentBrainBurstEffect = officialInput('fixture:official:brain-burst-effect', 'fixture:brain-burst-effect', currentBrainBurstRef, '測試用已核對現版效果。');
+  skills.source.records.push({ ...currentBrainBurstRef, payload: {} });
   skills.web.presentations.push({
     authoringId: 'fixture:web:current-search-sample',
     entityRef: skillRef,
@@ -77,7 +87,17 @@ async function compiledSharedFixture() {
     errata: [],
     detailSections: [],
   });
-  skills.web.officialInputs.sources.push(nameSource, descriptionSource);
+  skills.web.presentations.push({
+    authoringId: 'fixture:web:brain-burst-current',
+    entityRef: currentBrainBurstRef,
+    locale: 'zh-TW',
+    name: '顱腦崩裂',
+    nameOfficialSourceId: currentBrainBurstName.officialSourceId,
+    official: currentBrainBurstEffect,
+    errata: [],
+    detailSections: [],
+  });
+  skills.web.officialInputs.sources.push(nameSource, descriptionSource, currentBrainBurstName, currentBrainBurstEffect);
   domainFiles.set(skillsFile.path, Buffer.from(JSON.stringify(skills, null, 2) + '\n', 'utf8'));
   for (const row of manifest.files) {
     const bytes = domainFiles.get(row.path);
@@ -336,9 +356,9 @@ test('InterT10_history-page-direct-route-search-detail-reload-and-mobile-layout'
   }
 });
 
-// Scenario: The current skill page is opened with a one-skill current fixture and the verified 1.13.1 player projection.
-// Purpose: Keep both versions searchable with explicit identity, preserve query state across reload and browser navigation, and keep history failures from hiding verified current data.
-test('InterT20_skill-page-default-searches-versioned-current-and-history-with-class-filter', { timeout: 120000 }, async () => {
+// Scenario: The current skill page shares the exact 1.13.1 catalog, original details, and seven retained talent trees.
+// Purpose: Verify one merged skill list, current identity priority, canonical legacy routes, restored tree interactions, and independent data failures.
+test('InterT20_unified-skills-restored-trees-legacy-routes-and-independent-current-data', { timeout: 180000 }, async () => {
   const root = await createBuildRoot({ productionWeb: true });
   let server;
   let browser;
@@ -349,112 +369,271 @@ test('InterT20_skill-page-default-searches-versioned-current-and-history-with-cl
     for (const name of ['source-content.json', 'player-index.json', 'manifest.json']) {
       await copyFile(path.join(sourceDirectory, name), path.join(targetDirectory, name));
     }
+    const historicalSource = await readFile(path.join(sourceDirectory, 'source-content.json'));
+    const publishedDirectory = path.join(root, 'content', 'published');
+    await mkdir(publishedDirectory, { recursive: true });
+    await writeFile(path.join(publishedDirectory, 'content.json'), historicalSource);
     const sharedRelease = await compiledSharedFixture();
-    await buildStaticSite({ root, mode: 'fixture', data: fixturePublicContent(), sharedRelease });
+    await buildStaticSite({ root, mode: 'published', sharedRelease });
+    const historicalDataRoot = path.join(root, 'dist', 'data', HISTORY_DATA_REVISION);
     const hosted = await listen(path.join(root, 'dist'));
     server = hosted.server;
     browser = await chromium.launch({ headless: true, ...(chromePath ? { executablePath: chromePath } : {}) });
     const page = await browser.newPage();
+    const currentVersion = sharedRelease.version.game_version;
+    const currentPointer = sharedRelease.version.game_releases.find(row => row.game_version === currentVersion);
 
     await page.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
     await page.getByRole('heading', { name: '技能與天賦', exact: true }).waitFor({ state: 'visible' });
-    await page.locator('.shared-entry[data-version="1.13.1"]').first().waitFor({ state: 'visible' });
-    const currentVersion = sharedRelease.version.game_version;
-    const currentRows = page.locator(`.shared-entry[data-version="${currentVersion}"]`);
-    const historyRows = page.locator('.shared-entry[data-version="1.13.1"]');
-    assert.ok(await currentRows.count() > 0, 'current version skills remain available in the default combined list');
-    assert.equal(await historyRows.count(), 645, 'the full verified Traditional Chinese 1.13.1 skill projection is directly searchable');
-    assert.match(await page.locator('.shared-skill-version-note').innerText(), /1\.13\.1.*不是目前遊戲版本/u);
-    assert.equal(await page.locator('select[name="version"] option').count(), 3);
+    await page.locator('.shared-entry:visible').first().waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.shared-entry:visible').count(), 646,
+      '645 retained skills and two current rows merge into one list with only the exact Brain Burst pair combined');
+    assert.equal(await page.locator('select[name="version"]').count(), 0,
+      'the unified list has no current/history version filter');
+    assert.equal(await page.locator('.shared-skill-version').count(), 0,
+      'the unified list does not label all old rows as historical');
+    assert.equal(await page.locator('.shared-skill-version-note').innerText(),
+      '技能搜尋以已驗證的 1.13.1 索引與原詳情為基準；已逐項核對的目前版本項目合併並優先顯示。');
+    assert.equal(await page.locator('.shared-entry[data-skill-id="darktide:skill:psyker:brain-burst-improved"]').count(), 1,
+      'the true current/legacy Brain Burst identity is shown exactly once');
+    assert.equal(await page.locator('.shared-entry[data-skill-id="darktide:skill:psyker:brain-burst-improved"] a').getAttribute('href'),
+      '/skills/?id=darktide%3Askill%3Apsyker%3Abrain-burst-improved',
+      'the merged identity opens the confirmed current detail');
+    assert.equal(await page.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').count(), 1,
+      'an old-only entry uses its catalog route to the complete skill detail');
     assert.equal(await page.locator('select[name="archetype"] option').count(), 8);
-    assert.match(await currentRows.first().innerText(), new RegExp(`目前版本 ${currentVersion}`, 'u'));
-    assert.match(await historyRows.first().innerText(), /歷史版本 1\.13\.1/u);
-    assert.match(await currentRows.first().locator('a').getAttribute('href'), /^\/skills\/\?id=/u);
-    assert.match(await historyRows.first().locator('a').getAttribute('href'), /^\/history\/1\.13\.1\/\?id=/u);
+    const treeLinks = page.locator('.shared-talent-tree-links a');
+    assert.deepEqual(await treeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), [
+      '/skills/arbites/?view=tree', '/skills/ogryn/?view=tree', '/skills/psyker/?view=tree',
+      '/skills/scum/?view=tree', '/skills/skitarii/?view=tree', '/skills/veteran/?view=tree',
+      '/skills/zealot/?view=tree',
+    ], 'the skills directory exposes all seven tree destinations from retained catalog metadata');
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+
+    await page.locator('.shared-talent-tree-links a[href="/skills/psyker/?view=tree"]').click();
+    await page.waitForURL(url => url.pathname === '/skills/psyker/' && url.searchParams.get('view') === 'tree');
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    await page.goBack();
+    await page.waitForURL(url => url.pathname === '/skills/' && !url.searchParams.has('view'));
+    await page.locator('.shared-talent-tree-links a').first().waitFor({ state: 'visible' });
+
+    await page.locator('#shared-skill-query').fill('brain_burst_improved');
+    await page.waitForURL(url => url.searchParams.get('q') === 'brain_burst_improved');
+    assert.equal(await page.locator('.shared-entry:visible').count(), 1,
+      'the historical ID remains searchable on the merged current row');
+    assert.equal(await page.locator('.shared-entry:visible a').getAttribute('href'),
+      '/skills/?id=darktide%3Askill%3Apsyker%3Abrain-burst-improved');
+    await page.locator('#shared-skill-query').fill('彈藥腰帶');
+    await page.locator('#shared-skill-archetype').selectOption('arbites');
+    await page.waitForURL(url => url.searchParams.get('q') === '彈藥腰帶' && url.searchParams.get('archetype') === 'arbites');
+    assert.equal(await page.locator('.shared-entry:visible').count(), 1);
+    assert.match(await page.locator('.shared-skill-result-count').innerText(), /找到 1 項技能/u);
+    assert.equal(await page.locator('.shared-entry:visible a').getAttribute('href'), '/skills/arbites/adamant_ammo_belt/');
 
     await page.setViewportSize({ width: 390, height: 844 });
     const mobileFilterLayout = await page.evaluate(() => {
       const viewportWidth = document.documentElement.clientWidth;
-      const controls = ['#shared-skill-query', '#shared-skill-archetype', '#shared-skill-version']
-        .map(selector => {
-          const rect = document.querySelector(selector).getBoundingClientRect();
-          return { width: rect.width, right: rect.right };
-        });
-      return {
-        viewportWidth,
-        documentWidth: document.documentElement.scrollWidth,
-        bodyWidth: document.body.scrollWidth,
-        controls,
-      };
+      const controls = ['#shared-skill-query', '#shared-skill-archetype'].map(selector => {
+        const rect = document.querySelector(selector).getBoundingClientRect();
+        return { width: rect.width, right: rect.right };
+      });
+      return { viewportWidth, documentWidth: document.documentElement.scrollWidth, controls };
     });
     assert.equal(mobileFilterLayout.viewportWidth, 390);
-    assert.ok(mobileFilterLayout.documentWidth <= mobileFilterLayout.viewportWidth
-      && mobileFilterLayout.bodyWidth <= mobileFilterLayout.viewportWidth,
-    'the combined skill list and filters fit a 390px viewport without horizontal overflow');
+    assert.ok(mobileFilterLayout.documentWidth <= mobileFilterLayout.viewportWidth);
     for (const control of mobileFilterLayout.controls) {
       assert.ok(control.width > 0 && control.right <= mobileFilterLayout.viewportWidth,
-        'search, archetype, and version controls are visible within the mobile viewport');
+        'the unified search and class filter fit a 390px viewport');
     }
 
-    await page.locator('#shared-skill-query').fill('彈藥腰帶');
-    await page.locator('#shared-skill-archetype').selectOption('arbites');
-    await page.waitForURL(url => url.pathname === '/skills/' && url.searchParams.get('q') === '彈藥腰帶'
-      && url.searchParams.get('archetype') === 'arbites');
-    assert.equal(await page.locator('.shared-entry:visible').count(), 1);
-    assert.equal(await page.locator('.shared-entry:visible').getAttribute('data-version'), '1.13.1');
-    assert.match(await page.locator('.shared-skill-result-count').innerText(), /找到 1 筆技能/u);
-
-    await page.locator('#shared-skill-version').selectOption(currentVersion);
-    await page.waitForURL(url => url.searchParams.get('version') === currentVersion);
-    assert.equal(await page.locator('.shared-entry:visible').count(), 0,
-      'the mobile current-version filter excludes the matching historical search result');
-    await page.locator('#shared-skill-version').selectOption('1.13.1');
-    await page.waitForURL(url => url.searchParams.get('version') === '1.13.1'
-      && url.searchParams.get('archetype') === 'arbites' && url.searchParams.get('q') === '彈藥腰帶');
-    assert.equal(await page.locator('.shared-entry:visible').count(), 1,
-      'the mobile historical-version filter restores the matching skill');
-
-    await page.locator('.shared-entry:visible a').first().click();
-    await page.waitForURL(url => url.pathname === '/history/1.13.1/' && url.searchParams.get('type') === 'skill'
-      && url.searchParams.get('id') === 'arbites/adamant_ammo_belt');
+    await page.locator('.shared-entry:visible a').click();
+    await page.waitForURL(url => url.pathname === '/skills/arbites/adamant_ammo_belt/');
     await page.getByRole('heading', { name: '彈藥腰帶', exact: true }).waitFor({ state: 'visible' });
-    assert.match(await page.locator('.history-badge').innerText(), /1\.13\.1/u);
-
+    assert.equal(await page.locator('.detail-grid').count(), 1,
+      'the old-only canonical route opens the full legacy mechanics/source detail');
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+    assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u,
+      'legacy detail footer keeps the current release identity and states its actual data basis');
     await page.goBack();
     await page.waitForURL(url => url.pathname === '/skills/' && url.searchParams.get('q') === '彈藥腰帶'
-      && url.searchParams.get('archetype') === 'arbites' && url.searchParams.get('version') === '1.13.1');
-    assert.equal(await page.locator('.shared-entry:visible').count(), 1, 'back restores the historical search and class filter');
+      && url.searchParams.get('archetype') === 'arbites');
+    assert.equal(await page.locator('.shared-entry:visible').count(), 1,
+      'back restores the unified search and class filter');
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.locator('.shared-entry:visible').first().waitFor({ state: 'visible' });
     assert.equal(await page.locator('#shared-skill-query').inputValue(), '彈藥腰帶');
-    assert.equal(await page.locator('#shared-skill-archetype').inputValue(), 'arbites');
-    assert.equal(await page.locator('#shared-skill-version').inputValue(), '1.13.1');
-    assert.equal(await page.locator('.shared-entry:visible').count(), 1, 'direct refresh reapplies the saved search and class filter');
-    await page.goForward();
-    await page.getByRole('heading', { name: '彈藥腰帶', exact: true }).waitFor({ state: 'visible' });
-    assert.match(await page.locator('.history-badge').innerText(), /1\.13\.1/u, 'forward restores the version-specific historical detail');
 
-    await page.goto(`${hosted.origin}/skills/?version=1.13.1`, { waitUntil: 'domcontentloaded' });
-    await page.locator('.shared-entry[data-version="1.13.1"]').first().waitFor({ state: 'visible' });
-    assert.equal(new URL(page.url()).searchParams.get('version'), '1.13.1');
-    assert.equal(await page.locator('.shared-entry[data-version="1.13.1"]:visible').count(), 645);
-    assert.equal(await page.locator(`.shared-entry[data-version="${currentVersion}"]:visible`).count(), 0,
-      'the explicit historical selection never blends current-version details into the old list');
+    const archetypes = ['arbites', 'scum', 'skitarii', 'ogryn', 'psyker', 'veteran', 'zealot'];
+    for (const archetype of archetypes) {
+      await page.goto(`${hosted.origin}/skills/${archetype}/?view=tree`, { waitUntil: 'domcontentloaded' });
+      await page.locator('.tree-layout').waitFor({ state: 'visible' });
+      const expectedTree = JSON.parse(await readFile(path.join(historicalDataRoot, 'trees', `${archetype}.json`), 'utf8'));
+      assert.equal(await page.locator('.talent-node').count(), expectedTree.nodes.length,
+        `${archetype} tree restores all nodes from its retained tree artifact`);
+      assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+      assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u);
+    }
+
+    await page.goto(`${hosted.origin}/skills/psyker/?view=tree`, { waitUntil: 'domcontentloaded' });
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    const psykerTree = JSON.parse(await readFile(path.join(historicalDataRoot, 'trees', 'psyker.json'), 'utf8'));
+    const brainBurstNode = psykerTree.nodes.find(node => node.skill_id === 'psyker_brain_burst_improved');
+    assert.ok(brainBurstNode, 'the retained Psyker tree contains the verified mapped Brain Burst node');
+    await page.locator(`#tree-zoom`).evaluate(input => {
+      input.value = '125'; input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    assert.equal(await page.locator('#tree-zoom + output').innerText(), '125%');
+    await page.locator(`.talent-node[data-node-id="${brainBurstNode.node_id}"]`).click();
+    assert.equal(await page.locator('#tree-detail-panel h2').innerText(), '顱腦崩裂');
+    const currentDetailLink = page.locator('#tree-detail-panel a[href="/skills/?id=darktide%3Askill%3Apsyker%3Abrain-burst-improved"]');
+    assert.equal(await currentDetailLink.count(), 1, 'the mapped tree node uses the same current identity as search');
+    await currentDetailLink.click();
+    await page.waitForURL(url => url.pathname === '/skills/' && url.searchParams.get('id') === 'darktide:skill:psyker:brain-burst-improved');
+    await page.locator('.shared-official-text').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('main h1').innerText(), '顱腦崩裂');
+    assert.equal(await page.locator('.shared-official-text').innerText(), '測試用已核對現版效果。');
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+    await page.goBack();
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`),
+      'browser back from current detail restores the current release identity on the retained tree');
+    assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u,
+      'the tree footer continues to state the retained tree data basis');
+
+    await page.locator('.primary-nav a[href="/history/1.13.1/"]').click();
+    await page.getByRole('heading', { name: '1.13.1 歷史資料', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#build-meta').innerText(), '歷史版本 1.13.1');
+    await page.goBack();
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`),
+      'browser back from history restores the current release identity on the tree');
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.locator('.shared-entry[data-version="1.13.1"]:visible').first().waitFor({ state: 'visible' });
-    assert.equal(await page.locator('#shared-skill-version').inputValue(), '1.13.1');
-    assert.equal(await page.locator('.shared-entry[data-version="1.13.1"]:visible').count(), 645,
-      'refresh preserves the explicit historical version filter');
-    assert.equal(await page.locator(`.shared-entry[data-version="${currentVersion}"]:visible`).count(), 0);
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u,
+      'direct refresh preserves the selected tree and its accurate baseline note');
 
-    await page.route('**/history/1.13.1/manifest.json', route => route.fulfill({ status: 503, contentType: 'text/plain', body: 'unavailable' }));
-    await page.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
-    await page.locator(`.shared-entry[data-version="${currentVersion}"]:visible`).first().waitFor({ state: 'visible' });
-    assert.ok(await page.locator(`.shared-entry[data-version="${currentVersion}"]:visible`).count() > 0,
-      'a history-package validation failure must not hide the verified current version');
-    assert.equal(await page.locator('.shared-entry[data-version="1.13.1"]:visible').count(), 0,
-      'history entries remain fail-closed when their package cannot be verified');
-    assert.match(await page.locator('.shared-skill-history-unavailable').innerText(), /歷史.*未能驗證/u);
+    await page.goto(`${hosted.origin}/skills/psyker/psyker_brain_burst_improved/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForURL(url => url.pathname === '/skills/' && url.searchParams.get('id') === CURRENT_BRAIN_BURST_ID);
+    assert.equal(await page.locator('main h1').innerText(), '顱腦崩裂',
+      'the canonical old identity resolves to the exact current skill when its current record is available');
+
+    const delayedNavigation = await browser.newPage();
+    await delayedNavigation.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
+    await delayedNavigation.locator('.shared-talent-tree-links a[href="/skills/psyker/?view=tree"]').waitFor({ state: 'visible' });
+    let releaseTree;
+    let resolveTreeRequest;
+    let resolveTreeResponse;
+    const treeGate = new Promise(resolve => { releaseTree = resolve; });
+    const treeRequested = new Promise(resolve => { resolveTreeRequest = resolve; });
+    const treeReleased = new Promise(resolve => { resolveTreeResponse = resolve; });
+    const holdTree = async route => {
+      const response = await route.fetch();
+      resolveTreeRequest();
+      try { await treeGate; await route.fulfill({ response }); }
+      finally { resolveTreeResponse(); }
+    };
+    const psykerTreePath = `**/data/${HISTORY_DATA_REVISION}/trees/psyker.json`;
+    await delayedNavigation.route(psykerTreePath, holdTree);
+    try {
+      await delayedNavigation.locator('.shared-talent-tree-links a[href="/skills/psyker/?view=tree"]').click();
+      await treeRequested;
+      await delayedNavigation.locator('.primary-nav a[href="/weapons/"]').click();
+      await delayedNavigation.waitForURL(url => url.pathname === '/weapons/');
+      await delayedNavigation.getByRole('heading', { name: '武器', exact: true }).waitFor({ state: 'visible' });
+      releaseTree();
+      await treeReleased;
+      await delayedNavigation.waitForTimeout(50);
+      assert.equal(new URL(delayedNavigation.url()).pathname, '/weapons/',
+        'a delayed tree response cannot replace a newer weapons navigation');
+      assert.equal(await delayedNavigation.locator('main h1').innerText(), '武器',
+        'the rendered weapons page survives the delayed tree response');
+      assert.equal(await delayedNavigation.locator('.tree-layout').count(), 0);
+      await delayedNavigation.locator('.primary-nav a[href="/skills/"]').click();
+      await delayedNavigation.waitForURL(url => url.pathname === '/skills/');
+      await delayedNavigation.locator('.shared-talent-tree-links a[href="/skills/psyker/?view=tree"]').click();
+      await delayedNavigation.locator('.tree-layout').waitFor({ state: 'visible' });
+    } finally {
+      releaseTree();
+      await treeReleased;
+      await delayedNavigation.unroute(psykerTreePath, holdTree);
+    }
+    await delayedNavigation.close();
+
+    const delayedDetailNavigation = await browser.newPage();
+    await delayedDetailNavigation.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
+    await delayedDetailNavigation.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').waitFor({ state: 'visible' });
+    let releaseDetail;
+    let resolveDetailRequest;
+    let resolveDetailResponse;
+    const detailGate = new Promise(resolve => { releaseDetail = resolve; });
+    const detailRequested = new Promise(resolve => { resolveDetailRequest = resolve; });
+    const detailReleased = new Promise(resolve => { resolveDetailResponse = resolve; });
+    const holdDetail = async route => {
+      const response = await route.fetch();
+      resolveDetailRequest();
+      try { await detailGate; await route.fulfill({ response }); }
+      finally { resolveDetailResponse(); }
+    };
+    const detailPath = `**/data/${HISTORY_DATA_REVISION}/details/skills/arbites/adamant_ammo_belt.json`;
+    await delayedDetailNavigation.route(detailPath, holdDetail);
+    try {
+      await delayedDetailNavigation.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').click();
+      await detailRequested;
+      await delayedDetailNavigation.locator('.primary-nav a[href="/weapons/"]').click();
+      await delayedDetailNavigation.waitForURL(url => url.pathname === '/weapons/');
+      await delayedDetailNavigation.getByRole('heading', { name: '武器', exact: true }).waitFor({ state: 'visible' });
+      releaseDetail();
+      await detailReleased;
+      await delayedDetailNavigation.waitForTimeout(50);
+      assert.equal(new URL(delayedDetailNavigation.url()).pathname, '/weapons/',
+        'a delayed legacy detail response cannot replace a newer weapons navigation');
+      assert.equal(await delayedDetailNavigation.locator('main h1').innerText(), '武器',
+        'the rendered weapons page survives the delayed legacy detail response');
+      assert.equal(await delayedDetailNavigation.locator('.detail-grid').count(), 0);
+      await delayedDetailNavigation.locator('.primary-nav a[href="/skills/"]').click();
+      await delayedDetailNavigation.waitForURL(url => url.pathname === '/skills/');
+      await delayedDetailNavigation.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').click();
+      await delayedDetailNavigation.locator('.detail-grid').waitFor({ state: 'visible' });
+      await delayedDetailNavigation.getByRole('heading', { name: '彈藥腰帶', exact: true }).waitFor({ state: 'visible' });
+    } finally {
+      releaseDetail();
+      await detailReleased;
+      await delayedDetailNavigation.unroute(detailPath, holdDetail);
+    }
+    await delayedDetailNavigation.close();
+
+    const failedCurrent = await browser.newPage();
+    await failedCurrent.route(`**${currentPointer.manifest_path}`, route => route.abort('internetdisconnected'));
+    await failedCurrent.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
+    await failedCurrent.locator('.shared-skill-current-unavailable').waitFor({ state: 'visible' });
+    assert.equal(await failedCurrent.locator('.shared-entry:visible').count(), 645,
+      'verified old skill search remains usable when current data fails');
+    assert.equal(await failedCurrent.locator('.shared-failure').count(), 0);
+    assert.ok((await failedCurrent.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+    await failedCurrent.close();
+
+    const failedLegacy = await browser.newPage();
+    await failedLegacy.route('**/data/0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b/catalog.json',
+      route => route.fulfill({ status: 503, contentType: 'text/plain', body: 'unavailable' }));
+    await failedLegacy.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
+    await failedLegacy.locator('.shared-skill-history-unavailable').waitFor({ state: 'visible' });
+    assert.equal(await failedLegacy.locator('.shared-talent-tree-links').count(), 0,
+      'tree routes are not advertised when the retained catalog cannot be verified');
+    assert.equal(await failedLegacy.locator('.shared-entry:visible').count(), 2,
+      'current skills remain usable if the retained catalog cannot be read');
+    assert.ok((await failedLegacy.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
+    await failedLegacy.close();
+
+    const failedIndex = await browser.newPage();
+    await failedIndex.route('**/history/1.13.1/manifest.json', route =>
+      route.fulfill({ status: 503, contentType: 'text/plain', body: 'unavailable' }));
+    await failedIndex.goto(`${hosted.origin}/skills/`, { waitUntil: 'domcontentloaded' });
+    await failedIndex.locator('.shared-skill-history-unavailable').waitFor({ state: 'visible' });
+    assert.equal(await failedIndex.locator('.shared-entry:visible').count(), 2,
+      'current skills remain usable if the fixed old index cannot be verified');
+    await failedIndex.close();
+
+    process.stdout.write('Unified skills, seven legacy talent trees, exact current alias, canonical skill details, SPA history and independent data failure tests passed.\n');
   } finally {
     await browser?.close();
     await closeServer(server);
