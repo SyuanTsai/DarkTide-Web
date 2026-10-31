@@ -533,7 +533,7 @@ function currentNativeMarkIndexByFamily(records, result) {
     if (typeof templateKey !== 'string' || typeof familyId !== 'string'
         || result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status !== 'ready') continue;
     const rows = groups.get(familyId) ?? new Map();
-    rows.set(templateKey, { familyId, markId: record.recordId });
+    rows.set(templateKey, { familyId, markId: record.payload.markId });
     groups.set(familyId, rows);
   }
   return groups;

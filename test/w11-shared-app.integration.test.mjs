@@ -254,6 +254,35 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     assert.equal(await page.locator('[data-retained-mark-id="transonic_knife_p1_m1"]').count(), 1,
       'an untranslated retained model remains available by its ID');
 
+    const retainedCurrentMarkIds = ['chainaxe_p1_m1', 'chainaxe_p1_m2'];
+    for (const retainedMarkId of retainedCurrentMarkIds) {
+      await page.goto(familyListUrl);
+      await page.locator('.shared-weapon-family[data-current-family-id="chainaxe_p1"]').waitFor({ state: 'visible' });
+      const currentRecord = weaponDomain.source.records.find(row => row.kind === 'weapon'
+        && row.payload.familyId === 'chainaxe_p1' && row.payload.templateKey === retainedMarkId);
+      assert.ok(currentRecord, `the W11 current package has an exact template identity for ${retainedMarkId}`);
+      const currentMark = family.marks.find(row => row.markId === currentRecord.payload.markId);
+      assert.ok(currentMark, `the exact current weapon view resolves retained template ${retainedMarkId}`);
+      const oldMarkLink = page.locator(`.shared-weapon-family[data-current-family-id="chainaxe_p1"] [data-retained-mark-id="${retainedMarkId}"] a`);
+      assert.equal(await oldMarkLink.getAttribute('href'),
+        `/weapons/?family=chainaxe_p1&mark=${encodeURIComponent(currentMark.markId)}`,
+        `retained model ${retainedMarkId} links to its current view identity`);
+      await oldMarkLink.click();
+      await page.waitForURL(url => url.pathname === '/weapons/' && url.searchParams.get('family') === 'chainaxe_p1'
+        && url.searchParams.get('mark') === currentMark.markId);
+      await page.waitForFunction(expected => document.querySelector('.shared-official-text')?.textContent === expected,
+        currentMark.official.resolvedText);
+      assert.equal(await page.locator('main h1').innerText(), currentMark.name,
+        `retained model ${retainedMarkId} opens the verified current mark detail`);
+      assert.equal(await page.locator('.shared-tab-list[aria-label="武器型號"] a[aria-current="page"]').innerText(), currentMark.markLabel,
+        `retained model ${retainedMarkId} selects the correct current model tab`);
+      const currentValue = currentMark.statSections.flatMap(section => section.claims)
+        .map(claim => claim.payload?.displayValue?.status === 'known' ? claim.payload.displayValue.decimal : claim.payload?.value?.decimal)
+        .find(value => typeof value === 'string');
+      assert.ok(currentValue && (await page.locator('.shared-stat-list').allInnerTexts()).join('\n').includes(currentValue),
+        `retained model ${retainedMarkId} renders current verified weapon values, not only a matching URL`);
+    }
+
     await page.goto(routeFor(hosted.origin, '/blessings/'));
     await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
     const retainedBlessingIds = await page.locator('[data-retained-blessing-id]').evaluateAll(rows => rows.map(row => row.dataset.retainedBlessingId));
