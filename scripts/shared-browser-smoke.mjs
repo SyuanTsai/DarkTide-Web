@@ -88,7 +88,7 @@ async function readVerifiedRetainedTreeData(distPath, verification) {
       requestedPaths.add(requestPath);
     }
   }
-  return { requestedPaths: [...requestedPaths].sort() };
+  return { requestedPaths: [...requestedPaths].sort(), catalog, files, dataRevision };
 }
 
 export async function readVerifiedCoreDomains(distPath, verification) {
@@ -182,10 +182,29 @@ function selectBlessing(domains, view) {
   throw new Error('verified shared package has no exact blessing variant with all four readable tiers');
 }
 
-function selectWeapon(domains, view) {
+function selectWeapon(domains, view, retained = null) {
   const domain = domains.find(row => row.kind === 'weapons');
   const records = domain.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === domain.gameReleaseId);
   const familyIds = [...new Set(records.map(row => row.payload?.familyId).filter(value => typeof value === 'string'))];
+  const retainedFamilyHasBlessings = familyId => {
+    const entry = retained?.catalog?.entries.find(row => row.kind === 'weapon' && row.id === familyId);
+    if (!entry) return false;
+    const bytes = retained.files.get(entry.detail_path);
+    if (!bytes) throw new Error(`retained family detail is missing from pinned revision: ${entry.detail_path}`);
+    const detail = parseJson(bytes, `Retained family detail ${entry.id}`);
+    return (detail.relations ?? []).some(relation => relation.kind === 'blessing');
+  };
+  for (const familyId of familyIds) {
+    const family = view.getWeaponFamily(familyId);
+    if (family.status === 'ready' && family.marks.length >= 2
+      && retainedFamilyHasBlessings(familyId)
+      && family.marks.slice(0, 2).every(mark => mark.statSections.some(section => section.claims.some(claim =>
+        claim.payload?.displayValue?.status === 'known' || claim.payload?.value?.status === 'known')
+        && mark.source.displayedAttacks?.some(attack => attack.segments?.length)
+        && mark.source.actionContinuations?.length))) {
+      return { familyId, marks: family.marks.slice(0, 2) };
+    }
+  }
   for (const familyId of familyIds) {
     const family = view.getWeaponFamily(familyId);
     if (family.status === 'ready' && family.marks.length >= 2
@@ -284,7 +303,13 @@ export async function runSharedBrowserSmoke(distPath, verification) {
   const retained = await readVerifiedRetainedTreeData(distPath, verification);
   const skill = selectSkill(shared.domains, shared.view);
   const blessing = selectBlessing(shared.domains, shared.view);
-  const weapon = selectWeapon(shared.domains, shared.view);
+  const weapon = selectWeapon(shared.domains, shared.view, retained);
+  const expectedRetainedPaths = new Set(retained.requestedPaths);
+  const retainedPrefix = `/data/${retained.dataRevision}/`;
+  const addRetainedDetail = entry => {
+    assert.ok(entry && retained.files.has(entry.detail_path), `fixed retained catalog declares detail ${entry?.detail_path}`);
+    expectedRetainedPaths.add(`${retainedPrefix}${entry.detail_path}`);
+  };
 
   let server;
   let browser;
@@ -377,6 +402,22 @@ export async function runSharedBrowserSmoke(distPath, verification) {
       assert.match(await page.locator('#build-meta').innerText(), /資料基準 1\.13\.1/u);
     }
 
+    await page.goto(new URL('/weapons/', origin).href, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '武器', exact: true }).waitFor({ state: 'visible' });
+    await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('[data-retained-weapon-id]').count(), 70,
+      'the unified weapons directory includes every retained family, including identities without a Traditional Chinese name');
+    assert.equal(await page.locator('[data-retained-mark-id]').count(), 135,
+      'the unified weapons directory retains every model identity');
+
+    await page.goto(new URL('/blessings/', origin).href, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '祝福', exact: true }).waitFor({ state: 'visible' });
+    await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('[data-retained-blessing-id]').count(), 167,
+      'the unified blessing directory includes all retained blessings');
+    assert.equal(await page.locator('[data-retained-variant-id]').count(), 605,
+      'the unified blessing directory links all retained variant details');
+
     const blessingPath = `/blessings/?id=${encodeURIComponent(blessing.presentation.entityRef.recordId)}&variant=${encodeURIComponent(blessing.applicability.variantRef.recordId)}`;
     await page.goto(new URL(blessingPath, origin).href, { waitUntil: 'domcontentloaded' });
     await page.locator('.shared-official-text').waitFor({ state: 'visible' });
@@ -395,10 +436,39 @@ export async function runSharedBrowserSmoke(distPath, verification) {
       await assertSections(page, expected.sections);
     }
 
+    const retainedBlessing = retained.catalog.entries.find(row => row.kind === 'blessing' && row.id === 'rev-it-up');
+    assert.ok(retainedBlessing, 'the fixed retained catalog contains the selected retained blessing');
+    addRetainedDetail(retainedBlessing);
+    const retainedBlessingDetail = parseJson(retained.files.get(retainedBlessing.detail_path), 'Retained blessing detail');
+    for (const variantId of retainedBlessingDetail.record.variant_ids) {
+      const entry = retained.catalog.entries.find(row => row.kind === 'variant' && row.id === variantId);
+      addRetainedDetail(entry);
+    }
+    await page.goto(new URL('/blessings/rev-it-up/', origin).href, { waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: '提速', exact: true }).waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.blessing-levels').count(), 1,
+      'the retained blessing detail loads its exact pinned tier shards');
+    assert.equal(await page.locator('.relation-list a[href^="/weapons/"]').count(), 3,
+      'retained blessing applicability links remain available to weapon families and models');
+
     const firstMark = weapon.marks[0];
     const weaponPath = `/weapons/?family=${encodeURIComponent(weapon.familyId)}&mark=${encodeURIComponent(firstMark.markId)}`;
     await page.goto(new URL(weaponPath, origin).href, { waitUntil: 'domcontentloaded' });
     await assertWeaponView(page, firstMark);
+    const retainedFamily = retained.catalog.entries.find(row => row.kind === 'weapon' && row.id === weapon.familyId);
+    if (retainedFamily) {
+      addRetainedDetail(retainedFamily);
+      const retainedFamilyDetail = parseJson(retained.files.get(retainedFamily.detail_path), 'Retained weapon family detail');
+      const expectedBlessingRelations = [...new Map((retainedFamilyDetail.relations ?? [])
+        .filter(relation => relation.kind === 'blessing').map(relation => [relation.id, relation])).values()];
+      if (expectedBlessingRelations.length) {
+        await page.locator('.shared-retained-weapon-blessings').waitFor({ state: 'visible' });
+        const renderedRelations = await page.locator('.shared-retained-weapon-blessings a').evaluateAll(links =>
+          links.map(link => ({ href: link.getAttribute('href'), id: link.closest('[data-retained-blessing-id]')?.dataset.retainedBlessingId })));
+        assert.deepEqual(renderedRelations, expectedBlessingRelations.map(relation => ({ href: relation.route, id: relation.id })),
+          'the current family detail links every exact blessing relation from its pinned retained family shard');
+      }
+    }
     const nextMark = weapon.marks[1];
     await page.getByRole('link', { name: nextMark.markLabel, exact: true }).click();
     await assertWeaponView(page, nextMark);
@@ -413,7 +483,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     const expectedPaths = [...shared.requestedPaths].sort();
     assertExactRequestedPaths(requestedPaths, expectedPaths);
-    assertExactDataRequestPaths(requestedDataPaths, expectedPaths, retained.requestedPaths);
+    assertExactDataRequestPaths(requestedDataPaths, expectedPaths, [...expectedRetainedPaths]);
     assert.deepEqual([...requestedHistoryPaths].sort(), [
       '/history/1.13.1/manifest.json', '/history/1.13.1/player-index.json',
     ], 'the searchable history list requests exactly the existing fixed manifest and player index');
@@ -434,7 +504,7 @@ export async function runSharedBrowserSmoke(distPath, verification) {
 
     process.stdout.write(
       `Shared browser smoke passed: ${shared.pointer.game_version} / ${shared.pointer.data_revision.slice(0, 12)}, ` +
-      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, the unified skills index, seven retained talent trees, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
+      'four exact core-domain bytes, any pinned announcements bytes, the declared game-changes index when present, unified skills/weapons/blessings directories, seven retained talent trees, exact retained weapon/blessing relation shards, skill sections, blessing LV1–LV4, two weapon marks/source values and continuations, ' +
       'direct refresh, 390px layout, and independent current/legacy failure behavior.\n'
     );
   } finally {

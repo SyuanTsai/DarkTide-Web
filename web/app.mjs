@@ -17,7 +17,7 @@ import {
   writeListState
 } from './client.mjs';
 import { createSharedClient, hasSharedContext } from './shared-client.mjs';
-import { currentSkillIdForLegacyId, renderSharedPage } from './shared-render.mjs';
+import { currentSkillIdForLegacyId, renderSharedPage, retainedBlessingIdForCurrentId } from './shared-render.mjs';
 import { loadW14HistoryPackage, renderW14HistoryPage, W14_HISTORY_PATH } from './history-page.mjs';
 
 const main = document.getElementById('main');
@@ -958,17 +958,18 @@ function setSharedBuildMeta(result = null) {
   }
 }
 
-function renderLegacyLoadError(error) {
+function renderLegacyLoadError(error, domain = '技能') {
   main.replaceChildren();
-  setSeo('技能資料暫時無法載入', '已留存的技能詳情或天賦樹目前無法讀取。', { noindex: true });
+  const label = domain === '武器' || domain === '祝福' ? domain : '技能';
+  setSeo(`${label}資料暫時無法載入`, `已留存的${label}詳情目前無法讀取。`, { noindex: true });
   const section = element('section', null, 'error-state');
   section.append(element('p', '暫時無法讀取', 'eyebrow'));
-  section.append(element('h1', '已留存的技能資料目前無法載入'));
+  section.append(element('h1', `已留存的${label}資料目前無法載入`));
   section.append(element('p', error?.name === 'UpdateAvailableError'
-    ? '這份 1.13.1 詳情未能從已留存的資料修訂讀取；目前版本資料與其他技能頁仍可使用。'
-    : '技能詳情或天賦樹暫時無法讀取。請重試，或返回技能搜尋。'));
+    ? `這份 1.13.1 詳情未能從已留存的資料修訂讀取；目前版本資料與其他${label}頁仍可使用。`
+    : `${label}詳情暫時無法讀取。請重試，或返回${label}目錄。`));
   section.append(makeButton('重試', () => showCurrentPage(true)));
-  section.append(makeLink('/skills/', '返回技能搜尋', 'button secondary'));
+  section.append(makeLink(domain === '祝福' ? '/blessings/' : domain === '武器' ? '/weapons/' : '/skills/', `返回${label}目錄`, 'button secondary'));
   main.append(section);
 }
 
@@ -976,6 +977,11 @@ function isLegacySkillPath(url) {
   const segments = url.pathname.split('/').filter(Boolean);
   return segments[0] === 'skills' && (segments.length === 2 || segments.length === 3 ||
     (segments.length === 4 && segments[3] === 'mechanics'));
+}
+
+function isLegacyWeaponBlessingPath(url) {
+  const segments = url.pathname.split('/').filter(Boolean);
+  return (segments[0] === 'weapons' || segments[0] === 'blessings') && segments.length > 1;
 }
 
 async function readCatalog(force) {
@@ -1123,6 +1129,88 @@ async function showLegacySkillPage(url, force = false) {
   }
 }
 
+async function showLegacyWeaponBlessingPage(url, force = false) {
+  const generation = ++sharedNavigationGeneration;
+  const domain = url.pathname.startsWith('/blessings/') ? '祝福' : '武器';
+  main.replaceChildren(element('p', `正在讀取 1.13.1 留存${domain}詳情…`, 'loading-note'));
+  setSharedBuildMeta(sharedLoadPromise?.result ?? null);
+  const historyRequest = readHistoryPackage(url, force);
+  try {
+    const historyPackage = await historyRequest;
+    if (generation !== sharedNavigationGeneration) return;
+    const legacyPackage = await readLegacyPackage(historyPackage, force);
+    if (generation !== sharedNavigationGeneration) return;
+    let route = resolveCatalogRoute(url.pathname, legacyPackage.catalog);
+    if (route.type === 'redirect') {
+      const destination = makeRedirectUrl(url, route.target_route);
+      history.replaceState(null, '', `${destination.pathname}${destination.search}${destination.hash}`);
+      route = resolveCatalogRoute(destination.pathname, legacyPackage.catalog);
+    }
+    if (route.type === 'entry' && ['weapon', 'mark', 'blessing', 'variant'].includes(route.entry.kind)) {
+      const detail = await legacyDataClient.loadDetail(route.entry, { force });
+      if (generation !== sharedNavigationGeneration) return;
+      const levels = route.entry.kind === 'blessing'
+        ? await legacyDataClient.loadBlessingLevels(detail, { force }) : null;
+      if (generation !== sharedNavigationGeneration) return;
+      renderState({ type: 'loaded', value: { type: 'detail', entry: route.entry, detail,
+        catalog: legacyPackage.catalog, levels } });
+    } else {
+      renderState({ type: 'loaded', value: { type: 'not-found', catalog: legacyPackage.catalog } });
+      setSharedBuildMeta(sharedLoadPromise?.result ?? null);
+    }
+  } catch (error) {
+    if (generation !== sharedNavigationGeneration) return;
+    renderLegacyLoadError(error, domain);
+    setSharedBuildMeta(sharedLoadPromise?.result ?? null);
+  }
+}
+
+function captureSharedSearchFocus() {
+  const input = main.querySelector('#shared-search');
+  if (!input || document.activeElement !== input) return null;
+  return { start: input.selectionStart, end: input.selectionEnd, direction: input.selectionDirection };
+}
+
+function restoreSharedSearchFocus(state) {
+  if (!state) return;
+  const input = main.querySelector('#shared-search');
+  if (!input) return;
+  input.focus({ preventScroll: true });
+  if (Number.isInteger(state.start) && Number.isInteger(state.end)) {
+    input.setSelectionRange(state.start, state.end, state.direction ?? 'none');
+  }
+}
+
+function captureSharedDetailUiState() {
+  const details = [...main.querySelectorAll('details')].map(item => item.open);
+  const active = main.contains(document.activeElement) ? document.activeElement : null;
+  let focusPath = null;
+  if (active) {
+    focusPath = [];
+    for (let current = active; current && current !== main; current = current.parentElement) {
+      const parent = current.parentElement;
+      if (!parent) { focusPath = null; break; }
+      focusPath.unshift([...parent.children].indexOf(current));
+    }
+  }
+  return { details, focusPath, scrollX: window.scrollX, scrollY: window.scrollY };
+}
+
+function restoreSharedDetailUiState(state) {
+  if (!state) return;
+  const details = [...main.querySelectorAll('details')];
+  state.details.forEach((open, index) => { if (details[index]) details[index].open = open; });
+  if (Array.isArray(state.focusPath)) {
+    let target = main;
+    for (const index of state.focusPath) {
+      target = Number.isInteger(index) && index >= 0 ? target.children[index] : null;
+      if (!target) break;
+    }
+    if (target && typeof target.focus === 'function') target.focus({ preventScroll: true });
+  }
+  window.scrollTo(state.scrollX, state.scrollY);
+}
+
 async function showSharedPage(force = false) {
   const generation = ++sharedNavigationGeneration;
   const url = new URL(window.location.href);
@@ -1135,6 +1223,102 @@ async function showSharedPage(force = false) {
     renderSharedPage({ main, buildMeta, url, result: { status: 'loading' } });
   }
   const isSkillDirectory = url.pathname === '/skills/' && !url.searchParams.has('id');
+  const isWeaponDirectory = url.pathname === '/weapons/' && !url.searchParams.has('family');
+  const isBlessingDirectory = url.pathname === '/blessings/' && !url.searchParams.has('id');
+  const isCurrentWeaponDetail = url.pathname === '/weapons/' && url.searchParams.has('family');
+  const retainedBlessingId = retainedBlessingIdForCurrentId(url.searchParams.get('id'));
+  const isMappedBlessingDetail = url.pathname === '/blessings/' && Boolean(retainedBlessingId);
+  if (isWeaponDirectory || isBlessingDirectory) {
+    const currentRequest = sharedLoadPromise;
+    const historyRequest = readHistoryPackage(url, force);
+    let result = currentRequest.result ?? null;
+    let currentError = null;
+    let historyError = null;
+    let historyPackage = null;
+    const currentOutcome = currentRequest.then(value => {
+      result = value;
+      currentRequest.result = value;
+      return { status: 'fulfilled', value };
+    }).catch(error => {
+      currentError = error;
+      if (sharedLoadPromise === currentRequest) sharedLoadPromise = null;
+      return { status: 'rejected', reason: error };
+    });
+    const historyOutcome = historyRequest.then(async value => {
+      historyRequest.result = value;
+      historyPackage = await readLegacyPackage(value, force);
+      return { status: 'fulfilled', value: historyPackage };
+    }).catch(error => {
+      historyError = error;
+      if (historyLoadPromise === historyRequest) historyLoadPromise = null;
+      return { status: 'rejected', reason: error };
+    });
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'loading' }, url,
+      historyPackage: historyPackage?.catalog ? historyPackage : null, historyError, historyLoading: !historyPackage });
+    await Promise.race([currentOutcome, historyOutcome]);
+    if (generation !== sharedNavigationGeneration) return;
+    const partialResult = result ?? { status: 'unavailable' };
+    const currentLoading = !result && !currentError;
+    renderSharedPage({ main, buildMeta, result: partialResult, url: new URL(window.location.href),
+      error: currentError ?? (currentLoading ? new Error('current data is still loading') : null),
+      currentError, currentLoading, historyPackage, historyError, historyLoading: !historyPackage });
+    if (result) setSharedBuildMeta(result);
+    await Promise.all([currentOutcome, historyOutcome]);
+    if (generation !== sharedNavigationGeneration) return;
+    const searchFocus = captureSharedSearchFocus();
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'unavailable' }, url: new URL(window.location.href),
+      error: currentError, currentError, currentLoading: false, historyPackage, historyError, historyLoading: false });
+    if (result) setSharedBuildMeta(result);
+    restoreSharedSearchFocus(searchFocus);
+    return;
+  }
+  if (isCurrentWeaponDetail || isMappedBlessingDetail) {
+    const currentRequest = sharedLoadPromise;
+    let result = currentRequest.result ?? null;
+    let currentError = null;
+    let historyError = null;
+    let historyPackage = null;
+    let retainedBlessingDetail = null;
+    let retainedWeaponDetail = null;
+    if (!result) {
+      try {
+        result = await currentRequest;
+        currentRequest.result = result;
+      } catch (error) {
+        currentError = error;
+        if (sharedLoadPromise === currentRequest) sharedLoadPromise = null;
+      }
+    }
+    if (generation !== sharedNavigationGeneration) return;
+    const historyRequest = readHistoryPackage(url, force);
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'unavailable' }, url, error: currentError, currentError });
+    if (result) setSharedBuildMeta(result);
+    try {
+      const historicalIndex = await historyRequest;
+      if (generation !== sharedNavigationGeneration) return;
+      historyRequest.result = historicalIndex;
+      historyPackage = await readLegacyPackage(historicalIndex, force);
+      if (isMappedBlessingDetail) {
+        const retainedEntry = historyPackage.catalog.entries.find(row => row.kind === 'blessing' && row.id === retainedBlessingId);
+        if (retainedEntry) retainedBlessingDetail = await legacyDataClient.loadDetail(retainedEntry, { force });
+      }
+      if (isCurrentWeaponDetail) {
+        const familyId = url.searchParams.get('family');
+        const retainedEntry = historyPackage.catalog.entries.find(row => row.kind === 'weapon' && row.id === familyId);
+        if (retainedEntry) retainedWeaponDetail = await legacyDataClient.loadDetail(retainedEntry, { force });
+      }
+    } catch (error) {
+      historyError = error;
+      if (historyLoadPromise === historyRequest) historyLoadPromise = null;
+    }
+    if (generation !== sharedNavigationGeneration) return;
+    const detailUiState = captureSharedDetailUiState();
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'unavailable' }, url: new URL(window.location.href),
+      error: currentError, currentError, historyPackage, historyError, retainedBlessingDetail, retainedWeaponDetail });
+    if (result) setSharedBuildMeta(result);
+    restoreSharedDetailUiState(detailUiState);
+    return;
+  }
   if (isSkillDirectory) {
     const currentRequest = sharedLoadPromise;
     const historyRequest = readHistoryPackage(url, force);
@@ -1193,7 +1377,11 @@ function showCurrentPage(force = false) {
   const url = new URL(window.location.href);
   const pathname = url.pathname;
   if (pathname === W14_HISTORY_PATH.slice(0, -1) || pathname.startsWith(W14_HISTORY_PATH)) return showW14HistoryPage(force);
-  if (sharedMode) return isLegacySkillPath(url) ? showLegacySkillPage(url, force) : showSharedPage(force);
+  if (sharedMode) {
+    if (isLegacySkillPath(url)) return showLegacySkillPage(url, force);
+    if (isLegacyWeaponBlessingPath(url)) return showLegacyWeaponBlessingPage(url, force);
+    return showSharedPage(force);
+  }
   const request = { href: window.location.href, force };
   return navigation.navigate(request);
 }

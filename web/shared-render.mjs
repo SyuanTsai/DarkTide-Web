@@ -211,11 +211,20 @@ function labelText(value, fallback) { return typeof value === 'string' && value.
 function renderSearch(parent, query) {
   const label = node('label', '搜尋繁體中文名稱', 'shared-search-label');
   const input = node('input');
-  input.type = 'search'; input.name = 'q'; input.value = query;
+  input.id = 'shared-search'; input.type = 'search'; input.name = 'q'; input.value = query;
   input.autocomplete = 'off'; input.setAttribute('aria-label', '搜尋繁體中文名稱');
   label.append(input);
   parent.append(label);
   return input;
+}
+function syncSharedSearchQuery(input) {
+  const url = new URL(window.location.href);
+  const query = input.value.trim();
+  if (query) url.searchParams.set('q', query);
+  else url.searchParams.delete('q');
+  const path = `${url.pathname}${url.search}${url.hash}`;
+  const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (path !== current) window.history.replaceState(null, '', path);
 }
 function displayRef(ref) { return ref?.recordId; }
 function getPresentations(domain, kind) {
@@ -463,8 +472,224 @@ function renderSkillPage(main, result, url, historyPackage = null, historyError 
   filters.addEventListener('submit', event => { event.preventDefault(); updateUrl(true); });
   applyFilters();
 }
-function renderBlessingPage(main, result, url) {
-  const domain = result.domains.find(row => row.kind === 'blessings');
+const RETAINED_GAME_VERSION = '1.13.1';
+const RETAINED_STATIC_REVISION = '0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b';
+// Exact identity crosswalk verified from the 1.13.4 Chainaxe P1 traits source and retained variant ID.
+const CURRENT_TO_RETAINED_BLESSING_ID = new Map([
+  ['darktide:blessing:chainaxe:p1-movement-speed-on-activation', 'rev-it-up'],
+]);
+
+function retainedName(entry) {
+  return typeof entry?.name_zh_tw === 'string' && entry.name_zh_tw.trim()
+    ? entry.name_zh_tw : `名稱待確認（${entry?.id ?? '未知 ID'}）`;
+}
+
+function retainedNote(kind, historyPackage, historyError, historyLoading) {
+  const section = node('section', null, 'shared-history-catalog');
+  section.dataset.retainedGameVersion = RETAINED_GAME_VERSION;
+  if (historyPackage?.catalog) {
+    section.dataset.catalogRevision = historyPackage.catalog.data_revision ?? RETAINED_STATIC_REVISION;
+    const counts = historyPackage.catalog.counts;
+    const description = kind === 'weapons'
+      ? `目錄合併目前已驗證項目與 1.13.1 留存資料：共 ${counts.weapons} 個留存武器家族、${counts.marks} 個型號。缺少繁中名稱的項目仍以識別碼顯示；部分武器的數值資料尚未整理，留存資料也未逐項核對目前版本。`
+      : `目錄合併目前已驗證項目與 1.13.1 留存資料：共 ${counts.blessings} 個留存祝福、${counts.variants} 個變體。各變體連到其詳情，等級與適用關係按各項資料基準標示；不代表已逐項核對目前版本。`;
+    section.append(node('p', description, 'shared-history-note'));
+  } else if (historyLoading) {
+    section.append(node('p', '目前版本目錄已載入；正在讀取 1.13.1 留存目錄與詳情索引。', 'shared-skill-history-loading'));
+  } else {
+    section.append(node('p', historyError
+      ? '1.13.1 留存目錄目前無法讀取；此處只顯示目前版本已驗證資料。'
+      : '尚無可用的 1.13.1 留存目錄。', 'shared-skill-history-unavailable'));
+  }
+  return section;
+}
+
+function entrySearchText(entry, extra = []) {
+  return [entry?.name_zh_tw, entry?.id, ...extra].filter(value => typeof value === 'string').join(' ').toLocaleLowerCase('zh-Hant-TW');
+}
+
+function retainedFamilies(catalog) {
+  return (catalog?.entries ?? []).filter(entry => entry.kind === 'weapon');
+}
+
+function retainedMarksByFamily(catalog) {
+  const groups = new Map();
+  for (const entry of catalog?.entries ?? []) {
+    if (entry.kind !== 'mark') continue;
+    const familyId = /^\/weapons\/([^/]+)\/marks\//u.exec(entry.route)?.[1];
+    if (!familyId) continue;
+    const rows = groups.get(familyId) ?? [];
+    rows.push(entry);
+    groups.set(familyId, rows);
+  }
+  return groups;
+}
+
+function currentNativeMarkIndexByFamily(records, result) {
+  const groups = new Map();
+  for (const record of records) {
+    const templateKey = record.payload?.templateKey;
+    const familyId = record.payload?.familyId;
+    if (typeof templateKey !== 'string' || typeof familyId !== 'string'
+        || result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status !== 'ready') continue;
+    const rows = groups.get(familyId) ?? new Map();
+    rows.set(templateKey, { familyId, markId: record.recordId });
+    groups.set(familyId, rows);
+  }
+  return groups;
+}
+
+function renderHistoryWeaponLinks(parent, familyEntry, marks, currentMarksByTemplate = null) {
+  const linkList = node('ul', null, 'shared-history-links');
+  for (const mark of marks) {
+    const currentMark = currentMarksByTemplate?.get(mark.id);
+    const item = node('li', null, 'shared-history-mark-row');
+    item.dataset.retainedMarkId = mark.id;
+    item.append(link(currentMark
+      ? paramsUrl('/weapons/', { family: currentMark.familyId, mark: currentMark.markId })
+      : mark.route, retainedName(mark), currentMark ? 'shared-current-identity-link' : 'shared-history-link'));
+    item.append(node('small', currentMark
+      ? '名稱資料基準 1.13.1；已按相同武器識別對應目前型號。'
+      : '資料基準 1.13.1 · 未逐項核對目前版本。', 'shared-history-basis'));
+    linkList.append(item);
+  }
+  if (familyEntry) {
+    const item = node('li', null, 'shared-history-family-detail');
+    item.dataset.retainedFamilyDetailId = familyEntry.id;
+    item.append(link(familyEntry.route, `查看 1.13.1 留存詳情：${retainedName(familyEntry)}`, 'shared-history-link'));
+    linkList.prepend(item);
+  }
+  parent.append(linkList);
+}
+
+function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTemplate, retainedDetail = null) {
+  const familyEntry = catalog?.entries.find(entry => entry.kind === 'weapon' && entry.id === familyId);
+  if (!familyEntry) return;
+  const section = node('section', null, 'shared-retained-weapon-detail');
+  section.append(node('h2', '同家族已留存的型號與詳情'));
+  section.append(node('p', '目前詳情優先顯示已驗證的來源資料；下列留存型號以 1.13.1 為基準，未逐項核對目前版本。', 'shared-history-note'));
+  const marks = retainedMarksByFamily(catalog).get(familyId) ?? [];
+  renderHistoryWeaponLinks(section, familyEntry, marks, currentMarksByTemplate);
+  const blessings = [...new Map((retainedDetail?.relations ?? [])
+    .filter(relation => relation.kind === 'blessing')
+    .map(relation => [relation.id, relation])).values()];
+  if (blessings.length) {
+    const list = node('ul', null, 'shared-history-links shared-retained-weapon-blessings');
+    for (const blessing of blessings) {
+      const item = node('li', null, 'shared-history-blessing-relation');
+      item.dataset.retainedBlessingId = blessing.id;
+      item.append(link(blessing.route, retainedName({ id: blessing.id, name_zh_tw: blessing.name_zh_tw }), 'shared-history-link'));
+      item.append(node('small', '適用關係資料基準 1.13.1 · 未逐項核對目前版本。', 'shared-history-basis'));
+      list.append(item);
+    }
+    section.append(node('h3', `1.13.1 留存的祝福關聯（${blessings.length}）`), list);
+  }
+  main.append(section);
+}
+
+export function retainedBlessingIdForCurrentId(currentId) {
+  return CURRENT_TO_RETAINED_BLESSING_ID.get(currentId) ?? null;
+}
+
+function renderRetainedBlessingIdentity(main, historyPackage, retainedDetail, blessingId) {
+  const catalog = historyPackage?.catalog;
+  const entry = catalog?.entries.find(row => row.kind === 'blessing' && row.id === blessingId);
+  if (!entry) return;
+  const section = node('section', null, 'shared-retained-blessing-detail');
+  section.append(node('h2', '同一祝福的留存資料'));
+  section.append(node('p', '下列資料基準為 1.13.1，未逐項核對目前版本；請依目前頁面優先使用已驗證的同版來源。', 'shared-history-note'));
+  section.append(link(entry.route, `1.13.1「${retainedName(entry)}」完整詳情、舊版適用關係與等級`, 'shared-history-link'));
+  const variants = catalog.entries.filter(row => row.kind === 'variant'
+    && row.route.startsWith(`${entry.route}variants/`));
+  if (variants.length) {
+    const list = node('ul', null, 'shared-history-variants');
+    for (const variant of variants) {
+      const item = node('li', null, 'shared-history-variant-row');
+      item.dataset.retainedVariantId = variant.id;
+      item.append(link(variant.route, retainedName(variant), 'shared-history-link'));
+      list.append(item);
+    }
+    section.append(node('p', `${variants.length} 個 1.13.1 變體詳情`, 'shared-muted'), list);
+  }
+  if (retainedDetail?.relations?.length) {
+    const weapons = retainedDetail.relations.filter(row => row.kind === 'weapon');
+    if (weapons.length) {
+      const list = node('ul', null, 'shared-history-links');
+      for (const weapon of weapons) {
+        const item = node('li', null, 'shared-history-weapon-link');
+        item.append(link(weapon.route, retainedName({ id: weapon.id, name_zh_tw: weapon.name_zh_tw }), 'shared-history-link'));
+        list.append(item);
+      }
+      section.append(node('h3', '1.13.1 適用武器資料'), list);
+    }
+  }
+  main.append(section);
+}
+
+function renderBlessingHistory(main, result, url, historyPackage, historyError, historyLoading, currentItems) {
+  const section = retainedNote('blessings', historyPackage, historyError, historyLoading);
+  const list = main.querySelector('.shared-entry-list');
+  if (!historyPackage?.catalog) { main.insertBefore(section, list); return; }
+  const catalog = historyPackage.catalog;
+  const blessings = catalog.entries.filter(entry => entry.kind === 'blessing');
+  const variants = catalog.entries.filter(entry => entry.kind === 'variant');
+  const variantsByBlessing = new Map();
+  for (const entry of variants) {
+    const blessingId = /^\/blessings\/([^/]+)\/variants\//u.exec(entry.route)?.[1];
+    if (!blessingId) continue;
+    const rows = variantsByBlessing.get(blessingId) ?? [];
+    rows.push(entry);
+    variantsByBlessing.set(blessingId, rows);
+  }
+  const mappedRetainedIds = new Set();
+  for (const presentation of currentItems) {
+    const currentId = displayRef(presentation.entityRef);
+    const retainedId = CURRENT_TO_RETAINED_BLESSING_ID.get(currentId);
+    if (!retainedId || mappedRetainedIds.has(retainedId)) continue;
+    const oldEntry = blessings.find(entry => entry.id === retainedId);
+    if (!oldEntry) continue;
+    mappedRetainedIds.add(retainedId);
+    const item = [...main.querySelectorAll('.shared-current-blessing[data-current-blessing-id]')]
+      .find(row => row.dataset.currentBlessingId === currentId && !row.dataset.retainedBlessingId);
+    if (!item) continue;
+    item.dataset.retainedBlessingId = retainedId;
+    const related = variantsByBlessing.get(oldEntry.id) ?? [];
+    item.dataset.searchName = entrySearchText({ name_zh_tw: oldEntry.name_zh_tw, id: currentId }, [oldEntry.id,
+      ...related.flatMap(row => [row.name_zh_tw, row.id])]);
+    const alias = node('p', null, 'shared-history-alias');
+    alias.append(link(oldEntry.route, `資料基準 1.13.1 · ${retainedName(oldEntry)} 詳情、舊版適用關係與等級`, 'shared-history-link'));
+    item.append(alias);
+    appendRetainedVariants(item, related);
+  }
+  for (const entry of blessings) {
+    if (mappedRetainedIds.has(entry.id)) continue;
+    const item = node('li', null, 'shared-entry shared-history-blessing');
+    const related = variantsByBlessing.get(entry.id) ?? [];
+    item.dataset.retainedBlessingId = entry.id;
+    item.dataset.searchName = entrySearchText(entry, related.flatMap(row => [row.name_zh_tw, row.id]));
+    item.append(link(entry.route, retainedName(entry), 'shared-history-link'));
+    item.append(node('small', '資料基準 1.13.1 · 未逐項核對目前版本', 'shared-history-basis'));
+    appendRetainedVariants(item, related);
+    list.append(item);
+  }
+  main.insertBefore(section, list);
+}
+
+function appendRetainedVariants(parent, variants) {
+  if (!variants.length) return;
+  const list = node('ul', null, 'shared-history-variants');
+  for (const variant of variants) {
+    const variantItem = node('li', null, 'shared-history-variant-row');
+    variantItem.dataset.retainedVariantId = variant.id;
+    variantItem.dataset.searchName = entrySearchText(variant);
+    variantItem.append(link(variant.route, `變體詳情：${retainedName(variant)}`, 'shared-history-link'));
+    list.append(variantItem);
+  }
+  parent.append(node('small', `${variants.length} 個 1.13.1 變體／等級詳情`, 'shared-muted'), list);
+}
+
+function renderBlessingPage(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedBlessingDetail = null) {
+  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'blessings') : null;
   const presentations = getPresentations(domain, 'blessing');
   const id = url.searchParams.get('id');
   if (!id) {
@@ -474,24 +699,49 @@ function renderBlessingPage(main, result, url) {
     main.append(header);
     const input = renderSearch(main, url.searchParams.get('q') ?? '');
     const list = node('ul', null, 'shared-entry-list');
+    const currentItems = [...presentations];
+    const presentedIds = new Set(presentations.map(row => displayRef(row.entityRef)));
     for (const presentation of presentations) {
       for (const applicability of presentation.tierApplicability ?? []) {
         const variantRef = applicability.variantRef;
         const tier = applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
         if (!variantRef || !Number.isInteger(tier)) continue;
-        const view = result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier });
-        if (view.status !== 'ready') continue;
-        const item = node('li', null, 'shared-entry'); item.dataset.searchName = view.name;
+        const view = result?.status === 'ready' ? result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier }) : null;
+        if (view?.status !== 'ready') continue;
+        const item = node('li', null, 'shared-entry shared-current-blessing'); item.dataset.searchName = entrySearchText({ name_zh_tw: view.name, id: presentation.entityRef.recordId });
+        item.dataset.currentBlessingId = presentation.entityRef.recordId;
         item.append(link(paramsUrl('/blessings/', { id: presentation.entityRef.recordId, variant: variantRef.recordId, tier }), `${view.name} · LV${tier}`));
         item.append(node('p', view.official.resolvedText, 'shared-muted'));
         list.append(item);
       }
     }
+    const currentRecords = domain?.source.records.filter(row => row.kind === 'blessing'
+      && row.gameReleaseId === result.manifest.gameReleaseId) ?? [];
+    for (const record of currentRecords) {
+      if (presentedIds.has(record.recordId)) continue;
+      const item = node('li', null, 'shared-entry shared-current-blessing shared-current-blessing-unknown');
+      item.dataset.currentBlessingId = record.recordId;
+      item.dataset.searchName = entrySearchText({ name_zh_tw: null, id: record.recordId });
+      item.append(node('strong', retainedName({ id: record.recordId }), 'shared-unverified-name'));
+      item.append(node('p', '目前來源尚未提供可核實的繁中名稱、適用武器或等級詳情。', 'shared-muted'));
+      list.append(item);
+      currentItems.push({ entityRef: { recordId: record.recordId, kind: 'blessing' } });
+    }
     main.append(list);
     const applySearch = () => {
+      syncSharedSearchQuery(input);
       const query = input.value.trim().toLocaleLowerCase('zh-Hant-TW');
-      for (const row of list.querySelectorAll('.shared-entry')) row.hidden = !row.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+      for (const row of main.querySelectorAll('.shared-entry[data-search-name]')) {
+        const directMatch = row.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+        if (row.classList.contains('shared-history-blessing')) {
+          const variantRows = [...row.querySelectorAll('.shared-history-variant-row')];
+          const variantMatch = variantRows.some(variant => variant.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query));
+          row.hidden = !(directMatch || variantMatch);
+          for (const variant of variantRows) variant.hidden = !variant.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+        } else row.hidden = !directMatch;
+      }
     };
+    renderBlessingHistory(main, result, url, historyPackage, historyError, historyLoading, currentItems);
     input.addEventListener('input', applySearch);
     applySearch();
     return;
@@ -546,6 +796,7 @@ function renderBlessingPage(main, result, url) {
   renderErrata(main, view.errata);
   renderSections(main, view.sections);
   renderTerms(main, view);
+  renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail, retainedBlessingIdForCurrentId(id));
 }
 function sourceDecimal(value) {
   if (!value || value.status !== 'known' || typeof value.decimal !== 'string') return '來源數值未確認';
@@ -958,15 +1209,15 @@ function renderWeapon(main, result, view, familyMarks, url) {
   renderSections(main, view.sections);
   renderTerms(main, view);
 }
-function renderWeapons(main, result, url) {
-  const domain = result.domains.find(row => row.kind === 'weapons');
-  const records = domain.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === result.manifest.gameReleaseId);
+function renderWeapons(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedWeaponDetail = null) {
+  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'weapons') : null;
+  const records = domain?.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === result.manifest.gameReleaseId) ?? [];
   const families = [...new Set(records.map(row => row.payload?.familyId).filter(Boolean))];
   const familyId = url.searchParams.get('family');
   const markId = url.searchParams.get('mark');
   if (url.searchParams.has('family')) {
-    const family = result.view.getWeaponFamily(familyId);
-    if (family.status !== 'ready') {
+    const family = result?.status === 'ready' ? result.view.getWeaponFamily(familyId) : null;
+    if (family?.status !== 'ready') {
       setMetadata('武器家族資料未能確認', '目前無法確認此武器家族的同版繁體中文資料。', url);
       return renderUnavailable(main, family);
     }
@@ -975,7 +1226,10 @@ function renderWeapons(main, result, url) {
       setMetadata('武器型號未能確認', '目前無法確認此武器型號的同版繁體中文資料。', url);
       return renderUnavailable(main, { statusText: '無法確認這個武器型號。' });
     }
-    return renderWeapon(main, result, view, family.marks, url);
+    renderWeapon(main, result, view, family.marks, url);
+    renderRetainedWeaponDetail(main, historyPackage?.catalog, familyId,
+      currentNativeMarkIndexByFamily(records, result).get(familyId), retainedWeaponDetail);
+    return;
   }
   setMetadata('武器', '依武器家族與型號查閱素質、來源表與動作資料。', url);
   const header = node('header', null, 'page-intro');
@@ -983,19 +1237,67 @@ function renderWeapons(main, result, url) {
   main.append(header);
   const input = renderSearch(main, url.searchParams.get('q') ?? '');
   const list = node('ul', null, 'shared-entry-list');
+  const currentNativeMarkIndex = currentNativeMarkIndexByFamily(records, result);
+  const oldCatalog = historyPackage?.catalog;
+  const oldFamilies = retainedFamilies(oldCatalog);
+  const oldFamilyById = new Map(oldFamilies.map(entry => [entry.id, entry]));
+  const oldMarksByFamily = retainedMarksByFamily(oldCatalog);
   for (const family of families) {
     const view = result.view.getWeaponFamily(family);
-    if (view.status !== 'ready') continue;
-    const first = view.marks[0];
-    const item = node('li', null, 'shared-entry'); item.dataset.searchName = first.name;
-    item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${view.marks.length} 個型號`));
-    item.append(node('p', '依武器家族選取型號，查看各自的素質、來源表與動作資料。', 'shared-muted'));
+    const familyRecords = records.filter(record => record.payload?.familyId === family);
+    const firstRecord = familyRecords[0];
+    if (!firstRecord) continue;
+    const currentPresentation = domain.web.presentations.find(row => row?.locale === 'zh-TW'
+      && row?.entityRef?.kind === 'weapon' && row.entityRef.recordId === firstRecord.recordId);
+    const retainedFamily = oldFamilyById.get(family);
+    const retainedMarks = oldMarksByFamily.get(family) ?? [];
+    const currentReady = view.status === 'ready';
+    const currentName = currentReady ? view.marks[0].name : currentPresentation?.name;
+    const currentMarkNames = currentReady ? view.marks.map(mark => mark.name) : familyRecords.map(record => record.payload?.markId);
+    const item = node('li', null, 'shared-entry shared-weapon-family'); item.dataset.searchName = entrySearchText({ name_zh_tw: currentName, id: family }, [
+      ...currentMarkNames, retainedFamily?.name_zh_tw, ...retainedMarks.flatMap(mark => [mark.name_zh_tw, mark.id]),
+    ]);
+    item.dataset.currentFamilyId = family;
+    if (retainedFamily) item.dataset.retainedWeaponId = retainedFamily.id;
+    if (currentReady) {
+      const first = view.marks[0];
+      item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${view.marks.length} 個型號`));
+      item.append(node('p', retainedFamily
+        ? '此家族的目前版與 1.13.1 識別相同；型號依已核對的武器識別對應。'
+        : '依武器家族選取型號，查看目前版本已驗證的素質、來源表與動作資料。', 'shared-muted'));
+    } else {
+      item.append(node('strong', retainedName({ id: family, name_zh_tw: currentName }), 'shared-current-weapon-name'));
+      item.append(node('p', '目前版本已收錄此武器識別，但尚無可顯示的已驗證詳情。', 'shared-muted'));
+    }
+    if (retainedFamily) {
+      renderHistoryWeaponLinks(item, retainedFamily, retainedMarks, currentNativeMarkIndex.get(family));
+    }
     list.append(item);
   }
   main.append(list);
+  if (oldCatalog) {
+    const section = retainedNote('weapons', historyPackage, historyError, historyLoading);
+    const oldOnly = oldFamilies.filter(entry => !families.includes(entry.id));
+    for (const entry of oldOnly) {
+      const item = node('li', null, 'shared-entry shared-weapon-family shared-retained-weapon');
+      const marks = oldMarksByFamily.get(entry.id) ?? [];
+      item.dataset.retainedWeaponId = entry.id;
+      item.dataset.searchName = entrySearchText(entry, marks.flatMap(mark => [mark.name_zh_tw, mark.id]));
+      item.append(link(entry.route, retainedName(entry), 'shared-history-link'));
+      item.append(node('small', `資料基準 1.13.1 · 未逐項核對目前版本 · ${marks.length} 個留存型號`, 'shared-history-basis'));
+      renderHistoryWeaponLinks(item, null, marks);
+      list.append(item);
+    }
+    main.insertBefore(section, list);
+  } else {
+    main.insertBefore(retainedNote('weapons', historyPackage, historyError, historyLoading), list);
+  }
   const applySearch = () => {
+    syncSharedSearchQuery(input);
     const query = input.value.trim().toLocaleLowerCase('zh-Hant-TW');
-    for (const row of list.querySelectorAll('.shared-entry')) row.hidden = !row.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+    for (const row of main.querySelectorAll('.shared-entry[data-search-name]')) {
+      row.hidden = !row.dataset.searchName.toLocaleLowerCase('zh-Hant-TW').includes(query);
+    }
   };
   input.addEventListener('input', applySearch);
   applySearch();
@@ -1519,7 +1821,8 @@ function renderAnnouncements(main, result, url, buildMeta) {
 }
 
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null,
-  historyPackage = null, historyError = null, historyLoading = false, currentError = null } = {}) {
+  historyPackage = null, historyError = null, historyLoading = false, currentError = null, currentLoading = false,
+  retainedBlessingDetail = null, retainedWeaponDetail = null } = {}) {
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
   buildMeta.textContent = '';
@@ -1530,10 +1833,22 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   }
   main.removeAttribute('aria-busy');
   const isSkillDirectory = url.pathname === '/skills/' && !url.searchParams.has('id');
+  const isWeaponDirectory = url.pathname === '/weapons/' && !url.searchParams.has('family');
+  const isBlessingDirectory = url.pathname === '/blessings/' && !url.searchParams.has('id');
+  const isRetainedDirectory = isWeaponDirectory || isBlessingDirectory;
   if ((error || result?.status !== 'ready') && isSkillDirectory && historyPackage?.catalog) {
     buildMeta.textContent = `遊戲版本 ${buildMeta.dataset.currentVersion ?? '目前版本'} · 目前資料暫不可用 · 基準資料版本 1.13.1`;
     renderSkillPage(main, null, url, historyPackage, historyError, historyLoading,
       currentError ?? error ?? new Error('current skill data is unavailable'));
+    main.focus();
+    return;
+  }
+  if ((error || result?.status !== 'ready') && isRetainedDirectory && historyPackage?.catalog) {
+    const currentVersion = buildMeta.dataset.currentVersion ?? '目前版本';
+    const currentStatus = currentLoading ? '目前資料載入中' : '目前資料暫不可用';
+    buildMeta.textContent = `遊戲版本 ${currentVersion} · ${currentStatus} · 基準資料版本 ${RETAINED_GAME_VERSION}`;
+    if (isWeaponDirectory) renderWeapons(main, null, url, historyPackage, historyError, historyLoading);
+    else renderBlessingPage(main, null, url, historyPackage, historyError, historyLoading);
     main.focus();
     return;
   }
@@ -1549,8 +1864,8 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
     main.append(notice);
   }
   if (url.pathname.startsWith('/skills/')) renderSkillPage(main, result, url, historyPackage, historyError, historyLoading, currentError);
-  else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url);
-  else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url);
+  else if (url.pathname.startsWith('/blessings/')) renderBlessingPage(main, result, url, historyPackage, historyError, historyLoading, retainedBlessingDetail);
+  else if (url.pathname.startsWith('/weapons/')) renderWeapons(main, result, url, historyPackage, historyError, historyLoading, retainedWeaponDetail);
   else if (url.pathname === '/game-changes' || url.pathname.startsWith('/game-changes/')) renderGameChanges(main, result, url);
   else if (url.pathname === '/announcements' || url.pathname.startsWith('/announcements/')) {
     buildMeta.textContent = `公告資料 · 資料修訂 ${result.pointer.data_revision.slice(0, 12)}`;

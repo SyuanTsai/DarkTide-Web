@@ -105,8 +105,8 @@ async function build(root, sharedRelease) {
 function routeFor(origin, route) { return new URL(route, origin).href; }
 
 // Scenario: The isolated fixed candidate is built into the ordinary Web app and read through its actual static same-origin routes.
-// Purpose: Verify the live app uses one verified four-domain release for desktop/mobile, blessing tiers, weapon marks, keyboard navigation, and fail-closed integrity errors.
-// Given the pinned raw candidate package, When pages and controls are used in Chromium, Then displayed values match the validated view-model and failures never expose legacy fixture content.
+// Purpose: Verify the live app uses one verified four-domain release for desktop/mobile, unified retained directories, blessing tiers, weapon marks and relations, keyboard navigation, and fail-closed integrity errors.
+// Given the pinned raw candidate package, When pages and controls are used in Chromium, Then current values match the validated view-model and retained rows remain separately labelled without being hidden.
 test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromium', {
   skip: candidateDir && chromePath ? false : 'Set SYP_W11_APPROVED_PACKAGE_DIR and SYP_W10_CHROMIUM_EXE for the real Chromium package integration.',
   timeout: 120000,
@@ -214,9 +214,11 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     assert.equal(blessingCanonical.searchParams.get('id'), blessingRef.recordId);
     assert.equal(blessingCanonical.searchParams.get('variant'), variantRef.recordId);
     assert.equal(blessingCanonical.searchParams.get('tier'), '4');
-    await page.getByRole('link', { name: 'LV1' }).focus();
-    await page.keyboard.press('Enter');
-    await page.locator('.shared-official-text').waitFor({ state: 'visible' });
+    await page.locator('.shared-tab-list[aria-label="祝福等級"] a').filter({ hasText: 'LV1' }).press('Enter');
+    await page.locator('.shared-tab-list[aria-label="祝福等級"] a[aria-current="page"]')
+      .filter({ hasText: 'LV1' }).waitFor({ state: 'visible' });
+    await page.waitForFunction(expected => document.querySelector('.shared-official-text')?.textContent === expected,
+      tier1.official.resolvedText);
     assert.equal(await page.locator('.shared-official-text').innerText(), tier1.official.resolvedText);
     await page.goto(routeFor(hosted.origin, `/blessings/?id=${encodeURIComponent(blessingRef.recordId)}&variant=${encodeURIComponent(variantRef.recordId)}&tier=99`));
     await page.locator('.shared-failure').waitFor({ state: 'visible' });
@@ -232,9 +234,34 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     const familyListUrl = routeFor(hosted.origin, '/weapons/');
     await page.goto(familyListUrl);
     await page.locator('.shared-entry-list').waitFor({ state: 'visible' });
-    const familyRows = await page.locator('.shared-entry-list > .shared-entry').count();
-    const uniqueFamilies = new Set(weaponDomain.source.records.filter(row => row.kind === 'weapon').map(row => row.payload.familyId));
-    assert.equal(familyRows, uniqueFamilies.size, 'directory has one entry per family');
+    const currentFamilyIds = [...new Set(weaponDomain.source.records.filter(row => row.kind === 'weapon')
+      .map(row => row.payload.familyId).filter(Boolean))];
+    const retainedFamilyIds = await page.locator('[data-retained-weapon-id]').evaluateAll(rows => rows.map(row => row.dataset.retainedWeaponId));
+    assert.equal(retainedFamilyIds.length, 70, 'the unified directory keeps all 70 retained family identities');
+    assert.equal(new Set(retainedFamilyIds).size, 70, 'retained family identities are not duplicated');
+    const familyRows = await page.locator('.shared-entry-list > .shared-weapon-family').evaluateAll(rows => rows.map(row => ({
+      current: row.dataset.currentFamilyId ?? null, retained: row.dataset.retainedWeaponId ?? null,
+    })));
+    const expectedFamilyIds = new Set([...currentFamilyIds, ...retainedFamilyIds]);
+    assert.equal(familyRows.length, expectedFamilyIds.size,
+      'current and retained family identities merge only when their exact IDs match');
+    for (const familyId of expectedFamilyIds) {
+      assert.equal(familyRows.filter(row => row.current === familyId || row.retained === familyId).length, 1,
+        `the unified directory contains one row for ${familyId}`);
+    }
+    assert.match(await page.locator('[data-retained-weapon-id="transonic_knife_p1"]').innerText(), /名稱待確認（transonic_knife_p1）/u,
+      'an untranslated retained family remains available by its ID');
+    assert.equal(await page.locator('[data-retained-mark-id="transonic_knife_p1_m1"]').count(), 1,
+      'an untranslated retained model remains available by its ID');
+
+    await page.goto(routeFor(hosted.origin, '/blessings/'));
+    await page.locator('.shared-history-catalog[data-catalog-revision]').waitFor({ state: 'visible' });
+    const retainedBlessingIds = await page.locator('[data-retained-blessing-id]').evaluateAll(rows => rows.map(row => row.dataset.retainedBlessingId));
+    const retainedVariantIds = await page.locator('[data-retained-variant-id]').evaluateAll(rows => rows.map(row => row.dataset.retainedVariantId));
+    assert.equal(retainedBlessingIds.length, 167, 'the unified blessing directory includes all 167 retained blessings');
+    assert.equal(new Set(retainedBlessingIds).size, 167, 'retained blessing identities are not duplicated');
+    assert.equal(retainedVariantIds.length, 605, 'the unified blessing directory links all 605 retained variants');
+    assert.equal(new Set(retainedVariantIds).size, 605, 'retained variant identities are not duplicated');
     for (const mark of markViews) {
       await page.goto(routeFor(hosted.origin, `/weapons/?family=${encodeURIComponent(mark.familyId)}&mark=${encodeURIComponent(mark.markId)}`));
       await page.locator('.shared-official-text').waitFor({ state: 'visible' });
@@ -407,7 +434,7 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
         }
       }
       const otherMark = markViews.find(candidate => candidate.markId !== mark.markId);
-      await page.getByRole('link', { name: otherMark.markLabel }).focus();
+      await page.getByRole('link', { name: otherMark.markLabel, exact: true }).focus();
       await page.keyboard.press('Enter');
       await page.locator('.shared-stat-list').first().waitFor({ state: 'visible' });
       assert.equal(await page.locator('main h1').innerText(), otherMark.name, 'keyboard mark navigation switches the complete mark view');
@@ -417,6 +444,104 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
       await page.locator('.shared-failure').waitFor({ state: 'visible' });
       assert.match(await page.locator('.shared-failure').innerText(), /武器型號/u);
       assert.match(await page.title(), /型號.*確認/u, 'unknown mark has current Traditional Chinese metadata');
+    }
+
+    const retainedHistoryManifest = JSON.parse(await readFile(path.join(historySource, 'manifest.json'), 'utf8'));
+    const retainedRevision = retainedHistoryManifest.source.staticBackup.dataRevision;
+    const retainedDataRoot = path.join(root, 'dist', 'data', retainedRevision);
+    const retainedCatalog = JSON.parse(await readFile(path.join(retainedDataRoot, 'catalog.json'), 'utf8'));
+    const retainedFamilyEntry = retainedCatalog.entries.find(row => row.kind === 'weapon' && row.id === family.familyId);
+    assert.ok(retainedFamilyEntry, 'the current family has an exact retained family identity in the pinned catalog');
+    const retainedFamilyDetailBytes = await readFile(path.join(retainedDataRoot, ...retainedFamilyEntry.detail_path.split('/')));
+    const retainedFamilyDetail = JSON.parse(retainedFamilyDetailBytes.toString('utf8'));
+    const retainedBlessingRelations = [...new Map((retainedFamilyDetail.relations ?? [])
+      .filter(row => row.kind === 'blessing').map(row => [row.id, row])).values()];
+    assert.ok(retainedBlessingRelations.length > 0, 'the pinned family shard contains retained blessing relations');
+    const delayedDetailContext = await browser.newContext({ viewport: { width: 1365, height: 1000 } });
+    const delayedDetailPage = await delayedDetailContext.newPage();
+    let releaseRetainedDetail;
+    let resolveRetainedDetailRequest;
+    const retainedDetailGate = new Promise(resolve => { releaseRetainedDetail = resolve; });
+    const retainedDetailRequested = new Promise(resolve => { resolveRetainedDetailRequest = resolve; });
+    const retainedDetailUrl = `**/data/${retainedRevision}/${retainedFamilyEntry.detail_path}`;
+    const delayRetainedDetail = async route => {
+      resolveRetainedDetailRequest();
+      await retainedDetailGate;
+      await route.fulfill({ status: 200, contentType: 'application/json; charset=utf-8', body: retainedFamilyDetailBytes }).catch(() => {});
+    };
+    await delayedDetailPage.route(retainedDetailUrl, delayRetainedDetail);
+    try {
+      await delayedDetailPage.goto(routeFor(hosted.origin,
+        `/weapons/?family=${encodeURIComponent(family.familyId)}&mark=${encodeURIComponent(markViews[0].markId)}`),
+      { waitUntil: 'domcontentloaded' });
+      await retainedDetailRequested;
+      const currentSourceDetails = delayedDetailPage.locator('details.shared-source-details');
+      await currentSourceDetails.waitFor({ state: 'visible' });
+      const sourceSummary = currentSourceDetails.locator('summary');
+      await sourceSummary.click();
+      await sourceSummary.focus();
+      const scrollBeforeRetainedDetail = await delayedDetailPage.evaluate(() => {
+        window.scrollTo(0, document.documentElement.scrollHeight);
+        return window.scrollY;
+      });
+      releaseRetainedDetail();
+      await delayedDetailPage.locator('.shared-retained-weapon-blessings').waitFor({ state: 'visible' });
+      assert.equal(await currentSourceDetails.evaluate(element => element.open), true,
+        'late retained detail rendering preserves the user-opened current attack source details');
+      assert.equal(await delayedDetailPage.evaluate(() => document.activeElement?.matches('details.shared-source-details summary')), true,
+        'late retained detail rendering restores focus to the active source details summary');
+      assert.ok(Math.abs(await delayedDetailPage.evaluate(() => window.scrollY) - scrollBeforeRetainedDetail) <= 8,
+        'late retained detail rendering preserves the user scroll position within browser scroll rounding');
+      const currentFamilyBlessings = await delayedDetailPage.locator('.shared-retained-weapon-blessings [data-retained-blessing-id]')
+        .evaluateAll(rows => rows.map(row => row.dataset.retainedBlessingId));
+      assert.deepEqual(currentFamilyBlessings, retainedBlessingRelations.map(row => row.id),
+        'the current family detail exposes every blessing relationship from its exact pinned retained shard');
+    } finally {
+      releaseRetainedDetail();
+      await delayedDetailContext.close();
+    }
+
+    const retainedBlessingEntry = retainedCatalog.entries.find(row => row.kind === 'blessing' && row.id === 'rev-it-up');
+    assert.ok(retainedBlessingEntry, 'the current blessing identity has an exact retained blessing counterpart');
+    const retainedBlessingDetailBytes = await readFile(path.join(retainedDataRoot, ...retainedBlessingEntry.detail_path.split('/')));
+    const delayedBlessingContext = await browser.newContext({ viewport: { width: 1365, height: 1000 } });
+    const delayedBlessingPage = await delayedBlessingContext.newPage();
+    let releaseRetainedBlessingDetail;
+    let resolveRetainedBlessingRequest;
+    const retainedBlessingGate = new Promise(resolve => { releaseRetainedBlessingDetail = resolve; });
+    const retainedBlessingRequested = new Promise(resolve => { resolveRetainedBlessingRequest = resolve; });
+    const retainedBlessingUrl = `**/data/${retainedRevision}/${retainedBlessingEntry.detail_path}`;
+    const delayRetainedBlessing = async route => {
+      resolveRetainedBlessingRequest();
+      await retainedBlessingGate;
+      await route.fulfill({ status: 200, contentType: 'application/json; charset=utf-8', body: retainedBlessingDetailBytes }).catch(() => {});
+    };
+    await delayedBlessingPage.route(retainedBlessingUrl, delayRetainedBlessing);
+    try {
+      await delayedBlessingPage.goto(routeFor(hosted.origin,
+        `/blessings/?id=${encodeURIComponent(blessingRef.recordId)}&variant=${encodeURIComponent(variantRef.recordId)}`),
+      { waitUntil: 'domcontentloaded' });
+      await retainedBlessingRequested;
+      const currentBlessingSections = delayedBlessingPage.locator('details.shared-detail-sections');
+      await currentBlessingSections.waitFor({ state: 'visible' });
+      const blessingSummary = currentBlessingSections.locator('summary');
+      await blessingSummary.click();
+      await blessingSummary.focus();
+      const scrollBeforeRetainedBlessing = await delayedBlessingPage.evaluate(() => {
+        window.scrollTo(0, document.documentElement.scrollHeight);
+        return window.scrollY;
+      });
+      releaseRetainedBlessingDetail();
+      await delayedBlessingPage.locator('.shared-retained-blessing-detail').waitFor({ state: 'visible' });
+      assert.equal(await currentBlessingSections.evaluate(element => element.open), true,
+        'late retained blessing rendering preserves expanded current blessing details');
+      assert.equal(await delayedBlessingPage.evaluate(() => document.activeElement?.matches('details.shared-detail-sections summary')), true,
+        'late retained blessing rendering restores focus to the current details summary');
+      assert.ok(Math.abs(await delayedBlessingPage.evaluate(() => window.scrollY) - scrollBeforeRetainedBlessing) <= 8,
+        'late retained blessing rendering preserves the scroll position within browser scroll rounding');
+    } finally {
+      releaseRetainedBlessingDetail();
+      await delayedBlessingContext.close();
     }
     const searchUrl = routeFor(hosted.origin, `/skills/?q=${encodeURIComponent(skill.name)}`);
     await page.goto(searchUrl);
