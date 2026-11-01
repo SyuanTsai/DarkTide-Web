@@ -30,7 +30,7 @@ function jsonResponse(value, url = '') {
   return response;
 }
 
-async function setupFixture(t, { logContentType = 'text/plain; charset=utf-8' } = {}) {
+async function setupFixture(t, { logContentType = 'text/plain; charset=utf-8', logBuildId = null } = {}) {
   const tempRoot = path.join(REPO_ROOT, '.tmp');
   await mkdir(tempRoot, { recursive: true });
   const root = await mkdtemp(path.join(tempRoot, 'w09-promotion-cancellation-'));
@@ -96,6 +96,7 @@ async function setupFixture(t, { logContentType = 'text/plain; charset=utf-8' } 
     "await run(process.execPath, ['scripts/cloudflare-deploy.mjs'], {});",
   ].join('\n'));
   const logBytes = Buffer.from([
+    `Cloudflare local runtime verified: deep routes, JSON, strict 404, cache, build ${logBuildId ?? pendingBuildId}`,
     '\u001b[31mBrowser smoke failed:\u001b[0m locator.waitFor: Timeout 15000ms exceeded.',
     "waiting for locator('.shared-official-text') to be visible",
   ].join('\n'));
@@ -174,6 +175,8 @@ test('UnitT10_cancels-only-verified-undeployed-retryable-promotion-and-preserves
   assert.equal(state.pendingPromotion, null);
   assert.deepEqual(state.promotionCancellations[0].pendingPromotion, fixture.state.pendingPromotion,
     'the complete original retryable journal remains auditable');
+  assert.equal(state.promotionCancellations[0].evidence.workflow.runtimeBuildId, fixture.pendingBuildId,
+    'the proof records the exact build ID observed in this failed run log');
   assert.equal(state.reservations.find(row => row.releaseId === fixture.pendingAllocation.releaseId)?.status, 'prepared');
   assert.equal(state.reservations.find(row => row.releaseId === fixture.oldReservation.releaseId)?.status, 'approved');
   assert.deepEqual(await readFile(path.join(fixture.root, 'content/contracts/w09/runtime-snapshots', fixture.pendingBuildId, 'snapshot.json.gz')),
@@ -217,7 +220,25 @@ test('UnitT20_rejects-stale-transaction-active-state-and-unverified-production-b
   assert.equal(preserved.promotionCancellations.length, 0);
 });
 
-test('UnitT21_requires-the-real-job-logs-endpoint-text-shape', async t => {
+test('UnitT21_rejects-a-failed-run-that-smoked-a-different-journal-build-without-changing-state', async t => {
+  const fixture = await setupFixture(t, { logBuildId: fixed('f') });
+  await assert.rejects(cancelW09RetryablePromotion({
+    repoRoot: fixture.root,
+    expectedCurrent: fixture.current,
+    transactionId: fixture.state.pendingPromotion.transactionId,
+    workflowRunId: runId,
+    token: 'test-token',
+    fetchImpl: fixture.fetchImpl,
+    requireDurableState: true,
+    persistDurableState: async () => ({ status: 'persisted' }),
+  }), /failed run tested the exact retryable journal build ID/u);
+  const state = await readW09ReleaseState(fixture.statePath);
+  assert.deepEqual(state.pendingPromotion, fixture.state.pendingPromotion);
+  assert.equal(state.promotionCancellations.length, 0);
+  assert.deepEqual(currentW09ActiveSnapshot(state), fixture.current);
+});
+
+test('UnitT22_requires-the-real-job-logs-endpoint-text-shape', async t => {
   const fixture = await setupFixture(t, { logContentType: 'application/zip' });
   await assert.rejects(cancelW09RetryablePromotion({
     repoRoot: fixture.root,

@@ -403,15 +403,16 @@ function validatePromotionCancellation(receipt, state, label) {
   }
   const workflow = proof.workflow;
   if (!workflow || typeof workflow !== 'object' || Array.isArray(workflow)
-      || Object.keys(workflow).sort().join(',') !== 'conclusion,failedStep,failure,headBranch,headSha,jobId,logSha256,promoterSha256,runId,selectedReleaseIds,selectedSha256,workflowPath'
+      || Object.keys(workflow).sort().join(',') !== 'conclusion,failedStep,failure,headBranch,headSha,jobId,logSha256,promoterSha256,runId,runtimeBuildId,selectedReleaseIds,selectedSha256,workflowPath'
       || !Number.isSafeInteger(workflow.runId) || workflow.runId < 1
       || !Number.isSafeInteger(workflow.jobId) || workflow.jobId < 1
       || workflow.workflowPath !== '.github/workflows/shared-release.yml'
       || workflow.headBranch !== 'main' || !/^[a-f0-9]{40}$/u.test(workflow.headSha)
       || workflow.conclusion !== 'failure' || workflow.failedStep !== 'Promote the selected shared composition'
       || workflow.failure !== 'browser-smoke-official-text-timeout'
+      || workflow.runtimeBuildId !== pending.buildId
       || !Array.isArray(workflow.selectedReleaseIds)
-      || ![workflow.selectedSha256, workflow.promoterSha256, workflow.logSha256].every(value => typeof value === 'string' && SHA256_RE.test(value))) {
+      || ![workflow.selectedSha256, workflow.promoterSha256, workflow.logSha256, workflow.runtimeBuildId].every(value => typeof value === 'string' && SHA256_RE.test(value))) {
     throw new TypeError(label + ' has invalid GitHub workflow evidence');
   }
   const selectedIds = [...workflow.selectedReleaseIds].sort();
@@ -430,7 +431,7 @@ function validatePromotionCancellation(receipt, state, label) {
     throw new TypeError(label + ' formal production evidence does not match the pinned previous build and active releases');
   }
   const expectedCancellationId = createHash('sha256').update(JSON.stringify([
-    receipt.transactionId, workflow.runId, workflow.logSha256, production.buildId, proof.observedAt,
+    receipt.transactionId, workflow.runId, workflow.runtimeBuildId, workflow.logSha256, production.buildId, proof.observedAt,
   ])).digest('hex');
   if (receipt.cancellationId !== expectedCancellationId) throw new TypeError(label + ' cancellationId does not bind its public evidence');
 }
@@ -1661,7 +1662,7 @@ export async function cancelW09RetryablePromotion(options = {}) {
       }
 
       const cancellationId = createHash('sha256').update(JSON.stringify([
-        pending.transactionId, evidence.workflow.runId, evidence.workflow.logSha256,
+        pending.transactionId, evidence.workflow.runId, evidence.workflow.runtimeBuildId, evidence.workflow.logSha256,
         evidence.production.buildId, evidence.observedAt,
       ])).digest('hex');
       const cancellation = {

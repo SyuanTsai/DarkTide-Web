@@ -121,6 +121,7 @@ export async function verifyW09UndeployedPromotion({
       || (pendingPromotion.action !== undefined && pendingPromotion.action !== 'promote')) {
     fail('only a retryable W09 promote journal can be verified for cancellation');
   }
+  if (!SHA256.test(pendingPromotion.buildId)) fail('retryable W09 promotion journal has no valid pinned build ID');
   if (!Number.isSafeInteger(workflowRunId) || workflowRunId < 1 || typeof token !== 'string' || !token.trim()
       || typeof fetchImpl !== 'function') fail('workflow run ID, GitHub token, and fetch capability are required to verify cancellation');
   if (!expectedCurrent || expectedCurrent.runtimeSnapshotBuildId === null
@@ -182,6 +183,10 @@ export async function verifyW09UndeployedPromotion({
   if (!/Browser smoke failed:[\s\S]{0,1200}waiting for locator\('\.shared-official-text'\) to be visible/u.test(logText)) {
     fail('GitHub job logs do not prove the exact pre-deployment official-text browser-smoke failure');
   }
+  const runtimeBuildMatches = [...logText.matchAll(/Cloudflare local runtime verified: deep routes, JSON, strict 404, cache, build ([a-f0-9]{64})/gu)];
+  if (runtimeBuildMatches.length !== 1 || runtimeBuildMatches[0][1] !== pendingPromotion.buildId) {
+    fail('GitHub job logs do not prove that the failed run tested the exact retryable journal build ID');
+  }
   if (/Cloudflare deployment verified:|Wrangler version upload failed|production deployment\/check failed|wrangler versions upload/iu.test(logText)) {
     fail('GitHub job logs contain evidence that a Cloudflare deployment was attempted');
   }
@@ -213,6 +218,7 @@ export async function verifyW09UndeployedPromotion({
       jobId: job.id,
       failedStep: PROMOTION_STEP,
       failure: 'browser-smoke-official-text-timeout',
+      runtimeBuildId: runtimeBuildMatches[0][1],
       selectedReleaseIds: selectedReleaseIds.sort(),
       selectedSha256: hash(selectedBytes),
       promoterSha256: hash(promoterBytes),
