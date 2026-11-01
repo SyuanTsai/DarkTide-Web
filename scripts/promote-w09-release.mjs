@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   currentW09ActiveSnapshot,
+  cancelW09RetryablePromotion,
   promoteW09SelectedComposition,
   readW09ReleaseState,
   resolveW09CompositionContext,
@@ -22,6 +23,8 @@ const USAGE = [
   '  node scripts/promote-w09-release.mjs',
   '  node scripts/promote-w09-release.mjs --rollback --target-release-ids <web-id[,web-id...]>',
   '    --target-runtime-snapshot-build <sha256> --expected-current-file <repo-relative-json-file>',
+  '  node scripts/promote-w09-release.mjs --cancel-pending-promotion --transaction-id <sha256>',
+  '    --workflow-run-id <id> --expected-current-file <repo-relative-json-file>',
 ].join('\n');
 
 function run(command, args, { cwd = repoRoot, env = process.env } = {}) {
@@ -105,11 +108,46 @@ async function readRollbackArguments(args) {
   return { targetReleaseIds, targetRuntimeSnapshotBuildId, expectedCurrent };
 }
 
+async function readCancellationArguments(args) {
+  const values = new Map();
+  for (let index = 0; index < args.length; index += 2) {
+    const flag = args[index];
+    const value = args[index + 1];
+    if (!['--transaction-id', '--workflow-run-id', '--expected-current-file'].includes(flag)
+        || typeof value !== 'string' || !value || values.has(flag)) {
+      throw new Error(USAGE);
+    }
+    values.set(flag, value);
+  }
+  if (values.size !== 3) throw new Error(USAGE);
+  const transactionId = values.get('--transaction-id');
+  if (!/^[a-f0-9]{64}$/u.test(transactionId)) throw new Error('cancellation transaction ID must be a full SHA-256 digest');
+  const workflowRunId = Number(values.get('--workflow-run-id'));
+  if (!Number.isSafeInteger(workflowRunId) || workflowRunId < 1 || String(workflowRunId) !== values.get('--workflow-run-id')) {
+    throw new Error('cancellation workflow run ID must be a positive integer');
+  }
+  const expectedPath = path.resolve(repoRoot, values.get('--expected-current-file'));
+  const relativeExpectedPath = path.relative(repoRoot, expectedPath);
+  if (!relativeExpectedPath || relativeExpectedPath === '..' || relativeExpectedPath.startsWith('..' + path.sep) || path.isAbsolute(relativeExpectedPath)) {
+    throw new Error('cancellation expected-current file must be inside the checked-out Web repository');
+  }
+  const info = await lstat(expectedPath);
+  if (info.isSymbolicLink() || !info.isFile()) throw new Error('cancellation expected-current input must be a regular repository file');
+  const expectedCurrent = JSON.parse((await readFile(expectedPath)).toString('utf8'));
+  if (!expectedCurrent || typeof expectedCurrent !== 'object' || Array.isArray(expectedCurrent)
+      || !Array.isArray(expectedCurrent.activeByGame) || !Object.hasOwn(expectedCurrent, 'runtimeSnapshotBuildId')) {
+    throw new Error('cancellation expected-current input must contain the complete active pointer and runtime-build snapshot');
+  }
+  return { transactionId, workflowRunId, expectedCurrent };
+}
+
 try {
   const args = process.argv.slice(2);
   if (args[0] === '--help') throw new Error(USAGE);
   let rollbackArguments = null;
+  let cancellationArguments = null;
   if (args[0] === '--rollback') rollbackArguments = await readRollbackArguments(args.slice(1));
+  else if (args[0] === '--cancel-pending-promotion') cancellationArguments = await readCancellationArguments(args.slice(1));
   else if (args.length !== 0) throw new Error(USAGE);
 
   const compositionOptions = {
@@ -119,7 +157,7 @@ try {
       : {}),
   };
   let sourceFetchImpl = null;
-  if (!rollbackArguments) {
+  if (!rollbackArguments && !cancellationArguments) {
     await resolveW09CompositionContext({ repoRoot, ...compositionOptions });
     sourceFetchImpl = createW09SourceFetch({ token: process.env.W09_GIT_TOKEN });
   }
@@ -141,6 +179,15 @@ try {
       persistDurableState: stateStore.persist,
       requireDurableState: true,
     });
+  } else if (cancellationArguments) {
+    result = await cancelW09RetryablePromotion({
+      repoRoot,
+      ...cancellationArguments,
+      token: process.env.W09_GIT_TOKEN ?? process.env.GITHUB_TOKEN ?? '',
+      siteOrigin,
+      persistDurableState: stateStore.persist,
+      requireDurableState: true,
+    });
   } else {
     const selected = readSelectedFromHead();
     const statePath = path.join(repoRoot, 'content/contracts/w09/release-state.json');
@@ -159,7 +206,8 @@ try {
     });
   }
   process.stdout.write(JSON.stringify(result, null, 2) + '\n');
-  if (!['verified-and-active', 'verified-and-rolled-back', 'already-active', 'waiting-for-credentials'].includes(result.status)) {
+  if (!['verified-and-active', 'verified-and-rolled-back', 'already-active', 'waiting-for-credentials',
+    'cancelled-without-deployment', 'already-cancelled'].includes(result.status)) {
     throw new Error('W09 selected composition is not publishable: ' + JSON.stringify(result));
   }
 } catch (error) {

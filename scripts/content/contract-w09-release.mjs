@@ -6,6 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { safeRelativePath } from '../../src/static/common.mjs';
+import { verifyW09UndeployedPromotion } from './contract-w09-cancellation-proof.mjs';
 
 const STATE_SCHEMA = 'w09-release-ledger/1';
 const SHA256_RE = /^[a-f0-9]{64}$/;
@@ -294,6 +295,7 @@ export function createW09ReleaseState() {
     activeRuntimeSnapshotBuildId: null,
     publicationReceipts: [],
     pendingPromotion: null,
+    promotionCancellations: [],
   };
 }
 
@@ -327,6 +329,110 @@ function canonicalActiveSnapshot(snapshot) {
     activeByGame: [...snapshot.activeByGame].sort((left, right) => left.gameReleaseId.localeCompare(right.gameReleaseId, 'en')),
     runtimeSnapshotBuildId: snapshot.runtimeSnapshotBuildId,
   };
+}
+
+function validatePendingPromotion(pending, state, label) {
+  if (!pending || typeof pending !== 'object' || Array.isArray(pending)
+      || pending.schema !== 'w09-promotion-journal/1'
+      || !Array.isArray(pending.releaseIds) || pending.releaseIds.length === 0
+      || (pending.sourceReleaseIds !== undefined && (!Array.isArray(pending.sourceReleaseIds) || pending.sourceReleaseIds.length === 0))
+      || !pending.expectedActive || typeof pending.expectedActive !== 'object' || !['prepared', 'retryable'].includes(pending.phase)) {
+    throw new TypeError(label + ' must be a valid W09 promotion journal');
+  }
+  assertSha256(pending.transactionId, label + '.transactionId');
+  assertSha256(pending.buildId, label + '.buildId');
+  if (pending.dataRevision !== undefined) assertSha256(pending.dataRevision, label + '.dataRevision');
+  assertSha256(pending.artifactManifestSha256, label + '.artifactManifestSha256');
+  if (pending.runtimeSnapshotBuildId !== undefined) {
+    assertSha256(pending.runtimeSnapshotBuildId, label + '.runtimeSnapshotBuildId');
+    if (pending.runtimeSnapshotBuildId !== pending.buildId) throw new TypeError(label + ' runtime snapshot must pin its exact artifact build');
+  }
+  if (pending.action !== undefined && !['promote', 'rollback'].includes(pending.action)) {
+    throw new TypeError(label + ' action is invalid');
+  }
+  for (const releaseId of pending.releaseIds) {
+    const reservation = state.reservations.find(item => item.releaseId === releaseId);
+    if (!reservation || !['prepared', 'approved'].includes(reservation.status)) {
+      throw new TypeError(label + ' must retain its prepared release reservations');
+    }
+  }
+  validateActiveSnapshotShape(pending.expectedActive, label + '.expectedActive');
+  const expected = canonicalActiveSnapshot(pending.expectedActive);
+  if (!sameJson(expected, pending.expectedActive)) throw new TypeError(label + '.expectedActive must be canonical');
+}
+
+function expectedPublicReleasePointers(state, activeSnapshot, label) {
+  return activeSnapshot.activeByGame.map(active => {
+    const reservation = state.reservations.find(row => row.releaseId === active.releaseId);
+    if (!reservation || reservation.status !== 'approved' || reservation.gameReleaseId !== active.gameReleaseId
+        || !reservation.dataRevision) {
+      throw new TypeError(label + ' has no approved immutable reservation');
+    }
+    return {
+      game_version: reservation.gameVersion,
+      content_version: reservation.contentVersion,
+      data_revision: reservation.dataRevision,
+      manifest_path: '/data/' + reservation.dataRevision + '/manifest.json',
+      manifest_sha256: reservation.manifestSha256,
+    };
+  }).sort((left, right) => left.game_version.localeCompare(right.game_version, 'en', { numeric: true }));
+}
+
+function validatePromotionCancellation(receipt, state, label) {
+  if (!receipt || typeof receipt !== 'object' || Array.isArray(receipt)
+      || Object.keys(receipt).sort().join(',') !== 'action,cancellationId,evidence,pendingPromotion,schema,transactionId'
+      || receipt.schema !== 'w09-promotion-cancellation/1' || receipt.action !== 'promote') {
+    throw new TypeError(label + ' must be a closed promote-cancellation receipt');
+  }
+  assertSha256(receipt.transactionId, label + '.transactionId');
+  assertSha256(receipt.cancellationId, label + '.cancellationId');
+  validatePendingPromotion(receipt.pendingPromotion, state, label + '.pendingPromotion');
+  const pending = receipt.pendingPromotion;
+  if (pending.phase !== 'retryable' || (pending.action !== undefined && pending.action !== 'promote')
+      || pending.transactionId !== receipt.transactionId || !Array.isArray(pending.sourceReleaseIds)
+      || pending.expectedActive.runtimeSnapshotBuildId === null) {
+    throw new TypeError(label + ' must preserve a retryable promotion journal with a pinned previous runtime');
+  }
+  const proof = receipt.evidence;
+  if (!proof || typeof proof !== 'object' || Array.isArray(proof)
+      || Object.keys(proof).sort().join(',') !== 'observedAt,production,schema,workflow'
+      || proof.schema !== 'w09-undeployed-promotion-proof/1'
+      || typeof proof.observedAt !== 'string' || !Number.isFinite(Date.parse(proof.observedAt))
+      || new Date(proof.observedAt).toISOString() !== proof.observedAt) {
+    throw new TypeError(label + ' has invalid public no-deployment evidence');
+  }
+  const workflow = proof.workflow;
+  if (!workflow || typeof workflow !== 'object' || Array.isArray(workflow)
+      || Object.keys(workflow).sort().join(',') !== 'conclusion,failedStep,failure,headBranch,headSha,jobId,logSha256,promoterSha256,runId,selectedReleaseIds,selectedSha256,workflowPath'
+      || !Number.isSafeInteger(workflow.runId) || workflow.runId < 1
+      || !Number.isSafeInteger(workflow.jobId) || workflow.jobId < 1
+      || workflow.workflowPath !== '.github/workflows/shared-release.yml'
+      || workflow.headBranch !== 'main' || !/^[a-f0-9]{40}$/u.test(workflow.headSha)
+      || workflow.conclusion !== 'failure' || workflow.failedStep !== 'Promote the selected shared composition'
+      || workflow.failure !== 'browser-smoke-official-text-timeout'
+      || !Array.isArray(workflow.selectedReleaseIds)
+      || ![workflow.selectedSha256, workflow.promoterSha256, workflow.logSha256].every(value => typeof value === 'string' && SHA256_RE.test(value))) {
+    throw new TypeError(label + ' has invalid GitHub workflow evidence');
+  }
+  const selectedIds = [...workflow.selectedReleaseIds].sort();
+  const journalSourceIds = [...pending.sourceReleaseIds].sort();
+  if (new Set(selectedIds).size !== selectedIds.length || !sameJson(selectedIds, journalSourceIds)) {
+    throw new TypeError(label + ' GitHub selected Source releases do not match the preserved journal');
+  }
+  const production = proof.production;
+  if (!production || typeof production !== 'object' || Array.isArray(production)
+      || Object.keys(production).sort().join(',') !== 'buildId,dataRevision,gameReleases,observedAt,origin'
+      || production.origin !== 'https://darktide.tw-syuan.com'
+      || production.observedAt !== proof.observedAt
+      || production.buildId !== pending.expectedActive.runtimeSnapshotBuildId
+      || !SHA256_RE.test(production.dataRevision) || !Array.isArray(production.gameReleases)
+      || !sameJson(production.gameReleases, expectedPublicReleasePointers(state, pending.expectedActive, label + '.production')) ) {
+    throw new TypeError(label + ' formal production evidence does not match the pinned previous build and active releases');
+  }
+  const expectedCancellationId = createHash('sha256').update(JSON.stringify([
+    receipt.transactionId, workflow.runId, workflow.logSha256, production.buildId, proof.observedAt,
+  ])).digest('hex');
+  if (receipt.cancellationId !== expectedCancellationId) throw new TypeError(label + ' cancellationId does not bind its public evidence');
 }
 
 export function validateW09ReleaseState(state) {
@@ -527,26 +633,16 @@ export function validateW09ReleaseState(state) {
     }
   }
   if (state.pendingPromotion !== null && state.pendingPromotion !== undefined) {
-    const pending = state.pendingPromotion;
-    if (!pending || typeof pending !== 'object' || Array.isArray(pending)
-        || pending.schema !== 'w09-promotion-journal/1'
-        || !Array.isArray(pending.releaseIds) || pending.releaseIds.length === 0
-        || (pending.sourceReleaseIds !== undefined && (!Array.isArray(pending.sourceReleaseIds) || pending.sourceReleaseIds.length === 0))
-        || !pending.expectedActive || typeof pending.expectedActive !== 'object' || !['prepared', 'retryable'].includes(pending.phase)) {
-      throw new TypeError('pendingPromotion must be a valid W09 promotion journal');
-    }
-    assertText(pending.transactionId, 'pendingPromotion.transactionId');
-    assertSha256(pending.buildId, 'pendingPromotion.buildId');
-    if (pending.dataRevision !== undefined) assertSha256(pending.dataRevision, 'pendingPromotion.dataRevision');
-    assertSha256(pending.artifactManifestSha256, 'pendingPromotion.artifactManifestSha256');
-    if (pending.runtimeSnapshotBuildId !== undefined) assertSha256(pending.runtimeSnapshotBuildId, 'pendingPromotion.runtimeSnapshotBuildId');
-    for (const releaseId of pending.releaseIds) {
-      const reservation = state.reservations.find(item => item.releaseId === releaseId);
-      if (!reservation || !['prepared', 'approved'].includes(reservation.status)) {
-        throw new TypeError('pending promotion must retain its prepared release reservations');
-      }
-    }
-    validateActiveSnapshotShape(pending.expectedActive, 'pendingPromotion.expectedActive');
+    validatePendingPromotion(state.pendingPromotion, state, 'pendingPromotion');
+  }
+  const promotionCancellations = state.promotionCancellations ?? [];
+  if (!Array.isArray(promotionCancellations)) throw new TypeError('release state promotionCancellations must be an array');
+  const cancellationIds = new Set();
+  for (const [index, cancellation] of promotionCancellations.entries()) {
+    const label = 'promotionCancellations[' + index + ']';
+    validatePromotionCancellation(cancellation, state, label);
+    if (cancellationIds.has(cancellation.cancellationId)) throw new TypeError('release state contains a duplicate promotion cancellation');
+    cancellationIds.add(cancellation.cancellationId);
   }
   return true;
 }
@@ -1463,6 +1559,140 @@ export function createW09PublicSourceLockFile(manifest) {
  * source replay, selected-lock validation, immutable package verification, and full static
  * artifact verification. Active pointers are persisted only after an origin-verified receipt.
  */
+/**
+ * Clear only a retryable promotion whose pre-deployment browser smoke failure is
+ * authenticated by GitHub and whose exact previous whole-site build is still live.
+ * The complete journal is copied into an append-only cancellation receipt; release
+ * reservations, prepared packages, runtime snapshots, and active pointers stay intact.
+ */
+export async function cancelW09RetryablePromotion(options = {}) {
+  if (!options || typeof options !== 'object' || Array.isArray(options)) throw new TypeError('cancellation options must be an object');
+  assertW09DurableStateCapability(options);
+  if (options.requireDurableState !== true) throw new Error('W09 promotion cancellation requires durable owner-state persistence');
+  if (typeof options.repoRoot !== 'string' || !options.repoRoot.trim()) throw new TypeError('repoRoot is required for W09 promotion cancellation');
+  if (typeof options.transactionId !== 'string' || !SHA256_RE.test(options.transactionId)) {
+    throw new TypeError('cancellation transactionId must be a full SHA-256 digest');
+  }
+  if (!Number.isSafeInteger(options.workflowRunId) || options.workflowRunId < 1) {
+    throw new TypeError('cancellation workflowRunId must be a positive integer');
+  }
+  if (typeof options.token !== 'string' || !options.token.trim()) throw new TypeError('GitHub token is required to verify cancellation evidence');
+  const expectedCurrent = canonicalActiveSnapshot(options.expectedCurrent);
+  const repoRoot = path.resolve(options.repoRoot);
+  if (process.env.GITHUB_REF !== 'refs/heads/main') {
+    const branch = execFileSync('git', ['-C', repoRoot, 'branch', '--show-current'], { encoding: 'utf8', windowsHide: true }).trim();
+    if (branch !== 'main') throw new Error('W09 promotion cancellation is restricted to reviewed Web main');
+  }
+  const statePath = path.join(repoRoot, 'content/contracts/w09/release-state.json');
+  const lockPath = path.join(repoRoot, 'content/contracts/w09/publication.lock');
+
+  return withW09PublicationLock({
+    lockPath,
+    run: async () => {
+      const state = await readW09ReleaseState(statePath);
+      const current = currentW09ActiveSnapshot(state);
+      if (!sameJson(expectedCurrent, current)) throw new Error('active W09 whole-site CAS failed; refusing stale promotion cancellation');
+      const pending = state.pendingPromotion;
+      if (!pending) {
+        const prior = (state.promotionCancellations ?? []).find(row => row.transactionId === options.transactionId);
+        if (prior) return {
+          status: 'already-cancelled', transactionId: prior.transactionId,
+          cancellationId: prior.cancellationId, activePointers: current,
+        };
+        throw new Error('no retryable W09 promotion journal matches the cancellation request');
+      }
+      if (pending.transactionId !== options.transactionId) throw new Error('cancellation transactionId does not match the pending W09 journal');
+      validatePendingPromotion(pending, state, 'pendingPromotion');
+      if (pending.phase !== 'retryable') throw new Error('only a retryable W09 promotion journal can be cancelled');
+      if (pending.action !== undefined && pending.action !== 'promote') throw new Error('rollback journals cannot be cancelled as promotions');
+      if (!Array.isArray(pending.sourceReleaseIds) || !pending.sourceReleaseIds.length) {
+        throw new Error('retryable W09 promotion journal does not pin its selected Source releases');
+      }
+      if (!sameJson(canonicalActiveSnapshot(pending.expectedActive), current)) {
+        throw new Error('pending promotion expected-active snapshot differs from the current W09 pointers');
+      }
+      if (!current.activeByGame.length || !current.runtimeSnapshotBuildId
+          || !pending.runtimeSnapshotBuildId || pending.runtimeSnapshotBuildId !== pending.buildId
+          || pending.buildId === current.runtimeSnapshotBuildId) {
+        throw new Error('cancellation requires distinct pinned previous and failed whole-site runtime builds');
+      }
+
+      const readJournalSnapshot = async () => {
+        const snapshotDirectory = path.join(repoRoot, 'content/contracts/w09/runtime-snapshots', pending.runtimeSnapshotBuildId);
+        const directoryInfo = await lstat(snapshotDirectory);
+        if (directoryInfo.isSymbolicLink() || !directoryInfo.isDirectory()) throw new Error('pending runtime snapshot directory must be a regular directory');
+        const archivePath = path.join(snapshotDirectory, 'snapshot.json.gz');
+        const archiveInfo = await lstat(archivePath);
+        if (archiveInfo.isSymbolicLink() || !archiveInfo.isFile()) throw new Error('pending runtime snapshot must be a regular archive');
+        const bytes = await readFile(archivePath);
+        const archive = parseRuntimeSnapshotArchive(bytes, pending.runtimeSnapshotBuildId);
+        if (archive.artifactManifestSha256 !== pending.artifactManifestSha256) {
+          throw new Error('pending runtime snapshot manifest differs from the transaction journal');
+        }
+        const manifestBytes = Buffer.from(archive.files.find(row => row.path === 'artifact-manifest.json').base64, 'base64');
+        let manifest;
+        try { manifest = JSON.parse(manifestBytes.toString('utf8')); }
+        catch (error) { throw new Error('pending runtime snapshot artifact manifest is invalid JSON', { cause: error }); }
+        if (manifest.build_id !== pending.buildId || manifest.data_revision !== pending.dataRevision
+            || manifest.package_kind !== 'published') {
+          throw new Error('pending runtime snapshot artifact identity differs from the transaction journal');
+        }
+        return { archiveSha256: createHash('sha256').update(bytes).digest('hex') };
+      };
+      const journalSnapshot = await readJournalSnapshot();
+      const evidence = await verifyW09UndeployedPromotion({
+        pendingPromotion: structuredClone(pending), state: structuredClone(state), expectedCurrent: current,
+        workflowRunId: options.workflowRunId, token: options.token,
+        ...(options.fetchImpl ? { fetchImpl: options.fetchImpl } : {}),
+        ...(options.siteOrigin ? { siteOrigin: options.siteOrigin } : {}),
+      });
+      if (evidence.workflow.runId !== options.workflowRunId) throw new Error('verified GitHub run does not match the requested workflowRunId');
+
+      const stateAfterVerification = await readW09ReleaseState(statePath);
+      if (!sameJson(stateAfterVerification, state)) throw new Error('W09 owner state changed during cancellation evidence verification');
+      if (!sameJson(currentW09ActiveSnapshot(stateAfterVerification), expectedCurrent)
+          || !sameJson(stateAfterVerification.pendingPromotion, pending)
+          || stateAfterVerification.pendingPromotion.phase !== 'retryable') {
+        throw new Error('W09 transaction or active snapshot changed after cancellation verification');
+      }
+      const snapshotAfterVerification = await readJournalSnapshot();
+      if (snapshotAfterVerification.archiveSha256 !== journalSnapshot.archiveSha256) {
+        throw new Error('pending runtime snapshot archive changed during cancellation verification');
+      }
+
+      const cancellationId = createHash('sha256').update(JSON.stringify([
+        pending.transactionId, evidence.workflow.runId, evidence.workflow.logSha256,
+        evidence.production.buildId, evidence.observedAt,
+      ])).digest('hex');
+      const cancellation = {
+        schema: 'w09-promotion-cancellation/1',
+        action: 'promote',
+        transactionId: pending.transactionId,
+        cancellationId,
+        pendingPromotion: structuredClone(pending),
+        evidence,
+      };
+      const next = structuredClone(stateAfterVerification);
+      next.promotionCancellations ??= [];
+      next.promotionCancellations.push(cancellation);
+      next.promotionCancellations.sort((left, right) => left.cancellationId.localeCompare(right.cancellationId, 'en'));
+      next.pendingPromotion = null;
+      validateW09ReleaseState(next);
+      await writeW09ReleaseStateAtomic(statePath, next);
+      try {
+        await persistW09DurableCheckpoint(options, repoRoot, statePath, 'cancelled');
+      } catch (error) {
+        await writeW09ReleaseStateAtomic(statePath, stateAfterVerification);
+        throw new Error('W09 cancellation owner-state checkpoint is uncertain; the retryable journal was restored locally and the remote state must be re-read', { cause: error });
+      }
+      return {
+        status: 'cancelled-without-deployment', transactionId: pending.transactionId,
+        cancellationId, releaseIds: [...pending.releaseIds], activePointers: current,
+      };
+    },
+  });
+}
+
 export async function promoteW09SelectedComposition(options = {}) {
   if (!options || typeof options !== 'object' || Array.isArray(options)) throw new TypeError('promotion options must be an object');
   assertW09DurableStateCapability(options);

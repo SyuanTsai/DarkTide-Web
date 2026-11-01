@@ -2138,6 +2138,18 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.match(currentTemplateCheckout.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
 
   const promoteStep = sharedJob.steps.find(step => step.name === 'Promote the selected shared composition');
+  const selectedGate = sharedJob.steps.find(step => step.name === 'Check the selected composition gate');
+  const automaticPromotionSteps = [
+    selectedGate, retainedDetector, compositionCheckout, modsCheckout, currentTemplateCheckout, promoteStep,
+  ];
+  for (const step of automaticPromotionSteps) {
+    assert.ok(step, 'the automatic shared-release route keeps every selected-promotion step');
+    assert.match(step.if, /inputs\.action != 'rollback'/u,
+      `${step.name} must run for workflow_run, where workflow_dispatch inputs are absent`);
+    assert.doesNotMatch(step.if, /inputs\.action == 'promote'/u,
+      `${step.name} cannot require a dispatch-only promote input on workflow_run`);
+  }
+  assert.match(promoteStep.if, /steps\.freshness\.outputs\.current == 'true'/u);
   assert.equal(promoteStep.env.SYP_W07_RETAINED_MODS_ROOT,
     "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}");
   assert.equal(promoteStep.env.SYP_W07_RETAINED_SOURCE_ROOT,
@@ -2148,7 +2160,6 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   const sameShaCi = sharedJob.steps.find(step => step.name === 'Confirm same-commit static CI success');
   assert.match(sameShaCi.run, /head_sha=\$EXPECTED_SHA/u);
   assert.match(sameShaCi.run, /conclusion == "success"/u);
-  const selectedGate = sharedJob.steps.find(step => step.name === 'Check the selected composition gate');
   assert.ok(selectedGate.run.includes('readW09OwnerStateBranch'), 'missing selected marker must report active owner state');
   assert.ok(sharedJob.steps.some(step => step.name === 'Install Chromium for the exact-artifact browser smoke'
     && step.run === 'npx playwright install --with-deps chromium'));
