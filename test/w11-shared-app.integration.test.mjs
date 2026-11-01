@@ -142,6 +142,12 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     const page = await context.newPage();
     await page.goto(hosted.origin, { waitUntil: 'domcontentloaded' });
     await page.locator('.shared-hero h1').waitFor({ state: 'visible' });
+    const homeHero = await page.locator('.shared-hero').innerText();
+    assert.match(homeHero, /依版本查閱/u);
+    assert.match(homeHero, /1\.13\.1 留存內容尚未逐項核對目前版本/u,
+      'the home page distinguishes retained history from verified current-version content');
+    assert.doesNotMatch(homeHero, /同版官方資料/u,
+      'the home page does not describe the entire merged site as a single-version dataset');
     await page.evaluate(() => {
       let robots = document.querySelector('meta[name="robots"]');
       if (!robots) { robots = document.createElement('meta'); robots.name = 'robots'; document.head.append(robots); }
@@ -169,6 +175,14 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     await page.goBack();
     await page.waitForURL(url => url.pathname === '/skills/');
     await page.locator('.shared-talent-tree-links').waitFor({ state: 'visible' });
+    await page.goto(routeFor(hosted.origin, '/skills/veteran/?view=tree'));
+    await page.locator('.tree-layout').waitFor({ state: 'visible' });
+    await page.getByRole('button', { name: '火力齊射', exact: true }).click();
+    assert.deepEqual(await page.locator('#tree-detail-panel h3').allTextContents(), ['技能效果'],
+      'identical retained effect and mechanics fields render once');
+    await page.getByRole('button', { name: '近戰傷害提升', exact: true }).first().click();
+    assert.deepEqual(await page.locator('#tree-detail-panel h3').allTextContents(), ['技能效果', '機制說明'],
+      'distinct retained mechanics remain separately visible');
     await page.goto(routeFor(hosted.origin, '/game-changes/?version=1.13.2&type=weapon'));
     await page.locator('.shared-change-empty').waitFor({ state: 'visible' });
     assert.equal(await page.locator('.shared-change-empty').innerText(), '目前篩選條件下沒有已確認的遊戲變動。',
@@ -554,6 +568,22 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
       await retainedDetailRequested;
       const currentSourceDetails = delayedDetailPage.locator('details.shared-source-details');
       await currentSourceDetails.waitFor({ state: 'visible' });
+      const retainedStatus = delayedDetailPage.locator('.shared-retained-relations-status[data-state="loading"]');
+      await retainedStatus.waitFor({ state: 'visible' });
+      assert.equal(await retainedStatus.getAttribute('role'), 'status',
+        'the retained relationship area announces that its data is still loading');
+      assert.equal(await delayedDetailPage.locator('a[href="#retained-weapon-relations"]').innerText(),
+        '查看 1.13.1 留存資料與關聯', 'the retained relations are reachable from the top of the long current detail page');
+      const retainedAnchorOrder = await delayedDetailPage.locator('main').evaluate(main => {
+        const children = [...main.children];
+        return {
+          tabs: children.findIndex(child => child.matches('.shared-tab-list')),
+          link: children.findIndex(child => child.matches('a[href="#retained-weapon-relations"]')),
+          stats: children.findIndex(child => child.querySelector('.shared-stat-list')),
+        };
+      });
+      assert.ok(retainedAnchorOrder.tabs < retainedAnchorOrder.link && retainedAnchorOrder.link < retainedAnchorOrder.stats,
+        'the retained-data jump link sits beside the weapon tabs, before the long stat and attack sections');
       const sourceSummary = currentSourceDetails.locator('summary');
       await sourceSummary.click();
       await sourceSummary.focus();
@@ -576,6 +606,25 @@ test('InterT10_shared_web_app_renders_fixed_candidate_and_fails_closed_in_chromi
     } finally {
       releaseRetainedDetail();
       await delayedDetailContext.close();
+    }
+
+    const failedDetailContext = await browser.newContext({ viewport: { width: 1365, height: 1000 } });
+    const failedDetailPage = await failedDetailContext.newPage();
+    await failedDetailPage.route(retainedDetailUrl, route => route.fulfill({
+      status: 503, contentType: 'text/plain; charset=utf-8', body: 'retained detail unavailable',
+    }));
+    try {
+      await failedDetailPage.goto(routeFor(hosted.origin,
+        `/weapons/?family=${encodeURIComponent(family.familyId)}&mark=${encodeURIComponent(markViews[0].markId)}`),
+      { waitUntil: 'domcontentloaded' });
+      const failedRetainedStatus = failedDetailPage.locator('.shared-retained-relations-status[data-state="error"]');
+      await failedRetainedStatus.waitFor({ state: 'visible' });
+      assert.match(await failedRetainedStatus.innerText(), /1\.13\.1 留存詳情未能載入/u);
+      await failedDetailPage.locator('.shared-stat-list').first().waitFor({ state: 'visible' });
+      assert.equal(await failedDetailPage.locator('.shared-retained-weapon-blessings').count(), 0,
+        'a failed retained shard never renders guessed blessing relationships');
+    } finally {
+      await failedDetailContext.close();
     }
 
     const retainedBlessingEntry = retainedCatalog.entries.find(row => row.kind === 'blessing' && row.id === 'rev-it-up');

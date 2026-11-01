@@ -17,7 +17,7 @@ import {
   writeListState
 } from './client.mjs';
 import { createSharedClient, hasSharedContext } from './shared-client.mjs';
-import { currentSkillIdForLegacyId, renderSharedPage, retainedBlessingIdForCurrentId } from './shared-render.mjs';
+import { currentSkillIdForLegacyId, renderSharedPage, retainedBlessingIdForCurrentId, shouldRenderSkillMechanics } from './shared-render.mjs';
 import { loadW14HistoryPackage, renderW14HistoryPage, W14_HISTORY_PATH } from './history-page.mjs';
 
 const main = document.getElementById('main');
@@ -754,7 +754,9 @@ function renderTalentTree(tree, catalog, currentResult = null) {
         selectedPanel.append(makeLink(`/skills/?id=${encodeURIComponent(currentId)}`, '開啟目前版本技能詳情', 'button secondary'));
       } else if (detail && entry) {
         selectedPanel.append(element('h3', '技能效果'), mechanicsList(detail.record.effect_zh_tw));
-        if (detail.record.mechanics_zh_tw) selectedPanel.append(element('h3', '機制說明'), mechanicsList(detail.record.mechanics_zh_tw));
+        if (shouldRenderSkillMechanics(detail.record.effect_zh_tw, detail.record.mechanics_zh_tw)) {
+          selectedPanel.append(element('h3', '機制說明'), mechanicsList(detail.record.mechanics_zh_tw));
+        }
         selectedPanel.append(makeLink(entry.route, '開啟技能詳情', 'button secondary'));
         renderAssets(selectedPanel, detail, detail.record, entry);
       } else selectedPanel.append(element('p', node.type === 'start' ? '此節點為天賦樹起點。' : '此節點的技能資料尚未確認。', 'unknown'));
@@ -1291,7 +1293,8 @@ async function showSharedPage(force = false) {
     }
     if (generation !== sharedNavigationGeneration) return;
     const historyRequest = readHistoryPackage(url, force);
-    renderSharedPage({ main, buildMeta, result: result ?? { status: 'unavailable' }, url, error: currentError, currentError });
+    renderSharedPage({ main, buildMeta, result: result ?? { status: 'unavailable' }, url,
+      error: currentError, currentError, historyLoading: true });
     if (result) setSharedBuildMeta(result);
     try {
       const historicalIndex = await historyRequest;

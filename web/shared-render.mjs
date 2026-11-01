@@ -344,12 +344,23 @@ export function filterSkillSearchRows(rows, { query = '', archetype = '' } = {})
     && (!normalizedQuery || row.searchText.toLocaleLowerCase('zh-Hant-TW').includes(normalizedQuery)));
 }
 
+function normalizeSkillDescription(value) {
+  if (typeof value !== 'string') return '';
+  return value.normalize('NFC').replace(/\r\n?/gu, '\n')
+    .split('\n').map(line => line.trimEnd()).join('\n').trim();
+}
+
+export function shouldRenderSkillMechanics(effect, mechanics) {
+  const normalizedMechanics = normalizeSkillDescription(mechanics);
+  return Boolean(normalizedMechanics) && normalizedMechanics !== normalizeSkillDescription(effect);
+}
+
 function renderHome(main, result) {
-  setMetadata('首頁', '查閱同版技能、武器與祝福的繁體中文官方資料。', new URL(location.href));
+  setMetadata('首頁', '依各頁標示的遊戲版本與修訂，查閱技能、武器與祝福資料。', new URL(location.href));
   const hero = node('section', null, 'shared-hero');
-  hero.append(node('p', '同版官方資料 · 繁體中文', 'eyebrow'));
+  hero.append(node('p', '依版本查閱 · 繁體中文', 'eyebrow'));
   hero.append(node('h1', '查閱技能、武器與祝福資料'));
-  hero.append(node('p', '資料先按遊戲版本與完整修訂驗證，再呈現各自的官方文字、數值與條件。', 'shared-lead'));
+  hero.append(node('p', '各項資料依頁面標示的遊戲版本與修訂呈現；1.13.1 留存內容尚未逐項核對目前版本。', 'shared-lead'));
   const links = node('div', null, 'shared-home-links');
   for (const [href, label] of [['/skills/', '查閱技能'], ['/weapons/', '瀏覽武器'], ['/blessings/', '瀏覽祝福'], ['/game-changes/', '查看遊戲更新紀錄'], ['/announcements/', '閱讀公告']]) links.append(link(href, label, 'button-link'));
   hero.append(links);
@@ -645,14 +656,47 @@ function renderHistoryWeaponLinks(parent, familyEntry, marks, currentMarksByTemp
   parent.append(linkList);
 }
 
-function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTemplate, retainedDetail = null) {
+function retainedRelationsStatus(text, state) {
+  const status = node('p', text, 'shared-history-note shared-retained-relations-status');
+  status.dataset.state = state;
+  status.setAttribute('role', 'status');
+  return status;
+}
+
+function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTemplate, retainedDetail = null,
+  { historyError = null, historyLoading = false } = {}) {
+  if (!catalog?.entries) {
+    if (!historyLoading && !historyError) return;
+    const section = node('section', null, 'shared-retained-weapon-detail');
+    section.id = 'retained-weapon-relations';
+    section.append(node('h2', '1.13.1 留存資料'));
+    section.append(retainedRelationsStatus(historyLoading
+      ? '正在載入 1.13.1 留存型號與祝福關聯；目前版本資料可先使用。'
+      : '目前無法載入 1.13.1 留存關聯；目前版本資料可先使用，請稍後重試。',
+    historyLoading ? 'loading' : 'error'));
+    main.append(section);
+    return;
+  }
   const familyEntry = catalog?.entries.find(entry => entry.kind === 'weapon' && entry.id === familyId);
-  if (!familyEntry) return;
   const section = node('section', null, 'shared-retained-weapon-detail');
+  section.id = 'retained-weapon-relations';
+  if (!familyEntry) {
+    section.append(node('h2', '1.13.1 留存資料'));
+    section.append(node('p', '未找到相同武器識別的留存家族；沒有依相似名稱配對 1.13.1 資料。', 'shared-history-note'));
+    main.append(section);
+    return;
+  }
   section.append(node('h2', '同家族已留存的型號與詳情'));
   section.append(node('p', '目前詳情優先顯示已驗證的來源資料；下列留存型號以 1.13.1 為基準，未逐項核對目前版本。', 'shared-history-note'));
   const marks = retainedMarksByFamily(catalog).get(familyId) ?? [];
   renderHistoryWeaponLinks(section, familyEntry, marks, currentMarksByTemplate);
+  if (historyLoading && !retainedDetail) {
+    section.append(retainedRelationsStatus('正在載入這個家族的 1.13.1 祝福關聯。', 'loading'));
+  } else if (historyError && !retainedDetail) {
+    section.append(retainedRelationsStatus('1.13.1 留存詳情未能載入；上方目前型號與已驗證資料仍可使用，請稍後重試。', 'error'));
+  } else if (!retainedDetail) {
+    section.append(retainedRelationsStatus('目前沒有可用的 1.13.1 家族詳情。', 'unavailable'));
+  }
   const blessings = [...new Map((retainedDetail?.relations ?? [])
     .filter(relation => relation.kind === 'blessing')
     .map(relation => [relation.id, relation])).values()];
@@ -666,6 +710,8 @@ function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTempl
       list.append(item);
     }
     section.append(node('h3', `1.13.1 留存的祝福關聯（${blessings.length}）`), list);
+  } else if (retainedDetail) {
+    section.append(node('p', '此 1.13.1 留存詳情沒有列出可顯示的祝福關聯。', 'shared-history-note'));
   }
   main.append(section);
 }
@@ -1234,7 +1280,7 @@ function renderWeaponSourceDetails(parent, view) {
   }
   parent.append(block);
 }
-function renderWeapon(main, result, view, familyMarks, url) {
+function renderWeapon(main, result, view, familyMarks, url, showRetainedRelationsLink = false) {
   const hasRangedProfile = (view.attackProfiles ?? []).some(profile => ['hipfire', 'ads'].includes(profile.payload?.mode));
   const weaponCanonicalUrl = new URL(url.href);
   weaponCanonicalUrl.searchParams.set('family', view.familyId);
@@ -1250,6 +1296,9 @@ function renderWeapon(main, result, view, familyMarks, url) {
     tabs.append(anchor);
   }
   main.append(tabs);
+  if (showRetainedRelationsLink) {
+    main.append(link('#retained-weapon-relations', '查看 1.13.1 留存資料與關聯', 'secondary-link'));
+  }
   if (view.note) main.append(node('p', view.note, 'shared-callout'));
   if (view.official) renderOfficial(main, view.official);
   if (view.nameProvenance) {
@@ -1333,9 +1382,10 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
       setMetadata('武器型號未能確認', '目前無法確認此武器型號的同版繁體中文資料。', url);
       return renderUnavailable(main, { statusText: '無法確認這個武器型號。' });
     }
-    renderWeapon(main, result, view, family.marks, url);
+    renderWeapon(main, result, view, family.marks, url, Boolean(historyLoading || historyError || historyPackage?.catalog));
     renderRetainedWeaponDetail(main, historyPackage?.catalog, familyId,
-      currentNativeMarkIndexByFamily(records, result).get(familyId), retainedWeaponDetail);
+      currentNativeMarkIndexByFamily(records, result).get(familyId), retainedWeaponDetail,
+      { historyError, historyLoading });
     return;
   }
   setMetadata('武器', '依武器家族與型號查閱素質、來源表與動作資料。', url);
