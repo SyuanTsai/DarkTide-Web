@@ -3,6 +3,13 @@ import { execFileSync } from 'node:child_process';
 import { readFile, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import {
+  isFixedRetainedNameEvidenceMap,
+  loadFixedRetainedNameEvidenceMap,
+  retainedNameRootsFromEnvironment,
+} from './retained-name-evidence.mjs';
+
+export { retainedNameRootsFromEnvironment };
 
 export const WEB_AUTHORING_SCHEMA_ID = 'urn:darktide-web:web-authoring:2.0.0';
 export const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
@@ -51,6 +58,7 @@ const W07_BASELINE_LOCK = Object.freeze({
   blobOid: W07_BASELINE.blobOid,
   sha256: W07_BASELINE.sha256,
 });
+const verifiedRetainedNameEvidenceByInputs = new WeakMap();
 const W06_SOURCE_FILES = Object.freeze({
   schema: 'content/schema/v2/source-contract.schema.json',
   data: 'content/authoring/v2/w06-skills-blessings.json',
@@ -282,7 +290,7 @@ async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = '
   };
 }
 
-export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnapshotRoot, sourceRoot, mode = 'fixture' } = {}) {
+export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnapshotRoot, sourceRoot, retainedNameRoots = null, mode = 'fixture' } = {}) {
   if (!['fixture', 'w06', 'w07'].includes(mode)) throw new Error('Web authoring mode must be fixture, w06, or w07');
   const isW06 = mode === 'w06';
   const isW07 = mode === 'w07';
@@ -303,6 +311,9 @@ export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnaps
     isW07 ? readJson(absoluteRoot, W07_BASELINE_PATH) : Promise.resolve(null),
     isW07 ? readJson(absoluteRoot, W07_BASELINE_LOCK_PATH) : Promise.resolve(null),
   ]);
+  const hasRetainedWeaponName = isW07 && Array.isArray(authoringFile.value?.presentations)
+    && authoringFile.value.presentations.some(presentation => isObject(presentation) && Object.hasOwn(presentation, 'retainedName'));
+  const effectiveRetainedNameRoots = retainedNameRoots ?? (hasRetainedWeaponName ? retainedNameRootsFromEnvironment() : null);
   const schema = schemaFile.value;
   assertWebAuthoringSchemaParity(schema);
   const webLock = webLockFile.value;
@@ -360,12 +371,72 @@ export async function loadWebAuthoringInputs({ repoRoot = REPO_ROOT, sourceSnaps
   }
   const sourcePin = expectedSourcePin(sourceInfo.sourceLock, mode);
   if (canonical(authoringFile.value.sourcePin) !== canonical(sourcePin)) throw new Error('authoring Source pin differs from the fixed Source lock');
-  return {
+  const inputs = {
     repoRoot: absoluteRoot, mode, schema, authoring: authoringFile.value, officialInputs: officialFile.value, baseline: baselineFile?.value ?? null,
     officialInputsBytes: officialFile.bytes, webLock, sourcePin, termRules: termRulesFile?.value ?? null, ...sourceInfo,
     sourceRecordMap: new Map(sourceInfo.sourceContract.records.map(record => [keyOf(record), record])),
     sourceReleaseMap: new Map(sourceInfo.sourceContract.gameReleases.map(release => [release.gameReleaseId, release])),
   };
+  if (effectiveRetainedNameRoots) {
+    if (!isW07 || !isObject(effectiveRetainedNameRoots) || typeof effectiveRetainedNameRoots.modsRoot !== 'string'
+        || typeof effectiveRetainedNameRoots.sourceRoot !== 'string') {
+      throw new TypeError('fixed retained-name inputs require W07 mode and pinned Mods/Source checkout roots');
+    }
+    await attachFixedRetainedNameEvidenceMap(inputs, { ...effectiveRetainedNameRoots, webRoot: absoluteRoot });
+  }
+  return inputs;
+}
+
+export async function attachFixedRetainedNameEvidenceMap(inputs, { webRoot = inputs?.repoRoot, modsRoot, sourceRoot, sourceBytesRoot, evidenceMap = null } = {}) {
+  if (!isObject(inputs) || inputs.mode !== 'w07' || !isObject(inputs.sourceContract)
+      || (!isFixedRetainedNameEvidenceMap(evidenceMap)
+        && (typeof webRoot !== 'string' || typeof modsRoot !== 'string' || typeof sourceRoot !== 'string'))) {
+    throw new TypeError('fixed retained-name evidence requires W07 inputs and pinned Web/Mods/Source roots');
+  }
+  const evidence = isFixedRetainedNameEvidenceMap(evidenceMap)
+    ? evidenceMap
+    : await loadFixedRetainedNameEvidenceMap({ webRoot, modsRoot, sourceRoot, ...(typeof sourceBytesRoot === 'string' ? { sourceBytesRoot } : {}) });
+  const release = (inputs.sourceContract.gameReleases ?? []).find(row => row.gameReleaseId === evidence.current.gameReleaseId);
+  if (!release || release.gameVersion !== evidence.current.gameVersion) {
+    throw new Error('W07 Source contract does not contain the exact pinned retained-name game release');
+  }
+  const recordsByMark = new Map();
+  for (const record of inputs.sourceContract.records ?? []) {
+    if (record?.gameReleaseId !== evidence.current.gameReleaseId || record.kind !== 'weapon'
+        || typeof record.payload?.markId !== 'string') continue;
+    const previous = recordsByMark.get(record.payload.markId);
+    if (previous) throw new Error(`W07 Source contract contains duplicate weapon mark identity: ${record.payload.markId}`);
+    recordsByMark.set(record.payload.markId, record);
+  }
+  const sourceRefs = new Map((inputs.sourceContract.sourceRefs ?? []).map(ref => [ref.sourceId + '\u0000' + ref.gameReleaseId, ref]));
+  let boundMappings = 0;
+  for (const [identityKey, retained] of Object.entries(evidence.evidenceByIdentity)) {
+    const record = recordsByMark.get(retained.currentIdentity.markId);
+    if (!record) continue;
+    if (record.payload.familyId !== retained.currentIdentity.familyId
+        || record.payload.templateKey !== retained.currentIdentity.templateKey) {
+      throw new Error(`W07 Source weapon identity differs from pinned retained-name mapping: ${retained.currentIdentity.markId}`);
+    }
+    const currentSourceRef = (record.sourceRefs ?? []).map(ref => sourceRefs.get(ref.sourceId + '\u0000' + ref.gameReleaseId))
+      .find(ref => ref && ref.repository === `https://github.com/${retained.currentIdentity.repository}`
+        && ref.commit === retained.currentIdentity.commit && ref.path === retained.currentIdentity.path
+        && ref.artifactSha256 === retained.currentIdentity.sourceSha256);
+    if (!currentSourceRef) throw new Error(`W07 SourceRef bytes differ from pinned retained-name mapping: ${retained.currentIdentity.markId}`);
+    boundMappings += 1;
+    if (!identityKey.startsWith(evidence.current.gameReleaseId + '\u0000')) {
+      throw new Error('fixed retained-name evidence contains an identity outside its pinned game release');
+    }
+  }
+  if (!boundMappings) throw new Error('W07 Source contract contains no weapon records bound to the fixed retained-name source map');
+  inputs.sourceRecordMap = new Map((inputs.sourceContract.records ?? []).map(record => [keyOf(record), record]));
+  inputs.sourceRefMap = sourceRefs;
+  inputs.sourceReleaseMap = new Map((inputs.sourceContract.gameReleases ?? []).map(row => [row.gameReleaseId, row]));
+  verifiedRetainedNameEvidenceByInputs.set(inputs, evidence);
+  return evidence;
+}
+
+export function hasVerifiedRetainedNameEvidenceMap(inputs) {
+  return verifiedRetainedNameEvidenceByInputs.has(inputs);
 }
 
 function textHashMatches(text, digest) {
@@ -659,6 +730,72 @@ function sameSourceOwner(left, right) {
   return left?.recordId === right?.recordId
     && left?.gameReleaseId === right?.gameReleaseId
     && left?.kind === right?.kind;
+}
+
+function compareGameVersion(left, right) {
+  const parse = value => typeof value === 'string' && /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/.test(value)
+    ? value.split('.').map(Number) : null;
+  const a = parse(left);
+  const b = parse(right);
+  if (!a || !b) return null;
+  for (let index = 0; index < a.length; index += 1) if (a[index] !== b[index]) return a[index] < b[index] ? -1 : 1;
+  return 0;
+}
+
+function validateRetainedWeaponName(presentation, inputs, issues, at) {
+  const retainedName = presentation.retainedName;
+  if (!retainedName) return false;
+  if (inputs.mode !== 'w07') issue(issues, at + '/retainedName', 'retained weapon names are supported only by the W07 Source-bound weapon contract', 'retained-name-mode');
+  if (presentation.entityRef.kind !== 'weapon' || !presentation.weaponView) {
+    issue(issues, at + '/retainedName', 'a retained name requires a Source-bound weapon presentation', 'retained-name-owner');
+  }
+  if (presentation.name !== retainedName.name) issue(issues, at + '/name', 'presentation name differs from the retained localized name', 'retained-name-text');
+
+  const evidenceMap = verifiedRetainedNameEvidenceByInputs.get(inputs);
+  const expected = evidenceMap?.evidenceByIdentity?.[String(presentation.entityRef?.gameReleaseId) + '\u0000' + String(retainedName.sourceMarkId)];
+  if (!expected || canonical(expected) !== canonical(retainedName)) {
+    issue(issues, at + '/retainedName', 'retained name must match evidence derived from the fixed 1.13.1 history, pinned Mods blob, and exact current Source template bytes', 'retained-name-evidence');
+  }
+
+  const weapon = presentation.weaponView?.sourceWeaponRef
+    && inputs.sourceRecordMap.get(keyOf(presentation.weaponView.sourceWeaponRef));
+  const current = retainedName.currentIdentity;
+  const mod = retainedName.modsEvidence;
+  if (!weapon || weapon.kind !== 'weapon') {
+    issue(issues, at + '/retainedName/currentIdentity', 'retained name has no resolvable current Source weapon identity', 'retained-name-current-identity');
+  } else if (current?.gameReleaseId !== presentation.entityRef.gameReleaseId
+      || current?.familyId !== weapon.payload?.familyId
+      || current?.markId !== weapon.payload?.markId
+      || current?.templateKey !== weapon.payload?.templateKey
+      || mod?.familyId !== current?.familyId
+      || retainedName.sourceMarkId !== weapon.payload?.markId
+      || mod?.templatePath !== current?.path) {
+    issue(issues, at + '/retainedName/currentIdentity', 'retained name identity must match the current Source mark, exact template key, and template path', 'retained-name-current-identity');
+  } else {
+    const currentSourceRef = (weapon.sourceRefs ?? []).map(ref => inputs.sourceRefMap?.get(ref.sourceId + '\u0000' + ref.gameReleaseId))
+      .find(ref => ref && ref.repository === 'https://github.com/' + current.repository
+        && ref.commit === current.commit && ref.path === current.path);
+    if (!currentSourceRef || currentSourceRef.artifactSha256 !== expected?.currentIdentity?.sourceSha256
+        || current?.blobSha1 !== expected?.currentIdentity?.blobSha1) {
+      issue(issues, at + '/retainedName/currentIdentity', 'retained name identity must bind to the exact current Source template reference and blob', 'retained-name-current-identity');
+    }
+  }
+  const oldVsCurrent = compareGameVersion(retainedName.sourceGameVersion,
+    inputs.sourceReleaseMap.get(presentation.entityRef.gameReleaseId)?.gameVersion);
+  if (oldVsCurrent === null || oldVsCurrent >= 0) {
+    issue(issues, at + '/retainedName/sourceGameVersion', 'retained name source must be an earlier, explicitly versioned game release', 'retained-name-version');
+  }
+  return true;
+}
+
+export function validateRetainedWeaponNameForCandidate(presentation, inputs) {
+  const issues = [];
+  if (!isObject(presentation) || !isObject(presentation.retainedName)) {
+    issues.push({ path: '/retainedName', code: 'retained-name-evidence', message: 'retained weapon name must be an object backed by the fixed source evidence map' });
+    return { valid: false, issues };
+  }
+  validateRetainedWeaponName(presentation, inputs, issues, '/presentation');
+  return { valid: issues.length === 0, issues };
 }
 
 function sourceRefKey(ref) {
@@ -1177,11 +1314,15 @@ function validateW07R6ActionProfileClosure(weapon, profiles, releaseId, inputs, 
 function validateW07ActionProfileClosure(weapon, profiles, releaseId, inputs, issues, at) {
   const resolution = weapon.payload.actionProfileResolution;
   if (!resolution) {
-    const hasNotImported = (record, field) => {
+    const hasMissing = (record, field, reasonCode) => {
       if (record?.dataCoverage?.status !== 'partial' || !Array.isArray(record.dataCoverage.missing)) return false;
       const markers = record.dataCoverage.missing.filter(item => item?.field === field);
-      return markers.length === 1 && markers[0]?.reasonCode === 'NOT_IMPORTED';
+      return markers.length === 1 && markers[0]?.reasonCode === reasonCode;
     };
+    const hasNotImported = (record, field) => hasMissing(record, field, 'NOT_IMPORTED');
+    // Preserve the existing narrow exception for unresolved ranged profiles.
+    // It predates retained-name support and must not be replaced by the more
+    // explicit partial-source path below.
     const rangedModes = new Set(['hipfire', 'ads']);
     const supportsExplicitlyUnresolvedRangedProfile = hasNotImported(weapon, '/payload/actionProfileResolution')
       && profiles.length > 0
@@ -1189,6 +1330,15 @@ function validateW07ActionProfileClosure(weapon, profiles, releaseId, inputs, is
         && !profile.payload.actionResolution
         && hasNotImported(profile, '/payload/actionResolution'));
     if (supportsExplicitlyUnresolvedRangedProfile) return;
+
+    const supportsExplicitlyUnresolvedPartialProfile = hasNotImported(weapon, '/payload/actionProfileResolution')
+      && hasNotImported(weapon, '/payload/all-actions-and-display-segments')
+      && profiles.length > 0
+      && profiles.every(profile => !profile.payload.actionResolution
+        && hasNotImported(profile, '/payload/actionResolution')
+        && hasMissing(profile, '/payload/mode-runtime-semantics', 'NOT_VERIFIED')
+        && hasNotImported(profile, '/displayed-attack-segment-mapping'));
+    if (supportsExplicitlyUnresolvedPartialProfile) return;
     issue(issues, at + '/actionProfileResolution', 'W07 weapon facts require the pinned Source action-resolution closure', 'weapon-resolution-required');
     return;
   }
@@ -1812,6 +1962,7 @@ function validateTierPresentations(presentation, inputs, officialById, issues, a
 
 function validateWebSemantic(contract, inputs, issues) {
   inputs.sourceRecordMap = new Map(inputs.sourceContract.records.map(record => [keyOf(record), record]));
+  inputs.sourceRefMap = new Map((inputs.sourceContract.sourceRefs ?? []).map(ref => [ref.sourceId + '\u0000' + ref.gameReleaseId, ref]));
   inputs.sourceReleaseMap = new Map(inputs.sourceContract.gameReleases.map(release => [release.gameReleaseId, release]));
   inputs.termRuleMap = new Map((inputs.termRules?.rules ?? []).map(rule => [rule.ruleId, rule]));
   const officialById = new Map(inputs.officialInputs.sources.map(source => [source.officialSourceId, source]));
@@ -1850,13 +2001,20 @@ function validateWebSemantic(contract, inputs, issues) {
   uniqueBy(contract.presentations, item => item.authoringId, 'authoring id', issues, '/presentations');
   for (const [index, presentation] of contract.presentations.entries()) {
     const at = '/presentations/' + index;
+    const hasRetainedName = validateRetainedWeaponName(presentation, inputs, issues, at);
     const entity = resolveSourceRecord(presentation.entityRef, presentation.entityRef.kind, presentation.entityRef.gameReleaseId, inputs, issues, at + '/entityRef');
     if (!PRESENTATION_KINDS.includes(presentation.entityRef.kind) || (entity && !PRESENTATION_KINDS.includes(entity.kind))) issue(issues, at + '/entityRef/kind', 'Source kind cannot be presented by this contract', 'wrong-kind-ref');
-    const fixedOfficial = officialById.get(presentation.official.officialSourceId);
-    if (!fixedOfficial || canonical(fixedOfficial) !== canonical(presentation.official)) issue(issues, at + '/official', 'official bytes differ from the fixed official input snapshot', 'fixed-official-input');
-    if (presentation.official.entityRef.recordId !== presentation.entityRef.recordId || presentation.official.entityRef.gameReleaseId !== presentation.entityRef.gameReleaseId || presentation.official.entityRef.kind !== presentation.entityRef.kind) {
-      issue(issues, at + '/official/entityRef', 'official input is bound to a different entity or release', 'official-owner');
+    if (hasRetainedName && (presentation.official || presentation.officialLocaleRefs || presentation.faithfulTranslation
+      || presentation.nameOfficialSourceId || presentation.nameOfficialLocaleRefs || presentation.tierPresentations
+      || presentation.detailSections.length || presentation.errata.length || presentation.tierApplicability.length)) {
+      issue(issues, at + '/retainedName', 'a retained historical name cannot be presented as a current official name or translation', 'retained-name-official-conflict');
     }
+    if (!hasRetainedName) {
+      const fixedOfficial = officialById.get(presentation.official.officialSourceId);
+      if (!fixedOfficial || canonical(fixedOfficial) !== canonical(presentation.official)) issue(issues, at + '/official', 'official bytes differ from the fixed official input snapshot', 'fixed-official-input');
+      if (presentation.official.entityRef.recordId !== presentation.entityRef.recordId || presentation.official.entityRef.gameReleaseId !== presentation.entityRef.gameReleaseId || presentation.official.entityRef.kind !== presentation.entityRef.kind) {
+        issue(issues, at + '/official/entityRef', 'official input is bound to a different entity or release', 'official-owner');
+      }
     if (presentation.faithfulTranslation) {
       if (presentation.faithfulTranslation.sourceId !== presentation.official.officialSourceId) issue(issues, at + '/faithfulTranslation/sourceId', 'faithful translation must name its official source input', 'translation-source');
       if (!textHashMatches(presentation.faithfulTranslation.text, presentation.faithfulTranslation.textSha256)) issue(issues, at + '/faithfulTranslation/textSha256', 'faithful translation hash mismatch', 'hash-mismatch');
@@ -1932,7 +2090,8 @@ function validateWebSemantic(contract, inputs, issues) {
         for (const tier of entry.tiers) if (!defined.includes(tier)) issue(issues, at + '/tierApplicability/' + tierIndex + '/tiers', 'tier is not defined by the referenced Source variant: ' + tier, 'tier-range');
       }
     }
-    if (inputs.mode === 'w06') validateTierPresentations(presentation, inputs, officialById, issues, at);
+    }
+    if (inputs.mode === 'w06' && !hasRetainedName) validateTierPresentations(presentation, inputs, officialById, issues, at);
     if (inputs.mode === 'w07') validateWeaponView(presentation, contract, inputs, issues, at);
   }
 
@@ -2070,6 +2229,7 @@ function targetOwner(contract, target) {
 
 function reviewSourceValue(target, owner, value) {
   if (target.ownerKind === 'presentation') {
+    if (target.fieldPath === '/name' && owner.retainedName) return { retainedName: owner.retainedName };
     if (target.fieldPath === '/name' && owner.nameTermRuleRefs) return { termRuleRefs: owner.nameTermRuleRefs };
     const itemMatch = target.fieldPath.match(/^\/(?:tierPresentations\/options\/(\d+)\/)?detailSections\/(\d+)\/items\/(\d+)(?:\/(?:text|parts(?:\/\d+(?:\/text)?)?))?$/);
     if (itemMatch) {
@@ -2240,23 +2400,24 @@ function presentationUsesOfficialInput(target, owner) {
 
 function officialSourceIdsForTarget(target, owner) {
   if (target.dimension === 'translation') return [owner.faithfulTranslation.sourceId];
-  if (target.fieldPath === '/officialLocaleRefs') return owner.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? [owner.official.officialSourceId];
+  if (target.fieldPath === '/officialLocaleRefs') return owner.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? (owner.official?.officialSourceId ? [owner.official.officialSourceId] : []);
   if (target.fieldPath === '/name') {
+    if (owner.retainedName) return [];
     if (owner.nameOfficialLocaleRefs) return owner.nameOfficialLocaleRefs.map(ref => ref.officialSourceId);
     if (owner.nameOfficialSourceId) return [owner.nameOfficialSourceId];
   }
   const tierMatch = target.fieldPath.match(/^\/tierPresentations\/options\/(\d+)/);
   if (tierMatch) {
     const option = owner.tierPresentations?.options[Number(tierMatch[1])];
-    return option?.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? [owner.official.officialSourceId];
+    return option?.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? (owner.official?.officialSourceId ? [owner.official.officialSourceId] : []);
   }
   if (owner.officialLocaleRefs && (target.fieldPath === '/detailSections' || target.fieldPath.startsWith('/detailSections/'))) {
     return owner.officialLocaleRefs.map(ref => ref.officialSourceId);
   }
   if (target.fieldPath === '/tierPresentations' || target.fieldPath.startsWith('/tierPresentations/')) {
-    return owner.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? [owner.official.officialSourceId];
+    return owner.officialLocaleRefs?.map(ref => ref.officialSourceId) ?? (owner.official?.officialSourceId ? [owner.official.officialSourceId] : []);
   }
-  return [owner.official.officialSourceId];
+  return owner.official?.officialSourceId ? [owner.official.officialSourceId] : [];
 }
 
 function officialSourceClaimRefs(target, owner, inputs, sourceRecordMap) {

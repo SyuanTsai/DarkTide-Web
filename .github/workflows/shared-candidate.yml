@@ -35,6 +35,9 @@ jobs:
           package-manager-cache: false
       - name: Install locked dependencies
         run: npm ci
+      - name: Detect fixed retained-name inputs
+        id: retained-names
+        run: node scripts/content/retained-name-overlay-scan.mjs --repo-root "$GITHUB_WORKSPACE"
       - name: Check out public Source history for fixed-commit replay
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -43,10 +46,34 @@ jobs:
           path: source
           fetch-depth: 0
           persist-credentials: false
+      - name: Check out the pinned public Mods identity map for retained weapon names
+        if: steps.retained-names.outputs.required == 'true'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/Warhammer-40-000-DARKTIDE-Mods
+          ref: 241ad76ce62330472aa423055a5b85db59bb6c0d
+          path: retained-name-mods
+          sparse-checkout: |
+            Game Info/releases/1.13.X/blessings/data
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check out pinned public 1.13.4 weapon templates
+        if: steps.retained-names.outputs.required == 'true'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Aussiemon/Darktide-Source-Code
+          ref: e46b8926cfa3fa35503e4b80b15aab7a804314e4
+          path: retained-name-source
+          sparse-checkout: |
+            scripts/settings/equipment/weapon_templates
+          fetch-depth: 1
+          persist-credentials: false
       - name: Prepare or update the revision-scoped candidate PR
         env:
           W09_RELEASE_ID: ${{ github.event.client_payload.release_id || inputs.release_id }}
           W09_SOURCE_ROOT: ${{ github.workspace }}/source
+          SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}
+          SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}
           W09_GIT_TOKEN: ${{ github.token }}
           GH_TOKEN: ${{ github.token }}
         run: node scripts/prepare-w09-candidate.mjs

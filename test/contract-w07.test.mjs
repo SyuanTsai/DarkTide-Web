@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { FIXED_RETAINED_NAME_PINS } from '../scripts/content/retained-name-evidence.mjs';
 import {
   computeReviewDigests,
   createReviewReceipt,
@@ -28,6 +29,56 @@ test('UnitT01_w07-authoring-binds-each-mark-stat-and-action-to-its-source-record
   const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
   const result = validateWebAuthoring(inputs.authoring, inputs);
   assert.deepEqual(result.issues, []);
+});
+
+test('UnitT20_ScenarioCallerSuppliesForgedRetainedName_PurposeRequiresFixedSourceEvidenceMap', async () => {
+  // Scenario: A candidate carries a well-shaped retained name but its validation inputs have no loader-verified map.
+  // Purpose: Prevent caller-controlled localized names and source hashes from satisfying retained-name validation.
+  const inputs = await loadWebAuthoringInputs({ repoRoot, mode: 'w07' });
+  const candidate = structuredClone(inputs.authoring);
+  const presentation = candidate.presentations[0];
+  const weapon = inputs.sourceRecordMap.get(presentation.weaponView.sourceWeaponRef.gameReleaseId + '\u0000'
+    + presentation.weaponView.sourceWeaponRef.recordId);
+  const sourceRefMap = new Map(inputs.sourceContract.sourceRefs.map(ref => [ref.sourceId + '\u0000' + ref.gameReleaseId, ref]));
+  const templateSourceRef = weapon.sourceRefs.map(ref => sourceRefMap.get(ref.sourceId + '\u0000' + ref.gameReleaseId))
+    .find(ref => ref?.path.endsWith('/' + weapon.payload.templateKey + '.lua'));
+  assert.ok(templateSourceRef, 'fixture weapon should have an exact template SourceRef');
+  presentation.retainedName = {
+    name: presentation.name,
+    sourceGameVersion: '1.13.1',
+    sourceMarkId: weapon.payload.markId,
+    historyEvidence: {
+      repository: 'SyuanTsai/DarkTide-Web',
+      commit: '3b8d8cc3e86cf69bb5cb0009ad41e512463370a3',
+      path: 'content/history/1.13.1/source-content.json',
+      sourceSha256: '0'.repeat(64),
+      sourceIds: ['mods-release-1-13-x'],
+    },
+    modsEvidence: {
+      repository: FIXED_RETAINED_NAME_PINS.mods.repository,
+      commit: FIXED_RETAINED_NAME_PINS.mods.commit,
+      path: FIXED_RETAINED_NAME_PINS.mods.path,
+      blobSha1: FIXED_RETAINED_NAME_PINS.mods.blobSha1,
+      sha256: FIXED_RETAINED_NAME_PINS.mods.sha256,
+      familyId: weapon.payload.familyId,
+      nameKey: 'loc_weapon_family_chainaxe_p1_m1',
+      templatePath: templateSourceRef.path,
+    },
+    currentIdentity: {
+      gameReleaseId: weapon.gameReleaseId,
+      familyId: weapon.payload.familyId,
+      markId: weapon.payload.markId,
+      templateKey: weapon.payload.templateKey,
+      repository: 'Aussiemon/Darktide-Source-Code',
+      commit: templateSourceRef.commit,
+      path: templateSourceRef.path,
+      blobSha1: '0'.repeat(40),
+      sourceSha256: templateSourceRef.artifactSha256,
+    },
+    identityMethod: 'exact-mark-id-family-id-template-path-and-pinned-source-blob',
+  };
+  const result = validateWebAuthoring(candidate, inputs);
+  assert.ok(result.issues.some(item => item.code === 'retained-name-evidence'));
 });
 
 test('UnitT02_w07-rejects-a-foreign-mark-action-profile', async () => {

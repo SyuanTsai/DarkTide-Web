@@ -23,8 +23,33 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Detect fixed retained-name inputs
+        id: retained-names
+        run: node scripts/content/retained-name-overlay-scan.mjs --repo-root "$GITHUB_WORKSPACE"
       - name: Install locked dependencies
         run: npm ci
+      - name: Check out the pinned public Mods identity map for retained weapon names
+        if: steps.retained-names.outputs.required == 'true'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/Warhammer-40-000-DARKTIDE-Mods
+          ref: 241ad76ce62330472aa423055a5b85db59bb6c0d
+          path: retained-name-mods
+          sparse-checkout: |
+            Game Info/releases/1.13.X/blessings/data
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check out pinned public 1.13.4 weapon templates
+        if: steps.retained-names.outputs.required == 'true'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Aussiemon/Darktide-Source-Code
+          ref: e46b8926cfa3fa35503e4b80b15aab7a804314e4
+          path: retained-name-source
+          sparse-checkout: |
+            scripts/settings/equipment/weapon_templates
+          fetch-depth: 1
+          persist-credentials: false
       - name: Validate the selected shared-release authority marker
         id: selected
         run: |
@@ -53,6 +78,9 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Test
         run: npm test
+        env:
+          SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}
+          SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}
       - name: Build and verify deployable published package
         if: steps.selected.outputs.selected != 'true'
         run: npm run prepare:deploy

@@ -38,6 +38,7 @@ import { loadSharedReleaseFixture, validateSharedStaticFiles } from '../src/stat
 
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const W09_TEST_GIT_ROOT = process.env.W09_TEST_GIT_ROOT ?? REPO_ROOT;
 const W09_COMPILER_FILE_PATHS = [
   'content/contracts/w09/source-request.lock.json',
   'content/contracts/w09/source-request/contract-w09-request.mjs',
@@ -1726,7 +1727,7 @@ function gitCommitFixture(repoRoot, message, { allowEmpty = false } = {}) {
 }
 
 function cloneW09Fixture(sourceRoot, destination) {
-  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--shared', '--quiet', sourceRoot, destination], {
+  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '-c', 'core.longpaths=true', '--shared', '--quiet', sourceRoot, destination], {
     encoding: 'utf8',
     maxBuffer: 32 * 1024 * 1024,
     windowsHide: true,
@@ -1739,8 +1740,8 @@ async function createDualRootW09Fixture(t) {
   t.after(() => rm(fixtureRoot, { recursive: true, force: true }));
   const runtimeRoot = path.join(fixtureRoot, 'runtime');
   const compositionRoot = path.join(fixtureRoot, 'composition-inputs');
-  cloneW09Fixture(REPO_ROOT, runtimeRoot);
-  cloneW09Fixture(REPO_ROOT, compositionRoot);
+  cloneW09Fixture(W09_TEST_GIT_ROOT, runtimeRoot);
+  cloneW09Fixture(W09_TEST_GIT_ROOT, compositionRoot);
   await symlink(path.join(REPO_ROOT, 'node_modules'), path.join(compositionRoot, 'node_modules'), 'junction');
   git(runtimeRoot, ['checkout', '--quiet', '-B', 'main', 'HEAD']);
   git(compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
@@ -1943,9 +1944,9 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     assert.equal(promote.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
     assert.equal(promote.env.W09_EXPECTED_COMPOSITION_COMMIT, checkout.with.ref,
       'checkout ref and runtime-verified expected commit must name the same immutable input');
-    assertCompositionInputsMatchCurrentHead(REPO_ROOT, checkout.with.ref);
+    assertCompositionInputsMatchCurrentHead(W09_TEST_GIT_ROOT, checkout.with.ref);
     assert.throws(
-      () => assertCompositionInputsMatchCurrentHead(REPO_ROOT, W09_HISTORICAL_COMPOSITION_COMMIT),
+      () => assertCompositionInputsMatchCurrentHead(W09_TEST_GIT_ROOT, W09_HISTORICAL_COMPOSITION_COMMIT),
       /pinned selected marker bytes must match current HEAD/u,
       'both workflow fields pointing at the old composition commit must fail the selected/lock content relationship check',
     );

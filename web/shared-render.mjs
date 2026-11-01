@@ -64,6 +64,48 @@ function node(tag, value = null, className = '') {
   if (className) result.className = className;
   return result;
 }
+
+export function retainedNameProvenanceRows(nameProvenance) {
+  const rows = [];
+  const append = (label, value) => {
+    if (typeof value === 'string' && value.trim()) rows.push([label, value]);
+  };
+  append('型號 ID', nameProvenance?.sourceMarkId);
+  const historyEvidence = nameProvenance?.historyEvidence;
+  if (typeof historyEvidence?.repository === 'string' && typeof historyEvidence?.commit === 'string'
+      && typeof historyEvidence?.path === 'string') {
+    append('留存資料來源', `${historyEvidence.repository}@${historyEvidence.commit}:${historyEvidence.path}`);
+  }
+  append('留存來源 SHA-256', historyEvidence?.sourceSha256);
+  return rows;
+}
+
+const RAW_ATTACK_POWER_FIELD = /(?:^|\.)power_distribution\.attack(?:\.\d+|\[\d+\])?$/u;
+
+export function isRawAttackPowerDistributionDefinition(definition, curve, curveSourceRefs = []) {
+  const quantity = definition?.payload?.quantity;
+  const curveRef = definition?.payload?.curveRef;
+  const payload = curve?.payload;
+  const knots = payload?.knots;
+  if (definition?.kind !== 'stat-definition' || typeof quantity !== 'string' || !RAW_ATTACK_POWER_FIELD.test(quantity)
+      || curve?.kind !== 'stat-curve' || definition.gameReleaseId !== curve.gameReleaseId
+      || curveRef?.recordId !== curve.recordId || curveRef?.gameReleaseId !== curve.gameReleaseId
+      || payload?.inputUnit !== 'ratio' || payload?.outputUnit !== 'attack-power-point'
+      || !Array.isArray(knots) || knots.length === 0) return false;
+
+  const pinnedSourcePaths = new Set(curveSourceRefs
+    .filter(ref => typeof ref?.sourceId === 'string' && ref.gameReleaseId === curve.gameReleaseId && typeof ref.path === 'string')
+    .map(ref => `${ref.gameReleaseId}\u0000${ref.sourceId}\u0000${ref.path}`));
+  return knots.every(knot => {
+    const locator = knot?.sourceLocator;
+    const sourceRef = locator?.sourceRef;
+    return typeof knot?.rawEndpoint === 'string' && knot.rawEndpoint.trim() !== ''
+      && typeof locator?.path === 'string' && typeof locator.fieldPath === 'string'
+      && RAW_ATTACK_POWER_FIELD.test(locator.fieldPath)
+      && sourceRef?.gameReleaseId === curve.gameReleaseId && typeof sourceRef.sourceId === 'string'
+      && pinnedSourcePaths.has(`${sourceRef.gameReleaseId}\u0000${sourceRef.sourceId}\u0000${locator.path}`);
+  });
+}
 function link(href, label, className = '') {
   const result = node('a', label, className);
   result.href = href;
@@ -1049,14 +1091,29 @@ function renderWeaponSourceDetails(parent, view) {
   if (definitions.length) {
     const section = node('section', null, 'shared-source-stat-definitions');
     section.append(node('h3', '來源素質定義與曲線'));
-    for (const { definition, curve } of definitions) {
+    for (const { definition, curve, curveSourceRefs = [] } of definitions) {
       const payload = definition.payload ?? {};
       const article = node('article', null, 'shared-source-stat-definition');
-      article.append(node('h4', SOURCE_STAT_LABELS[payload.quantity] ?? '來源素質'));
+      const isRawAttackPowerDistribution = isRawAttackPowerDistributionDefinition(definition, curve, curveSourceRefs);
+      article.append(node('h4', isRawAttackPowerDistribution
+        ? '來源攻擊威力分布（非最終傷害）'
+        : SOURCE_STAT_LABELS[payload.quantity] ?? '來源素質'));
+      if (payload.quantity) article.append(node('p', `來源欄位：${payload.quantity}`, 'shared-source-field'));
+      if (isRawAttackPowerDistribution) {
+        article.append(node('p', '以下是原始程式碼的攻擊威力曲線端點，不是武器面板數值或最終傷害；遊戲實際輸入與可取得範圍尚未確認。', 'shared-muted'));
+      }
       if (payload.theoreticalInputRange) article.append(node('p', `理論輸入範圍：${rangeText(payload.theoreticalInputRange, 'theoretical')}。`));
       if (payload.obtainableInputRange) article.append(node('p', `實際可取得範圍：${rangeText(payload.obtainableInputRange, 'obtainable')}。`, 'shared-muted'));
       for (const knot of curve?.payload?.knots ?? []) {
         article.append(node('p', `來源曲線節點：輸入 ${knot.input}${sourceUnit(curve.payload.inputUnit)}，輸出 ${knot.output}${sourceUnit(curve.payload.outputUnit)}。`));
+        const locator = knot.sourceLocator;
+        if (locator?.path && locator?.line && locator?.fieldPath) {
+          article.append(node('p', `原始來源：${locator.path}:${locator.line} · ${locator.fieldPath}`, 'shared-muted'));
+        }
+      }
+      const curveSourcePaths = new Set((curve?.payload?.knots ?? []).map(knot => knot.sourceLocator?.path).filter(Boolean));
+      for (const sourceRef of curveSourceRefs.filter(ref => curveSourcePaths.has(ref.path))) {
+        if (sourceRef.repository && sourceRef.commit) article.append(node('p', `來源固定版本：${sourceRef.repository}@${sourceRef.commit}`, 'shared-muted'));
       }
       section.append(article);
     }
@@ -1194,7 +1251,16 @@ function renderWeapon(main, result, view, familyMarks, url) {
   }
   main.append(tabs);
   if (view.note) main.append(node('p', view.note, 'shared-callout'));
-  renderOfficial(main, view.official);
+  if (view.official) renderOfficial(main, view.official);
+  if (view.nameProvenance) {
+    const provenance = detailBlock('名稱來源');
+    provenance.append(node('p', `名稱沿用 ${view.nameProvenance.sourceGameVersion} 留存資料，並依相同型號 ID 與模板路徑連結至 ${view.nameProvenance.currentGameVersion} 原始碼；名稱未逐項核對目前版本。`));
+    const list = node('dl', null, 'shared-source-list');
+    for (const [label, value] of retainedNameProvenanceRows(view.nameProvenance)) {
+      list.append(node('dt', label), node('dd', value));
+    }
+    main.append(provenance, list);
+  }
   renderErrata(main, view.errata);
   for (const section of view.statSections) {
     const block = detailBlock(section.label);

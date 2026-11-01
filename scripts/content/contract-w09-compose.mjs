@@ -803,6 +803,19 @@ async function createW09CompilerProjection({ repoRoot, request, packet, replay, 
   }
 
   applyOverlayRows({ ...compilerInput, repoRoot }, lock.authoringOverlay, lock.web);
+  const hasRetainedNames = Array.isArray(compilerInput.w07.authoring?.presentations)
+    && compilerInput.w07.authoring.presentations.some(presentation => isRecord(presentation)
+      && Object.hasOwn(presentation, 'retainedName'));
+  if (hasRetainedNames) {
+    const retainedNameRoots = authoring.retainedNameRootsFromEnvironment();
+    if (!retainedNameRoots) {
+      throw new Error('W09 retained-name presentations require both pinned public Mods and current Source checkouts');
+    }
+    await authoring.attachFixedRetainedNameEvidenceMap(compilerInput.w07, {
+      ...retainedNameRoots,
+      webRoot: repoRoot,
+    });
+  }
   for (const modeName of ['w06', 'w07']) {
     const mode = compilerInput[modeName];
     mode.authoring.sourcePin = structuredClone(authoringSourcePin);

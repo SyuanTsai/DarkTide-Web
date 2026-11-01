@@ -76,6 +76,46 @@ function isGameVersion(value) {
   return typeof value === 'string' && /^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)$/u.test(value);
 }
 
+function compareGameVersions(left, right) {
+  if (!isGameVersion(left) || !isGameVersion(right)) return null;
+  const a = left.split('.').map(Number);
+  const b = right.split('.').map(Number);
+  for (let index = 0; index < a.length; index += 1) if (a[index] !== b[index]) return a[index] < b[index] ? -1 : 1;
+  return 0;
+}
+
+function resolveRetainedWeaponName(presentation, weapon, sourceRefByKey, sourceGameReleases) {
+  const retained = presentation?.retainedName;
+  const current = retained?.currentIdentity;
+  const history = retained?.historyEvidence;
+  const mods = retained?.modsEvidence;
+  const release = sourceGameReleases.get(weapon?.gameReleaseId);
+  if (!isObject(retained) || !isDisplayText(retained.name) || retained.name !== presentation.name
+      || retained.identityMethod !== 'exact-mark-id-family-id-template-path-and-pinned-source-blob'
+      || !isGameVersion(retained.sourceGameVersion) || compareGameVersions(retained.sourceGameVersion, release?.gameVersion) !== -1
+      || retained.sourceMarkId !== weapon?.payload?.markId
+      || current?.gameReleaseId !== weapon?.gameReleaseId
+      || current?.familyId !== weapon?.payload?.familyId
+      || current?.markId !== weapon?.payload?.markId
+      || current?.templateKey !== weapon?.payload?.templateKey
+      || mods?.familyId !== current?.familyId
+      || mods?.templatePath !== current?.path
+      || history?.repository !== 'SyuanTsai/DarkTide-Web'
+      || history?.path !== 'content/history/1.13.1/source-content.json'
+      || !Array.isArray(history?.sourceIds) || history.sourceIds.length === 0 || !isSha256(history?.sourceSha256)
+      || mods?.repository !== 'SyuanTsai/Warhammer-40-000-DARKTIDE-Mods' || !/^[a-f0-9]{40}$/u.test(mods?.commit ?? '')
+      || !/^[a-f0-9]{40}$/u.test(mods?.blobSha1 ?? '') || !isSha256(mods?.sha256) || !isDisplayText(mods?.nameKey)
+      || current?.repository !== 'Aussiemon/Darktide-Source-Code' || !/^[a-f0-9]{40}$/u.test(current?.commit ?? '')
+      || !/^[a-f0-9]{40}$/u.test(current?.blobSha1 ?? '') || !isSha256(current?.sourceSha256)
+      || !isDisplayText(current?.path)) return null;
+  const sourceRef = (weapon.sourceRefs ?? []).map(ref => sourceRefByKey.get(`${ref.gameReleaseId}\u0000${ref.sourceId}`))
+    .find(ref => ref && ref.commit === current.commit && ref.path === current.path
+      && ref.repository === `https://github.com/${current.repository}`
+      && ref.artifactSha256 === current.sourceSha256);
+  if (!sourceRef) return null;
+  return { ...retained, currentGameVersion: release.gameVersion };
+}
+
 function safePublicHttps(value) {
   if (!isDisplayText(value) || value.length > 2048 || /[\u0000-\u001f\u007f]/u.test(value)) return null;
   try {
@@ -926,7 +966,10 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     }
     const nameSource = findOfficial(officialSources, presentation.nameOfficialSourceId, weaponRef, gameReleaseId);
     const canonicalOfficialSource = findOfficial(officialSources, presentation.official?.officialSourceId, weaponRef, gameReleaseId);
-    if (!nameSource || !canonicalOfficialSource) return unavailable('missing-zh-tw-weapon-name', 'official');
+    const retainedName = !nameSource && !canonicalOfficialSource
+      ? resolveRetainedWeaponName(presentation, weapon, sourceRefByKey, sourceGameReleases)
+      : null;
+    if ((!nameSource || !canonicalOfficialSource) && !retainedName) return unavailable('missing-zh-tw-weapon-name', 'official');
     const view = presentation.weaponView;
     if (!Array.isArray(view.statSections) || !Array.isArray(view.attackProfileRefs)) return unavailable('invalid-weapon-presentation', 'weapon');
     const statSections = [];
@@ -956,7 +999,11 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
       if (!curveRef) return unavailable('incomplete-weapon-stat-curve-bundle', 'weapon');
       const curves = resolveRecords([{ ...curveRef, kind: 'stat-curve' }], 'stat-curve', gameReleaseId, recordByKey);
       if (!curves) return unavailable('incomplete-weapon-stat-curve-bundle', 'weapon');
-      sourceStatDefinitions.push({ definition, curve: curves[0] ?? null });
+      const curve = curves[0] ?? null;
+      const curveSourceRefs = (curve?.sourceRefs ?? [])
+        .map(ref => sourceRefByKey.get(`${ref.gameReleaseId}\u0000${ref.sourceId}`))
+        .filter(Boolean);
+      sourceStatDefinitions.push({ definition, curve, curveSourceRefs });
     }
     const termViews = new Map();
     addTerms(termViews, weapon.payload.termRefs, recordByKey, termLocalizations, gameReleaseId);
@@ -967,7 +1014,8 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     return {
       status: 'ready',
       name: presentation.name,
-      official: officialView(canonicalOfficialSource),
+      official: canonicalOfficialSource ? officialView(canonicalOfficialSource) : null,
+      ...(retainedName ? { nameProvenance: retainedName } : {}),
       errata: canonicalOfficialSource ? exactErrata(presentation.errata, canonicalOfficialSource) : [],
       familyId,
       markId,

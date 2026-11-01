@@ -10,6 +10,9 @@ const COMPILER_FILES = [
   'scripts/content/contract-authoring.mjs',
   'scripts/content/contract-release.mjs',
   'scripts/content/contract-w08-build.mjs',
+  'scripts/content/retained-name-evidence.mjs',
+  'scripts/content/contract-w14-history.mjs',
+  'src/published/contract.mjs',
 ].map((filePath, index) => ({ path: filePath, sizeBytes: index + 1, sha256: String(index + 2).repeat(64) }));
 
 function makeMode(name, presentations, extra = {}) {
