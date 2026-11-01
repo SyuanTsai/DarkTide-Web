@@ -5,10 +5,10 @@
   "publicationEligible": false,
   "sourcePin": {
     "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
-    "commit": "7e2adc082ae646227c45a7e03989f353cc887cfe",
+    "commit": "8f2d0faa9121bfff5f64c5d189df7a9aac14bde6",
     "schemaId": "https://github.com/SyuanTsai/DarkTide-Source-Data/content/schema/v2/source-contract.schema.json",
     "schemaSha256": "79039dee3d35b0d2d2525ef69631fe6c32afcca0259e58adff520828e844ee2a",
-    "dataSha256": "c8892116fda6b0318e957fedc6f05cec61d65514eae3f976e640201176d63688",
+    "dataSha256": "c34b56354d39ee369249f8d9cd26bcca60b07704bd25be242a10ee9ada99fb0c",
     "validatorSha256": "3bae4ff8ba6b00c9038d3baf925a4347a7606e47e7e78cfeb331982c364a1a9a"
   },
   "officialInputsSha256": "555d2becb4bd6b782519676bc3a7d2396e16674ad91a8a22c0da9d146611e417",
@@ -6040,6 +6040,894 @@
           "path": "scripts/settings/equipment/weapon_templates/transonic_sword_transonic_knife/transonic_sword_transonic_knife_p1_m1.lua",
           "blobSha1": "2f6ee29b5e57d67cbb1c999f990a339d8db14ca2",
           "sourceSha256": "0333130895af63ecd98e55c09ff5bbf3f84100ff87f6eb939513ba2edb4c1242"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-forcesword_p1_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:forcesword:p1-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "烈焰力場劍 戴莫斯 Mk IV",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "forcesword_p1_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:forcesword:p1-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:forcesword:p1:forcesword_p1_m2:action_left_diagonal_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:forcesword:p1:forcesword_p1_m2:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "烈焰力場劍 戴莫斯 Mk IV",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "forcesword_p1_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "forcesword_p1",
+          "nameKey": "loc_weapon_family_forcesword_p1_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/force_swords/forcesword_p1_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "forcesword_p1",
+          "markId": "forcesword_p1_m2",
+          "templateKey": "forcesword_p1_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/force_swords/forcesword_p1_m2.lua",
+          "blobSha1": "f3359775d910097d84ccfe96dfe2dcb0f73bc95f",
+          "sourceSha256": "275884d625a82268e68efd5e0c278480c522f067d308ea2826a35c249eb56bb6"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-forcesword_p1_m3",
+      "entityRef": {
+        "recordId": "darktide:weapon:forcesword:p1-m3:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "烈焰力場劍 伊利斯 Mk V",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "forcesword_p1_m3",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:forcesword:p1-m3:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:forcesword:p1:forcesword_p1_m3:action_left_diagonal_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:forcesword:p1:forcesword_p1_m3:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "烈焰力場劍 伊利斯 Mk V",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "forcesword_p1_m3",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "forcesword_p1",
+          "nameKey": "loc_weapon_family_forcesword_p1_m3",
+          "templatePath": "scripts/settings/equipment/weapon_templates/force_swords/forcesword_p1_m3.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "forcesword_p1",
+          "markId": "forcesword_p1_m3",
+          "templateKey": "forcesword_p1_m3",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/force_swords/forcesword_p1_m3.lua",
+          "blobSha1": "8527df4464e653de2debc9137da9148af2309dfc",
+          "sourceSha256": "53b3bdfe65bc6e00a765046741a1e309ba89088528812931b96293c784dd8436"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:ogryn_powermaul:p1-m1:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "動力錘 阿克利斯 Mk I",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "ogryn_powermaul_p1_m1",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:ogryn_powermaul:p1-m1:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:ogryn_powermaul:p1:ogryn_powermaul_p1_m1:action_left_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:ogryn_powermaul:p1:ogryn_powermaul_p1_m1:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "動力錘 阿克利斯 Mk I",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "ogryn_powermaul_p1_m1",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "ogryn_powermaul_p1",
+          "nameKey": "loc_weapon_family_ogryn_powermaul_p1_m1",
+          "templatePath": "scripts/settings/equipment/weapon_templates/ogryn_power_mauls/ogryn_powermaul_p1_m1.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "ogryn_powermaul_p1",
+          "markId": "ogryn_powermaul_p1_m1",
+          "templateKey": "ogryn_powermaul_p1_m1",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/ogryn_power_mauls/ogryn_powermaul_p1_m1.lua",
+          "blobSha1": "a7a0a6afd9401efc1272548cc00dfbbb4a8f5450",
+          "sourceSha256": "54ac94edfa3da782e4c7903d692ba974f45870c381c8cb77e205fccdae483ec9"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:powermaul_2h:p1-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "碾壓者 克魯克 Mk VII",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powermaul_2h_p1_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powermaul_2h:p1-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powermaul_2h:p1:powermaul_2h_p1_m2:action_light_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powermaul_2h:p1:powermaul_2h_p1_m2:action_heavy_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "碾壓者 克魯克 Mk VII",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powermaul_2h_p1_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powermaul_2h_p1",
+          "nameKey": "loc_weapon_family_powermaul_2h_p1_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_mauls_2h/powermaul_2h_p1_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powermaul_2h_p1",
+          "markId": "powermaul_2h_p1_m2",
+          "templateKey": "powermaul_2h_p1_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_mauls_2h/powermaul_2h_p1_m2.lua",
+          "blobSha1": "e159f0edb667bad1fafc7c6952c6230e46e19547",
+          "sourceSha256": "2348c2d0ced4829f86b9cd45c91eaea5187d96631d2db4cdd91d381e76dff635"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_2h_p1_m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword_2h:p1-m1:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "上古神刃 軍務部 Mk X",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_2h_p1_m1",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword_2h:p1-m1:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword_2h:p1:powersword_2h_p1_m1:action_light_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword_2h:p1:powersword_2h_p1_m1:action_heavy_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "上古神刃 軍務部 Mk X",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_2h_p1_m1",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_2h_p1",
+          "nameKey": "loc_weapon_family_powersword_2h_p1_m1",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords_2h/powersword_2h_p1_m1.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_2h_p1",
+          "markId": "powersword_2h_p1_m1",
+          "templateKey": "powersword_2h_p1_m1",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords_2h/powersword_2h_p1_m1.lua",
+          "blobSha1": "fca072244170e260c01699a5594885c717abb99d",
+          "sourceSha256": "970834ec6191ebc10f921ab29fbcdaaeff967f3612defdeac3042bee18adbcd3"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_2h_p1_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword_2h:p1-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "上古神刃 軍務部 Mk II",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_2h_p1_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword_2h:p1-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword_2h:p1:powersword_2h_p1_m2:action_light_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword_2h:p1:powersword_2h_p1_m2:action_heavy_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "上古神刃 軍務部 Mk II",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_2h_p1_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_2h_p1",
+          "nameKey": "loc_weapon_family_powersword_2h_p1_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords_2h/powersword_2h_p1_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_2h_p1",
+          "markId": "powersword_2h_p1_m2",
+          "templateKey": "powersword_2h_p1_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords_2h/powersword_2h_p1_m2.lua",
+          "blobSha1": "bb822912e9ca63171dfe94ed070a6b1940c8b1c0",
+          "sourceSha256": "069527fcf5eadbfdd76b0fbca6129eb346a10390318a39e45151a019abedb4cf"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_p1_m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword:p1-m1:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "動力劍 斯干達 Mk III",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_p1_m1",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword:p1-m1:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword:p1:powersword_p1_m1:action_left_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword:p1:powersword_p1_m1:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "動力劍 斯干達 Mk III",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_p1_m1",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_p1",
+          "nameKey": "loc_weapon_family_powersword_p1_m1",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p1_m1.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_p1",
+          "markId": "powersword_p1_m1",
+          "templateKey": "powersword_p1_m1",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p1_m1.lua",
+          "blobSha1": "e915bf8982fc476f88f9e984ab6bffe2a72e999f",
+          "sourceSha256": "cb81e3d4da63dd0d5cf4aac1b6905e3d2aa9634b32aa924cdca68e108d1f472b"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_p1_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword:p1-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "動力劍 阿克利斯 Mk VI",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_p1_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword:p1-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword:p1:powersword_p1_m2:action_left_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword:p1:powersword_p1_m2:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "動力劍 阿克利斯 Mk VI",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_p1_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_p1",
+          "nameKey": "loc_weapon_family_powersword_p1_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p1_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_p1",
+          "markId": "powersword_p1_m2",
+          "templateKey": "powersword_p1_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p1_m2.lua",
+          "blobSha1": "008c79df72ce81fa402f476658c85ffbc71c28da",
+          "sourceSha256": "da33efe61746297faf825b99d7416035f33d5c9b58bf15098b5aa293c3b3dbfb"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_p2_m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword:p2-m1:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "動力彎刀 阿里丁 Mk I",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_p2_m1",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword:p2-m1:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword:p2:powersword_p2_m1:action_light_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword:p2:powersword_p2_m1:action_heavy_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "動力彎刀 阿里丁 Mk I",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_p2_m1",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_p2",
+          "nameKey": "loc_weapon_family_powersword_p2_m1",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p2_m1.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_p2",
+          "markId": "powersword_p2_m1",
+          "templateKey": "powersword_p2_m1",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p2_m1.lua",
+          "blobSha1": "0b62087cbbd8a900dc8c5e909111aac13ebf968e",
+          "sourceSha256": "265413253543847c412eebebe4e80918b058becbbebb27c68be4a8293bc4cbde"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-powersword_p2_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:powersword:p2-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "動力彎刀 執法者 Mk IIb",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "powersword_p2_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:powersword:p2-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:powersword:p2:powersword_p2_m2:action_light_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:powersword:p2:powersword_p2_m2:action_heavy_1:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "動力彎刀 執法者 Mk IIb",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "powersword_p2_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "powersword_p2",
+          "nameKey": "loc_weapon_family_powersword_p2_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p2_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "powersword_p2",
+          "markId": "powersword_p2_m2",
+          "templateKey": "powersword_p2_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/power_swords/powersword_p2_m2.lua",
+          "blobSha1": "d67ecbd3d8ea17d0fdf426844e411cf5a364def5",
+          "sourceSha256": "90278c43193122f5f6635691e01e658321114f6181a9eb8f098bd32c4f29b959"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "entityRef": {
+        "recordId": "darktide:weapon:thunderhammer_2h:p1-m1:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "雷鎚 十字星 Mk II",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "thunderhammer_2h_p1_m1",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:thunderhammer_2h:p1-m1:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:thunderhammer_2h:p1:thunderhammer_2h_p1_m1:action_left_down_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:thunderhammer_2h:p1:thunderhammer_2h_p1_m1:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "雷鎚 十字星 Mk II",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "thunderhammer_2h_p1_m1",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "thunderhammer_2h_p1",
+          "nameKey": "loc_weapon_family_thunderhammer_2h_p1_m1",
+          "templatePath": "scripts/settings/equipment/weapon_templates/thunder_hammers_2h/thunderhammer_2h_p1_m1.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "thunderhammer_2h_p1",
+          "markId": "thunderhammer_2h_p1_m1",
+          "templateKey": "thunderhammer_2h_p1_m1",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/thunder_hammers_2h/thunderhammer_2h_p1_m1.lua",
+          "blobSha1": "87bcfde31977adbf9356767fef9089e9237a31b3",
+          "sourceSha256": "a37ffe60d9f2cf712c3d1a7fe3249e6f0f219324f2c458940643e40ce6448691"
+        },
+        "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
+      }
+    },
+    {
+      "authoringId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "entityRef": {
+        "recordId": "darktide:weapon:thunderhammer_2h:p1-m2:e46-normal-partial",
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon"
+      },
+      "locale": "zh-TW",
+      "name": "雷鎚 鐵盔 Mk IV",
+      "errata": [],
+      "detailSections": [],
+      "tierApplicability": [],
+      "weaponView": {
+        "markLabel": "thunderhammer_2h_p1_m2",
+        "attackHeading": "已定位的攻擊來源",
+        "comparisonHeading": "部分武器數值尚未整理",
+        "note": "名稱沿用 1.13.1 留存資料；下列 2 組為 e46 原始 attack-power 來源點，不是武器面板數值或最終傷害。每組只列 literal damage_profile 欄位；特攻與 on-abort、有效 profile、目標套用與完整連段尚未核實。",
+        "sourceWeaponRef": {
+          "recordId": "darktide:weapon:thunderhammer_2h:p1-m2:e46-normal-partial",
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "weapon"
+        },
+        "statSections": [],
+        "attackProfileRefs": [
+          {
+            "recordId": "darktide:attack-profile:thunderhammer_2h:p1:thunderhammer_2h_p1_m2:action_left_down_light:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          },
+          {
+            "recordId": "darktide:attack-profile:thunderhammer_2h:p1:thunderhammer_2h_p1_m2:action_left_heavy:e46-normal-partial",
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "attack-profile"
+          }
+        ]
+      },
+      "retainedName": {
+        "name": "雷鎚 鐵盔 Mk IV",
+        "sourceGameVersion": "1.13.1",
+        "sourceMarkId": "thunderhammer_2h_p1_m2",
+        "historyEvidence": {
+          "repository": "SyuanTsai/DarkTide-Web",
+          "commit": "61f1dcda6cb80fb1ee2bf595b3b9a082825a912f",
+          "path": "content/history/1.13.1/source-content.json",
+          "sourceSha256": "3f3c24874004d67aa7e03b045ca5f9a7409a0bea3e9136247852c26ec2c34bcc",
+          "sourceIds": [
+            "darktide-code-1-13-1",
+            "mods-release-1-13-x"
+          ]
+        },
+        "modsEvidence": {
+          "repository": "SyuanTsai/Warhammer-40-000-DARKTIDE-Mods",
+          "commit": "241ad76ce62330472aa423055a5b85db59bb6c0d",
+          "path": "Game Info/releases/1.13.X/blessings/data/BLESSING_WEAPON_MAP.json",
+          "blobSha1": "9952f7fcd3d0d6e14c769a1b4cf49dbd33f5fe4e",
+          "sha256": "22b7b82a1f7d59334cfda5a09dc4a9f9bc02bcf02611c4bc1ed5c1afba0717ab",
+          "familyId": "thunderhammer_2h_p1",
+          "nameKey": "loc_weapon_family_thunderhammer_2h_p1_m2",
+          "templatePath": "scripts/settings/equipment/weapon_templates/thunder_hammers_2h/thunderhammer_2h_p1_m2.lua"
+        },
+        "currentIdentity": {
+          "gameReleaseId": "darktide:1.13.4",
+          "familyId": "thunderhammer_2h_p1",
+          "markId": "thunderhammer_2h_p1_m2",
+          "templateKey": "thunderhammer_2h_p1_m2",
+          "repository": "Aussiemon/Darktide-Source-Code",
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "path": "scripts/settings/equipment/weapon_templates/thunder_hammers_2h/thunderhammer_2h_p1_m2.lua",
+          "blobSha1": "6e3247caa7d5b47c30b7da97f0b207f0a9e4d3bb",
+          "sourceSha256": "e19b5a34ddcdd6cc0d5eeac8657d7db3c05db44af391faabc4bf3e16d38d41be"
         },
         "identityMethod": "exact-mark-id-family-id-template-path-and-pinned-source-blob"
       }
@@ -29897,6 +30785,594 @@
       "targetId": "w07-retained-weapon-transonic_sword_transonic_knife_p1_m1-attack-profile-1",
       "ownerKind": "presentation",
       "ownerId": "w07-retained-weapon-transonic_sword_transonic_knife_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-forcesword_p1_m3-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-forcesword_p1_m3",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-ogryn_powermaul_p1_m1-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-ogryn_powermaul_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powermaul_2h_p1_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powermaul_2h_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m1-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_2h_p1_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_2h_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m1-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p1_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m1-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-powersword_p2_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-powersword_p2_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m1-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m1",
+      "fieldPath": "/weaponView/attackProfileRefs/1",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-name",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/name",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-mark-label",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/weaponView/markLabel",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-attack-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/weaponView/attackHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-comparison-heading",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/weaponView/comparisonHeading",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-note",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/weaponView/note",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-attack-profile-0",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
+      "fieldPath": "/weaponView/attackProfileRefs/0",
+      "dimension": "content"
+    },
+    {
+      "targetId": "w07-normal-partial-thunderhammer_2h_p1_m2-attack-profile-1",
+      "ownerKind": "presentation",
+      "ownerId": "w07-normal-partial-thunderhammer_2h_p1_m2",
       "fieldPath": "/weaponView/attackProfileRefs/1",
       "dimension": "content"
     }
