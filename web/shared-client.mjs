@@ -20,8 +20,8 @@ const SNAPSHOT_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/u;
 const RELATIVE_JSON_PATH = /^[A-Za-z0-9][A-Za-z0-9._/-]*\.json$/u;
 const DOMAIN_SCHEMA = 'w08-shared-domain/1.0.0';
 const MAX_MANIFEST_BYTES = 256 * 1024;
-const MAX_DOMAIN_BYTES = 8 * 1024 * 1024;
-const MAX_PACKAGE_BYTES = 16 * 1024 * 1024;
+const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
+const MAX_PACKAGE_BYTES = 24 * 1024 * 1024;
 const REQUEST_TIMEOUT_MS = 30_000;
 
 function fail(message) { throw new Error(message); }
