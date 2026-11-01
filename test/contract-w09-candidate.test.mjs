@@ -171,18 +171,70 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
 test('InterT29_candidate-workflow-is-a-serialized-unselected-repository-dispatch-route', async () => {
   const workflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/shared-candidate.yml'), 'utf8'));
   assert.deepEqual(workflow.on.repository_dispatch.types, ['w09-source-release']);
+  assert.equal(workflow.on.workflow_dispatch.inputs.release_id.required, true);
   assert.equal(workflow.permissions.contents, 'write');
   assert.equal(workflow.permissions['pull-requests'], 'write');
   const job = workflow.jobs['proposal-candidate'];
+  assert.match(job.if, /github\.repository == 'SyuanTsai\/DarkTide-Web'/u);
+  assert.match(job.if, /github\.event_name == 'repository_dispatch' && github\.event\.action == 'w09-source-release'/u);
+  assert.match(job.if, /github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main'/u);
   assert.equal(job.concurrency.group, 'darktide-w09-candidate-proposals');
   assert.equal(job.concurrency['cancel-in-progress'], false);
   assert.equal(job.environment, undefined, 'candidate preparation must not use production environment credentials');
-  const checkouts = job.steps.filter(step => step.uses?.startsWith('actions/checkout@'));
-  assert.equal(checkouts.length, 2);
-  assert.ok(checkouts.every(step => step.with['fetch-depth'] === 0 && step.with['persist-credentials'] === false));
+
+  const steps = job.steps;
+  const checkouts = steps.filter(step => step.uses?.startsWith('actions/checkout@'));
+  assert.equal(checkouts.length, 4, 'the two original checkouts plus two conditional pinned source inputs are expected');
+  const currentWeb = steps.find(step => step.name === 'Check out current Web main without persisted credentials');
+  assert.ok(currentWeb);
+  assert.equal(currentWeb.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
+  assert.equal(currentWeb.with.ref, 'main');
+  assert.equal(currentWeb.with['fetch-depth'], 0);
+  assert.equal(currentWeb.with['persist-credentials'], false);
+
+  const historySource = steps.find(step => step.name === 'Check out public Source history for fixed-commit replay');
+  assert.ok(historySource);
+  assert.equal(historySource.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
+  assert.equal(historySource.with.repository, 'SyuanTsai/DarkTide-Source-Data');
+  assert.equal(historySource.with.ref, 'main');
+  assert.equal(historySource.with.path, 'source');
+  assert.equal(historySource.with['fetch-depth'], 0);
+  assert.equal(historySource.with['persist-credentials'], false);
+
+  const detector = steps.find(step => step.name === 'Detect fixed retained-name inputs');
+  assert.ok(detector);
+  assert.equal(detector.id, 'retained-names');
+  assert.equal(detector.run, 'node scripts/content/retained-name-overlay-scan.mjs --repo-root "$GITHUB_WORKSPACE"');
+  assert.ok(steps.indexOf(detector) < steps.indexOf(historySource));
+
+  const retainedMods = steps.find(step => step.name === 'Check out the pinned public Mods identity map for retained weapon names');
+  assert.ok(retainedMods);
+  assert.equal(retainedMods.if, "steps.retained-names.outputs.required == 'true'");
+  assert.equal(retainedMods.with.repository, 'SyuanTsai/Warhammer-40-000-DARKTIDE-Mods');
+  assert.equal(retainedMods.with.ref, '241ad76ce62330472aa423055a5b85db59bb6c0d');
+  assert.equal(retainedMods.with.path, 'retained-name-mods');
+  assert.equal(retainedMods.with['fetch-depth'], 1);
+  assert.equal(retainedMods.with['persist-credentials'], false);
+  assert.match(retainedMods.with['sparse-checkout'], /Game Info\/releases\/1\.13\.X\/blessings\/data/u);
+
+  const retainedSource = steps.find(step => step.name === 'Check out pinned public 1.13.4 weapon templates');
+  assert.ok(retainedSource);
+  assert.equal(retainedSource.if, "steps.retained-names.outputs.required == 'true'");
+  assert.equal(retainedSource.with.repository, 'Aussiemon/Darktide-Source-Code');
+  assert.equal(retainedSource.with.ref, 'e46b8926cfa3fa35503e4b80b15aab7a804314e4');
+  assert.equal(retainedSource.with.path, 'retained-name-source');
+  assert.equal(retainedSource.with['fetch-depth'], 1);
+  assert.equal(retainedSource.with['persist-credentials'], false);
+  assert.match(retainedSource.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
+  assert.ok(steps.indexOf(retainedMods) < steps.indexOf(retainedSource));
+
   const run = job.steps.find(step => step.name === 'Prepare or update the revision-scoped candidate PR');
   assert.equal(run.run, 'node scripts/prepare-w09-candidate.mjs');
   assert.equal(run.env.W09_RELEASE_ID, '$' + '{{ github.event.client_payload.release_id || inputs.release_id }}');
   assert.equal(run.env.GH_TOKEN, '$' + '{{ github.token }}');
   assert.equal(run.env.W09_GIT_TOKEN, '$' + '{{ github.token }}');
+  assert.equal(run.env.SYP_W07_RETAINED_MODS_ROOT, '$' + "{{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}");
+  assert.equal(run.env.SYP_W07_RETAINED_SOURCE_ROOT, '$' + "{{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}");
+  assert.ok(!steps.some(step => /deploy|publish|select|allocate/u.test([step.name, step.run].filter(Boolean).join(' '))),
+    'candidate dispatch must not add a production publish, selection, or allocation route');
 });

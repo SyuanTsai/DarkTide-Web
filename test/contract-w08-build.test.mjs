@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -10,6 +10,8 @@ import {
   collectRequiredContentFromWeb,
   compileW08Candidate,
   evaluateW08PublicationGate,
+  parseW08CliArgs,
+  verifyW08CompilerFiles,
   validateW08Candidate,
   validateW08CandidateDirectory,
   writeW08Candidate,
@@ -20,6 +22,15 @@ const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..
 const RELEASE_ID = 'darktide:1.13.2';
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
 const SOURCE_COMMIT = 'c'.repeat(40);
+const W08_COMPILER_FILE_PATHS = [
+  'content/schema/v2/shared-candidate.schema.json',
+  'scripts/content/contract-authoring.mjs',
+  'scripts/content/contract-release.mjs',
+  'scripts/content/contract-w08-build.mjs',
+  'scripts/content/retained-name-evidence.mjs',
+  'scripts/content/contract-w14-history.mjs',
+  'src/published/contract.mjs',
+];
 const SNAPSHOT = {
   snapshotId: 'source-snapshot-1', commit: SOURCE_COMMIT,
   manifestSha256: 'd'.repeat(64), contentSha256: 'e'.repeat(64),
@@ -28,12 +39,8 @@ const SUPPLEMENTAL_SNAPSHOT = {
   snapshotId: 'source-snapshot-supplemental', commit: SOURCE_COMMIT,
   manifestSha256: 'f'.repeat(64), contentSha256: '1'.repeat(64),
 };
-const COMPILER_FILES = [
-  'content/schema/v2/shared-candidate.schema.json',
-  'scripts/content/contract-authoring.mjs',
-  'scripts/content/contract-release.mjs',
-  'scripts/content/contract-w08-build.mjs',
-].map((filePath, index) => ({ path: filePath, sizeBytes: index + 1, sha256: String(index + 2).repeat(64) }));
+const COMPILER_FILES = W08_COMPILER_FILE_PATHS
+  .map((filePath, index) => ({ path: filePath, sizeBytes: index + 1, sha256: String(index + 2).repeat(64) }));
 
 // Scenario: A W08 game change targets a Source rule with no existing Web presentation.
 // Purpose: Require reviewed identity and complete zh-TW before/after rule wording before the publication content gate can pass.
@@ -599,6 +606,44 @@ test('UnitT78_W08ReviewCoverageMatchesEmittedReleaseDomains', () => {
     'valid but non-emitted receipts are filtered, while undeclared Source targets remain rejected');
 });
 
+test('UnitT79_W08RejectsRetainedNameWithoutFixedEvidenceMap', () => {
+  // Scenario: A W07 weapon presentation is given a plausible retainedName object without using the fixed-input evidence loader.
+  // Purpose: Keep direct W08 compilation fail-closed when a caller supplies an unsupported name or source hash.
+  const input = makeInput();
+  input.w07.authoring.presentations[0].retainedName = {
+    name: input.w07.authoring.presentations[0].name,
+    sourceGameVersion: '1.13.1',
+    sourceMarkId: 'weapon:one',
+  };
+  assert.throws(() => compileW08Candidate(input), /w07 retained-name presentations require a fixed-source evidence map/u);
+});
+
+test('UnitT80_W08CliAcceptsBothPinnedRetainedSourceCheckouts', () => {
+  // Scenario: CI passes the public, pinned Mods and current Source checkout roots to the W08 candidate command.
+  // Purpose: Let the production authoring path verify retained names against the exact upstream Git commits.
+  assert.deepEqual(parseW08CliArgs([
+    '--out-root', 'candidate-output',
+    '--retained-mods-root', 'mods-checkout',
+    '--retained-source-root', 'source-checkout',
+    '--retained-source-bytes-root', 'source-bytes',
+  ]), {
+    command: 'write',
+    outRoot: 'candidate-output',
+    candidateRoot: null,
+    retainedNameRoots: {
+      modsRoot: 'mods-checkout',
+      sourceRoot: 'source-checkout',
+      sourceBytesRoot: 'source-bytes',
+    },
+  });
+});
+
+test('UnitT81_W08CliRejectsOnlyOneRetainedSourceCheckout', () => {
+  // Scenario: CI supplies just the Mods checkout and omits the pinned current Source checkout.
+  // Purpose: Prevent partial provenance configuration from silently disabling exact byte verification.
+  assert.throws(() => parseW08CliArgs(['--retained-mods-root', 'mods-checkout']), /requires both/u);
+});
+
 test('UnitT04_W08GateDerivesStateFromReviewTargetsInsteadOfClaimedCounts', () => {
   // Scenario: a pending target is paired with forged state counts claiming it is approved.
   // Purpose: publication readiness must derive and cross-check actual target states rather than trust caller summaries.
@@ -971,4 +1016,39 @@ test('InterT14_W08CandidateDirectoryRejectsMalformedUtf8AfterConsistentRehash', 
   invalid.envelope.manifest.sha256 = sha256(invalid.manifestBytes);
 
   assert.throws(() => validateW08Candidate(invalid), /UTF-8/i);
+});
+
+test('UnitT82_W08CompilerFileSetPinsTransitiveRetainedHistoryValidationCode', async t => {
+  // Scenario: the retained-name evidence loader relies on the history contract and published package validator.
+  // Purpose: Pin both transitive executable dependencies and reject same-size tampering in either dependency.
+  const root = await mkdtemp(path.join(os.tmpdir(), 'w08-transitive-compiler-pin-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+
+  const files = [];
+  for (const relativePath of W08_COMPILER_FILE_PATHS) {
+    const bytes = await readFile(path.join(REPO_ROOT, ...relativePath.split('/')));
+    const destination = path.join(root, ...relativePath.split('/'));
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, bytes, { flag: 'wx' });
+    files.push({ path: relativePath, sizeBytes: bytes.byteLength, sha256: sha256(bytes) });
+  }
+
+  const lock = { schemaVersion: 'w08-compiler/1', commit: 'a'.repeat(40), files };
+  const verified = await verifyW08CompilerFiles(root, lock);
+  assert.equal(verified.compilerFiles.length, W08_COMPILER_FILE_PATHS.length);
+  assert.deepEqual(verified.compilerFiles.map(row => row.path), W08_COMPILER_FILE_PATHS);
+
+  for (const relativePath of ['scripts/content/contract-w14-history.mjs', 'src/published/contract.mjs']) {
+    const destination = path.join(root, ...relativePath.split('/'));
+    const original = await readFile(destination);
+    const changed = Buffer.from(original);
+    changed[0] ^= 0x01;
+    await writeFile(destination, changed);
+    await assert.rejects(verifyW08CompilerFiles(root, lock), new RegExp(
+      'W08 compiler dependency ' + relativePath.replaceAll('/', '\\/') + ' SHA-256 does not match its pin', 'u'));
+    await writeFile(destination, original);
+  }
+
+  const incompleteLock = { ...lock, files: lock.files.filter(row => row.path !== 'src/published/contract.mjs') };
+  await assert.rejects(verifyW08CompilerFiles(root, incompleteLock), /must pin exactly the compiler, candidate schema, and their direct contract modules/u);
 });

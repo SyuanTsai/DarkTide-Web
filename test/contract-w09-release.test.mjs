@@ -38,6 +38,7 @@ import { loadSharedReleaseFixture, validateSharedStaticFiles } from '../src/stat
 
 const execFileAsync = promisify(execFile);
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const W09_TEST_GIT_ROOT = process.env.W09_TEST_GIT_ROOT ?? REPO_ROOT;
 const W09_COMPILER_FILE_PATHS = [
   'content/contracts/w09/source-request.lock.json',
   'content/contracts/w09/source-request/contract-w09-request.mjs',
@@ -1726,7 +1727,7 @@ function gitCommitFixture(repoRoot, message, { allowEmpty = false } = {}) {
 }
 
 function cloneW09Fixture(sourceRoot, destination) {
-  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '--shared', '--quiet', sourceRoot, destination], {
+  execFileSync('git', ['clone', '-c', 'core.autocrlf=false', '-c', 'core.longpaths=true', '--shared', '--quiet', sourceRoot, destination], {
     encoding: 'utf8',
     maxBuffer: 32 * 1024 * 1024,
     windowsHide: true,
@@ -1739,8 +1740,8 @@ async function createDualRootW09Fixture(t) {
   t.after(() => rm(fixtureRoot, { recursive: true, force: true }));
   const runtimeRoot = path.join(fixtureRoot, 'runtime');
   const compositionRoot = path.join(fixtureRoot, 'composition-inputs');
-  cloneW09Fixture(REPO_ROOT, runtimeRoot);
-  cloneW09Fixture(REPO_ROOT, compositionRoot);
+  cloneW09Fixture(W09_TEST_GIT_ROOT, runtimeRoot);
+  cloneW09Fixture(W09_TEST_GIT_ROOT, compositionRoot);
   await symlink(path.join(REPO_ROOT, 'node_modules'), path.join(compositionRoot, 'node_modules'), 'junction');
   git(runtimeRoot, ['checkout', '--quiet', '-B', 'main', 'HEAD']);
   git(compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
@@ -1943,9 +1944,9 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     assert.equal(promote.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
     assert.equal(promote.env.W09_EXPECTED_COMPOSITION_COMMIT, checkout.with.ref,
       'checkout ref and runtime-verified expected commit must name the same immutable input');
-    assertCompositionInputsMatchCurrentHead(REPO_ROOT, checkout.with.ref);
+    assertCompositionInputsMatchCurrentHead(W09_TEST_GIT_ROOT, checkout.with.ref);
     assert.throws(
-      () => assertCompositionInputsMatchCurrentHead(REPO_ROOT, W09_HISTORICAL_COMPOSITION_COMMIT),
+      () => assertCompositionInputsMatchCurrentHead(W09_TEST_GIT_ROOT, W09_HISTORICAL_COMPOSITION_COMMIT),
       /pinned selected marker bytes must match current HEAD/u,
       'both workflow fields pointing at the old composition commit must fail the selected/lock content relationship check',
     );
@@ -1975,6 +1976,8 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     'no guard path writes the historical checkout');
 });
 
+// Scenario: inspect the production workflow with both a selected promotion and explicit rollback available.
+// Purpose: keep the original full-history publication inputs stable while gating the two extra public checkouts on verified retained-name content only.
 test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route', async () => {
   const staticWorkflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/static-ci.yml'), 'utf8'));
   const sharedWorkflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/shared-release.yml'), 'utf8'));
@@ -2005,8 +2008,63 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.equal(sharedJob.concurrency['cancel-in-progress'], false);
   assert.match(sharedJob.if, /conclusion == 'success'/u);
   assert.match(sharedJob.if, /head_repository\.full_name == github\.repository/u);
-  assert.ok(sharedJob.steps.every(step => !step.uses?.startsWith('actions/checkout@')
-    || (step.with?.['fetch-depth'] === 0 && step.with?.['persist-credentials'] === false)));
+  const checkoutSteps = sharedJob.steps.filter(step => step.uses?.startsWith('actions/checkout@'));
+  const checkoutByName = new Map(checkoutSteps.map(step => [step.name, step]));
+  assert.equal(checkoutByName.size, 5, 'the workflow has the original three checkouts plus two conditional pinned public inputs');
+  const webCheckout = checkoutByName.get('Check out reviewed Web commit without persisted credentials');
+  const sourceHistoryCheckout = checkoutByName.get('Check out public Source history for fixed-commit replay');
+  const compositionCheckout = checkoutByName.get('Check out the pinned historical W09 composition inputs');
+  assert.ok(webCheckout && sourceHistoryCheckout && compositionCheckout);
+  for (const step of [webCheckout, sourceHistoryCheckout, compositionCheckout]) {
+    assert.equal(step.with?.['fetch-depth'], 0, `${step.name} keeps the original full-history replay behavior`);
+    assert.equal(step.with?.['persist-credentials'], false, `${step.name} does not persist checkout credentials`);
+  }
+  assert.equal(webCheckout.with.repository, undefined, 'the reviewed Web checkout remains the current repository');
+  assert.equal(webCheckout.with.ref, '${{ github.event.workflow_run.head_sha || github.sha }}');
+  assert.equal(sourceHistoryCheckout.with.repository, 'SyuanTsai/DarkTide-Source-Data');
+  assert.equal(sourceHistoryCheckout.with.ref, 'main');
+  assert.equal(sourceHistoryCheckout.with.path, 'source');
+  assert.equal(compositionCheckout.with.repository, 'SyuanTsai/DarkTide-Web');
+  assert.equal(compositionCheckout.with.ref, '825b098762442f2ba857fe52c62016456d5fa460');
+  assert.equal(compositionCheckout.with.path, 'composition-inputs');
+
+  const retainedDetector = sharedJob.steps.find(step => step.name === 'Detect fixed retained-name inputs in the selected composition');
+  assert.equal(retainedDetector?.id, 'retained-names');
+  assert.match(retainedDetector.if, /steps\.selected\.outputs\.run == 'true'/u);
+  assert.match(retainedDetector.if, /steps\.freshness\.outputs\.current == 'true'/u);
+  assert.match(retainedDetector.if, /inputs\.action != 'rollback'/u);
+  assert.match(retainedDetector.run, /retained-name-overlay-scan\.mjs/u);
+  const modsCheckout = checkoutByName.get('Check out the pinned public Mods identity map for retained weapon names');
+  const currentTemplateCheckout = checkoutByName.get('Check out pinned public 1.13.4 weapon templates');
+  assert.ok(modsCheckout && currentTemplateCheckout, 'both additional public inputs are present for retained-name candidates');
+  const requiredRetainedInputs = /steps\.retained-names\.outputs\.required == 'true'/u;
+  for (const step of [modsCheckout, currentTemplateCheckout]) {
+    assert.match(step.if, requiredRetainedInputs, `${step.name} is conditional on a positive retained-name detector`);
+    assert.match(step.if, /steps\.selected\.outputs\.run == 'true'/u);
+    assert.match(step.if, /steps\.freshness\.outputs\.current == 'true'/u);
+    assert.match(step.if, /inputs\.action != 'rollback'/u, 'rollback does not acquire retained-name inputs');
+    assert.equal(step.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
+    assert.equal(step.with?.['fetch-depth'], 1, 'the two optional public checkouts use only the pinned shallow history');
+    assert.equal(step.with?.['persist-credentials'], false, 'the optional public checkout never persists credentials');
+    assert.equal(step.with?.token, undefined, 'the optional checkout does not receive a token input');
+  }
+  assert.equal(modsCheckout.with.repository, 'SyuanTsai/Warhammer-40-000-DARKTIDE-Mods');
+  assert.equal(modsCheckout.with.ref, '241ad76ce62330472aa423055a5b85db59bb6c0d');
+  assert.equal(modsCheckout.with.path, 'retained-name-mods');
+  assert.match(modsCheckout.with['sparse-checkout'], /Game Info\/releases\/1\.13\.X\/blessings\/data/u);
+  assert.equal(currentTemplateCheckout.with.repository, 'Aussiemon/Darktide-Source-Code');
+  assert.equal(currentTemplateCheckout.with.ref, 'e46b8926cfa3fa35503e4b80b15aab7a804314e4');
+  assert.equal(currentTemplateCheckout.with.path, 'retained-name-source');
+  assert.match(currentTemplateCheckout.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
+
+  const promoteStep = sharedJob.steps.find(step => step.name === 'Promote the selected shared composition');
+  assert.equal(promoteStep.env.SYP_W07_RETAINED_MODS_ROOT,
+    "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}");
+  assert.equal(promoteStep.env.SYP_W07_RETAINED_SOURCE_ROOT,
+    "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}");
+  const rollbackStep = sharedJob.steps.find(step => step.name === 'Restore the explicit approved whole-site snapshot');
+  assert.equal(rollbackStep.env.SYP_W07_RETAINED_MODS_ROOT, undefined);
+  assert.equal(rollbackStep.env.SYP_W07_RETAINED_SOURCE_ROOT, undefined);
   const sameShaCi = sharedJob.steps.find(step => step.name === 'Confirm same-commit static CI success');
   assert.match(sameShaCi.run, /head_sha=\$EXPECTED_SHA/u);
   assert.match(sameShaCi.run, /conclusion == "success"/u);

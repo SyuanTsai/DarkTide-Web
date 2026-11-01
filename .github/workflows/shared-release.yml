@@ -148,6 +148,10 @@ jobs:
             echo "current=false" >> "$GITHUB_OUTPUT"
             echo "Skipped stale W09 run; main has moved." >> "$GITHUB_STEP_SUMMARY"
           fi
+      - name: Detect fixed retained-name inputs in the selected composition
+        id: retained-names
+        if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && inputs.action != 'rollback'
+        run: node scripts/content/retained-name-overlay-scan.mjs --repo-root "$GITHUB_WORKSPACE"
       - name: Check out the pinned historical W09 composition inputs
         if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && inputs.action != 'rollback'
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -157,6 +161,28 @@ jobs:
           path: composition-inputs
           fetch-depth: 0
           persist-credentials: false
+      - name: Check out the pinned public Mods identity map for retained weapon names
+        if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && steps.retained-names.outputs.required == 'true' && inputs.action != 'rollback'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: SyuanTsai/Warhammer-40-000-DARKTIDE-Mods
+          ref: 241ad76ce62330472aa423055a5b85db59bb6c0d
+          path: retained-name-mods
+          sparse-checkout: |
+            Game Info/releases/1.13.X/blessings/data
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check out pinned public 1.13.4 weapon templates
+        if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && steps.retained-names.outputs.required == 'true' && inputs.action != 'rollback'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Aussiemon/Darktide-Source-Code
+          ref: e46b8926cfa3fa35503e4b80b15aab7a804314e4
+          path: retained-name-source
+          sparse-checkout: |
+            scripts/settings/equipment/weapon_templates
+          fetch-depth: 1
+          persist-credentials: false
       - name: Promote the selected shared composition
         if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && inputs.action != 'rollback'
         run: node scripts/promote-w09-release.mjs
@@ -164,6 +190,8 @@ jobs:
           W09_GIT_TOKEN: ${{ github.token }}
           W09_STATE_BRANCH: w09-release-state
           W09_SOURCE_ROOT: ${{ github.workspace }}/source
+          SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}
+          SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}
           W09_COMPOSITION_ROOT: ${{ github.workspace }}/composition-inputs
           W09_EXPECTED_COMPOSITION_COMMIT: 825b098762442f2ba857fe52c62016456d5fa460
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

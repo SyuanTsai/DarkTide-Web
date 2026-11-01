@@ -11,8 +11,10 @@ import {
 } from './contract-release.mjs';
 import {
   computeReviewDigests,
+  hasVerifiedRetainedNameEvidenceMap,
   getReviewState,
   loadWebAuthoringInputs,
+  validateRetainedWeaponNameForCandidate,
   validateWebAuthoring,
 } from './contract-authoring.mjs';
 
@@ -31,6 +33,9 @@ const EXPECTED_COMPILER_FILES = Object.freeze([
   'scripts/content/contract-authoring.mjs',
   'scripts/content/contract-release.mjs',
   'scripts/content/contract-w08-build.mjs',
+  'scripts/content/retained-name-evidence.mjs',
+  'scripts/content/contract-w14-history.mjs',
+  'src/published/contract.mjs',
 ]);
 const ACCEPTED_LIMITATION_KEYS = Object.freeze([
   'obtainable-ranges',
@@ -279,6 +284,11 @@ async function verifyCompilerFiles(repoRoot, compilerLock) {
   return { compilerCommit: compilerLock.commit, compilerFiles: [...pinned.values()], gitHistoryAvailable };
 }
 
+export async function verifyW08CompilerFiles(repoRoot, compilerLock) {
+  if (typeof repoRoot !== 'string' || !repoRoot) fail('W08 compiler verification requires a repository root');
+  return verifyCompilerFiles(path.resolve(repoRoot), compilerLock);
+}
+
 function requireCanonicalMapRows(leftRows, rightRows, keyOf, label, { subset = false } = {}) {
   if (!Array.isArray(leftRows) || !Array.isArray(rightRows)) fail(label + ' rows must be arrays');
   const right = new Map();
@@ -351,13 +361,13 @@ function parseSourceCandidateArtifacts(sourceFiles, sourcePin) {
   return { manifest, receipt, revision, technical };
 }
 
-async function loadVerifiedW08CompilerInputs({ repoRoot = REPO_ROOT } = {}) {
+async function loadVerifiedW08CompilerInputs({ repoRoot = REPO_ROOT, retainedNameRoots = null } = {}) {
   const absoluteRoot = await realpath(repoRoot);
   const inputLockFile = await readPinnedFile(absoluteRoot, INPUT_LOCK_PATH, null, 'W08 compiler input lock');
   const inputLock = verifyInputLockShape(parseJson(inputLockFile.bytes, INPUT_LOCK_PATH));
   const compilerLockFile = await readPinnedFile(absoluteRoot, COMPILER_LOCK_PATH, null, 'W08 compiler lock');
   const compilerLock = parseJson(compilerLockFile.bytes, COMPILER_LOCK_PATH);
-  const compiler = await verifyCompilerFiles(absoluteRoot, compilerLock);
+  const compiler = await verifyW08CompilerFiles(absoluteRoot, compilerLock);
 
   for (const row of inputLock.inputFiles) {
     const pinned = await readPinnedFile(absoluteRoot, row.path, row, 'W08 input ' + row.path);
@@ -383,7 +393,7 @@ async function loadVerifiedW08CompilerInputs({ repoRoot = REPO_ROOT } = {}) {
 
   const [w06, w07] = await Promise.all([
     loadWebAuthoringInputs({ repoRoot: absoluteRoot, mode: 'w06' }),
-    loadWebAuthoringInputs({ repoRoot: absoluteRoot, mode: 'w07' }),
+    loadWebAuthoringInputs({ repoRoot: absoluteRoot, mode: 'w07', ...(retainedNameRoots ? { retainedNameRoots } : {}) }),
   ]);
   for (const inputs of [w06, w07]) {
     const validation = validateWebAuthoring(inputs.authoring, inputs);
@@ -1143,6 +1153,19 @@ export function compileW08Candidate(input) {
   const sourceContract = input.sourceContract;
   const modes = [{ name: 'w06', mode: input.w06 }, { name: 'w07', mode: input.w07 }];
   authoringPresentationIds(modes);
+  for (const { name, mode } of modes) {
+    const retainedPresentations = mode.authoring.presentations.filter(item => Object.hasOwn(item, 'retainedName'));
+    if (!retainedPresentations.length) continue;
+    if (name !== 'w07' || !hasVerifiedRetainedNameEvidenceMap(mode)) {
+      fail(name + ' retained-name presentations require a fixed-source evidence map from the W07 input loader');
+    }
+    for (const presentation of retainedPresentations) {
+      const validation = validateRetainedWeaponNameForCandidate(presentation, mode);
+      if (!validation.valid) {
+        fail(name + ' retained-name evidence validation failed: ' + validation.issues.map(issue => issue.path + ' ' + issue.message).join('; '));
+      }
+    }
+  }
   if (input.w06.sourceContract && input.w07.sourceContract) verifySourceOverlap(input.w06.sourceContract, input.w07.sourceContract, sourceContract);
 
   const requestedReleaseId = input.gameReleaseId ?? input.w07.authoring.presentations[0]?.entityRef.gameReleaseId
@@ -1680,7 +1703,10 @@ export async function validateW08CandidateDirectory(packageRoot, options = {}) {
     ?? (options.expectedBuild ? options.expectedBuild.envelope ? options.expectedBuild : compileW08Candidate(options.expectedBuild) : null);
   if (expectedCandidate) assertCandidatePackagesEqual(candidate, expectedCandidate, 'expected pinned inputs');
   else {
-    const rebuilt = await buildW08CandidateFromRepository({ repoRoot: options.repoRoot ?? REPO_ROOT });
+    const rebuilt = await buildW08CandidateFromRepository({
+      repoRoot: options.repoRoot ?? REPO_ROOT,
+      ...(options.retainedNameRoots ? { retainedNameRoots: options.retainedNameRoots } : {}),
+    });
     assertCandidatePackagesEqual(candidate, rebuilt, 'pinned repository inputs');
   }
   const expected = ['candidate.json', manifestPackagePath, ...manifest.files.map(row => expectedDomainPath(manifest.dataRevision, row.path))].sort(compareUtf8);
@@ -1694,18 +1720,48 @@ export function selectW08ConsumerFiles(manifest, selection) {
   return selectConsumerFiles(manifest, selection);
 }
 
-function parseW08CliArgs(args) {
-  if (args.length === 0) return { command: 'validate' };
-  if (args[0] === '--out-root' && args.length === 2) return { command: 'write', outRoot: args[1] };
-  if (args[0] === '--check-gate' && args.length <= 2) return { command: 'gate', candidateRoot: args[1] ?? null };
-  fail('Usage: contract-w08-build.mjs [--out-root <new-directory> | --check-gate [candidate-directory]]');
+export function parseW08CliArgs(args) {
+  const options = { command: 'validate', outRoot: null, candidateRoot: null, retainedModsRoot: null, retainedSourceRoot: null, retainedSourceBytesRoot: null };
+  let commandSelected = false;
+  for (let index = 0; index < args.length; index += 1) {
+    const argument = args[index];
+    if (argument === '--out-root' && !commandSelected && args[index + 1] && !args[index + 1].startsWith('--')) {
+      options.command = 'write';
+      options.outRoot = args[++index];
+      commandSelected = true;
+    } else if (argument === '--check-gate' && !commandSelected) {
+      options.command = 'gate';
+      if (args[index + 1] && !args[index + 1].startsWith('--')) options.candidateRoot = args[++index];
+      commandSelected = true;
+    } else if (argument === '--retained-mods-root' && args[index + 1] && !args[index + 1].startsWith('--')) {
+      options.retainedModsRoot = args[++index];
+    } else if (argument === '--retained-source-root' && args[index + 1] && !args[index + 1].startsWith('--')) {
+      options.retainedSourceRoot = args[++index];
+    } else if (argument === '--retained-source-bytes-root' && args[index + 1] && !args[index + 1].startsWith('--')) {
+      options.retainedSourceBytesRoot = args[++index];
+    } else {
+      fail('Usage: contract-w08-build.mjs [--out-root <new-directory> | --check-gate [candidate-directory]] [--retained-mods-root <checkout> --retained-source-root <checkout> [--retained-source-bytes-root <root>]]');
+    }
+  }
+  if (Boolean(options.retainedModsRoot) !== Boolean(options.retainedSourceRoot)) {
+    fail('retained-name verification requires both --retained-mods-root and --retained-source-root');
+  }
+  if (options.retainedModsRoot) options.retainedNameRoots = {
+    modsRoot: options.retainedModsRoot,
+    sourceRoot: options.retainedSourceRoot,
+    ...(options.retainedSourceBytesRoot ? { sourceBytesRoot: options.retainedSourceBytesRoot } : {}),
+  };
+  delete options.retainedModsRoot;
+  delete options.retainedSourceRoot;
+  delete options.retainedSourceBytesRoot;
+  return options;
 }
 
 async function runW08Cli(args = process.argv.slice(2)) {
   const options = parseW08CliArgs(args);
   const candidate = options.candidateRoot
-    ? (await validateW08CandidateDirectory(options.candidateRoot)).candidate
-    : await buildW08CandidateFromRepository();
+    ? (await validateW08CandidateDirectory(options.candidateRoot, options)).candidate
+    : await buildW08CandidateFromRepository(options);
   if (options.command === 'write') {
     const outputRoot = await writeW08Candidate(candidate, options.outRoot);
     process.stdout.write(JSON.stringify({ valid: true, candidateOnly: true, outputRoot,
