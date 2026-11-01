@@ -1970,6 +1970,86 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
       'the malformed configuration is rejected before the durable owner state store can be restored');
   });
 
+  await t.test('InterT26_09_selected-W09-and-historical-W08-compiler-commits-are-validated-separately', async () => {
+    const compositionContext = await releaseApi.resolveW09CompositionContext(options);
+    const selected = JSON.parse(gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + W09_SELECTED_COMPOSITION_PATH]).toString('utf8'));
+    const proposal = selected.proposals[0];
+    assert.ok(proposal, 'the fixture must include its actual selected release identity');
+    const inputLockPath = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+    const inputLock = JSON.parse(gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + inputLockPath]).toString('utf8'));
+    const historicalW08Lock = JSON.parse(gitBytes(fixture.compositionRoot, ['show', 'HEAD:content/contracts/w08/compiler.lock.json']).toString('utf8'));
+    const currentW08Lock = JSON.parse(gitBytes(fixture.runtimeRoot, [
+      'show', fixture.runtimeHead + ':content/contracts/w08/compiler.lock.json',
+    ]).toString('utf8'));
+    assert.equal(historicalW08Lock.files.length, 4, 'the selected composition retains the historical four-file W08 compiler pin');
+    assert.equal(currentW08Lock.files.length, 7, 'the current runtime keeps the complete seven-file W08 compiler pin');
+    assert.notEqual(inputLock.web.compilerCommit, historicalW08Lock.commit,
+      'candidate envelope W09 compiler commit is distinct from historical W08 compiler commit');
+    assert.equal(inputLock.web.compilerCommit, compositionContext.historyPin.commit,
+      'the W09 identity is authenticated by the independently pinned historical W09 lock');
+    assert.equal(inputLock.web.w08CompilerCommit, historicalW08Lock.commit,
+      'the W08 identity comes from its own selected lock field');
+
+    const candidate = {
+      envelope: {
+        gameReleaseId: proposal.gameReleaseId,
+        compiler: {
+          commit: inputLock.web.compilerCommit,
+          inputLockSha256: inputLock.web.w08InputLockSha256,
+          authoringCommit: inputLock.web.authoringCommit,
+          files: historicalW08Lock.files,
+        },
+      },
+      manifest: {
+        gameReleaseId: proposal.gameReleaseId,
+        source: {
+          commit: inputLock.source.sourceCommit,
+          sourceRevision: inputLock.source.sourceRevision,
+          manifestSha256: inputLock.source.manifestSha256,
+        },
+        web: {
+          compilerCommit: inputLock.web.compilerCommit,
+          authoringCommit: inputLock.web.authoringCommit,
+        },
+      },
+    };
+    const validationContext = { compositionContext, composition: { inputLock } };
+    await assert.rejects(
+      releaseApi.validateW09CandidateForComposition(candidate, validationContext),
+      /W08 compiled candidate is missing files/u,
+      'the authenticated historical validator receives the old four-file shape; current seven-file completeness is not applied to it',
+    );
+
+    const currentFileSet = structuredClone(candidate);
+    currentFileSet.envelope.compiler.files = currentW08Lock.files;
+    await assert.rejects(
+      releaseApi.validateW09CandidateForComposition(currentFileSet, validationContext),
+      /historical W09 candidate metadata differs/u,
+      'current W08 rows cannot be substituted for the exact selected historical compiler rows',
+    );
+
+    const conflatedCommit = structuredClone(candidate);
+    conflatedCommit.envelope.compiler.commit = historicalW08Lock.commit;
+    await assert.rejects(
+      releaseApi.validateW09CandidateForComposition(conflatedCommit, validationContext),
+      /historical W09 candidate metadata differs/u,
+      'the W08 compiler commit cannot be misrepresented as the separate W09 envelope compiler commit',
+    );
+
+    const historyReadme = path.join(fixture.compositionRoot, 'README.md');
+    const historyReadmeBytes = await readFile(historyReadme);
+    try {
+      await writeFile(historyReadme, Buffer.concat([historyReadmeBytes, Buffer.from('\nhistorical test-only worktree drift\n')]));
+      await assert.rejects(
+        releaseApi.validateW09CandidateForComposition(candidate, validationContext),
+        /tracked changes outside its selected input and compiler pins/u,
+        'un-pinned tracked history files cannot alter the runtime import environment',
+      );
+    } finally {
+      await writeFile(historyReadme, historyReadmeBytes);
+    }
+  });
+
   assert.deepEqual(await readOptionalBytes(runtimeStatePath), runtimeStateBefore,
     'all guard failures occur before any current-root state allocation');
   assert.deepEqual(await readOptionalBytes(historyStatePath), historyStateBefore,

@@ -21,6 +21,35 @@ const W09_SELECTED_PATH = 'content/contracts/w09/source-handoff/selected.json';
 const W09_COMPOSITION_LOCK_ROOT = 'content/contracts/w09/source-handoff/locks/';
 const W09_COMPOSER_MODULE_PATH = 'scripts/content/contract-w09-compose.mjs';
 const W09_COMPILER_LOCK_PATH = 'content/contracts/w09/compiler.lock.json';
+const W08_INPUT_LOCK_PATH = 'content/contracts/w08/compiler-inputs.lock.json';
+const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
+const W09_COMPOSITION_CONTEXTS = new WeakSet();
+
+function registerW09CompositionContext(context) {
+  const frozen = Object.freeze(context);
+  W09_COMPOSITION_CONTEXTS.add(frozen);
+  return frozen;
+}
+
+function canonicalW09Value(value) {
+  if (Array.isArray(value)) return value.map(canonicalW09Value);
+  if (value && typeof value === 'object' && !Buffer.isBuffer(value)) {
+    const sorted = {};
+    for (const key of Object.keys(value).sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)))) {
+      sorted[key] = canonicalW09Value(value[key]);
+    }
+    return sorted;
+  }
+  return value;
+}
+
+function canonicalW09Json(value) {
+  return JSON.stringify(canonicalW09Value(value));
+}
+
+function sha256Bytes(bytes) {
+  return createHash('sha256').update(bytes).digest('hex');
+}
 
 function releaseGitText(repoRoot, args, label) {
   try {
@@ -136,7 +165,7 @@ export async function resolveW09CompositionContext(options = {}) {
       moduleUrl,
       loadW09VerifiedComposition: composer.loadW09VerifiedComposition,
     };
-    return Object.freeze(context);
+    return registerW09CompositionContext(context);
   }
 
   if (typeof options.compositionRepoRoot !== 'string' || options.compositionRepoRoot.trim() === '') {
@@ -213,7 +242,7 @@ export async function resolveW09CompositionContext(options = {}) {
     moduleUrl,
     loadW09VerifiedComposition: historicalComposer.loadW09VerifiedComposition,
   };
-  return Object.freeze(context);
+  return registerW09CompositionContext(context);
 }
 
 async function revalidateW09CompositionContext(options, initialContext, stage) {
@@ -835,7 +864,10 @@ export async function prepareW09SharedRelease(options = {}) {
       dataRevision: firstPass.candidate.manifest.dataRevision,
     };
     const { contentVersion } = findW09ContentVersionSlot(state, identity);
-    const candidate = await finalizeW09Candidate(firstPass.candidate, contentVersion);
+    const candidate = await finalizeW09Candidate(firstPass.candidate, contentVersion, {
+      compositionContext,
+      composition: firstPass,
+    });
     const manifestSha256 = createHash('sha256').update(candidate.manifestBytes).digest('hex');
     const planned = planW09ContentVersion(state, { ...identity, manifestSha256 });
     if (planned.contentVersion !== contentVersion) throw new Error('dry-run candidate version differs from the current durable allocation plan');
@@ -883,7 +915,10 @@ export async function prepareW09SharedRelease(options = {}) {
         inputDigest: composition.inputDigest,
         dataRevision: composition.candidate.manifest.dataRevision,
       };
-      const planned = await planW09CandidateAllocation(state, identity, contentVersion => finalizeW09Candidate(composition.candidate, contentVersion));
+      const planned = await planW09CandidateAllocation(state, identity, contentVersion => finalizeW09Candidate(composition.candidate, contentVersion, {
+        compositionContext,
+        composition,
+      }));
       const nextState = reserveW09ContentVersion(state, planned.allocation);
       await writeW09ReleaseStateAtomic(statePath, nextState);
       await persistW09DurableCheckpoint(options, repoRoot, statePath, 'reserved');
@@ -1785,7 +1820,132 @@ async function persistW09DurableCheckpoint(options, repoRoot, statePath, phase) 
   return result;
 }
 
-async function finalizeW09Candidate(original, contentVersion) {
+async function loadW09CandidateValidator(candidate, { compositionContext, composition } = {}) {
+  if (!W09_COMPOSITION_CONTEXTS.has(compositionContext)) {
+    throw new Error('W09 candidate validation requires a context returned by the pinned composition resolver');
+  }
+  if (!compositionContext.dualRoot) return import('./contract-w08-build.mjs');
+
+  const historyRoot = compositionContext.compositionRoot;
+  const historyHead = compositionContext.expectedCompositionCommit;
+  if (releaseGitText(historyRoot, ['rev-parse', 'HEAD'], 'historical W09 composition HEAD recheck') !== historyHead
+      || releaseGitText(compositionContext.runtimeRoot, ['rev-parse', 'HEAD'], 'current W09 runtime HEAD recheck') !== compositionContext.runtimeHead) {
+    throw new Error('W09 candidate validation roots changed after the pinned composition was resolved');
+  }
+  const candidateReleaseId = candidate?.envelope?.gameReleaseId;
+  const selectedBytes = releaseGitBlob(historyRoot, historyHead, W09_SELECTED_PATH);
+  await readExactTrackedInput(historyRoot, W09_SELECTED_PATH, selectedBytes);
+  let selected;
+  try {
+    const decoded = new TextDecoder('utf-8', { fatal: true }).decode(selectedBytes);
+    const { validateW09SelectedComposition } = await import(pathToFileURL(path.join(historyRoot, ...W09_COMPOSER_MODULE_PATH.split('/'))).href);
+    selected = validateW09SelectedComposition(JSON.parse(decoded));
+  } catch (error) {
+    throw new Error('historical selected marker could not authenticate W09 candidate validation: ' + error.message);
+  }
+  const proposal = selected.proposals.find(row => row.gameReleaseId === candidateReleaseId);
+  if (!proposal) throw new Error('W09 candidate gameReleaseId is absent from the pinned selected composition');
+  const lockPath = W09_COMPOSITION_LOCK_ROOT + proposal.requestId + '.json';
+  const inputLockBytes = releaseGitBlob(historyRoot, historyHead, lockPath);
+  await readExactTrackedInput(historyRoot, lockPath, inputLockBytes);
+  let historicalInputLock;
+  try { historicalInputLock = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(inputLockBytes)); }
+  catch (error) { throw new Error('pinned W09 composition lock is invalid: ' + error.message); }
+  if (!composition || canonicalW09Json(composition.inputLock) !== canonicalW09Json(historicalInputLock)) {
+    throw new Error('W09 replay input lock differs from the exact selected historical bytes');
+  }
+  const lock = historicalInputLock;
+  if (lock.schema !== 'w09-web-inputs-lock/1' || lock.gameReleaseId !== candidateReleaseId
+      || lock.source?.releaseId !== proposal.releaseId || lock.source?.requestId !== proposal.requestId
+      || lock.source?.sourceRevision !== selected.sourceRevision) {
+    throw new Error('historical W09 selected identity does not match the replayed candidate');
+  }
+  if (compositionContext.historyPin.commit !== lock.web?.compilerCommit
+      || compositionContext.historyPin.fileSetSha256 !== lock.web?.compilerFileSetSha256
+      || compositionContext.historyPin.lockSha256 !== lock.web?.w09CompilerLockSha256) {
+    throw new Error('historical W09 code pin differs from the selected composition lock');
+  }
+
+  const w08InputLockBytes = releaseGitBlob(historyRoot, historyHead, W08_INPUT_LOCK_PATH);
+  const w08CompilerLockBytes = releaseGitBlob(historyRoot, historyHead, W08_COMPILER_LOCK_PATH);
+  await readExactTrackedInput(historyRoot, W08_INPUT_LOCK_PATH, w08InputLockBytes);
+  await readExactTrackedInput(historyRoot, W08_COMPILER_LOCK_PATH, w08CompilerLockBytes);
+  if (sha256Bytes(w08InputLockBytes) !== lock.web.w08InputLockSha256
+      || sha256Bytes(w08CompilerLockBytes) !== lock.web.w08CompilerLockSha256) {
+    throw new Error('historical W08 input/compiler lock bytes differ from the selected composition pin');
+  }
+  let w08CompilerLock;
+  try { w08CompilerLock = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(w08CompilerLockBytes)); }
+  catch (error) { throw new Error('historical W08 compiler lock is invalid: ' + error.message); }
+  if (!w08CompilerLock || w08CompilerLock.schemaVersion !== 'w08-compiler/1'
+      || w08CompilerLock.commit !== lock.web.w08CompilerCommit || !Array.isArray(w08CompilerLock.files)
+      || !w08CompilerLock.files.length) {
+    throw new Error('historical W08 compiler lock identity differs from the selected composition');
+  }
+  try {
+    execFileSync('git', ['-C', historyRoot, 'merge-base', '--is-ancestor', w08CompilerLock.commit, historyHead], {
+      stdio: 'ignore', windowsHide: true,
+    });
+  } catch {
+    throw new Error('historical W08 compiler commit is not an ancestor of its pinned composition checkout');
+  }
+
+  const candidateCompiler = candidate?.envelope?.compiler;
+  const normalizeFilePins = rows => {
+    if (!Array.isArray(rows)) return null;
+    return [...rows].map(row => ({ ...row }))
+      .sort((left, right) => Buffer.compare(Buffer.from(left.path ?? ''), Buffer.from(right.path ?? '')));
+  };
+  if (!candidateCompiler || candidateCompiler.commit !== lock.web.compilerCommit
+      || candidateCompiler.inputLockSha256 !== lock.web.w08InputLockSha256
+      || candidateCompiler.authoringCommit !== lock.web.authoringCommit
+      || candidate.manifest?.gameReleaseId !== candidateReleaseId
+      || candidate.manifest?.source?.commit !== lock.source.sourceCommit
+      || candidate.manifest?.source?.sourceRevision !== lock.source.sourceRevision
+      || candidate.manifest?.source?.manifestSha256 !== lock.source.manifestSha256
+      || candidate.manifest?.web?.compilerCommit !== lock.web.compilerCommit
+      || candidate.manifest?.web?.authoringCommit !== lock.web.authoringCommit
+      || canonicalW09Json(normalizeFilePins(candidateCompiler.files)) !== canonicalW09Json(normalizeFilePins(w08CompilerLock.files))) {
+    throw new Error('historical W09 candidate metadata differs from its independently pinned W09 and W08 compiler identities');
+  }
+
+  const seenPaths = new Set();
+  for (const row of w08CompilerLock.files) {
+    if (!row || typeof row.path !== 'string' || row.path.includes('\\') || row.path.startsWith('/')
+        || row.path.split('/').some(part => !part || part === '.' || part === '..')
+        || !Number.isSafeInteger(row.sizeBytes) || row.sizeBytes < 1 || !SHA256_RE.test(row.sha256)
+        || seenPaths.has(row.path)) {
+      throw new Error('historical W08 compiler lock contains an unsafe or duplicate file pin');
+    }
+    seenPaths.add(row.path);
+    const compilerBytes = releaseGitBlob(historyRoot, w08CompilerLock.commit, row.path);
+    const compositionBytes = releaseGitBlob(historyRoot, historyHead, row.path);
+    if (compilerBytes.byteLength !== row.sizeBytes || sha256Bytes(compilerBytes) !== row.sha256
+        || !compositionBytes.equals(compilerBytes)) {
+      throw new Error('historical W08 executable differs from its pinned compiler commit: ' + row.path);
+    }
+    await readExactTrackedInput(historyRoot, row.path, compositionBytes);
+  }
+  const validatorPath = path.join(historyRoot, 'scripts', 'content', 'contract-w08-build.mjs');
+  if (!seenPaths.has('scripts/content/contract-w08-build.mjs')) {
+    throw new Error('historical W08 compiler pin omits its candidate validator');
+  }
+  if (releaseGitText(historyRoot, ['status', '--porcelain', '--untracked-files=no'], 'historical W09 composition tracked-worktree check') !== '') {
+    throw new Error('historical W09 composition checkout has tracked changes outside its selected input and compiler pins');
+  }
+  const validator = await import(pathToFileURL(validatorPath).href);
+  if (typeof validator.validateW08Candidate !== 'function') {
+    throw new Error('pinned historical W08 compiler does not expose its candidate validator');
+  }
+  return validator;
+}
+
+export async function validateW09CandidateForComposition(candidate, validationContext) {
+  const validator = await loadW09CandidateValidator(candidate, validationContext);
+  validator.validateW08Candidate(candidate);
+}
+
+async function finalizeW09Candidate(original, contentVersion, validationContext) {
   const candidate = {
     envelope: structuredClone(original.envelope),
     manifest: structuredClone(original.manifest),
@@ -1797,8 +1957,7 @@ async function finalizeW09Candidate(original, contentVersion) {
   candidate.manifestBytes = Buffer.from(JSON.stringify(sortJson(candidate.manifest), null, 2) + '\n', 'utf8');
   const digest = createHash('sha256').update(candidate.manifestBytes).digest('hex');
   candidate.envelope.manifest.sha256 = digest;
-  const { validateW08Candidate } = await import('./contract-w08-build.mjs');
-  validateW08Candidate(candidate);
+  await validateW09CandidateForComposition(candidate, validationContext);
   return candidate;
 }
 
