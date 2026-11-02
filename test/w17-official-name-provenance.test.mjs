@@ -19,6 +19,7 @@ const PINS = [
     markId: 'chainaxe_p1_m1',
     markLabel: 'P1-M1',
     name: '突擊鏈斧',
+    sourceText: '突擊鏈斧',
     officialSourceId: 'official:w07:chainaxe-p1-m1:weapon-name:zh-tw:r1134',
     key: 'loc_weapon_family_chainaxe_p1_m1',
     sourceHash: 'ca7da17a',
@@ -31,6 +32,7 @@ const PINS = [
     markId: 'chainaxe_p1_m2',
     markLabel: 'P1-M2',
     name: '突擊鏈斧',
+    sourceText: '突擊鏈斧',
     officialSourceId: 'official:w07:chainaxe-p1-m2:weapon-name:zh-tw:r1134',
     key: 'loc_weapon_family_chainaxe_p1_m1',
     sourceHash: 'ca7da17a',
@@ -43,6 +45,7 @@ const PINS = [
     markId: 'lasgun_p1_m1',
     markLabel: 'P1-M1',
     name: '步兵鐳射槍',
+    sourceText: '步兵鐳射槍',
     officialSourceId: 'official:w13:lasgun-p1-m1:weapon-name:zh-tw:r1134',
     key: 'loc_weapon_family_lasgun_p1_m1',
     sourceHash: 'f93eef0d',
@@ -214,19 +217,35 @@ test('UnitT10_marks_the_three_exact_1_13_4_name_rows_against_the_pinned_1_13_2_t
   }
 });
 
+// Scenario: The published 1.13.4.4 package changes unrelated weapons and its overall revision pins, while these three verified localization rows remain byte-for-byte identical.
+// Purpose: Keep the narrowly scoped 1.13.2 text comparison visible across a package revision without treating the current text as independently observed in 1.13.4.
+// Given the exact three reviewed rows under the 1.13.4.4 manifest, When each weapon page is rendered, Then the same bounded provenance note remains visible.
+test('UnitT15_keeps_the_bounded_note_for_unchanged_rows_in_the_1_13_4_4_package', () => {
+  for (const pin of PINS) {
+    const result = makeResult(pin);
+    result.manifest.contentVersion = '1.13.4.4';
+    result.manifest.dataRevision = '608e2fe3ca7b6fa9bbaf50cdfac33c65e8be6304d70191d542bc2b5ac8343727';
+    result.manifest.source.commit = '9018a0a5b60e50116c46563f2531baadc5115efb';
+    result.manifest.source.sourceRevision = '9ffd8c5184d612f73ddb30ea9bf131af5a38becf9f4bfb1a678c474e4eddd3e2';
+    result.manifest.web.authoringCommit = '6129d9fb97b548a74cb8dcd9d1338cc0d5a1b47d';
+    result.pointer.content_version = '1.13.4.4';
+    result.pointer.data_revision = result.manifest.dataRevision;
+
+    const page = renderWeaponPage(result, pin);
+    assert.equal(elementsWithClass(page, 'shared-official-text')[0]?.textContent, pin.name);
+    assert.match(page.textContent, /與 1\.13\.2 固定來源文字相同/u);
+    assert.match(page.textContent, /未提供獨立 1\.13\.4 原始文字證據/u);
+  }
+});
+
 // Scenario: A fixed manifest or official-source field no longer matches the reviewed evidence map.
-// Purpose: Prevent a changed release, commit, ID, key, source hash, or original-text hash from inheriting the 1.13.2 provenance statement.
-// Given a known 1.13.4 source ID with any changed pin, When the page is rendered, Then it states that the source version is unconfirmed and omits the match claim.
+// Purpose: Prevent a changed release, repository, ID, key, source hash, or displayed/source text from inheriting the 1.13.2 provenance statement.
+// Given a known 1.13.4 source ID with any changed content evidence, When the page is rendered, Then it states that the source version is unconfirmed and omits the match claim.
 test('UnitT20_marks_known_rows_unconfirmed_when_any_fixed_provenance_pin_changes', () => {
   const changes = [
     ({ manifest }) => { manifest.gameReleaseId = 'darktide:1.13.3'; },
-    ({ manifest }) => { manifest.dataRevision = 'f'.repeat(64); },
     ({ manifest }) => { manifest.gameVersion = '1.13.3'; },
     ({ manifest }) => { manifest.source.repository += '-changed'; },
-    ({ manifest }) => { manifest.source.commit = 'b'.repeat(40); },
-    ({ manifest }) => { manifest.source.sourceRevision = 'e'.repeat(64); },
-    ({ manifest }) => { manifest.web.authoringCommit = 'c'.repeat(40); },
-    ({ manifest }) => { manifest.web.compilerCommit = 'd'.repeat(40); },
     ({ official, presentation }) => {
       const changedId = `${official.officialSourceId}:changed`;
       official.officialSourceId = changedId;
@@ -239,8 +258,11 @@ test('UnitT20_marks_known_rows_unconfirmed_when_any_fixed_provenance_pin_changes
     ({ official }) => { official.occurrence = 2; },
     ({ official }) => { official.key += ':changed'; },
     ({ official }) => { official.sourceHash = '00000000'; },
+    ({ official }) => { official.sourceText += '異動'; },
+    ({ official }) => { official.resolvedText += '異動'; },
     ({ official }) => { official.sourceTextSha256 = 'd'.repeat(64); },
     ({ official }) => { official.resolvedTextSha256 = 'e'.repeat(64); },
+    ({ presentation }) => { presentation.name += '異動'; },
     ({ presentation }) => { presentation.official.key += ':changed'; },
     ({ presentation }) => { presentation.official.sourceHash = '00000000'; },
     ({ presentation }) => { presentation.official.resolvedTextSha256 = 'e'.repeat(64); },
