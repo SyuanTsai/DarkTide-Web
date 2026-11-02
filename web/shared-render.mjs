@@ -642,9 +642,10 @@ function retainedSummaryIndex(historyPackage) {
       && typeof entry.id === 'string' && typeof entry.summary === 'string' && entry.summary.trim())
     .map(entry => [`${entry.kind}\u0000${entry.id}`, entry.summary]));
 }
-function appendRetainedSummary(parent, summaryIndex, kind, id, label = '摘要：') {
+function appendRetainedSummary(parent, summaryIndex, kind, id, label = '摘要：', parentSummary = null) {
   const summary = summaryIndex.get(`${kind}\u0000${id}`);
-  if (summary) parent.append(node('p', `${label}${summary}`, 'shared-history-summary'));
+  if (summary && summary !== parentSummary) parent.append(node('p', `${label}${summary}`, 'shared-history-summary'));
+  return summary ?? null;
 }
 // Exact identity crosswalk verified from the 1.13.4 Chainaxe P1 traits source and retained variant ID.
 const CURRENT_TO_RETAINED_BLESSING_ID = new Map([
@@ -908,8 +909,8 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
     const alias = node('p', null, 'shared-history-alias');
     alias.append(link(oldEntry.route, `資料基準 1.13.1 · ${retainedName(oldEntry)} 詳情、舊版適用關係與等級`, 'shared-history-link'));
     item.append(alias);
-    appendRetainedSummary(item, summaryIndex, 'blessing', oldEntry.id, '1.13.1 留存摘要：');
-    appendRetainedVariants(item, related, summaryIndex);
+    const parentSummary = appendRetainedSummary(item, summaryIndex, 'blessing', oldEntry.id, '1.13.1 留存摘要：');
+    appendRetainedVariants(item, related, summaryIndex, parentSummary);
   }
   for (const entry of blessings) {
     if (mappedRetainedIds.has(entry.id)) continue;
@@ -919,14 +920,14 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
     item.dataset.searchName = entrySearchText(entry, related.flatMap(row => [row.name_zh_tw, row.id]));
     item.append(link(entry.route, retainedName(entry), 'shared-history-link'));
     item.append(node('small', '資料基準 1.13.1 · 未逐項核對目前版本', 'shared-history-basis'));
-    appendRetainedSummary(item, summaryIndex, 'blessing', entry.id);
-    appendRetainedVariants(item, related, summaryIndex);
+    const parentSummary = appendRetainedSummary(item, summaryIndex, 'blessing', entry.id);
+    appendRetainedVariants(item, related, summaryIndex, parentSummary);
     list.append(item);
   }
   main.insertBefore(section, list);
 }
 
-function appendRetainedVariants(parent, variants, summaryIndex) {
+function appendRetainedVariants(parent, variants, summaryIndex, parentSummary = null) {
   if (!variants.length) return;
   const list = node('ul', null, 'shared-history-variants');
   for (const variant of variants) {
@@ -934,7 +935,7 @@ function appendRetainedVariants(parent, variants, summaryIndex) {
     variantItem.dataset.retainedVariantId = variant.id;
     variantItem.dataset.searchName = entrySearchText(variant);
     variantItem.append(link(variant.route, `變體詳情：${retainedName(variant)}`, 'shared-history-link'));
-    appendRetainedSummary(variantItem, summaryIndex, 'variant', variant.id);
+    appendRetainedSummary(variantItem, summaryIndex, 'variant', variant.id, '摘要：', parentSummary);
     list.append(variantItem);
   }
   parent.append(node('small', `${variants.length} 個 1.13.1 變體／等級詳情`, 'shared-muted'), list);
