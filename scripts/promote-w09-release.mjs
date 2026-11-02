@@ -210,9 +210,18 @@ try {
     'cancelled-without-deployment', 'already-cancelled'].includes(result.status)) {
     throw new Error('W09 selected composition is not publishable: ' + JSON.stringify(result));
   }
+  const activeBuildId = result.status === 'already-active' && !rollbackArguments
+    ? result.activePointers?.runtimeSnapshotBuildId
+    : result.artifact?.build_id;
+  if (activeBuildId !== undefined) {
+    if (!/^[a-f0-9]{64}$/u.test(activeBuildId)) throw new Error('W09 result did not identify a valid active build');
+    const artifact = JSON.parse(await readFile(path.join(repoRoot, 'dist', 'artifact-manifest.json'), 'utf8'));
+    if (artifact.build_id !== activeBuildId) throw new Error('prepared dist build does not match the active W09 build');
+  }
   if (process.env.GITHUB_OUTPUT) {
     await appendFile(process.env.GITHUB_OUTPUT,
-      'status=' + result.status + '\nstate_commit=' + (stateStore.ownerCommit ?? '') + '\n');
+      'status=' + result.status + '\nstate_commit=' + (stateStore.ownerCommit ?? '')
+      + '\nactive_build_id=' + (activeBuildId ?? '') + '\n');
   }
 } catch (error) {
   process.stderr.write(String(error?.message ?? error) + '\n');

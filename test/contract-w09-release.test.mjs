@@ -2205,19 +2205,31 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   assert.match(sharedJob.if, /head_repository\.full_name == github\.repository/u);
   assert.equal(sharedJob.outputs.publication_status,
     '${{ steps.promote.outputs.status || steps.rollback.outputs.status }}');
+  assert.equal(sharedJob.outputs.promotion_status, '${{ steps.promote.outputs.status }}');
+  assert.equal(sharedJob.outputs.active_build_id,
+    '${{ steps.promote.outputs.active_build_id || steps.rollback.outputs.active_build_id }}');
   assert.equal(backupJob.needs, 'shared-release');
   assert.equal(backupJob.permissions.contents, 'write');
   assert.match(backupJob.if, /verified-and-active/u);
   assert.match(backupJob.if, /verified-and-rolled-back/u);
+  assert.match(backupJob.if, /promotion_status == 'already-active'/u);
   assert.ok(!JSON.stringify(backupJob).includes('secrets.'));
   const backupStep = backupJob.steps.find(step => step.run === 'node scripts/operations-publish.mjs');
+  assert.match(backupStep.if, /backup-lookup\.outputs\.backup_required == 'true'/u);
   assert.equal(backupStep.env.BACKUP_COMPOSITION, 'w09');
   assert.equal(backupStep.env.W09_STATE_BRANCH_COMMIT, '${{ needs.shared-release.outputs.state_branch_commit }}');
   const stagedPackage = sharedJob.steps.find(step => step.name === 'Stage the exact verified package for retained backup');
   assert.match(stagedPackage.if, /verified-and-active/u);
   assert.match(stagedPackage.if, /verified-and-rolled-back/u);
+  assert.match(stagedPackage.if, /already-active/u);
+  assert.doesNotMatch(stagedPackage.if, /steps\.rollback\.outputs\.status == 'already-active'/u,
+    'an already-active rollback has no newly prepared dist package to retain');
   assert.match(stagedPackage.with.path, /dist\//u);
   assert.match(stagedPackage.with.path, /\.deployment\/last-deployment\.json/u);
+  assert.match(stagedPackage.with.path, /content\/contracts\/w09\/release-state\.json/u);
+  const backupLookup = backupJob.steps.find(step => step.run === 'node scripts/operations-backup-lookup.mjs');
+  assert.equal(backupLookup.if, "needs.shared-release.outputs.promotion_status == 'already-active'");
+  assert.equal(backupLookup.env.ACTIVE_BUILD_ID, '${{ needs.shared-release.outputs.active_build_id }}');
   const checkoutSteps = sharedJob.steps.filter(step => step.uses?.startsWith('actions/checkout@'));
   const checkoutByName = new Map(checkoutSteps.map(step => [step.name, step]));
   assert.equal(checkoutByName.size, 5, 'the workflow has the original three checkouts plus two conditional pinned public inputs');
@@ -2309,4 +2321,6 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   assert.match(cli, /requireDurableState: true/u);
   assert.match(cli, /delete deploymentEnv\.W09_GIT_TOKEN/u);
   assert.match(cli, /GITHUB_OUTPUT/u);
+  assert.match(cli, /active_build_id=/u);
+  assert.match(cli, /!rollbackArguments/u);
 });

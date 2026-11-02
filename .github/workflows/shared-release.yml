@@ -44,7 +44,9 @@ jobs:
     environment: production
     outputs:
       publication_status: ${{ steps.promote.outputs.status || steps.rollback.outputs.status }}
+      promotion_status: ${{ steps.promote.outputs.status }}
       state_branch_commit: ${{ steps.promote.outputs.state_commit || steps.rollback.outputs.state_commit }}
+      active_build_id: ${{ steps.promote.outputs.active_build_id || steps.rollback.outputs.active_build_id }}
     steps:
       - name: Check out reviewed Web commit without persisted credentials
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -224,12 +226,14 @@ jobs:
         if: >-
           steps.promote.outputs.status == 'verified-and-active'
           || steps.rollback.outputs.status == 'verified-and-rolled-back'
+          || steps.promote.outputs.status == 'already-active'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: w09-production-package
           path: |
             dist/
             .deployment/last-deployment.json
+            content/contracts/w09/release-state.json
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 1
@@ -238,6 +242,7 @@ jobs:
     if: >-
       needs.shared-release.outputs.publication_status == 'verified-and-active'
       || needs.shared-release.outputs.publication_status == 'verified-and-rolled-back'
+      || needs.shared-release.outputs.promotion_status == 'already-active'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -258,7 +263,17 @@ jobs:
         with:
           name: w09-production-package
           path: .
+      - name: Resolve the already-active build backup evidence
+        id: backup-lookup
+        if: needs.shared-release.outputs.promotion_status == 'already-active'
+        run: node scripts/operations-backup-lookup.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTIVE_BUILD_ID: ${{ needs.shared-release.outputs.active_build_id }}
       - name: Retain verified W09 package outside Cloudflare
+        if: >-
+          needs.shared-release.outputs.promotion_status != 'already-active'
+          || steps.backup-lookup.outputs.backup_required == 'true'
         run: node scripts/operations-publish.mjs
         env:
           GH_TOKEN: ${{ github.token }}
