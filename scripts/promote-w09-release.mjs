@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 import { execFileSync } from 'node:child_process';
-import { lstat, readFile } from 'node:fs/promises';
+import { appendFile, lstat, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -209,6 +209,10 @@ try {
   if (!['verified-and-active', 'verified-and-rolled-back', 'already-active', 'waiting-for-credentials',
     'cancelled-without-deployment', 'already-cancelled'].includes(result.status)) {
     throw new Error('W09 selected composition is not publishable: ' + JSON.stringify(result));
+  }
+  if (process.env.GITHUB_OUTPUT) {
+    await appendFile(process.env.GITHUB_OUTPUT,
+      'status=' + result.status + '\nstate_commit=' + (stateStore.ownerCommit ?? '') + '\n');
   }
 } catch (error) {
   process.stderr.write(String(error?.message ?? error) + '\n');

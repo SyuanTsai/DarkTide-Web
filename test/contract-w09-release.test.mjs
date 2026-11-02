@@ -2181,38 +2181,43 @@ test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_roo
   assert.ok(currentInputsLockBytes.byteLength > 0);
 });
 
-// Scenario: inspect the production workflow with both a selected promotion and explicit rollback available.
-// Purpose: keep the original full-history publication inputs stable while gating the two extra public checkouts on verified retained-name content only.
-test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yield-legacy-route', async () => {
+// Scenario: inspect the sole production workflow with both a selected promotion and explicit rollback available.
+// Purpose: keep static CI deployment-free and retain only successfully deployed W09 compositions from shared-release.
+test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-retain-W09-release', async () => {
   const staticWorkflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/static-ci.yml'), 'utf8'));
   const sharedWorkflow = parseYaml(await readFile(path.join(REPO_ROOT, '.github/workflows/shared-release.yml'), 'utf8'));
   const staticSteps = staticWorkflow.jobs['static-package'].steps;
-  const markerStep = staticSteps.find(step => step.name === 'Validate the selected shared-release authority marker');
-  assert.ok(markerStep?.run.includes('validateW09SelectedComposition'));
-  assert.ok(markerStep.run.includes("error.code !== 'ENOENT'"), 'missing and unreadable selected markers take different paths');
   assert.equal(staticWorkflow.jobs['static-package']['timeout-minutes'], 45);
-  assert.equal(staticWorkflow.jobs['static-package'].outputs.selected_shared, '${{ steps.selected.outputs.selected }}');
-  assert.match(staticWorkflow.jobs.deploy.if, /selected_shared != 'true'/u);
-  const legacyPrepare = staticSteps.find(step => step.name === 'Build and verify deployable published package');
-  assert.equal(legacyPrepare.if, "steps.selected.outputs.selected != 'true'");
-  assert.equal(staticSteps.find(step => step.name === 'Upload the verified static artifact').if, "steps.selected.outputs.selected != 'true'");
-  const legacyGuard = staticWorkflow.jobs.deploy.steps.find(step => step.name === 'Prevent legacy fallback after a W09 shared release is active');
-  assert.ok(legacyGuard?.run.includes('readW09OwnerStateBranch'));
-  assert.ok(legacyGuard?.run.includes('if (owner.active)'), 'active pointers or pending journal state block marker-free legacy deployment');
-  assert.ok(staticWorkflow.jobs.deploy.steps.find(step => step.name === 'Verify preview, publish production, and verify HTTPS').if
-    .includes("steps.legacy-authority.outputs.allowed == 'true'"));
-  assert.ok(staticWorkflow.jobs.deploy.steps.find(step => step.name === 'Save deployment receipt').if
-    .includes("steps.legacy-authority.outputs.allowed == 'true'"));
+  assert.deepEqual(Object.keys(staticWorkflow.jobs), ['static-package']);
+  assert.equal(staticWorkflow.jobs['static-package'].outputs, undefined);
+  assert.ok(!staticSteps.some(step => step.name === 'Validate the selected shared-release authority marker'));
+  assert.ok(!staticSteps.some(step => /deploy|artifact/u.test(step.name ?? '')));
 
   assert.deepEqual(sharedWorkflow.on.workflow_run.workflows, ['Static package CI and Cloudflare deployment']);
   assert.deepEqual(sharedWorkflow.on.workflow_run.branches, ['main']);
   assert.ok(sharedWorkflow.on.workflow_dispatch.inputs.expected_current_json);
   assert.equal(sharedWorkflow.permissions.contents, 'write');
   const sharedJob = sharedWorkflow.jobs['shared-release'];
+  const backupJob = sharedWorkflow.jobs.backup;
   assert.equal(sharedJob.concurrency.group, 'darktide-cloudflare-production');
   assert.equal(sharedJob.concurrency['cancel-in-progress'], false);
   assert.match(sharedJob.if, /conclusion == 'success'/u);
   assert.match(sharedJob.if, /head_repository\.full_name == github\.repository/u);
+  assert.equal(sharedJob.outputs.publication_status,
+    '${{ steps.promote.outputs.status || steps.rollback.outputs.status }}');
+  assert.equal(backupJob.needs, 'shared-release');
+  assert.equal(backupJob.permissions.contents, 'write');
+  assert.match(backupJob.if, /verified-and-active/u);
+  assert.match(backupJob.if, /verified-and-rolled-back/u);
+  assert.ok(!JSON.stringify(backupJob).includes('secrets.'));
+  const backupStep = backupJob.steps.find(step => step.run === 'node scripts/operations-publish.mjs');
+  assert.equal(backupStep.env.BACKUP_COMPOSITION, 'w09');
+  assert.equal(backupStep.env.W09_STATE_BRANCH_COMMIT, '${{ needs.shared-release.outputs.state_branch_commit }}');
+  const stagedPackage = sharedJob.steps.find(step => step.name === 'Stage the exact verified package for retained backup');
+  assert.match(stagedPackage.if, /verified-and-active/u);
+  assert.match(stagedPackage.if, /verified-and-rolled-back/u);
+  assert.match(stagedPackage.with.path, /dist\//u);
+  assert.match(stagedPackage.with.path, /\.deployment\/last-deployment\.json/u);
   const checkoutSteps = sharedJob.steps.filter(step => step.uses?.startsWith('actions/checkout@'));
   const checkoutByName = new Map(checkoutSteps.map(step => [step.name, step]));
   assert.equal(checkoutByName.size, 5, 'the workflow has the original three checkouts plus two conditional pinned public inputs');
@@ -2263,6 +2268,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.match(currentTemplateCheckout.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
 
   const promoteStep = sharedJob.steps.find(step => step.name === 'Promote the selected shared composition');
+  assert.equal(promoteStep.id, 'promote');
   assert.equal(promoteStep.env.W09_EXPECTED_COMPOSITION_COMMIT, W09_CURRENT_COMPOSITION_COMMIT,
     'the runtime must validate the exact same reviewed composition commit checked out above');
   assert.equal(promoteStep.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
@@ -2283,6 +2289,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.equal(promoteStep.env.SYP_W07_RETAINED_SOURCE_ROOT,
     "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}");
   const rollbackStep = sharedJob.steps.find(step => step.name === 'Restore the explicit approved whole-site snapshot');
+  assert.equal(rollbackStep.id, 'rollback');
   assert.equal(rollbackStep.env.SYP_W07_RETAINED_MODS_ROOT, undefined);
   assert.equal(rollbackStep.env.SYP_W07_RETAINED_SOURCE_ROOT, undefined);
   const sameShaCi = sharedJob.steps.find(step => step.name === 'Confirm same-commit static CI success');
@@ -2301,4 +2308,5 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.match(cli, /await stateStore\.restore\(\)/u);
   assert.match(cli, /requireDurableState: true/u);
   assert.match(cli, /delete deploymentEnv\.W09_GIT_TOKEN/u);
+  assert.match(cli, /GITHUB_OUTPUT/u);
 });

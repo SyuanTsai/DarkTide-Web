@@ -34,9 +34,14 @@ export function validateDeploymentReceipt(receipt, artifact) {
   return receipt;
 }
 
-export async function createBackup({ root, dist, receiptPath, output, runUrl, runAttempt = '1', sourceCommit }) {
+export async function createBackup({ root, dist, receiptPath, output, runUrl, runAttempt = '1', sourceCommit,
+  composition, stateBranchCommit }) {
   const artifact = await verifyStaticPackage(dist);
   const receipt = validateDeploymentReceipt(JSON.parse(await readFile(receiptPath, 'utf8')), artifact);
+  assert.ok(composition === undefined || composition === 'w09', 'unsupported backup composition');
+  assert.equal(composition === 'w09', stateBranchCommit !== undefined,
+    'W09 composition and state branch commit must be provided together');
+  if (stateBranchCommit !== undefined) assert.match(stateBranchCommit, /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/);
   if (sourceCommit) assert.match(sourceCommit, /^[a-f0-9]{40}$/);
   const commit = sourceCommit || (await exec('git', ['rev-parse', 'HEAD'], { cwd: root })).stdout.trim();
   assert.match(commit, /^[a-f0-9]{40}$/);
@@ -58,6 +63,7 @@ export async function createBackup({ root, dist, receiptPath, output, runUrl, ru
     created_at: new Date().toISOString(), deployment_run: runUrl, build_id: artifact.build_id,
     data_revision: artifact.data_revision, game_version: version.game_version, package_kind: 'published',
     file_count: artifact.file_count, public_input: { path: 'content/published/content.json', sha256: sha256(publicInput) },
+    ...(composition === 'w09' ? { composition, state_branch: { name: 'w09-release-state', commit: stateBranchCommit } } : {}),
     retention: 'Keep indefinitely; no automatic deletion. Preserve current and at least two preceding complete production packages.', files };
   const recordBytes = Buffer.from(JSON.stringify(record, null, 2) + '\n');
   await writeFile(path.join(output, 'backup.json'), recordBytes);
@@ -80,6 +86,12 @@ export async function inspectBackup(directory) {
   assert.match(record.data_revision, /^[a-f0-9]{64}$/);
   assert.equal(record.public_input.path, 'content/published/content.json');
   assert.match(record.public_input.sha256, /^[a-f0-9]{64}$/);
+  if (record.composition !== undefined || record.state_branch !== undefined) {
+    assert.equal(record.composition, 'w09');
+    assert.deepEqual(Object.keys(record.state_branch).sort(), ['commit', 'name']);
+    assert.equal(record.state_branch.name, 'w09-release-state');
+    assert.match(record.state_branch.commit, /^(?:[a-f0-9]{40}|[a-f0-9]{64})$/);
+  }
   assert.ok(Number.isSafeInteger(record.file_count) && record.file_count > 0);
   assert.deepEqual(record.files.map(row => row.name), BACKUP_FILES, 'unexpected backup file set');
   for (const row of record.files) {
@@ -125,5 +137,8 @@ export async function restoreBackup({ directory, output, sourceOutput }) {
     await exec('tar', ['-xzf', path.join(directory, 'source.tar.gz'), '-C', sourceOutput]);
     assert.equal(sha256(await readFile(path.join(sourceOutput, record.public_input.path))), record.public_input.sha256);
   }
-  return { status: 'verified', commit: record.commit, build_id: artifact.build_id, data_revision: artifact.data_revision, file_count: artifact.file_count };
+  return { status: 'verified', commit: record.commit, build_id: artifact.build_id, data_revision: artifact.data_revision,
+    file_count: artifact.file_count, ...(record.composition === 'w09'
+      ? { composition: record.composition, state_branch_commit: record.state_branch.commit }
+      : {}) };
 }

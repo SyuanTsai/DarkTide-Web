@@ -7,25 +7,25 @@ import path from 'node:path';
 import { parse } from 'yaml';
 const load = async name => parse(await readFile(new URL('../.github/workflows/' + name, import.meta.url), 'utf8'));
 
-// Scenario: PR builds, scheduled probes, and post-deploy backups run with distinct authority.
-// Purpose: No PR/monitor/backup can acquire the Cloudflare deploy secret; only trusted main creates backups/incidents, after W09 authority permits a real legacy deployment.
+// Scenario: static CI succeeds before the shared-release workflow deploys and retains an exact W09 package.
+// Purpose: Keep one production publisher while separating Cloudflare credentials from retained Release creation.
 test('UnitT10_operations_workflows_keep_credentials_out_of_PR_and_backup', async () => {
   const ci = await load('static-ci.yml');
-  const backup = ci.jobs.backup;
-  const deploySteps = ci.jobs.deploy.steps;
-  const publish = deploySteps.find(step => step.id === 'publish');
-  assert.equal(publish.run, 'npm run deploy:cloudflare');
-  for (const guard of ["steps.credential.outputs.ready == 'true'", "steps.freshness.outputs.current == 'true'", "steps.legacy-authority.outputs.allowed == 'true'"]) {
-    assert.ok(publish.if.includes(guard), 'publication requires ' + guard);
-    assert.ok(ci.jobs.deploy.outputs.verified.includes(guard), 'backup verification requires ' + guard);
-  }
-  assert.ok(ci.jobs.deploy.outputs.verified.includes("steps.publish.outcome == 'success'"));
-  assert.match(ci.jobs.deploy.if, /selected_shared != 'true'/);
-  assert.deepEqual(backup.needs, ['static-package', 'deploy']);
-  assert.match(backup.if, /needs\.deploy\.outputs\.verified == 'true'/);
-  assert.match(backup.if, /event_name != 'pull_request'/);
+  assert.deepEqual(Object.keys(ci.jobs), ['static-package']);
+  assert.ok(!JSON.stringify(ci).includes('CLOUDFLARE_API_TOKEN'));
+  assert.ok(!ci.jobs['static-package'].steps.some(step => step.uses?.startsWith('actions/upload-artifact@')));
+
+  const release = await load('shared-release.yml');
+  const publish = release.jobs['shared-release'];
+  const backup = release.jobs.backup;
+  assert.equal(backup.needs, 'shared-release');
+  assert.match(backup.if, /verified-and-active/);
+  assert.match(backup.if, /verified-and-rolled-back/);
   assert.equal(backup.permissions.contents, 'write');
   assert.ok(!JSON.stringify(backup).includes('secrets.'));
+  assert.ok(publish.steps.some(step => step.uses?.startsWith('actions/upload-artifact@')));
+  assert.ok(backup.steps.some(step => step.uses?.startsWith('actions/download-artifact@')));
+  assert.ok(backup.steps.some(step => step.run === 'node scripts/operations-publish.mjs'));
   const monitor = await load('operations-monitor.yml');
   assert.equal(monitor.on.schedule[0].cron, '17,47 * * * *');
   assert.ok(!JSON.stringify(monitor).includes('secrets.'));
