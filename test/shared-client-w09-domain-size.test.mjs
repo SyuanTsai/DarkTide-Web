@@ -7,7 +7,7 @@ import { loadSharedRelease } from '../web/shared-client.mjs';
 import { installTestLocation, jsonResponse } from './w11-shared-client.fixture.mjs';
 
 const PROPOSAL_ID = 'c41434cc510b4d28b91e59a14ac681e5aa973a09958ba3b7eb03d10eb13a8a00';
-const CANDIDATE_ROOT = new URL(`../content/contracts/w09/proposals/${PROPOSAL_ID}/candidate/`, import.meta.url);
+const CANDIDATE_ROOT = new URL('./fixtures/contracts/w09-c414/candidate/', import.meta.url);
 const EXPECTED_MANIFEST_SHA256 = '71d9ae708ea3c209b3831295b499f4b584720cd5622d9a915faa9a597f38da36';
 const EXPECTED_WEAPONS_SHA256 = '5f86b049f411883abd60378b2717590202a2322aa7b221241f84bc8003358605';
 const EXPECTED_WEAPONS_BYTES = 13_987_749;

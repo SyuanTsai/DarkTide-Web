@@ -10,7 +10,7 @@ const CURRENT_RELEASE = 'darktide:1.13.4';
 const DATA_REVISION = 'e039f650aed9c6742200f488ab93d0721ff9aa1849cfa29ad81f693da9b15a57';
 const SOURCE_COMMIT = 'a131860bc24354dfe8842047efe51ce1ceae8e68';
 const AUTHORING_COMMIT = '4ace4d76d0788e34c45984bb39c20c130f4ef62a';
-const D8D_CANDIDATE_ROOT = new URL('../content/contracts/w09/proposals/d8d430c3f105696a06d4f2af040e095d260546fbae38960d8ec1cb0eb1f56bab/candidate/', import.meta.url);
+const D8D_CANDIDATE_ROOT = new URL('./fixtures/contracts/w09-d8d/candidate/', import.meta.url);
 const PINS = [
   {
     presentationId: 'web:presentation:chainaxe-p1-m1:r1134',
