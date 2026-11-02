@@ -1280,7 +1280,7 @@ function renderWeaponSourceDetails(parent, view) {
   }
   parent.append(block);
 }
-function renderWeapon(main, result, view, familyMarks, url, showRetainedRelationsLink = false) {
+function renderWeapon(main, result, view, familyMarks, url, showRetainedRelationsLink = false, unresolvedMarkIds = []) {
   const hasRangedProfile = (view.attackProfiles ?? []).some(profile => ['hipfire', 'ads'].includes(profile.payload?.mode));
   const weaponCanonicalUrl = new URL(url.href);
   weaponCanonicalUrl.searchParams.set('family', view.familyId);
@@ -1296,6 +1296,16 @@ function renderWeapon(main, result, view, familyMarks, url, showRetainedRelation
     tabs.append(anchor);
   }
   main.append(tabs);
+  if (unresolvedMarkIds.length) {
+    const section = node('section', null, 'shared-unresolved-weapon-marks');
+    section.append(node('h2', '尚未確認的其他型號'));
+    const list = node('ul', null, 'shared-detail-list');
+    for (const markId of unresolvedMarkIds) {
+      list.append(node('li', `型號 ID ${markId}：尚無已驗證的繁體中文詳情。`));
+    }
+    section.append(list);
+    main.append(section);
+  }
   if (showRetainedRelationsLink) {
     main.append(link('#retained-weapon-relations', '查看 1.13.1 留存資料與關聯', 'secondary-link'));
   }
@@ -1380,9 +1390,10 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
     const view = url.searchParams.has('mark') ? family.marks.find(mark => mark.markId === markId) : family.marks[0];
     if (!view) {
       setMetadata('武器型號未能確認', '目前無法確認此武器型號的同版繁體中文資料。', url);
-      return renderUnavailable(main, { statusText: '無法確認這個武器型號。' });
+      return renderUnavailable(main, { statusText: `型號 ID ${markId} 尚無已驗證的繁體中文詳情。` });
     }
-    renderWeapon(main, result, view, family.marks, url, Boolean(historyLoading || historyError || historyPackage?.catalog));
+    renderWeapon(main, result, view, family.marks, url,
+      Boolean(historyLoading || historyError || historyPackage?.catalog), family.unresolvedMarkIds ?? []);
     renderRetainedWeaponDetail(main, historyPackage?.catalog, familyId,
       currentNativeMarkIndexByFamily(records, result).get(familyId), retainedWeaponDetail,
       { historyError, historyLoading });
@@ -1410,7 +1421,10 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
     const retainedMarks = oldMarksByFamily.get(family) ?? [];
     const currentReady = view.status === 'ready';
     const currentName = currentReady ? view.marks[0].name : currentPresentation?.name;
-    const currentMarkNames = currentReady ? view.marks.map(mark => mark.name) : familyRecords.map(record => record.payload?.markId);
+    const unresolvedMarkIds = currentReady ? view.unresolvedMarkIds ?? [] : [];
+    const currentMarkNames = currentReady
+      ? [...view.marks.map(mark => mark.name), ...unresolvedMarkIds]
+      : familyRecords.map(record => record.payload?.markId);
     const item = node('li', null, 'shared-entry shared-weapon-family'); item.dataset.searchName = entrySearchText({ name_zh_tw: currentName, id: family }, [
       ...currentMarkNames, retainedFamily?.name_zh_tw, ...retainedMarks.flatMap(mark => [mark.name_zh_tw, mark.id]),
     ]);
@@ -1418,12 +1432,18 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
     if (retainedFamily) item.dataset.retainedWeaponId = retainedFamily.id;
     if (currentReady) {
       const first = view.marks[0];
-      const currentMarkIdentities = currentWeaponMarkIdentities(familyRecords, view.marks);
+      const currentMarkIdentities = currentWeaponMarkIdentities(familyRecords, [
+        ...view.marks,
+        ...unresolvedMarkIds.map(markId => ({ markId })),
+      ]);
       const markCount = countUnifiedWeaponMarks(currentMarkIdentities, retainedMarks);
       item.append(link(paramsUrl('/weapons/', { family, mark: first.markId }), `${first.name} · ${markCount} 個型號`));
       item.append(node('p', retainedFamily
         ? '此家族的目前版與 1.13.1 識別相同；型號依已核對的武器識別對應。'
         : '依武器家族選取型號，查看目前版本已驗證的素質、來源表與動作資料。', 'shared-muted'));
+      if (unresolvedMarkIds.length) {
+        item.append(node('p', `尚無已驗證詳情的型號 ID：${unresolvedMarkIds.join('、')}`, 'shared-muted'));
+      }
     } else {
       item.append(node('strong', retainedName({ id: family, name_zh_tw: currentName }), 'shared-current-weapon-name'));
       item.append(node('p', '目前版本已收錄此武器識別，但尚無可顯示的已驗證詳情。', 'shared-muted'));

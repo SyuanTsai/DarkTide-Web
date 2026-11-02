@@ -1047,12 +1047,18 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     const markIds = [...new Set(weaponRecords.map((record) => record.payload.markId).filter(isDisplayText))];
     if (markIds.length === 0) return unavailable('unknown-weapon-family', 'weapon');
     const marks = [];
+    const unresolvedMarkIds = [];
+    let firstUnavailable = null;
     for (const markId of markIds) {
       const weapon = getWeapon({ familyId, markId });
-      if (weapon.status !== 'ready') return weapon;
-      marks.push(weapon);
+      if (weapon.status === 'ready') marks.push(weapon);
+      else {
+        unresolvedMarkIds.push(markId);
+        firstUnavailable ??= weapon;
+      }
     }
-    return { status: 'ready', familyId, marks };
+    if (marks.length === 0) return firstUnavailable ?? unavailable('unknown-weapon-family', 'weapon');
+    return { status: 'ready', familyId, marks, unresolvedMarkIds };
   };
 
   const entityName = (ref) => getEntityPresentation(ref)?.name ?? null;
