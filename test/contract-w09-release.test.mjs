@@ -2105,7 +2105,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.equal(sourceHistoryCheckout.with.ref, 'main');
   assert.equal(sourceHistoryCheckout.with.path, 'source');
   assert.equal(compositionCheckout.with.repository, 'SyuanTsai/DarkTide-Web');
-  assert.equal(compositionCheckout.with.ref, '82e5ce23409e5b078aeb651d942003d519701a5a');
+  assert.equal(compositionCheckout.with.ref, 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c');
   assert.equal(compositionCheckout.with.path, 'composition-inputs');
 
   const retainedDetector = sharedJob.steps.find(step => step.name === 'Detect fixed retained-name inputs in the selected composition');
