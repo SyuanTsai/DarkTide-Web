@@ -197,7 +197,7 @@ function validateManifestShape(manifest, pointer) {
   return filesByPath;
 }
 
-function selectConsumerFiles(manifest, filesByPath) {
+function selectConsumerFiles(manifest, filesByPath, requiredKinds = CORE_KINDS) {
   const selected = new Map();
   const add = file => {
     if (!CORE_KINDS.includes(file.kind)) fail(`Web consumer cannot load dependency kind ${file.kind}`);
@@ -205,7 +205,7 @@ function selectConsumerFiles(manifest, filesByPath) {
     selected.set(file.path, file);
     for (const dependency of file.dependencies) add(filesByPath.get(dependency));
   };
-  for (const kind of CORE_KINDS) {
+  for (const kind of requiredKinds) {
     const rows = manifest.files.filter(file => file.kind === kind);
     if (!rows.length) fail(`manifest is missing required ${kind} domain`);
     rows.forEach(add);
@@ -399,8 +399,33 @@ async function readBoundedJson(fetchImpl, url, limit, lifecycle) {
   return { bytes, value };
 }
 
-export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.bind(globalThis), cryptoApi = globalThis.crypto, signal } = {}) {
+function isSkillsPath(pathname) {
+  return typeof pathname === 'string' && /^\/skills(?:\/|$)/u.test(pathname);
+}
+
+function sharedClientIdentity(pointer) {
+  return [pointer.game_version, pointer.data_revision, pointer.manifest_path, pointer.manifest_sha256].join('\u0000');
+}
+
+function sharedDomainCacheKey(manifest, file) {
+  return [manifest.gameReleaseId, manifest.dataRevision, file.path, file.sizeBytes, file.sha256].join('\u0000');
+}
+
+export async function loadSharedRelease({
+  build,
+  fetchImpl = globalThis.fetch?.bind(globalThis),
+  cryptoApi = globalThis.crypto,
+  signal,
+  pathname,
+  cache = null,
+  force = false,
+} = {}) {
   const { pointer, staticFiles } = selectSharedRelease(build);
+  const cacheIdentity = sharedClientIdentity(pointer);
+  if (cache) {
+    if (cache.identity !== null && cache.identity !== cacheIdentity) fail('shared client cache is bound to a different release pointer');
+    cache.identity = cacheIdentity;
+  }
   if (Object.hasOwn(build, 'shared_package_kind')
       && !['fixture', 'published'].includes(build.shared_package_kind)) {
     fail('shared package kind is unsupported');
@@ -422,65 +447,113 @@ export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.b
     if (url.origin !== baseOrigin || url.pathname !== path || url.search || url.hash) fail('shared data path escaped its same-origin release root');
     return url;
   };
-  const manifestUrl = makeUrl(pointer.manifest_path);
-  const manifestResponse = await readBoundedJson(fetchImpl, manifestUrl, MAX_MANIFEST_BYTES, lifecycle);
-  if (await lifecycle.race(sha256(manifestResponse.bytes, cryptoApi)) !== pointer.manifest_sha256) fail('shared manifest hash does not match the build pointer');
-  const manifest = manifestResponse.value;
-  const filesByPath = validateManifestShape(manifest, pointer);
-  const material = utf8Json(dataRevisionMaterial(manifest));
-  if (await lifecycle.race(sha256(material, cryptoApi)) !== manifest.dataRevision) fail('shared manifest canonical data revision is invalid');
-  const selectedFiles = selectConsumerFiles(manifest, filesByPath);
+  const loadManifest = async () => {
+    const manifestUrl = makeUrl(pointer.manifest_path);
+    const manifestResponse = await readBoundedJson(fetchImpl, manifestUrl, MAX_MANIFEST_BYTES, lifecycle);
+    if (await lifecycle.race(sha256(manifestResponse.bytes, cryptoApi)) !== pointer.manifest_sha256) fail('shared manifest hash does not match the build pointer');
+    const manifest = manifestResponse.value;
+    const filesByPath = validateManifestShape(manifest, pointer);
+    const material = utf8Json(dataRevisionMaterial(manifest));
+    if (await lifecycle.race(sha256(material, cryptoApi)) !== manifest.dataRevision) fail('shared manifest canonical data revision is invalid');
+    return { manifestResponse, manifest, filesByPath };
+  };
+  let manifestPromise = cache?.manifestPromise ?? null;
+  if (!manifestPromise) {
+    manifestPromise = Promise.resolve().then(loadManifest);
+    if (cache) {
+      cache.manifestPromise = manifestPromise;
+      manifestPromise = manifestPromise.catch(error => {
+        if (cache.manifestPromise === manifestPromise) cache.manifestPromise = null;
+        throw error;
+      });
+      manifestPromise.catch(() => {});
+      cache.manifestPromise = manifestPromise;
+    }
+  }
+  const { manifestResponse, manifest, filesByPath } = cache
+    ? await lifecycle.race(manifestPromise)
+    : await manifestPromise;
+
+  // Check every file the original consumer can consume before allowing a partial route load.
+  const allCoreFiles = selectConsumerFiles(manifest, filesByPath);
   const announcementsFile = selectOptionalAnnouncementsFile(manifest, filesByPath);
-  const domains = [];
-  const rawFiles = new Map([[pointer.manifest_path, manifestResponse.bytes]]);
-  let totalBytes = manifestResponse.bytes.byteLength;
-  for (const file of selectedFiles) {
+  const changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
+  const pinnedFiles = new Map(allCoreFiles.map(file => [file.path, file]));
+  if (changeIndex) pinnedFiles.set(changeIndex.path, changeIndex);
+  if (announcementsFile) pinnedFiles.set(announcementsFile.path, announcementsFile);
+  const skillsOnly = isSkillsPath(pathname);
+  let packageBytes = manifestResponse.bytes.byteLength;
+  for (const file of pinnedFiles.values()) {
     const path = `/data/${manifest.dataRevision}/${file.path}`;
     const pinned = staticFiles.get(path);
-    if (!pinned || pinned.sha256 !== file.sha256 || pinned.size_bytes !== file.sizeBytes) fail(`build does not pin selected domain ${file.path}`);
-    totalBytes += file.sizeBytes;
-    if (totalBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+    if (!pinned || pinned.sha256 !== file.sha256 || pinned.size_bytes !== file.sizeBytes) {
+      if (file.path === changeIndex?.path) fail('build does not pin the optional game-changes index');
+      if (file.path === announcementsFile?.path) fail('build does not pin the optional announcements domain');
+      fail(`build does not pin selected domain ${file.path}`);
+    }
+    packageBytes += file.sizeBytes;
+    if (skillsOnly && packageBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+  }
+  if (!skillsOnly) packageBytes = manifestResponse.bytes.byteLength;
+
+  const routeCoreFiles = skillsOnly
+    ? selectConsumerFiles(manifest, filesByPath, ['skills', 'terms'])
+    : allCoreFiles;
+  const routeFiles = new Map(routeCoreFiles.map(file => [file.path, file]));
+  if (!skillsOnly) {
+    if (changeIndex) routeFiles.set(changeIndex.path, changeIndex);
+    if (announcementsFile) routeFiles.set(announcementsFile.path, announcementsFile);
+  }
+  const selectedFiles = [...routeFiles.values()];
+  const loadedForRequest = new Map();
+  const fetchDomain = async file => {
+    const path = `/data/${manifest.dataRevision}/${file.path}`;
     const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, file.sizeBytes), lifecycle);
-    if (response.bytes.byteLength !== file.sizeBytes || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== file.sha256) fail(`shared domain bytes do not match manifest: ${file.path}`);
+    if (response.bytes.byteLength !== file.sizeBytes
+        || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== file.sha256) {
+      fail(`shared domain bytes do not match manifest: ${file.path}`);
+    }
     validateDomain(response.value, file, manifest.gameReleaseId);
-    domains.push(response.value);
-    rawFiles.set(path, response.bytes);
+    return { file, path, bytes: response.bytes, document: response.value };
+  };
+  for (const file of selectedFiles) {
+    if (!skillsOnly && packageBytes + file.sizeBytes > MAX_PACKAGE_BYTES) {
+      fail('selected shared domains exceed the package byte limit');
+    }
+    const key = sharedDomainCacheKey(manifest, file);
+    let loaded;
+    if (force && cache) {
+      cache.domainPromises.delete(key);
+      cache.domainValues.delete(key);
+    }
+    if (!cache) {
+      loaded = await fetchDomain(file);
+    } else {
+      let promise = cache.domainPromises.get(key);
+      if (!promise) {
+        promise = Promise.resolve().then(() => fetchDomain(file))
+          .then(value => {
+            cache.domainValues.set(key, value);
+            return value;
+          })
+          .catch(error => {
+            if (cache.domainPromises.get(key) === promise) cache.domainPromises.delete(key);
+            throw error;
+          });
+        promise.catch(() => {});
+        cache.domainPromises.set(key, promise);
+      }
+      loaded = await lifecycle.race(promise);
+    }
+    loadedForRequest.set(key, loaded);
+    if (!skillsOnly) packageBytes += loaded.bytes.byteLength;
   }
-  const changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
-  if (changeIndex) {
-    const path = `/data/${manifest.dataRevision}/${changeIndex.path}`;
-    const pinned = staticFiles.get(path);
-    if (!pinned || pinned.sha256 !== changeIndex.sha256 || pinned.size_bytes !== changeIndex.sizeBytes) {
-      fail('build does not pin the optional game-changes index');
-    }
-    totalBytes += changeIndex.sizeBytes;
-    if (totalBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
-    const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, changeIndex.sizeBytes), lifecycle);
-    if (response.bytes.byteLength !== changeIndex.sizeBytes
-        || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== changeIndex.sha256) {
-      fail(`shared domain bytes do not match manifest: ${changeIndex.path}`);
-    }
-    validateDomain(response.value, changeIndex, manifest.gameReleaseId);
-    domains.push(response.value);
-    rawFiles.set(path, response.bytes);
-  }
-  if (announcementsFile) {
-    const path = `/data/${manifest.dataRevision}/${announcementsFile.path}`;
-    const pinned = staticFiles.get(path);
-    if (!pinned || pinned.sha256 !== announcementsFile.sha256 || pinned.size_bytes !== announcementsFile.sizeBytes) {
-      fail('build does not pin the optional announcements domain');
-    }
-    totalBytes += announcementsFile.sizeBytes;
-    if (totalBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
-    const response = await readBoundedJson(fetchImpl, makeUrl(path), Math.min(MAX_DOMAIN_BYTES, announcementsFile.sizeBytes), lifecycle);
-    if (response.bytes.byteLength !== announcementsFile.sizeBytes
-        || await lifecycle.race(sha256(response.bytes, cryptoApi)) !== announcementsFile.sha256) {
-      fail(`shared domain bytes do not match manifest: ${announcementsFile.path}`);
-    }
-    validateDomain(response.value, announcementsFile, manifest.gameReleaseId);
-    domains.push(response.value);
-    rawFiles.set(path, response.bytes);
-  }
+
+  const loadedValues = cache ? [...cache.domainValues.values()] : [...loadedForRequest.values()];
+  loadedValues.sort((left, right) => compareUtf8(left.file.path, right.file.path));
+  const domains = loadedValues.map(value => value.document);
+  const rawFiles = new Map([[pointer.manifest_path, manifestResponse.bytes]]);
+  for (const value of loadedValues) rawFiles.set(value.path, value.bytes);
   const view = createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId, fixtureOnly });
   return Object.freeze({
     status: 'ready',
@@ -502,5 +575,14 @@ export async function loadSharedRelease({ build, fetchImpl = globalThis.fetch?.b
 }
 
 export function createSharedClient(options = {}) {
-  return Object.freeze({ load: ({ signal } = {}) => loadSharedRelease({ ...options, signal }) });
+  const cache = { identity: null, manifestPromise: null, domainPromises: new Map(), domainValues: new Map() };
+  return Object.freeze({
+    load: ({ signal, pathname, force = false } = {}) => loadSharedRelease({
+      ...options,
+      signal,
+      pathname,
+      force,
+      cache: signal ? null : cache,
+    }),
+  });
 }

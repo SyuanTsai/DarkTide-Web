@@ -149,4 +149,16 @@ test('UnitT30_keeps-the-aggregate-shared-package-bound-at-24MiB', async t => {
     'the verified change index fits within the running aggregate bound');
   assert.ok(!calls.includes(`/data/${manifest.dataRevision}/${announcements.path}`),
     'the aggregate limit rejects the package before downloading its final optional domain');
+
+  const skillsCalls = [];
+  await assert.rejects(
+    loadSharedRelease({
+      build: packageInfo.build,
+      fetchImpl: makeFetch(packageInfo.responses, skillsCalls),
+      pathname: '/skills/',
+    }),
+    /selected shared domains exceed the package byte limit/u,
+  );
+  assert.deepEqual(skillsCalls, [packageInfo.pointer.manifest_path],
+    'skills-only loading preflights the complete pinned package total before fetching a partial route');
 });
