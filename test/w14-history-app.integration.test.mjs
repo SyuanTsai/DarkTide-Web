@@ -105,7 +105,10 @@ async function compiledSharedFixture({ retainedWeaponCrosswalk = false } = {}) {
     nameOfficialSourceId: currentBrainBurstName.officialSourceId,
     official: currentBrainBurstEffect,
     errata: [],
-    detailSections: [],
+    detailSections: [{
+      sectionId: 'effects',
+      items: [{ itemId: 'brain-burst-current-effect', text: '測試用技能效果數值：持續 12 秒。', termRefs: [], termRuleRefs: [] }],
+    }],
   });
   skills.web.officialInputs.sources.push(nameSource, descriptionSource, currentBrainBurstName, currentBrainBurstEffect);
   domainFiles.set(skillsFile.path, Buffer.from(JSON.stringify(skills, null, 2) + '\n', 'utf8'));
@@ -411,6 +414,9 @@ test('InterT20_unified-skills-restored-trees-legacy-routes-and-independent-curre
       'the merged identity opens the confirmed current detail');
     assert.equal(await page.locator('.shared-entry a[href="/skills/arbites/adamant_ammo_belt/"]').count(), 1,
       'an old-only entry uses its catalog route to the complete skill detail');
+    const retainedSkillSummary = page.locator('.shared-entry').filter({ has: page.locator('a[href="/skills/arbites/adamant_ammo_belt/"]') });
+    assert.match(await retainedSkillSummary.innerText(), /1\.13\.1 留存摘要：/u,
+      'a retained skill summary states its historical data basis beside the result');
     assert.equal(await page.locator('select[name="archetype"] option').count(), 8);
     const treeLinks = page.locator('.shared-talent-tree-links a');
     assert.deepEqual(await treeLinks.evaluateAll(links => links.map(link => link.getAttribute('href')).sort()), [
@@ -502,6 +508,10 @@ test('InterT20_unified-skills-restored-trees-legacy-routes-and-independent-curre
     await page.locator('.shared-official-text').waitFor({ state: 'visible' });
     assert.equal(await page.locator('main h1').innerText(), '顱腦崩裂');
     assert.equal(await page.locator('.shared-official-text').innerText(), '測試用已核對現版效果。');
+    assert.equal(await page.locator('.shared-detail-sections').evaluate(element => element.open), true,
+      'the approved current skill mechanics are open when its detail page loads');
+    assert.match(await page.locator('.shared-detail-sections').innerText(), /測試用技能效果數值：持續 12 秒/u,
+      'the current skill effect and value are visible without expanding a disclosure');
     assert.ok((await page.locator('#build-meta').innerText()).includes(`遊戲版本 ${currentVersion}`));
     await page.goBack();
     await page.locator('.tree-layout').waitFor({ state: 'visible' });
@@ -802,6 +812,14 @@ test('InterT30_weapons-and-blessings-restore-full-catalog-and-details', { timeou
     const retainedVariantIds = await page.locator('[data-retained-variant-id]').evaluateAll(nodes => nodes.map(row => row.dataset.retainedVariantId));
     assert.equal(retainedVariantIds.length, 605, 'all 605 retained variant detail routes remain linked');
     assert.equal(new Set(retainedVariantIds).size, 605, 'retained variant IDs are not duplicated');
+    const adhesiveCharge = page.locator('.shared-history-blessing[data-retained-blessing-id="adhesive-charge"]');
+    assert.match(await adhesiveCharge.innerText(), /資料基準 1\.13\.1 · 未逐項核對目前版本[\s\S]*摘要：.*震盪槍手榴彈.*\+6\/9\/12\/15%/u,
+      'the retained blessing summary exposes its verified effect and values with the 1.13.1 label');
+    const adhesiveVariant = adhesiveCharge.locator('[data-retained-variant-id]').first();
+    assert.match(await adhesiveCharge.innerText(), /個 1\.13\.1 變體／等級詳情/u,
+      'the blessing row gives its nested variant summaries a clear historical parent context');
+    assert.match(await adhesiveVariant.innerText(), /摘要：/u,
+      'the nested variant summary uses a concise label without repeating its historical context');
 
     await page.goto(`${hosted.origin}/blessings/rev-it-up/`, { waitUntil: 'domcontentloaded' });
     await page.getByRole('heading', { name: '提速', exact: true }).waitFor({ state: 'visible' });
