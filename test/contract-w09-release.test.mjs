@@ -1727,6 +1727,8 @@ test('InterT25_explicit-retention-reference-changes-use-the-durable-owner-state-
 const W09_HISTORICAL_COMPOSITION_COMMIT = '08c25ff58a01bac1a52a0531cde99288f68cfa31';
 const W09_C882_COMPOSITION_COMMIT = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
 const W09_C882_REQUEST_ID = 'c882e473212ea55a2a2cc6a5c71d35e50c6662f140a246fb99879bb327804740';
+const W09_CURRENT_COMPOSITION_COMMIT = 'bfa9fd93c74eef47353f71b94d8cede987cd2b9e';
+const W09_CURRENT_REQUEST_ID = '4223a7fb6929554a6a170cde4a1f49fd5abb058eaedf8912cd27bf8179b9e644';
 const W08_UPDATED_COMPILER_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5';
 const W08_UPDATED_AUTHORING_SIZE = 189850;
 const W08_UPDATED_AUTHORING_SHA256 = '11d884888d1ebf45fa8c91a265dcc0c34169aa73efec92a65006c0e0f05f455c';
@@ -2081,8 +2083,8 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     'no guard path writes the historical checkout');
 });
 
-// Scenario: Current main installs the dd467d9 W08 compiler lock while the selected c882 request still pins its historical befa compiler inputs.
-// Purpose: Prove the dual-root replay authenticates the new current compiler separately and leaves the existing selected marker, request lock, and historical compiler bytes intact.
+// Scenario: Current main selects the new eight-autogun request while a separate historical root replays selected c882 with its befa compiler inputs.
+// Purpose: Prove current and historical selection identities stay separate and each dual-root replay authenticates its own compiler and immutable request bytes.
 test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_root_replay', async t => {
   const releaseApi = await import('../scripts/content/contract-w09-release.mjs');
   const fixture = await createDualRootW09Fixture(t, W09_C882_COMPOSITION_COMMIT);
@@ -2135,9 +2137,16 @@ test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_roo
   assert.notEqual(currentCompilerLock.commit, historicalCompilerLock.commit,
     'current runtime and historical W09 composition keep separate W08 compiler commits');
 
-  const checkedOutSelectedBytes = await readFile(path.join(REPO_ROOT, ...selectedPath.split('/')));
-  const checkedOutRequestLockBytes = await readFile(path.join(REPO_ROOT, ...requestLockPath.split('/')));
-  assert.deepEqual(checkedOutSelectedBytes, selectedBytes, 'the c882 selected marker remains unchanged');
+  assertCompositionInputsMatchCurrentHead(REPO_ROOT, W09_CURRENT_COMPOSITION_COMMIT);
+  const checkedOutSelectedBytes = gitBytes(REPO_ROOT, ['show', 'HEAD:' + selectedPath]);
+  const checkedOutSelection = JSON.parse(checkedOutSelectedBytes.toString('utf8'));
+  const checkedOutRequestLockBytes = gitBytes(REPO_ROOT, ['show', 'HEAD:' + requestLockPath]);
+  assert.equal(checkedOutSelection.proposals?.length, 1);
+  assert.equal(checkedOutSelection.proposals[0].requestId, W09_CURRENT_REQUEST_ID,
+    'current main selects the reviewed eight-autogun Source request');
+  assert.equal(checkedOutSelection.proposals[0].gameReleaseId, 'darktide:1.13.4');
+  assert.notDeepEqual(checkedOutSelectedBytes, selectedBytes,
+    'current main may advance while the fixed historical c882 marker is replayed in its own root');
   assert.deepEqual(checkedOutRequestLockBytes, historicalRequestLockBytes, 'the c882 request lock remains unchanged');
 
   const runtimeStatePath = path.join(fixture.runtimeRoot, 'content/contracts/w09/release-state.json');
@@ -2221,7 +2230,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.equal(sourceHistoryCheckout.with.ref, 'main');
   assert.equal(sourceHistoryCheckout.with.path, 'source');
   assert.equal(compositionCheckout.with.repository, 'SyuanTsai/DarkTide-Web');
-  assert.equal(compositionCheckout.with.ref, 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c');
+  assert.equal(compositionCheckout.with.ref, W09_CURRENT_COMPOSITION_COMMIT);
   assert.equal(compositionCheckout.with.path, 'composition-inputs');
 
   const retainedDetector = sharedJob.steps.find(step => step.name === 'Detect fixed retained-name inputs in the selected composition');
@@ -2254,6 +2263,9 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-yiel
   assert.match(currentTemplateCheckout.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
 
   const promoteStep = sharedJob.steps.find(step => step.name === 'Promote the selected shared composition');
+  assert.equal(promoteStep.env.W09_EXPECTED_COMPOSITION_COMMIT, W09_CURRENT_COMPOSITION_COMMIT,
+    'the runtime must validate the exact same reviewed composition commit checked out above');
+  assert.equal(promoteStep.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
   const selectedGate = sharedJob.steps.find(step => step.name === 'Check the selected composition gate');
   const automaticPromotionSteps = [
     selectedGate, retainedDetector, compositionCheckout, modsCheckout, currentTemplateCheckout, promoteStep,
