@@ -115,6 +115,41 @@ async function originHarness(t) {
   return { manifest, fetcher, files, catalog, artifact };
 }
 
+async function w09OriginHarness(t) {
+  const harness = await originHarness(t);
+  const runtimeRevision = harness.artifact.data_revision;
+  const sharedRevision = 'c'.repeat(64);
+  const sharedPath = 'data/' + sharedRevision + '/manifest.json';
+  const sharedBytes = Buffer.from('{"retained":"W09 fixture"}\n');
+  const pointer = {
+    game_version: '1.2.3', content_version: '1.2.3.1', data_revision: sharedRevision,
+    manifest_path: '/' + sharedPath, manifest_sha256: sha256(sharedBytes),
+  };
+  const version = JSON.parse(harness.files.get('version.json'));
+  version.data_revision = sharedRevision;
+  version.game_releases = [pointer];
+  const versionBytes = Buffer.from(JSON.stringify(version, null, 2) + '\n');
+  const index = harness.files.get('index.html').toString();
+  const contextMatch = /window\.__BUILD__\s*=\s*(\{[^<]*\})\s*;?\s*<\/script>/u.exec(index);
+  const context = JSON.parse(contextMatch[1]);
+  context.shared_data_revision = sharedRevision;
+  context.game_releases = [pointer];
+  context.shared_files = [{ path: '/' + sharedPath, size_bytes: sharedBytes.length, sha256: sha256(sharedBytes) }];
+  const indexBytes = Buffer.from(index.replace(contextMatch[1], JSON.stringify(context)));
+  harness.files.set('index.html', indexBytes);
+  harness.files.set('version.json', versionBytes);
+  harness.files.set(sharedPath, sharedBytes);
+  harness.manifest.data_revision = sharedRevision;
+  const indexRow = harness.manifest.files.find(row => row.path === 'index.html');
+  indexRow.size_bytes = indexBytes.length;
+  indexRow.sha256 = sha256(indexBytes);
+  const versionRow = harness.manifest.files.find(row => row.path === 'version.json');
+  versionRow.size_bytes = versionBytes.length;
+  versionRow.sha256 = sha256(versionBytes);
+  harness.manifest.files.push({ path: sharedPath, size_bytes: sharedBytes.length, sha256: sha256(sharedBytes) });
+  return { ...harness, runtimeRevision, sharedRevision, sharedPath };
+}
+
 // Scenario: A healthy static origin serves bytes matching its independently retained manifest.
 // Purpose: Prove the probe checks the actual catalog, representative details, and executable assets.
 test('UnitT20_monitor_accepts_content_matching_backup_hashes', async t => {
@@ -126,6 +161,33 @@ test('UnitT20_monitor_accepts_content_matching_backup_hashes', async t => {
     assert.ok(result.hash_checks.some(row => row.path.endsWith('/' + h.catalog.entries.find(row => row.kind === kind).detail_path)));
   }
   assert.equal(result.hash_checks.filter(row => row.path.startsWith('assets/')).length, 3);
+});
+
+// Scenario: A retained W09 package separates its shared revision from the legacy runtime revision.
+// Purpose: Reconstruct the publication-time verification input from retained hashes and probe runtime details under the runtime revision.
+test('UnitT22_monitor_accepts_W09_content_using_retained_runtime_and_shared_closures', async t => {
+  const h = await w09OriginHarness(t);
+  const result = await monitorOrigin('https://example.test', h.manifest, { fetch: h.fetcher });
+  assert.equal(result.status, 'healthy');
+  assert.equal(result.data_revision, h.sharedRevision);
+  assert.equal(result.runtime_data_revision, h.runtimeRevision);
+  assert.ok(result.hash_checks.some(row => row.path === 'data/' + h.runtimeRevision + '/catalog.json'));
+});
+
+// Scenario: A shared W09 file is served with bytes different from the retained artifact manifest.
+// Purpose: Keep the monitor fail-closed when the public shared closure diverges from the retained publication.
+test('UnitT23_monitor_rejects_W09_shared_file_hash_mismatch', async t => {
+  const h = await w09OriginHarness(t);
+  h.files.set(h.sharedPath, Buffer.from('{"retained":"changed"}\n'));
+  await assert.rejects(monitorOrigin('https://example.test', h.manifest, { fetch: h.fetcher }), /shared retained file (?:size|hash)/i);
+});
+
+// Scenario: A W09 origin serves its shared release but the retained runtime catalog is missing.
+// Purpose: Ensure runtime health probes use the runtime revision and reject a missing catalog instead of looking under the shared revision.
+test('UnitT24_monitor_rejects_W09_missing_runtime_catalog', async t => {
+  const h = await w09OriginHarness(t);
+  h.files.delete('data/' + h.runtimeRevision + '/catalog.json');
+  await assert.rejects(monitorOrigin('https://example.test', h.manifest, { fetch: h.fetcher }), /200|content HTTP status/i);
 });
 
 // Scenario: HTML has dynamic edge injection but its required source attribution changes to nofollow.
