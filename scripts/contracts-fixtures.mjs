@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,10 +19,16 @@ async function writeJson(root, relative, value) {
   await writeFile(destination, `${JSON.stringify(value, null, 2)}\n`);
 }
 
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+
+async function readJson(root, relative) {
+  return JSON.parse(await readFile(path.join(root, ...relative.split('/')), 'utf8'));
+}
+
 async function createModsFixture() {
   const sourceRoot = path.join(repoRoot, 'docs', 'contracts', 'w03');
   const targetRoot = path.join(fixtureRoot, 'w14', 'w03');
-  const index = JSON.parse(await readFile(path.join(sourceRoot, 'mods', 'mapping-ledger.json'), 'utf8'));
+  const index = await readJson(sourceRoot, 'mods/mapping-ledger.json');
   const wanted = new Set(['M01', 'M05', 'M07', 'K01', 'M08']);
   for (const group of index.groups) {
     if (!wanted.has(group.groupId)) continue;
@@ -31,6 +38,58 @@ async function createModsFixture() {
     }
   }
   await copyRelative(sourceRoot, targetRoot, 'mods/mapping-ledger.json');
+}
+
+async function createW14ReportsFixture() {
+  const sourceRoot = path.join(repoRoot, 'docs', 'contracts', 'w14');
+  const targetRoot = path.join(fixtureRoot, 'w14');
+  const registry = await readJson(sourceRoot, 'weapon-registry-current-reconciliation.json');
+  await writeJson(targetRoot, 'weapon-registry-current-reconciliation.json', {
+    inputBindings: {
+      w03Ledger: { sha256: registry.inputBindings.w03Ledger.sha256 },
+      registryShard: { containerSha256: registry.inputBindings.registryShard.containerSha256 },
+      sourceCode: {
+        commit: registry.inputBindings.sourceCode.commit,
+        verifiedEntryFragments: registry.inputBindings.sourceCode.verifiedEntryFragments,
+      },
+      currentSourcePackageReviewBasis: {
+        approvedCurrentSourceTargetCount: registry.inputBindings.currentSourcePackageReviewBasis.approvedCurrentSourceTargetCount,
+        contentVersion: registry.inputBindings.currentSourcePackageReviewBasis.contentVersion,
+      },
+      activePublishedData: {
+        contentVersion: registry.inputBindings.activePublishedData.contentVersion,
+        sameDataRevisionAsReviewBasis: registry.inputBindings.activePublishedData.sameDataRevisionAsReviewBasis,
+      },
+    },
+    summary: { playerAvailabilityInferred: registry.summary.playerAvailabilityInferred },
+    interpretation: { playerAvailabilityInferred: registry.interpretation.playerAvailabilityInferred },
+    rows: registry.rows.map(row => ({
+      entryId: row.entryId,
+      registryKind: row.registryKind,
+      registryKey: row.registryKey,
+      selector: { locator: row.selector.locator },
+      sourceFragmentSha256: row.sourceFragmentSha256,
+      sourceByteRange: row.sourceByteRange,
+      classification: row.classification,
+      gameReleaseId: row.gameReleaseId,
+      associatedCurrentRecordIds: row.associatedCurrentRecordIds,
+      currentRecordIds: row.currentRecordIds,
+      currentRecordEvidence: row.currentRecordEvidence?.map(evidence => ({ approvedFields: evidence.approvedFields })),
+    })),
+  });
+
+  const source = await readJson(sourceRoot, 'source-current-row-reconciliation.json');
+  const sourceRows = source.rows
+    .filter(row => row.decision?.target?.sourceFieldResolution?.relation === 'legacy-child-absent-current-approved-parent-container')
+    .map(row => ({ decision: { target: { fieldPath: row.decision.target.fieldPath, actualValueCanonicalSha256: row.decision.target.actualValueCanonicalSha256,
+      sourceFieldResolution: row.decision.target.sourceFieldResolution } } }));
+  await writeJson(targetRoot, 'source-current-row-reconciliation.json', { rows: sourceRows });
+
+  const web = await readJson(sourceRoot, 'web-current-row-reconciliation.json');
+  const wantedEntries = new Set(['w03-363b5ef660cc42a3a8e72612', 'w03-6ef7ce5434aedeb86c6e42bb']);
+  await writeJson(targetRoot, 'web-current-row-reconciliation.json', {
+    rows: web.rows.filter(row => wantedEntries.has(row.entryId)),
+  });
 }
 
 export async function generateContractFixtures() {
@@ -43,11 +102,7 @@ export async function generateContractFixtures() {
   for (const descriptor of selectedDescriptors) await copyRelative(sourceW03, targetW03, descriptor.path);
   await createModsFixture();
 
-  for (const filename of [
-    'weapon-registry-current-reconciliation.json',
-    'source-current-row-reconciliation.json',
-    'web-current-row-reconciliation.json',
-  ]) await copyRelative(path.join(repoRoot, 'docs', 'contracts', 'w14'), path.join(fixtureRoot, 'w14'), filename);
+  await createW14ReportsFixture();
 
   await copyCandidate('c41434cc510b4d28b91e59a14ac681e5aa973a09958ba3b7eb03d10eb13a8a00', 'w09-c414');
   await copyCandidate('d8d430c3f105696a06d4f2af040e095d260546fbae38960d8ec1cb0eb1f56bab', 'w09-d8d');
