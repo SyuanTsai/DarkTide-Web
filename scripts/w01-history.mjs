@@ -282,7 +282,9 @@ async function fullRebuild({ history, historyPath, retainedPreviewManifestPath, 
   const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
   const materializeEntry = async entry => {
-    await run('git', ['fetch', '--no-tags', '--depth=1', 'origin', entry.commit], { cwd: repoRoot });
+    // A shallow fetch would truncate the full-history checkout that pinned-commit tests rely on.
+    try { await run('git', ['cat-file', '-e', entry.commit + '^{commit}'], { cwd: repoRoot }); }
+    catch { await run('git', ['fetch', '--no-tags', 'origin', entry.commit], { cwd: repoRoot }); }
     const sourceRoot = path.join(workRoot, entry.version.replace(/[^A-Za-z0-9_.-]/g, '-'));
     await rm(sourceRoot, { recursive: true, force: true });
     await run('git', ['worktree', 'add', '--detach', sourceRoot, entry.commit], { cwd: repoRoot });

@@ -153,3 +153,9 @@ test('UnitT03_workflow-gates-deployment-and-receipts-on-runtime-paths', () => {
   assert.ok(deploymentSteps.every(step => step.if.includes("github.repository == 'SyuanTsai/DarkTide-Web'")));
   assert.ok(deploymentSteps.every(step => step.if.includes("github.ref == 'refs/heads/codex/SYP-311-w01'")));
 });
+
+test('UnitT04_history-fetches-never-make-the-full-history-checkout-shallow', async () => {
+  const workflowText = await readFile(new URL('../.github/workflows/w01-preview.yml', import.meta.url), 'utf8');
+  assert.equal(/git fetch[^\n]*--depth/.test(workflowText), false);
+  assert.equal(/'--depth[=\d]*'/.test(historyScript), false);
+});

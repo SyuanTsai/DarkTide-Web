@@ -106,7 +106,7 @@ jobs:
             force_rebuild=true
             reason=missing-base
           else
-            git fetch --no-tags --depth=1 origin "$W01_HISTORY_BASE"
+            git cat-file -e "$W01_HISTORY_BASE^{commit}" 2>/dev/null || git fetch --no-tags origin "$W01_HISTORY_BASE"
             if git diff --name-only "$W01_HISTORY_BASE" "$W01_HISTORY_HEAD" -- docs/w01/history.json docs/w01/retained-history.json docs/w01/retained-preview-manifest.json | grep -q .; then
               force_rebuild=true
               reason=history-manifest-changed
