@@ -157,7 +157,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           repository: SyuanTsai/DarkTide-Web
-          ref: 82e5ce23409e5b078aeb651d942003d519701a5a
+          ref: b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c
           path: composition-inputs
           fetch-depth: 0
           persist-credentials: false
@@ -193,7 +193,7 @@ jobs:
           SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}
           SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}
           W09_COMPOSITION_ROOT: ${{ github.workspace }}/composition-inputs
-          W09_EXPECTED_COMPOSITION_COMMIT: 82e5ce23409e5b078aeb651d942003d519701a5a
+          W09_EXPECTED_COMPOSITION_COMMIT: b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '38d350980998e83d3f405aff0170921a'
           WRANGLER_SEND_METRICS: 'false'

@@ -11,7 +11,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const modsCommit = '241ad76ce62330472aa423055a5b85db59bb6c0d';
 const sourceCommit = 'e46b8926cfa3fa35503e4b80b15aab7a804314e4';
 const checkoutAction = 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803';
-const historicalCompositionCommit = '82e5ce23409e5b078aeb651d942003d519701a5a';
+const historicalCompositionCommit = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
 const retainedRootsEnv = ['SYP_W07_RETAINED_MODS_ROOT', 'SYP_W07_RETAINED_SOURCE_ROOT'];
 const conditionalRootExpression = name => "${{ steps.retained-names.outputs.required == 'true' && format('{0}/" + name + "', github.workspace) || '' }}";
 
