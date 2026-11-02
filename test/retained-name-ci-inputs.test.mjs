@@ -11,7 +11,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const modsCommit = '241ad76ce62330472aa423055a5b85db59bb6c0d';
 const sourceCommit = 'e46b8926cfa3fa35503e4b80b15aab7a804314e4';
 const checkoutAction = 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803';
-const historicalCompositionCommit = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
+const currentCompositionCommit = 'bfa9fd93c74eef47353f71b94d8cede987cd2b9e';
 const retainedRootsEnv = ['SYP_W07_RETAINED_MODS_ROOT', 'SYP_W07_RETAINED_SOURCE_ROOT'];
 const conditionalRootExpression = name => "${{ steps.retained-names.outputs.required == 'true' && format('{0}/" + name + "', github.workspace) || '' }}";
 
@@ -83,7 +83,7 @@ test('UnitT20_ScenarioW09OverlayHasRetainedNames_PurposeChecksOutAndPassesPinned
   const historyCheckout = stepWithName(releaseJob, 'Check out the pinned historical W09 composition inputs');
   assert.equal(historyCheckout.uses, checkoutAction);
   assert.equal(historyCheckout.with.repository, 'SyuanTsai/DarkTide-Web');
-  assert.equal(historyCheckout.with.ref, historicalCompositionCommit);
+  assert.equal(historyCheckout.with.ref, currentCompositionCommit);
   assert.equal(historyCheckout.with.path, 'composition-inputs');
   assert.equal(historyCheckout.with['persist-credentials'], false);
   const releaseDetector = stepWithName(releaseJob, 'Detect fixed retained-name inputs in the selected composition');
@@ -98,7 +98,7 @@ test('UnitT20_ScenarioW09OverlayHasRetainedNames_PurposeChecksOutAndPassesPinned
   const promoteStep = stepWithName(releaseJob, 'Promote the selected shared composition');
   assertConditionalRoots(promoteStep);
   assert.equal(promoteStep.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
-  assert.equal(promoteStep.env.W09_EXPECTED_COMPOSITION_COMMIT, historicalCompositionCommit);
+  assert.equal(promoteStep.env.W09_EXPECTED_COMPOSITION_COMMIT, currentCompositionCommit);
   assert.doesNotMatch(String(stepWithName(releaseJob, 'Restore the explicit approved whole-site snapshot').env.SYP_W07_RETAINED_MODS_ROOT ?? ''), /retained-name-mods/u,
     'rollback does not acquire retained-name upstream checkouts');
 });
