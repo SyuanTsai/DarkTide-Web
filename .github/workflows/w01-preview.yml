@@ -7,12 +7,26 @@ on:
       - 'source.lock.json'
       - 'scripts/w01-*.mjs'
       - 'test/w01-*.test.mjs'
+      - 'docs/w01/history.json'
+      - 'docs/w01/retained-history.json'
       - 'docs/w01/retained-preview-manifest.json'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/w01-preview.yml'
   push:
     branches: [codex/SYP-311-w01]
+  workflow_dispatch:
+    inputs:
+      full_rebuild:
+        description: Rebuild every retained W01 history entry
+        required: false
+        type: boolean
+        default: false
+      publish_history:
+        description: Publish rebuilt retained history to the fixed GitHub Release
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -21,7 +35,7 @@ concurrency:
 jobs:
   isolated-preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Check out Web candidate without persisted credentials
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -36,6 +50,7 @@ jobs:
           repository: SyuanTsai/DarkTide-Web
           ref: 8a4b3db2b1e835f0757f387ca89a19b9092b35ee
           path: baseline
+          fetch-depth: 1
           persist-credentials: false
       - name: Check out the exact pinned R1 preview source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -43,6 +58,7 @@ jobs:
           repository: SyuanTsai/DarkTide-Web
           ref: 872bd72bad255d40af62329b8ffe97a357935275
           path: prior-r1
+          fetch-depth: 1
           persist-credentials: false
       - name: Check out the exact published R2 A data source
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -50,104 +66,7 @@ jobs:
           repository: SyuanTsai/DarkTide-Web
           ref: a7fabea66f56cd5c8236b6e84a3f6c6586175840
           path: prior-r2
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.3 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: e516a5b896f78273544c16047126c327337a8424
-          path: prior-real-0-0-3
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.4 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: b401ae50d7ebb7e44aeb59a8c864a8b93628aead
-          path: prior-real-0-0-4
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.5 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: a09863ceac2bfca3944d09081c315d62b704563c
-          path: prior-real-0-0-5
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.6 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: f2a465e9858e57c3a4850126522dacc71226453d
-          path: prior-real-0-0-6
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.7 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: a11bdb73d4e00b735051bfcb55685623c05c9c12
-          path: prior-real-0-0-7
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.8 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: b55cc3e21024b364bc6aa95f4ad46a9a3f6c48a1
-          path: prior-real-0-0-8
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.9 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: d4a99510ea355b4703cf715c7f0978209cb04dd0
-          path: prior-real-0-0-9
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.10 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: 9c84344642cef3a82085dac3e6d4874bf9d2a4c5
-          path: prior-real-0-0-10
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.11 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: 3cf93b2e8c9acdcdc7ea5695c24e57a49c04b9b1
-          path: prior-real-0-0-11
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.12 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: 869f03f829b377ed4779ec73f55baf8a7507d6c4
-          path: prior-real-0-0-12
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.13 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: 58487ee15c16e398b091c9ad2c29322f3bf5548e
-          path: prior-real-0-0-13
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.14 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: b57d6268a470009a560eb03a8a3da4ba6748f106
-          path: prior-real-0-0-14
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.15 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: b3836b0e4ed8698aefff2973ad77a507709a39a9
-          path: prior-real-0-0-15
-          persist-credentials: false
-      - name: Check out the exact published pending 0.0.16 candidate source
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          repository: SyuanTsai/DarkTide-Web
-          ref: d0b39c44df0905783d24e1dd1aa5ab0306a18d55
-          path: prior-real-0-0-16
+          fetch-depth: 1
           persist-credentials: false
       - name: Set up Node.js 24
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -162,229 +81,65 @@ jobs:
           W01_DEPLOYMENT_SCOPE_BASE: ${{ github.event.before }}
           W01_DEPLOYMENT_SCOPE_HEAD: ${{ github.sha }}
         run: node scripts/w01-preview-deploy-scope.mjs --base "$W01_DEPLOYMENT_SCOPE_BASE" --head "$W01_DEPLOYMENT_SCOPE_HEAD"
+      - name: Classify retained-history policy
+        id: history-policy
+        working-directory: web
+        shell: bash
+        env:
+          W01_EVENT_NAME: ${{ github.event_name }}
+          W01_HISTORY_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          W01_HISTORY_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          W01_FULL_REBUILD: ${{ inputs.full_rebuild || false }}
+          W01_PUBLISH_HISTORY: ${{ inputs.publish_history || false }}
+        run: |
+          set -euo pipefail
+          force_rebuild=false
+          reason=cache-eligible
+          if [ "$W01_EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ "$W01_FULL_REBUILD" = "true" ] || [ "$W01_PUBLISH_HISTORY" = "true" ]; then
+              force_rebuild=true
+              reason=workflow-dispatch
+            else
+              reason=workflow-dispatch-cache-eligible
+            fi
+          elif [ -z "$W01_HISTORY_BASE" ] || [[ "$W01_HISTORY_BASE" =~ ^0+$ ]]; then
+            force_rebuild=true
+            reason=missing-base
+          else
+            git cat-file -e "$W01_HISTORY_BASE^{commit}" 2>/dev/null || git fetch --no-tags origin "$W01_HISTORY_BASE"
+            if git diff --name-only "$W01_HISTORY_BASE" "$W01_HISTORY_HEAD" -- docs/w01/history.json docs/w01/retained-history.json docs/w01/retained-preview-manifest.json | grep -q .; then
+              force_rebuild=true
+              reason=history-manifest-changed
+            fi
+          fi
+          echo "force_rebuild=$force_rebuild" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
       - name: Install locked Web dependencies
         working-directory: web
         run: npm ci
       - name: Install the locked Playwright Chromium browser
         working-directory: web
         run: npx playwright install --with-deps chromium
-      - name: Rebuild the pinned production baseline data
+      - name: Build baseline source required by current retain
         working-directory: baseline
         run: npm run build
-      - name: Rebuild exact R1 package into the candidate output
-        working-directory: prior-r1
-        run: npm run w01:build -- --output ../web/dist-w01
-      - name: Retain the pinned production baseline in R1 package
-        working-directory: prior-r1
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact R1 package and retained data
-        working-directory: prior-r1
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published R2 A package into the candidate output
-        working-directory: prior-r2
-        run: npm run w01:build -- --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact R2 A package
-        working-directory: prior-r2
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published R2 A and retained R1 and production data revisions
-        working-directory: prior-r2
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published real 0.0.3 package into the candidate output
-        working-directory: prior-real-0-0-3
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact 0.0.3 package
-        working-directory: prior-real-0-0-3
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published real 0.0.3 and retained historical data URLs
-        working-directory: prior-real-0-0-3
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.3 package for lifecycle tests
-        working-directory: prior-real-0-0-3
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r3"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r3/"
-      - name: Rebuild the exact published 0.0.4 package and retained data
-        working-directory: prior-real-0-0-4
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned baseline in exact published 0.0.4 package
-        working-directory: prior-real-0-0-4
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.4 and retained historical data URLs
-        working-directory: prior-real-0-0-4
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.4 package for lifecycle tests
-        working-directory: prior-real-0-0-4
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r4"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r4/"
-      - name: Rebuild the exact published 0.0.5 package and retained data
-        working-directory: prior-real-0-0-5
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned baseline in exact published 0.0.5 package
-        working-directory: prior-real-0-0-5
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.5 and retained historical data URLs
-        working-directory: prior-real-0-0-5
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.5 package for lifecycle tests
-        working-directory: prior-real-0-0-5
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r5"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r5/"
-      - name: Rebuild the exact published 0.0.6 package and retained data
-        working-directory: prior-real-0-0-6
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned baseline in exact published 0.0.6 package
-        working-directory: prior-real-0-0-6
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.6 and retained historical data URLs
-        working-directory: prior-real-0-0-6
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.6 package for lifecycle tests
-        working-directory: prior-real-0-0-6
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r6"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r6/"
-      - name: Rebuild the exact published 0.0.7 package and retained data
-        working-directory: prior-real-0-0-7
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned baseline in exact published 0.0.7 package
-        working-directory: prior-real-0-0-7
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.7 and retained historical data URLs
-        working-directory: prior-real-0-0-7
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.7 package for lifecycle tests
-        working-directory: prior-real-0-0-7
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r7"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r7/"
-      - name: Rebuild exact published pending 0.0.8 candidate into output
-        working-directory: prior-real-0-0-8
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.8 candidate
-        working-directory: prior-real-0-0-8
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.8 and retained historical data URLs
-        working-directory: prior-real-0-0-8
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published pending 0.0.9 candidate into output
-        working-directory: prior-real-0-0-9
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.9 candidate
-        working-directory: prior-real-0-0-9
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.9 and retained historical data URLs
-        working-directory: prior-real-0-0-9
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published pending 0.0.10 candidate into output
-        working-directory: prior-real-0-0-10
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.10 candidate
-        working-directory: prior-real-0-0-10
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.10 and retained historical data URLs
-        working-directory: prior-real-0-0-10
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published pending 0.0.11 candidate into output
-        working-directory: prior-real-0-0-11
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.11 candidate
-        working-directory: prior-real-0-0-11
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.11 and retained historical data URLs
-        working-directory: prior-real-0-0-11
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Rebuild exact published pending 0.0.12 candidate into output
-        working-directory: prior-real-0-0-12
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.12 candidate
-        working-directory: prior-real-0-0-12
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.12 and retained historical data URLs
-        working-directory: prior-real-0-0-12
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.12 package for lifecycle tests
-        working-directory: prior-real-0-0-12
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r12"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r12/"
-      - name: Rebuild exact published pending 0.0.13 candidate into output
-        working-directory: prior-real-0-0-13
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.13 candidate
-        working-directory: prior-real-0-0-13
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.13 and retained historical data URLs
-        working-directory: prior-real-0-0-13
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.13 package for lifecycle tests
-        working-directory: prior-real-0-0-13
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r13"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r13/"
-      - name: Rebuild exact published pending 0.0.14 candidate into output
-        working-directory: prior-real-0-0-14
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.14 candidate
-        working-directory: prior-real-0-0-14
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.14 and retained historical data URLs
-        working-directory: prior-real-0-0-14
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.14 package for lifecycle tests
-        working-directory: prior-real-0-0-14
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r14"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r14/"
-      - name: Rebuild exact published pending 0.0.15 candidate into output
-        working-directory: prior-real-0-0-15
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.15 candidate
-        working-directory: prior-real-0-0-15
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.15 and retained historical data URLs
-        working-directory: prior-real-0-0-15
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.15 package for lifecycle tests
-        working-directory: prior-real-0-0-15
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r15"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r15/"
-      - name: Rebuild exact published pending 0.0.16 candidate into output
-        working-directory: prior-real-0-0-16
-        run: npm run w01:build -- --candidate-preview --output ../web/dist-w01
-      - name: Retain the pinned production baseline in exact published 0.0.16 candidate
-        working-directory: prior-real-0-0-16
-        run: npm run w01:retain -- --baseline-root ../baseline --output ../web/dist-w01
-      - name: Verify exact published 0.0.16 and retained historical data URLs
-        working-directory: prior-real-0-0-16
-        run: npm run w01:verify -- ../web/dist-w01
-      - name: Freeze the verified published 0.0.16 package for lifecycle tests
-        working-directory: prior-real-0-0-16
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/w01-real-r16"
-          cp -a ../web/dist-w01/. "$RUNNER_TEMP/w01-real-r16/"
+      - name: Restore or rebuild retained W01 history
+        id: retained-history
+        working-directory: web
+        run: >-
+          node scripts/w01-history.mjs
+          --command prepare
+          --repo-root .
+          --history docs/w01/history.json
+          --output "$GITHUB_WORKSPACE/web/dist-w01"
+          --freeze-root "$RUNNER_TEMP"
+          --work-root "$RUNNER_TEMP/w01-history-work"
+          --bundle-root "$RUNNER_TEMP/w01-history-bundle"
+          --archive "$RUNNER_TEMP/w01-retained-history/w01-retained-history.tar"
+          --manifest-out "$RUNNER_TEMP/w01-retained-history/retained-history.json"
+          --force-rebuild "${{ steps.history-policy.outputs.force_rebuild }}"
+          --summary "$GITHUB_STEP_SUMMARY"
+          --github-output "$GITHUB_OUTPUT"
       - name: Build current pending 0.0.17 candidate preview
         working-directory: web
         run: npm run w01:build -- --candidate-preview --output dist-w01
@@ -407,10 +162,17 @@ jobs:
           W01_PRIOR_REAL_R7_ROOT: ${{ runner.temp }}/w01-real-r7
           W01_PRIOR_REAL_R12_ROOT: ${{ runner.temp }}/w01-real-r12
           W01_PRIOR_REAL_R13_ROOT: ${{ runner.temp }}/w01-real-r13
-          W01_PRIOR_REAL_R14_ROOT: ${{ runner.temp }}/w01-real-r14
           W01_PRIOR_REAL_R15_ROOT: ${{ runner.temp }}/w01-real-r15
           W01_PRIOR_REAL_R16_ROOT: ${{ runner.temp }}/w01-real-r16
         run: npm test
+      - name: Upload rebuilt retained-history release assets
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_history == true && steps.retained-history.outputs.rebuilt == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: w01-retained-history-release-assets
+          path: ${{ runner.temp }}/w01-retained-history/
+          if-no-files-found: error
+          retention-days: 1
       - name: Upload only the isolated W01 preview artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -448,3 +210,25 @@ jobs:
           path: ${{ runner.temp }}/w01-preview-deployment-receipt.json
           if-no-files-found: error
           retention-days: 30
+  publish-retained-history:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_history == true
+    needs: isolated-preview
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download rebuilt retained-history release assets
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: w01-retained-history-release-assets
+          path: release-assets
+      - name: Publish retained history to the fixed Release tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! gh release view w01-retained-history --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create w01-retained-history --repo "$GITHUB_REPOSITORY" --title "W01 retained history" --notes "Verified retained W01 preview history."
+          fi
+          gh release upload w01-retained-history release-assets/w01-retained-history.tar release-assets/retained-history.json --clobber --repo "$GITHUB_REPOSITORY"
