@@ -180,6 +180,7 @@ function renderSections(parent, sections) {
   if (!available.length) return;
   const details = node('details', null, 'shared-card shared-expandable shared-detail-sections');
   details.append(node('summary', '詳細說明'));
+  details.open = true;
   const content = node('div', null, 'shared-detail-section-list');
   for (const sectionId of SECTION_ORDER) {
     const section = byId.get(sectionId);
@@ -589,8 +590,11 @@ function renderSkillPage(main, result, url, historyPackage = null, historyError 
     item.dataset.skillId = row.id;
     item.dataset.searchText = row.searchText.toLocaleLowerCase('zh-Hant-TW');
     item.append(link(row.href, row.name));
-    const details = [row.category, row.summary].filter(Boolean).join(' · ');
-    if (details) item.append(node('p', details, 'shared-muted'));
+    if (row.category) item.append(node('p', row.category, 'shared-muted'));
+    if (row.summary) {
+      const summary = row.source === 'legacy' ? `1.13.1 留存摘要：${row.summary}` : row.summary;
+      item.append(node('p', summary, 'shared-muted'));
+    }
     list.append(item);
     return { row, item };
   });
@@ -630,6 +634,18 @@ function renderSkillPage(main, result, url, historyPackage = null, historyError 
 }
 const RETAINED_GAME_VERSION = '1.13.1';
 const RETAINED_STATIC_REVISION = '0ae547d78d49c5d5c46b991df3736f9d868eebd98e902b1a62426dc075d3884b';
+function retainedSummaryIndex(historyPackage) {
+  const projection = historyPackage?.projection;
+  if (projection?.gameVersion !== RETAINED_GAME_VERSION || !Array.isArray(projection.entries)) return new Map();
+  return new Map(projection.entries
+    .filter(entry => ['blessing', 'variant'].includes(entry?.kind)
+      && typeof entry.id === 'string' && typeof entry.summary === 'string' && entry.summary.trim())
+    .map(entry => [`${entry.kind}\u0000${entry.id}`, entry.summary]));
+}
+function appendRetainedSummary(parent, summaryIndex, kind, id, label = '摘要：') {
+  const summary = summaryIndex.get(`${kind}\u0000${id}`);
+  if (summary) parent.append(node('p', `${label}${summary}`, 'shared-history-summary'));
+}
 // Exact identity crosswalk verified from the 1.13.4 Chainaxe P1 traits source and retained variant ID.
 const CURRENT_TO_RETAINED_BLESSING_ID = new Map([
   ['darktide:blessing:chainaxe:p1-movement-speed-on-activation', 'rev-it-up'],
@@ -863,6 +879,7 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
   const list = main.querySelector('.shared-entry-list');
   if (!historyPackage?.catalog) { main.insertBefore(section, list); return; }
   const catalog = historyPackage.catalog;
+  const summaryIndex = retainedSummaryIndex(historyPackage);
   const blessings = catalog.entries.filter(entry => entry.kind === 'blessing');
   const variants = catalog.entries.filter(entry => entry.kind === 'variant');
   const variantsByBlessing = new Map();
@@ -891,7 +908,8 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
     const alias = node('p', null, 'shared-history-alias');
     alias.append(link(oldEntry.route, `資料基準 1.13.1 · ${retainedName(oldEntry)} 詳情、舊版適用關係與等級`, 'shared-history-link'));
     item.append(alias);
-    appendRetainedVariants(item, related);
+    appendRetainedSummary(item, summaryIndex, 'blessing', oldEntry.id, '1.13.1 留存摘要：');
+    appendRetainedVariants(item, related, summaryIndex);
   }
   for (const entry of blessings) {
     if (mappedRetainedIds.has(entry.id)) continue;
@@ -901,13 +919,14 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
     item.dataset.searchName = entrySearchText(entry, related.flatMap(row => [row.name_zh_tw, row.id]));
     item.append(link(entry.route, retainedName(entry), 'shared-history-link'));
     item.append(node('small', '資料基準 1.13.1 · 未逐項核對目前版本', 'shared-history-basis'));
-    appendRetainedVariants(item, related);
+    appendRetainedSummary(item, summaryIndex, 'blessing', entry.id);
+    appendRetainedVariants(item, related, summaryIndex);
     list.append(item);
   }
   main.insertBefore(section, list);
 }
 
-function appendRetainedVariants(parent, variants) {
+function appendRetainedVariants(parent, variants, summaryIndex) {
   if (!variants.length) return;
   const list = node('ul', null, 'shared-history-variants');
   for (const variant of variants) {
@@ -915,6 +934,7 @@ function appendRetainedVariants(parent, variants) {
     variantItem.dataset.retainedVariantId = variant.id;
     variantItem.dataset.searchName = entrySearchText(variant);
     variantItem.append(link(variant.route, `變體詳情：${retainedName(variant)}`, 'shared-history-link'));
+    appendRetainedSummary(variantItem, summaryIndex, 'variant', variant.id);
     list.append(variantItem);
   }
   parent.append(node('small', `${variants.length} 個 1.13.1 變體／等級詳情`, 'shared-muted'), list);
@@ -1019,15 +1039,15 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
     tierGroup.append(anchor);
   }
   main.append(tierGroup);
+  renderOfficial(main, view.official);
+  renderErrata(main, view.errata);
+  renderSections(main, view.sections);
+  renderTerms(main, view);
   const applicabilityText = view.applicability?.status === 'verified'
     ? '目前已驗證所選武器適用關係。'
     : '適用武器尚未驗證；此頁只顯示已確認的祝福與等級資料。';
   main.append(node('p', applicabilityText, 'shared-applicability'));
   if (view.obtainableTiers?.status !== 'known') main.append(node('p', '此等級是否可取得尚未確認。', 'shared-muted'));
-  renderOfficial(main, view.official);
-  renderErrata(main, view.errata);
-  renderSections(main, view.sections);
-  renderTerms(main, view);
   renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail, retainedBlessingIdForCurrentId(id));
 }
 function sourceDecimal(value) {
@@ -1412,8 +1432,10 @@ function renderWeapon(main, result, view, familyMarks, url, showRetainedRelation
   if (showRetainedRelationsLink) {
     main.append(link('#retained-weapon-relations', '查看 1.13.1 留存資料與關聯', 'secondary-link'));
   }
-  if (view.note) main.append(node('p', view.note, 'shared-callout'));
   if (view.official) renderOfficial(main, view.official, weaponNameProvenance(result, view));
+  renderSections(main, view.sections);
+  renderTerms(main, view);
+  if (view.note) main.append(node('p', view.note, 'shared-callout'));
   if (view.nameProvenance) {
     const provenance = detailBlock('名稱來源');
     provenance.append(node('p', `名稱沿用 ${view.nameProvenance.sourceGameVersion} 留存資料，並依相同型號 ID 與模板路徑連結至 ${view.nameProvenance.currentGameVersion} 原始碼；名稱未逐項核對目前版本。`));
@@ -1475,8 +1497,6 @@ function renderWeapon(main, result, view, familyMarks, url, showRetainedRelation
   attacks.append(chainList);
   main.append(attacks);
   renderWeaponSourceDetails(main, view);
-  renderSections(main, view.sections);
-  renderTerms(main, view);
 }
 function renderWeapons(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedWeaponDetail = null) {
   const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'weapons') : null;

@@ -5,9 +5,17 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { makeBlessingDomains, RELEASE as VIEW_FIXTURE_RELEASE } from './w11-shared-view.fixture.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const chromePath = process.env.SYP_W10_CHROMIUM_EXE;
+
+function replaceGameReleaseId(value, from, to) {
+  if (Array.isArray(value)) return value.map(row => replaceGameReleaseId(row, from, to));
+  if (!value || typeof value !== 'object') return value;
+  return Object.fromEntries(Object.entries(value).map(([key, row]) => [key,
+    key === 'gameReleaseId' && row === from ? to : replaceGameReleaseId(row, from, to)]));
+}
 
 function rangedFixture() {
   const gameReleaseId = 'fixture:w13-ranged-browser';
@@ -81,7 +89,8 @@ function rangedFixture() {
       detailSections: [], errata: [],
     }], officialInputs, termLocalizations: [] },
   };
-  return { gameReleaseId, domains: [weapons] };
+  const blessings = replaceGameReleaseId(makeBlessingDomains({ weaponRefs: [] }), VIEW_FIXTURE_RELEASE, gameReleaseId);
+  return { gameReleaseId, domains: [weapons, blessings] };
 }
 
 function startServer(fixture) {
@@ -93,7 +102,15 @@ function startServer(fixture) {
   const moduleScript = `import { createSharedViewModel } from '/web/shared-view.mjs';
 import { renderSharedPage } from '/web/shared-render.mjs';
 const fixture = window.__W13_FIXTURE__;
-const view = createSharedViewModel({ domains: fixture.domains, gameReleaseId: fixture.gameReleaseId, fixtureOnly: true });
+const baseView = createSharedViewModel({ domains: fixture.domains, gameReleaseId: fixture.gameReleaseId, fixtureOnly: true });
+// Match the approved auto-gun note-only presentation shape: no canonical body and no detail sections.
+const baseFamily = baseView.getWeaponFamily('lasgun_p1');
+const noteOnlyMarks = new Map(baseFamily.marks.map(mark => [mark.markId, { ...mark, official: null, sections: [] }]));
+const view = { ...baseView,
+  getWeaponFamily: familyId => familyId === 'lasgun_p1' ? { ...baseFamily, marks: [...noteOnlyMarks.values()] } : baseView.getWeaponFamily(familyId),
+  getWeapon: ({ familyId, markId } = {}) => familyId === 'lasgun_p1' && noteOnlyMarks.has(markId)
+    ? noteOnlyMarks.get(markId) : baseView.getWeapon({ familyId, markId }),
+};
 const result = { status: 'ready', fixtureOnly: true, pointer: { game_version: '1.13.2', data_revision: 'f'.repeat(64) },
   manifest: { gameReleaseId: fixture.gameReleaseId }, domains: fixture.domains, view };
 const render = value => renderSharedPage({ main: document.querySelector('main'), buildMeta: document.querySelector('#build-meta'),
@@ -110,7 +127,7 @@ render(result);`;
       response.end(bytes);
       return;
     }
-    if (pathname.startsWith('/weapons/')) {
+    if (pathname.startsWith('/weapons/') || pathname.startsWith('/blessings/')) {
       response.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       response.end(html);
       return;
@@ -144,6 +161,13 @@ test('InterT10_w13-ranged-web-render-displays-source-rows-safely-on-mobile', {
     const previewNotice = page.locator('.shared-preview-notice');
     assert.equal(await previewNotice.innerText(), '不可發布的資料預覽；此處版本標記僅供驗證。',
       'the true fixtureOnly flag is visible before rendered weapon content');
+    assert.equal(await page.locator('.shared-official-text').count(), 0,
+      'the note-only regression view has no official effect body');
+    assert.equal(await page.locator('.shared-detail-sections').count(), 0,
+      'the note-only regression view has no detail sections');
+    const mainText = await page.locator('main').innerText();
+    assert.ok(mainText.indexOf('隔離測試資料，非正式遊戲內容。') < mainText.indexOf('此版本尚未匯入高階動作解析'),
+      'when the note is the only player-facing summary, it appears before generated empty-action status');
     await page.locator('.shared-source-details').waitFor({ state: 'visible' });
     const sourceDetails = page.locator('.shared-source-details');
     await sourceDetails.locator('summary').focus();
@@ -169,6 +193,18 @@ test('InterT10_w13-ranged-web-render-displays-source-rows-safely-on-mobile', {
     assert.equal(await page.locator('main img').count(), 0, 'no HTML or script is created from a raw Source row');
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
       'long source locators fit the 390px viewport');
+    await page.goto(hosted.origin + '/blessings/?id=darktide%3Ablessing%3Afamily%3Amark%3Asample');
+    await page.locator('.shared-official-text').waitFor({ state: 'visible' });
+    const blessingOfficialText = await page.locator('.shared-official-text').innerText();
+    assert.match(blessingOfficialText, /\+20%.*2\s*秒/u,
+      'the blessing detail presents its approved tier value and duration');
+    assert.equal(await page.locator('.shared-detail-sections').evaluate(element => element.open), true,
+      'blessing detail sections are visible without expanding a disclosure');
+    const blessingText = await page.locator('main').innerText();
+    assert.ok(blessingText.indexOf(blessingOfficialText) < blessingText.indexOf('適用武器尚未驗證'),
+      'the verified blessing effect appears before unresolved weapon applicability');
+    assert.ok(blessingText.indexOf(blessingOfficialText) < blessingText.indexOf('此等級是否可取得尚未確認'),
+      'the verified blessing effect appears before unresolved tier availability');
     await page.evaluate(() => window.__w13RerenderWithoutFixtureOnly());
     assert.equal(await page.locator('.shared-preview-notice').count(), 0, 'a formal-mode result does not show the fixture notice');
   } finally {
