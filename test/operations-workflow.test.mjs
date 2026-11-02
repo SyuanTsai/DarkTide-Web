@@ -51,6 +51,7 @@ test('UnitT20_recovery_is_manual_main_only_and_defaults_to_isolated_verification
   const steps = recovery.jobs.restore.steps;
   const deploy = steps.find(step => step.run === 'npm run deploy:cloudflare');
   assert.equal(deploy.if, 'inputs.publish == true');
+  assert.equal(deploy.env.CLOUDFLARE_ACCOUNT_ID, undefined, 'the deploy script supplies its configured account to Wrangler');
   assert.ok(steps.some(step => step.run?.includes('operations-restore.mjs --backup .operations/retained --output dist')));
   assert.ok(steps.some(step => step.run === 'npm run smoke:cloudflare'));
   assert.ok(!steps.some(step => /npm run build|prepare:deploy/.test(step.run || '')));
