@@ -404,7 +404,7 @@ function isSkillsPath(pathname) {
 }
 
 function sharedClientIdentity(pointer) {
-  return [pointer.game_version, pointer.data_revision, pointer.manifest_path, pointer.manifest_sha256].join('\u0000');
+  return [pointer.game_version, pointer.content_version, pointer.data_revision, pointer.manifest_path, pointer.manifest_sha256].join('\u0000');
 }
 
 function sharedDomainCacheKey(manifest, file) {

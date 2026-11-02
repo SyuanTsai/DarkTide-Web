@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { createSharedClient } from '../web/shared-client.mjs';
+import { createSharedClient, loadSharedRelease } from '../web/shared-client.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
 import { renderSharedPage } from '../web/shared-render.mjs';
 import { makeBlessingDomains, makeTermsDomain, RELEASE, refs } from './w11-shared-view.fixture.mjs';
@@ -154,6 +154,25 @@ test('UnitT40_rejects_a_missing_unrequested_domain_pin', async t => {
   await assert.rejects(client.load({ pathname: '/skills/' }), /pin|manifest/i);
   assert.equal(calls.filter(call => new URL(call.url).pathname.endsWith('/manifest.json')).length, 1);
   assert.ok(!requestedDomainNames(calls).includes('weapons'));
+});
+
+// Scenario: A caller reuses a verified cache with a pointer that changes only its content version.
+// Purpose: Bind every manifest identity field to the cache so a stale manifest cannot be returned under a different pointer.
+// Given one cache populated from a fixed build, When content_version changes while the data revision and manifest digest stay fixed, Then the client rejects the conflicting pointer.
+test('UnitT45_rejects_a_changed_content_version_on_a_reused_cache', async t => {
+  installTestLocation(t);
+  const pack = makeSharedPackage();
+  const cache = { identity: null, manifestPromise: null, domainPromises: new Map(), domainValues: new Map() };
+  const fetchImpl = responseFetch(pack.responses);
+
+  await loadSharedRelease({ build: pack.build, fetchImpl, cache, pathname: '/skills/' });
+  const changedBuild = structuredClone(pack.build);
+  changedBuild.game_releases[0].content_version = '1.13.2.2';
+
+  await assert.rejects(
+    loadSharedRelease({ build: changedBuild, fetchImpl, cache, pathname: '/skills/' }),
+    /different release pointer/u,
+  );
 });
 
 // Scenario: The visitor moves from the lazy skills page to a route that keeps the existing full-core behavior.
