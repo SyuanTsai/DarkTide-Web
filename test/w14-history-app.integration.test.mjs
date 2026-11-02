@@ -818,8 +818,12 @@ test('InterT30_weapons-and-blessings-restore-full-catalog-and-details', { timeou
     const adhesiveVariant = adhesiveCharge.locator('[data-retained-variant-id]').first();
     assert.match(await adhesiveCharge.innerText(), /個 1\.13\.1 變體／等級詳情/u,
       'the blessing row gives its nested variant summaries a clear historical parent context');
-    assert.match(await adhesiveVariant.innerText(), /摘要：/u,
-      'the nested variant summary uses a concise label without repeating its historical context');
+    assert.equal(await adhesiveCharge.locator('.shared-history-summary').count(), 1,
+      'the identical parent and variant summary is displayed once');
+    assert.equal(await adhesiveVariant.locator('.shared-history-summary').count(), 0,
+      'the identical variant summary is not repeated under its parent');
+    assert.equal(await adhesiveVariant.locator('a[href*="weapon_trait_bespoke_ogryn_thumper_p2_grenades_stick_to_monsters"]').count(), 1,
+      'the variant detail link remains available after its duplicate summary is omitted');
 
     await page.goto(`${hosted.origin}/blessings/rev-it-up/`, { waitUntil: 'domcontentloaded' });
     await page.getByRole('heading', { name: '提速', exact: true }).waitFor({ state: 'visible' });
