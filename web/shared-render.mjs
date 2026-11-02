@@ -204,8 +204,10 @@ function renderSections(parent, sections) {
   parent.append(details);
 }
 // The 1.13.2 comparison rows were checked in W07 officialInputs 555d2bec… and the fixed W09 request/lock c882e473….
+// Bind the comparison to these exact displayed/source strings and row identities, not to a whole-package revision that may advance for unrelated data.
 const CHAINAXE_OFFICIAL_NAME_KEY = 'loc_weapon_family_chainaxe_p1_m1';
 const CHAINAXE_OFFICIAL_NAME_SOURCE_HASH = 'ca7da17a';
+const CHAINAXE_OFFICIAL_NAME_TEXT = '突擊鏈斧';
 const CHAINAXE_OFFICIAL_NAME_TEXT_SHA256 = '6ac2c3f1cd3bf92c06b4031fcadb4200bc4304c2b77b2b08135b129eb36f4e89';
 const OFFICIAL_WEAPON_NAME_PROVENANCE_PINS = new Map([
   ['chainaxe_p1\u0000chainaxe_p1_m1', {
@@ -214,6 +216,7 @@ const OFFICIAL_WEAPON_NAME_PROVENANCE_PINS = new Map([
     officialSourceId: 'official:w07:chainaxe-p1-m1:weapon-name:zh-tw:r1134',
     key: CHAINAXE_OFFICIAL_NAME_KEY,
     sourceHash: CHAINAXE_OFFICIAL_NAME_SOURCE_HASH,
+    sourceText: CHAINAXE_OFFICIAL_NAME_TEXT,
     sourceTextSha256: CHAINAXE_OFFICIAL_NAME_TEXT_SHA256,
     resolvedTextSha256: CHAINAXE_OFFICIAL_NAME_TEXT_SHA256,
   }],
@@ -223,6 +226,7 @@ const OFFICIAL_WEAPON_NAME_PROVENANCE_PINS = new Map([
     officialSourceId: 'official:w07:chainaxe-p1-m2:weapon-name:zh-tw:r1134',
     key: CHAINAXE_OFFICIAL_NAME_KEY,
     sourceHash: CHAINAXE_OFFICIAL_NAME_SOURCE_HASH,
+    sourceText: CHAINAXE_OFFICIAL_NAME_TEXT,
     sourceTextSha256: CHAINAXE_OFFICIAL_NAME_TEXT_SHA256,
     resolvedTextSha256: CHAINAXE_OFFICIAL_NAME_TEXT_SHA256,
   }],
@@ -232,6 +236,7 @@ const OFFICIAL_WEAPON_NAME_PROVENANCE_PINS = new Map([
     officialSourceId: 'official:w13:lasgun-p1-m1:weapon-name:zh-tw:r1134',
     key: 'loc_weapon_family_lasgun_p1_m1',
     sourceHash: 'f93eef0d',
+    sourceText: '步兵鐳射槍',
     sourceTextSha256: '691dfad2b858feab456f55f3466c9f0acfa72c8506e7c0c80fa0134b2ee4902a',
     resolvedTextSha256: '691dfad2b858feab456f55f3466c9f0acfa72c8506e7c0c80fa0134b2ee4902a',
   }],
@@ -243,12 +248,7 @@ function weaponNameProvenance(result, view) {
   const manifest = result?.manifest;
   const manifestMatches = manifest?.gameReleaseId === 'darktide:1.13.4'
     && manifest.gameVersion === '1.13.4'
-    && manifest.dataRevision === 'e039f650aed9c6742200f488ab93d0721ff9aa1849cfa29ad81f693da9b15a57'
-    && manifest.source?.repository === 'https://github.com/SyuanTsai/DarkTide-Source-Data'
-    && manifest.source?.commit === 'a131860bc24354dfe8842047efe51ce1ceae8e68'
-    && manifest.source?.sourceRevision === '724abb6d8c15c1ff9660fbd9f7b953f1577d3c09602aae3d3af2d2898ca3c5ae'
-    && manifest.web?.authoringCommit === '4ace4d76d0788e34c45984bb39c20c130f4ef62a'
-    && manifest.web?.compilerCommit === '09f0a211346b3119b15d6a255c814ab7fd8aa228';
+    && manifest.source?.repository === 'https://github.com/SyuanTsai/DarkTide-Source-Data';
   const domain = result?.domains?.find(row => row.kind === 'weapons');
   const records = domain?.source?.records?.filter(row => row?.kind === 'weapon' && row.recordId === pin.recordId) ?? [];
   const presentations = domain?.web?.presentations?.filter(row => row?.authoringId === pin.presentationId) ?? [];
@@ -267,6 +267,7 @@ function weaponNameProvenance(result, view) {
     && presentation.entityRef?.kind === expectedRef.kind
     && presentation.entityRef?.recordId === expectedRef.recordId
     && presentation.locale === 'zh-TW'
+    && presentation.name === pin.sourceText
     && presentation.nameOfficialSourceId === pin.officialSourceId
     && presentationOfficial?.entityRef?.gameReleaseId === expectedRef.gameReleaseId
     && presentationOfficial?.entityRef?.kind === expectedRef.kind
@@ -289,12 +290,14 @@ function weaponNameProvenance(result, view) {
     && source.key === pin.key
     && source.sourceHash === pin.sourceHash
     && source.occurrence === 1
+    && source.sourceText === pin.sourceText
+    && source.resolvedText === pin.sourceText
     && source.sourceTextSha256 === pin.sourceTextSha256
     && source.resolvedTextSha256 === pin.resolvedTextSha256
     && source.sourceText === source.resolvedText
-    && view.name === source.resolvedText
-    && view.official?.sourceText === source.sourceText
-    && view.official?.resolvedText === source.resolvedText;
+    && view.name === pin.sourceText
+    && view.official?.sourceText === pin.sourceText
+    && view.official?.resolvedText === pin.sourceText;
   return manifestMatches && identityMatches ? 'matches-fixed-1.13.2-text' : 'unconfirmed';
 }
 
