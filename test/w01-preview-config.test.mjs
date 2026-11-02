@@ -84,6 +84,7 @@ test('UnitT02_workflow-restores-or-rebuilds-history-from-the-committed-list', ()
   const steps = job.steps;
   const checkouts = steps.filter(step => step.uses?.startsWith('actions/checkout@'));
   assert.equal(checkouts.length, 4);
+  assert.equal(checkouts[0].with['fetch-depth'], 0, 'web candidate needs full history for pinned-commit tests');
   assert.deepEqual(checkouts.slice(1).map(step => step.with['fetch-depth']), [1, 1, 1]);
   assert.equal(checkouts.some(step => step.with.path?.startsWith('prior-real-')), false);
   assert.ok(workflow.on.workflow_dispatch.inputs.full_rebuild);
