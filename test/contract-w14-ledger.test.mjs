@@ -8,6 +8,9 @@ import { gunzipSync, gzipSync } from 'node:zlib';
 import * as w14LedgerContract from '../scripts/content/contract-w14-ledger.mjs';
 import * as w14OutcomeBuilder from '../scripts/content/build-w14-outcomes.mjs';
 
+const W14_FIXTURE_ROOT = new URL('./fixtures/contracts/w14/', import.meta.url);
+const w14Fixture = relative => new URL(relative, W14_FIXTURE_ROOT);
+
 import {
   buildW14Overlay,
   createW14OverlayEntry,
@@ -171,11 +174,11 @@ test('UnitT16_registry-reconciliation-rejects-ambiguous-or-unverified-current-ma
 // Purpose: keep the actual 260-row artifact bound to source entry IDs, selectors, fragments, and the approved current package digests.
 // Given the fixed W03 registry shard and generated report; when checking every row; then unmatched keys remain explicitly unproven and the three exact joins retain all verified review fields.
 test('UnitT17_generated-registry-report-is-row-bound-and-not-an-availability-claim', async () => {
-  const report = JSON.parse(await readFile(new URL('../docs/contracts/w14/weapon-registry-current-reconciliation.json', import.meta.url), 'utf8'));
-  const ledger = JSON.parse(await readFile(new URL('../docs/contracts/w03/mapping-ledger.json', import.meta.url), 'utf8'));
+  const report = JSON.parse(await readFile(w14Fixture('weapon-registry-current-reconciliation.json'), 'utf8'));
+  const ledger = JSON.parse(await readFile(w14Fixture('w03/mapping-ledger.json'), 'utf8'));
   const descriptor = ledger.shards.find(shard => shard.groupId === 'source-code-registry');
   assert.ok(descriptor);
-  const container = await readFile(new URL(`../docs/contracts/w03/${descriptor.path}`, import.meta.url));
+  const container = await readFile(w14Fixture(`w03/${descriptor.path}`));
   const checked = verifyW03LedgerShard(ledger, descriptor, container);
   assert.equal(checked.valid, true);
   assert.equal(report.inputBindings.w03Ledger.sha256.length, 64);
@@ -631,7 +634,7 @@ test('UnitT100_missing-current-child-resolves-only-to-existing-approved-parent',
 // Purpose: ensure their report points at the real approved container and carries its recomputed value hash.
 // Given the generated candidate-only crosswalk; when reviewing every parent replacement; then no absent leaf is reported as an actual approved target.
 test('UnitT110_source-current-parent-rewrites-retain-real-locator-and-hash', async () => {
-  const report = JSON.parse(await readFile(new URL('../docs/contracts/w14/source-current-row-reconciliation.json', import.meta.url), 'utf8'));
+  const report = JSON.parse(await readFile(w14Fixture('source-current-row-reconciliation.json'), 'utf8'));
   const replacements = report.rows.map(row => row.decision)
     .filter(decision => decision?.target?.sourceFieldResolution?.relation === 'legacy-child-absent-current-approved-parent-container');
 
@@ -717,9 +720,9 @@ test('UnitT130_kept-outcomes-bind-the-original-source-and-cannot-hide-current-ro
 // Purpose: permit the bounded announcement exception without allowing any other current row to disappear into a future scope.
 // Given an actual W03 announcement row; when its W15 deferral is validated; then that exact path is allowed and a neighboring current non-announcement row is rejected.
 test('UnitT140_only_fixed_current_web_announcement_rows_may_be_deferred_to_w15', async () => {
-  const ledger = JSON.parse(await readFile(new URL('../docs/contracts/w03/mapping-ledger.json', import.meta.url), 'utf8'));
+  const ledger = JSON.parse(await readFile(w14Fixture('w03/mapping-ledger.json'), 'utf8'));
   const descriptor = ledger.shards.find(item => item.groupId === 'web-w01-inputs');
-  const container = await readFile(new URL(`../docs/contracts/w03/${descriptor.path}`, import.meta.url));
+  const container = await readFile(w14Fixture(`w03/${descriptor.path}`));
   const checked = verifyW03LedgerShard(ledger, descriptor, container);
   assert.equal(checked.valid, true);
   const announcement = checked.entries.find(entry => entry.owner === 'web'
@@ -744,7 +747,7 @@ test('UnitT140_only_fixed_current_web_announcement_rows_may_be_deferred_to_w15',
 // Purpose: bind W15 deferral to the exact W03 Mods group instead of mistaking target owner for source owner.
 // Given verified M05, M07, and K01 rows; when deferring by group; then only the matching Mods source groups are accepted.
 test('UnitT150_mods_w15_deferral_uses_fixed_source_group_not_target_owner', async () => {
-  const docRoot = path.join(process.cwd(), 'docs', 'contracts', 'w03');
+  const docRoot = fileURLToPath(w14Fixture('w03/'));
   const indexBytes = await readFile(path.join(docRoot, 'mods', 'mapping-ledger.json'));
   const index = JSON.parse(indexBytes.toString('utf8'));
   const loadFirst = async (group) => {
@@ -791,11 +794,11 @@ test('UnitT150_mods_w15_deferral_uses_fixed_source_group_not_target_owner', asyn
 // Purpose: distinguish the Source-owned M01 archive manifest from the Extension gzip archive and bind each completion to its original Mods row.
 // Given a fixed M01 Mods shard row; when validating its archive outcome; then only the pinned Source manifest/path and original source locator are accepted.
 test('UnitT160_m01_archive_outcome_binds_the_fixed_source_manifest_and_mods_row', async () => {
-  const modsIndex = JSON.parse(await readFile(new URL('../docs/contracts/w03/mods/mapping-ledger.json', import.meta.url), 'utf8'));
+  const modsIndex = JSON.parse(await readFile(w14Fixture('w03/mods/mapping-ledger.json'), 'utf8'));
   const m01 = modsIndex.groups.find(group => group.groupId === 'M01');
   assert.ok(m01);
   const shard = m01.shards[0];
-  const rows = JSON.parse(await readFile(new URL(`../docs/contracts/w03/${shard.path}`, import.meta.url), 'utf8'));
+  const rows = JSON.parse(await readFile(w14Fixture(`w03/${shard.path}`), 'utf8'));
   const source = rows[0];
   assert.equal(source.source.repoId, 'mods');
   assert.ok(source.review.basisRefs.includes('W03/M01'));
@@ -837,7 +840,7 @@ test('UnitT160_m01_archive_outcome_binds_the_fixed_source_manifest_and_mods_row'
 // Purpose: prevent a `mods/mods/shards/...` lookup caused by mixing index-root and descriptor-root conventions.
 // Given the fixed W03 Mods index; when the first verified shard is reached; then its callback is invoked before the test stops the walk.
 test('UnitT170_mods_walker_uses_one_w03_root_for_index_and_shard_paths', async () => {
-  const docRoot = fileURLToPath(new URL('../docs/contracts/w03/', import.meta.url));
+  const docRoot = fileURLToPath(w14Fixture('w03/'));
   await assert.rejects(
     walkW03ModsLedgerShards({
       docRoot,
@@ -1147,15 +1150,15 @@ test('UnitT190_web_term_localization_targets_resolve_to_the_terms_domain_and_exa
 // Purpose: preserve the frozen Web owner identity separately from the presentation's entityRef when creating a current Web destination.
 // Given the exact W03 row and its pinned reconciliation/receipt target; when classifying the presentation name; then the destination keeps the Web owner ID and records the distinct skill entityRef, while a wrong authoringId is rejected.
 test('UnitT195_web_presentation_owner_identity_stays_distinct_from_its_source_entity_ref', async () => {
-  const ledger = JSON.parse(await readFile(new URL('../docs/contracts/w03/mapping-ledger.json', import.meta.url), 'utf8'));
+  const ledger = JSON.parse(await readFile(w14Fixture('w03/mapping-ledger.json'), 'utf8'));
   const descriptor = ledger.shards.find(item => item.groupId === 'web-w01-inputs' && item.path.endsWith('web-w01-inputs-0001.json'));
   assert.ok(descriptor);
-  const container = await readFile(new URL(`../docs/contracts/w03/${descriptor.path}`, import.meta.url));
+  const container = await readFile(w14Fixture(`w03/${descriptor.path}`));
   const checked = verifyW03LedgerShard(ledger, descriptor, container);
   assert.equal(checked.valid, true);
   const entry = checked.entries.find(item => item.entryId === 'w03-363b5ef660cc42a3a8e72612');
   assert.ok(entry);
-  const report = JSON.parse(await readFile(new URL('../docs/contracts/w14/web-current-row-reconciliation.json', import.meta.url), 'utf8'));
+  const report = JSON.parse(await readFile(w14Fixture('web-current-row-reconciliation.json'), 'utf8'));
   const reportRow = report.rows.find(item => item.entryId === entry.entryId);
   assert.ok(reportRow);
   assert.equal(entry.target.recordId, 'web:presentation:psyker-brain-burst-improved');
@@ -1201,17 +1204,17 @@ test('UnitT195_web_presentation_owner_identity_stays_distinct_from_its_source_en
 // Purpose: permit only the report-bound compiled-official owner reassignment without changing the original W03 record ID or accepting a different owner.
 // Given the fixed W03 row, reconciliation report, candidate human receipt and current presentation; when classifying it; then both IDs remain explicit and the exact report proof is embedded.
 test('UnitT200_compiled_official_input_reassignment_binds_legacy_row_to_exact_web_owner', async () => {
-  const ledger = JSON.parse(await readFile(new URL('../docs/contracts/w03/mapping-ledger.json', import.meta.url), 'utf8'));
+  const ledger = JSON.parse(await readFile(w14Fixture('w03/mapping-ledger.json'), 'utf8'));
   const descriptors = ledger.shards.filter(item => item.groupId === 'web-w01-inputs');
   let entry;
   for (const descriptor of descriptors) {
-    const envelope = JSON.parse(await readFile(new URL(`../docs/contracts/w03/${descriptor.path}`, import.meta.url), 'utf8'));
+    const envelope = JSON.parse(await readFile(w14Fixture(`w03/${descriptor.path}`), 'utf8'));
     const shard = JSON.parse(gunzipSync(Buffer.from(envelope.data, 'base64')).toString('utf8'));
     entry = shard.entries.find(item => item.entryId === 'w03-6ef7ce5434aedeb86c6e42bb');
     if (entry) break;
   }
   assert.ok(entry);
-  const webReportBytes = await readFile(new URL('../docs/contracts/w14/web-current-row-reconciliation.json', import.meta.url));
+  const webReportBytes = await readFile(w14Fixture('web-current-row-reconciliation.json'));
   const webReport = JSON.parse(webReportBytes.toString('utf8'));
   const reportRowIndex = webReport.rows.findIndex(item => item.entryId === entry.entryId);
   const reportRow = webReport.rows[reportRowIndex];

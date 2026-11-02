@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { loadW13RangedPreviewInputs, readW13SelectedW09Snapshot } from '../scripts/content/w13-ranged-preview.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const candidateRoot = path.join(repoRoot, 'content', 'contracts', 'w13', 'ranged-candidate');
+const candidateRoot = path.join(repoRoot, 'test', 'fixtures', 'contracts', 'w13', 'ranged-candidate');
 
 // Scenario: A candidate cache file changes without updating its fixed lock.
 // Purpose: Reject altered preview inputs before reading or projecting Source/Web contracts.

@@ -12,6 +12,7 @@ import { buildW07Candidate } from '../scripts/content/contract-w07.mjs';
 import { loadW13RangedPreviewInputs } from '../scripts/content/w13-ranged-preview.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const candidateRoot = path.join(repoRoot, 'test', 'fixtures', 'contracts', 'w13', 'ranged-candidate');
 const APPROVED_W07_OVERLAY = 'content/contracts/w09/authoring-overlays/w07/authoring/7c2e8bba7b53629af1a7938b5b47108054290a76fbf322b3a7d47f56d4977dd6.json';
 const RANGED_PRESENTATION_ID = 'web:presentation:lasgun-p1-m1';
 const SOURCE_WEAPON_REF = {
@@ -24,7 +25,7 @@ const SOURCE_WEAPON_REF = {
 // Purpose: Preserve every existing reviewed target and receipt while keeping the new ranged wording and action targets pending.
 test('UnitT10_w13-ranged-candidate-preserves-approved-w07-receipts-and-validates-new-review-state', { timeout: 300000 }, async () => {
   const approvedBaseline = JSON.parse(await readFile(path.join(repoRoot, ...APPROVED_W07_OVERLAY.split('/')), 'utf8'));
-  const preview = await loadW13RangedPreviewInputs({ repoRoot });
+  const preview = await loadW13RangedPreviewInputs({ repoRoot, candidateRoot });
   const inputs = preview.w07;
   assert.equal(preview.reviewReceipt.status, 'validated-pending-candidate');
   assert.equal(preview.reviewReceipt.previewOnly, true);
