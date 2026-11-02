@@ -254,6 +254,28 @@ test('UnitT65_weapon_view_preserves_typed_terms_and_only_exact_canonical_errata'
   assert.equal(result.errata[0].context.description, '只說明 Mk IV 的名稱範圍。');
 });
 
+// Scenario: One Source-backed mark keeps its exact Web presentation while a sibling mark has no presentation.
+// Purpose: Keep the verified mark usable and expose the missing sibling only as an unresolved mark ID.
+// Given one ready and one unpresented mark in the same family, When the family view is requested, Then the ready mark remains complete and the missing mark contributes no copied detail.
+test('UnitT70_keeps_ready_weapon_mark_when_sibling_presentation_is_missing', () => {
+  const domain = makeWeaponDomain();
+  domain.web.presentations = domain.web.presentations.filter(
+    presentation => presentation.entityRef.recordId !== refs.weaponXii.recordId,
+  );
+  const view = createSharedViewModel({ domains: [domain], gameReleaseId: RELEASE });
+
+  const family = view.getWeaponFamily('chainaxe-p1');
+  const markIv = view.getWeapon({ familyId: 'chainaxe-p1', markId: 'mark-iv' });
+  const missingMark = view.getWeapon({ familyId: 'chainaxe-p1', markId: 'mark-xii' });
+
+  assert.equal(family.status, 'ready');
+  assert.deepEqual(family.marks.map(mark => mark.markId), ['mark-iv']);
+  assert.deepEqual(family.unresolvedMarkIds, ['mark-xii']);
+  assert.equal(markIv.status, 'ready');
+  assert.equal(markIv.statSections[0].claims[0].payload.value.decimal, '80');
+  assert.equal(missingMark.status, 'unavailable');
+});
+
 const approvedPackageDir = process.env.SYP_W11_APPROVED_PACKAGE_DIR;
 // Scenario: The fixed isolated candidate has exact pinned bytes but is not a selected or published release.
 // Purpose: Re-run the pure model against real approved input without copying its multi-megabyte domains into the repository.
