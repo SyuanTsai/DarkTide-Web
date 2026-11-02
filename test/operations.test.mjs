@@ -138,7 +138,17 @@ test('InterT70_backup_roundtrip_preserves_all_files_and_rejects_tampering', asyn
   const restored = await restoreBackup({ directory, output: path.join(root, 'restored'), sourceOutput: path.join(root, 'source') });
   assert.equal(restored.build_id, artifact.build_id);
   assert.equal(restored.file_count, artifact.file_count);
+  assert.equal(restored.composition, undefined, 'legacy backup records remain accepted without composition metadata');
   assert.equal(record.files.length, 4);
+  const w09Directory = path.join(root, 'w09-backup');
+  const stateCommit = 'd'.repeat(40);
+  const w09Record = await createBackup({ root, dist: path.join(root, 'dist'), receiptPath, output: w09Directory,
+    runUrl: 'https://github.com/SyuanTsai/DarkTide-Web/actions/runs/54321', composition: 'w09', stateBranchCommit: stateCommit });
+  assert.equal(w09Record.composition, 'w09');
+  assert.deepEqual(w09Record.state_branch, { name: 'w09-release-state', commit: stateCommit });
+  const restoredW09 = await restoreBackup({ directory: w09Directory, output: path.join(root, 'w09-restored'), sourceOutput: path.join(root, 'w09-source') });
+  assert.equal(restoredW09.composition, 'w09');
+  assert.equal(restoredW09.state_branch_commit, stateCommit);
   await writeFile(path.join(directory, 'static-site.tar.gz'), 'damaged');
   await assert.rejects(restoreBackup({ directory, output: path.join(root, 'must-not-exist') }), /size|hash/);
   await assert.rejects(readFile(path.join(root, 'must-not-exist', 'version.json')), /ENOENT/);

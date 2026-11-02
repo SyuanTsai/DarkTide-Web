@@ -42,6 +42,9 @@ jobs:
       group: darktide-cloudflare-production
       cancel-in-progress: false
     environment: production
+    outputs:
+      publication_status: ${{ steps.promote.outputs.status || steps.rollback.outputs.status }}
+      state_branch_commit: ${{ steps.promote.outputs.state_commit || steps.rollback.outputs.state_commit }}
     steps:
       - name: Check out reviewed Web commit without persisted credentials
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -184,6 +187,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
       - name: Promote the selected shared composition
+        id: promote
         if: steps.selected.outputs.run == 'true' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true' && inputs.action != 'rollback'
         run: node scripts/promote-w09-release.mjs
         env:
@@ -199,6 +203,7 @@ jobs:
           WRANGLER_SEND_METRICS: 'false'
           CI: 'true'
       - name: Restore the explicit approved whole-site snapshot
+        id: rollback
         if: inputs.action == 'rollback' && steps.ci.outputs.success == 'true' && steps.freshness.outputs.current == 'true'
         run: >-
           node scripts/promote-w09-release.mjs --rollback
@@ -215,3 +220,48 @@ jobs:
           TARGET_RUNTIME_SNAPSHOT_BUILD_ID: ${{ inputs.target_runtime_snapshot_build_id }}
           WRANGLER_SEND_METRICS: 'false'
           CI: 'true'
+      - name: Stage the exact verified package for retained backup
+        if: >-
+          steps.promote.outputs.status == 'verified-and-active'
+          || steps.rollback.outputs.status == 'verified-and-rolled-back'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: w09-production-package
+          path: |
+            dist/
+            .deployment/last-deployment.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+  backup:
+    needs: shared-release
+    if: >-
+      needs.shared-release.outputs.publication_status == 'verified-and-active'
+      || needs.shared-release.outputs.publication_status == 'verified-and-rolled-back'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the exact published source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Download the exact verified package and deployment receipt
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: w09-production-package
+          path: .
+      - name: Retain verified W09 package outside Cloudflare
+        run: node scripts/operations-publish.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BACKUP_SOURCE_COMMIT: ${{ github.event.workflow_run.head_sha || github.sha }}
+          BACKUP_COMPOSITION: w09
+          W09_STATE_BRANCH_COMMIT: ${{ needs.shared-release.outputs.state_branch_commit }}
