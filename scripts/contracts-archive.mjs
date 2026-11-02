@@ -18,6 +18,7 @@ export const ARCHIVE_PATHS = Object.freeze([
 // Keep only inputs reached by npm test, package scripts, or the CI W09 release
 // workflow. Everything else below the two archive roots is release-managed evidence.
 export const ARCHIVE_EXCLUDED_PATHS = Object.freeze([
+  'content/contracts/w08/source-candidate',
   'docs/contracts/w03/coverage.json',
   'docs/contracts/w03/mapping-ledger.json',
   'docs/contracts/w03/scope-manifest.json',
