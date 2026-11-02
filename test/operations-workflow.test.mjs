@@ -21,11 +21,17 @@ test('UnitT10_operations_workflows_keep_credentials_out_of_PR_and_backup', async
   assert.equal(backup.needs, 'shared-release');
   assert.match(backup.if, /verified-and-active/);
   assert.match(backup.if, /verified-and-rolled-back/);
+  assert.match(backup.if, /promotion_status == 'already-active'/);
   assert.equal(backup.permissions.contents, 'write');
   assert.ok(!JSON.stringify(backup).includes('secrets.'));
   assert.ok(publish.steps.some(step => step.uses?.startsWith('actions/upload-artifact@')));
   assert.ok(backup.steps.some(step => step.uses?.startsWith('actions/download-artifact@')));
-  assert.ok(backup.steps.some(step => step.run === 'node scripts/operations-publish.mjs'));
+  const lookup = backup.steps.find(step => step.run === 'node scripts/operations-backup-lookup.mjs');
+  assert.equal(lookup.if, "needs.shared-release.outputs.promotion_status == 'already-active'");
+  assert.equal(lookup.env.ACTIVE_BUILD_ID, '${{ needs.shared-release.outputs.active_build_id }}');
+  const publishBackup = backup.steps.find(step => step.run === 'node scripts/operations-publish.mjs');
+  assert.match(publishBackup.if, /promotion_status != 'already-active'/);
+  assert.match(publishBackup.if, /backup-lookup\.outputs\.backup_required == 'true'/);
   const monitor = await load('operations-monitor.yml');
   assert.equal(monitor.on.schedule[0].cron, '17,47 * * * *');
   assert.ok(!JSON.stringify(monitor).includes('secrets.'));

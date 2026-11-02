@@ -12,8 +12,40 @@ export const REPOSITORY = 'SyuanTsai/DarkTide-Web';
 const BACKUP_FILES = ['artifact-manifest.json', 'deployment.json', 'source.tar.gz', 'static-site.tar.gz'];
 const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 
-export function validateDeploymentReceipt(receipt, artifact) {
+export function validateDeploymentReceipt(receipt, artifact, artifactManifestSha256) {
   assert.equal(artifact.package_kind, 'published', 'backup requires published package');
+  if (receipt?.schema === 'w09-publication-receipt/1') {
+    const keys = ['schema', 'status', 'action', 'transactionId', 'releaseIds', 'expectedActive', 'buildId',
+      'dataRevision', 'artifactManifestSha256', 'productionOrigin', 'activeByGame'];
+    assert.deepEqual(Object.keys(receipt).sort(), keys.sort(), 'unexpected W09 publication receipt fields');
+    assert.equal(receipt.status, 'verified', 'backup requires verified W09 publication');
+    assert.ok(['promote', 'rollback'].includes(receipt.action), 'unsupported W09 publication action');
+    assert.match(receipt.transactionId, /^[a-f0-9]{64}$/u);
+    assert.ok(Array.isArray(receipt.releaseIds) && receipt.releaseIds.length > 0, 'missing W09 release IDs');
+    assert.equal(new Set(receipt.releaseIds).size, receipt.releaseIds.length, 'duplicate W09 release ID');
+    for (const releaseId of receipt.releaseIds) assert.match(releaseId, /^w09-[a-f0-9]{32}$/u);
+    assert.ok(receipt.expectedActive && typeof receipt.expectedActive === 'object'
+      && !Array.isArray(receipt.expectedActive), 'invalid W09 expected active snapshot');
+    assert.deepEqual(Object.keys(receipt.expectedActive).sort(), ['activeByGame', 'runtimeSnapshotBuildId'].sort(),
+      'unexpected W09 expected active fields');
+    assert.ok(Array.isArray(receipt.expectedActive.activeByGame), 'invalid W09 expected active pointers');
+    if (receipt.expectedActive.runtimeSnapshotBuildId !== null) {
+      assert.match(receipt.expectedActive.runtimeSnapshotBuildId, /^[a-f0-9]{64}$/u);
+    }
+    assert.ok(Array.isArray(receipt.activeByGame) && receipt.activeByGame.length > 0,
+      'missing W09 active pointers');
+    for (const pointer of [...receipt.expectedActive.activeByGame, ...receipt.activeByGame]) {
+      assert.deepEqual(Object.keys(pointer).sort(), ['gameReleaseId', 'releaseId'], 'unexpected W09 active pointer fields');
+      assert.ok(typeof pointer.gameReleaseId === 'string' && pointer.gameReleaseId.length > 0);
+      assert.match(pointer.releaseId, /^w09-[a-f0-9]{32}$/u);
+    }
+    assert.equal(receipt.buildId, artifact.build_id, 'W09 receipt build mismatch');
+    assert.equal(receipt.dataRevision, artifact.data_revision, 'W09 receipt data mismatch');
+    assert.match(artifactManifestSha256 ?? '', /^[a-f0-9]{64}$/u, 'W09 receipt requires artifact manifest hash');
+    assert.equal(receipt.artifactManifestSha256, artifactManifestSha256, 'W09 receipt manifest mismatch');
+    assert.equal(receipt.productionOrigin, SITE_ORIGIN);
+    return receipt;
+  }
   const keys = ['status', 'build_id', 'data_revision', 'previous_versions', 'production_origin', 'deployed_versions', 'preview_origin'];
   assert.deepEqual(Object.keys(receipt).sort(), keys.sort(), 'unexpected deployment receipt fields');
   assert.equal(receipt.status, 'verified', 'backup requires verified deployment');
@@ -37,7 +69,8 @@ export function validateDeploymentReceipt(receipt, artifact) {
 export async function createBackup({ root, dist, receiptPath, output, runUrl, runAttempt = '1', sourceCommit,
   composition, stateBranchCommit }) {
   const artifact = await verifyStaticPackage(dist);
-  const receipt = validateDeploymentReceipt(JSON.parse(await readFile(receiptPath, 'utf8')), artifact);
+  const manifestBytes = await readFile(path.join(dist, 'artifact-manifest.json'));
+  const receipt = validateDeploymentReceipt(JSON.parse(await readFile(receiptPath, 'utf8')), artifact, sha256(manifestBytes));
   assert.ok(composition === undefined || composition === 'w09', 'unsupported backup composition');
   assert.equal(composition === 'w09', stateBranchCommit !== undefined,
     'W09 composition and state branch commit must be provided together');
@@ -50,7 +83,6 @@ export async function createBackup({ root, dist, receiptPath, output, runUrl, ru
   await mkdir(output, { recursive: false });
   await exec('tar', ['-czf', path.join(output, 'static-site.tar.gz'), '-C', dist, '.']);
   await exec('git', ['-c', 'core.autocrlf=false', 'archive', '--format=tar.gz', '--output=' + path.join(output, 'source.tar.gz'), commit], { cwd: root });
-  const manifestBytes = await readFile(path.join(dist, 'artifact-manifest.json'));
   await writeFile(path.join(output, 'artifact-manifest.json'), manifestBytes);
   await writeFile(path.join(output, 'deployment.json'), JSON.stringify(receipt, null, 2) + '\n');
   const version = JSON.parse(await readFile(path.join(dist, 'version.json'), 'utf8'));
@@ -105,7 +137,8 @@ export async function inspectBackup(directory) {
   assert.equal(manifest.build_id, record.build_id);
   assert.equal(manifest.data_revision, record.data_revision);
   assert.equal(manifest.files.length + 1, record.file_count);
-  validateDeploymentReceipt(JSON.parse(await readFile(path.join(directory, 'deployment.json'), 'utf8')), manifest);
+  validateDeploymentReceipt(JSON.parse(await readFile(path.join(directory, 'deployment.json'), 'utf8')), manifest,
+    sha256(await readFile(path.join(directory, 'artifact-manifest.json'))));
   return record;
 }
 

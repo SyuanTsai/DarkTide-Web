@@ -8,12 +8,25 @@ import { buildStaticSite } from '../src/static/build.mjs';
 import { createBuildRoot, disposeBuildRoot, publishedRemotePackage } from './static-test-helpers.mjs';
 import { createBackup, validateDeploymentReceipt, inspectBackup, restoreBackup } from '../src/operations/backup.mjs';
 import { assertSamePublication, monitorOrigin, incidentAction } from '../src/operations/monitor.mjs';
+import { resolveW09BackupReceipt } from '../scripts/operations-backup-lookup.mjs';
+import { sha256 } from '../src/static/common.mjs';
 
 const versionId = '45770a28-fd27-445a-98e9-7d619764f3db';
 function receipt(artifact) {
   return { status: 'verified', build_id: artifact.build_id, data_revision: artifact.data_revision,
     production_origin: 'https://darktide.tw-syuan.com', preview_origin: 'https://darktide-zh-tw-preview.syuan-tsai.workers.dev',
     previous_versions: [], deployed_versions: [{ version_id: versionId, percentage: 100 }] };
+}
+
+function w09Receipt(artifact, artifactManifestSha256 = 'c'.repeat(64)) {
+  return {
+    schema: 'w09-publication-receipt/1', status: 'verified', action: 'promote',
+    transactionId: 'd'.repeat(64), releaseIds: ['w09-' + 'e'.repeat(32)],
+    expectedActive: { activeByGame: [], runtimeSnapshotBuildId: null },
+    buildId: artifact.build_id, dataRevision: artifact.data_revision, artifactManifestSha256,
+    productionOrigin: 'https://darktide.tw-syuan.com',
+    activeByGame: [{ gameReleaseId: 'game-release', releaseId: 'w09-' + 'e'.repeat(32) }],
+  };
 }
 
 // Scenario: A successful receipt or a stale, failed, or mixed deployment is supplied.
@@ -26,6 +39,57 @@ test('UnitT10_backup_requires_matching_verified_deployment', () => {
     assert.throws(() => validateDeploymentReceipt({ ...receipt(artifact), ...changed }, artifact));
   }
   assert.throws(() => validateDeploymentReceipt(receipt(artifact), { ...artifact, package_kind: 'fixture' }));
+});
+
+// Scenario: A retained package contains either a legacy Cloudflare receipt or a W09 publication receipt.
+// Purpose: Keep restore and inspection compatible while binding W09 evidence to the exact manifest bytes.
+test('UnitT15_backup_accepts_only_matching_verified_W09_publication_receipts', () => {
+  const artifact = { package_kind: 'published', build_id: 'a'.repeat(64), data_revision: 'b'.repeat(64) };
+  const manifestSha = 'c'.repeat(64);
+  const valid = w09Receipt(artifact, manifestSha);
+  assert.deepEqual(validateDeploymentReceipt(valid, artifact, manifestSha), valid);
+  for (const changed of [
+    { status: 'pending' }, { buildId: 'f'.repeat(64) }, { dataRevision: 'f'.repeat(64) },
+    { artifactManifestSha256: 'f'.repeat(64) }, { productionOrigin: 'https://wrong.test' },
+    { token: 'must-not-copy' },
+  ]) {
+    assert.throws(() => validateDeploymentReceipt({ ...valid, ...changed }, artifact, manifestSha));
+  }
+  assert.throws(() => validateDeploymentReceipt(valid, artifact), /manifest/i);
+});
+
+// Scenario: The active W09 build may already have a retained Release, or may need its state receipt materialized.
+// Purpose: Use the monitor lookup identity, avoid duplicates, and fail closed before publication on stale bytes or missing evidence.
+test('UnitT17_already_active_backup_lookup_is_idempotent_and_fail_closed', async () => {
+  const artifact = { package_kind: 'published', build_id: 'a'.repeat(64), data_revision: 'b'.repeat(64) };
+  const manifestSha = 'c'.repeat(64);
+  const publicationReceipt = w09Receipt(artifact, manifestSha);
+  const matchingRelease = {
+    draft: false, prerelease: false, tag_name: 'site-' + '1'.repeat(40) + '-123-1',
+    name: 'Static site ' + artifact.build_id, html_url: 'https://example.test/release',
+  };
+  let calls = 0;
+  const retained = await resolveW09BackupReceipt({
+    artifact, artifactManifestSha256: manifestSha, activeBuildId: artifact.build_id,
+    state: { publicationReceipts: [] },
+    listReleases: async () => { calls += 1; return [matchingRelease]; },
+  });
+  assert.equal(calls, 1, 'GitHub lookup is injectable and called once');
+  assert.deepEqual(retained, { status: 'already-retained', release: matchingRelease });
+
+  const required = await resolveW09BackupReceipt({
+    artifact, artifactManifestSha256: manifestSha, activeBuildId: artifact.build_id,
+    state: { publicationReceipts: [publicationReceipt] }, listReleases: async () => [],
+  });
+  assert.deepEqual(required, { status: 'backup-required', receipt: publicationReceipt });
+  await assert.rejects(resolveW09BackupReceipt({
+    artifact, artifactManifestSha256: manifestSha, activeBuildId: artifact.build_id,
+    state: { publicationReceipts: [] }, listReleases: async () => [],
+  }), /publication receipt.*active build/i);
+  await assert.rejects(resolveW09BackupReceipt({
+    artifact, artifactManifestSha256: manifestSha, activeBuildId: 'f'.repeat(64),
+    state: { publicationReceipts: [publicationReceipt] }, listReleases: async () => [matchingRelease],
+  }), /dist build.*active build/i);
 });
 
 async function originHarness(t) {
@@ -142,7 +206,10 @@ test('InterT70_backup_roundtrip_preserves_all_files_and_rejects_tampering', asyn
   assert.equal(record.files.length, 4);
   const w09Directory = path.join(root, 'w09-backup');
   const stateCommit = 'd'.repeat(40);
-  const w09Record = await createBackup({ root, dist: path.join(root, 'dist'), receiptPath, output: w09Directory,
+  const w09ReceiptPath = path.join(root, 'w09-deployment.json');
+  const artifactManifestSha256 = sha256(await readFile(path.join(root, 'dist/artifact-manifest.json')));
+  await writeFile(w09ReceiptPath, JSON.stringify(w09Receipt(artifact, artifactManifestSha256)));
+  const w09Record = await createBackup({ root, dist: path.join(root, 'dist'), receiptPath: w09ReceiptPath, output: w09Directory,
     runUrl: 'https://github.com/SyuanTsai/DarkTide-Web/actions/runs/54321', composition: 'w09', stateBranchCommit: stateCommit });
   assert.equal(w09Record.composition, 'w09');
   assert.deepEqual(w09Record.state_branch, { name: 'w09-release-state', commit: stateCommit });
