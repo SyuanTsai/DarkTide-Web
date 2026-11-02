@@ -893,8 +893,11 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   git(webRoot, ['add', '--all']);
   git(webRoot, ['commit', '-m', 'W09 isolated reviewed composition fixture']);
 
+  const selectedBeforeCarriedProposal = await readFile(selectionFile);
   const carriedProposal = await prepareW09SourceProposal({ repoRoot: webRoot, sourceRoot, releaseId: request.releaseId, fetchImpl });
   await assert.rejects(readFile(validatorCanaryPath), { code: 'ENOENT' }, 'proposal and compiler projection must use the approved historical runtime');
+  assert.deepEqual(await readFile(selectionFile), selectedBeforeCarriedProposal,
+    'building a new unselected proposal must preserve the existing selected composition bytes');
   assert.equal(carriedProposal.selected, false, 'the refreshed same-release proposal remains unselected');
   assert.notEqual(carriedProposal.proposalDirectory, proposal.proposalDirectory,
     'changed Web inputs must create a new immutable proposal version instead of conflicting with history');
@@ -915,6 +918,14 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
       'immutable proposal internal paths must remain safe for ordinary Windows checkouts');
   }
   const carriedLock = JSON.parse(await readFile(path.join(carriedProposal.proposalDirectory, 'web-input-lock.json'), 'utf8'));
+  assert.equal(carriedLock.web.w08CompilerCommit, W08_UPDATED_COMPILER_COMMIT,
+    'the new proposal must pin the current dd W08 compiler commit');
+  assert.equal(carriedLock.web.w08AuthoringCommit, W08_UPDATED_COMPILER_COMMIT,
+    'the new proposal must pin the current dd W08 authoring commit');
+  assert.equal(carriedLock.web.w08CompilerLockSha256, sha256(compilerLockBytes),
+    'the new proposal must bind the exact current W08 compiler lock bytes');
+  assert.equal(carriedLock.web.w08InputLockSha256, sha256(inputLockBytes),
+    'the new proposal must bind the exact current W08 compiler-input lock bytes');
   assert.equal(carriedLock.web.overlayCommit, overlayCommit, 'new Source event must retain the selected Web overlay pin');
   assert.deepEqual(carriedLock.authoringOverlay, overlayRows, 'new Source event must carry forward selected current authoring/official-input overlays');
   assert.ok(await readFile(path.join(proposal.proposalDirectory, 'web-input-lock.json')),
@@ -1714,6 +1725,13 @@ test('InterT25_explicit-retention-reference-changes-use-the-durable-owner-state-
 });
 
 const W09_HISTORICAL_COMPOSITION_COMMIT = '08c25ff58a01bac1a52a0531cde99288f68cfa31';
+const W09_C882_COMPOSITION_COMMIT = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
+const W09_C882_REQUEST_ID = 'c882e473212ea55a2a2cc6a5c71d35e50c6662f140a246fb99879bb327804740';
+const W08_UPDATED_COMPILER_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5';
+const W08_UPDATED_AUTHORING_SIZE = 189850;
+const W08_UPDATED_AUTHORING_SHA256 = '11d884888d1ebf45fa8c91a265dcc0c34169aa73efec92a65006c0e0f05f455c';
+const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
+const W08_COMPILER_INPUTS_LOCK_PATH = 'content/contracts/w08/compiler-inputs.lock.json';
 const W09_COMPILER_LOCK_PATH = 'content/contracts/w09/compiler.lock.json';
 const W09_COMPOSITION_LOCK_ROOT = 'content/contracts/w09/source-handoff/locks/';
 
@@ -1735,7 +1753,7 @@ function cloneW09Fixture(sourceRoot, destination) {
   git(destination, ['remote', 'set-url', 'origin', 'https://github.com/SyuanTsai/DarkTide-Web.git']);
 }
 
-async function createDualRootW09Fixture(t) {
+async function createDualRootW09Fixture(t, compositionCommit = W09_HISTORICAL_COMPOSITION_COMMIT) {
   const fixtureRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-dual-root-'));
   t.after(() => rm(fixtureRoot, { recursive: true, force: true }));
   const runtimeRoot = path.join(fixtureRoot, 'runtime');
@@ -1744,7 +1762,7 @@ async function createDualRootW09Fixture(t) {
   cloneW09Fixture(W09_TEST_GIT_ROOT, compositionRoot);
   await symlink(path.join(REPO_ROOT, 'node_modules'), path.join(compositionRoot, 'node_modules'), 'junction');
   git(runtimeRoot, ['checkout', '--quiet', '-B', 'main', 'HEAD']);
-  git(compositionRoot, ['checkout', '--quiet', '--detach', W09_HISTORICAL_COMPOSITION_COMMIT]);
+  git(compositionRoot, ['checkout', '--quiet', '--detach', compositionCommit]);
 
   const historicalSelectedBytes = gitBytes(compositionRoot, [
     'show', 'HEAD:' + W09_SELECTED_COMPOSITION_PATH,
@@ -1760,6 +1778,10 @@ async function createDualRootW09Fixture(t) {
   }
 
   const pinCommit = git(runtimeRoot, ['rev-parse', 'HEAD']);
+  for (const relativePath of [W08_COMPILER_LOCK_PATH, W08_COMPILER_INPUTS_LOCK_PATH]) {
+    const bytes = await readFile(path.join(REPO_ROOT, ...relativePath.split('/')));
+    await writeFile(path.join(runtimeRoot, ...relativePath.split('/')), bytes);
+  }
   const compilerLock = JSON.parse(gitBytes(runtimeRoot, ['show', 'HEAD:' + W09_COMPILER_LOCK_PATH]).toString('utf8'));
   compilerLock.commit = pinCommit;
   compilerLock.files = W09_COMPILER_FILE_PATHS.map(relativePath => {
@@ -1768,13 +1790,16 @@ async function createDualRootW09Fixture(t) {
   });
   compilerLock.fileSetSha256 = sha256(Buffer.from(canonicalW09Json(compilerLock.files), 'utf8'));
   await writeFile(path.join(runtimeRoot, ...W09_COMPILER_LOCK_PATH.split('/')), jsonBytes(compilerLock));
-  git(runtimeRoot, ['add', '--', W09_COMPILER_LOCK_PATH, W09_SELECTED_COMPOSITION_PATH, ...historicalRequestLockPaths]);
+  git(runtimeRoot, ['add', '--', W08_COMPILER_LOCK_PATH, W08_COMPILER_INPUTS_LOCK_PATH,
+    W09_COMPILER_LOCK_PATH, W09_SELECTED_COMPOSITION_PATH, ...historicalRequestLockPaths]);
   gitCommitFixture(runtimeRoot, 'test fixture: pin current runtime code');
 
   return {
     fixtureRoot,
     runtimeRoot,
     compositionRoot,
+    compositionCommit,
+    runtimeCompilerCommit: pinCommit,
     runtimeHead: git(runtimeRoot, ['rev-parse', 'HEAD']),
   };
 }
@@ -2054,6 +2079,96 @@ test('InterT26_dual-root-replay-imports-pinned-history-with-runtime-state-owned-
     'all guard failures occur before any current-root state allocation');
   assert.deepEqual(await readOptionalBytes(historyStatePath), historyStateBefore,
     'no guard path writes the historical checkout');
+});
+
+// Scenario: Current main installs the dd467d9 W08 compiler lock while the selected c882 request still pins its historical befa compiler inputs.
+// Purpose: Prove the dual-root replay authenticates the new current compiler separately and leaves the existing selected marker, request lock, and historical compiler bytes intact.
+test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_root_replay', async t => {
+  const releaseApi = await import('../scripts/content/contract-w09-release.mjs');
+  const fixture = await createDualRootW09Fixture(t, W09_C882_COMPOSITION_COMMIT);
+  const selectedPath = W09_SELECTED_COMPOSITION_PATH;
+  const selectedBytes = gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + selectedPath]);
+  const selected = JSON.parse(selectedBytes.toString('utf8'));
+  assert.equal(selected.proposals?.[0]?.requestId, W09_C882_REQUEST_ID);
+  assert.equal(selected.proposals?.[0]?.gameReleaseId, 'darktide:1.13.4');
+
+  const requestLockPath = W09_COMPOSITION_LOCK_ROOT + W09_C882_REQUEST_ID + '.json';
+  const historicalRequestLockBytes = gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + requestLockPath]);
+  const historicalRequestLock = JSON.parse(historicalRequestLockBytes.toString('utf8'));
+  const historicalCompilerLockBytes = gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + W08_COMPILER_LOCK_PATH]);
+  const historicalInputsLockBytes = gitBytes(fixture.compositionRoot, ['show', 'HEAD:' + W08_COMPILER_INPUTS_LOCK_PATH]);
+  const historicalCompilerLock = JSON.parse(historicalCompilerLockBytes.toString('utf8'));
+  const historicalInputsLock = JSON.parse(historicalInputsLockBytes.toString('utf8'));
+  assert.equal(historicalCompilerLock.commit, 'befa04a50acea8a3295b9c81c158e3514b21e83e');
+  assert.equal(historicalInputsLock.authoringCommit, historicalCompilerLock.commit);
+  assert.equal(historicalRequestLock.web.w08CompilerCommit, historicalCompilerLock.commit);
+  assert.equal(historicalRequestLock.web.w08CompilerLockSha256, sha256(historicalCompilerLockBytes));
+  assert.equal(historicalRequestLock.web.w08InputLockSha256, sha256(historicalInputsLockBytes));
+
+  const currentCompilerLockBytes = await readFile(path.join(fixture.runtimeRoot, ...W08_COMPILER_LOCK_PATH.split('/')));
+  const currentCompilerLock = JSON.parse(currentCompilerLockBytes.toString('utf8'));
+  const currentInputsLockBytes = await readFile(path.join(fixture.runtimeRoot, ...W08_COMPILER_INPUTS_LOCK_PATH.split('/')));
+  const currentInputsLock = JSON.parse(currentInputsLockBytes.toString('utf8'));
+  const currentCompilerIdentity = await loadW08CompilerInputs({ repoRoot: fixture.runtimeRoot });
+  const currentAuthoringBlob = gitBytes(fixture.runtimeRoot, [
+    'show', W08_UPDATED_COMPILER_COMMIT + ':scripts/content/contract-authoring.mjs',
+  ]);
+  const currentAuthoringPin = currentCompilerLock.files.find(row => row.path === 'scripts/content/contract-authoring.mjs');
+  assert.equal(fixture.runtimeCompilerCommit, W08_UPDATED_COMPILER_COMMIT,
+    'the runtime root is based on the exact large-blob compiler commit');
+  assert.equal(currentCompilerLock.commit, W08_UPDATED_COMPILER_COMMIT);
+  assert.deepEqual(currentAuthoringPin, {
+    path: 'scripts/content/contract-authoring.mjs',
+    sizeBytes: W08_UPDATED_AUTHORING_SIZE,
+    sha256: W08_UPDATED_AUTHORING_SHA256,
+  });
+  assert.equal(currentAuthoringBlob.byteLength, W08_UPDATED_AUTHORING_SIZE);
+  assert.equal(sha256(currentAuthoringBlob), W08_UPDATED_AUTHORING_SHA256);
+  assert.equal(currentCompilerIdentity.compilerIdentity.commit, W08_UPDATED_COMPILER_COMMIT);
+  assert.equal(currentInputsLock.authoringCommit, W08_UPDATED_COMPILER_COMMIT);
+  assert.equal(currentCompilerIdentity.inputLock.authoringCommit, W08_UPDATED_COMPILER_COMMIT,
+    'the current input lock authenticates its bytes from the exact current compiler commit');
+  assert.equal(historicalInputsLock.authoringCommit, historicalCompilerLock.commit,
+    'the historical c882 request continues to use its separately pinned authoring commit');
+  assert.equal(historicalInputsLock.authoringCommit, 'befa04a50acea8a3295b9c81c158e3514b21e83e');
+  assert.notEqual(currentCompilerLock.commit, historicalCompilerLock.commit,
+    'current runtime and historical W09 composition keep separate W08 compiler commits');
+
+  const checkedOutSelectedBytes = await readFile(path.join(REPO_ROOT, ...selectedPath.split('/')));
+  const checkedOutRequestLockBytes = await readFile(path.join(REPO_ROOT, ...requestLockPath.split('/')));
+  assert.deepEqual(checkedOutSelectedBytes, selectedBytes, 'the c882 selected marker remains unchanged');
+  assert.deepEqual(checkedOutRequestLockBytes, historicalRequestLockBytes, 'the c882 request lock remains unchanged');
+
+  const runtimeStatePath = path.join(fixture.runtimeRoot, 'content/contracts/w09/release-state.json');
+  const historyStatePath = path.join(fixture.compositionRoot, 'content/contracts/w09/release-state.json');
+  const runtimeStateBefore = await readOptionalBytes(runtimeStatePath);
+  const historyStateBefore = await readOptionalBytes(historyStatePath);
+  const options = {
+    repoRoot: fixture.runtimeRoot,
+    compositionRepoRoot: fixture.compositionRoot,
+    expectedCompositionCommit: W09_C882_COMPOSITION_COMMIT,
+  };
+  const compositionContext = await releaseApi.resolveW09CompositionContext(options);
+  assert.equal(compositionContext.dualRoot, true);
+  assert.equal(compositionContext.expectedCompositionCommit, W09_C882_COMPOSITION_COMMIT);
+
+  const replay = await compositionContext.loadW09VerifiedComposition({
+    repoRoot: compositionContext.compositionRoot,
+    sourceRoot: fixture.runtimeRoot,
+    releaseId: selected.proposals[0].releaseId,
+    fetchImpl: async () => new Response(null, { status: 404 }),
+  });
+  assert.equal(replay.status, 'pending', 'the c882 replay reaches the controlled unavailable-archive outcome');
+  assert.equal(replay.releaseId, selected.proposals[0].releaseId);
+  assert.deepEqual(await readOptionalBytes(runtimeStatePath), runtimeStateBefore,
+    'replaying the selected c882 composition does not allocate or write current runtime state');
+  assert.deepEqual(await readOptionalBytes(historyStatePath), historyStateBefore,
+    'replaying the selected c882 composition leaves historical state read-only');
+  assert.deepEqual(await readFile(path.join(fixture.runtimeRoot, ...selectedPath.split('/'))), selectedBytes);
+  assert.deepEqual(await readFile(path.join(fixture.runtimeRoot, ...requestLockPath.split('/'))), historicalRequestLockBytes);
+  assert.deepEqual(await readFile(path.join(fixture.compositionRoot, ...selectedPath.split('/'))), selectedBytes);
+  assert.deepEqual(await readFile(path.join(fixture.compositionRoot, ...requestLockPath.split('/'))), historicalRequestLockBytes);
+  assert.ok(currentInputsLockBytes.byteLength > 0);
 });
 
 // Scenario: inspect the production workflow with both a selected promotion and explicit rollback available.

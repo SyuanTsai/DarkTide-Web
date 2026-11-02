@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -21,6 +22,15 @@ import { buildManifestPath, computeDataRevision } from '../scripts/content/contr
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RELEASE_ID = 'darktide:1.13.2';
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
+const W08_BASELINE_COMPILER_COMMIT = 'befa04a50acea8a3295b9c81c158e3514b21e83e';
+const W08_UPDATED_COMPILER_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5';
+const W08_PREVIOUS_ACTIVE_LOCK_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5^';
+const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
+const W08_COMPILER_INPUTS_LOCK_PATH = 'content/contracts/w08/compiler-inputs.lock.json';
+const W08_LARGE_AUTHORING_FILE_PATH = 'scripts/content/contract-authoring.mjs';
+const W08_LARGE_AUTHORING_FILE_SIZE = 189850;
+const W08_LARGE_AUTHORING_FILE_SHA256 = '11d884888d1ebf45fa8c91a265dcc0c34169aa73efec92a65006c0e0f05f455c';
+const W07_BASELINE_OFFICIAL_INPUT_SHA256 = 'f81406e85643fc0cdcf618d5a092b6dc6379404b0679d9b080a92b77510d504e';
 const SOURCE_COMMIT = 'c'.repeat(40);
 const W08_COMPILER_FILE_PATHS = [
   'content/schema/v2/shared-candidate.schema.json',
@@ -1051,4 +1061,82 @@ test('UnitT82_W08CompilerFileSetPinsTransitiveRetainedHistoryValidationCode', as
 
   const incompleteLock = { ...lock, files: lock.files.filter(row => row.path !== 'src/published/contract.mjs') };
   await assert.rejects(verifyW08CompilerFiles(root, incompleteLock), /must pin exactly the compiler, candidate schema, and their direct contract modules/u);
+});
+
+// Scenario: The verified large-blob fix is the current W08 compiler, while the existing authoring and Source inputs remain reviewed historical inputs.
+// Purpose: Pin only the exact dd467d9 compiler bytes and prevent accidental changes to the other 20 W08 input files or the f814 W07 baseline.
+test('UnitT83_current_W08_locks_pin_dd467d9_without_changing_reviewed_inputs', async () => {
+  const compilerBytes = await readFile(path.join(REPO_ROOT, W08_COMPILER_LOCK_PATH));
+  const inputsBytes = await readFile(path.join(REPO_ROOT, W08_COMPILER_INPUTS_LOCK_PATH));
+  const authoringBytes = await readFile(path.join(REPO_ROOT, W08_LARGE_AUTHORING_FILE_PATH));
+  const compilerLock = JSON.parse(compilerBytes.toString('utf8'));
+  const inputsLock = JSON.parse(inputsBytes.toString('utf8'));
+  const exactAuthoringPin = {
+    path: W08_LARGE_AUTHORING_FILE_PATH,
+    sizeBytes: W08_LARGE_AUTHORING_FILE_SIZE,
+    sha256: W08_LARGE_AUTHORING_FILE_SHA256,
+  };
+  assert.equal(authoringBytes.byteLength, exactAuthoringPin.sizeBytes);
+  assert.equal(sha256(authoringBytes), exactAuthoringPin.sha256);
+  assert.equal(compilerLock.commit, W08_UPDATED_COMPILER_COMMIT);
+  assert.deepEqual(compilerLock.files.find(row => row.path === W08_LARGE_AUTHORING_FILE_PATH), exactAuthoringPin);
+  assert.deepEqual(inputsLock.inputFiles.find(row => row.path === W08_LARGE_AUTHORING_FILE_PATH), exactAuthoringPin);
+
+  const previousCompilerLock = JSON.parse(execFileSync('git', [
+    '-C', REPO_ROOT, 'show', W08_PREVIOUS_ACTIVE_LOCK_COMMIT + ':' + W08_COMPILER_LOCK_PATH,
+  ], { maxBuffer: 8 * 1024 * 1024, windowsHide: true }).toString('utf8'));
+  const previousInputsLock = JSON.parse(execFileSync('git', [
+    '-C', REPO_ROOT, 'show', W08_PREVIOUS_ACTIVE_LOCK_COMMIT + ':' + W08_COMPILER_INPUTS_LOCK_PATH,
+  ], { maxBuffer: 8 * 1024 * 1024, windowsHide: true }).toString('utf8'));
+  assert.equal(previousCompilerLock.commit, W08_BASELINE_COMPILER_COMMIT);
+  assert.equal(previousCompilerLock.files.length, W08_COMPILER_FILE_PATHS.length);
+  assert.deepEqual(previousCompilerLock.files.find(row => row.path === W08_LARGE_AUTHORING_FILE_PATH), {
+    path: W08_LARGE_AUTHORING_FILE_PATH,
+    sizeBytes: 189558,
+    sha256: '7a6405d3a712a20c28dc3b39ccb3f154b6909ea9aaaa7c55746eb3ca68d9a40d',
+  }, 'dd467d9^ supplies the previous active seven-file lock');
+  assert.deepEqual(
+    compilerLock.files.filter(row => row.path !== W08_LARGE_AUTHORING_FILE_PATH),
+    previousCompilerLock.files.filter(row => row.path !== W08_LARGE_AUTHORING_FILE_PATH),
+    'the other six W08 executable pins remain byte-for-byte unchanged',
+  );
+  assert.equal(compilerLock.files.length, previousCompilerLock.files.length);
+  assert.deepEqual(
+    inputsLock.inputFiles.filter(row => row.path !== W08_LARGE_AUTHORING_FILE_PATH),
+    previousInputsLock.inputFiles.filter(row => row.path !== W08_LARGE_AUTHORING_FILE_PATH),
+    'the other 20 W08 input pins remain byte-for-byte unchanged',
+  );
+  assert.equal(inputsLock.inputFiles.filter(row => row.path !== W08_LARGE_AUTHORING_FILE_PATH).length, 20);
+  assert.equal(inputsLock.schemaVersion, previousInputsLock.schemaVersion);
+  assert.deepEqual(inputsLock.authoringModes, previousInputsLock.authoringModes);
+  assert.equal(inputsLock.authoringCommit, W08_UPDATED_COMPILER_COMMIT,
+    'the current input lock must point at a commit containing the updated compiler input bytes');
+  assert.equal(previousInputsLock.authoringCommit, W08_BASELINE_COMPILER_COMMIT,
+    'the previous active input lock still references the original compiler/input commit');
+  assert.equal(inputsLock.gameReleaseId, previousInputsLock.gameReleaseId);
+  assert.equal(inputsLock.proposedContentVersion, previousInputsLock.proposedContentVersion);
+  assert.deepEqual(inputsLock.source, previousInputsLock.source,
+    'the fixed Source candidate and all six source packet pins remain unchanged');
+  assert.equal(inputsLock.inputFiles.find(row => row.path === 'content/contracts/w07/official-inputs.json')?.sha256,
+    W07_BASELINE_OFFICIAL_INPUT_SHA256, 'the W07 official input baseline remains f814');
+
+  for (const row of inputsLock.inputFiles) {
+    const bytes = await readFile(path.join(REPO_ROOT, ...row.path.split('/')));
+    assert.equal(bytes.byteLength, row.sizeBytes, `${row.path} size must match its unchanged input pin`);
+    assert.equal(sha256(bytes), row.sha256, `${row.path} SHA-256 must match its unchanged input pin`);
+    const updatedCommitBytes = execFileSync('git', [
+      '-C', REPO_ROOT, 'show', W08_UPDATED_COMPILER_COMMIT + ':' + row.path,
+    ], { maxBuffer: 16 * 1024 * 1024, windowsHide: true });
+    assert.equal(updatedCommitBytes.byteLength, row.sizeBytes, `${row.path} blob in dd467d9 must match its input pin`);
+    assert.equal(sha256(updatedCommitBytes), row.sha256, `${row.path} blob in dd467d9 must match its input pin`);
+    if (row.path !== W08_LARGE_AUTHORING_FILE_PATH) {
+      const baselineBytes = execFileSync('git', [
+        '-C', REPO_ROOT, 'show', W08_BASELINE_COMPILER_COMMIT + ':' + row.path,
+      ], { maxBuffer: 16 * 1024 * 1024, windowsHide: true });
+      assert.deepEqual(updatedCommitBytes, baselineBytes, `${row.path} bytes are unchanged between befa and dd467d9`);
+    }
+  }
+  const verified = await verifyW08CompilerFiles(REPO_ROOT, compilerLock);
+  assert.equal(verified.compilerCommit, W08_UPDATED_COMPILER_COMMIT);
+  assert.equal(verified.gitHistoryAvailable, true);
 });
