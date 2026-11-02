@@ -1,6 +1,5 @@
-import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { lstat, mkdtemp, mkdir, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,6 +8,10 @@ import {
   ensureW09CandidatePullRequest,
   prepareW09SourceProposal,
 } from './content/contract-w09-compose.mjs';
+import {
+  replayW09ProposalFromManifest,
+  verifyW09ProposalManifestDirectory,
+} from './w09-proposal-manifest.mjs';
 
 const GIT_MAX_BUFFER = 256 * 1024 * 1024;
 const PROPOSAL_ROOT = 'content/contracts/w09/proposals/';
@@ -94,43 +97,11 @@ async function readProposal(root, proposalDirectory, expectedRevision, expectedR
   if (!relative.startsWith(PROPOSAL_ROOT) || !/^[a-f0-9]{64}$/u.test(relative.slice(PROPOSAL_ROOT.length))) {
     throw new Error('W09 proposal writer returned a path outside the immutable proposal namespace');
   }
-  const info = await lstat(absolute);
-  if (info.isSymbolicLink() || !info.isDirectory()) throw new Error('W09 proposal directory must be a regular directory');
-  const proposal = JSON.parse(await readFile(path.join(absolute, 'proposal.json'), 'utf8'));
-  if (proposal.schema !== 'w09-source-composition-proposal/1' || proposal.selected !== false
-      || proposal.allocationReserved !== false || proposal.publicationEligible !== false
-      || proposal.sourceRevision !== expectedRevision || proposal.releaseId !== expectedReleaseId) {
-    throw new Error('W09 proposal metadata does not match its verified Source release event');
-  }
-  const manifestPath = path.join(absolute, 'manifest.json');
-  const manifestBytes = await readFile(manifestPath);
-  if (manifestBytes.byteLength >= 200 * 1024) throw new Error('W09 proposal manifest exceeds the 200 KiB candidate PR limit');
-  let manifest;
-  try { manifest = JSON.parse(manifestBytes.toString('utf8')); }
-  catch { throw new Error('W09 proposal manifest is not valid JSON'); }
-  if (manifest?.schema !== 'w09-proposal-manifest/1'
-      || manifest.source?.repository !== 'SyuanTsai/DarkTide-Source-Data'
-      || manifest.source?.releaseId !== expectedReleaseId
-      || manifest.source?.archiveSha256 !== proposal.archiveSha256
-      || !Array.isArray(manifest.files)) {
-    throw new Error('W09 proposal manifest does not match its verified Source release event');
-  }
-  const generatedPaths = [];
-  const seen = new Set();
-  for (const row of manifest.files) {
-    if (!row || typeof row.path !== 'string' || row.path.includes('\\') || row.path.startsWith('/')
-        || row.path.split('/').some(part => !part || part === '.' || part === '..') || seen.has(row.path)
-        || !Number.isSafeInteger(row.sizeBytes) || row.sizeBytes < 0 || !/^[a-f0-9]{64}$/u.test(row.sha256)) {
-      throw new Error('W09 proposal manifest contains an unsafe or malformed file row');
-    }
-    const bytes = await readFile(path.join(absolute, ...row.path.split('/')));
-    if (bytes.byteLength !== row.sizeBytes || createHash('sha256').update(bytes).digest('hex') !== row.sha256) {
-      throw new Error('W09 proposal reconstruction differs from its manifest: ' + row.path);
-    }
-    generatedPaths.push(row.path);
-    seen.add(row.path);
-  }
-  if (!seen.has('proposal.json')) throw new Error('W09 proposal manifest omits proposal.json');
+  const { proposal, generatedPaths } = await verifyW09ProposalManifestDirectory({
+    proposalDirectory: absolute,
+    expectedReleaseId,
+    expectedSourceRevision: expectedRevision,
+  });
   return { proposal, relative, manifestRelative: relative + '/manifest.json', generatedPaths };
 }
 
@@ -205,7 +176,11 @@ export async function runW09CandidateHandoff({
       };
     }
 
-    const proposalResult = await prepareProposal({ repoRoot: candidatePath, sourceRoot: source, releaseId, fetchImpl });
+    const proposalResult = await replayW09ProposalFromManifest({
+      repoRoot: candidatePath,
+      releaseId,
+      replay: () => prepareProposal({ repoRoot: candidatePath, sourceRoot: source, releaseId, fetchImpl }),
+    });
     if (!proposalResult?.proposalWritten || proposalResult.sourceRevision !== probe.sourceRevision) {
       return {
         status: 'pending', releaseId, sourceRevision: probe.sourceRevision, branch,

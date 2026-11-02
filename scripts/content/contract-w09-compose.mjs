@@ -24,8 +24,6 @@ const W08_INPUT_LOCK_PATH = 'content/contracts/w08/compiler-inputs.lock.json';
 const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
 const W09_LOCK_ROOT = 'content/contracts/w09/source-handoff/locks/';
 const W09_OVERLAY_ROOT = 'content/contracts/w09/authoring-overlays/';
-const W09_PROPOSAL_MANIFEST_NAME = 'manifest.json';
-const W09_PROPOSAL_MANIFEST_MAX_BYTES = 200 * 1024;
 const SOURCE_PACKET_PATHS = Object.freeze([
   'analysis.md', 'source-revision.json', 'source-revision.md', 'source-manifest.json', 'source-receipt.json', 'technical.json',
 ]);
@@ -952,153 +950,7 @@ export function assertW09SourceProjectionPreservesReviewProof(original, projecti
   return projectedValidation;
 }
 
-function w09ProposalFileRows(files) {
-  if (!(files instanceof Map) || files.size === 0) throw new TypeError('W09 proposal files must be a non-empty Map');
-  const rows = [];
-  for (const [relativePath, value] of files) {
-    assertSafeRelativePath(relativePath, 'W09 proposal file path');
-    if (relativePath === W09_PROPOSAL_MANIFEST_NAME) throw new Error('W09 proposal files may not replace their storage manifest');
-    const bytes = Buffer.from(value);
-    rows.push({ path: relativePath, sizeBytes: bytes.byteLength, sha256: sha256(bytes) });
-  }
-  rows.sort((left, right) => left.path.localeCompare(right.path, 'en'));
-  for (const required of ['proposal.json', 'source-lock.json', 'web-input-lock.json', 'review-candidate.json']) {
-    if (!rows.some(row => row.path === required)) throw new Error('W09 proposal files omit required file ' + required);
-  }
-  return rows;
-}
-
-export function validateW09ProposalManifest(manifest) {
-  exactKeys(manifest, ['schema', 'source', 'proposal', 'files'], 'W09 proposal manifest');
-  if (manifest.schema !== 'w09-proposal-manifest/1') throw new Error('W09 proposal manifest schema is invalid');
-  exactKeys(manifest.source, ['repository', 'releaseId', 'archiveSha256'], 'W09 proposal manifest source');
-  if (manifest.source.repository !== W09_SOURCE_REPOSITORY) throw new Error('W09 proposal manifest must locate the fixed Source repository');
-  const proposal = proposalIdentity(manifest.proposal, manifest.proposal?.archiveSha256);
-  if (canonicalJson(proposal) !== canonicalJson(manifest.proposal)) throw new Error('W09 proposal manifest proposal identity is not canonical');
-  if (manifest.source.releaseId !== proposal.releaseId || manifest.source.archiveSha256 !== proposal.archiveSha256) {
-    throw new Error('W09 proposal manifest Source release/archive locator differs from its proposal identity');
-  }
-  if (!Array.isArray(manifest.files) || manifest.files.length === 0) throw new TypeError('W09 proposal manifest files must be non-empty');
-  let previousPath = null;
-  const paths = new Set();
-  for (const [index, row] of manifest.files.entries()) {
-    exactKeys(row, ['path', 'sizeBytes', 'sha256'], 'W09 proposal manifest files[' + index + ']');
-    assertSafeRelativePath(row.path, 'W09 proposal manifest files[' + index + '].path');
-    if (row.path === W09_PROPOSAL_MANIFEST_NAME) throw new Error('W09 proposal manifest may not list itself as reconstructed content');
-    if (previousPath !== null && previousPath.localeCompare(row.path, 'en') >= 0) {
-      throw new Error('W09 proposal manifest file paths must be unique and sorted');
-    }
-    if (!Number.isSafeInteger(row.sizeBytes) || row.sizeBytes < 0) throw new TypeError('W09 proposal manifest file size is invalid');
-    assertSha256(row.sha256, 'W09 proposal manifest files[' + index + '].sha256');
-    previousPath = row.path;
-    paths.add(row.path);
-  }
-  for (const required of ['proposal.json', 'source-lock.json', 'web-input-lock.json', 'review-candidate.json']) {
-    if (!paths.has(required)) throw new Error('W09 proposal manifest omits required file ' + required);
-  }
-  return manifest;
-}
-
-export function createW09ProposalManifest({ proposal, files } = {}) {
-  const identity = proposalIdentity(proposal, proposal?.archiveSha256);
-  const manifest = {
-    schema: 'w09-proposal-manifest/1',
-    source: {
-      repository: W09_SOURCE_REPOSITORY,
-      releaseId: identity.releaseId,
-      archiveSha256: identity.archiveSha256,
-    },
-    proposal: identity,
-    files: w09ProposalFileRows(files),
-  };
-  validateW09ProposalManifest(manifest);
-  if (w09ProposalJson(manifest).byteLength >= W09_PROPOSAL_MANIFEST_MAX_BYTES) {
-    throw new Error('W09 proposal manifest exceeds the 200 KiB candidate PR limit');
-  }
-  return manifest;
-}
-
-async function listW09ProposalEntries(directory, prefix = '') {
-  const entries = [];
-  for (const name of (await readdir(directory)).sort()) {
-    const entryPath = path.join(directory, name);
-    const relativePath = prefix ? prefix + '/' + name : name;
-    const info = await lstat(entryPath);
-    if (info.isSymbolicLink()) throw new Error('W09 proposal may not contain symbolic links');
-    if (info.isDirectory()) {
-      entries.push(relativePath + '\0directory');
-      entries.push(...await listW09ProposalEntries(entryPath, relativePath));
-    } else if (info.isFile()) entries.push(relativePath + '\0file');
-    else throw new Error('W09 proposal may contain only regular files and directories');
-  }
-  return entries;
-}
-
-function expectedW09ProposalEntries(files, { includeManifest = true } = {}) {
-  const entries = new Set(includeManifest ? [W09_PROPOSAL_MANIFEST_NAME + '\0file'] : []);
-  for (const relativePath of files.keys()) {
-    const segments = relativePath.split('/');
-    for (let index = 1; index < segments.length; index += 1) entries.add(segments.slice(0, index).join('/') + '\0directory');
-    entries.add(relativePath + '\0file');
-  }
-  return [...entries].sort();
-}
-
-async function ensureW09ProposalFileParent(root, relativePath) {
-  let cursor = root;
-  for (const segment of relativePath.split('/').slice(0, -1)) {
-    cursor = path.join(cursor, segment);
-    let info = await lstat(cursor).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
-    if (!info) {
-      await mkdir(cursor);
-      info = await lstat(cursor);
-    }
-    if (info.isSymbolicLink() || !info.isDirectory()) throw new Error('W09 proposal file path may not traverse a symbolic link or file');
-  }
-}
-
-export async function restoreW09ProposalDirectory({ proposalDirectory, files, expectedManifest } = {}) {
-  if (typeof proposalDirectory !== 'string' || !(files instanceof Map)) {
-    throw new TypeError('W09 proposal restoration requires a proposalDirectory and rebuilt file Map');
-  }
-  const absolute = path.resolve(proposalDirectory);
-  const rootInfo = await lstat(absolute);
-  if (rootInfo.isSymbolicLink() || !rootInfo.isDirectory()) throw new Error('W09 proposal directory must be a regular directory');
-  const manifestPath = path.join(absolute, W09_PROPOSAL_MANIFEST_NAME);
-  const manifestInfo = await lstat(manifestPath);
-  if (manifestInfo.isSymbolicLink() || !manifestInfo.isFile()) throw new Error('W09 proposal manifest must be a regular file');
-  const manifestBytes = await readFile(manifestPath);
-  if (manifestBytes.byteLength >= W09_PROPOSAL_MANIFEST_MAX_BYTES) throw new Error('W09 proposal manifest exceeds the 200 KiB candidate PR limit');
-  let manifest;
-  try { manifest = validateW09ProposalManifest(JSON.parse(manifestBytes.toString('utf8'))); }
-  catch (error) { throw new Error('W09 proposal manifest is invalid: ' + error.message, { cause: error }); }
-  if (expectedManifest && canonicalJson(manifest) !== canonicalJson(validateW09ProposalManifest(expectedManifest))) {
-    throw new Error('existing W09 proposal manifest conflicts with the verified Source replay');
-  }
-  const rebuiltRows = w09ProposalFileRows(files);
-  if (canonicalJson(rebuiltRows) !== canonicalJson(manifest.files)) {
-    throw new Error('rebuilt W09 proposal file bytes differ from the manifest size or SHA-256 hashes');
-  }
-
-  for (const row of manifest.files) {
-    const bytes = Buffer.from(files.get(row.path));
-    await ensureW09ProposalFileParent(absolute, row.path);
-    const destination = path.join(absolute, ...row.path.split('/'));
-    const currentInfo = await lstat(destination).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
-    if (currentInfo) {
-      if (currentInfo.isSymbolicLink() || !currentInfo.isFile()) throw new Error('existing W09 proposal content must be a regular file: ' + row.path);
-      if (!(await readFile(destination)).equals(bytes)) throw new Error('existing W09 proposal conflicts with its immutable bytes: ' + row.path);
-    } else {
-      await writeFile(destination, bytes, { flag: 'wx' });
-    }
-  }
-  const actualEntries = (await listW09ProposalEntries(absolute)).sort();
-  const expectedEntries = expectedW09ProposalEntries(files);
-  if (JSON.stringify(actualEntries) !== JSON.stringify(expectedEntries)) throw new Error('existing W09 proposal has conflicting paths');
-  return { path: absolute, manifest, manifestPath, fileCount: manifest.files.length };
-}
-
-async function writeW09ProposalDirectory(directory, files, proposal) {
+async function writeW09ProposalDirectory(directory, files) {
   const absolute = path.resolve(directory);
   const parent = path.dirname(absolute);
   await mkdir(parent, { recursive: true });
@@ -1108,39 +960,55 @@ async function writeW09ProposalDirectory(directory, files, proposal) {
     const info = await lstat(cursor).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
     if (info?.isSymbolicLink() || (info && !info.isDirectory())) throw new Error('W09 proposal path may not traverse a symbolic link or file');
   }
-  const manifest = createW09ProposalManifest({ proposal, files });
-  const manifestBytes = w09ProposalJson(manifest);
+  const expectedEntries = new Set();
+  for (const relativePath of files.keys()) {
+    assertSafeRelativePath(relativePath, 'W09 proposal file path');
+    const segments = relativePath.split('/');
+    for (let index = 1; index < segments.length; index += 1) expectedEntries.add(segments.slice(0, index).join('/') + '\0directory');
+    expectedEntries.add(relativePath + '\0file');
+  }
+  const expectedSorted = [...expectedEntries].sort();
   const existing = await lstat(absolute).catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
   if (existing) {
     if (existing.isSymbolicLink() || !existing.isDirectory()) throw new Error('existing W09 proposal must be a regular directory');
-    const existingManifest = await lstat(path.join(absolute, W09_PROPOSAL_MANIFEST_NAME))
-      .catch(error => error.code === 'ENOENT' ? null : Promise.reject(error));
-    if (!existingManifest) {
-      const actualEntries = (await listW09ProposalEntries(absolute)).sort();
-      if (JSON.stringify(actualEntries) !== JSON.stringify(expectedW09ProposalEntries(files, { includeManifest: false }))) {
-        throw new Error('existing W09 proposal has conflicting paths');
+    const actualEntries = [];
+    const visit = async (folder, prefix = '') => {
+      for (const name of (await readdir(folder)).sort()) {
+        const entryPath = path.join(folder, name);
+        const relativePath = prefix ? prefix + '/' + name : name;
+        const info = await lstat(entryPath);
+        if (info.isSymbolicLink()) throw new Error('W09 proposal may not contain symbolic links');
+        if (info.isDirectory()) {
+          actualEntries.push(relativePath + '\0directory');
+          await visit(entryPath, relativePath);
+        } else if (info.isFile()) actualEntries.push(relativePath + '\0file');
+        else throw new Error('W09 proposal may contain only regular files and directories');
       }
-      for (const [relativePath, bytes] of files) {
-        const current = await readFile(path.join(absolute, ...relativePath.split('/')));
-        if (!current.equals(bytes)) throw new Error('existing W09 proposal conflicts with its immutable bytes: ' + relativePath);
-      }
-      await writeFile(path.join(absolute, W09_PROPOSAL_MANIFEST_NAME), manifestBytes, { flag: 'wx' });
+    };
+    await visit(absolute);
+    if (JSON.stringify(actualEntries.sort()) !== JSON.stringify(expectedSorted)) throw new Error('existing W09 proposal has conflicting paths');
+    for (const [relativePath, bytes] of files) {
+      const current = await readFile(path.join(absolute, ...relativePath.split('/')));
+      if (!current.equals(bytes)) throw new Error('existing W09 proposal conflicts with its immutable bytes: ' + relativePath);
     }
-    const restored = await restoreW09ProposalDirectory({ proposalDirectory: absolute, files, expectedManifest: manifest });
-    return { ...restored, reused: true, manifestSizeBytes: manifestBytes.byteLength };
+    return { path: absolute, reused: true };
   }
 
   const temporary = absolute + '.' + process.pid + '.' + Math.random().toString(16).slice(2) + '.tmp';
   await mkdir(temporary, { recursive: false });
   try {
-    await writeFile(path.join(temporary, W09_PROPOSAL_MANIFEST_NAME), manifestBytes, { flag: 'wx' });
+    for (const [relativePath, bytes] of files) {
+      assertSafeRelativePath(relativePath, 'W09 proposal file path');
+      const destination = path.join(temporary, ...relativePath.split('/'));
+      await mkdir(path.dirname(destination), { recursive: true });
+      await writeFile(destination, bytes, { flag: 'wx' });
+    }
     await rename(temporary, absolute);
   } catch (error) {
     await rm(temporary, { recursive: true, force: true });
     throw error;
   }
-  const restored = await restoreW09ProposalDirectory({ proposalDirectory: absolute, files, expectedManifest: manifest });
-  return { ...restored, reused: false, manifestSizeBytes: manifestBytes.byteLength };
+  return { path: absolute, reused: false };
 }
 
 function w09ProposalJson(value) {
@@ -1338,7 +1206,7 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
       compositionLockSha256: sha256(w09ProposalJson(lock)),
     }));
     const proposalDirectory = path.join(absoluteWebRoot, 'content/contracts/w09/proposals', proposalIdentitySha256);
-    const persisted = await writeW09ProposalDirectory(proposalDirectory, files, proposalOnly);
+    const persisted = await writeW09ProposalDirectory(proposalDirectory, files);
     return {
       status: composition ? 'proposal' : 'pending',
       releaseId,
@@ -1346,8 +1214,6 @@ export async function prepareW09SourceProposal({ repoRoot, sourceRoot, releaseId
       sourceRevision: resolved.request.sourceRevision,
       gameReleaseId: resolved.request.gameReleaseId,
       proposalDirectory: persisted.path,
-      proposalManifestPath: persisted.manifestPath,
-      proposalManifestSizeBytes: persisted.manifestSizeBytes,
       proposalWritten: true,
       reused: persisted.reused,
       selected: false,
