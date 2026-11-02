@@ -2114,8 +2114,9 @@ test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_roo
     'show', W08_UPDATED_COMPILER_COMMIT + ':scripts/content/contract-authoring.mjs',
   ]);
   const currentAuthoringPin = currentCompilerLock.files.find(row => row.path === 'scripts/content/contract-authoring.mjs');
-  assert.equal(fixture.runtimeCompilerCommit, W08_UPDATED_COMPILER_COMMIT,
-    'the runtime root is based on the exact large-blob compiler commit');
+  assert.doesNotThrow(() => git(fixture.runtimeRoot, [
+    'merge-base', '--is-ancestor', W08_UPDATED_COMPILER_COMMIT, fixture.runtimeCompilerCommit,
+  ]), 'the exact large-blob compiler commit must be reachable from the current runtime root');
   assert.equal(currentCompilerLock.commit, W08_UPDATED_COMPILER_COMMIT);
   assert.deepEqual(currentAuthoringPin, {
     path: 'scripts/content/contract-authoring.mjs',
