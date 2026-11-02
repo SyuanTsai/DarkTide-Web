@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -8,9 +8,11 @@ import { fileURLToPath } from 'node:url';
 import { loadWebAuthoringInputs, validateWebAuthoring } from '../scripts/content/contract-authoring.mjs';
 import {
   assertW09SourceProjectionPreservesReviewProof,
+  createW09ProposalManifest,
   createW09AuthoringSourcePin,
   deriveW09CandidateBranch,
   ensureW09CandidatePullRequest,
+  restoreW09ProposalDirectory,
   validateW09CompositionInputLock,
 } from '../scripts/content/contract-w09-compose.mjs';
 
@@ -45,6 +47,17 @@ request.packetFiles = packetPaths.map((path, index) => ({
   sizeBytes: index + 1,
   sha256: 'abcdef'[index].repeat(64),
 }));
+
+function proposalFixtureFiles() {
+  return new Map([
+    ['proposal.json', Buffer.from('{"proposal":true}\n')],
+    ['source-lock.json', Buffer.from('{"source":true}\n')],
+    ['web-input-lock.json', Buffer.from('{"web":true}\n')],
+    ['review-candidate.json', Buffer.from('{"review":true}\n')],
+    ['candidate/manifest.json', Buffer.from('{"candidate":true}\n')],
+    ['candidate/domains/weapons.json', Buffer.from('[{"name":"fixture"}]\n')],
+  ]);
+}
 
 function validLock() {
   return {
@@ -211,6 +224,55 @@ test('UnitT04_source-projection-revalidates-complete-receipt-proof_and_fails_clo
       invalid.original, invalid.projection, invalid.validator, invalid.schema, invalid.originalValidation,
     ), /projection.*review|validation/i);
   }
+});
+
+// Scenario: a verified Source replay produces a complete proposal candidate for a PR.
+// Purpose: commit only a bounded manifest that pins the Source release/archive locator and every reconstructible proposal file.
+test('UnitT05_proposal-manifest-pins-every-reconstructible-file-and-stays-small', () => {
+  const files = proposalFixtureFiles();
+  const manifest = createW09ProposalManifest({ proposal: request, files });
+  assert.equal(manifest.schema, 'w09-proposal-manifest/1');
+  assert.deepEqual(manifest.source, {
+    repository: 'SyuanTsai/DarkTide-Source-Data',
+    releaseId: request.releaseId,
+    archiveSha256: request.archiveSha256,
+  });
+  assert.deepEqual(manifest.files.map(row => row.path), [...files.keys()].sort());
+  for (const row of manifest.files) {
+    const bytes = files.get(row.path);
+    assert.equal(row.sizeBytes, bytes.byteLength);
+    assert.equal(row.sha256, createHash('sha256').update(bytes).digest('hex'));
+  }
+  assert.ok(Buffer.byteLength(JSON.stringify(manifest) + '\n') < 200 * 1024);
+});
+
+// Scenario: a reviewer checks out a manifest-only proposal and rebuilds its full files from the pinned Source archive.
+// Purpose: restore exact bytes while rejecting any replay whose per-file hash differs from the reviewed manifest.
+test('UnitT06_proposal-manifest-restores-exact-files-and-rejects-hash-mismatch', async t => {
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'w09-proposal-manifest-'));
+  t.after(() => rm(tempRoot, { recursive: true, force: true }));
+  const files = proposalFixtureFiles();
+  const manifest = createW09ProposalManifest({ proposal: request, files });
+  const proposalDirectory = path.join(tempRoot, 'proposal');
+  await mkdir(proposalDirectory, { recursive: true });
+  await writeFile(path.join(proposalDirectory, 'manifest.json'), JSON.stringify(manifest) + '\n', { flag: 'wx' });
+
+  const restored = await restoreW09ProposalDirectory({ proposalDirectory, files });
+  assert.equal(restored.fileCount, files.size);
+  for (const [relativePath, bytes] of files) {
+    assert.deepEqual(await readFile(path.join(proposalDirectory, ...relativePath.split('/'))), bytes);
+  }
+
+  const mismatchedRoot = path.join(tempRoot, 'mismatched');
+  await mkdir(mismatchedRoot, { recursive: true });
+  await writeFile(path.join(mismatchedRoot, 'manifest.json'), JSON.stringify(manifest) + '\n', { flag: 'wx' });
+  const mismatchedFiles = new Map(files);
+  mismatchedFiles.set('candidate/domains/weapons.json', Buffer.from('[{"name":"tampered"}]\n'));
+  await assert.rejects(
+    restoreW09ProposalDirectory({ proposalDirectory: mismatchedRoot, files: mismatchedFiles }),
+    /manifest|hash|bytes|sha256/i,
+  );
+  await assert.rejects(readFile(path.join(mismatchedRoot, 'candidate/domains/weapons.json')), { code: 'ENOENT' });
 });
 
 // Scenario: a request is retried after a Web runner restart.

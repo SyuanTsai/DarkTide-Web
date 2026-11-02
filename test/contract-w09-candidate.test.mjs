@@ -72,13 +72,32 @@ function createProposalWriter() {
       gameReleaseId: 'darktide:' + releaseId.slice(-1),
       archiveSha256: 'b'.repeat(64),
     };
+    const proposalBytes = Buffer.from(JSON.stringify(proposal) + '\n');
     const proposalPath = path.join(proposalDirectory, 'proposal.json');
     try {
-      await writeFile(proposalPath, JSON.stringify(proposal) + '\n', { flag: 'wx' });
+      await writeFile(proposalPath, proposalBytes, { flag: 'wx' });
     } catch (error) {
       if (error.code !== 'EEXIST') throw error;
       const existing = await readFile(proposalPath, 'utf8');
-      if (existing !== JSON.stringify(proposal) + '\n') throw new Error('candidate proposal mismatch: existing=' + existing + ' expected=' + (JSON.stringify(proposal) + '\n'));
+      if (existing !== proposalBytes.toString('utf8')) throw new Error('candidate proposal mismatch: existing=' + existing + ' expected=' + proposalBytes.toString('utf8'));
+    }
+    const manifest = {
+      schema: 'w09-proposal-manifest/1',
+      source: { repository: 'SyuanTsai/DarkTide-Source-Data', releaseId, archiveSha256: proposal.archiveSha256 },
+      proposal: { releaseId, sourceRevision: SOURCE_REVISION, gameReleaseId: proposal.gameReleaseId, archiveSha256: proposal.archiveSha256 },
+      files: [{
+        path: 'proposal.json',
+        sizeBytes: proposalBytes.byteLength,
+        sha256: createHash('sha256').update(proposalBytes).digest('hex'),
+      }],
+    };
+    const manifestBytes = Buffer.from(JSON.stringify(manifest) + '\n');
+    const manifestPath = path.join(proposalDirectory, 'manifest.json');
+    try {
+      await writeFile(manifestPath, manifestBytes, { flag: 'wx' });
+    } catch (error) {
+      if (error.code !== 'EEXIST') throw error;
+      assert.deepEqual(await readFile(manifestPath), manifestBytes);
     }
     return { proposalWritten: true, sourceRevision: SOURCE_REVISION, releaseId, proposalDirectory };
   };
@@ -106,6 +125,11 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
   assert.ok(String(git(repoRoot, ['worktree', 'list', '--porcelain'])).includes(path.basename(unrelatedWorktree)), 'candidate cleanup must preserve unrelated worktree registrations');
 
   const firstRemoteCommit = git(repoRoot, ['ls-remote', '--heads', 'origin', 'refs/heads/' + first.branch]).trim().split(/\s+/u)[0];
+  assert.deepEqual(
+    String(git(repoRoot, ['ls-tree', '-r', '--name-only', firstRemoteCommit, '--', first.proposalPath])).trim().split(/\r?\n/u),
+    [first.proposalPath + '/manifest.json'],
+    'the candidate commit must retain only the small proposal manifest',
+  );
   const sameRunnerRetry = await runW09CandidateHandoff({ ...baseOptions, releaseId: firstId });
   const retriedRemoteCommit = git(repoRoot, ['ls-remote', '--heads', 'origin', 'refs/heads/' + first.branch]).trim().split(/\s+/u)[0];
   assert.equal(sameRunnerRetry.status, 'candidate');
@@ -140,9 +164,11 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
 
   git(secondRunner, ['fetch', 'origin', 'refs/heads/' + second.branch + ':refs/remotes/origin/' + second.branch]);
   const secondBranchCommit = String(git(secondRunner, ['rev-parse', 'refs/remotes/origin/' + second.branch])).trim();
-  const secondProposalRelative = second.proposalPath + '/proposal.json';
-  assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/proposal.json']).includes(firstId));
+  const secondProposalRelative = second.proposalPath + '/manifest.json';
+  assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/manifest.json']).includes(firstId));
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + secondProposalRelative]).includes(secondId));
+  assert.throws(() => git(secondRunner, ['show', secondBranchCommit + ':' + second.proposalPath + '/proposal.json']),
+    'generated proposal bytes must remain reconstructible but untracked');
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/review-note.md']).includes('Human-reviewed'));
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':main-update.txt']).includes('latest reviewed Web main'));
   assert.throws(() => git(secondRunner, ['show', secondBranchCommit + ':content/contracts/w09/source-handoff/selected.json']),

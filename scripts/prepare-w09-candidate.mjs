@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { lstat, mkdtemp, mkdir, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
@@ -101,7 +102,36 @@ async function readProposal(root, proposalDirectory, expectedRevision, expectedR
       || proposal.sourceRevision !== expectedRevision || proposal.releaseId !== expectedReleaseId) {
     throw new Error('W09 proposal metadata does not match its verified Source release event');
   }
-  return { proposal, relative };
+  const manifestPath = path.join(absolute, 'manifest.json');
+  const manifestBytes = await readFile(manifestPath);
+  if (manifestBytes.byteLength >= 200 * 1024) throw new Error('W09 proposal manifest exceeds the 200 KiB candidate PR limit');
+  let manifest;
+  try { manifest = JSON.parse(manifestBytes.toString('utf8')); }
+  catch { throw new Error('W09 proposal manifest is not valid JSON'); }
+  if (manifest?.schema !== 'w09-proposal-manifest/1'
+      || manifest.source?.repository !== 'SyuanTsai/DarkTide-Source-Data'
+      || manifest.source?.releaseId !== expectedReleaseId
+      || manifest.source?.archiveSha256 !== proposal.archiveSha256
+      || !Array.isArray(manifest.files)) {
+    throw new Error('W09 proposal manifest does not match its verified Source release event');
+  }
+  const generatedPaths = [];
+  const seen = new Set();
+  for (const row of manifest.files) {
+    if (!row || typeof row.path !== 'string' || row.path.includes('\\') || row.path.startsWith('/')
+        || row.path.split('/').some(part => !part || part === '.' || part === '..') || seen.has(row.path)
+        || !Number.isSafeInteger(row.sizeBytes) || row.sizeBytes < 0 || !/^[a-f0-9]{64}$/u.test(row.sha256)) {
+      throw new Error('W09 proposal manifest contains an unsafe or malformed file row');
+    }
+    const bytes = await readFile(path.join(absolute, ...row.path.split('/')));
+    if (bytes.byteLength !== row.sizeBytes || createHash('sha256').update(bytes).digest('hex') !== row.sha256) {
+      throw new Error('W09 proposal reconstruction differs from its manifest: ' + row.path);
+    }
+    generatedPaths.push(row.path);
+    seen.add(row.path);
+  }
+  if (!seen.has('proposal.json')) throw new Error('W09 proposal manifest omits proposal.json');
+  return { proposal, relative, manifestRelative: relative + '/manifest.json', generatedPaths };
 }
 
 async function cleanupWorktree(repoRoot, worktreePath, token) {
@@ -183,10 +213,15 @@ export async function runW09CandidateHandoff({
         proposalWritten: Boolean(proposalResult?.proposalWritten),
       };
     }
-    const { proposal, relative: proposalRelative } = await readProposal(candidatePath, proposalResult.proposalDirectory, probe.sourceRevision, releaseId);
-    git(candidatePath, ['add', '--', proposalRelative], { token: gitToken });
+    const {
+      proposal, relative: proposalRelative, manifestRelative, generatedPaths,
+    } = await readProposal(candidatePath, proposalResult.proposalDirectory, probe.sourceRevision, releaseId);
+    const generatedTrackedPaths = generatedPaths.map(relativePath => proposalRelative + '/' + relativePath);
+    git(candidatePath, ['rm', '--cached', '--ignore-unmatch', '--', ...generatedTrackedPaths], { token: gitToken });
+    git(candidatePath, ['add', '--', manifestRelative], { token: gitToken });
     const staged = String(git(candidatePath, ['diff', '--cached', '--name-only', '-z'], { token: gitToken })).split('\0').filter(Boolean);
-    if (staged.some(file => file !== proposalRelative && !file.startsWith(proposalRelative + '/'))) {
+    const allowedStaged = new Set([manifestRelative, ...generatedTrackedPaths]);
+    if (staged.some(file => !allowedStaged.has(file))) {
       throw new Error('W09 candidate commit attempted to include a path outside its immutable proposal directory');
     }
     if (staged.length > 0) git(candidatePath, ['-c', 'user.name=github-actions[bot]', '-c', 'user.email=41898282+github-actions[bot]@users.noreply.github.com', 'commit', '-m', 'SYP-341', '-m', 'feat: add an immutable W09 Source proposal candidate', '-m', 'zh-TW:\n新增：W09 Source 不可變提案候選資料'], { token: gitToken });
