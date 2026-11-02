@@ -69,6 +69,8 @@ const W07_SOURCE_FILES = Object.freeze({
   data: 'content/authoring/v2/w07-weapons.json',
   validator: 'scripts/content/contract-validator.mjs',
 });
+const SOURCE_GIT_SHOW_BUFFER_HEADROOM_BYTES = 1024 * 1024;
+const MAX_SOURCE_GIT_SHOW_BUFFER_BYTES = 64 * 1024 * 1024;
 const SHA256_RE = /^[a-f0-9]{64}$/;
 const COMMIT_RE = /^[a-f0-9]{40}$/;
 const hasOwn = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
@@ -266,8 +268,12 @@ async function loadSourceContract({ repoRoot, snapshotRoot, sourceRoot, mode = '
     catch (error) { throw new Error('cannot read Source checkout commit: ' + error.message); }
     if (actualCommit !== lock.commit) throw new Error('Source checkout commit differs from the pinned Source lock');
     for (const [name, relativePath] of Object.entries(files)) {
+      const maxBuffer = Math.min(
+        sourceBytes[name].byteLength + SOURCE_GIT_SHOW_BUFFER_HEADROOM_BYTES,
+        MAX_SOURCE_GIT_SHOW_BUFFER_BYTES,
+      );
       const bytes = !isFixture
-        ? execFileSync('git', ['-C', actualRoot, 'show', lock.commit + ':' + relativePath], { encoding: null })
+        ? execFileSync('git', ['-C', actualRoot, 'show', lock.commit + ':' + relativePath], { encoding: null, maxBuffer })
         : await readFile(path.join(actualRoot, relativePath));
       if (createHash('sha256').update(bytes).digest('hex') !== lock.files[name].sha256) {
         throw new Error('Source checkout differs from pinned bytes: ' + relativePath);

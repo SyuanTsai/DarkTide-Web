@@ -231,6 +231,114 @@ test('InterT30_source-snapshot-hashes-and-verified-file-tree-bytes-are-checked',
   assert.equal(verifiedSnapshot.sourceValidation.valid, true);
 });
 
+// Scenario: A temporary pinned Source checkout commits the real W07 snapshot data blob (>1 MiB), then its local snapshot and lock agree on bytes that differ from that Git blob.
+// Purpose: Prove the loader accepts a large exact Git blob and still rejects Source checkout bytes whose SHA-256 differs from the lock.
+// Given an exact temporary Source commit and byte-bound locks, When the pinned loader reads the large blob and then a mismatched snapshot, Then the exact commit loads and the mismatched Git bytes fail closed.
+test('InterT31_source-loader-reads-large-real-git-blob-and-rejects-blob-hash-mismatch', { timeout: 120000 }, async t => {
+  const sourceSnapshotPath = 'content/contracts/w07/source-v2-snapshot';
+  const sourceLockPath = 'content/contracts/w07/source-v2.lock.json';
+  const webAuthoringPath = 'content/authoring/v2/w07-weapons.json';
+  const webLockPath = 'content/contracts/w07/web-authoring.lock.json';
+  const webFixturePaths = [
+    'content/schema/v2/web-authoring.schema.json',
+    webAuthoringPath,
+    'content/contracts/w07/official-inputs.json',
+    sourceLockPath,
+    webLockPath,
+    'content/contracts/w07/baseline/w01-web-authoring.json',
+    'content/contracts/w07/baseline/w01-baseline.lock.json',
+  ];
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'web-large-source-blob-'));
+  t.after(() => rm(tempRoot, { recursive: true, force: true }));
+  const tempWebRoot = path.join(tempRoot, 'web');
+  const tempSnapshotRoot = path.join(tempRoot, 'snapshot');
+  const tempSourceRoot = path.join(tempRoot, 'source');
+  await Promise.all([mkdir(tempWebRoot, { recursive: true }), mkdir(tempSnapshotRoot, { recursive: true }), mkdir(tempSourceRoot, { recursive: true })]);
+
+  const copyToRoot = async (sourceRoot, targetRoot, relativePath) => {
+    const targetPath = path.join(targetRoot, ...relativePath.split('/'));
+    await mkdir(path.dirname(targetPath), { recursive: true });
+    await cp(path.join(sourceRoot, ...relativePath.split('/')), targetPath);
+  };
+  for (const relativePath of webFixturePaths) await copyToRoot(repoRoot, tempWebRoot, relativePath);
+
+  const sourceLock = JSON.parse(await readFile(path.join(repoRoot, sourceLockPath), 'utf8'));
+  const sourceSnapshotRoot = path.join(repoRoot, sourceSnapshotPath);
+  const sourceDataPath = sourceLock.files.data.path;
+  const sourceDataBytes = await readFile(path.join(sourceSnapshotRoot, ...sourceDataPath.split('/')));
+  assert.ok(sourceDataBytes.byteLength > 1024 * 1024, 'the pinned W07 Source contract blob must exceed 1 MiB');
+
+  for (const entry of Object.values(sourceLock.files)) {
+    const sourceBytes = await readFile(path.join(sourceSnapshotRoot, ...entry.path.split('/')));
+    assert.equal(hash(sourceBytes), entry.sha256, `${entry.path} pinned snapshot SHA-256`);
+    for (const targetRoot of [tempSnapshotRoot, tempSourceRoot]) {
+      const targetPath = path.join(targetRoot, ...entry.path.split('/'));
+      await mkdir(path.dirname(targetPath), { recursive: true });
+      await writeFile(targetPath, sourceBytes);
+    }
+  }
+
+  const git = args => execFileSync('git', ['-C', tempSourceRoot, ...args], {
+    encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, windowsHide: true,
+  }).trim();
+  execFileSync('git', ['init', '--quiet', '--initial-branch=main'], { cwd: tempSourceRoot, windowsHide: true });
+  git(['config', 'core.autocrlf', 'false']);
+  git(['config', 'user.name', 'W07 Source fixture']);
+  git(['config', 'user.email', 'w07-source-fixture@example.invalid']);
+  git(['add', '--', ...Object.values(sourceLock.files).map(entry => entry.path)]);
+  git(['commit', '--quiet', '-m', 'temporary pinned W07 source fixture']);
+  sourceLock.commit = git(['rev-parse', 'HEAD']);
+  assert.equal(Number(git(['cat-file', '-s', `${sourceLock.commit}:${sourceDataPath}`])), sourceDataBytes.byteLength,
+    'the >1 MiB bytes are committed as a real Git blob');
+
+  const tempSourceLockPath = path.join(tempWebRoot, ...sourceLockPath.split('/'));
+  const tempAuthoringPath = path.join(tempWebRoot, ...webAuthoringPath.split('/'));
+  const tempWebLockPath = path.join(tempWebRoot, ...webLockPath.split('/'));
+  const authoring = JSON.parse(await readFile(tempAuthoringPath, 'utf8'));
+  const webLock = JSON.parse(await readFile(tempWebLockPath, 'utf8'));
+  for (const presentation of authoring.presentations ?? []) delete presentation.retainedName;
+
+  const updateAuthoringPin = async () => {
+    authoring.sourcePin = {
+      repository: sourceLock.repository,
+      commit: sourceLock.commit,
+      schemaId: sourceLock.schemaId,
+      schemaSha256: sourceLock.files.schema.sha256,
+      dataSha256: sourceLock.files.data.sha256,
+      validatorSha256: sourceLock.files.validator.sha256,
+    };
+    const authoringBytes = Buffer.from(JSON.stringify(authoring, null, 2) + '\n');
+    await writeFile(tempAuthoringPath, authoringBytes);
+    webLock.authoring.sha256 = hash(authoringBytes);
+    await writeFile(tempWebLockPath, JSON.stringify(webLock, null, 2) + '\n');
+    await writeFile(tempSourceLockPath, JSON.stringify(sourceLock, null, 2) + '\n');
+  };
+  await updateAuthoringPin();
+
+  const exactInputs = await loadWebAuthoringInputs({
+    repoRoot: tempWebRoot,
+    sourceSnapshotRoot: tempSnapshotRoot,
+    sourceRoot: tempSourceRoot,
+    mode: 'w07',
+  });
+  assert.equal(exactInputs.sourceCheck.matchesPinnedSnapshot, true);
+  assert.equal(exactInputs.sourceContract.fixtureOnly, false);
+
+  const mismatchedSnapshot = Buffer.concat([sourceDataBytes, Buffer.from('\n')]);
+  await writeFile(path.join(tempSnapshotRoot, ...sourceDataPath.split('/')), mismatchedSnapshot);
+  sourceLock.files.data.sha256 = hash(mismatchedSnapshot);
+  await updateAuthoringPin();
+  await assert.rejects(
+    loadWebAuthoringInputs({
+      repoRoot: tempWebRoot,
+      sourceSnapshotRoot: tempSnapshotRoot,
+      sourceRoot: tempSourceRoot,
+      mode: 'w07',
+    }),
+    /Source checkout differs from pinned bytes: content\/authoring\/v2\/w07-weapons\.json/u,
+  );
+});
+
 // Scenario: a candidate invents an official text update from the same source snapshot or reuses a Source change ID.
 // Purpose: prevent source revision/baseline noise and ID collisions from entering the game-change view.
 test('UnitT30_game-change-owner-comparison-and-id-rules-reject-false-updates', async () => {
