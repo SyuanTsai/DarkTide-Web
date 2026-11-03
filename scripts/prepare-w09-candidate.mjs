@@ -3,6 +3,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createW09SourceFetch } from './content/contract-w09-source-fetch.mjs';
 import {
   deriveW09CandidateBranch,
   ensureW09CandidatePullRequest,
@@ -253,7 +254,9 @@ async function main() {
   const sourceRoot = process.env.W09_SOURCE_ROOT ?? path.join(repoRoot, 'source');
   const releaseId = process.env.W09_RELEASE_ID;
   if (!releaseId) throw new Error('W09_RELEASE_ID must contain the release_id-only event value');
-  const result = await runW09CandidateHandoff({ repoRoot, sourceRoot, releaseId });
+  // Unauthenticated Source release lookups share the runner IP's rate limit and fail with HTTP 403.
+  const fetchImpl = createW09SourceFetch({ token: process.env.W09_GIT_TOKEN });
+  const result = await runW09CandidateHandoff({ repoRoot, sourceRoot, releaseId, fetchImpl });
   const summary = result.status === 'candidate'
     ? 'W09 proposal branch ' + result.branch + ' now carries ' + result.releaseId + ' under one Source revision; PR ' + result.pullRequest.url + '. This is an unselected review candidate with no content allocation or deployment.\n'
     : 'W09 candidate handoff remains pending for ' + result.releaseId + ': ' + result.reason + '\n';
