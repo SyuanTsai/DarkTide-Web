@@ -1228,8 +1228,8 @@ async function showSharedPage(force = false) {
   const isWeaponDirectory = url.pathname === '/weapons/' && !url.searchParams.has('family');
   const isBlessingDirectory = url.pathname === '/blessings/' && !url.searchParams.has('id');
   const isCurrentWeaponDetail = url.pathname === '/weapons/' && url.searchParams.has('family');
-  const retainedBlessingId = retainedBlessingIdForCurrentId(url.searchParams.get('id'));
-  const isMappedBlessingDetail = url.pathname === '/blessings/' && Boolean(retainedBlessingId);
+  const isMappedBlessingDetail = url.pathname === '/blessings/'
+    && /^darktide:blessing:.+:p[1-9]\d*-.+$/u.test(url.searchParams.get('id') ?? '');
   if (isWeaponDirectory || isBlessingDirectory) {
     const currentRequest = sharedLoadPromise;
     const historyRequest = readHistoryPackage(url, force);
@@ -1302,6 +1302,7 @@ async function showSharedPage(force = false) {
       historyRequest.result = historicalIndex;
       historyPackage = await readLegacyPackage(historicalIndex, force);
       if (isMappedBlessingDetail) {
+        const retainedBlessingId = retainedBlessingIdForCurrentId(url.searchParams.get('id'), historyPackage.catalog);
         const retainedEntry = historyPackage.catalog.entries.find(row => row.kind === 'blessing' && row.id === retainedBlessingId);
         if (retainedEntry) retainedBlessingDetail = await legacyDataClient.loadDetail(retainedEntry, { force });
       }

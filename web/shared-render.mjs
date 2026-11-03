@@ -647,10 +647,39 @@ function appendRetainedSummary(parent, summaryIndex, kind, id, label = '摘要�
   if (summary && summary !== parentSummary) parent.append(node('p', `${label}${summary}`, 'shared-history-summary'));
   return summary ?? null;
 }
-// Exact identity crosswalk verified from the 1.13.4 Chainaxe P1 traits source and retained variant ID.
-const CURRENT_TO_RETAINED_BLESSING_ID = new Map([
-  ['darktide:blessing:chainaxe:p1-movement-speed-on-activation', 'rev-it-up'],
-]);
+const BESPOKE_RETAINED_VARIANT_ID = /^weapon_trait_bespoke_(.+)_p([1-9]\d*)_(.+)$/u;
+const BESPOKE_CURRENT_BLESSING_ID = /^darktide:blessing:(.+):p([1-9]\d*)-(.+)$/u;
+
+export function currentBlessingIdForRetainedVariantId(variantId) {
+  if (typeof variantId !== 'string') return null;
+  const match = BESPOKE_RETAINED_VARIANT_ID.exec(variantId);
+  if (!match) return null;
+  const [, family, tier, suffix] = match;
+  return `darktide:blessing:${family}:p${tier}-${suffix.replaceAll('_', '-')}`;
+}
+
+function retainedVariantIdForCurrentBlessingId(currentId) {
+  if (typeof currentId !== 'string') return null;
+  const match = BESPOKE_CURRENT_BLESSING_ID.exec(currentId);
+  if (!match) return null;
+  const [, family, tier, suffix] = match;
+  return `weapon_trait_bespoke_${family}_p${tier}_${suffix.replaceAll('-', '_')}`;
+}
+
+export function retainedBlessingIdForCurrentId(currentId, catalog) {
+  const variantId = retainedVariantIdForCurrentBlessingId(currentId);
+  if (!variantId || !Array.isArray(catalog?.entries)) return null;
+  const blessingIds = new Set(catalog.entries
+    .filter(entry => entry?.kind === 'blessing' && typeof entry.id === 'string')
+    .map(entry => entry.id));
+  const matches = new Set();
+  for (const entry of catalog.entries) {
+    if (entry?.kind !== 'variant' || entry.id !== variantId || typeof entry.route !== 'string') continue;
+    const retainedBlessingId = /^\/blessings\/([^/]+)\/variants\//u.exec(entry.route)?.[1];
+    if (retainedBlessingId && blessingIds.has(retainedBlessingId)) matches.add(retainedBlessingId);
+  }
+  return matches.size === 1 ? [...matches][0] : null;
+}
 
 function retainedName(entry) {
   return typeof entry?.name_zh_tw === 'string' && entry.name_zh_tw.trim()
@@ -836,10 +865,6 @@ function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTempl
   main.append(section);
 }
 
-export function retainedBlessingIdForCurrentId(currentId) {
-  return CURRENT_TO_RETAINED_BLESSING_ID.get(currentId) ?? null;
-}
-
 function renderRetainedBlessingIdentity(main, historyPackage, retainedDetail, blessingId) {
   const catalog = historyPackage?.catalog;
   const entry = catalog?.entries.find(row => row.kind === 'blessing' && row.id === blessingId);
@@ -894,7 +919,7 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
   const mappedRetainedIds = new Set();
   for (const presentation of currentItems) {
     const currentId = displayRef(presentation.entityRef);
-    const retainedId = CURRENT_TO_RETAINED_BLESSING_ID.get(currentId);
+    const retainedId = retainedBlessingIdForCurrentId(currentId, catalog);
     if (!retainedId || mappedRetainedIds.has(retainedId)) continue;
     const oldEntry = blessings.find(entry => entry.id === retainedId);
     if (!oldEntry) continue;
@@ -1049,7 +1074,8 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
     : '適用武器尚未驗證；此頁只顯示已確認的祝福與等級資料。';
   main.append(node('p', applicabilityText, 'shared-applicability'));
   if (view.obtainableTiers?.status !== 'known') main.append(node('p', '此等級是否可取得尚未確認。', 'shared-muted'));
-  renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail, retainedBlessingIdForCurrentId(id));
+  renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail,
+    retainedBlessingIdForCurrentId(id, historyPackage?.catalog));
 }
 function sourceDecimal(value) {
   if (!value || value.status !== 'known' || typeof value.decimal !== 'string') return '來源數值未確認';
