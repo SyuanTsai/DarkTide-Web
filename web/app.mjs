@@ -1057,7 +1057,7 @@ async function showLegacySkillPage(url, force = false) {
   const generation = ++sharedNavigationGeneration;
   main.replaceChildren(element('p', '正在讀取技能詳情與天賦樹…', 'loading-note'));
   setSharedBuildMeta(sharedLoadPromise?.result ?? null);
-  sharedLoadPromise = sharedClient.load({ pathname: url.pathname, force });
+  sharedLoadPromise = sharedClient.load({ pathname: url.pathname, search: url.search, force });
   const currentRequest = sharedLoadPromise;
   const historyRequest = readHistoryPackage(url, force);
   let currentResult = currentRequest.result ?? null;
@@ -1216,7 +1216,7 @@ function restoreSharedDetailUiState(state) {
 async function showSharedPage(force = false) {
   const generation = ++sharedNavigationGeneration;
   const url = new URL(window.location.href);
-  sharedLoadPromise = sharedClient.load({ pathname: url.pathname, force });
+  sharedLoadPromise = sharedClient.load({ pathname: url.pathname, search: url.search, force });
   if (!sharedLoadPromise) {
     renderSharedPage({ main, buildMeta, url, error: new Error('shared load unavailable') });
     return;

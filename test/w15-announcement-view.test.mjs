@@ -26,7 +26,11 @@ test('UnitT10_compiles_and_validates_official_document_as_optional_typed_announc
   const candidate = await buildW15AnnouncementCandidate();
   const source = candidate.announcements[2];
   const fixture = await makeCompiledAnnouncementFixture({ announcement: authoringRow(source) });
-  const loaded = await loadSharedRelease({ build: fixture.build, fetchImpl: responseFetch(fixture.responses) });
+  const loaded = await loadSharedRelease({
+    build: fixture.build,
+    fetchImpl: responseFetch(fixture.responses),
+    pathname: '/announcements/',
+  });
   assert.equal(loaded.status, 'ready');
   assert.equal(loaded.view.getAnnouncements().items.length, 1);
   assert.equal(loaded.view.getAnnouncements().items[0].scope, 'official-document');

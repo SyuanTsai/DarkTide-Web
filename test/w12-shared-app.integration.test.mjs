@@ -23,7 +23,7 @@ async function compiledBundle({ unrelatedPrivateToken = false, spoofOfficialToke
   const compiled = { ...emitted, manifest: structuredClone(emitted.manifest), files: new Map(emitted.files) };
   const manifest = compiled.manifest;
   if (mismatchedWeaponOfficialCopy) {
-    const weaponRow = manifest.files.find(row => row.kind === 'weapons');
+    const weaponRow = manifest.files.find(row => row.kind === 'weapon-family');
     const weapon = JSON.parse(compiled.files.get(weaponRow.path).toString('utf8'));
     weapon.web.presentations[0].official.resource += '/not-the-validated-copy';
     const changedBytes = Buffer.from(JSON.stringify(weapon, null, 2) + '\n', 'utf8');
@@ -32,7 +32,7 @@ async function compiledBundle({ unrelatedPrivateToken = false, spoofOfficialToke
     weaponRow.sha256 = sha256(changedBytes);
   }
   if (spoofWeaponPresentationPath) {
-    const weaponRow = manifest.files.find(row => row.kind === 'weapons');
+    const weaponRow = manifest.files.find(row => row.kind === 'weapon-family');
     const weapon = JSON.parse(compiled.files.get(weaponRow.path).toString('utf8'));
     weapon.web['presentations[0].official'] = structuredClone(weapon.web.presentations[0].official);
     const changedBytes = Buffer.from(JSON.stringify(weapon, null, 2) + '\n', 'utf8');

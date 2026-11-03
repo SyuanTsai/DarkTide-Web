@@ -10,7 +10,9 @@ import { createSharedViewModel } from '../web/shared-view.mjs';
 import { revisionAssetUrl, validateCatalog, validateTalentTree } from '../web/client.mjs';
 import { createStaticServer } from './serve.mjs';
 
-const CORE_KINDS = ['skills', 'blessings', 'weapons', 'terms'];
+const LEGACY_CORE_KINDS = ['skills', 'blessings', 'weapons', 'terms'];
+const SPLIT_SINGLETON_KINDS = ['skills', 'terms', 'weapons-index', 'blessings-index'];
+const SPLIT_SHARD_KINDS = ['weapon-family', 'blessing'];
 const RETAINED_TREE_ARCHETYPES = ['arbites', 'ogryn', 'psyker', 'scum', 'skitarii', 'veteran', 'zealot'];
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -106,10 +108,12 @@ export async function readVerifiedCoreDomains(distPath, verification) {
   for (const row of manifest.files) {
     assert.ok(row && DOMAIN_KINDS.includes(row.kind), `shared manifest contains unsupported domain kind: ${row?.kind}`);
   }
-  for (const kind of CORE_KINDS) {
-    assert.equal(manifest.files.filter(row => row.kind === kind).length, 1,
-      `verified shared manifest has one ${kind} core file`);
-  }
+  const split = manifest.files.some(row => [...SPLIT_SINGLETON_KINDS.slice(2), ...SPLIT_SHARD_KINDS].includes(row.kind));
+  const singletonKinds = split ? SPLIT_SINGLETON_KINDS : LEGACY_CORE_KINDS;
+  for (const kind of singletonKinds) assert.equal(manifest.files.filter(row => row.kind === kind).length, 1,
+    `verified shared manifest has one ${kind} core file`);
+  if (split) for (const kind of SPLIT_SHARD_KINDS) assert.ok(manifest.files.some(row => row.kind === kind),
+    `verified shared manifest has at least one ${kind} shard`);
   const announcementRows = manifest.files.filter(row => row.kind === 'announcements');
   assert.ok(announcementRows.length <= 1, 'verified shared manifest contains multiple announcements domains');
   validateManifest(manifest);
@@ -118,7 +122,9 @@ export async function readVerifiedCoreDomains(distPath, verification) {
 
   const domains = [];
   const requestedPaths = [pointer.manifest_path];
-  const selectedRows = CORE_KINDS.map(kind => manifest.files.find(file => file.kind === kind));
+  const selectedRows = split
+    ? manifest.files.filter(file => [...SPLIT_SINGLETON_KINDS, ...SPLIT_SHARD_KINDS].includes(file.kind))
+    : LEGACY_CORE_KINDS.map(kind => manifest.files.find(file => file.kind === kind));
   if (announcementRows.length) selectedRows.push(announcementRows[0]);
   if (manifest.changeIndexPath !== null) {
     const changeIndex = manifest.files.find(file => file.path === manifest.changeIndexPath);
@@ -166,8 +172,8 @@ function selectSkill(domains, view) {
 }
 
 function selectBlessing(domains, view) {
-  const domain = domains.find(row => row.kind === 'blessings');
-  for (const presentation of domain.web.presentations ?? []) {
+  const blessingDomains = domains.filter(row => ['blessings', 'blessing'].includes(row.kind));
+  for (const presentation of blessingDomains.flatMap(domain => domain.web.presentations ?? [])) {
     if (presentation.locale !== 'zh-TW' || presentation.entityRef?.kind !== 'blessing') continue;
     for (const applicability of presentation.tierApplicability ?? []) {
       if (![1, 2, 3, 4].every(tier => applicability.tiers?.includes(tier))) continue;
@@ -183,8 +189,10 @@ function selectBlessing(domains, view) {
 }
 
 function selectWeapon(domains, view, retained = null) {
-  const domain = domains.find(row => row.kind === 'weapons');
-  const records = domain.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === domain.gameReleaseId);
+  const weaponDomains = domains.filter(row => ['weapons', 'weapon-family'].includes(row.kind));
+  const releaseId = weaponDomains[0]?.gameReleaseId;
+  const records = weaponDomains.flatMap(domain => domain.source.records)
+    .filter(row => row.kind === 'weapon' && row.gameReleaseId === releaseId);
   const familyIds = [...new Set(records.map(row => row.payload?.familyId).filter(value => typeof value === 'string'))];
   const retainedFamilyHasBlessings = familyId => {
     const entry = retained?.catalog?.entries.find(row => row.kind === 'weapon' && row.id === familyId);

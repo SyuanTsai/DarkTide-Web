@@ -33,8 +33,8 @@ function normalizePrivateKey(key) {
 }
 
 const OFFICIAL_INPUT_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.officialInputs\.sources\[\d+\]$/u;
-const OFFICIAL_PRESENTATION_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings|weapons)\.json)\.web\.presentations\[\d+\]\.official$/u;
-const OFFICIAL_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?(?:skills|blessings|weapons)\.json)\.web\.(?:officialInputs\.sources\[\d+\]|presentations\[\d+\]\.official)\.segments\[\d+\]\.token$/u;
+const OFFICIAL_PRESENTATION_SOURCE_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.presentations\[\d+\]\.official$/u;
+const OFFICIAL_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.(?:officialInputs\.sources\[\d+\]|presentations\[\d+\]\.official)\.segments\[\d+\]\.token$/u;
 const GAME_CHANGE_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.json)\.web\.officialInputs\.sources\[\d+\]\.segments\[\d+\]\.token$/u;
 const WEAPON_PARAMETER_TOKEN_PATH = /^(data\/[a-f0-9]{64}\/(?:domains\/)?weapons\.json)\.web\.officialInputs\.sources\[\d+\]\.segments\[\d+\]\.token$/u;
 
@@ -221,8 +221,10 @@ function collectOfficialInputDomainFiles(sharedBundle) {
     const manifest = parseJson(bytes, manifestPath);
     for (const row of manifest.files) {
       const isCoreDomain = (row.kind === 'skills' || row.kind === 'blessings') &&
-        (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json');
-      const isWeaponDomain = row.kind === 'weapons' && (row.path === 'weapons.json' || row.path === 'domains/weapons.json');
+        (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json')
+        || row.kind === 'blessings-index' || row.kind === 'blessing';
+      const isWeaponDomain = row.kind === 'weapons' && (row.path === 'weapons.json' || row.path === 'domains/weapons.json')
+        || row.kind === 'weapons-index' || row.kind === 'weapon-family';
       // Optional game-change official inputs are trusted only at the exact manifest-declared index path.
       const isDeclaredChangeIndex = row.kind === 'game-changes' && manifest.changeIndexPath === row.path;
       if (isCoreDomain || isWeaponDomain || isDeclaredChangeIndex) {

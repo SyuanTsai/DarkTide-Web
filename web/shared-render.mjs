@@ -250,7 +250,7 @@ function weaponNameProvenance(result, view) {
   const manifestMatches = manifest?.gameReleaseId === 'darktide:1.13.4'
     && manifest.gameVersion === '1.13.4'
     && manifest.source?.repository === 'https://github.com/SyuanTsai/DarkTide-Source-Data';
-  const domain = result?.domains?.find(row => row.kind === 'weapons');
+  const domain = result?.domains?.find(row => row.kind === 'weapons' || row.kind === 'weapon-family');
   const records = domain?.source?.records?.filter(row => row?.kind === 'weapon' && row.recordId === pin.recordId) ?? [];
   const presentations = domain?.web?.presentations?.filter(row => row?.authoringId === pin.presentationId) ?? [];
   const sources = domain?.web?.officialInputs?.sources?.filter(row => row?.officialSourceId === pin.officialSourceId) ?? [];
@@ -770,11 +770,15 @@ export function currentWeaponMarkIdentities(familyRecords, currentMarks) {
 
 function currentNativeMarkIndexByFamily(records, result) {
   const groups = new Map();
+  const split = result?.domains?.some(domain => domain.kind === 'weapons-index');
   for (const record of records) {
     const templateKey = record.payload?.templateKey;
     const familyId = record.payload?.familyId;
+    const ready = split
+      ? result?.view?.getWeaponListFamily(familyId)?.marks?.some(mark => mark.markId === record.payload?.markId)
+      : result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status === 'ready';
     if (typeof templateKey !== 'string' || typeof familyId !== 'string'
-        || result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status !== 'ready') continue;
+        || !ready) continue;
     const rows = groups.get(familyId) ?? new Map();
     rows.set(templateKey, { familyId, markId: record.payload.markId });
     groups.set(familyId, rows);
@@ -967,7 +971,9 @@ function appendRetainedVariants(parent, variants, summaryIndex, parentSummary = 
 }
 
 function renderBlessingPage(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedBlessingDetail = null) {
-  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'blessings') : null;
+  const domain = result?.status === 'ready'
+    ? result.domains.find(row => row.kind === 'blessings-index') ?? result.domains.find(row => row.kind === 'blessings')
+    : null;
   const presentations = getPresentations(domain, 'blessing');
   const id = url.searchParams.get('id');
   if (!id) {
@@ -984,7 +990,11 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
         const variantRef = applicability.variantRef;
         const tier = applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
         if (!variantRef || !Number.isInteger(tier)) continue;
-        const view = result?.status === 'ready' ? result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier }) : null;
+        const view = result?.status === 'ready'
+          ? domain.kind === 'blessings-index'
+            ? result.view.getBlessingListItem({ blessingRef: presentation.entityRef, variantRef, tier })
+            : result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier })
+          : null;
         if (view?.status !== 'ready') continue;
         const item = node('li', null, 'shared-entry shared-current-blessing'); item.dataset.searchName = entrySearchText({ name_zh_tw: view.name, id: presentation.entityRef.recordId });
         item.dataset.currentBlessingId = presentation.entityRef.recordId;
@@ -1526,7 +1536,9 @@ function renderWeapon(main, result, view, familyMarks, url, showRetainedRelation
   renderWeaponSourceDetails(main, view);
 }
 function renderWeapons(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedWeaponDetail = null) {
-  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'weapons') : null;
+  const domain = result?.status === 'ready'
+    ? result.domains.find(row => row.kind === 'weapons-index') ?? result.domains.find(row => row.kind === 'weapons')
+    : null;
   const records = domain?.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === result.manifest.gameReleaseId) ?? [];
   const families = [...new Set(records.map(row => row.payload?.familyId).filter(Boolean))];
   const familyId = url.searchParams.get('family');
@@ -1561,7 +1573,9 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
   const oldFamilyById = new Map(oldFamilies.map(entry => [entry.id, entry]));
   const oldMarksByFamily = retainedMarksByFamily(oldCatalog);
   for (const family of families) {
-    const view = result.view.getWeaponFamily(family);
+    const view = domain.kind === 'weapons-index'
+      ? result.view.getWeaponListFamily(family)
+      : result.view.getWeaponFamily(family);
     const familyRecords = records.filter(record => record.payload?.familyId === family);
     const firstRecord = familyRecords[0];
     if (!firstRecord) continue;

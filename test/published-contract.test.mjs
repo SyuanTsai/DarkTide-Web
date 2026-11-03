@@ -2,7 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { fixture } from '../fixtures/site.mjs';
-import { createPublicFiles, projectPublicContent, validatePublicFiles, validatePublishedContent } from '../src/published/contract.mjs';
+import { computeDataRevision } from '../scripts/content/contract-release.mjs';
+import {
+  createPublicFiles,
+  projectPublicContent,
+  validatePublicFiles,
+  validatePublishedContent,
+  validateSharedManifest,
+} from '../src/published/contract.mjs';
 
 const iconBytes = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>');
 const iconHash = createHash('sha256').update(iconBytes).digest('hex');
@@ -75,6 +82,52 @@ function equalFiles(left, right) {
 // Purpose: Establish the smallest valid model shared by projection, validation, and public file generation.
 test('UnitT00_accepts_complete_public_v2_model', () => {
   assert.doesNotThrow(() => validatePublishedContent(completeModel(), { assetBytes }));
+});
+
+test('UnitT00a_published_contract_accepts_legacy_and_split_shared_manifests_but_not_mixed', () => {
+  const hash = 'a'.repeat(64);
+  const file = (kind, filePath, dependencies = []) => ({ kind, path: filePath, sizeBytes: 1, sha256: hash, dependencies });
+  const manifest = {
+    schemaVersion: '2.0.0',
+    gameReleaseId: 'darktide:1.2.3',
+    gameVersion: '1.2.3',
+    contentVersion: '1.2.3.1',
+    dataRevision: hash,
+    source: {
+      repository: 'https://github.com/SyuanTsai/DarkTide-Source-Data',
+      commit: 'b'.repeat(40),
+      sourceRevision: 'c'.repeat(64),
+      manifestSha256: 'd'.repeat(64),
+    },
+    web: { authoringCommit: 'e'.repeat(40), compilerCommit: 'f'.repeat(40) },
+    compatibility: { dataContractMajor: 2, requiredFeatures: [], gameSnapshotRefs: ['snapshot-1'] },
+    files: [
+      file('blessings', 'domains/blessings.json'),
+      file('skills', 'domains/skills.json'),
+      file('terms', 'domains/terms.json'),
+      file('weapons', 'domains/weapons.json'),
+    ],
+    changeIndexPath: null,
+  };
+  manifest.dataRevision = computeDataRevision(manifest);
+  assert.doesNotThrow(() => validateSharedManifest(manifest));
+
+  const split = structuredClone(manifest);
+  split.compatibility.requiredFeatures = ['split-weapon-blessing-domains-v1'];
+  split.files = [
+    file('blessings-index', 'domains/blessings-index.json'),
+    file('blessing', 'domains/blessings/example.json', ['domains/blessings-index.json']),
+    file('skills', 'domains/skills.json'),
+    file('terms', 'domains/terms.json'),
+    file('weapons-index', 'domains/weapons-index.json'),
+    file('weapon-family', 'domains/weapons/example.json', ['domains/weapons-index.json']),
+  ];
+  split.dataRevision = computeDataRevision(split);
+  assert.doesNotThrow(() => validateSharedManifest(split));
+
+  split.files.push(file('weapons', 'domains/weapons.json'));
+  split.dataRevision = computeDataRevision(split);
+  assert.throws(() => validateSharedManifest(split), /mixes legacy and split/u);
 });
 
 // Scenario: The legacy fictional fixture includes evidence, a template source ID, and schema v1.
