@@ -39,6 +39,8 @@ test('UnitT10_operations_workflows_keep_credentials_out_of_PR_and_backup', async
   assert.match(monitor.jobs.monitor.if, /refs\/heads\/main/);
   assert.equal(monitor.jobs.monitor.permissions.issues, 'write');
   assert.equal(monitor.jobs.contract.permissions, undefined);
+  assert.deepEqual(monitor.jobs.monitor.steps[0].with['sparse-checkout'].trim().split(/\s+/u), ['scripts', 'src', 'web'],
+    'the scheduled probe checks out only the code it runs');
 });
 
 // Scenario: An operator chooses an old retained package and leaves publication disabled.
