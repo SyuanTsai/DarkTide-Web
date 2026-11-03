@@ -12,6 +12,15 @@ import { runW09CandidateHandoff } from '../scripts/prepare-w09-candidate.mjs';
 const OFFICIAL_ORIGIN = 'https://github.com/SyuanTsai/DarkTide-Web.git';
 const SOURCE_REVISION = 'a'.repeat(64);
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const PACKET_PATHS = [
+  'analysis.md', 'source-revision.json', 'source-revision.md', 'source-manifest.json', 'source-receipt.json', 'technical.json',
+];
+const GAME_RELEASE_IDS = ['darktide:fixture-1', 'darktide:fixture-2', 'darktide:fixture-3'];
+const RELEASE_IDS = GAME_RELEASE_IDS.map(gameReleaseId => 'w09-' + createHash('sha256')
+  .update(JSON.stringify({ gameReleaseId, sourceRevision: SOURCE_REVISION }))
+  .digest('hex')
+  .slice(0, 32));
+const GAME_RELEASE_BY_ID = new Map(RELEASE_IDS.map((releaseId, index) => [releaseId, GAME_RELEASE_IDS[index]]));
 
 function git(root, args, encoding = 'utf8') {
   return execFileSync('git', ['-C', root, ...args], { encoding, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -59,31 +68,51 @@ async function fixtureGit(t) {
 
 function createProposalWriter() {
   return async ({ repoRoot, releaseId }) => {
+    const gameReleaseId = GAME_RELEASE_BY_ID.get(releaseId);
+    if (!gameReleaseId) throw new Error('fixture received an unknown releaseId');
     const proposalHash = createHash('sha256').update(releaseId).digest('hex');
     const proposalDirectory = path.join(repoRoot, 'content/contracts/w09/proposals', proposalHash);
     await mkdir(proposalDirectory, { recursive: true });
     const proposal = {
       schema: 'w09-source-composition-proposal/1',
+      proposalOnly: true,
       selected: false,
       allocationReserved: false,
       publicationEligible: false,
+      requestId: '1'.repeat(64),
       sourceRevision: SOURCE_REVISION,
       releaseId,
-      gameReleaseId: 'darktide:' + releaseId.slice(-1),
+      gameReleaseId,
+      sourceCommit: '2'.repeat(40),
+      manifestSha256: '3'.repeat(64),
       archiveSha256: 'b'.repeat(64),
+      packetFiles: PACKET_PATHS.map((packetPath, index) => ({
+        path: packetPath,
+        sha256: '456789'[index].repeat(64),
+        sizeBytes: index + 1,
+      })),
     };
-    const proposalPath = path.join(proposalDirectory, 'proposal.json');
-    try {
-      await writeFile(proposalPath, JSON.stringify(proposal) + '\n', { flag: 'wx' });
-    } catch (error) {
-      if (error.code !== 'EEXIST') throw error;
-      const existing = await readFile(proposalPath, 'utf8');
-      if (existing !== JSON.stringify(proposal) + '\n') throw new Error('candidate proposal mismatch: existing=' + existing + ' expected=' + (JSON.stringify(proposal) + '\n'));
+    const files = new Map([
+      ['proposal.json', JSON.stringify(proposal) + '\n'],
+      ['source-lock.json', '{"source":true}\n'],
+      ['web-input-lock.json', '{"web":true}\n'],
+      ['review-candidate.json', '{"review":true}\n'],
+    ]);
+    for (const [name, bytes] of files) {
+      const filePath = path.join(proposalDirectory, name);
+      try {
+        await writeFile(filePath, bytes, { flag: 'wx' });
+      } catch (error) {
+        if (error.code !== 'EEXIST') throw error;
+        assert.equal(await readFile(filePath, 'utf8'), bytes);
+      }
     }
     return { proposalWritten: true, sourceRevision: SOURCE_REVISION, releaseId, proposalDirectory };
   };
 }
 
+// Scenario: Candidate retries, a second Source release, a human review note, a main update, and a merge conflict share one revision branch.
+// Purpose: Preserve branch history while committing only proposal manifests and leaving conflicting remote state untouched.
 test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges-main-and-leaves-conflicts-pending', async t => {
   const { tempRoot, repoRoot, bareRoot, unrelatedWorktree } = await fixtureGit(t);
   const prepareProposal = createProposalWriter();
@@ -94,9 +123,7 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
   };
   const baseOptions = { repoRoot, sourceRoot: repoRoot, prepareProposal, ensurePullRequest, runGh: async () => '' };
   const originalUserName = String(git(repoRoot, ['config', '--get', 'user.name'])).trim();
-  const firstId = 'w09-' + '1'.repeat(32);
-  const secondId = 'w09-' + '2'.repeat(32);
-  const thirdId = 'w09-' + '3'.repeat(32);
+  const [firstId, secondId, thirdId] = RELEASE_IDS;
   const first = await runW09CandidateHandoff({ ...baseOptions, releaseId: firstId });
   assert.equal(first.status, 'candidate');
   assert.equal(first.proposalWritten, true);
@@ -106,6 +133,11 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
   assert.ok(String(git(repoRoot, ['worktree', 'list', '--porcelain'])).includes(path.basename(unrelatedWorktree)), 'candidate cleanup must preserve unrelated worktree registrations');
 
   const firstRemoteCommit = git(repoRoot, ['ls-remote', '--heads', 'origin', 'refs/heads/' + first.branch]).trim().split(/\s+/u)[0];
+  assert.deepEqual(
+    String(git(repoRoot, ['ls-tree', '-r', '--name-only', firstRemoteCommit, '--', first.proposalPath])).trim().split(/\r?\n/u),
+    [first.proposalPath + '/manifest.json'],
+    'the candidate commit must retain only the small proposal manifest',
+  );
   const sameRunnerRetry = await runW09CandidateHandoff({ ...baseOptions, releaseId: firstId });
   const retriedRemoteCommit = git(repoRoot, ['ls-remote', '--heads', 'origin', 'refs/heads/' + first.branch]).trim().split(/\s+/u)[0];
   assert.equal(sameRunnerRetry.status, 'candidate');
@@ -140,9 +172,11 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
 
   git(secondRunner, ['fetch', 'origin', 'refs/heads/' + second.branch + ':refs/remotes/origin/' + second.branch]);
   const secondBranchCommit = String(git(secondRunner, ['rev-parse', 'refs/remotes/origin/' + second.branch])).trim();
-  const secondProposalRelative = second.proposalPath + '/proposal.json';
-  assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/proposal.json']).includes(firstId));
+  const secondProposalRelative = second.proposalPath + '/manifest.json';
+  assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/manifest.json']).includes(firstId));
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + secondProposalRelative]).includes(secondId));
+  assert.throws(() => git(secondRunner, ['show', secondBranchCommit + ':' + second.proposalPath + '/proposal.json']),
+    'generated proposal bytes must remain reconstructible but untracked');
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':' + first.proposalPath + '/review-note.md']).includes('Human-reviewed'));
   assert.ok(git(secondRunner, ['show', secondBranchCommit + ':main-update.txt']).includes('latest reviewed Web main'));
   assert.throws(() => git(secondRunner, ['show', secondBranchCommit + ':content/contracts/w09/source-handoff/selected.json']),
