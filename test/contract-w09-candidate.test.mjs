@@ -28,7 +28,24 @@ function git(root, args, encoding = 'utf8') {
 
 function commitAll(root, message) {
   git(root, ['add', '--all']);
-  git(root, ['commit', '-m', message]);
+  git(root, ['-c', 'user.name=W09 candidate fixture', '-c', 'user.email=w09-candidate@example.invalid', 'commit', '-m', message]);
+}
+
+// Runs the handoff the way a CI runner does: no global, system, or repository Git identity.
+async function withoutGitIdentity(tempRoot, run) {
+  const emptyConfig = path.join(tempRoot, 'empty-gitconfig');
+  await writeFile(emptyConfig, '', { flag: 'w' });
+  const saved = { GIT_CONFIG_GLOBAL: process.env.GIT_CONFIG_GLOBAL, GIT_CONFIG_NOSYSTEM: process.env.GIT_CONFIG_NOSYSTEM };
+  process.env.GIT_CONFIG_GLOBAL = emptyConfig;
+  process.env.GIT_CONFIG_NOSYSTEM = '1';
+  try {
+    return await run();
+  } finally {
+    for (const [key, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
 }
 
 async function fixtureGit(t) {
@@ -159,9 +176,9 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
 
   const secondRunner = path.join(tempRoot, 'web-runner-2');
   git(tempRoot, ['clone', OFFICIAL_ORIGIN, secondRunner]);
-  git(secondRunner, ['config', 'user.name', 'W09 independent runner']);
-  git(secondRunner, ['config', 'user.email', 'w09-runner-two@example.invalid']);
-  const second = await runW09CandidateHandoff({ ...baseOptions, repoRoot: secondRunner, sourceRoot: secondRunner, releaseId: secondId });
+  assert.throws(() => git(secondRunner, ['config', '--local', '--get', 'user.name']), 'the second runner has no repository identity, like CI');
+  const second = await withoutGitIdentity(tempRoot,
+    () => runW09CandidateHandoff({ ...baseOptions, repoRoot: secondRunner, sourceRoot: secondRunner, releaseId: secondId }));
   assert.equal(second.status, 'candidate');
   assert.equal(second.branch, first.branch, 'different game releases from the same Source revision share one candidate branch');
   assert.equal(prCalls.length, 3);
@@ -194,7 +211,7 @@ test('InterT28_revision-scoped-candidate-handoff-preserves-branch-history-merges
   const prCallsBeforeConflict = prCalls.length;
   const conflict = await runW09CandidateHandoff({ ...baseOptions, repoRoot: secondRunner, sourceRoot: secondRunner, releaseId: thirdId });
   assert.equal(conflict.status, 'pending');
-  assert.match(conflict.reason, /conflicts with latest main/u);
+  assert.match(conflict.reason, /could not merge latest main.*(?:conflict|CONFLICT)/su);
   assert.equal(conflict.proposalWritten, false);
   assert.equal(prCalls.length, prCallsBeforeConflict, 'a conflicted branch does not edit or reopen its PR');
   const branchAfterConflict = git(secondRunner, ['ls-remote', '--heads', 'origin', 'refs/heads/' + second.branch]).trim().split(/\s+/u)[0];

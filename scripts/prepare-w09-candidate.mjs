@@ -18,6 +18,8 @@ const PROPOSAL_ROOT = 'content/contracts/w09/proposals/';
 const OFFICIAL_ORIGIN = /^https:\/\/github\.com\/SyuanTsai\/DarkTide-Web(?:\.git)?\/?$/u;
 const RELEASE_ID = /^w09-[a-f0-9]{32}$/u;
 const SOURCE_REVISION = /^[a-f0-9]{64}$/u;
+// CI runners have no Git identity; every commit the handoff creates, including merges, names the bot explicitly.
+const BOT_IDENTITY = Object.freeze(['-c', 'user.name=github-actions[bot]', '-c', 'user.email=41898282+github-actions[bot]@users.noreply.github.com']);
 
 function gitEnv(token) {
   const env = { ...process.env, GIT_TERMINAL_PROMPT: '0' };
@@ -44,8 +46,12 @@ function git(root, args, { token = '', encoding = 'utf8' } = {}) {
       stdio: ['ignore', 'pipe', 'pipe'],
     });
   } catch (error) {
-    const operation = String(args[0] ?? 'unknown');
-    let detail = error?.stderr ? Buffer.from(error.stderr).toString('utf8').trim() : '';
+    let operationIndex = 0;
+    while (args[operationIndex] === '-c') operationIndex += 2;
+    const operation = String(args[operationIndex] ?? 'unknown');
+    const output = stream => (stream ? Buffer.from(stream).toString('utf8').trim() : '');
+    // Merge conflicts are reported on stdout, so fall back to it when stderr is empty.
+    let detail = output(error?.stderr) || output(error?.stdout);
     if (token) detail = detail.split(token).join('[redacted]');
     detail = detail.replace(/(authorization\s*:\s*basic\s+)\S+/giu, '$1[redacted]')
       .replace(/https?:\/\/[^\s]+\?[^\s]+/giu, '[redacted-url]')
@@ -167,11 +173,11 @@ export async function runW09CandidateHandoff({
     const branchBase = remoteCommit ?? latestMain;
     git(root, ['worktree', 'add', '--detach', candidatePath, branchBase], { token: gitToken });
     try {
-      git(candidatePath, ['merge', '--no-edit', latestMain], { token: gitToken });
-    } catch {
+      git(candidatePath, [...BOT_IDENTITY, 'merge', '--no-edit', latestMain], { token: gitToken });
+    } catch (error) {
       return {
         status: 'pending', releaseId, sourceRevision: probe.sourceRevision, branch,
-        reason: 'candidate branch conflicts with latest main; existing branch and PR were left unchanged',
+        reason: 'candidate branch could not merge latest main; existing branch and PR were left unchanged: ' + String(error?.message ?? error),
         proposalWritten: false,
       };
     }
@@ -199,7 +205,7 @@ export async function runW09CandidateHandoff({
     if (staged.some(file => !allowedStaged.has(file))) {
       throw new Error('W09 candidate commit attempted to include a path outside its immutable proposal directory');
     }
-    if (staged.length > 0) git(candidatePath, ['-c', 'user.name=github-actions[bot]', '-c', 'user.email=41898282+github-actions[bot]@users.noreply.github.com', 'commit', '-m', 'SYP-341', '-m', 'feat: add an immutable W09 Source proposal candidate', '-m', 'zh-TW:\n新增：W09 Source 不可變提案候選資料'], { token: gitToken });
+    if (staged.length > 0) git(candidatePath, [...BOT_IDENTITY, 'commit', '-m', 'SYP-341', '-m', 'feat: add an immutable W09 Source proposal candidate', '-m', 'zh-TW:\n新增：W09 Source 不可變提案候選資料'], { token: gitToken });
     const currentBranch = String(git(candidatePath, ['branch', '--show-current'])).trim();
     if (currentBranch !== '') throw new Error('W09 candidate worktree must remain detached until its non-force push');
     const currentCommit = String(git(candidatePath, ['rev-parse', 'HEAD'])).trim();
