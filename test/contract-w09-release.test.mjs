@@ -1729,7 +1729,8 @@ const W09_C882_COMPOSITION_COMMIT = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
 const W09_C882_REQUEST_ID = 'c882e473212ea55a2a2cc6a5c71d35e50c6662f140a246fb99879bb327804740';
 const W09_CURRENT_COMPOSITION_COMMIT = 'bfa9fd93c74eef47353f71b94d8cede987cd2b9e';
 const W09_CURRENT_REQUEST_ID = '4223a7fb6929554a6a170cde4a1f49fd5abb058eaedf8912cd27bf8179b9e644';
-const W08_UPDATED_COMPILER_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5';
+const W08_UPDATED_COMPILER_COMMIT = JSON.parse(await readFile(
+  path.join(REPO_ROOT, 'content/contracts/w08/compiler.lock.json'), 'utf8')).commit;
 const W08_UPDATED_AUTHORING_SIZE = 189850;
 const W08_UPDATED_AUTHORING_SHA256 = '11d884888d1ebf45fa8c91a265dcc0c34169aa73efec92a65006c0e0f05f455c';
 const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
@@ -2232,7 +2233,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   assert.equal(backupLookup.env.ACTIVE_BUILD_ID, '${{ needs.shared-release.outputs.active_build_id }}');
   const checkoutSteps = sharedJob.steps.filter(step => step.uses?.startsWith('actions/checkout@'));
   const checkoutByName = new Map(checkoutSteps.map(step => [step.name, step]));
-  assert.equal(checkoutByName.size, 5, 'the workflow has the original three checkouts plus two conditional pinned public inputs');
+  assert.equal(checkoutByName.size, 3, 'the workflow keeps its three direct checkouts while retained inputs are delegated');
   const webCheckout = checkoutByName.get('Check out reviewed Web commit without persisted credentials');
   const sourceHistoryCheckout = checkoutByName.get('Check out public Source history for fixed-commit replay');
   const compositionCheckout = checkoutByName.get('Check out the pinned historical W09 composition inputs');
@@ -2250,34 +2251,12 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   assert.equal(compositionCheckout.with.ref, W09_CURRENT_COMPOSITION_COMMIT);
   assert.equal(compositionCheckout.with.path, 'composition-inputs');
 
-  const retainedDetector = sharedJob.steps.find(step => step.name === 'Detect fixed retained-name inputs in the selected composition');
-  assert.equal(retainedDetector?.id, 'retained-names');
-  assert.match(retainedDetector.if, /steps\.selected\.outputs\.run == 'true'/u);
-  assert.match(retainedDetector.if, /steps\.freshness\.outputs\.current == 'true'/u);
-  assert.match(retainedDetector.if, /inputs\.action != 'rollback'/u);
-  assert.match(retainedDetector.run, /retained-name-overlay-scan\.mjs/u);
-  const modsCheckout = checkoutByName.get('Check out the pinned public Mods identity map for retained weapon names');
-  const currentTemplateCheckout = checkoutByName.get('Check out pinned public 1.13.4 weapon templates');
-  assert.ok(modsCheckout && currentTemplateCheckout, 'both additional public inputs are present for retained-name candidates');
-  const requiredRetainedInputs = /steps\.retained-names\.outputs\.required == 'true'/u;
-  for (const step of [modsCheckout, currentTemplateCheckout]) {
-    assert.match(step.if, requiredRetainedInputs, `${step.name} is conditional on a positive retained-name detector`);
-    assert.match(step.if, /steps\.selected\.outputs\.run == 'true'/u);
-    assert.match(step.if, /steps\.freshness\.outputs\.current == 'true'/u);
-    assert.match(step.if, /inputs\.action != 'rollback'/u, 'rollback does not acquire retained-name inputs');
-    assert.equal(step.uses, 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803');
-    assert.equal(step.with?.['fetch-depth'], 1, 'the two optional public checkouts use only the pinned shallow history');
-    assert.equal(step.with?.['persist-credentials'], false, 'the optional public checkout never persists credentials');
-    assert.equal(step.with?.token, undefined, 'the optional checkout does not receive a token input');
-  }
-  assert.equal(modsCheckout.with.repository, 'SyuanTsai/Warhammer-40-000-DARKTIDE-Mods');
-  assert.equal(modsCheckout.with.ref, '241ad76ce62330472aa423055a5b85db59bb6c0d');
-  assert.equal(modsCheckout.with.path, 'retained-name-mods');
-  assert.match(modsCheckout.with['sparse-checkout'], /Game Info\/releases\/1\.13\.X\/blessings\/data/u);
-  assert.equal(currentTemplateCheckout.with.repository, 'Aussiemon/Darktide-Source-Code');
-  assert.equal(currentTemplateCheckout.with.ref, 'e46b8926cfa3fa35503e4b80b15aab7a804314e4');
-  assert.equal(currentTemplateCheckout.with.path, 'retained-name-source');
-  assert.match(currentTemplateCheckout.with['sparse-checkout'], /scripts\/settings\/equipment\/weapon_templates/u);
+  const retainedInputs = sharedJob.steps.find(step => step.name === 'Acquire retained-name inputs');
+  assert.equal(retainedInputs?.id, 'retained-name-inputs');
+  assert.equal(retainedInputs?.uses, './.github/actions/retained-name-inputs');
+  assert.match(retainedInputs.if, /steps\.selected\.outputs\.run == 'true'/u);
+  assert.match(retainedInputs.if, /steps\.freshness\.outputs\.current == 'true'/u);
+  assert.match(retainedInputs.if, /inputs\.action != 'rollback'/u);
 
   const promoteStep = sharedJob.steps.find(step => step.name === 'Promote the selected shared composition');
   assert.equal(promoteStep.id, 'promote');
@@ -2286,7 +2265,7 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   assert.equal(promoteStep.env.W09_COMPOSITION_ROOT, '${{ github.workspace }}/composition-inputs');
   const selectedGate = sharedJob.steps.find(step => step.name === 'Check the selected composition gate');
   const automaticPromotionSteps = [
-    selectedGate, retainedDetector, compositionCheckout, modsCheckout, currentTemplateCheckout, promoteStep,
+    selectedGate, retainedInputs, compositionCheckout, promoteStep,
   ];
   for (const step of automaticPromotionSteps) {
     assert.ok(step, 'the automatic shared-release route keeps every selected-promotion step');
@@ -2297,9 +2276,9 @@ test('InterT25_workflows-serialize-shared-publication-after-same-sha-CI-and-reta
   }
   assert.match(promoteStep.if, /steps\.freshness\.outputs\.current == 'true'/u);
   assert.equal(promoteStep.env.SYP_W07_RETAINED_MODS_ROOT,
-    "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-mods', github.workspace) || '' }}");
+    '${{ steps.retained-name-inputs.outputs.mods-root }}');
   assert.equal(promoteStep.env.SYP_W07_RETAINED_SOURCE_ROOT,
-    "${{ steps.retained-names.outputs.required == 'true' && format('{0}/retained-name-source', github.workspace) || '' }}");
+    '${{ steps.retained-name-inputs.outputs.source-root }}');
   const rollbackStep = sharedJob.steps.find(step => step.name === 'Restore the explicit approved whole-site snapshot');
   assert.equal(rollbackStep.id, 'rollback');
   assert.equal(rollbackStep.env.SYP_W07_RETAINED_MODS_ROOT, undefined);

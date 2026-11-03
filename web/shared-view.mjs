@@ -59,6 +59,31 @@ function addConsistent(map, conflicts, key, value) {
   }
 }
 
+function isProjectionOf(projected, complete) {
+  if (Array.isArray(projected)) {
+    return Array.isArray(complete) && projected.length === complete.length
+      && projected.every((item, index) => isProjectionOf(item, complete[index]));
+  }
+  if (isObject(projected)) {
+    return isObject(complete) && Object.keys(projected).every(key => Object.hasOwn(complete, key)
+      && isProjectionOf(projected[key], complete[key]));
+  }
+  return Object.is(projected, complete);
+}
+
+function addCompatibleProjection(map, conflicts, key, value) {
+  if (conflicts.has(key)) return;
+  const prior = map.get(key);
+  if (!prior) {
+    map.set(key, value);
+  } else if (isProjectionOf(prior, value)) {
+    map.set(key, value);
+  } else if (!isProjectionOf(value, prior)) {
+    map.delete(key);
+    conflicts.add(key);
+  }
+}
+
 function isSha256(value) {
   return typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
 }
@@ -531,7 +556,8 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
   const sourceRecordByKey = new Map();
   const recordConflicts = new Set();
   const sourceRecordConflicts = new Set();
-  const presentations = [];
+  const presentationById = new Map();
+  const presentationConflicts = new Set();
   const officialSourceById = new Map();
   const officialSourceConflicts = new Set();
   const termLocalizations = [];
@@ -559,7 +585,14 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
         addConsistent(recordByKey, recordConflicts, key, record);
       }
     }
-    if (Array.isArray(domain.web?.presentations)) presentations.push(...domain.web.presentations);
+    if (Array.isArray(domain.web?.presentations)) {
+      for (const presentation of domain.web.presentations) {
+        const key = isDisplayText(presentation?.authoringId)
+          ? presentation.authoringId
+          : refKey(presentation?.entityRef);
+        if (key) addCompatibleProjection(presentationById, presentationConflicts, key, presentation);
+      }
+    }
     if (Array.isArray(domain.web?.officialInputs?.sources)) {
       for (const source of domain.web.officialInputs.sources) {
         if (typeof source?.officialSourceId === 'string') {
@@ -603,6 +636,9 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
       }
     }
   }
+  const presentations = [...presentationById.entries()]
+    .filter(([id]) => !presentationConflicts.has(id))
+    .map(([, presentation]) => presentation);
   const officialSources = [...officialSourceById.entries()]
     .filter(([id]) => !officialSourceConflicts.has(id))
     .map(([, source]) => source);
@@ -1061,6 +1097,53 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     return { status: 'ready', familyId, marks, unresolvedMarkIds };
   };
 
+  const getWeaponListFamily = (familyId) => {
+    const weaponRecords = [...recordByKey.values()].filter(record => record?.kind === 'weapon'
+      && record.gameReleaseId === gameReleaseId && record.payload?.familyId === familyId);
+    const marks = [];
+    const unresolvedMarkIds = [];
+    for (const weapon of weaponRecords) {
+      const markId = weapon.payload?.markId;
+      if (!isDisplayText(markId)) continue;
+      const weaponRef = { gameReleaseId, kind: 'weapon', recordId: weapon.recordId };
+      const presentation = getPresentation(weaponRef);
+      const nameSource = presentation
+        ? findOfficial(officialSources, presentation.nameOfficialSourceId, weaponRef, gameReleaseId)
+        : null;
+      const canonicalOfficialSource = presentation
+        ? findOfficial(officialSources, presentation.official?.officialSourceId, weaponRef, gameReleaseId)
+        : null;
+      const retainedName = presentation && !nameSource && !canonicalOfficialSource
+        ? resolveRetainedWeaponName(presentation, weapon, sourceRefByKey, sourceGameReleases)
+        : null;
+      if (!presentation || ((!nameSource || !canonicalOfficialSource) && !retainedName)) {
+        unresolvedMarkIds.push(markId);
+        continue;
+      }
+      marks.push({ familyId, markId, name: presentation.name });
+    }
+    if (marks.length === 0) return unavailable('missing-zh-tw-weapon-presentation', 'weapon');
+    return { status: 'ready', familyId, marks, unresolvedMarkIds };
+  };
+
+  const getBlessingListItem = ({ blessingRef, variantRef, tier } = {}) => {
+    const parent = getRecord(blessingRef, 'blessing');
+    const presentation = getPresentation(blessingRef);
+    if (!parent || !presentation || !Number.isInteger(tier) || tier < 1) return unavailable('unknown-tier', 'tier');
+    const nameSource = findOfficial(officialSources, presentation.nameOfficialSourceId, blessingRef, gameReleaseId);
+    const applicability = presentation.tierApplicability?.filter(row => sameRef(row?.variantRef, variantRef, 'blessing-variant')) ?? [];
+    const options = presentation.tierPresentations?.options?.filter(row => row?.tier === tier) ?? [];
+    if (!nameSource || applicability.length !== 1 || !applicability[0].tiers?.includes(tier) || options.length !== 1) {
+      return unavailable('unknown-tier', 'tier');
+    }
+    const officialRefs = options[0].officialLocaleRefs?.filter(row => row?.sourceLocale === 'zh-TW') ?? [];
+    if (officialRefs.length !== 1) return unavailable('missing-zh-tw-tier-text', 'official');
+    const officialSource = findOfficial(officialSources, officialRefs[0].officialSourceId,
+      blessingRef, gameReleaseId, { tier, variantRef });
+    if (!officialSource) return unavailable('missing-zh-tw-tier-text', 'official');
+    return { status: 'ready', name: presentation.name, tier, variantRef: { ...variantRef }, official: officialView(officialSource) };
+  };
+
   const entityName = (ref) => getEntityPresentation(ref)?.name ?? null;
 
   const projectBlessingVariant = (record) => {
@@ -1325,7 +1408,18 @@ export function createSharedViewModel({ domains, gameReleaseId, fixtureOnly = fa
     return { status: 'ready', items: filtered };
   };
 
-  return Object.freeze({ gameReleaseId, getSkill, getBlessing, getWeapon, getWeaponFamily, getGameChanges, getAnnouncements, getAnnouncement });
+  return Object.freeze({
+    gameReleaseId,
+    getSkill,
+    getBlessing,
+    getBlessingListItem,
+    getWeapon,
+    getWeaponFamily,
+    getWeaponListFamily,
+    getGameChanges,
+    getAnnouncements,
+    getAnnouncement,
+  });
 }
 
 function exactErrata(errata, officialSource) {

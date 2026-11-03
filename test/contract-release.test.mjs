@@ -56,7 +56,8 @@ test('UnitT00_schema-defines-formal-version-manifest-and-fixture-contracts', asy
     'source', 'web', 'compatibility', 'files', 'changeIndexPath',
   ]) assert.ok(manifest.required.includes(key), key);
   assert.deepEqual(schema.definitions.domainKind.enum, [
-    'skills', 'blessings', 'weapons', 'terms', 'catalog', 'curios', 'perks',
+    'skills', 'blessings', 'weapons', 'weapons-index', 'weapon-family', 'blessings-index', 'blessing',
+    'terms', 'catalog', 'curios', 'perks',
     'classifications', 'announcements', 'game-changes',
   ]);
   assert.equal(manifest.additionalProperties, false);
@@ -77,6 +78,7 @@ test('UnitT30_preserves-known-snapshot-and-native-tier-feature-contract', async 
     'official-errata-details-v1',
     'official-native-localizations-v1',
     'blessing-tier-presentations-v1',
+    'split-weapon-blessing-domains-v1',
   ]);
 
   const { computeDataRevision, validateManifest } = await loadValidator();
@@ -97,6 +99,47 @@ test('UnitT30_preserves-known-snapshot-and-native-tier-feature-contract', async 
   unknownFeature.compatibility.requiredFeatures.push('unknown-feature-v1');
   unknownFeature.dataRevision = computeDataRevision(unknownFeature);
   assert.throws(() => validateManifest(unknownFeature), /unknown required feature/);
+});
+
+test('UnitT35_accepts_legacy_or_split_manifests_and_rejects_mixed_layouts', async () => {
+  const { computeDataRevision, validateManifest } = await loadValidator();
+  const legacy = await readFixtureManifest('valid');
+  assert.doesNotThrow(() => validateManifest(legacy), 'historical auxiliary fixtures remain valid');
+
+  const sha = 'a'.repeat(64);
+  const row = (kind, filePath, dependencies = []) => ({ kind, path: filePath, sizeBytes: 1, sha256: sha, dependencies });
+  const split = structuredClone(legacy);
+  split.compatibility.requiredFeatures = ['split-weapon-blessing-domains-v1'];
+  split.files = [
+    row('blessings-index', 'domains/blessings-index.json'),
+    row('blessing', 'domains/blessings/example.json', ['domains/blessings-index.json']),
+    row('skills', 'domains/skills.json'),
+    row('terms', 'domains/terms.json'),
+    row('weapons-index', 'domains/weapons-index.json'),
+    row('weapon-family', 'domains/weapons/example.json', ['domains/weapons-index.json']),
+  ];
+  split.dataRevision = computeDataRevision(split);
+  assert.doesNotThrow(() => validateManifest(split));
+
+  const mixed = structuredClone(split);
+  mixed.files.push(row('weapons', 'domains/weapons.json'));
+  mixed.dataRevision = computeDataRevision(mixed);
+  assert.throws(() => validateManifest(mixed), /mixes legacy and split/u);
+
+  const badDependency = structuredClone(split);
+  badDependency.files.find(file => file.kind === 'weapon-family').dependencies = [];
+  badDependency.dataRevision = computeDataRevision(badDependency);
+  assert.throws(() => validateManifest(badDependency), /paths and dependencies/u);
+
+  const missingShard = structuredClone(split);
+  missingShard.files = missingShard.files.filter(file => file.kind !== 'weapon-family');
+  missingShard.dataRevision = computeDataRevision(missingShard);
+  assert.throws(() => validateManifest(missingShard), /at least one weapon-family/u);
+
+  const oversized = structuredClone(split);
+  oversized.files.find(file => file.kind === 'blessing').sizeBytes = 16 * 1024 * 1024 + 1;
+  oversized.dataRevision = computeDataRevision(oversized);
+  assert.throws(() => validateManifest(oversized), /16 MiB/u);
 });
 
 // Scenario: a consumer requests only a subset of the published shared domains.

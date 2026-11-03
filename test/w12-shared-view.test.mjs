@@ -27,7 +27,7 @@ test('UnitT05_compiler_includes_comparison_release_registry', async () => {
 test('UnitT06_deduplicates_identical_official_inputs_and_rejects_conflicts', async () => {
   const sourcePackage = await makeCompiledGameChangesPackage();
   const index = sourcePackage.domains.find(row => row.kind === 'game-changes');
-  const weapons = sourcePackage.domains.find(row => row.kind === 'weapons');
+  const weapons = sourcePackage.domains.find(row => row.kind === 'weapon-family');
   const sharedId = index.web.officialTextChanges[0].toOfficialSourceId;
   const indexSource = index.web.officialInputs.sources.find(row => row.officialSourceId === sharedId);
   const weaponSource = weapons.web.officialInputs.sources.find(row => row.officialSourceId === sharedId);
@@ -508,9 +508,9 @@ test('UnitT35_requires_both_comparison_release_and_snapshot_rows', async () => {
 // Given a valid change domain with its target presentation missing, When projected, Then the unidentified item is omitted.
 test('UnitT40_omits_changes_without_a_unique_zh_tw_entity_name', async () => {
   const sourcePackage = await makeCompiledGameChangesPackage();
-  const domain = sourcePackage.domains.find(row => row.kind === 'weapons');
-  domain.web.presentations = [];
-  const view = createSharedViewModel({ domains: sourcePackage.domains, gameReleaseId: domain.gameReleaseId });
+  const weaponDomains = sourcePackage.domains.filter(row => ['weapons-index', 'weapon-family'].includes(row.kind));
+  for (const domain of weaponDomains) domain.web.presentations = [];
+  const view = createSharedViewModel({ domains: sourcePackage.domains, gameReleaseId: weaponDomains[0].gameReleaseId });
 
   assert.deepEqual(view.getGameChanges({ gameVersion: '1.0.1' }).items, []);
 });

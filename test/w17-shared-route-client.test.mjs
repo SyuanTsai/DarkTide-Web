@@ -98,10 +98,9 @@ test('UnitT20_loads_route_domains_and_their_declared_dependency_closure', async 
   assert.ok(!result.rawFiles.has(`/data/${result.manifest.dataRevision}/weapons.json`));
 });
 
-// Scenario: A non-skill route uses the existing complete consumer package and the manifest declares an announcements domain.
-// Purpose: Preserve current optional-domain loading for every route outside the narrowly scoped skills optimization.
-// Given a compiled package with a pinned announcement, When weapons are loaded, Then all core domains and the announcement remain present and verified.
-test('UnitT25_keeps_optional_announcements_on_full_routes', async t => {
+// Scenario: A split package also contains an optional announcements domain.
+// Purpose: A weapon-list route must fetch only the index named by the split loading contract.
+test('UnitT25_split_weapon_list_does_not_fetch_unrelated_optional_domains', async t => {
   installTestLocation(t);
   const fixture = await makeCompiledAnnouncementFixture();
   const calls = [];
@@ -109,14 +108,32 @@ test('UnitT25_keeps_optional_announcements_on_full_routes', async t => {
 
   const result = await client.load({ pathname: '/weapons/' });
 
-  assert.deepEqual(sorted(result.domains.map(domain => domain.kind)), [
-    'announcements', 'blessings', 'skills', 'terms', 'weapons',
-  ]);
+  assert.deepEqual(result.domains.map(domain => domain.kind), ['weapons-index']);
   const announcementFile = result.manifest.files.find(file => file.kind === 'announcements');
-  assert.ok(result.rawFiles.has(`/data/${result.manifest.dataRevision}/${announcementFile.path}`));
-  assert.deepEqual(sorted(requestedDomainNames(calls)), [
-    'announcements', 'blessings', 'skills', 'terms', 'weapons',
-  ]);
+  assert.ok(!result.rawFiles.has(`/data/${result.manifest.dataRevision}/${announcementFile.path}`));
+  assert.deepEqual(requestedDomainNames(calls), ['weapons-index']);
+});
+
+test('UnitT26_split_routes_fetch_exactly_the_contract_files', async t => {
+  installTestLocation(t);
+  const fixture = await makeCompiledAnnouncementFixture();
+  const cases = [
+    ['/weapons/', '', ['weapons-index']],
+    ['/weapons/', '?family=fixture-family&mark=fixture-mark', ['blessings-index', 'fixture-family', 'weapons-index']],
+    ['/blessings/', '', ['blessings-index']],
+    ['/blessings/', '?id=fixture%3Ablessing%3Aalpha', ['blessings-index', 'fixture-blessing-alpha', 'weapons-index']],
+    ['/skills/', '', ['skills', 'terms']],
+    ['/announcements/', '', ['announcements']],
+  ];
+
+  for (const [pathname, search, expected] of cases) await t.test(pathname + search, async () => {
+    const calls = [];
+    const client = createSharedClient({ build: fixture.build, fetchImpl: responseFetch(fixture.responses, { calls }) });
+    const result = await client.load({ pathname, search });
+
+    assert.equal(result.status, 'ready');
+    assert.deepEqual(sorted(requestedDomainNames(calls)), sorted(expected));
+  });
 });
 
 // Scenario: A selected domain is served with bytes that differ from the exact build and manifest pins.

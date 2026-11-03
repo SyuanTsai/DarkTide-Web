@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { parse } from 'yaml';
+import { assertStaticCiWorkflow } from '../scripts/verify-deploy-config.mjs';
 const load = async name => parse(await readFile(new URL('../.github/workflows/' + name, import.meta.url), 'utf8'));
 
 // Scenario: static CI succeeds before the shared-release workflow deploys and retains an exact W09 package.
@@ -39,6 +40,17 @@ test('UnitT10_operations_workflows_keep_credentials_out_of_PR_and_backup', async
   assert.match(monitor.jobs.monitor.if, /refs\/heads\/main/);
   assert.equal(monitor.jobs.monitor.permissions.issues, 'write');
   assert.equal(monitor.jobs.contract.permissions, undefined);
+  assert.deepEqual(monitor.jobs.monitor.steps[0].with['sparse-checkout'].trim().split(/\s+/u), ['scripts', 'src', 'web'],
+    'the scheduled probe checks out only the code it runs');
+});
+
+// Scenario: static CI is changed to add a deploy job that references a Cloudflare secret.
+// Purpose: Keep deployment credentials confined to shared-release and fail verification on any static-CI secret.
+test('UnitT15_static_ci_rejects_secret_bearing_deploy_job', async () => {
+  const ci = await load('static-ci.yml');
+  ci.jobs.deploy = { env: { CLOUDFLARE_API_TOKEN: '${{ secrets.CLOUDFLARE_API_TOKEN }}' } };
+
+  assert.throws(() => assertStaticCiWorkflow(ci), /static CI must not deploy|static CI must never receive secrets/u);
 });
 
 // Scenario: An operator chooses an old retained package and leaves publication disabled.
@@ -51,6 +63,7 @@ test('UnitT20_recovery_is_manual_main_only_and_defaults_to_isolated_verification
   const steps = recovery.jobs.restore.steps;
   const deploy = steps.find(step => step.run === 'npm run deploy:cloudflare');
   assert.equal(deploy.if, 'inputs.publish == true');
+  assert.equal(deploy.env.CLOUDFLARE_ACCOUNT_ID, undefined, 'the deploy script supplies its configured account to Wrangler');
   assert.ok(steps.some(step => step.run?.includes('operations-restore.mjs --backup .operations/retained --output dist')));
   assert.ok(steps.some(step => step.run === 'npm run smoke:cloudflare'));
   assert.ok(!steps.some(step => /npm run build|prepare:deploy/.test(step.run || '')));

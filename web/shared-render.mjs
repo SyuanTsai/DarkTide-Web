@@ -250,7 +250,7 @@ function weaponNameProvenance(result, view) {
   const manifestMatches = manifest?.gameReleaseId === 'darktide:1.13.4'
     && manifest.gameVersion === '1.13.4'
     && manifest.source?.repository === 'https://github.com/SyuanTsai/DarkTide-Source-Data';
-  const domain = result?.domains?.find(row => row.kind === 'weapons');
+  const domain = result?.domains?.find(row => row.kind === 'weapons' || row.kind === 'weapon-family');
   const records = domain?.source?.records?.filter(row => row?.kind === 'weapon' && row.recordId === pin.recordId) ?? [];
   const presentations = domain?.web?.presentations?.filter(row => row?.authoringId === pin.presentationId) ?? [];
   const sources = domain?.web?.officialInputs?.sources?.filter(row => row?.officialSourceId === pin.officialSourceId) ?? [];
@@ -647,10 +647,39 @@ function appendRetainedSummary(parent, summaryIndex, kind, id, label = '摘要�
   if (summary && summary !== parentSummary) parent.append(node('p', `${label}${summary}`, 'shared-history-summary'));
   return summary ?? null;
 }
-// Exact identity crosswalk verified from the 1.13.4 Chainaxe P1 traits source and retained variant ID.
-const CURRENT_TO_RETAINED_BLESSING_ID = new Map([
-  ['darktide:blessing:chainaxe:p1-movement-speed-on-activation', 'rev-it-up'],
-]);
+const BESPOKE_RETAINED_VARIANT_ID = /^weapon_trait_bespoke_(.+)_p([1-9]\d*)_(.+)$/u;
+const BESPOKE_CURRENT_BLESSING_ID = /^darktide:blessing:(.+):p([1-9]\d*)-(.+)$/u;
+
+export function currentBlessingIdForRetainedVariantId(variantId) {
+  if (typeof variantId !== 'string') return null;
+  const match = BESPOKE_RETAINED_VARIANT_ID.exec(variantId);
+  if (!match) return null;
+  const [, family, tier, suffix] = match;
+  return `darktide:blessing:${family}:p${tier}-${suffix.replaceAll('_', '-')}`;
+}
+
+function retainedVariantIdForCurrentBlessingId(currentId) {
+  if (typeof currentId !== 'string') return null;
+  const match = BESPOKE_CURRENT_BLESSING_ID.exec(currentId);
+  if (!match) return null;
+  const [, family, tier, suffix] = match;
+  return `weapon_trait_bespoke_${family}_p${tier}_${suffix.replaceAll('-', '_')}`;
+}
+
+export function retainedBlessingIdForCurrentId(currentId, catalog) {
+  const variantId = retainedVariantIdForCurrentBlessingId(currentId);
+  if (!variantId || !Array.isArray(catalog?.entries)) return null;
+  const blessingIds = new Set(catalog.entries
+    .filter(entry => entry?.kind === 'blessing' && typeof entry.id === 'string')
+    .map(entry => entry.id));
+  const matches = new Set();
+  for (const entry of catalog.entries) {
+    if (entry?.kind !== 'variant' || entry.id !== variantId || typeof entry.route !== 'string') continue;
+    const retainedBlessingId = /^\/blessings\/([^/]+)\/variants\//u.exec(entry.route)?.[1];
+    if (retainedBlessingId && blessingIds.has(retainedBlessingId)) matches.add(retainedBlessingId);
+  }
+  return matches.size === 1 ? [...matches][0] : null;
+}
 
 function retainedName(entry) {
   return typeof entry?.name_zh_tw === 'string' && entry.name_zh_tw.trim()
@@ -741,11 +770,15 @@ export function currentWeaponMarkIdentities(familyRecords, currentMarks) {
 
 function currentNativeMarkIndexByFamily(records, result) {
   const groups = new Map();
+  const split = result?.domains?.some(domain => domain.kind === 'weapons-index');
   for (const record of records) {
     const templateKey = record.payload?.templateKey;
     const familyId = record.payload?.familyId;
+    const ready = split
+      ? result?.view?.getWeaponListFamily(familyId)?.marks?.some(mark => mark.markId === record.payload?.markId)
+      : result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status === 'ready';
     if (typeof templateKey !== 'string' || typeof familyId !== 'string'
-        || result?.view?.getWeapon({ familyId, markId: record.payload?.markId })?.status !== 'ready') continue;
+        || !ready) continue;
     const rows = groups.get(familyId) ?? new Map();
     rows.set(templateKey, { familyId, markId: record.payload.markId });
     groups.set(familyId, rows);
@@ -836,10 +869,6 @@ function renderRetainedWeaponDetail(main, catalog, familyId, currentMarksByTempl
   main.append(section);
 }
 
-export function retainedBlessingIdForCurrentId(currentId) {
-  return CURRENT_TO_RETAINED_BLESSING_ID.get(currentId) ?? null;
-}
-
 function renderRetainedBlessingIdentity(main, historyPackage, retainedDetail, blessingId) {
   const catalog = historyPackage?.catalog;
   const entry = catalog?.entries.find(row => row.kind === 'blessing' && row.id === blessingId);
@@ -894,7 +923,7 @@ function renderBlessingHistory(main, result, url, historyPackage, historyError, 
   const mappedRetainedIds = new Set();
   for (const presentation of currentItems) {
     const currentId = displayRef(presentation.entityRef);
-    const retainedId = CURRENT_TO_RETAINED_BLESSING_ID.get(currentId);
+    const retainedId = retainedBlessingIdForCurrentId(currentId, catalog);
     if (!retainedId || mappedRetainedIds.has(retainedId)) continue;
     const oldEntry = blessings.find(entry => entry.id === retainedId);
     if (!oldEntry) continue;
@@ -942,7 +971,9 @@ function appendRetainedVariants(parent, variants, summaryIndex, parentSummary = 
 }
 
 function renderBlessingPage(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedBlessingDetail = null) {
-  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'blessings') : null;
+  const domain = result?.status === 'ready'
+    ? result.domains.find(row => row.kind === 'blessings-index') ?? result.domains.find(row => row.kind === 'blessings')
+    : null;
   const presentations = getPresentations(domain, 'blessing');
   const id = url.searchParams.get('id');
   if (!id) {
@@ -959,7 +990,11 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
         const variantRef = applicability.variantRef;
         const tier = applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
         if (!variantRef || !Number.isInteger(tier)) continue;
-        const view = result?.status === 'ready' ? result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier }) : null;
+        const view = result?.status === 'ready'
+          ? domain.kind === 'blessings-index'
+            ? result.view.getBlessingListItem({ blessingRef: presentation.entityRef, variantRef, tier })
+            : result.view.getBlessing({ blessingRef: presentation.entityRef, variantRef, tier })
+          : null;
         if (view?.status !== 'ready') continue;
         const item = node('li', null, 'shared-entry shared-current-blessing'); item.dataset.searchName = entrySearchText({ name_zh_tw: view.name, id: presentation.entityRef.recordId });
         item.dataset.currentBlessingId = presentation.entityRef.recordId;
@@ -1049,7 +1084,8 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
     : '適用武器尚未驗證；此頁只顯示已確認的祝福與等級資料。';
   main.append(node('p', applicabilityText, 'shared-applicability'));
   if (view.obtainableTiers?.status !== 'known') main.append(node('p', '此等級是否可取得尚未確認。', 'shared-muted'));
-  renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail, retainedBlessingIdForCurrentId(id));
+  renderRetainedBlessingIdentity(main, historyPackage, retainedBlessingDetail,
+    retainedBlessingIdForCurrentId(id, historyPackage?.catalog));
 }
 function sourceDecimal(value) {
   if (!value || value.status !== 'known' || typeof value.decimal !== 'string') return '來源數值未確認';
@@ -1500,7 +1536,9 @@ function renderWeapon(main, result, view, familyMarks, url, showRetainedRelation
   renderWeaponSourceDetails(main, view);
 }
 function renderWeapons(main, result, url, historyPackage = null, historyError = null, historyLoading = false, retainedWeaponDetail = null) {
-  const domain = result?.status === 'ready' ? result.domains.find(row => row.kind === 'weapons') : null;
+  const domain = result?.status === 'ready'
+    ? result.domains.find(row => row.kind === 'weapons-index') ?? result.domains.find(row => row.kind === 'weapons')
+    : null;
   const records = domain?.source.records.filter(row => row.kind === 'weapon' && row.gameReleaseId === result.manifest.gameReleaseId) ?? [];
   const families = [...new Set(records.map(row => row.payload?.familyId).filter(Boolean))];
   const familyId = url.searchParams.get('family');
@@ -1535,7 +1573,9 @@ function renderWeapons(main, result, url, historyPackage = null, historyError = 
   const oldFamilyById = new Map(oldFamilies.map(entry => [entry.id, entry]));
   const oldMarksByFamily = retainedMarksByFamily(oldCatalog);
   for (const family of families) {
-    const view = result.view.getWeaponFamily(family);
+    const view = domain.kind === 'weapons-index'
+      ? result.view.getWeaponListFamily(family)
+      : result.view.getWeaponFamily(family);
     const familyRecords = records.filter(record => record.payload?.familyId === family);
     const firstRecord = familyRecords[0];
     if (!firstRecord) continue;

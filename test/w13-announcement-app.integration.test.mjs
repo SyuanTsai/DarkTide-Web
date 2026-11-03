@@ -49,13 +49,9 @@ test('InterT10_compiled_announcement_renders_on_static_list_route', { timeout: 1
     const verifiedShared = await readVerifiedCoreDomains(distPath, verification);
     const dataRoot = `/data/${verification.shared_data_revision}`;
     assert.deepEqual(verifiedShared.domains.map(domain => domain.kind).sort(),
-      ['announcements', 'blessings', 'skills', 'terms', 'weapons']);
+      ['announcements', 'blessing', 'blessings-index', 'skills', 'terms', 'weapon-family', 'weapons-index']);
     assert.deepEqual(verifiedShared.requestedPaths, [
-      `${dataRoot}/domains/announcements.json`,
-      `${dataRoot}/domains/blessings.json`,
-      `${dataRoot}/domains/skills.json`,
-      `${dataRoot}/domains/terms.json`,
-      `${dataRoot}/domains/weapons.json`,
+      ...fixture.compiled.manifest.files.map(file => `${dataRoot}/${file.path}`),
       `${dataRoot}/manifest.json`,
     ].sort());
     assert.equal(verifiedShared.view.getAnnouncements().items.length, 1);

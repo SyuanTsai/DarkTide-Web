@@ -28,6 +28,11 @@ const W08_CANDIDATE_SCHEMA = 'w08-shared-candidate/1.0.0';
 const SHA1_RE = /^[a-f0-9]{40}$/;
 const SHA256_RE = /^[a-f0-9]{64}$/;
 const CORE_DOMAIN_KINDS = Object.freeze(['blessings', 'skills', 'terms', 'weapons']);
+const SPLIT_REQUIRED_DOMAIN_KINDS = Object.freeze(['blessings-index', 'skills', 'terms', 'weapons-index']);
+const SPLIT_DOMAIN_FEATURE = 'split-weapon-blessing-domains-v1';
+const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
+const MAX_PACKAGE_BYTES = 24 * 1024 * 1024;
+const SAFE_SHARD_SEGMENT = /^[A-Za-z0-9._-]+$/;
 const EXPECTED_COMPILER_FILES = Object.freeze([
   'content/schema/v2/shared-candidate.schema.json',
   'scripts/content/contract-authoring.mjs',
@@ -725,8 +730,8 @@ export function evaluateW08PublicationGate({ sourceBuild, review, requiredConten
   };
 }
 
-function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, modeRows, termRules = null }) {
-  const presentations = modeRows.flatMap(({ mode }) => mode.authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
+function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, modeRows, termRules = null, presentationRows = null }) {
+  const presentations = presentationRows ?? modeRows.flatMap(({ mode }) => mode.authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
     && ((kind === 'skills' && item.entityRef.kind === 'skill') || (kind === 'blessings' && item.entityRef.kind === 'blessing')
       || (kind === 'weapons' && item.entityRef.kind === 'weapon'))));
   const termLocalizations = kind === 'terms'
@@ -834,7 +839,7 @@ function assertModeShape(mode, name) {
 }
 
 function collectWebContentRows(domainDocuments, sourceContract) {
-  const documents = [...domainDocuments];
+  const documents = [...domainDocuments].filter(document => !['weapons-index', 'blessings-index'].includes(document.kind));
   const localizedSubjects = collectLocalizedSubjectWeb(documents.map(document => document.web));
   return documents.flatMap(document => collectRequiredContentFromWeb(document.web, sourceContract, localizedSubjects));
 }
@@ -1009,24 +1014,140 @@ function authoringPresentationIds(modes) {
   }
 }
 
+function releaseCompatibilityRecords(sourceContract, releaseId) {
+  return sourceContract.records.filter(record => record.kind === 'release-compatibility'
+    && (record.gameReleaseId === releaseId || record.payload?.toGameReleaseId === releaseId));
+}
+
+function uniqueSortedRecords(records) {
+  const byKey = new Map();
+  for (const record of records) {
+    const key = sourceRecordKey(record);
+    const prior = byKey.get(key);
+    if (prior && canonicalJson(prior) !== canonicalJson(record)) fail('split domain contains conflicting Source records: ' + key.replace('\u0000', ':'));
+    byKey.set(key, record);
+  }
+  return [...byKey.values()].sort((left, right) => compareUtf8(sourceRecordKey(left), sourceRecordKey(right)));
+}
+
+function presentationsForRecords(modes, releaseId, kind, records) {
+  const recordIds = new Set(records.map(record => record.recordId));
+  return modes.flatMap(({ mode }) => mode.authoring.presentations.filter(item => item.entityRef?.gameReleaseId === releaseId
+    && item.entityRef.kind === kind && recordIds.has(item.entityRef.recordId)));
+}
+
+function indexPresentation(presentation, kind) {
+  const projected = {};
+  const keys = kind === 'weapon'
+    ? ['authoringId', 'entityRef', 'locale', 'name', 'nameOfficialSourceId', 'official', 'retainedName']
+    : ['authoringId', 'entityRef', 'locale', 'name', 'nameOfficialSourceId', 'tierApplicability'];
+  for (const key of keys) if (Object.hasOwn(presentation, key)) projected[key] = structuredClone(presentation[key]);
+  if (kind === 'blessing' && Array.isArray(presentation.tierPresentations?.options)) {
+    projected.tierPresentations = {
+      options: presentation.tierPresentations.options.map(option => ({
+        tier: option.tier,
+        officialLocaleRefs: structuredClone(option.officialLocaleRefs ?? []),
+      })),
+    };
+  }
+  return canonicalize(projected);
+}
+
+function splitDetailRecords(primaryRecords, presentations, sourceContract, releaseId) {
+  const recordsByKey = new Map(sourceContract.records.map(record => [sourceRecordKey(record), record]));
+  const seeds = [...primaryRecords, ...releaseCompatibilityRecords(sourceContract, releaseId)];
+  for (const ref of collectTypedRecordPointers(presentations)) {
+    const record = recordsByKey.get(sourceRecordKey(ref));
+    if (!record) fail('split presentation typed reference is unresolved: ' + ref.gameReleaseId + ':' + ref.recordId);
+    if (ref.kind && ref.kind !== record.kind) fail('split presentation typed reference kind conflicts: ' + ref.recordId);
+    seeds.push(record);
+  }
+  return recordClosure(seeds, sourceContract);
+}
+
+export function blessingDomainSlug(recordId) {
+  const prefix = 'darktide:blessing:';
+  if (typeof recordId !== 'string' || recordId.length === 0) {
+    fail('blessing recordId cannot be converted to a split-domain slug: ' + String(recordId));
+  }
+  const unprefixed = recordId.startsWith(prefix) ? recordId.slice(prefix.length) : recordId;
+  const slug = unprefixed.replace(/[^A-Za-z0-9._-]/gu, '-');
+  if (!slug) fail('blessing recordId produces an empty split-domain slug: ' + recordId);
+  return slug;
+}
+
 function createDomainBytes(sourceContract, modes, releaseId) {
   const docs = new Map();
-  for (const kind of CORE_DOMAIN_KINDS) {
+  for (const kind of ['skills', 'terms']) {
     const records = makeRegistryDomainSeeds(kind, sourceContract, releaseId, modes);
     const termRules = kind === 'terms' ? modes.find(row => row.name === 'w06')?.mode.termRules ?? null : null;
     const document = makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords: records, modeRows: modes, termRules });
-    docs.set(kind, document);
+    docs.set('domains/' + kind + '.json', document);
   }
+
+  const compatibilityRecords = releaseCompatibilityRecords(sourceContract, releaseId);
+  const weaponRecords = sourceContract.records.filter(record => record.kind === 'weapon' && record.gameReleaseId === releaseId);
+  if (!weaponRecords.length) fail('weapons-index domain has no Source-owned weapon records');
+  const weaponPresentations = presentationsForRecords(modes, releaseId, 'weapon', weaponRecords);
+  docs.set('domains/weapons-index.json', makeDomainDocument({
+    kind: 'weapons-index', releaseId, sourceContract,
+    sourceRecords: uniqueSortedRecords([...weaponRecords, ...compatibilityRecords]),
+    modeRows: modes,
+    presentationRows: weaponPresentations.map(presentation => indexPresentation(presentation, 'weapon')),
+  }));
+  const familyIds = [...new Set(weaponRecords.map(record => record.payload?.familyId))];
+  if (familyIds.some(familyId => typeof familyId !== 'string' || !SAFE_SHARD_SEGMENT.test(familyId))) {
+    fail('weapon familyId is not a safe split-domain path segment');
+  }
+  familyIds.sort(compareUtf8);
+  for (const familyId of familyIds) {
+    const familyWeapons = weaponRecords.filter(record => record.payload.familyId === familyId);
+    const familyPresentations = presentationsForRecords(modes, releaseId, 'weapon', familyWeapons);
+    docs.set('domains/weapons/' + familyId + '.json', makeDomainDocument({
+      kind: 'weapon-family', releaseId, sourceContract,
+      sourceRecords: splitDetailRecords(familyWeapons, familyPresentations, sourceContract, releaseId),
+      modeRows: modes,
+      presentationRows: familyPresentations,
+    }));
+  }
+
+  const blessingRecords = sourceContract.records.filter(record => record.kind === 'blessing' && record.gameReleaseId === releaseId);
+  if (!blessingRecords.length) fail('blessings-index domain has no Source-owned blessing records');
+  const blessingPresentations = presentationsForRecords(modes, releaseId, 'blessing', blessingRecords);
+  docs.set('domains/blessings-index.json', makeDomainDocument({
+    kind: 'blessings-index', releaseId, sourceContract,
+    sourceRecords: uniqueSortedRecords([...blessingRecords, ...compatibilityRecords]),
+    modeRows: modes,
+    presentationRows: blessingPresentations.map(presentation => indexPresentation(presentation, 'blessing')),
+  }));
+  const slugs = new Map();
+  const lowerSlugs = new Set();
+  for (const blessingRecord of blessingRecords) {
+    const slug = blessingDomainSlug(blessingRecord.recordId);
+    if (slugs.has(slug) || lowerSlugs.has(slug.toLowerCase())) {
+      fail('blessing split-domain slug collision: ' + slug);
+    }
+    slugs.set(slug, blessingRecord.recordId);
+    lowerSlugs.add(slug.toLowerCase());
+    const presentations = presentationsForRecords(modes, releaseId, 'blessing', [blessingRecord]);
+    docs.set('domains/blessings/' + slug + '.json', makeDomainDocument({
+      kind: 'blessing', releaseId, sourceContract,
+      sourceRecords: splitDetailRecords([blessingRecord], presentations, sourceContract, releaseId),
+      modeRows: modes,
+      presentationRows: presentations,
+    }));
+  }
+
   const announcements = modes.flatMap(({ mode }) => mode.authoring.announcements);
   if (announcements.length) {
     const rows = modes.map(({ mode, name }) => ({ mode, name }));
-    docs.set('announcements', makeDomainDocument({ kind: 'announcements', releaseId, sourceContract,
+    docs.set('domains/announcements.json', makeDomainDocument({ kind: 'announcements', releaseId, sourceContract,
       sourceRecords: makeRegistryDomainSeeds('announcements', sourceContract, releaseId, rows), modeRows: rows }));
   }
   const gameChanges = modes.flatMap(({ mode }) => [...mode.authoring.gameChanges, ...mode.authoring.officialTextChanges]);
   if (gameChanges.length) {
     const rows = modes.map(({ mode, name }) => ({ mode, name }));
-    docs.set('game-changes', makeDomainDocument({ kind: 'game-changes', releaseId, sourceContract,
+    docs.set('domains/game-changes.json', makeDomainDocument({ kind: 'game-changes', releaseId, sourceContract,
       sourceRecords: makeRegistryDomainSeeds('game-changes', sourceContract, releaseId, rows), modeRows: rows }));
   }
   return docs;
@@ -1148,6 +1269,33 @@ function utf8JsonDocument(value, label) {
   return bytes;
 }
 
+function assertSplitRouteByteLimits(files, manifestSizeBytes) {
+  const byPath = new Map(files.map(file => [file.path, file]));
+  const rows = kind => files.filter(file => file.kind === kind);
+  const assertRoute = (label, selectedRows) => {
+    const selected = new Map();
+    const add = file => {
+      if (!file || selected.has(file.path)) return;
+      selected.set(file.path, file);
+      for (const dependency of file.dependencies) add(byPath.get(dependency));
+    };
+    for (const file of selectedRows) add(file);
+    const sizeBytes = manifestSizeBytes + [...selected.values()].reduce((sum, file) => sum + file.sizeBytes, 0);
+    if (sizeBytes > MAX_PACKAGE_BYTES) fail(label + ' exceeds the 24 MiB route limit');
+  };
+  const weaponIndex = rows('weapons-index')[0];
+  const blessingIndex = rows('blessings-index')[0];
+  assertRoute('skills route', [...rows('skills'), ...rows('terms')]);
+  assertRoute('weapon list route', [weaponIndex]);
+  for (const file of rows('weapon-family')) assertRoute('weapon family route ' + file.path, [weaponIndex, file, blessingIndex]);
+  assertRoute('blessing list route', [blessingIndex]);
+  for (const file of rows('blessing')) assertRoute('blessing detail route ' + file.path, [blessingIndex, file, weaponIndex]);
+  for (const file of rows('announcements')) assertRoute('announcements route', [file]);
+  for (const file of rows('game-changes')) {
+    assertRoute('game-changes route', [file, ...rows('skills'), ...rows('terms'), weaponIndex, blessingIndex]);
+  }
+}
+
 export function compileW08Candidate(input) {
   requireCandidateInputs(input);
   const sourceContract = input.sourceContract;
@@ -1179,16 +1327,23 @@ export function compileW08Candidate(input) {
 
   const builtDomainDocuments = createDomainBytes(sourceContract, modes, requestedReleaseId);
   const emittedDomainDocuments = [...builtDomainDocuments.values()];
-  const domainBytes = new Map([...builtDomainDocuments].map(([kind, document]) => [
-    'domains/' + kind + '.json',
-    utf8JsonDocument(document, kind + ' domain'),
+  const domainBytes = new Map([...builtDomainDocuments].map(([filePath, document]) => [
+    filePath,
+    utf8JsonDocument(document, document.kind + ' domain'),
   ]));
+  for (const [filePath, bytes] of domainBytes) {
+    if (bytes.byteLength > MAX_DOMAIN_BYTES) fail('domain file exceeds the 16 MiB limit: ' + filePath);
+  }
   const files = [...domainBytes].map(([filePath, bytes]) => ({
-    kind: filePath.slice('domains/'.length, -'.json'.length),
+    kind: builtDomainDocuments.get(filePath).kind,
     path: filePath,
     sizeBytes: bytes.byteLength,
     sha256: sha256(bytes),
-    dependencies: [],
+    dependencies: filePath.startsWith('domains/weapons/')
+      ? ['domains/weapons-index.json']
+      : filePath.startsWith('domains/blessings/')
+        ? ['domains/blessings-index.json']
+        : [],
   })).sort((left, right) => compareUtf8(left.path, right.path));
 
   const snapshotIds = new Set();
@@ -1209,7 +1364,7 @@ export function compileW08Candidate(input) {
     web: { authoringCommit: input.webIdentity.authoringCommit, compilerCommit: input.compilerIdentity.commit },
     compatibility: {
       dataContractMajor: 2,
-      requiredFeatures: ['official-errata-details-v1', 'official-native-localizations-v1', 'blessing-tier-presentations-v1'],
+      requiredFeatures: ['official-errata-details-v1', 'official-native-localizations-v1', 'blessing-tier-presentations-v1', SPLIT_DOMAIN_FEATURE],
       gameSnapshotRefs: [...snapshotIds].sort(compareUtf8),
     },
     files,
@@ -1218,6 +1373,7 @@ export function compileW08Candidate(input) {
   manifest.dataRevision = computeDataRevision(manifest);
   validateManifest(manifest);
   const manifestBytes = utf8JsonDocument(manifest, 'shared manifest');
+  assertSplitRouteByteLimits(files, manifestBytes.byteLength);
   const manifestPath = buildManifestPath(manifest.dataRevision);
   const webReview = reviewCoverage(emittedDomainDocuments);
   const emittedRecords = emittedSourceRecords(emittedDomainDocuments);
@@ -1306,17 +1462,27 @@ function validateDomainDocument(document, row, releaseId) {
     if (!Array.isArray(document.source[field])) fail('domain file source.' + field + ' must be an array: ' + row.path);
   }
   const records = new Map();
+  const isIndex = row.kind === 'weapons-index' || row.kind === 'blessings-index';
+  const indexRecordKind = row.kind === 'weapons-index' ? 'weapon' : row.kind === 'blessings-index' ? 'blessing' : null;
   for (const record of document.source.records) {
     if (!isRecord(record) || typeof record.recordId !== 'string' || typeof record.gameReleaseId !== 'string' || typeof record.kind !== 'string') fail('domain file contains an invalid Source record: ' + row.path);
     const key = sourceRecordKey(record);
     if (records.has(key)) fail('domain file duplicates a Source record: ' + record.recordId);
     records.set(key, record);
   }
-  for (const record of records.values()) {
-    for (const ref of collectTypedRecordPointers(record)) {
-      const target = records.get(sourceRecordKey(ref));
-      if (!target) fail('domain Source closure is incomplete for ' + ref.recordId);
-      if (ref.kind && ref.kind !== target.kind) fail('domain Source reference kind mismatch for ' + ref.recordId);
+  if (isIndex) {
+    const primaryRecords = [...records.values()].filter(record => record.kind === indexRecordKind && record.gameReleaseId === releaseId);
+    if (primaryRecords.length === 0) fail('split index has no ' + indexRecordKind + ' records: ' + row.path);
+    if ([...records.values()].some(record => ![indexRecordKind, 'release-compatibility'].includes(record.kind))) {
+      fail('split index contains a non-index Source record: ' + row.path);
+    }
+  } else {
+    for (const record of records.values()) {
+      for (const ref of collectTypedRecordPointers(record)) {
+        const target = records.get(sourceRecordKey(ref));
+        if (!target) fail('domain Source closure is incomplete for ' + ref.recordId);
+        if (ref.kind && ref.kind !== target.kind) fail('domain Source reference kind mismatch for ' + ref.recordId);
+      }
     }
   }
   const sourceRefs = new Map(document.source.sourceRefs.map(ref => [sourceRefKey(ref), ref]));
@@ -1346,6 +1512,7 @@ function validateDomainDocument(document, row, releaseId) {
   ];
   for (const ref of collectTypedRecordPointers(webItems)) {
     const target = records.get(sourceRecordKey(ref));
+    if (!target && isIndex) continue;
     if (!target) fail('domain Web typed Source reference is unresolved: ' + ref.recordId);
     if (ref.kind && ref.kind !== target.kind) fail('domain Web typed Source reference kind mismatch: ' + ref.recordId);
   }
@@ -1484,21 +1651,66 @@ export function validateW08Candidate(candidate, options = {}) {
   const kinds = new Set();
   const domainDocuments = new Map();
   for (const row of candidate.manifest.files) {
-    if (![...CORE_DOMAIN_KINDS, 'announcements', 'game-changes'].includes(row.kind) || row.path !== 'domains/' + row.kind + '.json') {
+    const singletonPath = ['skills', 'terms', 'weapons-index', 'blessings-index', 'announcements', 'game-changes'].includes(row.kind)
+      && row.path === 'domains/' + row.kind + '.json';
+    const familyPath = row.kind === 'weapon-family' && /^domains\/weapons\/[A-Za-z0-9._-]+\.json$/.test(row.path);
+    const blessingPath = row.kind === 'blessing' && /^domains\/blessings\/[A-Za-z0-9._-]+\.json$/.test(row.path);
+    if (!singletonPath && !familyPath && !blessingPath) {
       fail('W08 manifest contains an unsupported domain path: ' + row.path);
     }
-    if (filePaths.has(row.path) || kinds.has(row.kind)) fail('W08 candidate must contain one file per domain kind');
+    if (filePaths.has(row.path)) fail('W08 candidate duplicates a domain path');
+    if (!['weapon-family', 'blessing'].includes(row.kind) && kinds.has(row.kind)) fail('W08 candidate must contain one file per singleton domain kind');
     filePaths.add(row.path);
     kinds.add(row.kind);
     const bytes = resolveFileBytes(candidate.files, row.path);
-    if (!Buffer.isBuffer(bytes) || bytes.byteLength !== row.sizeBytes || sha256(bytes) !== row.sha256) fail('domain file bytes do not match their manifest pin: ' + row.path);
+    if (!Buffer.isBuffer(bytes) || bytes.byteLength > MAX_DOMAIN_BYTES
+      || bytes.byteLength !== row.sizeBytes || sha256(bytes) !== row.sha256) fail('domain file bytes do not match their manifest pin or size limit: ' + row.path);
     const document = parseJson(bytes, row.path);
     validateDomainDocument(document, row, candidate.manifest.gameReleaseId);
-    domainDocuments.set(row.kind, document);
+    domainDocuments.set(row.path, document);
   }
-  for (const kind of CORE_DOMAIN_KINDS) if (!kinds.has(kind)) fail('W08 candidate is missing required core domain: ' + kind);
+  for (const kind of SPLIT_REQUIRED_DOMAIN_KINDS) if (!kinds.has(kind)) fail('W08 candidate is missing required split domain: ' + kind);
+  if (kinds.has('weapons') || kinds.has('blessings')) fail('W08 candidate must not contain legacy weapon/blessing domains');
   const providedPaths = candidate.files instanceof Map ? [...candidate.files.keys()] : Object.keys(candidate.files ?? {});
   if (providedPaths.length !== filePaths.size || providedPaths.some(relativePath => !filePaths.has(relativePath))) fail('candidate file set differs from the shared manifest');
+  assertSplitRouteByteLimits(candidate.manifest.files, candidate.manifestBytes.byteLength);
+
+  const weaponIndex = domainDocuments.get('domains/weapons-index.json');
+  const expectedFamilies = new Set(weaponIndex.source.records
+    .filter(record => record.kind === 'weapon' && record.gameReleaseId === candidate.manifest.gameReleaseId)
+    .map(record => record.payload?.familyId));
+  const familyRows = candidate.manifest.files.filter(row => row.kind === 'weapon-family');
+  const actualFamilies = new Set();
+  for (const row of familyRows) {
+    const familyId = row.path.slice('domains/weapons/'.length, -'.json'.length);
+    if (actualFamilies.has(familyId)) fail('W08 candidate duplicates a weapon family shard: ' + familyId);
+    actualFamilies.add(familyId);
+    const document = domainDocuments.get(row.path);
+    if (!document.source.records.some(record => record.kind === 'weapon' && record.gameReleaseId === candidate.manifest.gameReleaseId
+      && record.payload?.familyId === familyId)) fail('weapon family shard does not contain its indexed family: ' + familyId);
+  }
+  if (canonicalJson([...actualFamilies].sort(compareUtf8)) !== canonicalJson([...expectedFamilies].sort(compareUtf8))) {
+    fail('weapon family shards do not exactly cover weapons-index');
+  }
+
+  const blessingIndex = domainDocuments.get('domains/blessings-index.json');
+  const expectedBlessings = new Map(blessingIndex.source.records
+    .filter(record => record.kind === 'blessing' && record.gameReleaseId === candidate.manifest.gameReleaseId)
+    .map(record => [blessingDomainSlug(record.recordId), record.recordId]));
+  const actualBlessings = new Set();
+  for (const row of candidate.manifest.files.filter(file => file.kind === 'blessing')) {
+    const slug = row.path.slice('domains/blessings/'.length, -'.json'.length);
+    if (actualBlessings.has(slug)) fail('W08 candidate duplicates a blessing shard: ' + slug);
+    actualBlessings.add(slug);
+    const recordId = expectedBlessings.get(slug);
+    if (!recordId || !domainDocuments.get(row.path).source.records.some(record => record.kind === 'blessing'
+      && record.gameReleaseId === candidate.manifest.gameReleaseId && record.recordId === recordId)) {
+      fail('blessing shard does not contain its indexed blessing: ' + slug);
+    }
+  }
+  if (canonicalJson([...actualBlessings].sort(compareUtf8)) !== canonicalJson([...expectedBlessings.keys()].sort(compareUtf8))) {
+    fail('blessing shards do not exactly cover blessings-index');
+  }
   const expectedLimitations = new Set(ACCEPTED_LIMITATION_KEYS);
   for (const limitation of candidate.envelope.acceptedLimitations) {
     requireRecord(limitation, 'accepted limitation');
@@ -1574,9 +1786,8 @@ export function validateW08Candidate(candidate, options = {}) {
     }
   }
 
-  const localizedSubjects = collectLocalizedSubjectWeb(documents.map(document => document.web));
   const emittedSourceContract = { records: emittedSourceRecords(documents) };
-  const requiredContent = documents.flatMap(document => collectRequiredContentFromWeb(document.web, emittedSourceContract, localizedSubjects));
+  const requiredContent = collectWebContentRows(documents, emittedSourceContract);
   const expectedGate = evaluateW08PublicationGate({
     sourceBuild: candidate.envelope.sourceBuild,
     review: candidate.envelope.review,
