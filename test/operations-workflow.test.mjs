@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { parse } from 'yaml';
+import { assertStaticCiWorkflow } from '../scripts/verify-deploy-config.mjs';
 const load = async name => parse(await readFile(new URL('../.github/workflows/' + name, import.meta.url), 'utf8'));
 
 // Scenario: static CI succeeds before the shared-release workflow deploys and retains an exact W09 package.
@@ -41,6 +42,15 @@ test('UnitT10_operations_workflows_keep_credentials_out_of_PR_and_backup', async
   assert.equal(monitor.jobs.contract.permissions, undefined);
   assert.deepEqual(monitor.jobs.monitor.steps[0].with['sparse-checkout'].trim().split(/\s+/u), ['scripts', 'src', 'web'],
     'the scheduled probe checks out only the code it runs');
+});
+
+// Scenario: static CI is changed to add a deploy job that references a Cloudflare secret.
+// Purpose: Keep deployment credentials confined to shared-release and fail verification on any static-CI secret.
+test('UnitT15_static_ci_rejects_secret_bearing_deploy_job', async () => {
+  const ci = await load('static-ci.yml');
+  ci.jobs.deploy = { env: { CLOUDFLARE_API_TOKEN: '${{ secrets.CLOUDFLARE_API_TOKEN }}' } };
+
+  assert.throws(() => assertStaticCiWorkflow(ci), /static CI must not deploy|static CI must never receive secrets/u);
 });
 
 // Scenario: An operator chooses an old retained package and leaves publication disabled.
