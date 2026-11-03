@@ -264,6 +264,10 @@ test('InterT29_candidate-workflow-is-a-serialized-unselected-repository-dispatch
   assert.ok(steps.indexOf(retainedInputs) < steps.indexOf(historySource));
 
   const run = job.steps.find(step => step.name === 'Prepare or update the revision-scoped candidate PR');
+  const entry = await readFile(path.join(REPO_ROOT, 'scripts/prepare-w09-candidate.mjs'), 'utf8');
+  assert.match(entry, /createW09SourceFetch\(\{ token: process\.env\.W09_GIT_TOKEN \}\)/u,
+    'candidate Source release lookups use the workflow token like promotion does');
+  assert.match(entry, /runW09CandidateHandoff\(\{ repoRoot, sourceRoot, releaseId, fetchImpl \}\)/u);
   assert.equal(run.run, 'node scripts/prepare-w09-candidate.mjs');
   assert.equal(run.env.W09_RELEASE_ID, '$' + '{{ github.event.client_payload.release_id || inputs.release_id }}');
   assert.equal(run.env.GH_TOKEN, '$' + '{{ github.token }}');
