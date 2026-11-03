@@ -8,6 +8,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { parse as parseYaml } from 'yaml';
 import { runW09CandidateHandoff } from '../scripts/prepare-w09-candidate.mjs';
+import { earlierActiveRunIds, waitForEarlierCandidateRuns } from '../scripts/wait-for-earlier-candidate-runs.mjs';
 
 const OFFICIAL_ORIGIN = 'https://github.com/SyuanTsai/DarkTide-Web.git';
 const SOURCE_REVISION = 'a'.repeat(64);
@@ -229,8 +230,12 @@ test('InterT29_candidate-workflow-is-a-serialized-unselected-repository-dispatch
   assert.match(job.if, /github\.repository == 'SyuanTsai\/DarkTide-Web'/u);
   assert.match(job.if, /github\.event_name == 'repository_dispatch' && github\.event\.action == 'w09-source-release'/u);
   assert.match(job.if, /github\.event_name == 'workflow_dispatch' && github\.ref == 'refs\/heads\/main'/u);
-  assert.equal(job.concurrency.group, 'darktide-w09-candidate-proposals');
-  assert.equal(job.concurrency['cancel-in-progress'], false);
+  assert.equal(job.concurrency, undefined, 'a concurrency group keeps one pending run and cancels the other dispatched releases');
+  assert.equal(workflow.permissions.actions, 'read');
+  const queueWait = job.steps.find(step => step.name === 'Wait for earlier candidate runs to finish');
+  assert.equal(queueWait?.run, 'node scripts/wait-for-earlier-candidate-runs.mjs');
+  assert.ok(job.steps.indexOf(queueWait) < job.steps.findIndex(step => step.name === 'Prepare or update the revision-scoped candidate PR'),
+    'runs are serialized before any candidate branch or PR work');
   assert.equal(job.environment, undefined, 'candidate preparation must not use production environment credentials');
 
   const steps = job.steps;
@@ -267,4 +272,36 @@ test('InterT29_candidate-workflow-is-a-serialized-unselected-repository-dispatch
   assert.equal(run.env.SYP_W07_RETAINED_SOURCE_ROOT, '$' + '{{ steps.retained-name-inputs.outputs.source-root }}');
   assert.ok(!steps.some(step => /deploy|publish|select|allocate/u.test([step.name, step.run].filter(Boolean).join(' '))),
     'candidate dispatch must not add a production publish, selection, or allocation route');
+});
+
+// Scenario: One Source handoff dispatches several release IDs at once.
+// Purpose: Serialize candidate runs by run ID instead of a concurrency group that cancels queued dispatches.
+test('UnitT30_candidate-runs-wait-only-for-earlier-active-runs-of-the-same-workflow', async () => {
+  const runs = [
+    { id: 10, status: 'completed' }, { id: 11, status: 'in_progress' }, { id: 12, status: 'queued' },
+    { id: 13, status: 'in_progress' }, { id: 14, status: 'queued' },
+  ];
+  assert.deepEqual(earlierActiveRunIds(runs, 13), [11, 12]);
+  assert.deepEqual(earlierActiveRunIds(runs, 11), []);
+
+  let polls = 0;
+  const fetchImpl = async url => {
+    const status = new URL(url).searchParams.get('status');
+    const active = polls < 6 ? [{ id: 5, status: 'in_progress' }] : [];
+    if (status === 'in_progress') polls += 1;
+    return { ok: true, json: async () => ({ workflow_runs: active.filter(run => run.status === status) }) };
+  };
+  const logs = [];
+  const result = await waitForEarlierCandidateRuns({
+    repository: 'SyuanTsai/DarkTide-Web', token: 't', ownRunId: 9, fetchImpl, sleep: async () => {}, log: line => logs.push(line),
+  });
+  assert.deepEqual(result, { waited: true });
+  assert.ok(logs.length >= 1 && logs.every(line => line.includes('5')));
+
+  let clock = 0;
+  await assert.rejects(waitForEarlierCandidateRuns({
+    repository: 'SyuanTsai/DarkTide-Web', token: 't', ownRunId: 9,
+    fetchImpl: async url => ({ ok: true, json: async () => ({ workflow_runs: new URL(url).searchParams.get('status') === 'queued' ? [{ id: 7, status: 'queued' }] : [] }) }),
+    sleep: async () => { clock += 60_000; }, now: () => clock, maxWaitMs: 120_000, log: () => {},
+  }), /still active: 7/u);
 });
