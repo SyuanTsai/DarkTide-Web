@@ -9,6 +9,7 @@ on:
         type: string
         required: true
 permissions:
+  actions: read
   contents: write
   pull-requests: write
 jobs:
@@ -17,10 +18,7 @@ jobs:
       && ((github.event_name == 'repository_dispatch' && github.event.action == 'w09-source-release')
         || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'))
     runs-on: ubuntu-latest
-    timeout-minutes: 35
-    concurrency:
-      group: darktide-w09-candidate-proposals
-      cancel-in-progress: false
+    timeout-minutes: 140
     steps:
       - name: Check out current Web main without persisted credentials
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -33,6 +31,10 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Wait for earlier candidate runs to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/wait-for-earlier-candidate-runs.mjs
       - name: Install locked dependencies
         run: npm ci
       - name: Acquire retained-name inputs
