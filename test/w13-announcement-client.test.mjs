@@ -16,6 +16,7 @@ test('UnitT10_loads_exact_compiled_optional_announcement_domain', async t => {
   const result = await loadSharedRelease({
     build: fixture.build,
     fetchImpl: responseFetch(fixture.responses, { calls }),
+    pathname: '/announcements/',
   });
 
   assert.equal(result.status, 'ready');
@@ -62,7 +63,7 @@ test('UnitT40_rejects_unpinned_optional_announcement_domain', async t => {
   const build = structuredClone(fixture.build);
   build.shared_files = build.shared_files.filter(row => !row.path.endsWith('/domains/announcements.json'));
 
-  await assert.rejects(loadSharedRelease({ build, fetchImpl: responseFetch(fixture.responses) }),
+  await assert.rejects(loadSharedRelease({ build, fetchImpl: responseFetch(fixture.responses), pathname: '/announcements/' }),
     /does not pin the optional announcements domain/u);
 });
 
@@ -77,7 +78,8 @@ test('UnitT50_rejects_changed_announcement_domain_bytes', async t => {
     return Buffer.from(bytes.toString('utf8').replace('2026-10-24', '2026-10-25'));
   } });
 
-  await assert.rejects(loadSharedRelease({ build: fixture.build, fetchImpl }), /domain bytes do not match manifest/u);
+  await assert.rejects(loadSharedRelease({ build: fixture.build, fetchImpl, pathname: '/announcements/' }),
+    /domain bytes do not match manifest/u);
 });
 
 // Scenario: A schema-valid compiler fixture contains a real date error inside the optional Web announcement projection.

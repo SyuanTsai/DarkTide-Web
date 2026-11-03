@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+export { validateManifest, validateManifest as validateSharedManifest } from '../../scripts/content/contract-release.mjs';
 
 const ROOT_FIELDS = ['schema_version', 'package_kind', 'game_version', 'skills', 'weapons', 'marks', 'blessings', 'variants', 'bindings', 'assets', 'routes', 'sources', 'talent_trees'];
 const ROW_FIELDS = {

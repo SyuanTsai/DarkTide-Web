@@ -1,15 +1,23 @@
 import { createSharedViewModel } from './shared-view.mjs';
 
 const CORE_KINDS = Object.freeze(['skills', 'blessings', 'weapons', 'terms']);
+const SPLIT_CORE_KINDS = Object.freeze(['skills', 'terms', 'weapons-index', 'blessings-index']);
 const DOMAIN_KINDS = new Set([
-  ...CORE_KINDS, 'catalog', 'curios', 'perks', 'classifications', 'announcements', 'game-changes',
+  ...CORE_KINDS, ...SPLIT_CORE_KINDS, 'weapon-family', 'blessing',
+  'catalog', 'curios', 'perks', 'classifications', 'announcements', 'game-changes',
 ]);
 const FEATURES = new Set([
   'official-errata-details-v1',
   'official-native-localizations-v1',
   'blessing-tier-presentations-v1',
+  'split-weapon-blessing-domains-v1',
 ]);
-const REQUIRED_FEATURES = Object.freeze([...FEATURES]);
+const REQUIRED_FEATURES = Object.freeze([
+  'official-errata-details-v1',
+  'official-native-localizations-v1',
+  'blessing-tier-presentations-v1',
+]);
+const SPLIT_DOMAIN_FEATURE = 'split-weapon-blessing-domains-v1';
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
 const GAME_VERSION = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/u;
 const CONTENT_VERSION = /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.([1-9][0-9]*)$/u;
@@ -176,7 +184,46 @@ function validateManifestShape(manifest, pointer) {
     lowerPaths.add(file.path.toLowerCase());
     kinds.add(file.kind);
   }
-  for (const kind of CORE_KINDS) if (!manifest.files.some(file => file.kind === kind)) fail(`manifest is missing required ${kind} domain`);
+  const rows = kind => manifest.files.filter(file => file.kind === kind);
+  const hasLegacy = rows('weapons').length > 0 || rows('blessings').length > 0;
+  const hasSplit = rows('weapons-index').length > 0 || rows('weapon-family').length > 0
+    || rows('blessings-index').length > 0 || rows('blessing').length > 0;
+  const hasSplitFeature = features.includes(SPLIT_DOMAIN_FEATURE);
+  if (hasLegacy && hasSplit) fail('manifest mixes legacy and split weapon/blessing domain kinds');
+  if (!hasLegacy && !hasSplit) fail('manifest has no supported weapon/blessing domain format');
+  const domainFormat = hasSplit ? 'split' : 'legacy';
+  if (domainFormat === 'legacy') {
+    if (hasSplitFeature) fail('legacy weapon/blessing domains must not declare the split feature');
+    for (const kind of CORE_KINDS) if (rows(kind).length !== 1) fail(`legacy manifest requires exactly one ${kind} domain`);
+  } else {
+    if (!hasSplitFeature) fail('split weapon/blessing domains require their feature flag');
+    for (const kind of SPLIT_CORE_KINDS) if (rows(kind).length !== 1) fail(`split manifest requires exactly one ${kind} domain`);
+    if (rows('weapon-family').length === 0 || rows('blessing').length === 0) {
+      fail('split manifest requires at least one weapon-family and one blessing domain');
+    }
+    const weaponIndex = rows('weapons-index')[0];
+    const blessingIndex = rows('blessings-index')[0];
+    if (weaponIndex.path !== 'domains/weapons-index.json' || weaponIndex.dependencies.length !== 0) {
+      fail('weapons-index path or dependencies are invalid');
+    }
+    if (blessingIndex.path !== 'domains/blessings-index.json' || blessingIndex.dependencies.length !== 0) {
+      fail('blessings-index path or dependencies are invalid');
+    }
+    for (const file of rows('weapon-family')) {
+      if (!/^domains\/weapons\/[A-Za-z0-9._-]+\.json$/u.test(file.path)
+          || file.dependencies.length !== 1 || file.dependencies[0] !== weaponIndex.path) {
+        fail(`weapon-family path or dependencies are invalid: ${file.path}`);
+      }
+    }
+    for (const file of rows('blessing')) {
+      if (!/^domains\/blessings\/[A-Za-z0-9._-]+\.json$/u.test(file.path)
+          || file.dependencies.length !== 1 || file.dependencies[0] !== blessingIndex.path) {
+        fail(`blessing path or dependencies are invalid: ${file.path}`);
+      }
+    }
+    const sortedPaths = manifest.files.map(file => file.path).slice().sort(compareUtf8);
+    if (manifest.files.some((file, index) => file.path !== sortedPaths[index])) fail('split manifest files are not sorted by path');
+  }
   const visiting = new Set();
   const visited = new Set();
   const visit = filePath => {
@@ -194,7 +241,7 @@ function validateManifestShape(manifest, pointer) {
     requireSafeRelativeJsonPath(manifest.changeIndexPath, 'manifest.changeIndexPath');
     if (filesByPath.get(manifest.changeIndexPath)?.kind !== 'game-changes') fail('manifest changeIndexPath does not identify a listed game-changes file');
   }
-  return filesByPath;
+  return { filesByPath, domainFormat };
 }
 
 function selectConsumerFiles(manifest, filesByPath, requiredKinds = CORE_KINDS) {
@@ -211,6 +258,74 @@ function selectConsumerFiles(manifest, filesByPath, requiredKinds = CORE_KINDS) 
     rows.forEach(add);
   }
   return [...selected.values()].sort((a, b) => compareUtf8(a.path, b.path));
+}
+
+function selectFilesWithDependencies(filesByPath, roots) {
+  const selected = new Map();
+  const add = file => {
+    if (!file || selected.has(file.path)) return;
+    selected.set(file.path, file);
+    for (const dependency of file.dependencies) add(filesByPath.get(dependency));
+  };
+  for (const file of roots) add(file);
+  return [...selected.values()].sort((left, right) => compareUtf8(left.path, right.path));
+}
+
+function blessingSlug(recordId) {
+  const prefix = 'darktide:blessing:';
+  if (typeof recordId !== 'string' || recordId.length === 0) fail('blessing route has no record identity');
+  const unprefixed = recordId.startsWith(prefix) ? recordId.slice(prefix.length) : recordId;
+  const slug = unprefixed.replace(/[^A-Za-z0-9._-]/gu, '-');
+  if (!slug) fail('blessing route produces an empty domain slug');
+  return slug;
+}
+
+function selectSplitRouteFiles(manifest, filesByPath, pathname, search) {
+  const rows = kind => manifest.files.filter(file => file.kind === kind);
+  const one = kind => {
+    const matches = rows(kind);
+    if (matches.length !== 1) fail(`split manifest requires one ${kind} domain`);
+    return matches[0];
+  };
+  const params = new URLSearchParams(typeof search === 'string' ? search : '');
+  const oneParam = name => {
+    const values = params.getAll(name);
+    if (values.length > 1) fail(`route contains duplicate ${name} parameters`);
+    return values[0] ?? null;
+  };
+  let roots;
+  if (typeof pathname === 'string' && /^\/skills(?:\/|$)/u.test(pathname)) {
+    roots = [one('skills'), one('terms')];
+  } else if (typeof pathname === 'string' && /^\/weapons(?:\/|$)/u.test(pathname)) {
+    const familyId = oneParam('family');
+    if (familyId === null) roots = [one('weapons-index')];
+    else {
+      if (!/^[A-Za-z0-9._-]+$/u.test(familyId)) fail('weapon route familyId is not a safe domain segment');
+      const family = filesByPath.get(`domains/weapons/${familyId}.json`);
+      if (!family || family.kind !== 'weapon-family') fail('weapon route has no matching family domain');
+      roots = [one('weapons-index'), family, one('blessings-index')];
+    }
+  } else if (typeof pathname === 'string' && /^\/blessings(?:\/|$)/u.test(pathname)) {
+    const recordId = oneParam('id');
+    if (recordId === null) roots = [one('blessings-index')];
+    else {
+      const blessing = filesByPath.get(`domains/blessings/${blessingSlug(recordId)}.json`);
+      if (!blessing || blessing.kind !== 'blessing') fail('blessing route has no matching detail domain');
+      roots = [one('blessings-index'), blessing, one('weapons-index')];
+    }
+  } else if (typeof pathname === 'string' && /^\/game-changes(?:\/|$)/u.test(pathname)) {
+    const changeIndex = manifest.changeIndexPath === null ? null : filesByPath.get(manifest.changeIndexPath);
+    roots = [changeIndex, one('skills'), one('terms'), one('weapons-index'), one('blessings-index')].filter(Boolean);
+  } else if (typeof pathname === 'string' && /^\/announcements(?:\/|$)/u.test(pathname)) {
+    const announcements = rows('announcements');
+    if (announcements.length > 1) fail('manifest contains multiple announcements domains');
+    roots = announcements;
+  } else if (pathname === '/terms/' || pathname === '/terms') {
+    roots = [one('terms')];
+  } else {
+    roots = [];
+  }
+  return selectFilesWithDependencies(filesByPath, roots);
 }
 
 function selectOptionalGameChangesFile(manifest, filesByPath) {
@@ -274,16 +389,27 @@ function validateDomain(document, file, releaseId) {
     if (!Array.isArray(document.source[key])) fail(`domain source.${key} is invalid: ${file.path}`);
   }
   const records = new Map();
+  const isIndex = file.kind === 'weapons-index' || file.kind === 'blessings-index';
+  const indexRecordKind = file.kind === 'weapons-index' ? 'weapon' : file.kind === 'blessings-index' ? 'blessing' : null;
   for (const record of document.source.records) {
     if (!isObject(record) || typeof record.recordId !== 'string' || typeof record.gameReleaseId !== 'string' || typeof record.kind !== 'string') fail(`domain contains an invalid Source record: ${file.path}`);
     const key = sourceRecordKey(record);
     if (records.has(key)) fail(`domain duplicates Source record ${record.recordId}`);
     records.set(key, record);
   }
-  for (const record of records.values()) {
-    for (const ref of typedPointers(record)) {
-      const target = records.get(sourceRecordKey(ref));
-      if (!target || (ref.kind && ref.kind !== target.kind)) fail(`domain Source closure is incomplete: ${ref.recordId}`);
+  if (isIndex) {
+    if (![...records.values()].some(record => record.kind === indexRecordKind && record.gameReleaseId === releaseId)) {
+      fail(`split index has no ${indexRecordKind} records: ${file.path}`);
+    }
+    if ([...records.values()].some(record => ![indexRecordKind, 'release-compatibility'].includes(record.kind))) {
+      fail(`split index contains a non-index Source record: ${file.path}`);
+    }
+  } else {
+    for (const record of records.values()) {
+      for (const ref of typedPointers(record)) {
+        const target = records.get(sourceRecordKey(ref));
+        if (!target || (ref.kind && ref.kind !== target.kind)) fail(`domain Source closure is incomplete: ${ref.recordId}`);
+      }
     }
   }
   const sourceRefs = new Map(document.source.sourceRefs.map(ref => [sourceRefKey(ref), ref]));
@@ -306,6 +432,7 @@ function validateDomain(document, file, releaseId) {
   const webRows = [...document.web.presentations, ...document.web.termLocalizations, ...document.web.announcements, ...document.web.gameChanges, ...document.web.officialTextChanges];
   for (const ref of typedPointers(webRows)) {
     const target = records.get(sourceRecordKey(ref));
+    if (!target && isIndex) continue;
     if (!target || (ref.kind && ref.kind !== target.kind)) fail(`domain Web typed reference is unresolved: ${ref.recordId}`);
   }
   for (const ref of sourcePointers(webRows)) if (!sourceRefs.has(sourceRefKey(ref))) fail(`domain Web provenance is unresolved: ${ref.sourceId}`);
@@ -417,6 +544,7 @@ export async function loadSharedRelease({
   cryptoApi = globalThis.crypto,
   signal,
   pathname,
+  search = '',
   cache = null,
   force = false,
 } = {}) {
@@ -452,10 +580,10 @@ export async function loadSharedRelease({
     const manifestResponse = await readBoundedJson(fetchImpl, manifestUrl, MAX_MANIFEST_BYTES, lifecycle);
     if (await lifecycle.race(sha256(manifestResponse.bytes, cryptoApi)) !== pointer.manifest_sha256) fail('shared manifest hash does not match the build pointer');
     const manifest = manifestResponse.value;
-    const filesByPath = validateManifestShape(manifest, pointer);
+    const { filesByPath, domainFormat } = validateManifestShape(manifest, pointer);
     const material = utf8Json(dataRevisionMaterial(manifest));
     if (await lifecycle.race(sha256(material, cryptoApi)) !== manifest.dataRevision) fail('shared manifest canonical data revision is invalid');
-    return { manifestResponse, manifest, filesByPath };
+    return { manifestResponse, manifest, filesByPath, domainFormat };
   };
   let manifestPromise = cache?.manifestPromise ?? null;
   if (!manifestPromise) {
@@ -470,18 +598,40 @@ export async function loadSharedRelease({
       cache.manifestPromise = manifestPromise;
     }
   }
-  const { manifestResponse, manifest, filesByPath } = cache
+  const { manifestResponse, manifest, filesByPath, domainFormat } = cache
     ? await lifecycle.race(manifestPromise)
     : await manifestPromise;
 
-  // Check every file the original consumer can consume before allowing a partial route load.
-  const allCoreFiles = selectConsumerFiles(manifest, filesByPath);
-  const announcementsFile = selectOptionalAnnouncementsFile(manifest, filesByPath);
-  const changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
-  const pinnedFiles = new Map(allCoreFiles.map(file => [file.path, file]));
-  if (changeIndex) pinnedFiles.set(changeIndex.path, changeIndex);
-  if (announcementsFile) pinnedFiles.set(announcementsFile.path, announcementsFile);
-  const skillsOnly = isSkillsPath(pathname);
+  // Bind the complete manifest file set to the immutable build pins even when a route fetches only a shard.
+  let selectedFiles;
+  let pinnedFiles;
+  let skillsOnly = false;
+  let announcementsFile = null;
+  let changeIndex = null;
+  if (domainFormat === 'legacy') {
+    const allCoreFiles = selectConsumerFiles(manifest, filesByPath);
+    announcementsFile = selectOptionalAnnouncementsFile(manifest, filesByPath);
+    changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
+    pinnedFiles = new Map(allCoreFiles.map(file => [file.path, file]));
+    if (changeIndex) pinnedFiles.set(changeIndex.path, changeIndex);
+    if (announcementsFile) pinnedFiles.set(announcementsFile.path, announcementsFile);
+    skillsOnly = isSkillsPath(pathname);
+    const routeCoreFiles = skillsOnly
+      ? selectConsumerFiles(manifest, filesByPath, ['skills', 'terms'])
+      : allCoreFiles;
+    const routeFiles = new Map(routeCoreFiles.map(file => [file.path, file]));
+    if (!skillsOnly) {
+      if (changeIndex) routeFiles.set(changeIndex.path, changeIndex);
+      if (announcementsFile) routeFiles.set(announcementsFile.path, announcementsFile);
+    }
+    selectedFiles = [...routeFiles.values()];
+  } else {
+    announcementsFile = selectOptionalAnnouncementsFile(manifest, filesByPath);
+    changeIndex = selectOptionalGameChangesFile(manifest, filesByPath);
+    pinnedFiles = new Map(manifest.files.map(file => [file.path, file]));
+    selectedFiles = selectSplitRouteFiles(manifest, filesByPath, pathname ?? '/', search);
+  }
+  const preflightCompleteLegacyPackage = domainFormat === 'legacy' && skillsOnly;
   let packageBytes = manifestResponse.bytes.byteLength;
   for (const file of pinnedFiles.values()) {
     const path = `/data/${manifest.dataRevision}/${file.path}`;
@@ -491,20 +641,12 @@ export async function loadSharedRelease({
       if (file.path === announcementsFile?.path) fail('build does not pin the optional announcements domain');
       fail(`build does not pin selected domain ${file.path}`);
     }
-    packageBytes += file.sizeBytes;
-    if (skillsOnly && packageBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+    if (preflightCompleteLegacyPackage) {
+      packageBytes += file.sizeBytes;
+      if (packageBytes > MAX_PACKAGE_BYTES) fail('selected shared domains exceed the package byte limit');
+    }
   }
-  if (!skillsOnly) packageBytes = manifestResponse.bytes.byteLength;
-
-  const routeCoreFiles = skillsOnly
-    ? selectConsumerFiles(manifest, filesByPath, ['skills', 'terms'])
-    : allCoreFiles;
-  const routeFiles = new Map(routeCoreFiles.map(file => [file.path, file]));
-  if (!skillsOnly) {
-    if (changeIndex) routeFiles.set(changeIndex.path, changeIndex);
-    if (announcementsFile) routeFiles.set(announcementsFile.path, announcementsFile);
-  }
-  const selectedFiles = [...routeFiles.values()];
+  if (!preflightCompleteLegacyPackage) packageBytes = manifestResponse.bytes.byteLength;
   const loadedForRequest = new Map();
   const fetchDomain = async file => {
     const path = `/data/${manifest.dataRevision}/${file.path}`;
@@ -517,7 +659,7 @@ export async function loadSharedRelease({
     return { file, path, bytes: response.bytes, document: response.value };
   };
   for (const file of selectedFiles) {
-    if (!skillsOnly && packageBytes + file.sizeBytes > MAX_PACKAGE_BYTES) {
+    if (!preflightCompleteLegacyPackage && packageBytes + file.sizeBytes > MAX_PACKAGE_BYTES) {
       fail('selected shared domains exceed the package byte limit');
     }
     const key = sharedDomainCacheKey(manifest, file);
@@ -546,7 +688,7 @@ export async function loadSharedRelease({
       loaded = await lifecycle.race(promise);
     }
     loadedForRequest.set(key, loaded);
-    if (!skillsOnly) packageBytes += loaded.bytes.byteLength;
+    if (!preflightCompleteLegacyPackage) packageBytes += loaded.bytes.byteLength;
   }
 
   const loadedValues = cache ? [...cache.domainValues.values()] : [...loadedForRequest.values()];
@@ -577,10 +719,11 @@ export async function loadSharedRelease({
 export function createSharedClient(options = {}) {
   const cache = { identity: null, manifestPromise: null, domainPromises: new Map(), domainValues: new Map() };
   return Object.freeze({
-    load: ({ signal, pathname, force = false } = {}) => loadSharedRelease({
+    load: ({ signal, pathname, search = '', force = false } = {}) => loadSharedRelease({
       ...options,
       signal,
       pathname,
+      search,
       force,
       cache: signal ? null : cache,
     }),

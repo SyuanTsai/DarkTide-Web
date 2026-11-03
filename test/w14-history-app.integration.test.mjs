@@ -60,7 +60,7 @@ async function compiledSharedFixture({ retainedWeaponCrosswalk = false } = {}) {
   const manifest = structuredClone(compiled.manifest);
   const domainFiles = new Map(compiled.files);
   if (retainedWeaponCrosswalk) {
-    const weaponsFile = manifest.files.find(row => row.kind === 'weapons');
+    const weaponsFile = manifest.files.find(row => row.kind === 'weapons-index');
     const weapons = JSON.parse(domainFiles.get(weaponsFile.path).toString('utf8'));
     const currentWeapon = weapons.source.records.find(row => row.kind === 'weapon'
       && row.gameReleaseId === manifest.gameReleaseId);
@@ -750,7 +750,7 @@ test('InterT30_weapons-and-blessings-restore-full-catalog-and-details', { timeou
 
     const sharedPointer = sharedRelease.version.game_releases.find(row => row.game_version === sharedRelease.version.game_version);
     const sharedManifest = JSON.parse(await readFile(path.join(root, 'dist', sharedPointer.manifest_path.slice(1)), 'utf8'));
-    const currentWeaponsFile = sharedManifest.files.find(row => row.kind === 'weapons');
+    const currentWeaponsFile = sharedManifest.files.find(row => row.kind === 'weapons-index');
     assert.ok(currentWeaponsFile, 'the current fixture manifest identifies its weapons domain file');
     const currentWeaponsBytes = await readFile(path.join(root, 'dist', 'data', sharedRelease.version.data_revision, currentWeaponsFile.path));
     const delayedCurrent = await browser.newPage({ viewport: { width: 1280, height: 900 } });

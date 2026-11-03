@@ -43,6 +43,10 @@
         "skills",
         "blessings",
         "weapons",
+        "weapons-index",
+        "weapon-family",
+        "blessings-index",
+        "blessing",
         "terms",
         "catalog",
         "curios",
@@ -134,7 +138,8 @@
             "enum": [
               "official-errata-details-v1",
               "official-native-localizations-v1",
-              "blessing-tier-presentations-v1"
+              "blessing-tier-presentations-v1",
+              "split-weapon-blessing-domains-v1"
             ]
           }
         },
@@ -156,7 +161,7 @@
       "properties": {
         "kind": { "$ref": "#/definitions/domainKind" },
         "path": { "$ref": "#/definitions/filePath" },
-        "sizeBytes": { "type": "integer", "minimum": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 1, "maximum": 16777216 },
         "sha256": { "$ref": "#/definitions/sha256" },
         "dependencies": {
           "type": "array",
