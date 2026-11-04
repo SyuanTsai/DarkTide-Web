@@ -37,7 +37,7 @@ jobs:
         && github.event.workflow_run.head_repository.full_name == github.repository)
       || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     concurrency:
       group: darktide-cloudflare-production
       cancel-in-progress: false
