@@ -37,9 +37,15 @@ export const W09_SOURCE_PACKET_FILES = Object.freeze([
 export const W09_SOURCE_INPUT_PATHS = Object.freeze({
   w05: 'content/authoring/v2/w05-psyker.json',
   w06: 'content/authoring/v2/w06-skills-blessings.json',
-  w07: 'content/authoring/v2/w07-weapons.json'
+  w07: 'content/authoring/v2/w07-weapons.json',
+  w07Split: 'content/authoring/v2/w07/index.json'
 });
 export const W09_SOURCE_INPUT_PRESETS = Object.freeze({
+  splitW07: Object.freeze({
+    baseline: Object.freeze({ commit: W09_ACCEPTED_W07_BASELINE_COMMIT, path: W09_SOURCE_INPUT_PATHS.w07, sha256: W09_ACCEPTED_W07_BASELINE_SHA256 }),
+    authoring: Object.freeze({ commit: 'current', path: W09_SOURCE_INPUT_PATHS.w07Split }),
+    candidate: Object.freeze({ commit: 'current', path: W09_SOURCE_INPUT_PATHS.w07Split })
+  }),
   acceptedW07: Object.freeze({
     baseline: Object.freeze({ commit: W09_ACCEPTED_W07_BASELINE_COMMIT, path: W09_SOURCE_INPUT_PATHS.w07, sha256: W09_ACCEPTED_W07_BASELINE_SHA256 }),
     authoring: Object.freeze({ commit: 'current', path: W09_SOURCE_INPUT_PATHS.w07 }),
@@ -606,6 +612,31 @@ export async function cleanupW09ApprovedSourceRuntime(runtime) {
   await runtime.cleanup();
 }
 
+const W07_DIRECTORY = 'content/authoring/v2/w07';
+const W07_INDEX = `${W07_DIRECTORY}/index.json`;
+const MAX_BYTES = 16 * 1024 * 1024;
+const jsonBytes = (value) => Buffer.from(`${JSON.stringify(value, null, 2)}\n`, 'utf8');
+
+async function assembleAuthoringBundle(readPart) {
+  const index = JSON.parse((await readPart(W07_INDEX)).toString('utf8'));
+  if (index.schema !== 'w07-authoring-split/1' || !Array.isArray(index.parts) || index.parts[0]?.path !== 'shared.json' || !index.bundle) throw new Error('Invalid authoring index');
+  const names = index.parts.map((entry) => entry.path);
+  const valid = /^(?:shared|weapons\/[A-Za-z0-9._-]+|blessings\/[A-Za-z0-9._-]+)\.json$/u;
+  if (names.some((name) => typeof name !== 'string' || !valid.test(name)) || new Set(names).size !== names.length) throw new Error('Invalid authoring part paths');
+  const parts = [];
+  for (const entry of index.parts) {
+    const bytes = await readPart(`${W07_DIRECTORY}/${entry.path}`);
+    if (bytes.length > MAX_BYTES || bytes.length !== entry.sizeBytes || sha256(bytes) !== entry.sha256) throw new Error(`Authoring part integrity mismatch: ${entry.path}`);
+    parts.push(JSON.parse(bytes.toString('utf8')));
+  }
+  const shared = parts[0];
+  const { schemaVersion, contractKind, fixtureOnly, publicationEligible } = index.bundle;
+  const bundle = { schemaVersion, contractKind, fixtureOnly, publicationEligible, gameReleases: shared.gameReleases, sourceRefs: shared.sourceRefs, records: parts.flatMap((part) => part.records), tombstones: shared.tombstones, reviewReceipts: parts.flatMap((part) => part.reviewReceipts), sourceSnapshots: shared.sourceSnapshots };
+  return { bundle, bytes: jsonBytes(bundle) };
+}
+
+const readAuthoringBundleAtCommit = (gitShow, commit) => assembleAuthoringBundle((name) => gitShow(commit, name));
+
 async function readPinnedSourceInputs(sourceRoot, sourceCommit, inputRefs) {
   const result = [];
   for (const ref of inputRefs) {
@@ -617,10 +648,13 @@ async function readPinnedSourceInputs(sourceRoot, sourceCommit, inputRefs) {
       try { gitResult(sourceRoot, ['merge-base', '--is-ancestor', pin, sourceCommit]); }
       catch { throw new Error('baseline commit must be an explicit ancestor of the pinned Source commit'); }
     }
-    const bytes = readGitBlob(sourceRoot, pin, relativePath);
+    const assembled = relativePath === W09_SOURCE_INPUT_PATHS.w07Split
+      ? await readAuthoringBundleAtCommit((commit, name) => readGitBlob(sourceRoot, commit, name), pin)
+      : null;
+    const bytes = assembled?.bytes ?? readGitBlob(sourceRoot, pin, relativePath);
     const digest = sha256(bytes);
     if (ref.sha256 !== undefined && ref.sha256 !== digest) throw new Error(`${role} Git input hash does not match its explicit ref`);
-    result.push({ role, commit: pin, path: relativePath, sha256: digest, bytes, document: parseJson(bytes, `${role} Git input`) });
+    result.push({ role, commit: pin, path: relativePath, sha256: digest, bytes, document: assembled?.bundle ?? parseJson(bytes, `${role} Git input`) });
   }
   return result;
 }
@@ -1223,7 +1257,7 @@ export async function publishW09SourceArchive({
   }
 }
 
-export async function createW09SourceRequests({ packetDir, sourceRoot, expectedCommit, inputPreset = 'acceptedW07', inputRefs } = {}) {
+export async function createW09SourceRequests({ packetDir, sourceRoot, expectedCommit, inputPreset = 'splitW07', inputRefs } = {}) {
   if (typeof expectedCommit !== 'string' || !COMMIT_RE.test(expectedCommit)) throw new Error('expectedCommit must be a full Git commit SHA');
   const bundle = await readPacketBundle(packetDir);
   const repository = await assertSourceRepository(sourceRoot, expectedCommit);
@@ -1246,7 +1280,7 @@ function validateInputPreset(inputPreset) {
   return W09_SOURCE_INPUT_PRESETS[inputPreset];
 }
 
-async function resolveInputRefs({ sourceRoot, sourceCommit, inputPreset = 'acceptedW07', inputRefs } = {}) {
+async function resolveInputRefs({ sourceRoot, sourceCommit, inputPreset = 'splitW07', inputRefs } = {}) {
   const preset = inputRefs ? undefined : validateInputPreset(inputPreset);
   const configuredRefs = inputRefs ?? SOURCE_ROLES.map((role) => ({ role, ...preset[role] }));
   if (!Array.isArray(configuredRefs) || configuredRefs.length !== SOURCE_ROLES.length) {
@@ -1352,7 +1386,7 @@ export async function prepareW09SourceHandoff({
   sourceRoot = REPO_ROOT,
   outputRoot,
   mode = DEFAULT_MODE,
-  inputPreset = 'acceptedW07',
+  inputPreset = 'splitW07',
   inputRefs,
   expectedCommit,
   fallbackCandidate = false
@@ -1530,7 +1564,7 @@ function parseCliArguments(argv) {
 
 async function runCli(argv) {
   if (argv.length === 0 || (argv.length === 1 && ['--help', '-h'].includes(argv[0]))) {
-    process.stdout.write('Read-only by default. Usage: node contract-w09-request.mjs --prepare --source-root <repo> --output-root <new-path> [--mode candidate|formal] [--input-preset acceptedW07] [--baseline-ref <commit|path|sha256> --authoring-ref <commit|path|sha256> --candidate-ref <commit|path|sha256>] [--fallback-candidate] [--publish-archive --dispatch (--release-id <derived-id>|--all-releases)]\n');
+    process.stdout.write('Read-only by default. Usage: node contract-w09-request.mjs --prepare --source-root <repo> --output-root <new-path> [--mode candidate|formal] [--input-preset splitW07|acceptedW07] [--baseline-ref <commit|path|sha256> --authoring-ref <commit|path|sha256> --candidate-ref <commit|path|sha256>] [--fallback-candidate] [--publish-archive --dispatch (--release-id <derived-id>|--all-releases)]\n');
     return;
   }
   const values = parseCliArguments(argv);
@@ -1545,7 +1579,7 @@ async function runCli(argv) {
     sourceRoot: values.get('--source-root') || process.cwd(),
     outputRoot: values.get('--output-root'),
     mode: values.get('--mode') || DEFAULT_MODE,
-    inputPreset: values.get('--input-preset') || 'acceptedW07',
+    inputPreset: values.get('--input-preset') || 'splitW07',
     inputRefs,
     fallbackCandidate: values.has('--fallback-candidate')
   });
