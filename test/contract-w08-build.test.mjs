@@ -472,6 +472,33 @@ test('UnitT01c_BlessingIndexProjectsListTierSources', () => {
   assert.deepEqual(index.web.officialInputs.sources.map(row => row.officialSourceId).sort(), [blessing.nameOfficialSourceId, 'source:4:zh-TW'].sort());
 });
 
+test('index review rows follow projected blessing and weapon fields while coverage retains the shard union', () => {
+  const input = makeInput();
+  const blessing = input.w06.authoring.presentations.find(row => row.entityRef.kind === 'blessing');
+  blessing.tierApplicability = [{ tiers: [1, 2, 3, 4] }];
+  blessing.tierPresentations = { options: [1, 2, 3, 4].map(tier => ({ tier, officialLocaleRefs: [] })) };
+  const weapon = input.w07.authoring.presentations[0];
+  const blessingPaths = ['/tierApplicability', ...[0, 1, 2, 3].map(i => `/tierPresentations/options/${i}`), '/tierPresentations/options/3/detailSections/0/items/0', '/detailSections/0/items/0'];
+  for (const [mode, owner, paths] of [[input.w06, blessing, blessingPaths], [input.w07, weapon, ['/detailSections/0/items/0']]]) {
+    for (const fieldPath of paths) mode.authoring.reviewTargets.push({ targetId: owner.authoringId + ':' + fieldPath, ownerId: owner.authoringId, fieldPath, dimension: 'content' });
+    mode.authoring.reviewReceipts = mode.authoring.reviewTargets.map(target => ({ receiptId: 'receipt:' + target.targetId, targetId: target.targetId }));
+  }
+  const candidate = compileW08Candidate(input);
+  const read = path => JSON.parse(candidate.files.get(path));
+  const index = read('domains/blessings-index.json');
+  const shard = read('domains/blessings/blessing-one.json');
+  const paths = doc => doc.web.reviewTargets.filter(row => row.target.ownerId === blessing.authoringId).map(row => row.target.fieldPath).sort();
+  assert.deepEqual(paths(index), ['/name', '/tierApplicability', '/tierPresentations/options/3'].sort());
+  assert.deepEqual(paths(shard), ['/name', ...blessingPaths].sort());
+  assert.deepEqual(index.web.reviewReceipts.map(row => row.receipt.targetId).sort(), index.web.reviewTargets.map(row => row.target.targetId).sort());
+  const weaponIndex = read('domains/weapons-index.json');
+  assert.deepEqual(weaponIndex.web.reviewTargets.map(row => row.target.fieldPath), ['/name']);
+  assert.equal(weaponIndex.web.reviewReceipts.length, 1);
+  const allTargets = [...input.w06.authoring.reviewTargets, ...input.w07.authoring.reviewTargets].map(row => row.targetId).sort();
+  assert.deepEqual(candidate.envelope.review.targets.map(row => row.target.targetId).sort(), allTargets);
+  assert.equal(candidate.envelope.review.receipts.length, allTargets.length);
+});
+
 // Scenario: An index grows beyond its dedicated budget while still below the general domain limit.
 // Purpose: Reject oversized indexes before they reach clients.
 test('UnitT01d_W08RejectsIndexAbove8MiB', () => {
