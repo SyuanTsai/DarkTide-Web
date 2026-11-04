@@ -1,0 +1,2352 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "-0.055",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "-0.065",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "-0.075",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "-0.085",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.charge_time.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "value": {
+            "decimal": "-5.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.charge_time.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "value": {
+            "decimal": "-6.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.charge_time.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "value": {
+            "decimal": "-7.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.charge_time.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "value": {
+            "decimal": "-8.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value charge_time at stat_buffs.stat_buffs.charge_up_time; defined tier literals are tier 1=-0.055, tier 2=-0.065, tier 3=-0.075, tier 4=-0.085.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_forcestaff_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=3, tier 2=3, tier 3=3, tier 4=3.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f72b2b643670eb5e4db31001104db82af1cc31d5fe1a372badd09fb6acb8c68",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "0cfe392ccb33299dd9dbb9b01e9acd9317aa6e3e747450561f3532cc412ad614"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f72b2b643670eb5e4db31001104db82af1cc31d5fe1a372badd09fb6acb8c68",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f72b2b643670eb5e4db31001104db82af1cc31d5fe1a372badd09fb6acb8c68",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f72b2b643670eb5e4db31001104db82af1cc31d5fe1a372badd09fb6acb8c68",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "194edb4577085689cbc0075074437b408831b7dd63d37effa3a1d7f11d997c83"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f72b2b643670eb5e4db31001104db82af1cc31d5fe1a372badd09fb6acb8c68",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "786df82eea2630cbf53ac1f6b28c64fceae5cbf729ec1655081bc639b84bc178",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "e5235b66fb0013e852994df77e451359c21f8f14b05d9d1d3f03cfe83771a1f4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "786df82eea2630cbf53ac1f6b28c64fceae5cbf729ec1655081bc639b84bc178",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "786df82eea2630cbf53ac1f6b28c64fceae5cbf729ec1655081bc639b84bc178",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "targetDigest": "ed27427535025c06c7d6274d0bc6673c3b832d21c2d5ae452678c6c9be95f784"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d75662b7224ab496910d3aabac845dc7798c83206a7f96ea189d7087e155679",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d75662b7224ab496910d3aabac845dc7798c83206a7f96ea189d7087e155679",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d75662b7224ab496910d3aabac845dc7798c83206a7f96ea189d7087e155679",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+        },
+        "targetDigest": "f61e0a218599a03cffacc4cee2d60fbbdac9fa5989d8b9f745be6c1fe580f4aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d75662b7224ab496910d3aabac845dc7798c83206a7f96ea189d7087e155679",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+        },
+        "targetDigest": "4f4cb7c83cf63165737b3ca542161dfc74303e06e168c586e00c52a37b95377b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d75662b7224ab496910d3aabac845dc7798c83206a7f96ea189d7087e155679",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+        },
+        "targetDigest": "f6045e7fc52dfeae5a0250927faa62750ebe592c4d1b65692fb06e008c32dbc4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d835a334a2b96c6d36e6d5f442967a8bfc54c7004aae88bc4befc6796330347",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d835a334a2b96c6d36e6d5f442967a8bfc54c7004aae88bc4befc6796330347",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d835a334a2b96c6d36e6d5f442967a8bfc54c7004aae88bc4befc6796330347",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+        },
+        "targetDigest": "f61e0a218599a03cffacc4cee2d60fbbdac9fa5989d8b9f745be6c1fe580f4aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d835a334a2b96c6d36e6d5f442967a8bfc54c7004aae88bc4befc6796330347",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+        },
+        "targetDigest": "4f4cb7c83cf63165737b3ca542161dfc74303e06e168c586e00c52a37b95377b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2d835a334a2b96c6d36e6d5f442967a8bfc54c7004aae88bc4befc6796330347",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+        },
+        "targetDigest": "49834d152c440bffd6f73b170578a2acab95759ac761d0a22b498ed1c41ed1f7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb6419888a4b9bd7a8f8ce11bfb018f773e794a4cd3b38781ade769c82094070",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb6419888a4b9bd7a8f8ce11bfb018f773e794a4cd3b38781ade769c82094070",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb6419888a4b9bd7a8f8ce11bfb018f773e794a4cd3b38781ade769c82094070",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+        },
+        "targetDigest": "f61e0a218599a03cffacc4cee2d60fbbdac9fa5989d8b9f745be6c1fe580f4aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb6419888a4b9bd7a8f8ce11bfb018f773e794a4cd3b38781ade769c82094070",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+        },
+        "targetDigest": "4f4cb7c83cf63165737b3ca542161dfc74303e06e168c586e00c52a37b95377b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb6419888a4b9bd7a8f8ce11bfb018f773e794a4cd3b38781ade769c82094070",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+        },
+        "targetDigest": "d153da5aa9bc471ee310f4e9c58057148ff1520651b418245807bb6a60cfad86"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c91e4ba8df23e723efee8900c2af3da7a382b5a88cd9ef1aa5f310b17c5fa9d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c91e4ba8df23e723efee8900c2af3da7a382b5a88cd9ef1aa5f310b17c5fa9d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c91e4ba8df23e723efee8900c2af3da7a382b5a88cd9ef1aa5f310b17c5fa9d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+        },
+        "targetDigest": "f61e0a218599a03cffacc4cee2d60fbbdac9fa5989d8b9f745be6c1fe580f4aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c91e4ba8df23e723efee8900c2af3da7a382b5a88cd9ef1aa5f310b17c5fa9d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+        },
+        "targetDigest": "4f4cb7c83cf63165737b3ca542161dfc74303e06e168c586e00c52a37b95377b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c91e4ba8df23e723efee8900c2af3da7a382b5a88cd9ef1aa5f310b17c5fa9d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+        },
+        "targetDigest": "91607b4c08a8cd6d9469644c945448bf21e8dff2c19b0e57da8d065781dcdeeb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "14896ec663c63cd29befb34c337ea77864c27221ee0b927e09f2d65df1f414d5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "14896ec663c63cd29befb34c337ea77864c27221ee0b927e09f2d65df1f414d5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "14896ec663c63cd29befb34c337ea77864c27221ee0b927e09f2d65df1f414d5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+        },
+        "targetDigest": "775be6f61edb8c726a4e9124dbbf9c032eb45198f4e0f067e27ba1a0adfcf462"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "14896ec663c63cd29befb34c337ea77864c27221ee0b927e09f2d65df1f414d5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+        },
+        "targetDigest": "4f4cb7c83cf63165737b3ca542161dfc74303e06e168c586e00c52a37b95377b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "14896ec663c63cd29befb34c337ea77864c27221ee0b927e09f2d65df1f414d5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+        },
+        "targetDigest": "9926c02f3a35cfd08b23139f1903cde86470e0e90bdb7b23c3291922d0146f10"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c010c029acaf900ee5e2e14ab36c2ffd4ec52073dc716f609671853da3cb8bba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-display-percent-code"
+        },
+        "targetDigest": "0e64271c6e3b203f07a6da9c0bb258c91eb0b0af0a26181dabc6b850b15a1d5f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd88cd5db6021da5d03370c76de4ddac9da6e15149678c174053bba61d7db586",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value-code"
+        },
+        "targetDigest": "109bba367f3c9ed41b10113392330e92a4f0b4f8bed718f1754d978ba8ebafb7"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "6f342b46385eba1cd7af40fd5a2c3316d385464df7721bb7d23dd40784e96096",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_forcestaff_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_forcestaff_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "63ba476d49bba069c8daa677a43e09a8fefc6e9a595d23c416f0ba5d44dee4d0",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-494; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:4cf5de54:key-unknown:en:1:g-f60e6be31a682144:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Warp Flurry",
+          "resolvedTextSha256": "9ee045370ad664a9f461589e356896e76b5f6022f5f009b8c51747eefd38ed91",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9ee045370ad664a9f461589e356896e76b5f6022f5f009b8c51747eefd38ed91",
+              "text": "Warp Flurry"
+            }
+          ],
+          "sourceHash": "4cf5de54",
+          "sourceLocale": "en",
+          "sourceText": "Warp Flurry",
+          "sourceTextSha256": "9ee045370ad664a9f461589e356896e76b5f6022f5f009b8c51747eefd38ed91"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:4cf5de54:key-unknown:zh-tw:1:g-f60e6be31a682144:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "亞空間亂舞",
+          "resolvedTextSha256": "fd67afafd2c1b63002b7192a957b9d073a1e2b3dd5b16fb22831f7215282bbad",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fd67afafd2c1b63002b7192a957b9d073a1e2b3dd5b16fb22831f7215282bbad",
+              "text": "亞空間亂舞"
+            }
+          ],
+          "sourceHash": "4cf5de54",
+          "sourceLocale": "zh-TW",
+          "sourceText": "亞空間亂舞",
+          "sourceTextSha256": "fd67afafd2c1b63002b7192a957b9d073a1e2b3dd5b16fb22831f7215282bbad"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent",
+              "value": "-5.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "-5.5%  Charge Time on Chained Secondary Attack. Stacks 3 times.",
+          "resolvedTextSha256": "c19d6c435b154776e95f82968c679aa710341bebc008dcfd7b8664a2f5f4a337",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-1",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "b8dd22dc87da24f43a4e9c118a58f28ed4fd69c80c9d544b3f21f0e072e5641a",
+              "text": "  Charge Time on Chained Secondary Attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "en",
+          "sourceText": "{charge_time:%s}  Charge Time on Chained Secondary Attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "d163d67bbd154e6e63a25f66a07b2dec51d653a26b418108cac19399e73d9f57"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent",
+              "value": "-6.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "-6.5%  Charge Time on Chained Secondary Attack. Stacks 3 times.",
+          "resolvedTextSha256": "686852a62e3fb41994f40d4cc52e3b8b3bb8992d1de589a98ef3b7a7da360257",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-1",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "b8dd22dc87da24f43a4e9c118a58f28ed4fd69c80c9d544b3f21f0e072e5641a",
+              "text": "  Charge Time on Chained Secondary Attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "en",
+          "sourceText": "{charge_time:%s}  Charge Time on Chained Secondary Attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "d163d67bbd154e6e63a25f66a07b2dec51d653a26b418108cac19399e73d9f57"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent",
+              "value": "-7.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "-7.5%  Charge Time on Chained Secondary Attack. Stacks 3 times.",
+          "resolvedTextSha256": "fe1f95d917d7149a5bf549cd05628076d2e975c5206aa58354fd9f737cb973e1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-1",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "b8dd22dc87da24f43a4e9c118a58f28ed4fd69c80c9d544b3f21f0e072e5641a",
+              "text": "  Charge Time on Chained Secondary Attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "en",
+          "sourceText": "{charge_time:%s}  Charge Time on Chained Secondary Attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "d163d67bbd154e6e63a25f66a07b2dec51d653a26b418108cac19399e73d9f57"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent",
+              "value": "-8.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "-8.5%  Charge Time on Chained Secondary Attack. Stacks 3 times.",
+          "resolvedTextSha256": "f359a9ec80791d216ea64c2f6d884d03e0813da089845b71488dad16537f6f62",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-1",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "b8dd22dc87da24f43a4e9c118a58f28ed4fd69c80c9d544b3f21f0e072e5641a",
+              "text": "  Charge Time on Chained Secondary Attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "en",
+          "sourceText": "{charge_time:%s}  Charge Time on Chained Secondary Attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "d163d67bbd154e6e63a25f66a07b2dec51d653a26b418108cac19399e73d9f57"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent",
+              "value": "-5.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "連續使用次要攻擊會使充能時間縮短-5.5%，最多疊加3次。",
+          "resolvedTextSha256": "b809a3701a0aafd1bd6f7b40d663c2de25f63cd397f31d719bb9d2ec4bf7d3b6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "906b80ccf9c647e29f395fb3826f7ccc255c707c7fba1f0474517db1cfb1b50f",
+              "text": "連續使用次要攻擊會使充能時間縮短"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-2",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續使用次要攻擊會使充能時間縮短{charge_time:%s}，最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "e614378d193acb7f5951c675b63bf5fd618c9ff7766a00666850ee65d7795e91"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent",
+              "value": "-6.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "連續使用次要攻擊會使充能時間縮短-6.5%，最多疊加3次。",
+          "resolvedTextSha256": "cc831d51f994b429c65054b82e8ec52dcf74f7d2423c5828b63f35b770eb4468",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "906b80ccf9c647e29f395fb3826f7ccc255c707c7fba1f0474517db1cfb1b50f",
+              "text": "連續使用次要攻擊會使充能時間縮短"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-2",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續使用次要攻擊會使充能時間縮短{charge_time:%s}，最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "e614378d193acb7f5951c675b63bf5fd618c9ff7766a00666850ee65d7795e91"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent",
+              "value": "-7.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "連續使用次要攻擊會使充能時間縮短-7.5%，最多疊加3次。",
+          "resolvedTextSha256": "561f55587ed9bde6432d45f8a71edcbe0cd8c974f6d7b91ab0364feeb79361b2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "906b80ccf9c647e29f395fb3826f7ccc255c707c7fba1f0474517db1cfb1b50f",
+              "text": "連續使用次要攻擊會使充能時間縮短"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-2",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續使用次要攻擊會使充能時間縮短{charge_time:%s}，最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "e614378d193acb7f5951c675b63bf5fd618c9ff7766a00666850ee65d7795e91"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent",
+              "value": "-8.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "連續使用次要攻擊會使充能時間縮短-8.5%，最多疊加3次。",
+          "resolvedTextSha256": "0990a15d15dca98481d27e94978462f0db68ee418cb71a37d922e698e5f0d411",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "906b80ccf9c647e29f395fb3826f7ccc255c707c7fba1f0474517db1cfb1b50f",
+              "text": "連續使用次要攻擊會使充能時間縮短"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-2",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續使用次要攻擊會使充能時間縮短{charge_time:%s}，最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "e614378d193acb7f5951c675b63bf5fd618c9ff7766a00666850ee65d7795e91"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "亞空間亂舞",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:4cf5de54:key-unknown:en:1:g-f60e6be31a682144:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:4cf5de54:key-unknown:zh-tw:1:g-f60e6be31a682144:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:4cf5de54:key-unknown:zh-tw:1:g-f60e6be31a682144:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          },
+          "key": "loc_trait_bespoke_faster_charge_on_chained_secondary_attacks_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "charge_time",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent",
+              "value": "-8.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "連續使用次要攻擊會使充能時間縮短-8.5%，最多疊加3次。",
+          "resolvedTextSha256": "0990a15d15dca98481d27e94978462f0db68ee418cb71a37d922e698e5f0d411",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "906b80ccf9c647e29f395fb3826f7ccc255c707c7fba1f0474517db1cfb1b50f",
+              "text": "連續使用次要攻擊會使充能時間縮短"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "charge_time",
+              "segmentId": "segment-2",
+              "sha256": "940cdd4368d5e76ca54dac1d7853f3e8e520e24718634cb16bba7cf5cc662928",
+              "token": "{charge_time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "4eca7572",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續使用次要攻擊會使充能時間縮短{charge_time:%s}，最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "e614378d193acb7f5951c675b63bf5fd618c9ff7766a00666850ee65d7795e91"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "charge_time",
+                  "placeholder": "{charge_time:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "charge_time",
+                  "placeholder": "{charge_time:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "charge_time",
+                  "placeholder": "{charge_time:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:en:1:g-f60e6be31a682144:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4eca7572:key-known:zh-tw:1:g-f60e6be31a682144:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-charge-time-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "charge_time",
+                  "placeholder": "{charge_time:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-faster-charge-on-chained-secondary-attacks-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-faster-charge-on-chained-secondary-attacks"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c484a94f84d154b16884f7fa9d9180d1d9d5ad087df251a970e99a27d6d747b0",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2be7262417a9ba3e0e2569773071c15c0d9dc2df92137f132cfedc6cfe8c215c",
+          "targetId": "review:w06:generic:f60e6be31a682144:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "988af2840db3032b41322cb59f8dc195f491d3466ed42c6bab0036ccbcb03700",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "622d2ff4dd8e04cebc36d2ffb38cf8965b2acc09bb6e2d55ec3511a181da1122",
+          "targetId": "review:w06:generic:f60e6be31a682144:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c7b4a65fbef45308193b6dd95a49c7c7e53adf20e08ed7ee2ac356696be4ebdc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "54fcea2d85c0901dd289e8138efa85bbe40f9a9e31171fb068a2e0798956cc3d",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e2fcb94c8ff8aa62c52d6480245d6d769568e0f10478d698d08c04ff6b317917",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "11910f0ed0c45ef980bfcaca123f16049c5ab48e8865ff7c1e2e8c845d6f789e",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5c173efa46544c3e0553ca3bc08e6526a332060f8914ffde648a9d6b23daeaaa",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "1cff45088a054fd7cccca41ee068ba6894263927321146f75228892a88edae60",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ebdc656832958028be8a8e09e6e626c0bf4dfdfc9e26eed9827aa915c8fce37e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "910dac99f93de61b37d14acbe329b96719958208b527eb5cadda35bda52f03a3",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "c484a94f84d154b16884f7fa9d9180d1d9d5ad087df251a970e99a27d6d747b0",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:content::name"
+        },
+        "targetDigest": "2be7262417a9ba3e0e2569773071c15c0d9dc2df92137f132cfedc6cfe8c215c"
+      },
+      {
+        "dependenciesDigest": "988af2840db3032b41322cb59f8dc195f491d3466ed42c6bab0036ccbcb03700",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:context::tierapplicability"
+        },
+        "targetDigest": "622d2ff4dd8e04cebc36d2ffb38cf8965b2acc09bb6e2d55ec3511a181da1122"
+      },
+      {
+        "dependenciesDigest": "c7b4a65fbef45308193b6dd95a49c7c7e53adf20e08ed7ee2ac356696be4ebdc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:0"
+        },
+        "targetDigest": "54fcea2d85c0901dd289e8138efa85bbe40f9a9e31171fb068a2e0798956cc3d"
+      },
+      {
+        "dependenciesDigest": "e2fcb94c8ff8aa62c52d6480245d6d769568e0f10478d698d08c04ff6b317917",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:1"
+        },
+        "targetDigest": "11910f0ed0c45ef980bfcaca123f16049c5ab48e8865ff7c1e2e8c845d6f789e"
+      },
+      {
+        "dependenciesDigest": "5c173efa46544c3e0553ca3bc08e6526a332060f8914ffde648a9d6b23daeaaa",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:2"
+        },
+        "targetDigest": "1cff45088a054fd7cccca41ee068ba6894263927321146f75228892a88edae60"
+      },
+      {
+        "dependenciesDigest": "ebdc656832958028be8a8e09e6e626c0bf4dfdfc9e26eed9827aa915c8fce37e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:forcestaff-p1-faster-charge-on-chained-secondary-attacks",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f60e6be31a682144:official::tierpresentations:options:3"
+        },
+        "targetDigest": "910dac99f93de61b37d14acbe329b96719958208b527eb5cadda35bda52f03a3"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

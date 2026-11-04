@@ -1,0 +1,2259 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_chance at stat_buffs.stat_buffs.critical_strike_chance; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a01d37b4914bf5de224399950e03be61c9605f415ba917fedfe11b9dadea6adf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "b9c9415a627d721e2de42ce94ed53eb9934eb6265f364df7ee0af2ea7ac814d5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a01d37b4914bf5de224399950e03be61c9605f415ba917fedfe11b9dadea6adf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a01d37b4914bf5de224399950e03be61c9605f415ba917fedfe11b9dadea6adf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a01d37b4914bf5de224399950e03be61c9605f415ba917fedfe11b9dadea6adf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a01d37b4914bf5de224399950e03be61c9605f415ba917fedfe11b9dadea6adf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab2a077745e8d42bf00ba4457e3a44630482ccbbc9a594d4ca90d4a7473f7077",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "fcbbeef9f980359b267dc76bbf004e4207995ca642edb38b02f4a58d957bc157"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab2a077745e8d42bf00ba4457e3a44630482ccbbc9a594d4ca90d4a7473f7077",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab2a077745e8d42bf00ba4457e3a44630482ccbbc9a594d4ca90d4a7473f7077",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "50b1562a5fca09baad954f53a5acdcd6e39917ae47ae838e2edf52cc902270fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e3424aa20bd5e78511621fe755ee46c1e2fb0e411bb91870f29ba9a62d3d043",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e3424aa20bd5e78511621fe755ee46c1e2fb0e411bb91870f29ba9a62d3d043",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e3424aa20bd5e78511621fe755ee46c1e2fb0e411bb91870f29ba9a62d3d043",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "02623f971ab705c3cbde354d793449e09bc6ea911092dc539c0aef984979c2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e3424aa20bd5e78511621fe755ee46c1e2fb0e411bb91870f29ba9a62d3d043",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "91266cc7e40329e29bfa74289721a3eeb601c57b70670621bebc6cf5a6db89e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e3424aa20bd5e78511621fe755ee46c1e2fb0e411bb91870f29ba9a62d3d043",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb5bea083f18dafa70c3beca71af569541d08036f35c87ce6a62d9f135bbb972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb5bea083f18dafa70c3beca71af569541d08036f35c87ce6a62d9f135bbb972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb5bea083f18dafa70c3beca71af569541d08036f35c87ce6a62d9f135bbb972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "02623f971ab705c3cbde354d793449e09bc6ea911092dc539c0aef984979c2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb5bea083f18dafa70c3beca71af569541d08036f35c87ce6a62d9f135bbb972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "91266cc7e40329e29bfa74289721a3eeb601c57b70670621bebc6cf5a6db89e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fb5bea083f18dafa70c3beca71af569541d08036f35c87ce6a62d9f135bbb972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4cbfaf957ec8c6d6c7210389f5a8923b972a53b9f957e6d9991c52795e5da4dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4cbfaf957ec8c6d6c7210389f5a8923b972a53b9f957e6d9991c52795e5da4dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4cbfaf957ec8c6d6c7210389f5a8923b972a53b9f957e6d9991c52795e5da4dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "02623f971ab705c3cbde354d793449e09bc6ea911092dc539c0aef984979c2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4cbfaf957ec8c6d6c7210389f5a8923b972a53b9f957e6d9991c52795e5da4dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "91266cc7e40329e29bfa74289721a3eeb601c57b70670621bebc6cf5a6db89e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4cbfaf957ec8c6d6c7210389f5a8923b972a53b9f957e6d9991c52795e5da4dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8ca376127fd9e372affbcf9a7999063e3f62c76327af7f34110e6527c5072f08",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8ca376127fd9e372affbcf9a7999063e3f62c76327af7f34110e6527c5072f08",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8ca376127fd9e372affbcf9a7999063e3f62c76327af7f34110e6527c5072f08",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "02623f971ab705c3cbde354d793449e09bc6ea911092dc539c0aef984979c2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8ca376127fd9e372affbcf9a7999063e3f62c76327af7f34110e6527c5072f08",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "91266cc7e40329e29bfa74289721a3eeb601c57b70670621bebc6cf5a6db89e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8ca376127fd9e372affbcf9a7999063e3f62c76327af7f34110e6527c5072f08",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "686e8c2c1b2e0d2b44355373abde6581a0a7b9c0993099f373f29a7c2fd8e35c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "686e8c2c1b2e0d2b44355373abde6581a0a7b9c0993099f373f29a7c2fd8e35c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "686e8c2c1b2e0d2b44355373abde6581a0a7b9c0993099f373f29a7c2fd8e35c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "e9263dfa91d844218cb126784a16eaa79d0943bb52015ccc7d0608cb97427610"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "686e8c2c1b2e0d2b44355373abde6581a0a7b9c0993099f373f29a7c2fd8e35c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "91266cc7e40329e29bfa74289721a3eeb601c57b70670621bebc6cf5a6db89e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "686e8c2c1b2e0d2b44355373abde6581a0a7b9c0993099f373f29a7c2fd8e35c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4d53afd6fc88098a2cf7f3c889ebbf05e0487d12edc31380962b7617dc6257db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+        },
+        "targetDigest": "7ae1d25f60c603af77cbf571f82a7adaef779312642f6528e4feba361e656a19"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8b38216a1551718fc81f8994f28f9c8b8fe1e29f51f34078ec7b284945d5c09",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value-code"
+        },
+        "targetDigest": "4ec26cdeb7ea5ea3003fd51c46c079323e837c50e3326ac17b1fe7c709da9212"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "5b50747992a9cd2cc7d76ff53e10ab1dd83d7ef6346bb2eb6309f018620f9f56",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 9-472; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+14% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "5a0dced8bf14a8c4fb9f69aa0662443b3dc8aa6590db74146ec8012e95a4a801",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+16% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "bd7eabfa5460fbf48c99a86c850d79bb8e8239e7a044df977d2839ffb5d5b7ec",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+18% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "507046bd41303395f6ca06ad56a875760ebd2fe9e0d98e1839f0f3708128f10d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+20% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "c59b8371dab074a402504f9e0f75a2d8f527afd04bc8b89e886a4e735eb2bee3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+14%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "e41a31ac0384ab3a806b6e3b5840b5e1013e9a74cb8d4343d1eeb61b0987509b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+16%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "c7a1ba216eee4b137e1e1ed8b606a4d5d91bf1514313ae514cd995fd608a1c24",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+18%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "5746631e01ff6eb34847fd8904ca2d66b849b5cb2461c780fc8cb44a1987e0cc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+20%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "baa6f819fdce92abceec55e45a4b9bfbd7925584a71de79ad6cfc3fbc766edb3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ddb302e2:key-unknown:en:1:g-e7792284b5db329c:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Headhunter",
+          "resolvedTextSha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2",
+              "text": "Headhunter"
+            }
+          ],
+          "sourceHash": "ddb302e2",
+          "sourceLocale": "en",
+          "sourceText": "Headhunter",
+          "sourceTextSha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-e7792284b5db329c:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "獵頭者",
+          "resolvedTextSha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330",
+              "text": "獵頭者"
+            }
+          ],
+          "sourceHash": "ddb302e2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "獵頭者",
+          "sourceTextSha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "獵頭者",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:ddb302e2:key-unknown:en:1:g-e7792284b5db329c:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-e7792284b5db329c:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-e7792284b5db329c:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+20%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "baa6f819fdce92abceec55e45a4b9bfbd7925584a71de79ad6cfc3fbc766edb3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-e7792284b5db329c:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-e7792284b5db329c:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-stacking-crit-chance-on-weakspot"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d56d159eb415c8537cbdbf8af42aa52064e51e126c587454a5c28c67036a4f9e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c19f6e7d8f56a35550a731a71b00a757151bbf987e38a7a0259e51f7d5be06be",
+          "targetId": "review:w06:generic:e7792284b5db329c:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3b8b2e6e66a63d09a5957e0230ca1f12c16212188683690c81fac68b9e4ae66f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4a02869c69fefd771edd79c5fe48a0e1a3f1fc80f0bb58f38dbd00fda9f282b4",
+          "targetId": "review:w06:generic:e7792284b5db329c:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "30e93c76641974c8e8fddde75a26f9685347a567666ee9253c0ab9ce82523866",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "af8c087518acc10fbc9434a18593b91deb11a420456f0f27fe65149336d72bc8",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a4c86df9924cda63876175d59d5eff8a9a3edda8d2f5b0c0cdad24aac22e4a24",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "44d1d69cd1d210a5ebb88a9c84da99b4653e61508bbc5f23e7ee23ea857c5b77",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "276c2560167c15f721ebe546270a067bf19781d75aff796ce37f7d24e3cf7ca4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4380e5bd4ab21210d57934573cf553537635992719972f8fbe33aff37c6c45ac",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "94e23f11cfd48dd9666816e5fde747453926436694a2eeaeee874b1f4d3f8ce3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bf0b3b4c19febcfb0b5ed1d660a09b436d72b04972075db3dc8c5d3f4bdb9c70",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "d56d159eb415c8537cbdbf8af42aa52064e51e126c587454a5c28c67036a4f9e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:content::name"
+        },
+        "targetDigest": "c19f6e7d8f56a35550a731a71b00a757151bbf987e38a7a0259e51f7d5be06be"
+      },
+      {
+        "dependenciesDigest": "3b8b2e6e66a63d09a5957e0230ca1f12c16212188683690c81fac68b9e4ae66f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:context::tierapplicability"
+        },
+        "targetDigest": "4a02869c69fefd771edd79c5fe48a0e1a3f1fc80f0bb58f38dbd00fda9f282b4"
+      },
+      {
+        "dependenciesDigest": "30e93c76641974c8e8fddde75a26f9685347a567666ee9253c0ab9ce82523866",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:0"
+        },
+        "targetDigest": "af8c087518acc10fbc9434a18593b91deb11a420456f0f27fe65149336d72bc8"
+      },
+      {
+        "dependenciesDigest": "a4c86df9924cda63876175d59d5eff8a9a3edda8d2f5b0c0cdad24aac22e4a24",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:1"
+        },
+        "targetDigest": "44d1d69cd1d210a5ebb88a9c84da99b4653e61508bbc5f23e7ee23ea857c5b77"
+      },
+      {
+        "dependenciesDigest": "276c2560167c15f721ebe546270a067bf19781d75aff796ce37f7d24e3cf7ca4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:2"
+        },
+        "targetDigest": "4380e5bd4ab21210d57934573cf553537635992719972f8fbe33aff37c6c45ac"
+      },
+      {
+        "dependenciesDigest": "94e23f11cfd48dd9666816e5fde747453926436694a2eeaeee874b1f4d3f8ce3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:galvanic_rifle-p1-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e7792284b5db329c:official::tierpresentations:options:3"
+        },
+        "targetDigest": "bf0b3b4c19febcfb0b5ed1d660a09b436d72b04972075db3dc8c5d3f4bdb9c70"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.4",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.5",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.6",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "30",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "40",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "50",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_weakspot_damage at stat_buffs.stat_buffs.critical_strike_weakspot_damage; defined tier literals are tier 1=0.3, tier 2=0.4, tier 3=0.5, tier 4=0.6.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddcfe3ec4f9d98bf939c0d8949f2f66c9ab13ec04ddd1c0bd9b4213f098de6bf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "6f540dea5817b3dc1aea31bb1884f96ee8cd3b2cbd25b2dab14a7f2cb8bcdc6b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddcfe3ec4f9d98bf939c0d8949f2f66c9ab13ec04ddd1c0bd9b4213f098de6bf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddcfe3ec4f9d98bf939c0d8949f2f66c9ab13ec04ddd1c0bd9b4213f098de6bf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddcfe3ec4f9d98bf939c0d8949f2f66c9ab13ec04ddd1c0bd9b4213f098de6bf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "b6f3712757a9edcaa0002a536de2c43fecd09ba623956710bb1aed9602ec72e0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ddcfe3ec4f9d98bf939c0d8949f2f66c9ab13ec04ddd1c0bd9b4213f098de6bf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c0b919c0449e1634a378ab5ee282a6e28359e55dc275509c6c89aaa4eea6ef71",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "3d501ca35a58c33928bc48136af7997ad61df1d79a98c68a2b71b2165d3bc0af"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c0b919c0449e1634a378ab5ee282a6e28359e55dc275509c6c89aaa4eea6ef71",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c0b919c0449e1634a378ab5ee282a6e28359e55dc275509c6c89aaa4eea6ef71",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "436996c4a9108d1e7500daf5bf1a7fc6165577cbcb54d4b102090d8527f1d4fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd239a83ccab0cc7677382aa8e03305317c0961436ef3c877ae548bc07c7d767",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd239a83ccab0cc7677382aa8e03305317c0961436ef3c877ae548bc07c7d767",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd239a83ccab0cc7677382aa8e03305317c0961436ef3c877ae548bc07c7d767",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "c44fd1122cd74b7ba3f8fa2f06fe58d4062a80f83196309e638683318e19f794"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd239a83ccab0cc7677382aa8e03305317c0961436ef3c877ae548bc07c7d767",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "a12366885b41753f7a0297c694d35f7f36a8d03c842e9cd7ccb8aed30e6b3ab2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd239a83ccab0cc7677382aa8e03305317c0961436ef3c877ae548bc07c7d767",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "ef0dd9a793fecab39f4909719a148a56c16e28e4d88f075b52773de00876b2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "94a9d442761fc80c7cf41f3e97f2351b4b89b46829b536b1566488f5aeed40a8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "94a9d442761fc80c7cf41f3e97f2351b4b89b46829b536b1566488f5aeed40a8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "94a9d442761fc80c7cf41f3e97f2351b4b89b46829b536b1566488f5aeed40a8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "c44fd1122cd74b7ba3f8fa2f06fe58d4062a80f83196309e638683318e19f794"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "94a9d442761fc80c7cf41f3e97f2351b4b89b46829b536b1566488f5aeed40a8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "a12366885b41753f7a0297c694d35f7f36a8d03c842e9cd7ccb8aed30e6b3ab2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "94a9d442761fc80c7cf41f3e97f2351b4b89b46829b536b1566488f5aeed40a8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "24b0fc6e847fa1044517906b7c9f8dc5444f44534ec9f9e45f541a4c8ac94f4e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bb772a422cb685977554c32e5922b6cc8c99968572406bdc1a2de61657e7cef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bb772a422cb685977554c32e5922b6cc8c99968572406bdc1a2de61657e7cef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bb772a422cb685977554c32e5922b6cc8c99968572406bdc1a2de61657e7cef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "c44fd1122cd74b7ba3f8fa2f06fe58d4062a80f83196309e638683318e19f794"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bb772a422cb685977554c32e5922b6cc8c99968572406bdc1a2de61657e7cef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "a12366885b41753f7a0297c694d35f7f36a8d03c842e9cd7ccb8aed30e6b3ab2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bb772a422cb685977554c32e5922b6cc8c99968572406bdc1a2de61657e7cef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "612b43b54d511cbf2a51283b5916035b35b23f2ab2c78e77bd3e36206b22b053"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "76bbf0c953090561cbf68fa278219f4b02ce96f647c64c63ddd88f726dc1bf15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "76bbf0c953090561cbf68fa278219f4b02ce96f647c64c63ddd88f726dc1bf15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "76bbf0c953090561cbf68fa278219f4b02ce96f647c64c63ddd88f726dc1bf15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "c44fd1122cd74b7ba3f8fa2f06fe58d4062a80f83196309e638683318e19f794"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "76bbf0c953090561cbf68fa278219f4b02ce96f647c64c63ddd88f726dc1bf15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "a12366885b41753f7a0297c694d35f7f36a8d03c842e9cd7ccb8aed30e6b3ab2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "76bbf0c953090561cbf68fa278219f4b02ce96f647c64c63ddd88f726dc1bf15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "337665de755d05566163fca839b7143986a3a062bc7c2c797255a213fc0abd06"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "02b81686a2a114f5bc37dfe3cccec9bf7a5e8c400588ef50361aaf83185bdecb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+        },
+        "targetDigest": "de4af17fd52db1788e5631f22a11d100e82c6b80dabab1962b6098a03b9bec37"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "5b50747992a9cd2cc7d76ff53e10ab1dd83d7ef6346bb2eb6309f018620f9f56",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_galvanic_rifle_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 9-472; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-galvanic-rifle-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+              "value": "+30%"
+            }
+          ],
+          "resolvedText": "+30% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "5aa088bcc3baff5499f83fc9504b152d7555e466966d8b4ed57abcdf473695da",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+              "value": "+40%"
+            }
+          ],
+          "resolvedText": "+40% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "940bce72ea6fe4bdd3f191ac4ca64e76e1c9bb8be28fedc2ddfede80a73a716c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "+50% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "aae344f242e5acfa5b193d14026d9e22ae9b85a8c3cfd0727f3c1cd967219947",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "+60% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "6fe8b23f38a9fd9075b89686e004b59bbe39a2575a027c163d749f77c5c707a5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+              "value": "+30%"
+            }
+          ],
+          "resolvedText": "提高+30%弱點致命一擊傷害。",
+          "resolvedTextSha256": "a394c668f89ea522fcf27b22578d58867f66a5e425d08398e962091d0e291db9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+              "value": "+40%"
+            }
+          ],
+          "resolvedText": "提高+40%弱點致命一擊傷害。",
+          "resolvedTextSha256": "638b7e717b88f84c37ffab718546db33c8b567b0cc388656be3da5203925fd9d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "提高+50%弱點致命一擊傷害。",
+          "resolvedTextSha256": "55bd27b93312680e6d69c448d6576f15a2caeda9a8641259fc2931c55172a0f4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "提高+60%弱點致命一擊傷害。",
+          "resolvedTextSha256": "76736b80fafedd53f6a3a13527194a889c0643efff2197c6c568e9869127a76b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:6b6877ef:key-unknown:en:1:g-fe58ac8769094cd9:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Deadly Accurate",
+          "resolvedTextSha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028",
+              "text": "Deadly Accurate"
+            }
+          ],
+          "sourceHash": "6b6877ef",
+          "sourceLocale": "en",
+          "sourceText": "Deadly Accurate",
+          "sourceTextSha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-fe58ac8769094cd9:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命精準",
+          "resolvedTextSha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518",
+              "text": "致命精準"
+            }
+          ],
+          "sourceHash": "6b6877ef",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命精準",
+          "sourceTextSha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "致命精準",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:6b6877ef:key-unknown:en:1:g-fe58ac8769094cd9:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-fe58ac8769094cd9:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-fe58ac8769094cd9:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:galvanic_rifle:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "提高+60%弱點致命一擊傷害。",
+          "resolvedTextSha256": "76736b80fafedd53f6a3a13527194a889c0643efff2197c6c568e9869127a76b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-fe58ac8769094cd9:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-fe58ac8769094cd9:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:galvanic_rifle:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:galvanic_rifle:p1-crit-weakspot-finesse"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3f31188ced7fee2f858e42d4c0105f41672b9724fafaf94ad1bd6e73831540ce",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "343166fa47fc8eb9fbae4302f8909e4dce552cf838d5526a5d898019b981c190",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5ce52a34be34d2838443dbeb29713d263edc1b9d28503c8ebbe53718f4d1ccee",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b7f89980139dfbc832b0b1d5e58f5a281e07a881633b27e09d5979058f9bd78c",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "54edd6621d7c563fae32127847de01fa25896d1444f7748f9e0d3e2463dd3c93",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "1cc5f0b105569b90042eb5a5fbadb020cb3847b279c9b77f76d6285e4feb06af",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5ec8eb65923cd9dafa457fc97d6026c25beb68a974e43e065790136f54185646",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ce5e80b970ae4ddd7548aa44a828223d89cdd894be4b300e0842c1a6a8fec5ed",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "68fbe95ff784f66314a620eea593a58f6cd82666793efca541b29064e73a518d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "693683de6c93e129e5ed630f311572ed901557309cd0e5260db4836c919a83ff",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8d274fb6f6b2e9f83e613940ca8e2617fb6cf57e22d8ef65e286c9333408b5ad",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "617ab83d3c53d1cc43485a63de0b9b99a478bc7235a7ef7927f661c158d1e7c3",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "3f31188ced7fee2f858e42d4c0105f41672b9724fafaf94ad1bd6e73831540ce",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:content::name"
+        },
+        "targetDigest": "343166fa47fc8eb9fbae4302f8909e4dce552cf838d5526a5d898019b981c190"
+      },
+      {
+        "dependenciesDigest": "5ce52a34be34d2838443dbeb29713d263edc1b9d28503c8ebbe53718f4d1ccee",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:context::tierapplicability"
+        },
+        "targetDigest": "b7f89980139dfbc832b0b1d5e58f5a281e07a881633b27e09d5979058f9bd78c"
+      },
+      {
+        "dependenciesDigest": "54edd6621d7c563fae32127847de01fa25896d1444f7748f9e0d3e2463dd3c93",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:0"
+        },
+        "targetDigest": "1cc5f0b105569b90042eb5a5fbadb020cb3847b279c9b77f76d6285e4feb06af"
+      },
+      {
+        "dependenciesDigest": "5ec8eb65923cd9dafa457fc97d6026c25beb68a974e43e065790136f54185646",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:1"
+        },
+        "targetDigest": "ce5e80b970ae4ddd7548aa44a828223d89cdd894be4b300e0842c1a6a8fec5ed"
+      },
+      {
+        "dependenciesDigest": "68fbe95ff784f66314a620eea593a58f6cd82666793efca541b29064e73a518d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:2"
+        },
+        "targetDigest": "693683de6c93e129e5ed630f311572ed901557309cd0e5260db4836c919a83ff"
+      },
+      {
+        "dependenciesDigest": "8d274fb6f6b2e9f83e613940ca8e2617fb6cf57e22d8ef65e286c9333408b5ad",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:galvanic_rifle-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fe58ac8769094cd9:official::tierpresentations:options:3"
+        },
+        "targetDigest": "617ab83d3c53d1cc43485a63de0b9b99a478bc7235a7ef7927f661c158d1e7c3"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

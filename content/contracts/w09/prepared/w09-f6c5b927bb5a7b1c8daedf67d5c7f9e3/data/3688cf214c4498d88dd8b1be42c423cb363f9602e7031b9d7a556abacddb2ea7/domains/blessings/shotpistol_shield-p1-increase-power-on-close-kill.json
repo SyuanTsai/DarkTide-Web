@@ -1,0 +1,2550 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.055",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.06",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.065",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "6",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "6.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "3.5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value power_level at stat_buffs.stat_buffs.power_level_modifier; defined tier literals are tier 1=0.05, tier 2=0.055, tier 3=0.06, tier 4=0.065.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotpistol_shield_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at child_duration; defined tier literals are tier 1=3.5, tier 2=3.5, tier 3=3.5, tier 4=3.5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b0b5be9a82a6bd6eaf27a51ab554f73fa2ed914b354f7e5a9e9db5c281472017",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "8d047cef54e352c7257bbf3b0e98adfa70dae7e5c548b76491ca4419f7927f6e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b0b5be9a82a6bd6eaf27a51ab554f73fa2ed914b354f7e5a9e9db5c281472017",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b0b5be9a82a6bd6eaf27a51ab554f73fa2ed914b354f7e5a9e9db5c281472017",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b0b5be9a82a6bd6eaf27a51ab554f73fa2ed914b354f7e5a9e9db5c281472017",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "f403503fae1caf08c62c37157869970b40cf1435d2a9b5cad17cb5c2a1f8f8c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b0b5be9a82a6bd6eaf27a51ab554f73fa2ed914b354f7e5a9e9db5c281472017",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4494fcdb1d6f1d3502dfd635afaccc2559550a50ac16c488cfe28af5b3e3d6a7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "16ec1c2f488b7b03f2a0ac23ff94157f96a342278e423c3dcd15f11d19a38167"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4494fcdb1d6f1d3502dfd635afaccc2559550a50ac16c488cfe28af5b3e3d6a7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4494fcdb1d6f1d3502dfd635afaccc2559550a50ac16c488cfe28af5b3e3d6a7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "targetDigest": "8ca889a5c3b4099b0138ab6821dead3d2d10d74f376724ea3ed30a0262b91d77"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1f3c2ffc37d441deba0c2e80487b46317ec57486e60ebfead58b16c622c53a96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1f3c2ffc37d441deba0c2e80487b46317ec57486e60ebfead58b16c622c53a96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1f3c2ffc37d441deba0c2e80487b46317ec57486e60ebfead58b16c622c53a96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f4ef82fc74eb4d7adc7dbd5903663092f00c0312420fc7517b96d2a29891350c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1f3c2ffc37d441deba0c2e80487b46317ec57486e60ebfead58b16c622c53a96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1f3c2ffc37d441deba0c2e80487b46317ec57486e60ebfead58b16c622c53a96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7c37af673c6959989026a35443ae6939bf1c682ade51592dc19d045becb7e2d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7c37af673c6959989026a35443ae6939bf1c682ade51592dc19d045becb7e2d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7c37af673c6959989026a35443ae6939bf1c682ade51592dc19d045becb7e2d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f4ef82fc74eb4d7adc7dbd5903663092f00c0312420fc7517b96d2a29891350c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7c37af673c6959989026a35443ae6939bf1c682ade51592dc19d045becb7e2d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7c37af673c6959989026a35443ae6939bf1c682ade51592dc19d045becb7e2d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "5c6d5e1c03ce6242bc58d47157a9fda8c44e16b946fe155aa9cf78ff588bafce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "77e2d53eb02876fb987143fac39714560b619783c392b1affb467cf4c4d23839",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "77e2d53eb02876fb987143fac39714560b619783c392b1affb467cf4c4d23839",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "77e2d53eb02876fb987143fac39714560b619783c392b1affb467cf4c4d23839",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f4ef82fc74eb4d7adc7dbd5903663092f00c0312420fc7517b96d2a29891350c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "77e2d53eb02876fb987143fac39714560b619783c392b1affb467cf4c4d23839",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "77e2d53eb02876fb987143fac39714560b619783c392b1affb467cf4c4d23839",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "5251cd53fe45d4339555cfb6a5c7a58b7ea9c49b45d3753f4d8214a59cdc5b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f9c6632bad5587f07d053092a35473a3af1ec3678c0d8336a58593285e2e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f9c6632bad5587f07d053092a35473a3af1ec3678c0d8336a58593285e2e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f9c6632bad5587f07d053092a35473a3af1ec3678c0d8336a58593285e2e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f4ef82fc74eb4d7adc7dbd5903663092f00c0312420fc7517b96d2a29891350c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f9c6632bad5587f07d053092a35473a3af1ec3678c0d8336a58593285e2e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f9c6632bad5587f07d053092a35473a3af1ec3678c0d8336a58593285e2e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "67f1cebfb2d282ea4414c9f8871fa79e13d0fcca8c1220a1281a7e4ba08e8d9f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19277a51e78bffdd300be7e68e718bf10a3076b6151ea3f7b1007d1268a7233c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19277a51e78bffdd300be7e68e718bf10a3076b6151ea3f7b1007d1268a7233c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19277a51e78bffdd300be7e68e718bf10a3076b6151ea3f7b1007d1268a7233c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "680e03ca9528ae6c094079e1ba23050d2804afdd5a4129e269652d445b00b136"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19277a51e78bffdd300be7e68e718bf10a3076b6151ea3f7b1007d1268a7233c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19277a51e78bffdd300be7e68e718bf10a3076b6151ea3f7b1007d1268a7233c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e5537a06f2a625708d2e8f19479f87d8b1b4e9f8537fb7c0c5dbc5a6e1137fe0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e5537a06f2a625708d2e8f19479f87d8b1b4e9f8537fb7c0c5dbc5a6e1137fe0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e5537a06f2a625708d2e8f19479f87d8b1b4e9f8537fb7c0c5dbc5a6e1137fe0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "0fc22500ceeb5110c49003d70554d814b35adc590a87cd3c69eaa8d6e6ca40a9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e5537a06f2a625708d2e8f19479f87d8b1b4e9f8537fb7c0c5dbc5a6e1137fe0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "4642144bda16f725d3413f98e7d9c02ab9e34eb1387dffa3fcc7a3be1744b302"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e5537a06f2a625708d2e8f19479f87d8b1b4e9f8537fb7c0c5dbc5a6e1137fe0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "c27b07d47cb30f282c8cf0d5a9ca4472d2c0cfba7f43d0b1a378e35b6fb2342c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "919f33b5d45f2ddbcc4616683602c233953801b6546e230c1ba8dc5cd97fb3c5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-power-level-display-percent-code"
+        },
+        "targetDigest": "89091c849a9c39a871612a66b400ab2abf39017d2ec05310bc6a57bbd3a971f9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e7cac2193f07cc6d1f64748c274b178e89c096994c8454b755d94569255ebeb6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-stacks-display-value-code"
+        },
+        "targetDigest": "655fa0204561af0d5424ce4b1ea6b0f730c775cfb8575580134a25c8974b1402"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d5a4eae737f0622e58c87cb1d908b7dafe2e383341baf98a3cb70ca1a163e57",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value-code"
+        },
+        "targetDigest": "e9452b23b36c466b6a4da07a77d401cb87660b9eeefa04f6f3bb06497eb03e33"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b886bc7dbe32d2b52640c358e520d4a6421b374d96c774ee019e34b9d1e869c1",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotpistol_shield_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotpistol_shield_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "c50fe205c3e71abacc00b0c2c7cae96bc2e3d4f8ef62361a7456e89d798ef668",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 19 bespoke traits span lines 10-996; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:00d6e1d9:key-unknown:en:1:g-41e5c2be2f3f8faa:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Deathspitter",
+          "resolvedTextSha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6",
+              "text": "Deathspitter"
+            }
+          ],
+          "sourceHash": "00d6e1d9",
+          "sourceLocale": "en",
+          "sourceText": "Deathspitter",
+          "sourceTextSha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-41e5c2be2f3f8faa:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "死亡噴吐",
+          "resolvedTextSha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca",
+              "text": "死亡噴吐"
+            }
+          ],
+          "sourceHash": "00d6e1d9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "死亡噴吐",
+          "sourceTextSha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "+5% Strength for 3.5s on Close Range Kill.",
+          "resolvedTextSha256": "b3c2c0818da6622e473a122ace8a5846114a4c8be31b015e02a71fc45a463a87",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "+5.5% Strength for 3.5s on Close Range Kill.",
+          "resolvedTextSha256": "2e499bf5fd85976acc5676c5a4be13c7ea8920d7ce67d3054bbf0c26b03e4c50",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "+6% Strength for 3.5s on Close Range Kill.",
+          "resolvedTextSha256": "74ef26edc2565b4addcea4fb9391932ef4a6cde5319d60dad9b01ad80ca212f8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "+6.5% Strength for 3.5s on Close Range Kill.",
+          "resolvedTextSha256": "1bd146b880c946ae4b8d7922b8b65a557398343c438927ef977c4343f598c7ff",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+5%，持續3.5秒。",
+          "resolvedTextSha256": "6d223d4e3fedcc724ee58bf3f65cefd1d8432741b8e63ada960edfbf2dd94206",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+5.5%，持續3.5秒。",
+          "resolvedTextSha256": "6b1a44f58996bcb612f890d31b4d8ebb5948126a6ab360f201c0c7ecc664a996",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6%，持續3.5秒。",
+          "resolvedTextSha256": "bd22594b480b32194ea8dcb65b8f40ed7b06db37dc648eb0fbd75cdc2721936a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6.5%，持續3.5秒。",
+          "resolvedTextSha256": "e3f3195c74f40ee2dda9adda6dd0ab338eaf552223695e49949ddb70fadeeb9d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "死亡噴吐",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:00d6e1d9:key-unknown:en:1:g-41e5c2be2f3f8faa:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-41e5c2be2f3f8faa:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-41e5c2be2f3f8faa:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6.5%，持續3.5秒。",
+          "resolvedTextSha256": "e3f3195c74f40ee2dda9adda6dd0ab338eaf552223695e49949ddb70fadeeb9d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-41e5c2be2f3f8faa:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-41e5c2be2f3f8faa:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-power-level-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-increase-power-on-close-kill"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d7238559a44c78254c27632110a8be98a7c6177ca267de9392a9e0b5a4139a9b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6ab05729fdf39eeeac882393f225f097d2ffc8dce0d1e11c8cdd30f2245409c9",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "78149f025b08adac622afe3385e09ae6e4facca62512bf77bcce341f3f13feab",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0b69f719e2844da28918a1caffa66da206ae2e1cac670ae6b87a84a91ec22903",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "db0e7b2ae7fb5c0917b08cb1da45d8ba4c5441eb303d6811331a96dc6ce8aa43",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fc8da254ca6e9c406cf3f37d809774aba82c8e3a3e57e612b54b677fca7ae595",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "df59229a73dc33ec18d837f9adfc3f1f15d8083f1d2e1422f0bdeaf2489f1c47",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a85976f62f45cd8dd8569296929f3a36e8cf4cd2ab61fa2beedf70467c65aa1a",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f49b7f19d50cbb1f6cc03aba418b6d4a79699cc59349a4b621165f5f8c6de61e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b49c912d454e2a68cc5c24b6c1de8e09529d1e44570b378d8919a70fa76a5fe1",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "81e5f723aca597e500eb772c5bddef5d8dd56ececa5a2c814eb789b06067cf8f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4246c17f1f7cd905d101eb827ca063ba28006a290a914fc6e645c1a0a5c0089c",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "d7238559a44c78254c27632110a8be98a7c6177ca267de9392a9e0b5a4139a9b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:content::name"
+        },
+        "targetDigest": "6ab05729fdf39eeeac882393f225f097d2ffc8dce0d1e11c8cdd30f2245409c9"
+      },
+      {
+        "dependenciesDigest": "78149f025b08adac622afe3385e09ae6e4facca62512bf77bcce341f3f13feab",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:context::tierapplicability"
+        },
+        "targetDigest": "0b69f719e2844da28918a1caffa66da206ae2e1cac670ae6b87a84a91ec22903"
+      },
+      {
+        "dependenciesDigest": "db0e7b2ae7fb5c0917b08cb1da45d8ba4c5441eb303d6811331a96dc6ce8aa43",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:0"
+        },
+        "targetDigest": "fc8da254ca6e9c406cf3f37d809774aba82c8e3a3e57e612b54b677fca7ae595"
+      },
+      {
+        "dependenciesDigest": "df59229a73dc33ec18d837f9adfc3f1f15d8083f1d2e1422f0bdeaf2489f1c47",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:1"
+        },
+        "targetDigest": "a85976f62f45cd8dd8569296929f3a36e8cf4cd2ab61fa2beedf70467c65aa1a"
+      },
+      {
+        "dependenciesDigest": "f49b7f19d50cbb1f6cc03aba418b6d4a79699cc59349a4b621165f5f8c6de61e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:2"
+        },
+        "targetDigest": "b49c912d454e2a68cc5c24b6c1de8e09529d1e44570b378d8919a70fa76a5fe1"
+      },
+      {
+        "dependenciesDigest": "81e5f723aca597e500eb772c5bddef5d8dd56ececa5a2c814eb789b06067cf8f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotpistol_shield-p1-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:41e5c2be2f3f8faa:official::tierpresentations:options:3"
+        },
+        "targetDigest": "4246c17f1f7cd905d101eb827ca063ba28006a290a914fc6e645c1a0a5c0089c"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,1668 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "2",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "3",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "4",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "5",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code"
+            }
+          ],
+          "property": "description.format_values.ammo_amount.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code"
+            }
+          ],
+          "property": "description.format_values.ammo_amount.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code"
+            }
+          ],
+          "property": "description.format_values.ammo_amount.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "value": {
+            "decimal": "4",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code"
+            }
+          ],
+          "property": "description.format_values.ammo_amount.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value ammo_amount at num_ammmo_to_move; defined tier literals are tier 1=2, tier 2=3, tier 3=4, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bce4967c2bde2f17cb63a74d37472d1d7fabf01aeb6334e9d31f6acc83e14e0f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "aea83eafb5284b4d89244644cd450dccc1fdbf6afbcfab3c09af395d29907247"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bce4967c2bde2f17cb63a74d37472d1d7fabf01aeb6334e9d31f6acc83e14e0f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bce4967c2bde2f17cb63a74d37472d1d7fabf01aeb6334e9d31f6acc83e14e0f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bce4967c2bde2f17cb63a74d37472d1d7fabf01aeb6334e9d31f6acc83e14e0f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "1fc3fba239c73530aa32fcc87e5d9981f167d9da4d1d93fa79202b91f62b2ed3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bce4967c2bde2f17cb63a74d37472d1d7fabf01aeb6334e9d31f6acc83e14e0f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2371ab2fc6619a54c705fdb00b821b1f815385b1090fc3ef87867ef4a2da5f8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "3a1aa4c467f8252b3410e622f6198e2ec616df0b2393297aca522aa94e8b1fe9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2371ab2fc6619a54c705fdb00b821b1f815385b1090fc3ef87867ef4a2da5f8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2371ab2fc6619a54c705fdb00b821b1f815385b1090fc3ef87867ef4a2da5f8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "88d7ecef81561c74cb013b255eefa2943113df97e056fb1edd87ef5d4c168ffe"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "612351d6373bb4c2365e522087b309da842c081e826f658a06d44b2b9f277506",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "612351d6373bb4c2365e522087b309da842c081e826f658a06d44b2b9f277506",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "612351d6373bb4c2365e522087b309da842c081e826f658a06d44b2b9f277506",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+        },
+        "targetDigest": "dbb7aea25b3586d0a1f946ef5d80f18c934174f59f0f7a4106d65bd1d48d515b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "612351d6373bb4c2365e522087b309da842c081e826f658a06d44b2b9f277506",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+        },
+        "targetDigest": "3483c5538c088b515bf28b46e09463e8757eebc9171328da23e78adce16d7034"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "612351d6373bb4c2365e522087b309da842c081e826f658a06d44b2b9f277506",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier1-display-value"
+        },
+        "targetDigest": "a23605c8b064ca7a4b25c895e0b46467d0dfa0de1c10f9fc8fc799b0678c8498"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "573e86d0c35ad141bbe6fdebed61c47d599bcd4752fa76ae40e8eb4ae21b82a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "573e86d0c35ad141bbe6fdebed61c47d599bcd4752fa76ae40e8eb4ae21b82a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "573e86d0c35ad141bbe6fdebed61c47d599bcd4752fa76ae40e8eb4ae21b82a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+        },
+        "targetDigest": "dbb7aea25b3586d0a1f946ef5d80f18c934174f59f0f7a4106d65bd1d48d515b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "573e86d0c35ad141bbe6fdebed61c47d599bcd4752fa76ae40e8eb4ae21b82a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+        },
+        "targetDigest": "3483c5538c088b515bf28b46e09463e8757eebc9171328da23e78adce16d7034"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "573e86d0c35ad141bbe6fdebed61c47d599bcd4752fa76ae40e8eb4ae21b82a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier2-display-value"
+        },
+        "targetDigest": "9926c02f3a35cfd08b23139f1903cde86470e0e90bdb7b23c3291922d0146f10"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d71a947062de51202c4abdc13d074d0e44aad7da8c18485fb1ee003794552cfd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d71a947062de51202c4abdc13d074d0e44aad7da8c18485fb1ee003794552cfd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d71a947062de51202c4abdc13d074d0e44aad7da8c18485fb1ee003794552cfd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+        },
+        "targetDigest": "dbb7aea25b3586d0a1f946ef5d80f18c934174f59f0f7a4106d65bd1d48d515b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d71a947062de51202c4abdc13d074d0e44aad7da8c18485fb1ee003794552cfd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+        },
+        "targetDigest": "3483c5538c088b515bf28b46e09463e8757eebc9171328da23e78adce16d7034"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d71a947062de51202c4abdc13d074d0e44aad7da8c18485fb1ee003794552cfd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier3-display-value"
+        },
+        "targetDigest": "5ebe08cae0ceaf5d7b4ff259a9f06433242775129fdc59151422a2013e4c57bc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "466c4fd29f7e42e1652ed8a4c4145411065d26b65fc43396a14b585ebeb0ef91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "466c4fd29f7e42e1652ed8a4c4145411065d26b65fc43396a14b585ebeb0ef91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "466c4fd29f7e42e1652ed8a4c4145411065d26b65fc43396a14b585ebeb0ef91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+        },
+        "targetDigest": "dbb7aea25b3586d0a1f946ef5d80f18c934174f59f0f7a4106d65bd1d48d515b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "466c4fd29f7e42e1652ed8a4c4145411065d26b65fc43396a14b585ebeb0ef91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+        },
+        "targetDigest": "3483c5538c088b515bf28b46e09463e8757eebc9171328da23e78adce16d7034"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "466c4fd29f7e42e1652ed8a4c4145411065d26b65fc43396a14b585ebeb0ef91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-tier4-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3e8dd526f8ccf5f9b380c83ab223816b8b553c26110fe84516111a36bd39cd2c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:flamer:p1-ammo-from-reserve-on-crit-ammo-amount-display-value-code"
+        },
+        "targetDigest": "a2f59c52e4229874452db8f8cd44247c688e93f0bb05ebdbcba750f7d8df2add"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b2b9adf72f1817bed354fa457d860697316b887a2a2fd359090d30a8d2ba6c4a",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 8 bespoke traits span lines 11-378; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-1",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "resolvedTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+              "text": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank."
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "en",
+          "sourceText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "sourceTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-2",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "resolvedTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+              "text": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank."
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "en",
+          "sourceText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "sourceTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-3",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "resolvedTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+              "text": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank."
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "en",
+          "sourceText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "sourceTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-4",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "resolvedTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b",
+              "text": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank."
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "en",
+          "sourceText": "Critical Hits spend Ammo from your Reserve instead of your current fuel tank.",
+          "sourceTextSha256": "1fce52b11673bd6b11eedcf6cd67afa347b8897f498f62da875842cc66b1371b"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-1",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "resolvedTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+              "text": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。"
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "sourceTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-2",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "resolvedTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+              "text": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。"
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "sourceTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-3",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "resolvedTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+              "text": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。"
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "sourceTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-4",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "resolvedTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+              "text": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。"
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "sourceTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:fc0e6843:key-unknown:en:1:g-7a107a6b129dd33c:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Everlasting Flame",
+          "resolvedTextSha256": "2e67d0b2f26140dbbf7992484c4ce29fe1f93008310a4164a6ad2970f173e0a9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2e67d0b2f26140dbbf7992484c4ce29fe1f93008310a4164a6ad2970f173e0a9",
+              "text": "Everlasting Flame"
+            }
+          ],
+          "sourceHash": "fc0e6843",
+          "sourceLocale": "en",
+          "sourceText": "Everlasting Flame",
+          "sourceTextSha256": "2e67d0b2f26140dbbf7992484c4ce29fe1f93008310a4164a6ad2970f173e0a9"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:fc0e6843:key-unknown:zh-tw:1:g-7a107a6b129dd33c:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "永燃烈焰",
+          "resolvedTextSha256": "ee5a08632bfc5c18259c45a7dc505a00096b582daf3af4e1cdcfa6875ab84031",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ee5a08632bfc5c18259c45a7dc505a00096b582daf3af4e1cdcfa6875ab84031",
+              "text": "永燃烈焰"
+            }
+          ],
+          "sourceHash": "fc0e6843",
+          "sourceLocale": "zh-TW",
+          "sourceText": "永燃烈焰",
+          "sourceTextSha256": "ee5a08632bfc5c18259c45a7dc505a00096b582daf3af4e1cdcfa6875ab84031"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "永燃烈焰",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:fc0e6843:key-unknown:en:1:g-7a107a6b129dd33c:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:fc0e6843:key-unknown:zh-tw:1:g-7a107a6b129dd33c:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:fc0e6843:key-unknown:zh-tw:1:g-7a107a6b129dd33c:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_spent_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-4",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "resolvedTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485",
+              "text": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。"
+            }
+          ],
+          "sourceHash": "e0eb4441",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊消耗彈藥儲備而非當前燃料箱中的彈藥。",
+          "sourceTextSha256": "cdac49e0c7c138ece795c8418b438bc872fc83cdd6dab28af2e8a7b67250e485"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:en:1:g-7a107a6b129dd33c:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:e0eb4441:key-known:zh-tw:1:g-7a107a6b129dd33c:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:flamer:p1-ammo-from-reserve-on-crit"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "dfadc39f1ce729c1db2b2cad0a06e66870e6cc89c7acc07d92dfb259fc23f32e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f63fbcfbde61a08625b82980066ee2d91541bd169d01ff78e9f53bee7dca9556",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "adb554fb9d4feca06917dc2d2e05fe131c2eb46784b56815c23ed1407ad0b7d6",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ff889a83a4557aa8a4c96acbdd6277a5684f59c7080bab95313bd525bd9be953",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0b5c1bac52153e7e3773cb3226257d987750643aa7825b93b67b50fb8ba139ad",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0a3c4af2d428e2f09f77998d59744a6d65b5169411e57a18b87259baeb5c6513",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "762f3f59b725ef39072d2d8cd91a9d09b8b11704fa5556aa431d0e9a330d674d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ddfdca936fa75817ff8a2842dc8e2cb387dbad26926a84f62fa644af208d8aac",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8299a15758cccb5f17f72a93f48f52b0f5e967736add646da042106ca3fa2b1d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bdb11076f2ee34f034641c428d589e71d06bfc9045f3859939a6234105c6b431",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5e29f1a1edcb0279c83e5ab5455f49a5bf2b8fed146e6db68c6493f812880053",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "e30b8f0f65728b7f561f721cec01523c7c1c88b31db69c97f0b640ace61c4146",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "dfadc39f1ce729c1db2b2cad0a06e66870e6cc89c7acc07d92dfb259fc23f32e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:content::name"
+        },
+        "targetDigest": "f63fbcfbde61a08625b82980066ee2d91541bd169d01ff78e9f53bee7dca9556"
+      },
+      {
+        "dependenciesDigest": "adb554fb9d4feca06917dc2d2e05fe131c2eb46784b56815c23ed1407ad0b7d6",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:context::tierapplicability"
+        },
+        "targetDigest": "ff889a83a4557aa8a4c96acbdd6277a5684f59c7080bab95313bd525bd9be953"
+      },
+      {
+        "dependenciesDigest": "0b5c1bac52153e7e3773cb3226257d987750643aa7825b93b67b50fb8ba139ad",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:0"
+        },
+        "targetDigest": "0a3c4af2d428e2f09f77998d59744a6d65b5169411e57a18b87259baeb5c6513"
+      },
+      {
+        "dependenciesDigest": "762f3f59b725ef39072d2d8cd91a9d09b8b11704fa5556aa431d0e9a330d674d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:1"
+        },
+        "targetDigest": "ddfdca936fa75817ff8a2842dc8e2cb387dbad26926a84f62fa644af208d8aac"
+      },
+      {
+        "dependenciesDigest": "8299a15758cccb5f17f72a93f48f52b0f5e967736add646da042106ca3fa2b1d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:2"
+        },
+        "targetDigest": "bdb11076f2ee34f034641c428d589e71d06bfc9045f3859939a6234105c6b431"
+      },
+      {
+        "dependenciesDigest": "5e29f1a1edcb0279c83e5ab5455f49a5bf2b8fed146e6db68c6493f812880053",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:flamer-p1-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:7a107a6b129dd33c:official::tierpresentations:options:3"
+        },
+        "targetDigest": "e30b8f0f65728b7f561f721cec01523c7c1c88b31db69c97f0b640ace61c4146"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.075",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.15",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "7.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "15",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_phosphor_pistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value rend at stat_buffs.stat_buffs.critical_strike_rending_multiplier; defined tier literals are tier 1=0.05, tier 2=0.075, tier 3=0.1, tier 4=0.15.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4a93bb64d83f88e31314feb53b270f00ad103e2f6fe81d68da69fca7fcdd125c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "4d2e1ec9b181427857465da504df4907f443593562b9908de5c480eddc14dcc6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4a93bb64d83f88e31314feb53b270f00ad103e2f6fe81d68da69fca7fcdd125c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4a93bb64d83f88e31314feb53b270f00ad103e2f6fe81d68da69fca7fcdd125c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4a93bb64d83f88e31314feb53b270f00ad103e2f6fe81d68da69fca7fcdd125c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "4da1be074fc4619d4462d9c3634c490ad54a46a6ddf5103c54f40d8e46682481"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4a93bb64d83f88e31314feb53b270f00ad103e2f6fe81d68da69fca7fcdd125c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d5406ab5fa66d1d94863eee7ba37429e88617bda1129bb18cb1acd31397d2276",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "a8fb09d06d6b30e31578af1cbd721a29257e69561540c70aa4f2963f1868643c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d5406ab5fa66d1d94863eee7ba37429e88617bda1129bb18cb1acd31397d2276",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d5406ab5fa66d1d94863eee7ba37429e88617bda1129bb18cb1acd31397d2276",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+        },
+        "targetDigest": "aaf1440b9ea49ea8b72b8397c967ed066c997078d225706e129481f75aed47d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "66e4b05a5b3b9dd39712b67adeb1a876a48784f2f86964e842f83d3aa5dc0162",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "66e4b05a5b3b9dd39712b67adeb1a876a48784f2f86964e842f83d3aa5dc0162",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "66e4b05a5b3b9dd39712b67adeb1a876a48784f2f86964e842f83d3aa5dc0162",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "0517a40a91f2763797be75b60b40acf2821e8ba256324642b2df04a067b0f36a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "66e4b05a5b3b9dd39712b67adeb1a876a48784f2f86964e842f83d3aa5dc0162",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "3e97f4c671a5544d2269af2425cbdafa8277a10053ba63e58bd54103996d1883"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "66e4b05a5b3b9dd39712b67adeb1a876a48784f2f86964e842f83d3aa5dc0162",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d856012a20343ee5b0ea4904833edfb58ba3b06984962ddf05c75fd60fa88c4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d856012a20343ee5b0ea4904833edfb58ba3b06984962ddf05c75fd60fa88c4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d856012a20343ee5b0ea4904833edfb58ba3b06984962ddf05c75fd60fa88c4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "0517a40a91f2763797be75b60b40acf2821e8ba256324642b2df04a067b0f36a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d856012a20343ee5b0ea4904833edfb58ba3b06984962ddf05c75fd60fa88c4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "3e97f4c671a5544d2269af2425cbdafa8277a10053ba63e58bd54103996d1883"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d856012a20343ee5b0ea4904833edfb58ba3b06984962ddf05c75fd60fa88c4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "3417672b5a4f4aaae12565ff2723f7b7d5343a582bd72fa864981f1680560dd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "313e66ba40cc0f26baba530a233b233c4accce866b3186e8d2ee216d6321cfea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "313e66ba40cc0f26baba530a233b233c4accce866b3186e8d2ee216d6321cfea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "313e66ba40cc0f26baba530a233b233c4accce866b3186e8d2ee216d6321cfea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "0517a40a91f2763797be75b60b40acf2821e8ba256324642b2df04a067b0f36a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "313e66ba40cc0f26baba530a233b233c4accce866b3186e8d2ee216d6321cfea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "3e97f4c671a5544d2269af2425cbdafa8277a10053ba63e58bd54103996d1883"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "313e66ba40cc0f26baba530a233b233c4accce866b3186e8d2ee216d6321cfea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9b8ef1f03d082390acb9dce71fff7160a36c53b5a550fab624abaa9b345c5fb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9b8ef1f03d082390acb9dce71fff7160a36c53b5a550fab624abaa9b345c5fb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9b8ef1f03d082390acb9dce71fff7160a36c53b5a550fab624abaa9b345c5fb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "0517a40a91f2763797be75b60b40acf2821e8ba256324642b2df04a067b0f36a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9b8ef1f03d082390acb9dce71fff7160a36c53b5a550fab624abaa9b345c5fb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "3e97f4c671a5544d2269af2425cbdafa8277a10053ba63e58bd54103996d1883"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9b8ef1f03d082390acb9dce71fff7160a36c53b5a550fab624abaa9b345c5fb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "739df5e9349af5eb505bd3ba2a4e62bc4772d8de7f00fad260f9b5a1335af027"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4d664f04287157c4360e2efa722fa308709cc654c5396d4cde3dcbcf222cef12",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:phosphor_pistol:p1-rending-on-crit-rend-display-percent-code"
+        },
+        "targetDigest": "51ca04a8702378595151caae22de9d9e2b152fb83b6d906979cab0d6fa942071"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "d1204fa40a54684413e0bf31266648c86187493d079449db2d1d5b7c07eaf2b7",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_phosphor_pistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_phosphor_pistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-511; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-phosphor-pistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1391c6e5:key-unknown:en:1:g-62b4d12e02673db2:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Hand-Cannon",
+          "resolvedTextSha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd",
+              "text": "Hand-Cannon"
+            }
+          ],
+          "sourceHash": "1391c6e5",
+          "sourceLocale": "en",
+          "sourceText": "Hand-Cannon",
+          "sourceTextSha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-62b4d12e02673db2:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "手銃",
+          "resolvedTextSha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c",
+              "text": "手銃"
+            }
+          ],
+          "sourceHash": "1391c6e5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "手銃",
+          "sourceTextSha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent",
+              "value": "+5%"
+            }
+          ],
+          "resolvedText": "+5% Rending on Critical Hit.",
+          "resolvedTextSha256": "9f655249c52a3f8d957204b06688408e2f7d89f5fabaa08d90b643287605d552",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent",
+              "value": "+7.5%"
+            }
+          ],
+          "resolvedText": "+7.5% Rending on Critical Hit.",
+          "resolvedTextSha256": "6e80be74c4c8f19c3c86c0732ddfd86326ad63c4ceda9dbe1aeb7507957a1e57",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "+10% Rending on Critical Hit.",
+          "resolvedTextSha256": "01408226694d25e5d65dbe70317bf22f89e1cd7ff9b81b1ec6a93bfe8410197a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "+15% Rending on Critical Hit.",
+          "resolvedTextSha256": "69cc908a3bf6650d37dde0b215aaabfa3991537caa32b9706d47c53b60e74865",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent",
+              "value": "+5%"
+            }
+          ],
+          "resolvedText": "致命一擊時+5%撕裂。",
+          "resolvedTextSha256": "18c85ae701c86f02c379a597cb81420c950dd25a229d626366c1ed9609822f2d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent",
+              "value": "+7.5%"
+            }
+          ],
+          "resolvedText": "致命一擊時+7.5%撕裂。",
+          "resolvedTextSha256": "2ec52ef41ad8ba4fa8f37e33fb2211087d8e763fdbba2fb01602c0383dbcaec0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "致命一擊時+10%撕裂。",
+          "resolvedTextSha256": "3068133baf475ffc18f53126a204df33d87ec1e7a2be244740bd4baca46a97e4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "致命一擊時+15%撕裂。",
+          "resolvedTextSha256": "aeb3a4923935fbfdf50c3d861f64fbff1cb0e002cffad0950063bd1d91116bbd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "手銃",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1391c6e5:key-unknown:en:1:g-62b4d12e02673db2:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-62b4d12e02673db2:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-62b4d12e02673db2:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:phosphor_pistol:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "致命一擊時+15%撕裂。",
+          "resolvedTextSha256": "aeb3a4923935fbfdf50c3d861f64fbff1cb0e002cffad0950063bd1d91116bbd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-62b4d12e02673db2:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-62b4d12e02673db2:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:phosphor_pistol:p1-rending-on-crit-rend-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:phosphor_pistol:p1-rending-on-crit"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0a8a163001f7affc89dd5e521fd7daebb1da973cae8e8a98825b812c60d5595a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d7cccf3956dc99185d40615271e5a9c1f841e6c6396e2528db25be1f5d6dd3fc",
+          "targetId": "review:w06:generic:62b4d12e02673db2:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4ca46b5c40e7dabdbab222319870c03a1f6b3a55b2717db15ca5e59c05fc32fc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2c194ffb29ca9cd77d97fabdd032927226703f73ccbff4943b91da3d8fbef4e3",
+          "targetId": "review:w06:generic:62b4d12e02673db2:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ab4708f3d28efd27ac8c07ecf6bdbab016abc34b3168f98208793b7341decf71",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bec54a884826c50f4de09dc3ce1905f2dd840aba46148749a78b1cade169ce6a",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e5f465ec9979f4c09b0a20616fc6f9c92959f99d1f43750f7268fc09f5452592",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "24efff7841cff44ff0f01db520bf944bd5ef87ad4ed1ab40d0563337b1f2fbbc",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "26a27ec5d68e1f6d065deecae5cd668d631532d0f78196b4e208a8c503f88dcc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "842990273d00f8934c1fa6ecf8ee15346258d4f2881aab37b654cc5bd9a72026",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "69a837cd265172db2a8871af015e5b96af8523528f79ec293a849700757c5ee4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "04bf022e872ebfb1fa4c06ff85965d36d8a0256240447af10169036649f326d9",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "0a8a163001f7affc89dd5e521fd7daebb1da973cae8e8a98825b812c60d5595a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:content::name"
+        },
+        "targetDigest": "d7cccf3956dc99185d40615271e5a9c1f841e6c6396e2528db25be1f5d6dd3fc"
+      },
+      {
+        "dependenciesDigest": "4ca46b5c40e7dabdbab222319870c03a1f6b3a55b2717db15ca5e59c05fc32fc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:context::tierapplicability"
+        },
+        "targetDigest": "2c194ffb29ca9cd77d97fabdd032927226703f73ccbff4943b91da3d8fbef4e3"
+      },
+      {
+        "dependenciesDigest": "ab4708f3d28efd27ac8c07ecf6bdbab016abc34b3168f98208793b7341decf71",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:0"
+        },
+        "targetDigest": "bec54a884826c50f4de09dc3ce1905f2dd840aba46148749a78b1cade169ce6a"
+      },
+      {
+        "dependenciesDigest": "e5f465ec9979f4c09b0a20616fc6f9c92959f99d1f43750f7268fc09f5452592",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:1"
+        },
+        "targetDigest": "24efff7841cff44ff0f01db520bf944bd5ef87ad4ed1ab40d0563337b1f2fbbc"
+      },
+      {
+        "dependenciesDigest": "26a27ec5d68e1f6d065deecae5cd668d631532d0f78196b4e208a8c503f88dcc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:2"
+        },
+        "targetDigest": "842990273d00f8934c1fa6ecf8ee15346258d4f2881aab37b654cc5bd9a72026"
+      },
+      {
+        "dependenciesDigest": "69a837cd265172db2a8871af015e5b96af8523528f79ec293a849700757c5ee4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:phosphor_pistol-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:62b4d12e02673db2:official::tierpresentations:options:3"
+        },
+        "targetDigest": "04bf022e872ebfb1fa4c06ff85965d36d8a0256240447af10169036649f326d9"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

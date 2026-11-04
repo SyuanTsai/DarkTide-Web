@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.6",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.8",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "1.2",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "value": {
+            "decimal": "0.6",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "value": {
+            "decimal": "0.8",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "value": {
+            "decimal": "1",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "value": {
+            "decimal": "1.2",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at active_duration; defined tier literals are tier 1=0.6, tier 2=0.8, tier 3=1, tier 4=1.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbc55f9130335b30e01aaff8d3e1bbb7bfc35943f38a3d104cb2d4bc28288f49",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "7cd7dcb352ac4d7797f9758efd8e0f599cdc1087b6fc34143851e9d77b6c734f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbc55f9130335b30e01aaff8d3e1bbb7bfc35943f38a3d104cb2d4bc28288f49",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbc55f9130335b30e01aaff8d3e1bbb7bfc35943f38a3d104cb2d4bc28288f49",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbc55f9130335b30e01aaff8d3e1bbb7bfc35943f38a3d104cb2d4bc28288f49",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "888d873f3329442359c08d053ac52bf350f482e158850b10d48271ebc82f2e7a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbc55f9130335b30e01aaff8d3e1bbb7bfc35943f38a3d104cb2d4bc28288f49",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5b319c15588da828e59cd6d1885866a1c815c9f538b188471875f983b36bc251",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "dc7f4fb588f2ea8abb1a8f5a11340e557600a056ee7aa4e90a74814f0a9f95a9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5b319c15588da828e59cd6d1885866a1c815c9f538b188471875f983b36bc251",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5b319c15588da828e59cd6d1885866a1c815c9f538b188471875f983b36bc251",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "targetDigest": "2bfd1d3f504c227263707185d5cacfe2227f6c298e1fbc1aaae3d669796b102d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "01998d46c11cdc705ad7eb15474fe444dd200547517a79bb64b4cea580a6a2a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "01998d46c11cdc705ad7eb15474fe444dd200547517a79bb64b4cea580a6a2a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "01998d46c11cdc705ad7eb15474fe444dd200547517a79bb64b4cea580a6a2a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "1298bfcce43f0f1442f54020291c12acb7e89a79e8744fe10acf77c7b2ac1a73"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "01998d46c11cdc705ad7eb15474fe444dd200547517a79bb64b4cea580a6a2a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "8e222854bf84c4a4e30d1142ef88c621eb352eef74d982b0bcfb1fae23a90dad"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "01998d46c11cdc705ad7eb15474fe444dd200547517a79bb64b4cea580a6a2a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "ed2ec9172a103025aade8b17ae9ea85bbd0c46679aca0a3d1948eec6c63b2499"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "127393bd824d5bae736a9749b55b062aacdddba344a130cc598686547b8d0ffa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "127393bd824d5bae736a9749b55b062aacdddba344a130cc598686547b8d0ffa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "127393bd824d5bae736a9749b55b062aacdddba344a130cc598686547b8d0ffa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "1298bfcce43f0f1442f54020291c12acb7e89a79e8744fe10acf77c7b2ac1a73"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "127393bd824d5bae736a9749b55b062aacdddba344a130cc598686547b8d0ffa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "8e222854bf84c4a4e30d1142ef88c621eb352eef74d982b0bcfb1fae23a90dad"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "127393bd824d5bae736a9749b55b062aacdddba344a130cc598686547b8d0ffa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "13aa6f12a95319361bb2a99045fcff894ac20db1da410b4f0fdebffc7393aa15"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0692d2048770ff646d4ee39619665f81c409c82f04f0711e8ae9a566368f4736",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0692d2048770ff646d4ee39619665f81c409c82f04f0711e8ae9a566368f4736",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0692d2048770ff646d4ee39619665f81c409c82f04f0711e8ae9a566368f4736",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "1298bfcce43f0f1442f54020291c12acb7e89a79e8744fe10acf77c7b2ac1a73"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0692d2048770ff646d4ee39619665f81c409c82f04f0711e8ae9a566368f4736",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "8e222854bf84c4a4e30d1142ef88c621eb352eef74d982b0bcfb1fae23a90dad"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0692d2048770ff646d4ee39619665f81c409c82f04f0711e8ae9a566368f4736",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "a0857678f00408c5853d45915ea5fc78c2e0d63b94d85c10feba70a4ab03bb62"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4252299cefa6acd19d218f7002e644b27d83410fb34fa373c28ebacd0530d779",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4252299cefa6acd19d218f7002e644b27d83410fb34fa373c28ebacd0530d779",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4252299cefa6acd19d218f7002e644b27d83410fb34fa373c28ebacd0530d779",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "1298bfcce43f0f1442f54020291c12acb7e89a79e8744fe10acf77c7b2ac1a73"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4252299cefa6acd19d218f7002e644b27d83410fb34fa373c28ebacd0530d779",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "8e222854bf84c4a4e30d1142ef88c621eb352eef74d982b0bcfb1fae23a90dad"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4252299cefa6acd19d218f7002e644b27d83410fb34fa373c28ebacd0530d779",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "c9fe0b4053421dcac5d2fc8bf88aa7ff0d32a694948c3bbc3097cf089b7490cd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a9f5d6aaadc54e7cd1aeb0764e3e36acd36675b6eda0585472815322a5f2e553",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-display-value-code"
+        },
+        "targetDigest": "a904b3b5f5ff51a3871ec3638d9c3e979f84e388350de9df6bdc91d7bb3a4844"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "3ad40b8defd27ae50563545044765bb930115243d856a715fa666870454968bf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-470; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:b358bc4e:key-unknown:en:1:g-ae234b8582598398:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Ghost",
+          "resolvedTextSha256": "df1bc4984a055e10b2863eb03abf11701cb63a1e2371dc398889e8291812fb80",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "df1bc4984a055e10b2863eb03abf11701cb63a1e2371dc398889e8291812fb80",
+              "text": "Ghost"
+            }
+          ],
+          "sourceHash": "b358bc4e",
+          "sourceLocale": "en",
+          "sourceText": "Ghost",
+          "sourceTextSha256": "df1bc4984a055e10b2863eb03abf11701cb63a1e2371dc398889e8291812fb80"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:b358bc4e:key-unknown:zh-tw:1:g-ae234b8582598398:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "幽靈",
+          "resolvedTextSha256": "e5017e24c27185ade47fac93d36ef4913a541bcb1142917e6610a82d1d3ddea6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e5017e24c27185ade47fac93d36ef4913a541bcb1142917e6610a82d1d3ddea6",
+              "text": "幽靈"
+            }
+          ],
+          "sourceHash": "b358bc4e",
+          "sourceLocale": "zh-TW",
+          "sourceText": "幽靈",
+          "sourceTextSha256": "e5017e24c27185ade47fac93d36ef4913a541bcb1142917e6610a82d1d3ddea6"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value",
+              "value": "0.6"
+            }
+          ],
+          "resolvedText": "Immune to Ranged Attacks for 0.6s on Weak Spot Hit.",
+          "resolvedTextSha256": "daa884b6ac49c4c01a3459c5ef66bba1e0195a25e3a98550efa1f769a5c64273",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "6e76fef45397f876edc122e5f50b581b1f25b975908026f29a2d08cfe4b19efa",
+              "text": "Immune to Ranged Attacks for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "en",
+          "sourceText": "Immune to Ranged Attacks for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "323d47b6ffa0b5a159b05b6118e00765284c221440e94cb963bae33384140fc6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value",
+              "value": "0.8"
+            }
+          ],
+          "resolvedText": "Immune to Ranged Attacks for 0.8s on Weak Spot Hit.",
+          "resolvedTextSha256": "06d4f580676bd96e4af6440faf96e1925b0075f07d2739172af509aa3ada31b7",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "6e76fef45397f876edc122e5f50b581b1f25b975908026f29a2d08cfe4b19efa",
+              "text": "Immune to Ranged Attacks for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "en",
+          "sourceText": "Immune to Ranged Attacks for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "323d47b6ffa0b5a159b05b6118e00765284c221440e94cb963bae33384140fc6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "Immune to Ranged Attacks for 1s on Weak Spot Hit.",
+          "resolvedTextSha256": "91223e2332d0604f3bfce65972274cfc61eef8e3897c82d400aa4f2e62f5a6e4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "6e76fef45397f876edc122e5f50b581b1f25b975908026f29a2d08cfe4b19efa",
+              "text": "Immune to Ranged Attacks for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "en",
+          "sourceText": "Immune to Ranged Attacks for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "323d47b6ffa0b5a159b05b6118e00765284c221440e94cb963bae33384140fc6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value",
+              "value": "1.2"
+            }
+          ],
+          "resolvedText": "Immune to Ranged Attacks for 1.2s on Weak Spot Hit.",
+          "resolvedTextSha256": "f771dbfbd7527782de3fff60911a8e0b7a04cf27676558e1765329f2db8d3315",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "6e76fef45397f876edc122e5f50b581b1f25b975908026f29a2d08cfe4b19efa",
+              "text": "Immune to Ranged Attacks for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "en",
+          "sourceText": "Immune to Ranged Attacks for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "323d47b6ffa0b5a159b05b6118e00765284c221440e94cb963bae33384140fc6"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value",
+              "value": "0.6"
+            }
+          ],
+          "resolvedText": "弱點攻擊後，免疫遠端攻擊0.6秒。",
+          "resolvedTextSha256": "993f43c583d1db3c766a8781230dd30301d4a53fb3d38a57217ed64c5a041a76",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3826c9ed58fe2f6a50b2aa4ca96c97a0973b053140073b777fe3e310e3d8737",
+              "text": "弱點攻擊後，免疫遠端攻擊"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊後，免疫遠端攻擊{time:%s}秒。",
+          "sourceTextSha256": "7d898a4e1063b0a519c210d30aa48af83f608d85f2fad712ac582b72ad0df662"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value",
+              "value": "0.8"
+            }
+          ],
+          "resolvedText": "弱點攻擊後，免疫遠端攻擊0.8秒。",
+          "resolvedTextSha256": "8b4bc771a565831f0d90f4f09ecff91b0b7ec07d86d229b8a835e31447f6bac9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3826c9ed58fe2f6a50b2aa4ca96c97a0973b053140073b777fe3e310e3d8737",
+              "text": "弱點攻擊後，免疫遠端攻擊"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊後，免疫遠端攻擊{time:%s}秒。",
+          "sourceTextSha256": "7d898a4e1063b0a519c210d30aa48af83f608d85f2fad712ac582b72ad0df662"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "弱點攻擊後，免疫遠端攻擊1秒。",
+          "resolvedTextSha256": "f6e42e56a002ab5f4844570a263ec32ad8cef7b6c1fcd334a198cd5382bb86fa",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3826c9ed58fe2f6a50b2aa4ca96c97a0973b053140073b777fe3e310e3d8737",
+              "text": "弱點攻擊後，免疫遠端攻擊"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊後，免疫遠端攻擊{time:%s}秒。",
+          "sourceTextSha256": "7d898a4e1063b0a519c210d30aa48af83f608d85f2fad712ac582b72ad0df662"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value",
+              "value": "1.2"
+            }
+          ],
+          "resolvedText": "弱點攻擊後，免疫遠端攻擊1.2秒。",
+          "resolvedTextSha256": "3c4075913269e6b31da35cf58c8282eda002ff73459f834f7e20cf77b2acfad8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3826c9ed58fe2f6a50b2aa4ca96c97a0973b053140073b777fe3e310e3d8737",
+              "text": "弱點攻擊後，免疫遠端攻擊"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊後，免疫遠端攻擊{time:%s}秒。",
+          "sourceTextSha256": "7d898a4e1063b0a519c210d30aa48af83f608d85f2fad712ac582b72ad0df662"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "幽靈",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:b358bc4e:key-unknown:en:1:g-ae234b8582598398:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:b358bc4e:key-unknown:zh-tw:1:g-ae234b8582598398:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:b358bc4e:key-unknown:zh-tw:1:g-ae234b8582598398:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_count_as_dodge_vs_ranged_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value",
+              "value": "1.2"
+            }
+          ],
+          "resolvedText": "弱點攻擊後，免疫遠端攻擊1.2秒。",
+          "resolvedTextSha256": "3c4075913269e6b31da35cf58c8282eda002ff73459f834f7e20cf77b2acfad8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3826c9ed58fe2f6a50b2aa4ca96c97a0973b053140073b777fe3e310e3d8737",
+              "text": "弱點攻擊後，免疫遠端攻擊"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "c9140fb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊後，免疫遠端攻擊{time:%s}秒。",
+          "sourceTextSha256": "7d898a4e1063b0a519c210d30aa48af83f608d85f2fad712ac582b72ad0df662"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier1-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier2-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier3-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:en:1:g-ae234b8582598398:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:c9140fb8:key-known:zh-tw:1:g-ae234b8582598398:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot-time-tier4-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:laspistol:p1-count-as-dodge-vs-ranged-on-weakspot"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "318b3b3cfc2622453811bdf2cf307e87b6c6dce1bac53ffa7155f71a5bfa8e72",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ae8b10a0de6e35b0032d03a1dc975211ebed46e3518e4fca14b680ef8fd1845b",
+          "targetId": "review:w06:generic:ae234b8582598398:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5f542aa483ec9a32c6427497f592f4c5402eba3437779eb58b2296367ec89a83",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f36157001f1ee11235502c61306389c3f5b1119bfc87adac21f84f7680438c2d",
+          "targetId": "review:w06:generic:ae234b8582598398:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "658bc5d922c87f2ba425960dacb9262e0963861d3992abb7250d1b7903495c97",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "598cde176ad99c729d92338b3ddce79117ac4f8cea82dc3f6e682ce9292cc7dc",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "fe714c21dcf9964d9c1aed33c494bca889d37c167757c51b6c040bd676117ebc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b4b284c272813972327da2452ecdd723499d5bf4cb8d9eaeda481a954cf515a8",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "fb855dabc28882a32d569d26443cbae016653a66d70724f23caa0086e319feac",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a0e3922eb16bb533ef153a29d77f74eb605d9eeb6d11b05a7938955da617e0ee",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "364bc72cca9c12e53d4708581f1b2ec96ffc3f30b87c4e6fd12197187ee2b9e5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d6ca2bc85be83149ae2c1399bd9e7b06bca102b8b725be76681230b605a59152",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "318b3b3cfc2622453811bdf2cf307e87b6c6dce1bac53ffa7155f71a5bfa8e72",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:content::name"
+        },
+        "targetDigest": "ae8b10a0de6e35b0032d03a1dc975211ebed46e3518e4fca14b680ef8fd1845b"
+      },
+      {
+        "dependenciesDigest": "5f542aa483ec9a32c6427497f592f4c5402eba3437779eb58b2296367ec89a83",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:context::tierapplicability"
+        },
+        "targetDigest": "f36157001f1ee11235502c61306389c3f5b1119bfc87adac21f84f7680438c2d"
+      },
+      {
+        "dependenciesDigest": "658bc5d922c87f2ba425960dacb9262e0963861d3992abb7250d1b7903495c97",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:0"
+        },
+        "targetDigest": "598cde176ad99c729d92338b3ddce79117ac4f8cea82dc3f6e682ce9292cc7dc"
+      },
+      {
+        "dependenciesDigest": "fe714c21dcf9964d9c1aed33c494bca889d37c167757c51b6c040bd676117ebc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:1"
+        },
+        "targetDigest": "b4b284c272813972327da2452ecdd723499d5bf4cb8d9eaeda481a954cf515a8"
+      },
+      {
+        "dependenciesDigest": "fb855dabc28882a32d569d26443cbae016653a66d70724f23caa0086e319feac",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:2"
+        },
+        "targetDigest": "a0e3922eb16bb533ef153a29d77f74eb605d9eeb6d11b05a7938955da617e0ee"
+      },
+      {
+        "dependenciesDigest": "364bc72cca9c12e53d4708581f1b2ec96ffc3f30b87c4e6fd12197187ee2b9e5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:laspistol-p1-count-as-dodge-vs-ranged-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ae234b8582598398:official::tierpresentations:options:3"
+        },
+        "targetDigest": "d6ca2bc85be83149ae2c1399bd9e7b06bca102b8b725be76681230b605a59152"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

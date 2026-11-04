@@ -1,0 +1,2550 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.055",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.06",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.065",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "6",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "6.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value power_level at stat_buffs.stat_buffs.power_level_modifier; defined tier literals are tier 1=0.05, tier 2=0.055, tier 3=0.06, tier 4=0.065.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at child_duration; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab6ee6972bddf0ef562e4eaa4467f7d390435da0a9815540ac53116219b3a07e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "9e944b5ead8b26745e70babf9e75b12867d77878fa4af363cb8d3d1c0e1e39a1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab6ee6972bddf0ef562e4eaa4467f7d390435da0a9815540ac53116219b3a07e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab6ee6972bddf0ef562e4eaa4467f7d390435da0a9815540ac53116219b3a07e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab6ee6972bddf0ef562e4eaa4467f7d390435da0a9815540ac53116219b3a07e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "f403503fae1caf08c62c37157869970b40cf1435d2a9b5cad17cb5c2a1f8f8c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ab6ee6972bddf0ef562e4eaa4467f7d390435da0a9815540ac53116219b3a07e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "972b6ce53054ca11fb356d98a6c2cf7f80a6811e8d080e4bb626bb9309780878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "c7fce0a1626d044197b1b73b5ecfb3a55ad3f0d1e9830e7d8d8138fb74b17268"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "972b6ce53054ca11fb356d98a6c2cf7f80a6811e8d080e4bb626bb9309780878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "972b6ce53054ca11fb356d98a6c2cf7f80a6811e8d080e4bb626bb9309780878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+        },
+        "targetDigest": "3fe4c9224afae80c77342fa6cc1dcaece60897b9d83b5838b78c98f8b3126dda"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6a259dc2baa2bb99c4123e36e94b8dd9e0ba6c2ed25e55d5c2c7a0c60118359e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6a259dc2baa2bb99c4123e36e94b8dd9e0ba6c2ed25e55d5c2c7a0c60118359e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6a259dc2baa2bb99c4123e36e94b8dd9e0ba6c2ed25e55d5c2c7a0c60118359e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "8c41ce0aad4bd04263bc3c32bd612f414465e8d18016f649f9cdceaa36484339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6a259dc2baa2bb99c4123e36e94b8dd9e0ba6c2ed25e55d5c2c7a0c60118359e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6a259dc2baa2bb99c4123e36e94b8dd9e0ba6c2ed25e55d5c2c7a0c60118359e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "27337c098020ddde9229d033eebb7b3ccbc6b7a7d6d5353d9cbe60fead9c8d9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "27337c098020ddde9229d033eebb7b3ccbc6b7a7d6d5353d9cbe60fead9c8d9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "27337c098020ddde9229d033eebb7b3ccbc6b7a7d6d5353d9cbe60fead9c8d9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "8c41ce0aad4bd04263bc3c32bd612f414465e8d18016f649f9cdceaa36484339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "27337c098020ddde9229d033eebb7b3ccbc6b7a7d6d5353d9cbe60fead9c8d9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "27337c098020ddde9229d033eebb7b3ccbc6b7a7d6d5353d9cbe60fead9c8d9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+        },
+        "targetDigest": "5c6d5e1c03ce6242bc58d47157a9fda8c44e16b946fe155aa9cf78ff588bafce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "176497ac92506ef4d2cf26bf02e19676a9402d6995dec1596e58d5215f57351c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "176497ac92506ef4d2cf26bf02e19676a9402d6995dec1596e58d5215f57351c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "176497ac92506ef4d2cf26bf02e19676a9402d6995dec1596e58d5215f57351c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "8c41ce0aad4bd04263bc3c32bd612f414465e8d18016f649f9cdceaa36484339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "176497ac92506ef4d2cf26bf02e19676a9402d6995dec1596e58d5215f57351c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "176497ac92506ef4d2cf26bf02e19676a9402d6995dec1596e58d5215f57351c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+        },
+        "targetDigest": "5251cd53fe45d4339555cfb6a5c7a58b7ea9c49b45d3753f4d8214a59cdc5b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aac246c5f4e8b3a6cbaa7b11c53e634b84018adc45816ca7d471dbf8f11290a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aac246c5f4e8b3a6cbaa7b11c53e634b84018adc45816ca7d471dbf8f11290a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aac246c5f4e8b3a6cbaa7b11c53e634b84018adc45816ca7d471dbf8f11290a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "8c41ce0aad4bd04263bc3c32bd612f414465e8d18016f649f9cdceaa36484339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aac246c5f4e8b3a6cbaa7b11c53e634b84018adc45816ca7d471dbf8f11290a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aac246c5f4e8b3a6cbaa7b11c53e634b84018adc45816ca7d471dbf8f11290a6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+        },
+        "targetDigest": "67f1cebfb2d282ea4414c9f8871fa79e13d0fcca8c1220a1281a7e4ba08e8d9f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbd2832a945943565e36241e5d4f550430bcc0548c267534f716bdca49165cd4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbd2832a945943565e36241e5d4f550430bcc0548c267534f716bdca49165cd4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbd2832a945943565e36241e5d4f550430bcc0548c267534f716bdca49165cd4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "5eeb08df8d69a145f458c6c9056a84e48339fccea588da7fce37f690f38a9994"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbd2832a945943565e36241e5d4f550430bcc0548c267534f716bdca49165cd4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbd2832a945943565e36241e5d4f550430bcc0548c267534f716bdca49165cd4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f331ede6fb37c6cc9205ece43b0996947536c0ede9597e0672ce168c595fce56",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f331ede6fb37c6cc9205ece43b0996947536c0ede9597e0672ce168c595fce56",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f331ede6fb37c6cc9205ece43b0996947536c0ede9597e0672ce168c595fce56",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "2465a1ebb82957131b6c0e8cbb9a6b4072bb0588dd5b5a7ee970ee927fbff4bb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f331ede6fb37c6cc9205ece43b0996947536c0ede9597e0672ce168c595fce56",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "535499e4a92c73d613998e0ee51be7c8f846994b99a91dea6af60310a0751479"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f331ede6fb37c6cc9205ece43b0996947536c0ede9597e0672ce168c595fce56",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+        },
+        "targetDigest": "db60253728334e33549e325958aab2ed8cff7ccacaadc2c8eeffcae5a6394769"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e981be6fdb171df90c8a6f712b4b17340d436ba6fc6560455f98ba60681eb0e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-power-level-display-percent-code"
+        },
+        "targetDigest": "e6fff0af369674a9441c2b302468cb2eeb29b2aa0743d23b488c43cefed7c0f6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "219787ef699f09174a3a06c8403c71969b3e090c8e6b70601e3bd9663996441b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-stacks-display-value-code"
+        },
+        "targetDigest": "ef245b3f6b60874ac24ea4196fc266de62e092620cb433d3883742011d6f52f4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1b258b11a881e226295fe0dbec1c81d6677e67f0958cb6ed536fb03c4d8c3882",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-increase-power-on-close-kill-time-display-value-code"
+        },
+        "targetDigest": "e05ab6d84c0250286004bf85f7401f2daa237433359992cb676f49ba1f594260"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "af514732d0bbff1c5101a16b7f2af0995b295fa55e74b8f15c713d6d1d62f8cd",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "0c50970de63dfb212853a211e9bf4e88c862ae02e1afec9b154ac4757779b7bc",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 12 bespoke traits span lines 9-615; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:00d6e1d9:key-unknown:en:1:g-c745dfe4a3e117c7:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Deathspitter",
+          "resolvedTextSha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6",
+              "text": "Deathspitter"
+            }
+          ],
+          "sourceHash": "00d6e1d9",
+          "sourceLocale": "en",
+          "sourceText": "Deathspitter",
+          "sourceTextSha256": "f2ac23053c28a4a0d23e8de309e2fa2abfc574e06a9a5dbaefa63c460d3a75a6"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-c745dfe4a3e117c7:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "死亡噴吐",
+          "resolvedTextSha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca",
+              "text": "死亡噴吐"
+            }
+          ],
+          "sourceHash": "00d6e1d9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "死亡噴吐",
+          "sourceTextSha256": "1f73840829b69c7c3ff210dd26db3988acfe9d7aae1caca0906e60b40285fbca"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+5% Strength for 5s on Close Range Kill.",
+          "resolvedTextSha256": "efe4aaa567ae1f8014260baea2d433e328f8cc9e49ff2315551f403e10939456",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+5.5% Strength for 5s on Close Range Kill.",
+          "resolvedTextSha256": "df861bd684152b7832b3e1c8abdb51278e4f414df93bdd3de8af286df56d43b3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+6% Strength for 5s on Close Range Kill.",
+          "resolvedTextSha256": "95104bdd91c5a268e72d1e4ee1e78dc6ec4aa5e3db4196a576d2ecc328caf277",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+6.5% Strength for 5s on Close Range Kill.",
+          "resolvedTextSha256": "efe818e99e7857ba2cda50493bb2caf5d5c545e41244557e3a9a5ef32a94b613",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "52c720cd9edab284965f48931b71c63e63e90a884b7a4eb48ed8b40631c033bb",
+              "text": "s on Close Range Kill."
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s on Close Range Kill.",
+          "sourceTextSha256": "7644eba762681e5ac239a87c00dd55e9786ccdc063f56c08592124037feabe4e"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+5%，持續5秒。",
+          "resolvedTextSha256": "fd7fc381dd42dff3247a9f79c7fb6b0a3b7770ef9aeb7c4d0230d29cba329779",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+5.5%，持續5秒。",
+          "resolvedTextSha256": "ccd0b589dbf34a541fada0de2a4b66fab530ed42d37d50b3f7c8aeb2c0675c5c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6%，持續5秒。",
+          "resolvedTextSha256": "896736fee3e2a6654917978812e5aac54b40e6df03a4f5c8b5070fd3e1dd3212",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6.5%，持續5秒。",
+          "resolvedTextSha256": "c0c6ea0ef245ccebb259e5b5a42d70cd1cd9f59ce13cc4be2817e385cadf6b87",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "死亡噴吐",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:00d6e1d9:key-unknown:en:1:g-c745dfe4a3e117c7:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-c745dfe4a3e117c7:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:00d6e1d9:key-unknown:zh-tw:1:g-c745dfe4a3e117c7:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-increase-power-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_power_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent",
+              "value": "+6.5%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "近戰攻擊擊殺後威力提升+6.5%，持續5秒。",
+          "resolvedTextSha256": "c0c6ea0ef245ccebb259e5b5a42d70cd1cd9f59ce13cc4be2817e385cadf6b87",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c67d1c61443bef95e2d0dbf6ef5bfa64f38ef73f9a6f59aaa5fd08256e760975",
+              "text": "近戰攻擊擊殺後威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "fe798d47",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近戰攻擊擊殺後威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "ad3fc57f6f3dd588785c6281a0e0518a58b5aaca7b56bfa1f2694d92913e7913"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:en:1:g-c745dfe4a3e117c7:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:fe798d47:key-known:zh-tw:1:g-c745dfe4a3e117c7:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-power-level-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-increase-power-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p2-increase-power-on-close-kill"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d199744baacd09bfeecbc28b74c00e0807453b13aedcda1a5d7a593e3ef80604",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "74eb5432cd42d0b8a08d400297b730983394e964027b41de0010b6f86a73c716",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ceeb2eedbab5ed48cc1645225f8b88dc9bba2333f3066da8732efb61933faa2d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "87ec192af6e3559049eb1fa32208295e90b241dcf8ba291c926fd167ee67e17b",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "aa39fb5cad4d26caa316927bde8d83dd1c4386df2de566fbf2ba8a5265b527d7",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "97933167199e9f4d1f2481457caa97762c5f3e4d014c7974c61bd0e8d0369c4a",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ad9b6e9e7eb462f42e4b393a0dab8e74f3a83ba0df6e51d975c4b2ca1c27a52b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "84ba15db699eb40ef66a6c6492424542363d2492dd231388e64f2e1cf9aeab87",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "358cbf2f34cf43199f8b573850a222247e0c479fb498a4a55517a3723ec23587",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "13ddbaae8e18638832e98cbf6769c5b11241bf8493ae2a8228d909b5cde7a881",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a2c18939a23a705b6e4f6adf294dc97b5e9b690a090f6ee4d8c166910d3c741f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "211386ea1e9e90d7ddc3fff3ac287b664da971a359fc8127d6b6feb165420bda",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "d199744baacd09bfeecbc28b74c00e0807453b13aedcda1a5d7a593e3ef80604",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:content::name"
+        },
+        "targetDigest": "74eb5432cd42d0b8a08d400297b730983394e964027b41de0010b6f86a73c716"
+      },
+      {
+        "dependenciesDigest": "ceeb2eedbab5ed48cc1645225f8b88dc9bba2333f3066da8732efb61933faa2d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:context::tierapplicability"
+        },
+        "targetDigest": "87ec192af6e3559049eb1fa32208295e90b241dcf8ba291c926fd167ee67e17b"
+      },
+      {
+        "dependenciesDigest": "aa39fb5cad4d26caa316927bde8d83dd1c4386df2de566fbf2ba8a5265b527d7",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:0"
+        },
+        "targetDigest": "97933167199e9f4d1f2481457caa97762c5f3e4d014c7974c61bd0e8d0369c4a"
+      },
+      {
+        "dependenciesDigest": "ad9b6e9e7eb462f42e4b393a0dab8e74f3a83ba0df6e51d975c4b2ca1c27a52b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:1"
+        },
+        "targetDigest": "84ba15db699eb40ef66a6c6492424542363d2492dd231388e64f2e1cf9aeab87"
+      },
+      {
+        "dependenciesDigest": "358cbf2f34cf43199f8b573850a222247e0c479fb498a4a55517a3723ec23587",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:2"
+        },
+        "targetDigest": "13ddbaae8e18638832e98cbf6769c5b11241bf8493ae2a8228d909b5cde7a881"
+      },
+      {
+        "dependenciesDigest": "a2c18939a23a705b6e4f6adf294dc97b5e9b690a090f6ee4d8c166910d3c741f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p2-increase-power-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:c745dfe4a3e117c7:official::tierpresentations:options:3"
+        },
+        "targetDigest": "211386ea1e9e90d7ddc3fff3ac287b664da971a359fc8127d6b6feb165420bda"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

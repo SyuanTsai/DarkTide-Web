@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "2",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "3",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "4",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+          },
+          "value": {
+            "decimal": "1",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+          },
+          "value": {
+            "decimal": "4",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_bolter_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at target_buff_data.num_stacks_on_proc; defined tier literals are tier 1=1, tier 2=2, tier 3=3, tier 4=4.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "534c49b653e8f2f37d0bd3618beb64302ef192fdccda731230b6c9c762c38cd1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "ccb12c9a5955b96ee0215643fce612ff1be8d80e5c02d3b2d56eae610bacaf4b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "534c49b653e8f2f37d0bd3618beb64302ef192fdccda731230b6c9c762c38cd1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "534c49b653e8f2f37d0bd3618beb64302ef192fdccda731230b6c9c762c38cd1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "534c49b653e8f2f37d0bd3618beb64302ef192fdccda731230b6c9c762c38cd1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "55f5840a24ed62c410491e222cabc7f9d644da9d8251ecc3361a86eeab3d73cf"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "534c49b653e8f2f37d0bd3618beb64302ef192fdccda731230b6c9c762c38cd1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5e4b0fb9ee1a0d3f82f3aaf05f49812e20dd672a7e34664dc4af348ca5b6f6aa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "9f2ce9aabcc926c562bb6cd4a72a292c6c587411fcb97ef317237071d2d9bb6d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5e4b0fb9ee1a0d3f82f3aaf05f49812e20dd672a7e34664dc4af348ca5b6f6aa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5e4b0fb9ee1a0d3f82f3aaf05f49812e20dd672a7e34664dc4af348ca5b6f6aa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+        },
+        "targetDigest": "4aadd84e44531d2cc9202002547e5bb5cb6caf3ea93c8b4f1ce44d8bf30e82e7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1ed6cf6bfa5e4d5dcea98de1187319d66cc9835900e1ebfc10be997f1c360528",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1ed6cf6bfa5e4d5dcea98de1187319d66cc9835900e1ebfc10be997f1c360528",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1ed6cf6bfa5e4d5dcea98de1187319d66cc9835900e1ebfc10be997f1c360528",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+        },
+        "targetDigest": "45d17d1ba49ad7813702799d7f6dd8d028cba752907fa1325d1ffcd3fd873f8c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1ed6cf6bfa5e4d5dcea98de1187319d66cc9835900e1ebfc10be997f1c360528",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+        },
+        "targetDigest": "9f5600de6bae75ddf75740b38ae28377867a1c4cc2ab92693ce5d1c7c7a134cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1ed6cf6bfa5e4d5dcea98de1187319d66cc9835900e1ebfc10be997f1c360528",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+        },
+        "targetDigest": "27a6a51c52f2b3a75c75bbf8dff4deb8070a9582b8b36cad3eef453c18e0b164"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd6adb4e3c1e768504a7671786cd6834921bb4ce75137566014c8e99dc0af1f7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd6adb4e3c1e768504a7671786cd6834921bb4ce75137566014c8e99dc0af1f7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd6adb4e3c1e768504a7671786cd6834921bb4ce75137566014c8e99dc0af1f7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+        },
+        "targetDigest": "45d17d1ba49ad7813702799d7f6dd8d028cba752907fa1325d1ffcd3fd873f8c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd6adb4e3c1e768504a7671786cd6834921bb4ce75137566014c8e99dc0af1f7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+        },
+        "targetDigest": "9f5600de6bae75ddf75740b38ae28377867a1c4cc2ab92693ce5d1c7c7a134cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd6adb4e3c1e768504a7671786cd6834921bb4ce75137566014c8e99dc0af1f7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+        },
+        "targetDigest": "a23605c8b064ca7a4b25c895e0b46467d0dfa0de1c10f9fc8fc799b0678c8498"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ec5e435522d0644eb7592bb70933e19e72b299eb034d6f7efb6e081fffe0c0e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ec5e435522d0644eb7592bb70933e19e72b299eb034d6f7efb6e081fffe0c0e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ec5e435522d0644eb7592bb70933e19e72b299eb034d6f7efb6e081fffe0c0e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+        },
+        "targetDigest": "45d17d1ba49ad7813702799d7f6dd8d028cba752907fa1325d1ffcd3fd873f8c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ec5e435522d0644eb7592bb70933e19e72b299eb034d6f7efb6e081fffe0c0e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+        },
+        "targetDigest": "9f5600de6bae75ddf75740b38ae28377867a1c4cc2ab92693ce5d1c7c7a134cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ec5e435522d0644eb7592bb70933e19e72b299eb034d6f7efb6e081fffe0c0e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+        },
+        "targetDigest": "9926c02f3a35cfd08b23139f1903cde86470e0e90bdb7b23c3291922d0146f10"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6419b3783e3f45904fbb91243732aa21a2dd81452c5ae4c2c59d298caf442262",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6419b3783e3f45904fbb91243732aa21a2dd81452c5ae4c2c59d298caf442262",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6419b3783e3f45904fbb91243732aa21a2dd81452c5ae4c2c59d298caf442262",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+        },
+        "targetDigest": "45d17d1ba49ad7813702799d7f6dd8d028cba752907fa1325d1ffcd3fd873f8c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6419b3783e3f45904fbb91243732aa21a2dd81452c5ae4c2c59d298caf442262",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+        },
+        "targetDigest": "9f5600de6bae75ddf75740b38ae28377867a1c4cc2ab92693ce5d1c7c7a134cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6419b3783e3f45904fbb91243732aa21a2dd81452c5ae4c2c59d298caf442262",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+        },
+        "targetDigest": "5ebe08cae0ceaf5d7b4ff259a9f06433242775129fdc59151422a2013e4c57bc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4903f07ca50ec3c644fcd3f2dbd68dafb4e1093506aa57047ca2559257168422",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:bolter:p1-bleed-on-ranged-stacks-display-value-code"
+        },
+        "targetDigest": "34e346cf03f9822f09ac7c253482dbdce2b9cd181bc607494a30eed2fa52c358"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "098412307d7a0887624e94c1fbde683395d4a94e2050f61f5d1aaece1fd78d3b",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_bolter_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_bolter_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-464; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-bolter-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:312743c2:key-unknown:en:1:g-97185e3307e502fb:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Puncture",
+          "resolvedTextSha256": "d240ed1ddd93dfbfb530ba45589a4e0e2f827a203a7a937b95b6f38164d6071a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "d240ed1ddd93dfbfb530ba45589a4e0e2f827a203a7a937b95b6f38164d6071a",
+              "text": "Puncture"
+            }
+          ],
+          "sourceHash": "312743c2",
+          "sourceLocale": "en",
+          "sourceText": "Puncture",
+          "sourceTextSha256": "d240ed1ddd93dfbfb530ba45589a4e0e2f827a203a7a937b95b6f38164d6071a"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:312743c2:key-unknown:zh-tw:1:g-97185e3307e502fb:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "出血穿透",
+          "resolvedTextSha256": "7c629f3bb8c615c1f025e9d1490f7966f200d61cbae090854178c761c57e2b37",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7c629f3bb8c615c1f025e9d1490f7966f200d61cbae090854178c761c57e2b37",
+              "text": "出血穿透"
+            }
+          ],
+          "sourceHash": "312743c2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "出血穿透",
+          "sourceTextSha256": "7c629f3bb8c615c1f025e9d1490f7966f200d61cbae090854178c761c57e2b37"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "Ranged hits add 1 stacks of bleed to enemies.",
+          "resolvedTextSha256": "9c062ced6591c775e00edfdcbe2795258ca0d232213159869ae8c7aca961f3bd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e4fcdbead3ee5bca5574b8a7c5e1e46f7dff2d79e12eafe608114916f96619db",
+              "text": "Ranged hits add "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ed486c6db002f8a1ec9f9725bfd31c6c2d6a744381faf8382f08566d6b7d68da",
+              "text": " stacks of bleed to enemies."
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "en",
+          "sourceText": "Ranged hits add {stacks:%s} stacks of bleed to enemies.",
+          "sourceTextSha256": "0eec7f4f8c4d35dfdc16ab487614603b1226f45a5e2ee228bc70a270e2dddc18"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "Ranged hits add 2 stacks of bleed to enemies.",
+          "resolvedTextSha256": "854077b44b8e8621144b204d22a3c539dd7bc3ca6e6dfe6f8ec02934b4bfa3ec",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e4fcdbead3ee5bca5574b8a7c5e1e46f7dff2d79e12eafe608114916f96619db",
+              "text": "Ranged hits add "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ed486c6db002f8a1ec9f9725bfd31c6c2d6a744381faf8382f08566d6b7d68da",
+              "text": " stacks of bleed to enemies."
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "en",
+          "sourceText": "Ranged hits add {stacks:%s} stacks of bleed to enemies.",
+          "sourceTextSha256": "0eec7f4f8c4d35dfdc16ab487614603b1226f45a5e2ee228bc70a270e2dddc18"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "Ranged hits add 3 stacks of bleed to enemies.",
+          "resolvedTextSha256": "2fd8e760432253dd1e46bd2d9aaa16903dcda661f690f5f7fb32a8cad6615aa4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e4fcdbead3ee5bca5574b8a7c5e1e46f7dff2d79e12eafe608114916f96619db",
+              "text": "Ranged hits add "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ed486c6db002f8a1ec9f9725bfd31c6c2d6a744381faf8382f08566d6b7d68da",
+              "text": " stacks of bleed to enemies."
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "en",
+          "sourceText": "Ranged hits add {stacks:%s} stacks of bleed to enemies.",
+          "sourceTextSha256": "0eec7f4f8c4d35dfdc16ab487614603b1226f45a5e2ee228bc70a270e2dddc18"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "Ranged hits add 4 stacks of bleed to enemies.",
+          "resolvedTextSha256": "04ef1757199b1a0a34307a3ee032b6994f86c91b02def7866a6fae203a71b98a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e4fcdbead3ee5bca5574b8a7c5e1e46f7dff2d79e12eafe608114916f96619db",
+              "text": "Ranged hits add "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ed486c6db002f8a1ec9f9725bfd31c6c2d6a744381faf8382f08566d6b7d68da",
+              "text": " stacks of bleed to enemies."
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "en",
+          "sourceText": "Ranged hits add {stacks:%s} stacks of bleed to enemies.",
+          "sourceTextSha256": "0eec7f4f8c4d35dfdc16ab487614603b1226f45a5e2ee228bc70a270e2dddc18"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "遠程攻擊命中將對敵人疊加1層流血效果。",
+          "resolvedTextSha256": "957f74f7ae7854542905686338fb03fec921a4468f902b86942602f31dd2f4ff",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5db27a60d3e3663da35a4350c4f8127570f7dc12b96dce8abc4138a44c3fdca7",
+              "text": "遠程攻擊命中將對敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6c5207044bc09588a4c0eb6513b0f867ad9657aa2b1d1b8aadfa7d753c2a2d28",
+              "text": "層流血效果。"
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "遠程攻擊命中將對敵人疊加{stacks:%s}層流血效果。",
+          "sourceTextSha256": "67c9004d401830631914d98ba244adba76b2412c5f7f98cf374d49ade2602fc4"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "遠程攻擊命中將對敵人疊加2層流血效果。",
+          "resolvedTextSha256": "b30123d6cb11b62567ecda5865c66cd544aad3a88cdb60852f7c4e67ffa5fa4c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5db27a60d3e3663da35a4350c4f8127570f7dc12b96dce8abc4138a44c3fdca7",
+              "text": "遠程攻擊命中將對敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6c5207044bc09588a4c0eb6513b0f867ad9657aa2b1d1b8aadfa7d753c2a2d28",
+              "text": "層流血效果。"
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "遠程攻擊命中將對敵人疊加{stacks:%s}層流血效果。",
+          "sourceTextSha256": "67c9004d401830631914d98ba244adba76b2412c5f7f98cf374d49ade2602fc4"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "遠程攻擊命中將對敵人疊加3層流血效果。",
+          "resolvedTextSha256": "d94844205e8f0dce925d1a1bc4cf291569ce5cea61f7b32d7f569ff0effc0dda",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5db27a60d3e3663da35a4350c4f8127570f7dc12b96dce8abc4138a44c3fdca7",
+              "text": "遠程攻擊命中將對敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6c5207044bc09588a4c0eb6513b0f867ad9657aa2b1d1b8aadfa7d753c2a2d28",
+              "text": "層流血效果。"
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "遠程攻擊命中將對敵人疊加{stacks:%s}層流血效果。",
+          "sourceTextSha256": "67c9004d401830631914d98ba244adba76b2412c5f7f98cf374d49ade2602fc4"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "遠程攻擊命中將對敵人疊加4層流血效果。",
+          "resolvedTextSha256": "694344d35e6fcbee62b2738bfbe9b9cb4f01b1ebaa22552f1e0660071a01f547",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5db27a60d3e3663da35a4350c4f8127570f7dc12b96dce8abc4138a44c3fdca7",
+              "text": "遠程攻擊命中將對敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6c5207044bc09588a4c0eb6513b0f867ad9657aa2b1d1b8aadfa7d753c2a2d28",
+              "text": "層流血效果。"
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "遠程攻擊命中將對敵人疊加{stacks:%s}層流血效果。",
+          "sourceTextSha256": "67c9004d401830631914d98ba244adba76b2412c5f7f98cf374d49ade2602fc4"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:bolter-p1-bleed-on-ranged",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "出血穿透",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:312743c2:key-unknown:en:1:g-97185e3307e502fb:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:312743c2:key-unknown:zh-tw:1:g-97185e3307e502fb:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:312743c2:key-unknown:zh-tw:1:g-97185e3307e502fb:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:bolter:p1-bleed-on-ranged"
+          },
+          "key": "loc_trait_bespoke_bleed_on_ranged_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "遠程攻擊命中將對敵人疊加4層流血效果。",
+          "resolvedTextSha256": "694344d35e6fcbee62b2738bfbe9b9cb4f01b1ebaa22552f1e0660071a01f547",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5db27a60d3e3663da35a4350c4f8127570f7dc12b96dce8abc4138a44c3fdca7",
+              "text": "遠程攻擊命中將對敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6c5207044bc09588a4c0eb6513b0f867ad9657aa2b1d1b8aadfa7d753c2a2d28",
+              "text": "層流血效果。"
+            }
+          ],
+          "sourceHash": "49118e7c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "遠程攻擊命中將對敵人疊加{stacks:%s}層流血效果。",
+          "sourceTextSha256": "67c9004d401830631914d98ba244adba76b2412c5f7f98cf374d49ade2602fc4"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier1-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier2-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier3-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:en:1:g-97185e3307e502fb:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:49118e7c:key-known:zh-tw:1:g-97185e3307e502fb:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:bolter:p1-bleed-on-ranged-stacks-tier4-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:bolter:p1-bleed-on-ranged"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "63b9b1797d6e20820e8a67ac40d5fe80644558aa9472602a27c7ddd0615bbf62",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d216e349fb409f377eb5a50149500200602f8620dd8dc23d5ed405c753568e79",
+          "targetId": "review:w06:generic:97185e3307e502fb:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f1879b065dcf5dc91132998d0e480d2578de96ac7ee33b08707ca8380bc0fefe",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "308265ab88ceb543211a8240ad20aedb1102fa65b71f660c224108e94eed7276",
+          "targetId": "review:w06:generic:97185e3307e502fb:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d773d4b401b7fcafdc2f6b16a92dab4e623f9574f59b0829233b2dc9ab397aa6",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5fa05be27a36749a67d597f93229b5d5d8ec6a5340c05c6d02d3cbf672ee8d11",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8efe47b8a70e9b7eb726d0bdf38231c3ed7ed67e0c72192823856568bda99cae",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "863e7b461f51df7db75420e73b1a58cf6a635f52d621efc5e14147c54fcb39e5",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "6d8f7cc58be3890cbc4a7e15d72f3b6d2b8704669d1703e5a38abb697f6e52a1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "86927f6566b2e05f6f10c0e9fe254f73257042f8b10843f5d9487d788f917722",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f27a367ef2635c44cc67d1467b6c9b9a6fcef71ac97e80202e24e5f0d188ee0c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7aaae0f8dd58e862c3cf590d6f57471a4cb0adffcd844475927a1a24fadf136e",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "63b9b1797d6e20820e8a67ac40d5fe80644558aa9472602a27c7ddd0615bbf62",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:content::name"
+        },
+        "targetDigest": "d216e349fb409f377eb5a50149500200602f8620dd8dc23d5ed405c753568e79"
+      },
+      {
+        "dependenciesDigest": "f1879b065dcf5dc91132998d0e480d2578de96ac7ee33b08707ca8380bc0fefe",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:context::tierapplicability"
+        },
+        "targetDigest": "308265ab88ceb543211a8240ad20aedb1102fa65b71f660c224108e94eed7276"
+      },
+      {
+        "dependenciesDigest": "d773d4b401b7fcafdc2f6b16a92dab4e623f9574f59b0829233b2dc9ab397aa6",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:0"
+        },
+        "targetDigest": "5fa05be27a36749a67d597f93229b5d5d8ec6a5340c05c6d02d3cbf672ee8d11"
+      },
+      {
+        "dependenciesDigest": "8efe47b8a70e9b7eb726d0bdf38231c3ed7ed67e0c72192823856568bda99cae",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:1"
+        },
+        "targetDigest": "863e7b461f51df7db75420e73b1a58cf6a635f52d621efc5e14147c54fcb39e5"
+      },
+      {
+        "dependenciesDigest": "6d8f7cc58be3890cbc4a7e15d72f3b6d2b8704669d1703e5a38abb697f6e52a1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:2"
+        },
+        "targetDigest": "86927f6566b2e05f6f10c0e9fe254f73257042f8b10843f5d9487d788f917722"
+      },
+      {
+        "dependenciesDigest": "f27a367ef2635c44cc67d1467b6c9b9a6fcef71ac97e80202e24e5f0d188ee0c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:bolter-p1-bleed-on-ranged",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:97185e3307e502fb:official::tierpresentations:options:3"
+        },
+        "targetDigest": "7aaae0f8dd58e862c3cf590d6f57471a4cb0adffcd844475927a1a24fadf136e"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

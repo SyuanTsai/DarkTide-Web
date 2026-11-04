@@ -1,0 +1,2174 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.02",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.03",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.04",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "value": {
+            "decimal": "4",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_chance at stat_buffs.stat_buffs.critical_strike_chance; defined tier literals are tier 1=0.02, tier 2=0.03, tier 3=0.04, tier 4=0.05.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_laspistol_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7f8fe4b64f1f19ade5dc220254de337dbce6e2e5d816b192a7e663587b0a1b75",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "87f813c0a6a4baf2f81369dc93048c8af28494c0a7d8c613e4b56348c63bedbc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7f8fe4b64f1f19ade5dc220254de337dbce6e2e5d816b192a7e663587b0a1b75",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7f8fe4b64f1f19ade5dc220254de337dbce6e2e5d816b192a7e663587b0a1b75",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7f8fe4b64f1f19ade5dc220254de337dbce6e2e5d816b192a7e663587b0a1b75",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "114c5183000e97b2716fe5c3f9ef11297cf74bcf965907be356b0059bd573420"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7f8fe4b64f1f19ade5dc220254de337dbce6e2e5d816b192a7e663587b0a1b75",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "584c5e93788e65823bb7b7d05ebf9cbd11718fda5b6813529856f399550eb217",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "71a3d434ed36d597fe0f20f1a7c596369ae41678843356f774a5fd2a3e1d74b8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "584c5e93788e65823bb7b7d05ebf9cbd11718fda5b6813529856f399550eb217",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "584c5e93788e65823bb7b7d05ebf9cbd11718fda5b6813529856f399550eb217",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "targetDigest": "358739d4a21b8af6622599b1fc4580ec16f252a65bc437dce6f8fc6f0a7cce09"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cbe6704d0fdd0b7b70b2df7e49709d76332371b216102342b6b0a676c3634224",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cbe6704d0fdd0b7b70b2df7e49709d76332371b216102342b6b0a676c3634224",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cbe6704d0fdd0b7b70b2df7e49709d76332371b216102342b6b0a676c3634224",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "d907ce594874283bb5085c2d51c86ed53b6c414646c4db29fad96f343abda2a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cbe6704d0fdd0b7b70b2df7e49709d76332371b216102342b6b0a676c3634224",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "7fb9876672f8ec7c8f8c7736d4bcc85b95abc1fabee805155efb15bc7d2e5471"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cbe6704d0fdd0b7b70b2df7e49709d76332371b216102342b6b0a676c3634224",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "d6cca816e664354d1ff7022c15c900ca5e01a4c0b82f955f413cbecc08be7de5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b9d300ccbd7e471d7a5a161932b0363d4e94751e70a59275851e69a9d80c471e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b9d300ccbd7e471d7a5a161932b0363d4e94751e70a59275851e69a9d80c471e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b9d300ccbd7e471d7a5a161932b0363d4e94751e70a59275851e69a9d80c471e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "d907ce594874283bb5085c2d51c86ed53b6c414646c4db29fad96f343abda2a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b9d300ccbd7e471d7a5a161932b0363d4e94751e70a59275851e69a9d80c471e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "7fb9876672f8ec7c8f8c7736d4bcc85b95abc1fabee805155efb15bc7d2e5471"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b9d300ccbd7e471d7a5a161932b0363d4e94751e70a59275851e69a9d80c471e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "e2c5d5bb77537dfa67c6ddb1d940345b94bfee1dfe636d34029aed91eb688c79"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1d087237e73410e314f8dbfe6ce073409e8669c188675c526fba151a01a157f9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1d087237e73410e314f8dbfe6ce073409e8669c188675c526fba151a01a157f9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1d087237e73410e314f8dbfe6ce073409e8669c188675c526fba151a01a157f9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "d907ce594874283bb5085c2d51c86ed53b6c414646c4db29fad96f343abda2a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1d087237e73410e314f8dbfe6ce073409e8669c188675c526fba151a01a157f9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "7fb9876672f8ec7c8f8c7736d4bcc85b95abc1fabee805155efb15bc7d2e5471"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1d087237e73410e314f8dbfe6ce073409e8669c188675c526fba151a01a157f9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "f03b525053797fb75fc39c3005b64160a12519c4e3e86041b03c6ab669b12416"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "758b740da1cfd2c15fbcc96a921014d778a49d8468936904b7fe0b37109576f6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "758b740da1cfd2c15fbcc96a921014d778a49d8468936904b7fe0b37109576f6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "758b740da1cfd2c15fbcc96a921014d778a49d8468936904b7fe0b37109576f6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "d907ce594874283bb5085c2d51c86ed53b6c414646c4db29fad96f343abda2a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "758b740da1cfd2c15fbcc96a921014d778a49d8468936904b7fe0b37109576f6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "7fb9876672f8ec7c8f8c7736d4bcc85b95abc1fabee805155efb15bc7d2e5471"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "758b740da1cfd2c15fbcc96a921014d778a49d8468936904b7fe0b37109576f6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43d3a553d4fc2ed260a38ae7bf948544aa27079f22c87fb3cd68170944e2b1e0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43d3a553d4fc2ed260a38ae7bf948544aa27079f22c87fb3cd68170944e2b1e0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43d3a553d4fc2ed260a38ae7bf948544aa27079f22c87fb3cd68170944e2b1e0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+        },
+        "targetDigest": "18fd021e9a166a1b6aac5b299221387adf57369d46615922dee3e553ba6065ce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43d3a553d4fc2ed260a38ae7bf948544aa27079f22c87fb3cd68170944e2b1e0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+        },
+        "targetDigest": "7fb9876672f8ec7c8f8c7736d4bcc85b95abc1fabee805155efb15bc7d2e5471"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43d3a553d4fc2ed260a38ae7bf948544aa27079f22c87fb3cd68170944e2b1e0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "192f23466d560d41e975aea730e4c4fc4dfe1effdde7ee6088b1a1e56e70f509",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-display-percent-code"
+        },
+        "targetDigest": "3f1dcd98d30a3a5a32e8a7146e234fc0f6bc63d783a6351187fb4e0ac40367a4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "25cb029912298c0026af23f1466a52cf11deba121a8145ce58e4ab7d57780f9d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:laspistol:p1-chained-weakspot-hits-increases-crit-chance-stacks-display-value-code"
+        },
+        "targetDigest": "68be7c05c8f52b4fa3fd9b663f2e96ce4381ec6c8e9e428bcb0f71baa2c9a39b"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8f9a8d0c35a6bc31acc075adfa833c710175c8e3ebc97887c615186d160cfc64",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_laspistol_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_laspistol_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "3ad40b8defd27ae50563545044765bb930115243d856a715fa666870454968bf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-470; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent",
+              "value": "+2%"
+            }
+          ],
+          "resolvedText": "Up to +2% Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "resolvedTextSha256": "f46f228257413f66a1e06af47f2e3e9e5770d04caa5001a5a44f7459d4f7ccee",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "a32d4674cc21a18df8455b9d6dc83cbad1f9985641fa80614b1f80e3bf66eea8",
+              "text": " Critical Chance on Chained Ranged Weak Spot Hit (Any Target)."
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "en",
+          "sourceText": "Up to {crit_chance:%s} Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "sourceTextSha256": "79c7507cfa0cc3891f88e1982420f695ddf52c5c402b3be70331220662730df2"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent",
+              "value": "+3%"
+            }
+          ],
+          "resolvedText": "Up to +3% Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "resolvedTextSha256": "484a50d209ed000cf2b410774bf2b85e0ef3d3bf044c44beecd7637f572e1e06",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "a32d4674cc21a18df8455b9d6dc83cbad1f9985641fa80614b1f80e3bf66eea8",
+              "text": " Critical Chance on Chained Ranged Weak Spot Hit (Any Target)."
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "en",
+          "sourceText": "Up to {crit_chance:%s} Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "sourceTextSha256": "79c7507cfa0cc3891f88e1982420f695ddf52c5c402b3be70331220662730df2"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent",
+              "value": "+4%"
+            }
+          ],
+          "resolvedText": "Up to +4% Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "resolvedTextSha256": "08ab920f54a647eec35ef0a9d45766314c5fc9dfa1dbc78b4ebe220b37826e58",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "a32d4674cc21a18df8455b9d6dc83cbad1f9985641fa80614b1f80e3bf66eea8",
+              "text": " Critical Chance on Chained Ranged Weak Spot Hit (Any Target)."
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "en",
+          "sourceText": "Up to {crit_chance:%s} Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "sourceTextSha256": "79c7507cfa0cc3891f88e1982420f695ddf52c5c402b3be70331220662730df2"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent",
+              "value": "+5%"
+            }
+          ],
+          "resolvedText": "Up to +5% Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "resolvedTextSha256": "e3f31f6633e787e09ca6fbce3d9217f2e120f60b04a689162a9808657a1e8a80",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "a32d4674cc21a18df8455b9d6dc83cbad1f9985641fa80614b1f80e3bf66eea8",
+              "text": " Critical Chance on Chained Ranged Weak Spot Hit (Any Target)."
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "en",
+          "sourceText": "Up to {crit_chance:%s} Critical Chance on Chained Ranged Weak Spot Hit (Any Target).",
+          "sourceTextSha256": "79c7507cfa0cc3891f88e1982420f695ddf52c5c402b3be70331220662730df2"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent",
+              "value": "+2%"
+            }
+          ],
+          "resolvedText": "連續遠端弱點攻擊最多+2%致命一擊機率（任何目標）。",
+          "resolvedTextSha256": "9a26c3cd80586d291d30b06fe54cac076ce68ffcb3d82d5f00bb0f1fe1da9c6d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "88e35c551a57f80670ef6a4cc1acd54d0b393ae95e4e77c50c7044c84e62c3ed",
+              "text": "連續遠端弱點攻擊最多"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1cc9ca77fa1b34ae6cd71054c79ee67785c6667e5ee56a28bf64d1faa6780916",
+              "text": "致命一擊機率（任何目標）。"
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續遠端弱點攻擊最多{crit_chance:%s}致命一擊機率（任何目標）。",
+          "sourceTextSha256": "671bd91a1293b54fddea2ea95abb5a977938245358fd9deaddcb66b46c0c6586"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent",
+              "value": "+3%"
+            }
+          ],
+          "resolvedText": "連續遠端弱點攻擊最多+3%致命一擊機率（任何目標）。",
+          "resolvedTextSha256": "9706527f709dee47cc6ef4f963df347f55a9150818004520d60645ef9869cf92",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "88e35c551a57f80670ef6a4cc1acd54d0b393ae95e4e77c50c7044c84e62c3ed",
+              "text": "連續遠端弱點攻擊最多"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1cc9ca77fa1b34ae6cd71054c79ee67785c6667e5ee56a28bf64d1faa6780916",
+              "text": "致命一擊機率（任何目標）。"
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續遠端弱點攻擊最多{crit_chance:%s}致命一擊機率（任何目標）。",
+          "sourceTextSha256": "671bd91a1293b54fddea2ea95abb5a977938245358fd9deaddcb66b46c0c6586"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent",
+              "value": "+4%"
+            }
+          ],
+          "resolvedText": "連續遠端弱點攻擊最多+4%致命一擊機率（任何目標）。",
+          "resolvedTextSha256": "d87eb995fa8aa4b0d7a7cadf3e536063b3f8e327109d31866f0bf243015607ce",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "88e35c551a57f80670ef6a4cc1acd54d0b393ae95e4e77c50c7044c84e62c3ed",
+              "text": "連續遠端弱點攻擊最多"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1cc9ca77fa1b34ae6cd71054c79ee67785c6667e5ee56a28bf64d1faa6780916",
+              "text": "致命一擊機率（任何目標）。"
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續遠端弱點攻擊最多{crit_chance:%s}致命一擊機率（任何目標）。",
+          "sourceTextSha256": "671bd91a1293b54fddea2ea95abb5a977938245358fd9deaddcb66b46c0c6586"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent",
+              "value": "+5%"
+            }
+          ],
+          "resolvedText": "連續遠端弱點攻擊最多+5%致命一擊機率（任何目標）。",
+          "resolvedTextSha256": "037052b7d3b51dce8e53829979cfacc8f6af6d49367247870fd36bcc4e5035e4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "88e35c551a57f80670ef6a4cc1acd54d0b393ae95e4e77c50c7044c84e62c3ed",
+              "text": "連續遠端弱點攻擊最多"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1cc9ca77fa1b34ae6cd71054c79ee67785c6667e5ee56a28bf64d1faa6780916",
+              "text": "致命一擊機率（任何目標）。"
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續遠端弱點攻擊最多{crit_chance:%s}致命一擊機率（任何目標）。",
+          "sourceTextSha256": "671bd91a1293b54fddea2ea95abb5a977938245358fd9deaddcb66b46c0c6586"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:cc0b463d:key-unknown:en:1:g-f2b20f79b52035a5:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Concentrated Fire",
+          "resolvedTextSha256": "f26c00874aacddc9b52aa27e820c3581037d6f5618846c7408196bcb82323a58",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f26c00874aacddc9b52aa27e820c3581037d6f5618846c7408196bcb82323a58",
+              "text": "Concentrated Fire"
+            }
+          ],
+          "sourceHash": "cc0b463d",
+          "sourceLocale": "en",
+          "sourceText": "Concentrated Fire",
+          "sourceTextSha256": "f26c00874aacddc9b52aa27e820c3581037d6f5618846c7408196bcb82323a58"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:cc0b463d:key-unknown:zh-tw:1:g-f2b20f79b52035a5:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "集中火力",
+          "resolvedTextSha256": "fc12dc7db2fdf0ae6a7f15e2d28fdde5ce97a7bffb90d0255fea5b2c7c4ac267",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fc12dc7db2fdf0ae6a7f15e2d28fdde5ce97a7bffb90d0255fea5b2c7c4ac267",
+              "text": "集中火力"
+            }
+          ],
+          "sourceHash": "cc0b463d",
+          "sourceLocale": "zh-TW",
+          "sourceText": "集中火力",
+          "sourceTextSha256": "fc12dc7db2fdf0ae6a7f15e2d28fdde5ce97a7bffb90d0255fea5b2c7c4ac267"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "集中火力",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:cc0b463d:key-unknown:en:1:g-f2b20f79b52035a5:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:cc0b463d:key-unknown:zh-tw:1:g-f2b20f79b52035a5:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:cc0b463d:key-unknown:zh-tw:1:g-f2b20f79b52035a5:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_chained_weakspot_hits_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent",
+              "value": "+5%"
+            }
+          ],
+          "resolvedText": "連續遠端弱點攻擊最多+5%致命一擊機率（任何目標）。",
+          "resolvedTextSha256": "037052b7d3b51dce8e53829979cfacc8f6af6d49367247870fd36bcc4e5035e4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "88e35c551a57f80670ef6a4cc1acd54d0b393ae95e4e77c50c7044c84e62c3ed",
+              "text": "連續遠端弱點攻擊最多"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1cc9ca77fa1b34ae6cd71054c79ee67785c6667e5ee56a28bf64d1faa6780916",
+              "text": "致命一擊機率（任何目標）。"
+            }
+          ],
+          "sourceHash": "4c483691",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續遠端弱點攻擊最多{crit_chance:%s}致命一擊機率（任何目標）。",
+          "sourceTextSha256": "671bd91a1293b54fddea2ea95abb5a977938245358fd9deaddcb66b46c0c6586"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:en:1:g-f2b20f79b52035a5:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4c483691:key-known:zh-tw:1:g-f2b20f79b52035a5:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-chained-weakspot-hits-increases-crit-chance-crit-chance-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:laspistol:p1-chained-weakspot-hits-increases-crit-chance"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7aa8dad44f8a8ff540f664f393ea4fe03720cb9b1d112228d6b64b83058fe92a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "54ec546d65754dd541d77f956bde8d2781edd3db11fa74ab447ec43f6e19a9f9",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4ef2a525654b6de3837023fd86ccb4cf9c8f78b062bf1fa543a8fcd3ada7726e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "60ff789eb763e3c4760e27ad5321e201990ec75cd84f9f3559aed44b9378fc43",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "214d296a4d73bfcbabc98da409ab03e29b81804b816c4be732855cd60c1028d9",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "22a582a8158a044c3aa112299f21868a8cedeb1904569eed7fb9e27259144e6a",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1a753b37621c875354fec15e21d4ac3e21d98c6aa5569d25090c2130f2f92363",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "41f3eeee3a57635d2bad5112cce9cfb1d6e0deb0ab1166741c265d484ea0f2d9",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "748d3a6ac75132a2202080246753c827b24538ba28f56e722715fd144f7221f6",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a82c9c02326178530631b8b991b81494ed7d6e7e3c22a8d961a76049bb8b08f5",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "039dae76e374e69f63b96c4df08683c91d20ed29c9a8f0e7993b9a934e3e637f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0b13c46d83cb731a4275045f43b5207e77225d7d9169c1515a29edeb064ad2b4",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "7aa8dad44f8a8ff540f664f393ea4fe03720cb9b1d112228d6b64b83058fe92a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:content::name"
+        },
+        "targetDigest": "54ec546d65754dd541d77f956bde8d2781edd3db11fa74ab447ec43f6e19a9f9"
+      },
+      {
+        "dependenciesDigest": "4ef2a525654b6de3837023fd86ccb4cf9c8f78b062bf1fa543a8fcd3ada7726e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:context::tierapplicability"
+        },
+        "targetDigest": "60ff789eb763e3c4760e27ad5321e201990ec75cd84f9f3559aed44b9378fc43"
+      },
+      {
+        "dependenciesDigest": "214d296a4d73bfcbabc98da409ab03e29b81804b816c4be732855cd60c1028d9",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:0"
+        },
+        "targetDigest": "22a582a8158a044c3aa112299f21868a8cedeb1904569eed7fb9e27259144e6a"
+      },
+      {
+        "dependenciesDigest": "1a753b37621c875354fec15e21d4ac3e21d98c6aa5569d25090c2130f2f92363",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:1"
+        },
+        "targetDigest": "41f3eeee3a57635d2bad5112cce9cfb1d6e0deb0ab1166741c265d484ea0f2d9"
+      },
+      {
+        "dependenciesDigest": "748d3a6ac75132a2202080246753c827b24538ba28f56e722715fd144f7221f6",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:2"
+        },
+        "targetDigest": "a82c9c02326178530631b8b991b81494ed7d6e7e3c22a8d961a76049bb8b08f5"
+      },
+      {
+        "dependenciesDigest": "039dae76e374e69f63b96c4df08683c91d20ed29c9a8f0e7993b9a934e3e637f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:laspistol-p1-chained-weakspot-hits-increases-crit-chance",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f2b20f79b52035a5:official::tierpresentations:options:3"
+        },
+        "targetDigest": "0b13c46d83cb731a4275045f43b5207e77225d7d9169c1515a29edeb064ad2b4"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

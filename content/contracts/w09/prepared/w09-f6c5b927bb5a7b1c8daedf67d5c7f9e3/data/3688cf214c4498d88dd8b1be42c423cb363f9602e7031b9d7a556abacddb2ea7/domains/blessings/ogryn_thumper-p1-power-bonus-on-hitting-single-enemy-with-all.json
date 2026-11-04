@@ -1,0 +1,2352 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.22",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.26",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "22",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "26",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "30",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value power_level at proc_stat_buffs.stat_buffs.power_level_modifier; defined tier literals are tier 1=0.18, tier 2=0.22, tier 3=0.26, tier 4=0.3.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_ogryn_thumper_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value time at active_duration; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19fb691016bf62a2798d473d184b0f7f471eae4f0635fa0c88b9e16797c34a13",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "9d41884f0991beac27c3ceee3ec7810707e4d082a3f3724562ffe86ddb8ec7f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19fb691016bf62a2798d473d184b0f7f471eae4f0635fa0c88b9e16797c34a13",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19fb691016bf62a2798d473d184b0f7f471eae4f0635fa0c88b9e16797c34a13",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19fb691016bf62a2798d473d184b0f7f471eae4f0635fa0c88b9e16797c34a13",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "76ea95f753fdfb9d60979ac3fb618f7ffa63066fc6f395521f80c322c1e57e76"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "19fb691016bf62a2798d473d184b0f7f471eae4f0635fa0c88b9e16797c34a13",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8164efb230f7f39577c44b5e97c5c7f75b03c9b18f182ce2105245af369889d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "213eb176867ce17140d4f11d6916c6188adb179b1b515f27840546b4127930ee"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8164efb230f7f39577c44b5e97c5c7f75b03c9b18f182ce2105245af369889d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8164efb230f7f39577c44b5e97c5c7f75b03c9b18f182ce2105245af369889d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "fc19c10fac88a400de767e50ab8c2bec4379ccd0507472915457ad795e04b645"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e2da03d310cf41e8f3ee71261d37942ff43f35f3c06dc963b45796442854acf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e2da03d310cf41e8f3ee71261d37942ff43f35f3c06dc963b45796442854acf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e2da03d310cf41e8f3ee71261d37942ff43f35f3c06dc963b45796442854acf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "8bab95b551acb0d39f81c76524a13f971c8c4d26eb8fce3ee1d75b365b1feccc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e2da03d310cf41e8f3ee71261d37942ff43f35f3c06dc963b45796442854acf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "35c4927a67ea356e55c72817f9e700f53c056de9ed3296039be27002969ffca1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e2da03d310cf41e8f3ee71261d37942ff43f35f3c06dc963b45796442854acf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7049744ef6a3d0c6808b0d74a6f24012364b6af74217c7f97b231a41f343397a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7049744ef6a3d0c6808b0d74a6f24012364b6af74217c7f97b231a41f343397a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7049744ef6a3d0c6808b0d74a6f24012364b6af74217c7f97b231a41f343397a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "8bab95b551acb0d39f81c76524a13f971c8c4d26eb8fce3ee1d75b365b1feccc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7049744ef6a3d0c6808b0d74a6f24012364b6af74217c7f97b231a41f343397a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "35c4927a67ea356e55c72817f9e700f53c056de9ed3296039be27002969ffca1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7049744ef6a3d0c6808b0d74a6f24012364b6af74217c7f97b231a41f343397a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "b26d5f84cfe655acb58063b0738490de93eda519494e383899e43caac7b7fb5e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "822a1ddade635b57af757a602e03bcbfc77f33c2651cc9f449df8ba76fb11576",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "822a1ddade635b57af757a602e03bcbfc77f33c2651cc9f449df8ba76fb11576",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "822a1ddade635b57af757a602e03bcbfc77f33c2651cc9f449df8ba76fb11576",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "8bab95b551acb0d39f81c76524a13f971c8c4d26eb8fce3ee1d75b365b1feccc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "822a1ddade635b57af757a602e03bcbfc77f33c2651cc9f449df8ba76fb11576",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "35c4927a67ea356e55c72817f9e700f53c056de9ed3296039be27002969ffca1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "822a1ddade635b57af757a602e03bcbfc77f33c2651cc9f449df8ba76fb11576",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f533c5632409df1368baf3f74df8aeb64d8453df14eef453455a8dd858d039ab"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "699a06e09323de7cb8d4b3cb4e217ac0f59881f5a93c31ee54d2f63256f75c9e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "699a06e09323de7cb8d4b3cb4e217ac0f59881f5a93c31ee54d2f63256f75c9e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "699a06e09323de7cb8d4b3cb4e217ac0f59881f5a93c31ee54d2f63256f75c9e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "8bab95b551acb0d39f81c76524a13f971c8c4d26eb8fce3ee1d75b365b1feccc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "699a06e09323de7cb8d4b3cb4e217ac0f59881f5a93c31ee54d2f63256f75c9e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "35c4927a67ea356e55c72817f9e700f53c056de9ed3296039be27002969ffca1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "699a06e09323de7cb8d4b3cb4e217ac0f59881f5a93c31ee54d2f63256f75c9e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "ef0dd9a793fecab39f4909719a148a56c16e28e4d88f075b52773de00876b2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7a635c3fa8abf795052a6888a988ab32592d771ea491ed359096663089fd8e28",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7a635c3fa8abf795052a6888a988ab32592d771ea491ed359096663089fd8e28",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7a635c3fa8abf795052a6888a988ab32592d771ea491ed359096663089fd8e28",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "deb9c4edfccdbb074121843410912c4de744ae1dfc61fe932f376c25ac0ced11"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7a635c3fa8abf795052a6888a988ab32592d771ea491ed359096663089fd8e28",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "35c4927a67ea356e55c72817f9e700f53c056de9ed3296039be27002969ffca1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7a635c3fa8abf795052a6888a988ab32592d771ea491ed359096663089fd8e28",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "db60253728334e33549e325958aab2ed8cff7ccacaadc2c8eeffcae5a6394769"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b316717a938efc272de3671c65d27db4d5ada82cf92d924e6b14584724bc921",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+        },
+        "targetDigest": "a557590ccb511b0ede23f4cfda9f105c4255813bf8d55352c9a71a8787253aec"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6244d5d558e4c408612545c952a44109dfedbb94b1d2167ed6cee450018ba3e4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code"
+        },
+        "targetDigest": "035311ad9c34c20ddf412a0437df67938a565aab07194fe2d77694a73a7611b9"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "85fd2671c0c645e49a9466534a73dc6fda02c1e1dc7b717fb592f6d8e55ad1dc",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_ogryn_thumper_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_ogryn_thumper_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8077e62af087dcc465a1d379335c388168f838d1ea97d249c940320f2a1a240c",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 9-486; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:adf6c70b:key-unknown:en:1:g-80dce12abbf028ce:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Full Bore",
+          "resolvedTextSha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844",
+              "text": "Full Bore"
+            }
+          ],
+          "sourceHash": "adf6c70b",
+          "sourceLocale": "en",
+          "sourceText": "Full Bore",
+          "sourceTextSha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-80dce12abbf028ce:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "全孔射擊",
+          "resolvedTextSha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f",
+              "text": "全孔射擊"
+            }
+          ],
+          "sourceHash": "adf6c70b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "全孔射擊",
+          "sourceTextSha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+18% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "eab8d7ebda513471001e2def36cfa73b2e247e3ff0fc5e545da4f481927f6bd4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+              "value": "+22%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+22% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "f59bafccb828af2d9556162d1a3cae73e7afd0a7d3e4bb038ca6ea044b4e7f7a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+              "value": "+26%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+26% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "67c54095133f1dfe793ccf66ac694a7a3eaea1b7cfbccce4fdfc89ee50ba0514",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+30%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+30% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "edd97f1a7d84b9509721914860262eefa4f54a7b294cc28872dbeb8faf646025",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+18%，持續5秒。",
+          "resolvedTextSha256": "110cb6246f998919e0a7dc1de247a0700f37ce70bf7b731b74f02f19026734d2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+              "value": "+22%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+22%，持續5秒。",
+          "resolvedTextSha256": "aad6556816df07f84d79b0134b0b4e03a5cc1360aa73a9eabbf3930173b647ae",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+              "value": "+26%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+26%，持續5秒。",
+          "resolvedTextSha256": "7ac327702dcc66e15f63132ca2bc83a3fb429d797f1b0f45c7868becbb783c47",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+30%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+30%，持續5秒。",
+          "resolvedTextSha256": "154874ec413ab700ba0072e467d4baa71ec6c35cc816c37addbcac664f7c7597",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "全孔射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:adf6c70b:key-unknown:en:1:g-80dce12abbf028ce:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-80dce12abbf028ce:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-80dce12abbf028ce:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+30%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+30%，持續5秒。",
+          "resolvedTextSha256": "154874ec413ab700ba0072e467d4baa71ec6c35cc816c37addbcac664f7c7597",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-80dce12abbf028ce:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-80dce12abbf028ce:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p1-power-bonus-on-hitting-single-enemy-with-all"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "efd93576770c53ef78d92363638a4ad6bb0cee17b6925720d1d66322308f4a2f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fa47b2e0f0a4de95cea1b59ace74ff7221710f1e68e9c4431af9a3ee63728178",
+          "targetId": "review:w06:generic:80dce12abbf028ce:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f0cc7a6a3566cbb26aa2f4a2de46485fa08099142c6ed86cf6cbe2d7ae2dbd06",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "997a3c9a351644f1a258b023afc624d13628c4e20b53e4798a16899767fec5bf",
+          "targetId": "review:w06:generic:80dce12abbf028ce:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7740fa354c9ed048b61dc87b97e0f0a7257e4e3e3a38efa06392ddfe984c3104",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a1d38a14ad5defb412d60a9958572b23a30b54b2300f23397be201e391891095",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "09cab4ece9dae3da713b3c2286a3f423a952ae37132da2e21379a2cbc52da26d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "330a9a96fdf0773ad7cc034abab887cf11e41affb627124511e5b14c7640bb1b",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ce1b8cd3546b48acb2c62b4c9c3104002d2d33ed541ebb163ff93405be2656d6",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "49de8d7bfbcf6f5595ca806142ac311222ca940bcec3a301b92acbaaf53d2b1c",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "73c99466e06a777e661d92e7d8e09df57b2da419deb538b356697ee3c8485b6e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b81820979dbe7f2fec858e7b4d5e7fd6773e3d3927bed981151d2c630d966a52",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "efd93576770c53ef78d92363638a4ad6bb0cee17b6925720d1d66322308f4a2f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:content::name"
+        },
+        "targetDigest": "fa47b2e0f0a4de95cea1b59ace74ff7221710f1e68e9c4431af9a3ee63728178"
+      },
+      {
+        "dependenciesDigest": "f0cc7a6a3566cbb26aa2f4a2de46485fa08099142c6ed86cf6cbe2d7ae2dbd06",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:context::tierapplicability"
+        },
+        "targetDigest": "997a3c9a351644f1a258b023afc624d13628c4e20b53e4798a16899767fec5bf"
+      },
+      {
+        "dependenciesDigest": "7740fa354c9ed048b61dc87b97e0f0a7257e4e3e3a38efa06392ddfe984c3104",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:0"
+        },
+        "targetDigest": "a1d38a14ad5defb412d60a9958572b23a30b54b2300f23397be201e391891095"
+      },
+      {
+        "dependenciesDigest": "09cab4ece9dae3da713b3c2286a3f423a952ae37132da2e21379a2cbc52da26d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:1"
+        },
+        "targetDigest": "330a9a96fdf0773ad7cc034abab887cf11e41affb627124511e5b14c7640bb1b"
+      },
+      {
+        "dependenciesDigest": "ce1b8cd3546b48acb2c62b4c9c3104002d2d33ed541ebb163ff93405be2656d6",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:2"
+        },
+        "targetDigest": "49de8d7bfbcf6f5595ca806142ac311222ca940bcec3a301b92acbaaf53d2b1c"
+      },
+      {
+        "dependenciesDigest": "73c99466e06a777e661d92e7d8e09df57b2da419deb538b356697ee3c8485b6e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:ogryn_thumper-p1-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:80dce12abbf028ce:official::tierpresentations:options:3"
+        },
+        "targetDigest": "b81820979dbe7f2fec858e7b4d5e7fd6773e3d3927bed981151d2c630d966a52"
+      }
+    ],
+    "termLocalizations": []
+  }
+}
