@@ -455,6 +455,31 @@ test('UnitT01_W08CompilesSplitWeaponAndBlessingDomainsDeterministically', () => 
   assert.equal(result.envelope.publicationGate.status, 'blocked');
 });
 
+// Scenario: A blessing has four options with English and Taiwanese source references.
+// Purpose: The index retains positional projections and only the sources used by the list.
+test('UnitT01c_BlessingIndexProjectsListTierSources', () => {
+  const input = makeInput();
+  const blessing = input.w06.authoring.presentations.find(item => item.entityRef.kind === 'blessing');
+  blessing.tierApplicability = [{ tiers: [1, 2, 3, 4] }];
+  blessing.tierPresentations = { options: [1, 2, 3, 4].map(tier => ({ tier, officialLocaleRefs: ['en', 'zh-TW'].map(sourceLocale => ({ sourceLocale, officialSourceId: `source:${tier}:${sourceLocale}` })) })) };
+  for (const option of blessing.tierPresentations.options) for (const ref of option.officialLocaleRefs) input.w06.officialInputs.sources.push({ officialSourceId: ref.officialSourceId, locale: ref.sourceLocale, text: 'fixture' });
+  const candidate = compileW08Candidate(input);
+  const index = JSON.parse(candidate.files.get('domains/blessings-index.json'));
+  const projected = index.web.presentations.find(item => item.authoringId === blessing.authoringId);
+  assert.equal(projected.tierPresentations.options.length, 4);
+  assert.deepEqual(projected.tierPresentations.options.slice(0, 3), [{ tier: 1 }, { tier: 2 }, { tier: 3 }]);
+  assert.deepEqual(projected.tierPresentations.options[3], { tier: 4, officialLocaleRefs: [{ sourceLocale: 'en' }, { sourceLocale: 'zh-TW', officialSourceId: 'source:4:zh-TW' }] });
+  assert.deepEqual(index.web.officialInputs.sources.map(row => row.officialSourceId).sort(), [blessing.nameOfficialSourceId, 'source:4:zh-TW'].sort());
+});
+
+// Scenario: An index grows beyond its dedicated budget while still below the general domain limit.
+// Purpose: Reject oversized indexes before they reach clients.
+test('UnitT01d_W08RejectsIndexAbove8MiB', () => {
+  const input = makeInput();
+  input.w07.authoring.presentations[0].name = 'x'.repeat(9 * 1024 * 1024);
+  assert.throws(() => compileW08Candidate(input), /domain file exceeds the 8 MiB limit: domains\/weapons-index.json/u);
+});
+
 test('UnitT01a_W08RejectsBlessingSlugCollisions', () => {
   const input = makeInput();
   const original = input.sourceContract.records.find(record => record.kind === 'blessing');
