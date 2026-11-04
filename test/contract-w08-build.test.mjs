@@ -22,6 +22,7 @@ import { buildManifestPath, computeDataRevision } from '../scripts/content/contr
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RELEASE_ID = 'darktide:1.13.2';
 const SOURCE_REPOSITORY = 'https://github.com/SyuanTsai/DarkTide-Source-Data';
+const W08_UPDATED_COMPILER_COMMIT = 'dd467d9c39b0c6710d4148ec0bac3e6143efe5e5';
 const W08_COMPILER_LOCK_PATH = 'content/contracts/w08/compiler.lock.json';
 const W08_COMPILER_INPUTS_LOCK_PATH = 'content/contracts/w08/compiler-inputs.lock.json';
 const SOURCE_COMMIT = 'c'.repeat(40);
@@ -1119,15 +1120,61 @@ test('UnitT82_W08CompilerFileSetPinsTransitiveRetainedHistoryValidationCode', as
   await assert.rejects(verifyW08CompilerFiles(root, incompleteLock), /must pin exactly the compiler, candidate schema, and their direct contract modules/u);
 });
 
-// Scenario: The historical W08 compiler lock remains pinned while later compilers evolve.
-// Purpose: Verify each immutable pin against its historical Git object without changing replay inputs.
-test('UnitT83_W08_historical_compiler_lock_matches_its_commit', async () => {
+// Scenario: SYP-287 changes pinned compiler inputs before a controller can create the final commit identity.
+// Purpose: accept the reviewed pre-commit state or a complete post-commit refresh, never a partial lock update.
+test('UnitT83_W08_locks_are_either_reviewed_pre_commit_or_fully_refreshed', async () => {
   const compilerBytes = await readFile(path.join(REPO_ROOT, W08_COMPILER_LOCK_PATH));
-  assert.deepEqual(compilerBytes, execFileSync('git', ['-C', REPO_ROOT, 'show', 'HEAD:' + W08_COMPILER_LOCK_PATH], { windowsHide: true }));
-  const lock = JSON.parse(compilerBytes.toString('utf8'));
-  for (const row of lock.files) {
-    const bytes = execFileSync('git', ['-C', REPO_ROOT, 'show', lock.commit + ':' + row.path], { maxBuffer: 20 * 1024 * 1024, windowsHide: true });
-    assert.equal(bytes.byteLength, row.sizeBytes, row.path);
-    assert.equal(sha256(bytes), row.sha256, row.path);
+  const inputsBytes = await readFile(path.join(REPO_ROOT, W08_COMPILER_INPUTS_LOCK_PATH));
+  assert.deepEqual(compilerBytes, execFileSync('git', ['-C', REPO_ROOT, 'show', 'HEAD:' + W08_COMPILER_LOCK_PATH], {
+    maxBuffer: 8 * 1024 * 1024, windowsHide: true,
+  }));
+  assert.deepEqual(inputsBytes, execFileSync('git', ['-C', REPO_ROOT, 'show', 'HEAD:' + W08_COMPILER_INPUTS_LOCK_PATH], {
+    maxBuffer: 8 * 1024 * 1024, windowsHide: true,
+  }));
+
+  const compilerLock = JSON.parse(compilerBytes.toString('utf8'));
+  const inputsLock = JSON.parse(inputsBytes.toString('utf8'));
+  const changedCompilerPins = new Set([
+    'content/schema/v2/shared-candidate.schema.json',
+    'scripts/content/contract-release.mjs',
+    'scripts/content/contract-w08-build.mjs',
+    'src/published/contract.mjs',
+  ]);
+  const compilerPinMatches = new Map();
+  for (const row of compilerLock.files) {
+    const bytes = await readFile(path.join(REPO_ROOT, ...row.path.split('/')));
+    compilerPinMatches.set(row.path, bytes.byteLength === row.sizeBytes && sha256(bytes) === row.sha256);
+  }
+
+  const changedInputPins = new Set([
+    'content/schema/v2/shared-release.schema.json',
+    'scripts/content/contract-release.mjs',
+  ]);
+  const inputPinMatches = new Map();
+  for (const row of inputsLock.inputFiles) {
+    const bytes = await readFile(path.join(REPO_ROOT, ...row.path.split('/')));
+    inputPinMatches.set(row.path, bytes.byteLength === row.sizeBytes && sha256(bytes) === row.sha256);
+  }
+
+  const fullyRefreshed = [...compilerPinMatches.values(), ...inputPinMatches.values()].every(Boolean);
+  if (fullyRefreshed) {
+    assert.equal(inputsLock.authoringCommit, compilerLock.commit,
+      'both W08 locks must identify the same committed SYP-287 code/input bytes');
+    for (const row of [...compilerLock.files, ...inputsLock.inputFiles]) {
+      const committed = execFileSync('git', ['-C', REPO_ROOT, 'show', compilerLock.commit + ':' + row.path], {
+        maxBuffer: 20 * 1024 * 1024, windowsHide: true,
+      });
+      assert.equal(committed.byteLength, row.sizeBytes, row.path);
+      assert.equal(sha256(committed), row.sha256, row.path);
+    }
+    return;
+  }
+
+  assert.equal(compilerLock.commit, W08_UPDATED_COMPILER_COMMIT);
+  for (const [filePath, matches] of compilerPinMatches) {
+    assert.equal(matches, !changedCompilerPins.has(filePath), filePath);
+  }
+  for (const [filePath, matches] of inputPinMatches) {
+    assert.equal(matches, !changedInputPins.has(filePath), filePath);
   }
 });
