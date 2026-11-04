@@ -31,6 +31,7 @@ const CORE_DOMAIN_KINDS = Object.freeze(['blessings', 'skills', 'terms', 'weapon
 const SPLIT_REQUIRED_DOMAIN_KINDS = Object.freeze(['blessings-index', 'skills', 'terms', 'weapons-index']);
 const SPLIT_DOMAIN_FEATURE = 'split-weapon-blessing-domains-v1';
 const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
+const MAX_INDEX_DOMAIN_BYTES = 8 * 1024 * 1024;
 const MAX_PACKAGE_BYTES = 24 * 1024 * 1024;
 const SAFE_SHARD_SEGMENT = /^[A-Za-z0-9._-]+$/;
 const EXPECTED_COMPILER_FILES = Object.freeze([
@@ -1036,6 +1037,10 @@ function presentationsForRecords(modes, releaseId, kind, records) {
     && item.entityRef.kind === kind && recordIds.has(item.entityRef.recordId)));
 }
 
+export function blessingListTier(applicability) {
+  return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
+}
+
 function indexPresentation(presentation, kind) {
   const projected = {};
   const keys = kind === 'weapon'
@@ -1043,11 +1048,12 @@ function indexPresentation(presentation, kind) {
     : ['authoringId', 'entityRef', 'locale', 'name', 'nameOfficialSourceId', 'tierApplicability'];
   for (const key of keys) if (Object.hasOwn(presentation, key)) projected[key] = structuredClone(presentation[key]);
   if (kind === 'blessing' && Array.isArray(presentation.tierPresentations?.options)) {
+    const listTiers = new Set((presentation.tierApplicability ?? []).map(blessingListTier));
     projected.tierPresentations = {
-      options: presentation.tierPresentations.options.map(option => ({
-        tier: option.tier,
-        officialLocaleRefs: structuredClone(option.officialLocaleRefs ?? []),
-      })),
+      options: presentation.tierPresentations.options.map(option => listTiers.has(option.tier)
+        ? { tier: option.tier, officialLocaleRefs: (option.officialLocaleRefs ?? []).map(ref =>
+          ref.sourceLocale === 'zh-TW' ? structuredClone(ref) : { sourceLocale: ref.sourceLocale }) }
+        : { tier: option.tier }),
     };
   }
   return canonicalize(projected);
@@ -1333,6 +1339,7 @@ export function compileW08Candidate(input) {
   ]));
   for (const [filePath, bytes] of domainBytes) {
     if (bytes.byteLength > MAX_DOMAIN_BYTES) fail('domain file exceeds the 16 MiB limit: ' + filePath);
+    if (builtDomainDocuments.get(filePath).kind.endsWith('-index') && bytes.byteLength > MAX_INDEX_DOMAIN_BYTES) fail('domain file exceeds the 8 MiB limit: ' + filePath);
   }
   const files = [...domainBytes].map(([filePath, bytes]) => ({
     kind: builtDomainDocuments.get(filePath).kind,

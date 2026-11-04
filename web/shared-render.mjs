@@ -1,3 +1,7 @@
+export function blessingListTier(applicability) {
+  return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
+}
+
 const SECTION_ORDER = ['effects', 'conditions', 'calculation', 'notes', 'extra'];
 const SECTION_LABELS = Object.freeze({ effects: '效果', conditions: '條件', calculation: '計算', notes: '補充說明', extra: '額外說明' });
 const INPUT_LABELS = Object.freeze({
@@ -988,7 +992,7 @@ function renderBlessingPage(main, result, url, historyPackage = null, historyErr
     for (const presentation of presentations) {
       for (const applicability of presentation.tierApplicability ?? []) {
         const variantRef = applicability.variantRef;
-        const tier = applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
+        const tier = blessingListTier(applicability);
         if (!variantRef || !Number.isInteger(tier)) continue;
         const view = result?.status === 'ready'
           ? domain.kind === 'blessings-index'
