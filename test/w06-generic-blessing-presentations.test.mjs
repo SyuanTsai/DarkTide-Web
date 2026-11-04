@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { generatePresentations } from '../scripts/content/w06-generic-blessing-presentations.mjs';
+import { applyApprovedReceipts } from '../scripts/content/w06-generic-blessing-presentations-apply.mjs';
+import { getReviewState } from '../scripts/content/contract-authoring.mjs';
 
 function fixture() {
   const record = (kind, payload) => ({ recordId: `darktide:${kind}:gun:p1-test`, kind, gameReleaseId: 'darktide:1.13.4', payload });
@@ -90,4 +92,28 @@ test('UnitT80_overlong_claim_id_is_reported_as_other', () => {
   const r = generatePresentations(f);
   assert.equal(r.additions.presentations.length, 0);
   assert.equal(r.skipped[0].reason, 'other');
+});
+
+// Scenario: approval or digest differs. Purpose: reject before any output can be written.
+test('UnitT90_invalid_approval_or_digest_fails_without_mutation', () => {
+  const generated = generatePresentations(fixture());
+  const approval = { decision: 'approved', reviewer: { kind: 'human', id: 'reviewer' }, reviewedAt: '2026-01-01T00:00:00Z', reviewedPackage: { packageDigest: generated.packageDigest } };
+  const before = structuredClone(generated.authoring);
+  for (const bad of [{ ...approval, decision: 'rejected' }, { ...approval, reviewedPackage: { packageDigest: 'wrong' } }]) {
+    assert.throws(() => applyApprovedReceipts({ ...generated, approval: bad, packageDigest: generated.packageDigest, inputs: {} }));
+    assert.deepEqual(generated.authoring, before);
+  }
+});
+
+// Scenario: an approved added target and an existing receipt. Purpose: create a current receipt without altering existing receipts.
+test('UnitT95_approved_additions_preserve_existing_receipts', () => {
+  const f = fixture(), generated = generatePresentations(f);
+  const existing = { targetId: 'old', unchanged: true };
+  generated.authoring.reviewReceipts.push(existing);
+  const records = f.candidates.records;
+  const inputs = { mode: 'w06', sourceContract: { records }, sourceRecordMap: new Map(records.map(r => [r.gameReleaseId + '\0' + r.recordId, r])), officialInputs: generated.officialInputs, termRules: { rules: [] }, sourceValidator: { computeReviewDigests: () => ({ targetDigest: 'a', dependenciesDigest: 'b' }) } };
+  const approval = { decision: 'approved', reviewer: { kind: 'human', id: 'reviewer' }, reviewedAt: '2026-01-01T00:00:00Z', reviewedPackage: { packageDigest: generated.packageDigest } };
+  const result = applyApprovedReceipts({ ...generated, approval, packageDigest: generated.packageDigest, inputs });
+  assert.deepEqual(result.reviewReceipts[0], existing);
+  for (const target of generated.additions.reviewTargets) assert.equal(getReviewState(result, target.targetId, inputs), 'approved');
 });
