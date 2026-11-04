@@ -14,6 +14,10 @@ const GAME_VERSION_RE = /^\d+\.\d+\.\d+$/;
 const SLOT_RE = /^(\d+\.\d+\.\d+)\.(\d+)$/;
 const RELEASE_STATUSES = new Set(['reserved', 'prepared', 'approved', 'failed']);
 const INTERNAL_PUBLICATION_LOCK = Symbol('w09-internal-publication-lock');
+// The whole-site runtime snapshot stores every published file as base64 inside canonical JSON.
+// The 1.13.4 site pushed it past the original 128 MiB decoded bound, so keep headroom while
+// staying well below the V8 maximum string length used by toString and JSON.stringify.
+export const W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES = 384 * 1024 * 1024;
 const W09_WEB_ORIGINS = new Set([
   'https://github.com/SyuanTsai/DarkTide-Web',
   'https://github.com/SyuanTsai/DarkTide-Web.git',
@@ -1254,6 +1258,10 @@ export function encodeW09RuntimeSnapshotArchive(buildId, files) {
     files: rows,
   };
   const canonicalBytes = Buffer.from(JSON.stringify(sortJson(archive), null, 2) + '\n', 'utf8');
+  if (canonicalBytes.byteLength > W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES) {
+    throw new Error('W09 runtime snapshot archive is ' + canonicalBytes.byteLength
+      + ' decoded bytes, above the ' + W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES + ' byte bound');
+  }
   const archiveBytes = gzipSync(canonicalBytes, { level: 9, mtime: 0 });
   parseRuntimeSnapshotArchive(archiveBytes, buildId);
   return archiveBytes;
@@ -1287,10 +1295,11 @@ function parseRuntimeSnapshotArchive(archiveBytes, expectedBuildId) {
   let archive;
   let decoded;
   try {
-    decoded = gunzipSync(archiveBytes, { maxOutputLength: 128 * 1024 * 1024 });
+    decoded = gunzipSync(archiveBytes, { maxOutputLength: W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES });
     archive = JSON.parse(decoded.toString('utf8'));
   } catch (error) {
-    throw new Error('approved W09 runtime snapshot archive is not valid bounded gzip JSON', { cause: error });
+    throw new Error('approved W09 runtime snapshot archive is not valid bounded gzip JSON: '
+      + (error?.message ?? String(error)), { cause: error });
   }
   if (!archive || typeof archive !== 'object' || Array.isArray(archive)
       || archive.schema !== 'w09-runtime-snapshot/1' || archive.buildId !== expectedBuildId
