@@ -1760,8 +1760,8 @@ test('InterT25_explicit-retention-reference-changes-use-the-durable-owner-state-
 const W09_HISTORICAL_COMPOSITION_COMMIT = '08c25ff58a01bac1a52a0531cde99288f68cfa31';
 const W09_C882_COMPOSITION_COMMIT = 'b8dfe7a306669ce40821d9ea7ad58bf34d2b6a9c';
 const W09_C882_REQUEST_ID = 'c882e473212ea55a2a2cc6a5c71d35e50c6662f140a246fb99879bb327804740';
-const W09_CURRENT_COMPOSITION_COMMIT = 'bfa9fd93c74eef47353f71b94d8cede987cd2b9e';
-const W09_CURRENT_REQUEST_ID = '4223a7fb6929554a6a170cde4a1f49fd5abb058eaedf8912cd27bf8179b9e644';
+const W09_CURRENT_COMPOSITION_COMMIT = '43d17200984d2e0d598cb8db09a335047d030f70';
+const W09_CURRENT_REQUEST_ID = '21cd10e66306740999be41b8c76260fb81d8050f21c7f592c69f878d394edee7';
 const W08_UPDATED_COMPILER_COMMIT = JSON.parse(await readFile(
   path.join(REPO_ROOT, 'content/contracts/w08/compiler.lock.json'), 'utf8')).commit;
 const W08_UPDATED_AUTHORING_SIZE = 189850;
@@ -2177,7 +2177,7 @@ test('InterT27_updated_current_W08_compiler_coexists_with_c882_selected_dual_roo
   const checkedOutRequestLockBytes = gitBytes(REPO_ROOT, ['show', 'HEAD:' + requestLockPath]);
   assert.equal(checkedOutSelection.proposals?.length, 1);
   assert.equal(checkedOutSelection.proposals[0].requestId, W09_CURRENT_REQUEST_ID,
-    'current main selects the reviewed eight-autogun Source request');
+    'current main selects the reviewed 1.13.4 blessing-presentation Source request');
   assert.equal(checkedOutSelection.proposals[0].gameReleaseId, 'darktide:1.13.4');
   assert.notDeepEqual(checkedOutSelectedBytes, selectedBytes,
     'current main may advance while the fixed historical c882 marker is replayed in its own root');
