@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at stat_buffs.stat_buffs.stagger_count_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "689d082ee56540acae998f1bacf64060e88aeb948a9e4b56648928cd390b7aaa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "1ebe3d21dcb2d50e2ffab2e33fe9f979c85af34d3faa0f544a7ff2f5459714a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "689d082ee56540acae998f1bacf64060e88aeb948a9e4b56648928cd390b7aaa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "689d082ee56540acae998f1bacf64060e88aeb948a9e4b56648928cd390b7aaa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "689d082ee56540acae998f1bacf64060e88aeb948a9e4b56648928cd390b7aaa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "689d082ee56540acae998f1bacf64060e88aeb948a9e4b56648928cd390b7aaa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1949dfba861b1282afc10fd287ff86a5e74c49aa84316586e3a16c1a586f8ee9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "74eeb1af86929af1a3c273aef506cd1553cfb1c080dc36528cb285be4d4395d5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1949dfba861b1282afc10fd287ff86a5e74c49aa84316586e3a16c1a586f8ee9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1949dfba861b1282afc10fd287ff86a5e74c49aa84316586e3a16c1a586f8ee9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "targetDigest": "836c0108d32bbfd986777adf99a1c2a885837c91112fd1bb83552f456217c07f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "462b2fb802387dbe9e488562a876c4799a6a53c47989fb348e9129f060dd1395",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "462b2fb802387dbe9e488562a876c4799a6a53c47989fb348e9129f060dd1395",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "462b2fb802387dbe9e488562a876c4799a6a53c47989fb348e9129f060dd1395",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "84b35665fd6539c9731990440f90cbc67d9cabc957c2b1b6fc9f394cfae31ea5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "462b2fb802387dbe9e488562a876c4799a6a53c47989fb348e9129f060dd1395",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "7cb22051580e756f0125bb2b37225c524cf4f35c4cdd726792dd37e3c6e9b015"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "462b2fb802387dbe9e488562a876c4799a6a53c47989fb348e9129f060dd1395",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8b431d7ec78248d7f1d3e310841793c2b23a6ad42dd36310d0d780c6785ce501",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8b431d7ec78248d7f1d3e310841793c2b23a6ad42dd36310d0d780c6785ce501",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8b431d7ec78248d7f1d3e310841793c2b23a6ad42dd36310d0d780c6785ce501",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "84b35665fd6539c9731990440f90cbc67d9cabc957c2b1b6fc9f394cfae31ea5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8b431d7ec78248d7f1d3e310841793c2b23a6ad42dd36310d0d780c6785ce501",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "7cb22051580e756f0125bb2b37225c524cf4f35c4cdd726792dd37e3c6e9b015"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8b431d7ec78248d7f1d3e310841793c2b23a6ad42dd36310d0d780c6785ce501",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "666121b398aa3bd543b5f54cbf63ac14595ab4309ff40e24f932698899b5b392",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "666121b398aa3bd543b5f54cbf63ac14595ab4309ff40e24f932698899b5b392",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "666121b398aa3bd543b5f54cbf63ac14595ab4309ff40e24f932698899b5b392",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "84b35665fd6539c9731990440f90cbc67d9cabc957c2b1b6fc9f394cfae31ea5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "666121b398aa3bd543b5f54cbf63ac14595ab4309ff40e24f932698899b5b392",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "7cb22051580e756f0125bb2b37225c524cf4f35c4cdd726792dd37e3c6e9b015"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "666121b398aa3bd543b5f54cbf63ac14595ab4309ff40e24f932698899b5b392",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e0f91b767cb087cd82c92420edba9758dd2ae6903bdb917d32ff58ccd8aca085",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e0f91b767cb087cd82c92420edba9758dd2ae6903bdb917d32ff58ccd8aca085",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e0f91b767cb087cd82c92420edba9758dd2ae6903bdb917d32ff58ccd8aca085",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "84b35665fd6539c9731990440f90cbc67d9cabc957c2b1b6fc9f394cfae31ea5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e0f91b767cb087cd82c92420edba9758dd2ae6903bdb917d32ff58ccd8aca085",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "7cb22051580e756f0125bb2b37225c524cf4f35c4cdd726792dd37e3c6e9b015"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e0f91b767cb087cd82c92420edba9758dd2ae6903bdb917d32ff58ccd8aca085",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7050741bc31c83a7a472d92d86d91801a839dfe68e3bde85a413e3daa71e039f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p3-stagger-count-bonus-damage-damage-display-percent-code"
+        },
+        "targetDigest": "b733e7f1917b286e8b020f592b074a726357218a8c71f90b0e5ff69320240db0"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "665667c11a0220073e1644754188017540cf574fd449b56ed7f49438025f6215",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 19 bespoke traits span lines 10-898; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-e97c80d128ec7d19:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "No Respite",
+          "resolvedTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+              "text": "No Respite"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "en",
+          "sourceText": "No Respite",
+          "sourceTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-e97c80d128ec7d19:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "刻不容緩",
+          "resolvedTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+              "text": "刻不容緩"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "zh-TW",
+          "sourceText": "刻不容緩",
+          "sourceTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "Up to +14% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "3c4b6a13dffc3ef21544e7db41b8e922aa75a7689e2882420fa70eb01d1404e7",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "Up to +16% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "2e14cc7bcc6422bf785113bf501b75fcbd7649777893a9a0314e3589ec214451",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "Up to +18% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "a1c994ba98978df101c7c5c35d328f05f8a67694a40a42d82094691eb3d32283",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "Up to +20% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "4def3256a1e4e8f12c6336411851b38eafcdd8a52081dbf56e0a1814ea709941",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+14%傷害。",
+          "resolvedTextSha256": "8965732061c98df0a803bc1dd6b10cf7e9258f229503672579ebcf377939ea2b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+16%傷害。",
+          "resolvedTextSha256": "32ad475c27515a52e48269e2fe92721ba36db8e53b94374b094762f942512f0e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+18%傷害。",
+          "resolvedTextSha256": "88e6c8793ff6f1e404fd75736b69bf8eb2e65dca38984213a617d6512a64f022",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "刻不容緩",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-e97c80d128ec7d19:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-e97c80d128ec7d19:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-e97c80d128ec7d19:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-e97c80d128ec7d19:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-e97c80d128ec7d19:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-stagger-count-bonus-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p3-stagger-count-bonus-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5039dd2a2e325ef3e191efef9471ade2183fe931cfb4abc42e8bf120e06602a3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5b24c9b331b93133a0ee6fa0ff92c49cefc0954f2d0967dc885f83f2d39c4298",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "805ba411113d060fc165d1352abc5038940049cc09b9df5cf2e18f0bb0d54f94",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f1f1419e93233b522068ebbfee0547982c0008c070fdcca2484b0a632a3dfaf0",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e6a941a6e1ad8282565362d214b50b8ec90553378807d28677d1e3d48186ed4c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6b87036da10adeb403bd09cc5e0616bbb2fb6b7ab4ebc02558ce792315b8af60",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "af63365425ed62aa8664124c1c79cc79af6b1e0f132ccf737cdad9a33d9c64fd",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2c7a66e09d0dda4afd414cbc018e1661737548ade86da5e1c60867a39d69624d",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "073f9c35373f9b9518c5ffbce9712c46e2a374e1b4d4057e91e99e5a200c285f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "1c85148128aaaea1e6a94f6252296dbfad3db43ec709a0353a529c294e507ae3",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7d3fb1226717785ec336601122ad001480bddaee01097afaba7c8888111dab85",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "9ef5ccc9eb1704bd1a82d5c65951a26ca9e85029386f388ede70e48e62037363",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "5039dd2a2e325ef3e191efef9471ade2183fe931cfb4abc42e8bf120e06602a3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:content::name"
+        },
+        "targetDigest": "5b24c9b331b93133a0ee6fa0ff92c49cefc0954f2d0967dc885f83f2d39c4298"
+      },
+      {
+        "dependenciesDigest": "805ba411113d060fc165d1352abc5038940049cc09b9df5cf2e18f0bb0d54f94",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:context::tierapplicability"
+        },
+        "targetDigest": "f1f1419e93233b522068ebbfee0547982c0008c070fdcca2484b0a632a3dfaf0"
+      },
+      {
+        "dependenciesDigest": "e6a941a6e1ad8282565362d214b50b8ec90553378807d28677d1e3d48186ed4c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:0"
+        },
+        "targetDigest": "6b87036da10adeb403bd09cc5e0616bbb2fb6b7ab4ebc02558ce792315b8af60"
+      },
+      {
+        "dependenciesDigest": "af63365425ed62aa8664124c1c79cc79af6b1e0f132ccf737cdad9a33d9c64fd",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:1"
+        },
+        "targetDigest": "2c7a66e09d0dda4afd414cbc018e1661737548ade86da5e1c60867a39d69624d"
+      },
+      {
+        "dependenciesDigest": "073f9c35373f9b9518c5ffbce9712c46e2a374e1b4d4057e91e99e5a200c285f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:2"
+        },
+        "targetDigest": "1c85148128aaaea1e6a94f6252296dbfad3db43ec709a0353a529c294e507ae3"
+      },
+      {
+        "dependenciesDigest": "7d3fb1226717785ec336601122ad001480bddaee01097afaba7c8888111dab85",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p3-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e97c80d128ec7d19:official::tierpresentations:options:3"
+        },
+        "targetDigest": "9ef5ccc9eb1704bd1a82d5c65951a26ca9e85029386f388ede70e48e62037363"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

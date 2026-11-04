@@ -1,0 +1,2352 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.06",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.08",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.12",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "value": {
+            "decimal": "6",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "value": {
+            "decimal": "8",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "value": {
+            "decimal": "12",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_chance at conditional_stat_buffs.stat_buffs.ranged_critical_strike_chance; defined tier literals are tier 1=0.06, tier 2=0.08, tier 3=0.1, tier 4=0.12.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e97015e6569d0573a0d02f38e7261295e130410b6f69c925537c95456b4b2bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "1ac7738ede6f16313937b0e1d891569a0719f7a36b37438176e1a2e46b5f2145"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e97015e6569d0573a0d02f38e7261295e130410b6f69c925537c95456b4b2bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e97015e6569d0573a0d02f38e7261295e130410b6f69c925537c95456b4b2bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e97015e6569d0573a0d02f38e7261295e130410b6f69c925537c95456b4b2bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "ee757518b7d77580ee38828b62360ecf601cec91f552e9b7df36283cb97d20fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1e97015e6569d0573a0d02f38e7261295e130410b6f69c925537c95456b4b2bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "317f8b4d7c55de3c98048264d80bac8318d9d854090656c29f4599d998f10c21",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "a5aae57fb14392dfe421aea6553c0fec284bcb44ed4938fcfaf16c8b616eb345"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "317f8b4d7c55de3c98048264d80bac8318d9d854090656c29f4599d998f10c21",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "317f8b4d7c55de3c98048264d80bac8318d9d854090656c29f4599d998f10c21",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "targetDigest": "3a4835c5937ad9743423d5ca214057c08081a8be91a9ddb2afeaad9871e2f136"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3f507e113274c6527383566d1679ce15b8632591778c902c69c85fbc80108b86",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3f507e113274c6527383566d1679ce15b8632591778c902c69c85fbc80108b86",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3f507e113274c6527383566d1679ce15b8632591778c902c69c85fbc80108b86",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "84aee40362b5affeeadf3e52df71eea702da2d60d4be9c6f3d2d990f1810c19d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3f507e113274c6527383566d1679ce15b8632591778c902c69c85fbc80108b86",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "85873ae77b5a664c1b79e5c29359b830c6b31fc0eb5e958b69d05c62a4c2f6dc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3f507e113274c6527383566d1679ce15b8632591778c902c69c85fbc80108b86",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "5251cd53fe45d4339555cfb6a5c7a58b7ea9c49b45d3753f4d8214a59cdc5b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2c7068bce3d257d3da8360b8412a4c18badc3cac15e777e773995e0bd67b507a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2c7068bce3d257d3da8360b8412a4c18badc3cac15e777e773995e0bd67b507a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2c7068bce3d257d3da8360b8412a4c18badc3cac15e777e773995e0bd67b507a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "84aee40362b5affeeadf3e52df71eea702da2d60d4be9c6f3d2d990f1810c19d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2c7068bce3d257d3da8360b8412a4c18badc3cac15e777e773995e0bd67b507a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "85873ae77b5a664c1b79e5c29359b830c6b31fc0eb5e958b69d05c62a4c2f6dc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2c7068bce3d257d3da8360b8412a4c18badc3cac15e777e773995e0bd67b507a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "035637c20d37f580a9be128f5f4ecf27e13367b42d7f19391ffc5ca4a371d4fe"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98405c187d0e508156af971277b7c40a2e8126eb902169cc9ba11fd1209a66db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98405c187d0e508156af971277b7c40a2e8126eb902169cc9ba11fd1209a66db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98405c187d0e508156af971277b7c40a2e8126eb902169cc9ba11fd1209a66db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "84aee40362b5affeeadf3e52df71eea702da2d60d4be9c6f3d2d990f1810c19d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98405c187d0e508156af971277b7c40a2e8126eb902169cc9ba11fd1209a66db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "85873ae77b5a664c1b79e5c29359b830c6b31fc0eb5e958b69d05c62a4c2f6dc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98405c187d0e508156af971277b7c40a2e8126eb902169cc9ba11fd1209a66db",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "54e941f136818cef7f48a065a43ca43cb48141a536035565d4d7ef1a2e5ffe1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "54e941f136818cef7f48a065a43ca43cb48141a536035565d4d7ef1a2e5ffe1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "54e941f136818cef7f48a065a43ca43cb48141a536035565d4d7ef1a2e5ffe1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "84aee40362b5affeeadf3e52df71eea702da2d60d4be9c6f3d2d990f1810c19d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "54e941f136818cef7f48a065a43ca43cb48141a536035565d4d7ef1a2e5ffe1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "85873ae77b5a664c1b79e5c29359b830c6b31fc0eb5e958b69d05c62a4c2f6dc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "54e941f136818cef7f48a065a43ca43cb48141a536035565d4d7ef1a2e5ffe1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "bbca1ab2aed7babdd1cc33ff5bfd6a83460020c45f502c0fb668ac705ec176f9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e60430ddbd350ccd9cef137ef068ea77b4973ba06c7630ce4e5e3cc60491ffae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e60430ddbd350ccd9cef137ef068ea77b4973ba06c7630ce4e5e3cc60491ffae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e60430ddbd350ccd9cef137ef068ea77b4973ba06c7630ce4e5e3cc60491ffae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+        },
+        "targetDigest": "9c64a08bae8b74411eee1f07978d284211d43f90b07c7d6f7c79fce746080a57"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e60430ddbd350ccd9cef137ef068ea77b4973ba06c7630ce4e5e3cc60491ffae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+        },
+        "targetDigest": "85873ae77b5a664c1b79e5c29359b830c6b31fc0eb5e958b69d05c62a4c2f6dc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e60430ddbd350ccd9cef137ef068ea77b4973ba06c7630ce4e5e3cc60491ffae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "78a5f85db56d928351f1b3105a83b4ed4607a0d5336290706123a97b633e5e5d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-display-percent-code"
+        },
+        "targetDigest": "b7c2b5c51e8625d0a17af06f69e9fb58e3b440108bf5dcb0a182a5a8f5e28081"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b6e412b750d2045cb538be88a34522fba0e32da0d845f7d9e4eab785fff079a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value-code"
+        },
+        "targetDigest": "d216a7a70beef071cb25fa08ad4a69ad3491a61048791460b72da0675ae97931"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "28c3b385e01bf57d864cda64631adaaac4f71ced694685c6375f8c6a81c450ad",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "cff2d32bf86d650146caec4d2ebf701ecd0109b233782e22c83ff9b65a13e3ff",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-438; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:83faa1f6:key-unknown:en:1:g-ebb78706d4867f56:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Scattershot",
+          "resolvedTextSha256": "87c0b34c54850f7e01eebc4d0b2e9164a745ed849c5e41819b008fd9b2d9f6b5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "87c0b34c54850f7e01eebc4d0b2e9164a745ed849c5e41819b008fd9b2d9f6b5",
+              "text": "Scattershot"
+            }
+          ],
+          "sourceHash": "83faa1f6",
+          "sourceLocale": "en",
+          "sourceText": "Scattershot",
+          "sourceTextSha256": "87c0b34c54850f7e01eebc4d0b2e9164a745ed849c5e41819b008fd9b2d9f6b5"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:83faa1f6:key-unknown:zh-tw:1:g-ebb78706d4867f56:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "散彈",
+          "resolvedTextSha256": "ed0088fdd5e3ff61ba9bf25c8b6fec12e6d84745e4941a3163e567ff92f372dc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ed0088fdd5e3ff61ba9bf25c8b6fec12e6d84745e4941a3163e567ff92f372dc",
+              "text": "散彈"
+            }
+          ],
+          "sourceHash": "83faa1f6",
+          "sourceLocale": "zh-TW",
+          "sourceText": "散彈",
+          "sourceTextSha256": "ed0088fdd5e3ff61ba9bf25c8b6fec12e6d84745e4941a3163e567ff92f372dc"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+6% Critical Chance for each Enemy Hit by your previous attack. Stacks 5 times.",
+          "resolvedTextSha256": "5004e2cbf224d9eb11cdf6b3b484bdab82cea3d5c6da2d409d1c7fc73b5d35ea",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "8a2f0e28b2a16dd3fa23387f12f718267e2f76de1449419af249c18c5055a30c",
+              "text": " Critical Chance for each Enemy Hit by your previous attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance for each Enemy Hit by your previous attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "522169a1e4c3672f567004e57b7aa0ff161086c8e03ad8452328657992961b92"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+8% Critical Chance for each Enemy Hit by your previous attack. Stacks 5 times.",
+          "resolvedTextSha256": "b71db9d4268e57cb2a5e040d65a878b4ad1276d21cc1f962db95787ed81f72e6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "8a2f0e28b2a16dd3fa23387f12f718267e2f76de1449419af249c18c5055a30c",
+              "text": " Critical Chance for each Enemy Hit by your previous attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance for each Enemy Hit by your previous attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "522169a1e4c3672f567004e57b7aa0ff161086c8e03ad8452328657992961b92"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+10% Critical Chance for each Enemy Hit by your previous attack. Stacks 5 times.",
+          "resolvedTextSha256": "dd8c177c4523a8022f6996d6a7b78a491c4ca4372199703774a36e903af0789e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "8a2f0e28b2a16dd3fa23387f12f718267e2f76de1449419af249c18c5055a30c",
+              "text": " Critical Chance for each Enemy Hit by your previous attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance for each Enemy Hit by your previous attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "522169a1e4c3672f567004e57b7aa0ff161086c8e03ad8452328657992961b92"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent",
+              "value": "+12%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+12% Critical Chance for each Enemy Hit by your previous attack. Stacks 5 times.",
+          "resolvedTextSha256": "5acbc86ea4c349f74852b656d46a60c8a2380850040b118448ce6017eb309086",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "8a2f0e28b2a16dd3fa23387f12f718267e2f76de1449419af249c18c5055a30c",
+              "text": " Critical Chance for each Enemy Hit by your previous attack. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance for each Enemy Hit by your previous attack. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "522169a1e4c3672f567004e57b7aa0ff161086c8e03ad8452328657992961b92"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率+6%，最多疊加5層。",
+          "resolvedTextSha256": "4a56d8740a6eb610fa4442779c01dfbba8251c4dc192b2c93bf020c1c4e845ed",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa92621fc13a54723ac7595b5a5d68a96a9c8faa02466351be12f8ba280363ce",
+              "text": "上一次攻擊命中每命中一個敵人，你的暴擊幾率"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "zh-TW",
+          "sourceText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率{crit_chance:%s}，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "0999994168c37482a564ae68bf32dfab5b321f611c41525869c505acec61a2c0"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率+8%，最多疊加5層。",
+          "resolvedTextSha256": "e9e82df95d66eac2577d2f046ae152be9e229a11aec5c1998550e065e7690856",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa92621fc13a54723ac7595b5a5d68a96a9c8faa02466351be12f8ba280363ce",
+              "text": "上一次攻擊命中每命中一個敵人，你的暴擊幾率"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "zh-TW",
+          "sourceText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率{crit_chance:%s}，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "0999994168c37482a564ae68bf32dfab5b321f611c41525869c505acec61a2c0"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率+10%，最多疊加5層。",
+          "resolvedTextSha256": "63c8af33026e5d1709cdff813ffccf98521b28e848c7b7967316575ac7cdbdad",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa92621fc13a54723ac7595b5a5d68a96a9c8faa02466351be12f8ba280363ce",
+              "text": "上一次攻擊命中每命中一個敵人，你的暴擊幾率"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "zh-TW",
+          "sourceText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率{crit_chance:%s}，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "0999994168c37482a564ae68bf32dfab5b321f611c41525869c505acec61a2c0"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent",
+              "value": "+12%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率+12%，最多疊加5層。",
+          "resolvedTextSha256": "148821092dfda7e8b79e51b9accb27e5b9b5c88284b3ffcd669349a0b554f5f1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa92621fc13a54723ac7595b5a5d68a96a9c8faa02466351be12f8ba280363ce",
+              "text": "上一次攻擊命中每命中一個敵人，你的暴擊幾率"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "zh-TW",
+          "sourceText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率{crit_chance:%s}，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "0999994168c37482a564ae68bf32dfab5b321f611c41525869c505acec61a2c0"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "散彈",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:83faa1f6:key-unknown:en:1:g-ebb78706d4867f56:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:83faa1f6:key-unknown:zh-tw:1:g-ebb78706d4867f56:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:83faa1f6:key-unknown:zh-tw:1:g-ebb78706d4867f56:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          },
+          "key": "loc_trait_bespoke_crit_chance_on_hitting_multiple_with_one_shot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent",
+              "value": "+12%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率+12%，最多疊加5層。",
+          "resolvedTextSha256": "148821092dfda7e8b79e51b9accb27e5b9b5c88284b3ffcd669349a0b554f5f1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa92621fc13a54723ac7595b5a5d68a96a9c8faa02466351be12f8ba280363ce",
+              "text": "上一次攻擊命中每命中一個敵人，你的暴擊幾率"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ef1e9b8c0002765d27140067ac7cf105423d5ac4f943e469f520e9b3afa17aa1",
+              "text": "，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "f8a4f721",
+          "sourceLocale": "zh-TW",
+          "sourceText": "上一次攻擊命中每命中一個敵人，你的暴擊幾率{crit_chance:%s}，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "0999994168c37482a564ae68bf32dfab5b321f611c41525869c505acec61a2c0"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:en:1:g-ebb78706d4867f56:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f8a4f721:key-known:zh-tw:1:g-ebb78706d4867f56:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-crit-chance-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p1-crit-chance-on-hitting-multiple-with-one-shot"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "cf5ae0e597923eeaecabeb2fb6a59179b68204122c8a7b48a6f116228f430fb5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bedaf9d87a202a587473b3cd987011f71cda9f93a925f933558c45d8ed2e3209",
+          "targetId": "review:w06:generic:ebb78706d4867f56:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "56571144007b55e423875843109790f299e62707d8df925d535a0c1613ea7aa3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d67c838804bd96139f0954fc784425ab34d4e6b0082a9d602d529ccbfd9e5c6d",
+          "targetId": "review:w06:generic:ebb78706d4867f56:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "cf0e89cec05aa32f8df024ba075b1ab3438842ce23be66d78703dd71d619f8ca",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "e659a77f8a21648adbc6991b1dc292545f2a9e2a46940af072e7b52b0dc8037a",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8aedaedf8a3dfcb4f6e3e00137d3f985e00b9d5475bab98921f737c7b118249c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "9d0f57b520373882b6b6641a6777dc35746a3e31dc7a457eb1f6511fbd1f0c66",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1d0e01ac6b18bbf6feabb26b65b90fd3b19d14d1759ca9b22e0a69fe32174e7d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7078ff2bb4c1fe032019d522232f0b7634d8e9012b19fc1cd3db0a97cb9d82aa",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f85ffc97a0a8e7e4d4943e1b7013c6b7e08d59d67e835d7c2e780270733e03be",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4cf902b5e382b19bbc74ba55c438834800606c1435a1c1a7f8471b8b72fc1c9a",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "cf5ae0e597923eeaecabeb2fb6a59179b68204122c8a7b48a6f116228f430fb5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:content::name"
+        },
+        "targetDigest": "bedaf9d87a202a587473b3cd987011f71cda9f93a925f933558c45d8ed2e3209"
+      },
+      {
+        "dependenciesDigest": "56571144007b55e423875843109790f299e62707d8df925d535a0c1613ea7aa3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:context::tierapplicability"
+        },
+        "targetDigest": "d67c838804bd96139f0954fc784425ab34d4e6b0082a9d602d529ccbfd9e5c6d"
+      },
+      {
+        "dependenciesDigest": "cf0e89cec05aa32f8df024ba075b1ab3438842ce23be66d78703dd71d619f8ca",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:0"
+        },
+        "targetDigest": "e659a77f8a21648adbc6991b1dc292545f2a9e2a46940af072e7b52b0dc8037a"
+      },
+      {
+        "dependenciesDigest": "8aedaedf8a3dfcb4f6e3e00137d3f985e00b9d5475bab98921f737c7b118249c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:1"
+        },
+        "targetDigest": "9d0f57b520373882b6b6641a6777dc35746a3e31dc7a457eb1f6511fbd1f0c66"
+      },
+      {
+        "dependenciesDigest": "1d0e01ac6b18bbf6feabb26b65b90fd3b19d14d1759ca9b22e0a69fe32174e7d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:2"
+        },
+        "targetDigest": "7078ff2bb4c1fe032019d522232f0b7634d8e9012b19fc1cd3db0a97cb9d82aa"
+      },
+      {
+        "dependenciesDigest": "f85ffc97a0a8e7e4d4943e1b7013c6b7e08d59d67e835d7c2e780270733e03be",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p1-crit-chance-on-hitting-multiple-with-one-shot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ebb78706d4867f56:official::tierpresentations:options:3"
+        },
+        "targetDigest": "4cf902b5e382b19bbc74ba55c438834800606c1435a1c1a7f8471b8b72fc1c9a"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

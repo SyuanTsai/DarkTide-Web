@@ -1,0 +1,2776 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.07",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.08",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.09",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.close_damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "7",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.close_damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "8",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.close_damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "9",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.close_damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "value": {
+            "decimal": "3.5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value close_damage at stat_buffs.stat_buffs.damage_near; defined tier literals are tier 1=0.07, tier 2=0.08, tier 3=0.09, tier 4=0.1.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at child_duration; defined tier literals are tier 1=3.5, tier 2=3.5, tier 3=3.5, tier 4=3.5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf0a8d629cb1930f4bbbf41693e58c98f384168866ba11307184325a132352ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "0ef66f503a4bf9ca1f994722fcd4fe8426c57f7ecd5e292f5edf6b3a9f7f6097"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf0a8d629cb1930f4bbbf41693e58c98f384168866ba11307184325a132352ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf0a8d629cb1930f4bbbf41693e58c98f384168866ba11307184325a132352ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf0a8d629cb1930f4bbbf41693e58c98f384168866ba11307184325a132352ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "fad6081f627b6f8f2c76183760aa4aa9e1acdf8a56a17b9222d3f10f30bdbed4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf0a8d629cb1930f4bbbf41693e58c98f384168866ba11307184325a132352ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d0b5a0f00146394afaa82d1011b1cbec0061f1a9496ac7368a0c3b60e315730c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "f417ff1aa8c21f7e57f6fbb3d8a351c533dffd5c878ad4b2b58027f2f0c29011"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d0b5a0f00146394afaa82d1011b1cbec0061f1a9496ac7368a0c3b60e315730c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d0b5a0f00146394afaa82d1011b1cbec0061f1a9496ac7368a0c3b60e315730c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "targetDigest": "d7a133cc3af78ba6676515432214ecd6ab45b5397ee97e3e90926fb4f4c42324"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0426b33694ff76fee9942af8d388d77dd27b8a29c192a9dfb8d5c3a1d257c9dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0426b33694ff76fee9942af8d388d77dd27b8a29c192a9dfb8d5c3a1d257c9dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0426b33694ff76fee9942af8d388d77dd27b8a29c192a9dfb8d5c3a1d257c9dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+        },
+        "targetDigest": "a1a3af27337cac26ddb0d6eefccee5953e4da6520b1c5079032b2278f503331b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0426b33694ff76fee9942af8d388d77dd27b8a29c192a9dfb8d5c3a1d257c9dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0426b33694ff76fee9942af8d388d77dd27b8a29c192a9dfb8d5c3a1d257c9dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+        },
+        "targetDigest": "40b19dab77bdb13e3713a031338940eed8511eac1614d6d18427655712f60a14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1451cf858aa2f8968983db5e71f7b60128972169cf37610dad4a45e57cd3cd91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1451cf858aa2f8968983db5e71f7b60128972169cf37610dad4a45e57cd3cd91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1451cf858aa2f8968983db5e71f7b60128972169cf37610dad4a45e57cd3cd91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+        },
+        "targetDigest": "a1a3af27337cac26ddb0d6eefccee5953e4da6520b1c5079032b2278f503331b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1451cf858aa2f8968983db5e71f7b60128972169cf37610dad4a45e57cd3cd91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1451cf858aa2f8968983db5e71f7b60128972169cf37610dad4a45e57cd3cd91",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+        },
+        "targetDigest": "035637c20d37f580a9be128f5f4ecf27e13367b42d7f19391ffc5ca4a371d4fe"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52eed7696a10ba050efe1216b54b1758523f2e83d829c2a157a98c50842291b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52eed7696a10ba050efe1216b54b1758523f2e83d829c2a157a98c50842291b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52eed7696a10ba050efe1216b54b1758523f2e83d829c2a157a98c50842291b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+        },
+        "targetDigest": "a1a3af27337cac26ddb0d6eefccee5953e4da6520b1c5079032b2278f503331b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52eed7696a10ba050efe1216b54b1758523f2e83d829c2a157a98c50842291b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52eed7696a10ba050efe1216b54b1758523f2e83d829c2a157a98c50842291b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+        },
+        "targetDigest": "89c1adb6a033e0fdf2737e085980564d7eeae0d878a6320c5556adf4a9d3c7f3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e476df570eb6ac232d5659bdd7085dc2fb8e4bd824f0f529f2a2b9e448842664",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e476df570eb6ac232d5659bdd7085dc2fb8e4bd824f0f529f2a2b9e448842664",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e476df570eb6ac232d5659bdd7085dc2fb8e4bd824f0f529f2a2b9e448842664",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+        },
+        "targetDigest": "a1a3af27337cac26ddb0d6eefccee5953e4da6520b1c5079032b2278f503331b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e476df570eb6ac232d5659bdd7085dc2fb8e4bd824f0f529f2a2b9e448842664",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e476df570eb6ac232d5659bdd7085dc2fb8e4bd824f0f529f2a2b9e448842664",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a19c0a9a2ba6c1813e654c2bc5da516e59df8900f40da2ffdafad2551a6e1ae4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a19c0a9a2ba6c1813e654c2bc5da516e59df8900f40da2ffdafad2551a6e1ae4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a19c0a9a2ba6c1813e654c2bc5da516e59df8900f40da2ffdafad2551a6e1ae4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "cadeab39611868b2204b28aa79fa9a613184c694de7ac3c6fadf903b1246f04a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a19c0a9a2ba6c1813e654c2bc5da516e59df8900f40da2ffdafad2551a6e1ae4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a19c0a9a2ba6c1813e654c2bc5da516e59df8900f40da2ffdafad2551a6e1ae4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f723cc6907e380bbf920a4b9853adfb273c3782b5210f3977b4bd66653b3a6ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f723cc6907e380bbf920a4b9853adfb273c3782b5210f3977b4bd66653b3a6ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f723cc6907e380bbf920a4b9853adfb273c3782b5210f3977b4bd66653b3a6ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+        },
+        "targetDigest": "f65d1a7bd8bdf93af6c8c4b891de53fbb3ddd7dd82e23d1010137ca79e55093a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f723cc6907e380bbf920a4b9853adfb273c3782b5210f3977b4bd66653b3a6ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+        },
+        "targetDigest": "1f75d51321a40811a8575d750e34ae963057a6b6a9f317ef3a81a66b87266564"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f723cc6907e380bbf920a4b9853adfb273c3782b5210f3977b4bd66653b3a6ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+        },
+        "targetDigest": "c27b07d47cb30f282c8cf0d5a9ca4472d2c0cfba7f43d0b1a378e35b6fb2342c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9c504418aba876fa3daceb461d470f57ed6f7c2d9e173880984b75d7ebb0aae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-close-damage-display-percent-code"
+        },
+        "targetDigest": "c10f61c33c8addce73d906ee359f7323644aa363109f0290eaee7b51ac2002cd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28b2096161defae95f655a951e1fedb1ad54a7c97b1046c94fef9a797dd35045",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value-code"
+        },
+        "targetDigest": "d216a7a70beef071cb25fa08ad4a69ad3491a61048791460b72da0675ae97931"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "279b75bdc92d6308e8dfbd3cf6d8cf954480f1ed9431168da4a1dd5481322fbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p1-increase-close-damage-on-close-kill-time-display-value-code"
+        },
+        "targetDigest": "c1ea1a336b6a41498343d0aebcc081df74364439707a278f77c5df8ac94add79"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "28c3b385e01bf57d864cda64631adaaac4f71ced694685c6375f8c6a81c450ad",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "cff2d32bf86d650146caec4d2ebf701ecd0109b233782e22c83ff9b65a13e3ff",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-438; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:41f0c1d1:key-unknown:en:1:g-fa30471afba1e07e:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Fire Frenzy",
+          "resolvedTextSha256": "556937bd7233e91e5040d1320373382c700566942cdbb920546548606f21d60c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "556937bd7233e91e5040d1320373382c700566942cdbb920546548606f21d60c",
+              "text": "Fire Frenzy"
+            }
+          ],
+          "sourceHash": "41f0c1d1",
+          "sourceLocale": "en",
+          "sourceText": "Fire Frenzy",
+          "sourceTextSha256": "556937bd7233e91e5040d1320373382c700566942cdbb920546548606f21d60c"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:41f0c1d1:key-unknown:zh-tw:1:g-fa30471afba1e07e:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "烈火熱焰",
+          "resolvedTextSha256": "c4dab3db78424c8326680fb09468396a7baa6b00fd37f300303585def6385d69",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c4dab3db78424c8326680fb09468396a7baa6b00fd37f300303585def6385d69",
+              "text": "烈火熱焰"
+            }
+          ],
+          "sourceHash": "41f0c1d1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "烈火熱焰",
+          "sourceTextSha256": "c4dab3db78424c8326680fb09468396a7baa6b00fd37f300303585def6385d69"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent",
+              "value": "+7%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "Gain +7% Close Damage for 3.5 seconds after killing an enemy at close range, stacking 5 times.",
+          "resolvedTextSha256": "1ad5060c2da15f316ae0eed839ad252dc26aea61e926e41fdbb9fbeaddbadead",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "b293a6e20571e019c94135159ef9613ddad88c0ea6bdfa4ba6ca6fe812fec740",
+              "text": "Gain "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2758318d6a926f5901b32c439d0f82a5541f0c2f3906d0a6c522709dbb95b4a0",
+              "text": " Close Damage for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b7bc715def37e9fb32d2e8078aac6b28fc27696be82e6505f62563d2217c9722",
+              "text": " seconds after killing an enemy at close range, stacking "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "en",
+          "sourceText": "Gain {close_damage:%s} Close Damage for {time:%s} seconds after killing an enemy at close range, stacking {stacks:%s} times.",
+          "sourceTextSha256": "3f68417b0e3fb16df692fdb48566c7d95c6c078ac737caf85c849e23df6dbc9e"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "Gain +8% Close Damage for 3.5 seconds after killing an enemy at close range, stacking 5 times.",
+          "resolvedTextSha256": "987f599ee55d155d0aef9f2b4b18e97225f369543128d5515391669898ccfbbf",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "b293a6e20571e019c94135159ef9613ddad88c0ea6bdfa4ba6ca6fe812fec740",
+              "text": "Gain "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2758318d6a926f5901b32c439d0f82a5541f0c2f3906d0a6c522709dbb95b4a0",
+              "text": " Close Damage for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b7bc715def37e9fb32d2e8078aac6b28fc27696be82e6505f62563d2217c9722",
+              "text": " seconds after killing an enemy at close range, stacking "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "en",
+          "sourceText": "Gain {close_damage:%s} Close Damage for {time:%s} seconds after killing an enemy at close range, stacking {stacks:%s} times.",
+          "sourceTextSha256": "3f68417b0e3fb16df692fdb48566c7d95c6c078ac737caf85c849e23df6dbc9e"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "Gain +9% Close Damage for 3.5 seconds after killing an enemy at close range, stacking 5 times.",
+          "resolvedTextSha256": "1bb4b414547a0e4229a2d8587e71275b9ebb3e1c28bfb8b64fc7bea71e50b171",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "b293a6e20571e019c94135159ef9613ddad88c0ea6bdfa4ba6ca6fe812fec740",
+              "text": "Gain "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2758318d6a926f5901b32c439d0f82a5541f0c2f3906d0a6c522709dbb95b4a0",
+              "text": " Close Damage for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b7bc715def37e9fb32d2e8078aac6b28fc27696be82e6505f62563d2217c9722",
+              "text": " seconds after killing an enemy at close range, stacking "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "en",
+          "sourceText": "Gain {close_damage:%s} Close Damage for {time:%s} seconds after killing an enemy at close range, stacking {stacks:%s} times.",
+          "sourceTextSha256": "3f68417b0e3fb16df692fdb48566c7d95c6c078ac737caf85c849e23df6dbc9e"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "Gain +10% Close Damage for 3.5 seconds after killing an enemy at close range, stacking 5 times.",
+          "resolvedTextSha256": "123a2b23dffb8f15b5b228a1261f0ab67dd0eb9ed6e2c6e8775828cd9f33c5b8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "b293a6e20571e019c94135159ef9613ddad88c0ea6bdfa4ba6ca6fe812fec740",
+              "text": "Gain "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2758318d6a926f5901b32c439d0f82a5541f0c2f3906d0a6c522709dbb95b4a0",
+              "text": " Close Damage for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b7bc715def37e9fb32d2e8078aac6b28fc27696be82e6505f62563d2217c9722",
+              "text": " seconds after killing an enemy at close range, stacking "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "en",
+          "sourceText": "Gain {close_damage:%s} Close Damage for {time:%s} seconds after killing an enemy at close range, stacking {stacks:%s} times.",
+          "sourceTextSha256": "3f68417b0e3fb16df692fdb48566c7d95c6c078ac737caf85c849e23df6dbc9e"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent",
+              "value": "+7%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，近戰傷害增加+7%，持續3.5秒，最多疊加5層。",
+          "resolvedTextSha256": "ae8ef67a472ba0de091bbe938b574f45679e66dee99a3ea8cecd70206628d0cf",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8260e734355b43477b4a87225fc8aad0738d448e29b385bc9190881cef01d282",
+              "text": "近距離擊殺敵人後，近戰傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，近戰傷害增加{close_damage:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "6d71182e49afb41b0db0b95c9e158a36dc0455facdce4b2a7ec4a99d0068d4ad"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，近戰傷害增加+8%，持續3.5秒，最多疊加5層。",
+          "resolvedTextSha256": "bada4a734d496e8780ec487dcde47b7e963ef519c7f863f3f117100f9b2ad424",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8260e734355b43477b4a87225fc8aad0738d448e29b385bc9190881cef01d282",
+              "text": "近距離擊殺敵人後，近戰傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，近戰傷害增加{close_damage:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "6d71182e49afb41b0db0b95c9e158a36dc0455facdce4b2a7ec4a99d0068d4ad"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，近戰傷害增加+9%，持續3.5秒，最多疊加5層。",
+          "resolvedTextSha256": "808b6e039cff22a4a4c38898b6f64290c15d074d1a83cd03caf17672136bb738",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8260e734355b43477b4a87225fc8aad0738d448e29b385bc9190881cef01d282",
+              "text": "近距離擊殺敵人後，近戰傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，近戰傷害增加{close_damage:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "6d71182e49afb41b0db0b95c9e158a36dc0455facdce4b2a7ec4a99d0068d4ad"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，近戰傷害增加+10%，持續3.5秒，最多疊加5層。",
+          "resolvedTextSha256": "810057ed60926ea23913deb428c5c3d3a9bf1d3e83087d001db35732420bf239",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8260e734355b43477b4a87225fc8aad0738d448e29b385bc9190881cef01d282",
+              "text": "近距離擊殺敵人後，近戰傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，近戰傷害增加{close_damage:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "6d71182e49afb41b0db0b95c9e158a36dc0455facdce4b2a7ec4a99d0068d4ad"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "烈火熱焰",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:41f0c1d1:key-unknown:en:1:g-fa30471afba1e07e:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:41f0c1d1:key-unknown:zh-tw:1:g-fa30471afba1e07e:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:41f0c1d1:key-unknown:zh-tw:1:g-fa30471afba1e07e:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p1-increase-close-damage-on-close-kill"
+          },
+          "key": "loc_trait_bespoke_increase_close_damage_on_close_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "close_damage",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value",
+              "value": "3.5"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，近戰傷害增加+10%，持續3.5秒，最多疊加5層。",
+          "resolvedTextSha256": "810057ed60926ea23913deb428c5c3d3a9bf1d3e83087d001db35732420bf239",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8260e734355b43477b4a87225fc8aad0738d448e29b385bc9190881cef01d282",
+              "text": "近距離擊殺敵人後，近戰傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "close_damage",
+              "segmentId": "segment-2",
+              "sha256": "f18ca8455deccb861d15cb89853431efbd961a1a21decee2ed468a4a69a13826",
+              "token": "{close_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "72a8e537",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，近戰傷害增加{close_damage:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "6d71182e49afb41b0db0b95c9e158a36dc0455facdce4b2a7ec4a99d0068d4ad"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "close_damage",
+                  "placeholder": "{close_damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "close_damage",
+                  "placeholder": "{close_damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "close_damage",
+                  "placeholder": "{close_damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:en:1:g-fa30471afba1e07e:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:72a8e537:key-known:zh-tw:1:g-fa30471afba1e07e:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-close-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "close_damage",
+                  "placeholder": "{close_damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p1-increase-close-damage-on-close-kill-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p1-increase-close-damage-on-close-kill"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "993af5924b11e1727deb784a537c21988e11085acb503f7551f90372be199886",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "23576bb348a3bb3f1d5ead99573de7549a08f958af6f72c25100a9d10c854d7f",
+          "targetId": "review:w06:generic:fa30471afba1e07e:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "dcbe73bffa2b271f12ab523c67fb234fe2bc8449e99c0bbd9d30c8e6a23f7435",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5796eea304e349ae1d550012196b9951a408893db06dc980697710c0cc4f3440",
+          "targetId": "review:w06:generic:fa30471afba1e07e:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "17b169a2f437e0e17993de7457122f6f173d01b75a5b3c3e446888d7eb598ca2",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c2f345734a42fc9ef2d9e50b4f18a28d98b3d2fcf61447048c296df96f96bf0d",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f1c57be7f6d0be40c34f3d5b9b44260bc26c242fa3311dbf399e014f6bf33b77",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b39fb8aaad9fbade2da1d16d676323836f42b25cf244a26bf59105739fc1e861",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "13df9a0d514901dab8a6ce235e279ea3bca849468e38d580801137084215aa1d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7c19a5440e0f1ee1d3bb0c326f0ddbe2cd1bdd5a024d69ed31a5e4468a2c2b20",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "847ddcc187a30cf6ab0ab1426c442e23d1dfe74b2cf5719c2b6e810de11131ad",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f8bd7f9f4569323eba7a61b807a72e78f81141355cb6a3d119b48e385e08f209",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "993af5924b11e1727deb784a537c21988e11085acb503f7551f90372be199886",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:content::name"
+        },
+        "targetDigest": "23576bb348a3bb3f1d5ead99573de7549a08f958af6f72c25100a9d10c854d7f"
+      },
+      {
+        "dependenciesDigest": "dcbe73bffa2b271f12ab523c67fb234fe2bc8449e99c0bbd9d30c8e6a23f7435",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:context::tierapplicability"
+        },
+        "targetDigest": "5796eea304e349ae1d550012196b9951a408893db06dc980697710c0cc4f3440"
+      },
+      {
+        "dependenciesDigest": "17b169a2f437e0e17993de7457122f6f173d01b75a5b3c3e446888d7eb598ca2",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:0"
+        },
+        "targetDigest": "c2f345734a42fc9ef2d9e50b4f18a28d98b3d2fcf61447048c296df96f96bf0d"
+      },
+      {
+        "dependenciesDigest": "f1c57be7f6d0be40c34f3d5b9b44260bc26c242fa3311dbf399e014f6bf33b77",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:1"
+        },
+        "targetDigest": "b39fb8aaad9fbade2da1d16d676323836f42b25cf244a26bf59105739fc1e861"
+      },
+      {
+        "dependenciesDigest": "13df9a0d514901dab8a6ce235e279ea3bca849468e38d580801137084215aa1d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:2"
+        },
+        "targetDigest": "7c19a5440e0f1ee1d3bb0c326f0ddbe2cd1bdd5a024d69ed31a5e4468a2c2b20"
+      },
+      {
+        "dependenciesDigest": "847ddcc187a30cf6ab0ab1426c442e23d1dfe74b2cf5719c2b6e810de11131ad",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p1-increase-close-damage-on-close-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:fa30471afba1e07e:official::tierpresentations:options:3"
+        },
+        "targetDigest": "f8bd7f9f4569323eba7a61b807a72e78f81141355cb6a3d119b48e385e08f209"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

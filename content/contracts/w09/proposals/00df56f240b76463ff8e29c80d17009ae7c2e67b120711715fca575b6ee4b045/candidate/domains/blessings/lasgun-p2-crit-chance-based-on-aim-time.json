@@ -1,0 +1,1216 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            },
+            {
+              "field": "/payload/formatValues/stacks",
+              "reasonCode": "NOT_EXPOSED_BY_SOURCE"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.45",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.4",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.35",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.3",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:lasgun:p2-crit-chance-based-on-aim-time",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "value": {
+            "decimal": "0.45",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "value": {
+            "decimal": "0.4",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "value": {
+            "decimal": "0.35",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+          },
+          "value": {
+            "decimal": "0.3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_chance at stat_buffs.stat_buffs.critical_strike_chance; defined tier literals are tier 1=0.1, tier 2=0.1, tier 3=0.1, tier 4=0.1.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at duration_per_stack; defined tier literals are tier 1=0.45, tier 2=0.4, tier 3=0.35, tier 4=0.3.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9804f01093d02e59f46b7235daaafad244ec9053041706b0fa871723cf91dee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "1498da01f44fea843237397747fdff6a1955236465c7375047630c3dce9f6aa7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9804f01093d02e59f46b7235daaafad244ec9053041706b0fa871723cf91dee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9804f01093d02e59f46b7235daaafad244ec9053041706b0fa871723cf91dee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9804f01093d02e59f46b7235daaafad244ec9053041706b0fa871723cf91dee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "b2bdcd6313423dd427a617ad9953e3f6a3cbefaf40bc44b5965514ec838ca39f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e9804f01093d02e59f46b7235daaafad244ec9053041706b0fa871723cf91dee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2f51a1e5f04d36ef82d462f5f15f36800db2790fdb0b5f00bb29c0b15322d77f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "332a0a2e592e64905a58de5ce2ab65c787006d873e571d860ffca2d0a73b5d2f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2f51a1e5f04d36ef82d462f5f15f36800db2790fdb0b5f00bb29c0b15322d77f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2f51a1e5f04d36ef82d462f5f15f36800db2790fdb0b5f00bb29c0b15322d77f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p2-crit-chance-based-on-aim-time"
+        },
+        "targetDigest": "9ab11a1b86aac551920f5ea3c6a5ec1bb9a84d29f3110806cdff60f9b4d8d344"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "46a7cf29d05a587453733c357534509f0aa158233317d36e9bd742b6c3d0042b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "46a7cf29d05a587453733c357534509f0aa158233317d36e9bd742b6c3d0042b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "46a7cf29d05a587453733c357534509f0aa158233317d36e9bd742b6c3d0042b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+        },
+        "targetDigest": "ed7045e34a4ae0de5ced2f463d496ffc533da5007e274ab71f523128abe06191"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "46a7cf29d05a587453733c357534509f0aa158233317d36e9bd742b6c3d0042b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+        },
+        "targetDigest": "ef28843af1b155d8d6c4771f609acdcd42e3ceb1354999ffda2fcf713d617f50"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "46a7cf29d05a587453733c357534509f0aa158233317d36e9bd742b6c3d0042b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8cc1f88fdaf3afd28d02dd8d30e97597ca76c0e63ace3460a65ca6cf0362b532",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8cc1f88fdaf3afd28d02dd8d30e97597ca76c0e63ace3460a65ca6cf0362b532",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8cc1f88fdaf3afd28d02dd8d30e97597ca76c0e63ace3460a65ca6cf0362b532",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+        },
+        "targetDigest": "6afeea38fc82a82982c603281cdde69d6371c3a29f674de5da5f6a999f329e02"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8cc1f88fdaf3afd28d02dd8d30e97597ca76c0e63ace3460a65ca6cf0362b532",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+        },
+        "targetDigest": "ef28843af1b155d8d6c4771f609acdcd42e3ceb1354999ffda2fcf713d617f50"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8cc1f88fdaf3afd28d02dd8d30e97597ca76c0e63ace3460a65ca6cf0362b532",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier1-display-value"
+        },
+        "targetDigest": "188de7e10e477a4183f0b6dd74818da39d48d5c9576f6f077c62bcc3e4388947"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4fb7d7ff999c8d6c33d9ad7fe5948cb911a90c4cd7b8f2b619fd157bffa1ddcc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4fb7d7ff999c8d6c33d9ad7fe5948cb911a90c4cd7b8f2b619fd157bffa1ddcc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4fb7d7ff999c8d6c33d9ad7fe5948cb911a90c4cd7b8f2b619fd157bffa1ddcc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+        },
+        "targetDigest": "6afeea38fc82a82982c603281cdde69d6371c3a29f674de5da5f6a999f329e02"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4fb7d7ff999c8d6c33d9ad7fe5948cb911a90c4cd7b8f2b619fd157bffa1ddcc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+        },
+        "targetDigest": "ef28843af1b155d8d6c4771f609acdcd42e3ceb1354999ffda2fcf713d617f50"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4fb7d7ff999c8d6c33d9ad7fe5948cb911a90c4cd7b8f2b619fd157bffa1ddcc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier2-display-value"
+        },
+        "targetDigest": "e7452eb036f989adb6cefadfb7523be0968d1668a67dd5ff6965cdce049d05fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8e6d4b555a11722e35b1a2326e751d8536ae1c1320124f3688fc4f1778dc8700",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8e6d4b555a11722e35b1a2326e751d8536ae1c1320124f3688fc4f1778dc8700",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8e6d4b555a11722e35b1a2326e751d8536ae1c1320124f3688fc4f1778dc8700",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+        },
+        "targetDigest": "6afeea38fc82a82982c603281cdde69d6371c3a29f674de5da5f6a999f329e02"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8e6d4b555a11722e35b1a2326e751d8536ae1c1320124f3688fc4f1778dc8700",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+        },
+        "targetDigest": "ef28843af1b155d8d6c4771f609acdcd42e3ceb1354999ffda2fcf713d617f50"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8e6d4b555a11722e35b1a2326e751d8536ae1c1320124f3688fc4f1778dc8700",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier3-display-value"
+        },
+        "targetDigest": "ffbbf3ca08eec6eb0250b84bc48a9badbbe5f070b8ed4d9387356035a7deb7f1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8a7f5c1ae2fb921e227dedc47c4577b74d928116bc3a457ce0b34595bf5212fb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8a7f5c1ae2fb921e227dedc47c4577b74d928116bc3a457ce0b34595bf5212fb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8a7f5c1ae2fb921e227dedc47c4577b74d928116bc3a457ce0b34595bf5212fb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+        },
+        "targetDigest": "6afeea38fc82a82982c603281cdde69d6371c3a29f674de5da5f6a999f329e02"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8a7f5c1ae2fb921e227dedc47c4577b74d928116bc3a457ce0b34595bf5212fb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+        },
+        "targetDigest": "ef28843af1b155d8d6c4771f609acdcd42e3ceb1354999ffda2fcf713d617f50"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8a7f5c1ae2fb921e227dedc47c4577b74d928116bc3a457ce0b34595bf5212fb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p2-crit-chance-based-on-aim-time-time-tier4-display-value"
+        },
+        "targetDigest": "f351a6f342b5679eef71feba99fe5945ef1fa8e5a1ac47cab6d8134db388b91a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ff1da79689db90471cb3d5e6156f60ec15b56319d3b921978a071ba058537eee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-crit-chance-display-percent-code"
+        },
+        "targetDigest": "04858ec1004fc7db0ae41f6c7f2f73a712308638f07c18c43605f0d3781a0030"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5315d1a999ac27a4c61949c1bbc98125ccffa90e734541241d83c7bccfed3ea4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:lasgun:p2-crit-chance-based-on-aim-time-time-display-value-code"
+        },
+        "targetDigest": "60331f2479aa98ba82e76e8e0f47257528bd18f8bfdfef565887079b236621b6"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "157038dc6492c147ab1ee61f0a64518f5b73ceffc3ec6707d590d0ed344be7e3",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 8 bespoke traits span lines 10-463; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": []
+    },
+    "officialTextChanges": [],
+    "presentations": [],
+    "reviewReceipts": [],
+    "reviewTargets": [],
+    "termLocalizations": []
+  }
+}

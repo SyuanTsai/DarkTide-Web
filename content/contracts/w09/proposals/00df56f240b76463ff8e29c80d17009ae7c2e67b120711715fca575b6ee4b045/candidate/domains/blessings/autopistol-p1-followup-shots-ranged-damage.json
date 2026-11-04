@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_autopistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at conditional_stat_buffs.stat_buffs.ranged_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cab4ee01809c07fb2a76c1113856f0f820f45201af0a7c8dd95d6cfa651fc4d9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "27dbfadcb942500b8f120eaec0376c26efb6c6e3cd19f12086ab7a56b9518b7c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cab4ee01809c07fb2a76c1113856f0f820f45201af0a7c8dd95d6cfa651fc4d9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cab4ee01809c07fb2a76c1113856f0f820f45201af0a7c8dd95d6cfa651fc4d9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cab4ee01809c07fb2a76c1113856f0f820f45201af0a7c8dd95d6cfa651fc4d9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cab4ee01809c07fb2a76c1113856f0f820f45201af0a7c8dd95d6cfa651fc4d9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "36e74a2a4b873613e50f5c8c53f4d5fbec5da4cf74f1fb73094597aa2a752140",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "714fd4e7c453d224ee51d3bda9d47dec0ae71a182c542429ae82001725d6f86d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "36e74a2a4b873613e50f5c8c53f4d5fbec5da4cf74f1fb73094597aa2a752140",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "36e74a2a4b873613e50f5c8c53f4d5fbec5da4cf74f1fb73094597aa2a752140",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "8311f83e6825e165e2c68e3f84b189cd1363276bdcc4e7e58dd6292fd9bb39cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbed48ddf5d067e6a37bcc1fac0ef1876a90f6d37711d618b7a38d37fafa3047",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbed48ddf5d067e6a37bcc1fac0ef1876a90f6d37711d618b7a38d37fafa3047",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbed48ddf5d067e6a37bcc1fac0ef1876a90f6d37711d618b7a38d37fafa3047",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "23bd52b68b34786a2ea5c5970e6cd535bac50778601a965dda50bad655697900"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbed48ddf5d067e6a37bcc1fac0ef1876a90f6d37711d618b7a38d37fafa3047",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "efd1b78c000836a943ac6ff87d7f5c4cac8a3123adc82c6d24ae8213d2fd1d53"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bbed48ddf5d067e6a37bcc1fac0ef1876a90f6d37711d618b7a38d37fafa3047",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8091255700d90805daa8450a26ad39d4d76ed3d52b63ed43f913a30c8bdd65e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8091255700d90805daa8450a26ad39d4d76ed3d52b63ed43f913a30c8bdd65e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8091255700d90805daa8450a26ad39d4d76ed3d52b63ed43f913a30c8bdd65e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "23bd52b68b34786a2ea5c5970e6cd535bac50778601a965dda50bad655697900"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8091255700d90805daa8450a26ad39d4d76ed3d52b63ed43f913a30c8bdd65e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "efd1b78c000836a943ac6ff87d7f5c4cac8a3123adc82c6d24ae8213d2fd1d53"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d8091255700d90805daa8450a26ad39d4d76ed3d52b63ed43f913a30c8bdd65e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a0ddbea88231509654d61d4d89e4597f6826c634dd3962a24c102aa0928aa6dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a0ddbea88231509654d61d4d89e4597f6826c634dd3962a24c102aa0928aa6dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a0ddbea88231509654d61d4d89e4597f6826c634dd3962a24c102aa0928aa6dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "23bd52b68b34786a2ea5c5970e6cd535bac50778601a965dda50bad655697900"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a0ddbea88231509654d61d4d89e4597f6826c634dd3962a24c102aa0928aa6dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "efd1b78c000836a943ac6ff87d7f5c4cac8a3123adc82c6d24ae8213d2fd1d53"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a0ddbea88231509654d61d4d89e4597f6826c634dd3962a24c102aa0928aa6dc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "128bffa4c2c49560156a01d32ffd8d2a9281f04dee2961b69dec6ac8a3f3026f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "128bffa4c2c49560156a01d32ffd8d2a9281f04dee2961b69dec6ac8a3f3026f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "128bffa4c2c49560156a01d32ffd8d2a9281f04dee2961b69dec6ac8a3f3026f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "23bd52b68b34786a2ea5c5970e6cd535bac50778601a965dda50bad655697900"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "128bffa4c2c49560156a01d32ffd8d2a9281f04dee2961b69dec6ac8a3f3026f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "efd1b78c000836a943ac6ff87d7f5c4cac8a3123adc82c6d24ae8213d2fd1d53"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "128bffa4c2c49560156a01d32ffd8d2a9281f04dee2961b69dec6ac8a3f3026f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6314da80c82b2e337bec8905f520c157702bc3661c298d2c2445804f188f2761",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:autopistol:p1-followup-shots-ranged-damage-damage-display-percent-code"
+        },
+        "targetDigest": "c10144e4bc7c674cdffc67b4a3b929f61b3e1f77de19438cbcbfb973897d2881"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "dbb37a06f1c012da27c7ab18285be7204f275b6956b88096d2c0bc762dd0bf0e",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_autopistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_autopistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-529; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-autopistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "58365f07afbd0206c6231babd2e2672c4db43f09c48f265eaaf764377ba40b1a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "5c6bf52558c4f5bad4ef52cca08dfa927fd09ff00a7a7b1be216628aadd81bc2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "+18% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "e4a576d1089cadbe799366d3649ed16a87d399e39d1b334045eafad20fb7e630",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "aa5a47fbdbf1d48f2fbcd431aab7d78b1d2dd52df8c40bd250abc5e853c7b9b4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+14%傷害。",
+          "resolvedTextSha256": "d1e24bc9f974350e2b6f17aaa7c604698e56b2470acb8a251c804e2296786d33",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+16%傷害。",
+          "resolvedTextSha256": "2fa012f71f344be832e5a477b7da0a703f8b21dc7dad41a1c880b218635e9d8e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+18%傷害。",
+          "resolvedTextSha256": "41915405db8ec6f826f4e4d0814dd35ec593d8641e30221cd18d9399bcf3f9b6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-d052fd95814eb9db:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Sustained Fire",
+          "resolvedTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+              "text": "Sustained Fire"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "en",
+          "sourceText": "Sustained Fire",
+          "sourceTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-d052fd95814eb9db:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "持續射擊",
+          "resolvedTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+              "text": "持續射擊"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "zh-TW",
+          "sourceText": "持續射擊",
+          "sourceTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "持續射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-d052fd95814eb9db:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-d052fd95814eb9db:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-d052fd95814eb9db:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:autopistol:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-d052fd95814eb9db:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-d052fd95814eb9db:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:autopistol:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:autopistol:p1-followup-shots-ranged-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "956ee2363632f8e1855395a7bc98e69e608fd474ceeba37eff51d1622ea242c3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a51b9743d53e864669c08830d06074bf9fc6d6cd4f0d4e63a1e959fd826922f4",
+          "targetId": "review:w06:generic:d052fd95814eb9db:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "bb527ee13df1a0b3d250e7bd8d78bf24b9b671e87d963fcc64553971ff286ca4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "41369888bba65f29df55ee3abf59de2d30fe924e78ff7cf51eb923f3a3a241c5",
+          "targetId": "review:w06:generic:d052fd95814eb9db:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "feffa9b6a8d1333afb34fbaaaebd08b252587360130313198359b49aa6d67788",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "10b0df8b1f761b5eda3c72d813bf3cd63efca37c853614bca21d78a7c7e53291",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7e26c911725108658316ec1259dbd91528b553ebeda3ef6f077028aafef86f90",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "087ac24a48f9f22dbe27a5b969f5efb623f2f4b0931a89e240e0251ac72b04d5",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "794d26918e826a7282ad431b9e12528a62309fdac9357f6fecca43bef5578337",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "17e044190ef0db5ed67ef66a1dc9cb04143f8ccdec36db8758f10cee997110fc",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2e83d73aad730db9c8b18c4f4060cdbca82efafef070022fb1c2ada1a770b6ad",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "75519c8fc8717aba64702879d2a837d3b7222275bd3d66f7ef52cfc1fb1f49c9",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "956ee2363632f8e1855395a7bc98e69e608fd474ceeba37eff51d1622ea242c3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:content::name"
+        },
+        "targetDigest": "a51b9743d53e864669c08830d06074bf9fc6d6cd4f0d4e63a1e959fd826922f4"
+      },
+      {
+        "dependenciesDigest": "bb527ee13df1a0b3d250e7bd8d78bf24b9b671e87d963fcc64553971ff286ca4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:context::tierapplicability"
+        },
+        "targetDigest": "41369888bba65f29df55ee3abf59de2d30fe924e78ff7cf51eb923f3a3a241c5"
+      },
+      {
+        "dependenciesDigest": "feffa9b6a8d1333afb34fbaaaebd08b252587360130313198359b49aa6d67788",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:0"
+        },
+        "targetDigest": "10b0df8b1f761b5eda3c72d813bf3cd63efca37c853614bca21d78a7c7e53291"
+      },
+      {
+        "dependenciesDigest": "7e26c911725108658316ec1259dbd91528b553ebeda3ef6f077028aafef86f90",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:1"
+        },
+        "targetDigest": "087ac24a48f9f22dbe27a5b969f5efb623f2f4b0931a89e240e0251ac72b04d5"
+      },
+      {
+        "dependenciesDigest": "794d26918e826a7282ad431b9e12528a62309fdac9357f6fecca43bef5578337",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:2"
+        },
+        "targetDigest": "17e044190ef0db5ed67ef66a1dc9cb04143f8ccdec36db8758f10cee997110fc"
+      },
+      {
+        "dependenciesDigest": "2e83d73aad730db9c8b18c4f4060cdbca82efafef070022fb1c2ada1a770b6ad",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:autopistol-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:d052fd95814eb9db:official::tierpresentations:options:3"
+        },
+        "targetDigest": "75519c8fc8717aba64702879d2a837d3b7222275bd3d66f7ef52cfc1fb1f49c9"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

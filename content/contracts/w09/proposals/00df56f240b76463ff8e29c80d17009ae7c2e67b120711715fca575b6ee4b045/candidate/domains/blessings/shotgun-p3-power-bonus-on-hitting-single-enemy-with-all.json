@@ -1,0 +1,2352 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value power_level at proc_stat_buffs.stat_buffs.power_level_modifier; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p3_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value time at active_duration; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c05b86f79bea6d7c7fcf7aa6889906cac1904758cae689d8d90ed0e00c2989fc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "3b7010b98768bebcf8bb23d488e244d77f513c9d44b3ce67b15cf9b08b428bca"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c05b86f79bea6d7c7fcf7aa6889906cac1904758cae689d8d90ed0e00c2989fc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c05b86f79bea6d7c7fcf7aa6889906cac1904758cae689d8d90ed0e00c2989fc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c05b86f79bea6d7c7fcf7aa6889906cac1904758cae689d8d90ed0e00c2989fc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c05b86f79bea6d7c7fcf7aa6889906cac1904758cae689d8d90ed0e00c2989fc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "06f0c5e96057f0a6f3b1a027813ca2da1b257adbfcf33668f8161a220a6b9139",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "e4a95526765e9ed4197e4397fd5e63141a5d788f0e42cabe2497be1a7a6a07c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "06f0c5e96057f0a6f3b1a027813ca2da1b257adbfcf33668f8161a220a6b9139",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "06f0c5e96057f0a6f3b1a027813ca2da1b257adbfcf33668f8161a220a6b9139",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "targetDigest": "5a31d1eeb3c3fedfc955786916f41ce634f346e0f3ea08203bbc7febf84a01e2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "62fe1e5aa6ca2d4ffd1f136f326a53835047a22c2236680523904e83dffa6b8f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "62fe1e5aa6ca2d4ffd1f136f326a53835047a22c2236680523904e83dffa6b8f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "62fe1e5aa6ca2d4ffd1f136f326a53835047a22c2236680523904e83dffa6b8f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "e818277af938c7ac69dc9913c4a6e33272948e4e541bf1e1f0d586cf230be882"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "62fe1e5aa6ca2d4ffd1f136f326a53835047a22c2236680523904e83dffa6b8f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "7ad31f2596a03891c2510c5e48da973381660e50b9806ecdda90e98feb96ab65"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "62fe1e5aa6ca2d4ffd1f136f326a53835047a22c2236680523904e83dffa6b8f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "70d3f12080115ecfd1349d1a3ee743f73de6b83acc6a64e333bf1ffd4f34c914",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "70d3f12080115ecfd1349d1a3ee743f73de6b83acc6a64e333bf1ffd4f34c914",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "70d3f12080115ecfd1349d1a3ee743f73de6b83acc6a64e333bf1ffd4f34c914",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "e818277af938c7ac69dc9913c4a6e33272948e4e541bf1e1f0d586cf230be882"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "70d3f12080115ecfd1349d1a3ee743f73de6b83acc6a64e333bf1ffd4f34c914",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "7ad31f2596a03891c2510c5e48da973381660e50b9806ecdda90e98feb96ab65"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "70d3f12080115ecfd1349d1a3ee743f73de6b83acc6a64e333bf1ffd4f34c914",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38ac10cd6feeafb3c6fc467833022160c5cd97f962e63494682882da772156b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38ac10cd6feeafb3c6fc467833022160c5cd97f962e63494682882da772156b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38ac10cd6feeafb3c6fc467833022160c5cd97f962e63494682882da772156b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "e818277af938c7ac69dc9913c4a6e33272948e4e541bf1e1f0d586cf230be882"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38ac10cd6feeafb3c6fc467833022160c5cd97f962e63494682882da772156b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "7ad31f2596a03891c2510c5e48da973381660e50b9806ecdda90e98feb96ab65"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38ac10cd6feeafb3c6fc467833022160c5cd97f962e63494682882da772156b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7dd08429fd27a1a144212c71f9d4c0a87562f5ad869f2784618eec66973dff33",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7dd08429fd27a1a144212c71f9d4c0a87562f5ad869f2784618eec66973dff33",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7dd08429fd27a1a144212c71f9d4c0a87562f5ad869f2784618eec66973dff33",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "e818277af938c7ac69dc9913c4a6e33272948e4e541bf1e1f0d586cf230be882"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7dd08429fd27a1a144212c71f9d4c0a87562f5ad869f2784618eec66973dff33",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "7ad31f2596a03891c2510c5e48da973381660e50b9806ecdda90e98feb96ab65"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7dd08429fd27a1a144212c71f9d4c0a87562f5ad869f2784618eec66973dff33",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b4bfab50c41edb239c157ec367afe4bc274127ed4b9d9b10d6f049ff9376927",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b4bfab50c41edb239c157ec367afe4bc274127ed4b9d9b10d6f049ff9376927",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b4bfab50c41edb239c157ec367afe4bc274127ed4b9d9b10d6f049ff9376927",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "f493d6dc739efb0466e3f8ec8e0c636daffaa3be195d68e819569547564ba27f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b4bfab50c41edb239c157ec367afe4bc274127ed4b9d9b10d6f049ff9376927",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "7ad31f2596a03891c2510c5e48da973381660e50b9806ecdda90e98feb96ab65"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b4bfab50c41edb239c157ec367afe4bc274127ed4b9d9b10d6f049ff9376927",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+        },
+        "targetDigest": "db60253728334e33549e325958aab2ed8cff7ccacaadc2c8eeffcae5a6394769"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a7d455a4dd8a7c6f654b0254118e40f38a855f4b0afb8c183fac52e880829f46",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-display-percent-code"
+        },
+        "targetDigest": "4cae6fd1e9c814ad636fc6831b814a7575de5cd808154b46d8c1c24ea37b5280"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c4a6465ef917b40bbb8aa58f42a0885b594acda259f16822bb28b3afe0c137e2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value-code"
+        },
+        "targetDigest": "64bb146e265dea37639a20c200b91256776fcec693cf633fa093fd6ef73e3a2a"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "62ff18ecafa440c8809f9bf8f3f501cbbbca86816e3d3131307d3ab4464858c0",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p3_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p3_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "665667c11a0220073e1644754188017540cf574fd449b56ed7f49438025f6215",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 19 bespoke traits span lines 10-898; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:adf6c70b:key-unknown:en:1:g-cd5bac66b4c712d2:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Full Bore",
+          "resolvedTextSha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844",
+              "text": "Full Bore"
+            }
+          ],
+          "sourceHash": "adf6c70b",
+          "sourceLocale": "en",
+          "sourceText": "Full Bore",
+          "sourceTextSha256": "ad247d369820dea87cc4f60e5a3a223105764bc7cfc63f8ba4ffb14e18fda844"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-cd5bac66b4c712d2:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "全孔射擊",
+          "resolvedTextSha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f",
+              "text": "全孔射擊"
+            }
+          ],
+          "sourceHash": "adf6c70b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "全孔射擊",
+          "sourceTextSha256": "cb01c2439d443acb89c194c908cf32bf0bacdb6a791f049ebce26e88b178f98f"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+14% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "7151d575ca8cf1d5a7a46c491a57af701b1b3ca1c13ef1e2089dacc12072d3ae",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+16% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "43284c88834976a624acc0119415c7f2afb3cb4016df990a19600f68a54d83e9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+18% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "eab8d7ebda513471001e2def36cfa73b2e247e3ff0fc5e545da4f481927f6bd4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+20% Strength for 5s when every pellet in a shot hits the same enemy.",
+          "resolvedTextSha256": "d11d0a23964e36807df81e1eceb033727e7fed51438a7ab4c8fb2b65a74ac0c0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "d2791a1bf47ed9fae5b85083b6650f3a6d1b6e2aa44fe7be67acd5a30c2d8270",
+              "text": " Strength for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "338397896dea71dd9896b31b202c0e66e0fd4800e0ab055cb6103a6499303af8",
+              "text": "s when every pellet in a shot hits the same enemy."
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for {time:%s}s when every pellet in a shot hits the same enemy.",
+          "sourceTextSha256": "fb570018069e3a4f617b6cea6c48de5bd5ac5b596e1beb36f5ff38f7041e7c3f"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+14%，持續5秒。",
+          "resolvedTextSha256": "21bad2d0b4fbb9730da3470c1a05e23f8be5bb96b38b7a731d4a8af898257f81",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+16%，持續5秒。",
+          "resolvedTextSha256": "24057806d3ffa6f000c5eaae47f423f78eced70e4b8f5c393b44c7710677693d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+18%，持續5秒。",
+          "resolvedTextSha256": "110cb6246f998919e0a7dc1de247a0700f37ce70bf7b731b74f02f19026734d2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+20%，持續5秒。",
+          "resolvedTextSha256": "607766b40e9ce752a2e5db4f087baa11eafe4772640d387b25001af27e2767a9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "全孔射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:adf6c70b:key-unknown:en:1:g-cd5bac66b4c712d2:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-cd5bac66b4c712d2:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:adf6c70b:key-unknown:zh-tw:1:g-cd5bac66b4c712d2:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          },
+          "key": "loc_trait_bespoke_power_bonus_on_hitting_single_enemy_with_all_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "一次射擊的所有彈藥都命中同個敵人時，威力提升+20%，持續5秒。",
+          "resolvedTextSha256": "607766b40e9ce752a2e5db4f087baa11eafe4772640d387b25001af27e2767a9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "97956ed5a86481ec046308f398e683bebd1e2cd95d369eab186e43621b2b92d8",
+              "text": "一次射擊的所有彈藥都命中同個敵人時，威力提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "d88ada0f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "一次射擊的所有彈藥都命中同個敵人時，威力提升{power_level:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "f14f1591992e7febd6783d2dacb53f8446a905aefe47c3c753a0980b49b9d108"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:en:1:g-cd5bac66b4c712d2:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d88ada0f:key-known:zh-tw:1:g-cd5bac66b4c712d2:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-power-level-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p3-power-bonus-on-hitting-single-enemy-with-all"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a5eb2358eb7c86f406d04a07997594aef90c0d70165093a7460ffcca6336c304",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b64fa1c09ac6c7adef8f57c01eddeda1b6c25db659b694a484ec2c783ed80007",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "9bda2f0eef071e5000feec5cd9cc1e94f06bc0d0790f176ab1a51a67f6ffcfc1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "89f76e611300f1516aed919adda0d302fef6f34318e48ae74036e177f7fd89fb",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "9c1a0b314dbeb1555ce2f12274e3518432f8cd7dd5ba8ef0a91e8cf02a6aecbc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "8044253a5a2965f4513b6fa83a37cd6bca00c1820a51f12eb0bd7472a991c248",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "560220c4b2e33d65a925346df03ebb02a1aa55b502a4bcc68e012262ad73fe74",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "24461fb4dd6d776ef8b22f980b21e09cd27cd66b36b0a1a3b198ffc15cebb06d",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8cb37491bf56b807600606962e567f20bdd550170d9c99757b90e081987897cc",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "96a7fd632e1495ea2c7e65c1268c05659f349239b9b604e965816ca087cd5022",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "43df274eedd460a804b76796530d38158246537da5055f160da44e69e6f9a5c0",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "72e1283d090a6fbe01f6920dfb55836932ba1d652af71ef719ab2b99abe3e8f0",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "a5eb2358eb7c86f406d04a07997594aef90c0d70165093a7460ffcca6336c304",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:content::name"
+        },
+        "targetDigest": "b64fa1c09ac6c7adef8f57c01eddeda1b6c25db659b694a484ec2c783ed80007"
+      },
+      {
+        "dependenciesDigest": "9bda2f0eef071e5000feec5cd9cc1e94f06bc0d0790f176ab1a51a67f6ffcfc1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:context::tierapplicability"
+        },
+        "targetDigest": "89f76e611300f1516aed919adda0d302fef6f34318e48ae74036e177f7fd89fb"
+      },
+      {
+        "dependenciesDigest": "9c1a0b314dbeb1555ce2f12274e3518432f8cd7dd5ba8ef0a91e8cf02a6aecbc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:0"
+        },
+        "targetDigest": "8044253a5a2965f4513b6fa83a37cd6bca00c1820a51f12eb0bd7472a991c248"
+      },
+      {
+        "dependenciesDigest": "560220c4b2e33d65a925346df03ebb02a1aa55b502a4bcc68e012262ad73fe74",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:1"
+        },
+        "targetDigest": "24461fb4dd6d776ef8b22f980b21e09cd27cd66b36b0a1a3b198ffc15cebb06d"
+      },
+      {
+        "dependenciesDigest": "8cb37491bf56b807600606962e567f20bdd550170d9c99757b90e081987897cc",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:2"
+        },
+        "targetDigest": "96a7fd632e1495ea2c7e65c1268c05659f349239b9b604e965816ca087cd5022"
+      },
+      {
+        "dependenciesDigest": "43df274eedd460a804b76796530d38158246537da5055f160da44e69e6f9a5c0",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p3-power-bonus-on-hitting-single-enemy-with-all",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:cd5bac66b4c712d2:official::tierpresentations:options:3"
+        },
+        "targetDigest": "72e1283d090a6fbe01f6920dfb55836932ba1d652af71ef719ab2b99abe3e8f0"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

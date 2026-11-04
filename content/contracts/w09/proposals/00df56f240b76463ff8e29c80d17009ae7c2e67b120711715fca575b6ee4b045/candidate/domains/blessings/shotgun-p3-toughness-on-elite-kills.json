@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.12",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "12",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value toughness at toughness_fixed_percentage; defined tier literals are tier 1=0.1, tier 2=0.12, tier 3=0.14, tier 4=0.16.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb668103713df60347b3f03044fdc58f74325e61547ec7b67f23409a6100cd61",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "68201797c8efee6ca2db89e84047b97858334a9df0087dd3563f340aa617f880"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb668103713df60347b3f03044fdc58f74325e61547ec7b67f23409a6100cd61",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb668103713df60347b3f03044fdc58f74325e61547ec7b67f23409a6100cd61",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb668103713df60347b3f03044fdc58f74325e61547ec7b67f23409a6100cd61",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "a1305d63e705a6c0584369edad01b362b1fbb76a0bd5f1399465bdab7e395b3d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb668103713df60347b3f03044fdc58f74325e61547ec7b67f23409a6100cd61",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21890961ae9b12fc9b108fd3761962c6d0666759562bd8b608ad9483b722f861",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "8d359775ac198db26971d3fbe40a975a78c27d26cb407dd44393671b6f4b2119"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21890961ae9b12fc9b108fd3761962c6d0666759562bd8b608ad9483b722f861",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21890961ae9b12fc9b108fd3761962c6d0666759562bd8b608ad9483b722f861",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+        },
+        "targetDigest": "c26cd1a151b2a9f980ed1052b992bb8b8d8f70e2ff44ba6bba1f99572b744357"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4171d3f2463919f79a1755b90fa8454d029cd3c90a381211808d57bc99ffa49b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4171d3f2463919f79a1755b90fa8454d029cd3c90a381211808d57bc99ffa49b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4171d3f2463919f79a1755b90fa8454d029cd3c90a381211808d57bc99ffa49b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "e9ec30b35420c640589bf5df01c0461435b11dacbd835a1560bb38fe34cab6eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4171d3f2463919f79a1755b90fa8454d029cd3c90a381211808d57bc99ffa49b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "42a74fd68ca786512556b941ad53c11ad7eee357e21f95a70536b5aab4f1e1aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4171d3f2463919f79a1755b90fa8454d029cd3c90a381211808d57bc99ffa49b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d6748a2308e329d3342dc6830e2d1cd883c8a382f3550451adb45ecc0fc1e6b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d6748a2308e329d3342dc6830e2d1cd883c8a382f3550451adb45ecc0fc1e6b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d6748a2308e329d3342dc6830e2d1cd883c8a382f3550451adb45ecc0fc1e6b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "e9ec30b35420c640589bf5df01c0461435b11dacbd835a1560bb38fe34cab6eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d6748a2308e329d3342dc6830e2d1cd883c8a382f3550451adb45ecc0fc1e6b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "42a74fd68ca786512556b941ad53c11ad7eee357e21f95a70536b5aab4f1e1aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3d6748a2308e329d3342dc6830e2d1cd883c8a382f3550451adb45ecc0fc1e6b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "bbca1ab2aed7babdd1cc33ff5bfd6a83460020c45f502c0fb668ac705ec176f9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "181ef5c2cd011b2241a17a242fc93405880740b00111377bd49b48ec6dc11fe9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "181ef5c2cd011b2241a17a242fc93405880740b00111377bd49b48ec6dc11fe9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "181ef5c2cd011b2241a17a242fc93405880740b00111377bd49b48ec6dc11fe9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "e9ec30b35420c640589bf5df01c0461435b11dacbd835a1560bb38fe34cab6eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "181ef5c2cd011b2241a17a242fc93405880740b00111377bd49b48ec6dc11fe9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "42a74fd68ca786512556b941ad53c11ad7eee357e21f95a70536b5aab4f1e1aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "181ef5c2cd011b2241a17a242fc93405880740b00111377bd49b48ec6dc11fe9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "24c5f646f8d564ecd2e5c6eddfb4f8a1fbcae36feed55746e9103260dcebacef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "24c5f646f8d564ecd2e5c6eddfb4f8a1fbcae36feed55746e9103260dcebacef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "24c5f646f8d564ecd2e5c6eddfb4f8a1fbcae36feed55746e9103260dcebacef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "e9ec30b35420c640589bf5df01c0461435b11dacbd835a1560bb38fe34cab6eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "24c5f646f8d564ecd2e5c6eddfb4f8a1fbcae36feed55746e9103260dcebacef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "42a74fd68ca786512556b941ad53c11ad7eee357e21f95a70536b5aab4f1e1aa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "24c5f646f8d564ecd2e5c6eddfb4f8a1fbcae36feed55746e9103260dcebacef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd639c9459023da65cb32912396da07f73bdab83a69b62d996cb29a93577c2de",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p3-toughness-on-elite-kills-toughness-display-percent-code"
+        },
+        "targetDigest": "a0eefce11a9235fddc2957d0950e6eb69da289d64dc91a2056607e51da7e8dda"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "665667c11a0220073e1644754188017540cf574fd449b56ed7f49438025f6215",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 19 bespoke traits span lines 10-898; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "+10% Toughness on Elite Kill.",
+          "resolvedTextSha256": "79fae12df0cce279652ce4b092087572a765a645e9bab1ef3bad254447cc0734",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent",
+              "value": "+12%"
+            }
+          ],
+          "resolvedText": "+12% Toughness on Elite Kill.",
+          "resolvedTextSha256": "f8211dc5c6e05a20b13c932a2fb64d4de2605afec94474c7e5b539f5e9a0932c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% Toughness on Elite Kill.",
+          "resolvedTextSha256": "c247087b6ff9ee8c1fde4b0aa2bc174083909ecdf4418673958f983864005e12",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% Toughness on Elite Kill.",
+          "resolvedTextSha256": "007fd55d1f337722d33157a001f64b6e4a5092867eaf85c7fa47f6b9a3a9226c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "擊殺精英+10%韌性。",
+          "resolvedTextSha256": "0fbc2c51693b957c97d463dc94e2d067433d3ec4c83482fc9f452399a6164829",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent",
+              "value": "+12%"
+            }
+          ],
+          "resolvedText": "擊殺精英+12%韌性。",
+          "resolvedTextSha256": "3d87b09e786775a0075d1b5b4af687ea7f573e347b83d9f8825a7865cdadcc20",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "擊殺精英+14%韌性。",
+          "resolvedTextSha256": "391b3d18ecab6258112e4b03fedf77df7b0a32481fc82bd5dd260c2022971cba",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "擊殺精英+16%韌性。",
+          "resolvedTextSha256": "19f80ad365b75f92bd3a2518b7a493ad210b5a715922a9ed99d27a544043bebe",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:e31c381b:key-unknown:en:1:g-4c0bbf6ef3683731:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Gloryhunter",
+          "resolvedTextSha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6",
+              "text": "Gloryhunter"
+            }
+          ],
+          "sourceHash": "e31c381b",
+          "sourceLocale": "en",
+          "sourceText": "Gloryhunter",
+          "sourceTextSha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-4c0bbf6ef3683731:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "榮耀獵手",
+          "resolvedTextSha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f",
+              "text": "榮耀獵手"
+            }
+          ],
+          "sourceHash": "e31c381b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "榮耀獵手",
+          "sourceTextSha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "榮耀獵手",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:e31c381b:key-unknown:en:1:g-4c0bbf6ef3683731:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-4c0bbf6ef3683731:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-4c0bbf6ef3683731:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p3-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "擊殺精英+16%韌性。",
+          "resolvedTextSha256": "19f80ad365b75f92bd3a2518b7a493ad210b5a715922a9ed99d27a544043bebe",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-4c0bbf6ef3683731:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-4c0bbf6ef3683731:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p3-toughness-on-elite-kills-toughness-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p3-toughness-on-elite-kills"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ed53d0a9a12c164953c7955582694b3e3cf63b22e2fe500dd7581d546ce79872",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2f01d5e7f89d3222821ddf1d75f2c86b2a811e86e6c83fc7567c67046d0a9618",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e81c6e2c904d454d517b88754f74c92cc23d288f22676737e938f8cf20397d2a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b1f244c4b34e824c12679488112359bbb3db33bc50acee668360d98a41139b18",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1557528c5857b8fee8d2b917933d32c824010a8c1a0f253770bfbe3aa1fc2fac",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0142b33468d8e3988dfefdf9b590d55f6d3405f115b461aa04e0af4cffc470b9",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "569f0c38f8e37284b547bd0e4e0c2fb2174bbfbbe545079170939e2484da6e60",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "27b0f6e1d199d1617a04c09da498f3312dff860610beee1c2fa93151623b4a13",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "78273b1699955e5fa25edca82052c00ac374f3e35e4354b798c8eaf20a987700",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a5ee767ab0b8747b59a754685917764aaf45a17954004516ffe74259002eca96",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5dfad07f81184cad8f1728f8287541c51d214513d53589b31cf913e81a64fc87",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "09d39f95ab4526d8660298febe34fbd7b0a9476533f609097aee2ef3686d8cea",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "ed53d0a9a12c164953c7955582694b3e3cf63b22e2fe500dd7581d546ce79872",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:content::name"
+        },
+        "targetDigest": "2f01d5e7f89d3222821ddf1d75f2c86b2a811e86e6c83fc7567c67046d0a9618"
+      },
+      {
+        "dependenciesDigest": "e81c6e2c904d454d517b88754f74c92cc23d288f22676737e938f8cf20397d2a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:context::tierapplicability"
+        },
+        "targetDigest": "b1f244c4b34e824c12679488112359bbb3db33bc50acee668360d98a41139b18"
+      },
+      {
+        "dependenciesDigest": "1557528c5857b8fee8d2b917933d32c824010a8c1a0f253770bfbe3aa1fc2fac",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:0"
+        },
+        "targetDigest": "0142b33468d8e3988dfefdf9b590d55f6d3405f115b461aa04e0af4cffc470b9"
+      },
+      {
+        "dependenciesDigest": "569f0c38f8e37284b547bd0e4e0c2fb2174bbfbbe545079170939e2484da6e60",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:1"
+        },
+        "targetDigest": "27b0f6e1d199d1617a04c09da498f3312dff860610beee1c2fa93151623b4a13"
+      },
+      {
+        "dependenciesDigest": "78273b1699955e5fa25edca82052c00ac374f3e35e4354b798c8eaf20a987700",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:2"
+        },
+        "targetDigest": "a5ee767ab0b8747b59a754685917764aaf45a17954004516ffe74259002eca96"
+      },
+      {
+        "dependenciesDigest": "5dfad07f81184cad8f1728f8287541c51d214513d53589b31cf913e81a64fc87",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p3-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c0bbf6ef3683731:official::tierpresentations:options:3"
+        },
+        "targetDigest": "09d39f95ab4526d8660298febe34fbd7b0a9476533f609097aee2ef3686d8cea"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

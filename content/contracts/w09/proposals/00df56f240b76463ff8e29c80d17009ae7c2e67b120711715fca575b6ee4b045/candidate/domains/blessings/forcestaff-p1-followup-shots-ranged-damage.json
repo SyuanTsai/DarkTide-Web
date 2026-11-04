@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at conditional_stat_buffs.stat_buffs.ranged_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd4a49a4817c80ab10aed829b2f39899e7588264409a4316a3970f7ffb063381",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "736db10d1bd4a745a762654eae01fc61dbffa8fc465d9d3c7f65f98f7bc4b7a9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd4a49a4817c80ab10aed829b2f39899e7588264409a4316a3970f7ffb063381",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd4a49a4817c80ab10aed829b2f39899e7588264409a4316a3970f7ffb063381",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd4a49a4817c80ab10aed829b2f39899e7588264409a4316a3970f7ffb063381",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd4a49a4817c80ab10aed829b2f39899e7588264409a4316a3970f7ffb063381",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "380c159d093ae334466634258890f8cc3eb3176f6803364b820c6381dfa7dfd9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "2224fe3086bc18a68e9df04caa2e598cd5eb95e351707f23da3c4a3b319af8cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "380c159d093ae334466634258890f8cc3eb3176f6803364b820c6381dfa7dfd9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "380c159d093ae334466634258890f8cc3eb3176f6803364b820c6381dfa7dfd9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "targetDigest": "edbc1324287842986a58e4ba255b8a14f104cc0ec02c81b74f164b0f960f0b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "53f8a02e9809933d2c0ad9c606d1d37e31a95d09d5c93d2b955bbab667649aff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "53f8a02e9809933d2c0ad9c606d1d37e31a95d09d5c93d2b955bbab667649aff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "53f8a02e9809933d2c0ad9c606d1d37e31a95d09d5c93d2b955bbab667649aff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "b49f2a0823ed65b0f74ff9e876f79343cc136713a1602e9c91f0559d6cae0f46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "53f8a02e9809933d2c0ad9c606d1d37e31a95d09d5c93d2b955bbab667649aff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f827f680c5bb055618f5d8e3e52cd8bf8a0e95ad71ae2c642cca5c42425c577c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "53f8a02e9809933d2c0ad9c606d1d37e31a95d09d5c93d2b955bbab667649aff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "255e766a198c308f08d7c37a18e6297f6a2a1e630b0ec794ce7c1e8f004d1c15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "255e766a198c308f08d7c37a18e6297f6a2a1e630b0ec794ce7c1e8f004d1c15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "255e766a198c308f08d7c37a18e6297f6a2a1e630b0ec794ce7c1e8f004d1c15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "b49f2a0823ed65b0f74ff9e876f79343cc136713a1602e9c91f0559d6cae0f46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "255e766a198c308f08d7c37a18e6297f6a2a1e630b0ec794ce7c1e8f004d1c15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f827f680c5bb055618f5d8e3e52cd8bf8a0e95ad71ae2c642cca5c42425c577c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "255e766a198c308f08d7c37a18e6297f6a2a1e630b0ec794ce7c1e8f004d1c15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9411127de1f9fd96ea9366202a12398dc435b3f44190a23a9f06373090acaa4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9411127de1f9fd96ea9366202a12398dc435b3f44190a23a9f06373090acaa4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9411127de1f9fd96ea9366202a12398dc435b3f44190a23a9f06373090acaa4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "b49f2a0823ed65b0f74ff9e876f79343cc136713a1602e9c91f0559d6cae0f46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9411127de1f9fd96ea9366202a12398dc435b3f44190a23a9f06373090acaa4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f827f680c5bb055618f5d8e3e52cd8bf8a0e95ad71ae2c642cca5c42425c577c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9411127de1f9fd96ea9366202a12398dc435b3f44190a23a9f06373090acaa4b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8254b212960a2e1b768075deb5d37e9119b8cac53b8da8c83b4aa68368c1702b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8254b212960a2e1b768075deb5d37e9119b8cac53b8da8c83b4aa68368c1702b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8254b212960a2e1b768075deb5d37e9119b8cac53b8da8c83b4aa68368c1702b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "b49f2a0823ed65b0f74ff9e876f79343cc136713a1602e9c91f0559d6cae0f46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8254b212960a2e1b768075deb5d37e9119b8cac53b8da8c83b4aa68368c1702b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f827f680c5bb055618f5d8e3e52cd8bf8a0e95ad71ae2c642cca5c42425c577c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8254b212960a2e1b768075deb5d37e9119b8cac53b8da8c83b4aa68368c1702b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b589c7ced509e7ca8cf03c458a038bfcc301ad37ac22eb96748796c340719a1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p1-followup-shots-ranged-damage-damage-display-percent-code"
+        },
+        "targetDigest": "aeff8a0fdedfadda6e7ce0213441261d4d5a08686f69ebf346e7b42353689b49"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "63ba476d49bba069c8daa677a43e09a8fefc6e9a595d23c416f0ba5d44dee4d0",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-494; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "58365f07afbd0206c6231babd2e2672c4db43f09c48f265eaaf764377ba40b1a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "5c6bf52558c4f5bad4ef52cca08dfa927fd09ff00a7a7b1be216628aadd81bc2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "+18% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "e4a576d1089cadbe799366d3649ed16a87d399e39d1b334045eafad20fb7e630",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "aa5a47fbdbf1d48f2fbcd431aab7d78b1d2dd52df8c40bd250abc5e853c7b9b4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+14%傷害。",
+          "resolvedTextSha256": "d1e24bc9f974350e2b6f17aaa7c604698e56b2470acb8a251c804e2296786d33",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+16%傷害。",
+          "resolvedTextSha256": "2fa012f71f344be832e5a477b7da0a703f8b21dc7dad41a1c880b218635e9d8e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+18%傷害。",
+          "resolvedTextSha256": "41915405db8ec6f826f4e4d0814dd35ec593d8641e30221cd18d9399bcf3f9b6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-f5e2230520d33c5e:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Sustained Fire",
+          "resolvedTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+              "text": "Sustained Fire"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "en",
+          "sourceText": "Sustained Fire",
+          "sourceTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-f5e2230520d33c5e:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "持續射擊",
+          "resolvedTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+              "text": "持續射擊"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "zh-TW",
+          "sourceText": "持續射擊",
+          "sourceTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "持續射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-f5e2230520d33c5e:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-f5e2230520d33c5e:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-f5e2230520d33c5e:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p1-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-f5e2230520d33c5e:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-f5e2230520d33c5e:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p1-followup-shots-ranged-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:forcestaff:p1-followup-shots-ranged-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "dfcc40786989b39b58eae4578753beaeb4242cd7494c99cf5fd0685794913382",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d2b355a1e15ec7eea839b2725edf08140c094dce0e314701609b55caf4f4bc52",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "798a920ff6bbe142ff56bafbe24a9548ca92192d4d4c05d191af033bc4c03c81",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "66f50c3f3665595facdda10e19f4a65ae576ca1221b57cad1e5e4777f6ad17b4",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "50963a57e0abc8e07f073d4021c91d8bdd41f1bb6c429a1abf8ed81ad05ce36d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "73c12ad1e3aa15153b0d42fcd426ed12eb1d1056710ec1af1278a22fbb1f81ae",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ad106b2e5844e9215dde9fd7c91c87fd0d4095912c3ae6c2a0c2e573e10be451",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ae8dfeff212a21d6756fb56b496cef92deb6a8f46073df4389869b70060813c4",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a991b25238f5c71660592352deaaf82e8bbcd553bbbb5f6de10aa1d6a5e0869f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a8e81275bdcde6a4bfaaebc45953bf914fa448082c1241dd28b06fdb2acdc8d6",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2ae28d7e3eeb3cca10dfcbed84eaf213b90dae6a663d67b12107877efad54969",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d694d7401edefd6e36ef8ea746a06548fa37ed1d7ee85c5d15efbac6c1ce894a",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "dfcc40786989b39b58eae4578753beaeb4242cd7494c99cf5fd0685794913382",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:content::name"
+        },
+        "targetDigest": "d2b355a1e15ec7eea839b2725edf08140c094dce0e314701609b55caf4f4bc52"
+      },
+      {
+        "dependenciesDigest": "798a920ff6bbe142ff56bafbe24a9548ca92192d4d4c05d191af033bc4c03c81",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:context::tierapplicability"
+        },
+        "targetDigest": "66f50c3f3665595facdda10e19f4a65ae576ca1221b57cad1e5e4777f6ad17b4"
+      },
+      {
+        "dependenciesDigest": "50963a57e0abc8e07f073d4021c91d8bdd41f1bb6c429a1abf8ed81ad05ce36d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:0"
+        },
+        "targetDigest": "73c12ad1e3aa15153b0d42fcd426ed12eb1d1056710ec1af1278a22fbb1f81ae"
+      },
+      {
+        "dependenciesDigest": "ad106b2e5844e9215dde9fd7c91c87fd0d4095912c3ae6c2a0c2e573e10be451",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:1"
+        },
+        "targetDigest": "ae8dfeff212a21d6756fb56b496cef92deb6a8f46073df4389869b70060813c4"
+      },
+      {
+        "dependenciesDigest": "a991b25238f5c71660592352deaaf82e8bbcd553bbbb5f6de10aa1d6a5e0869f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:2"
+        },
+        "targetDigest": "a8e81275bdcde6a4bfaaebc45953bf914fa448082c1241dd28b06fdb2acdc8d6"
+      },
+      {
+        "dependenciesDigest": "2ae28d7e3eeb3cca10dfcbed84eaf213b90dae6a663d67b12107877efad54969",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:forcestaff-p1-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f5e2230520d33c5e:official::tierpresentations:options:3"
+        },
+        "targetDigest": "d694d7401edefd6e36ef8ea746a06548fa37ed1d7ee85c5d15efbac6c1ce894a"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

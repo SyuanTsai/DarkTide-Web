@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.7",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.8",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.9",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "70",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "90",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_weakspot_damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "value": {
+            "decimal": "100",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_weakspot_damage at stat_buffs.stat_buffs.critical_strike_weakspot_damage; defined tier literals are tier 1=0.7, tier 2=0.8, tier 3=0.9, tier 4=1.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed01fab518e9e8365391e46ef1cf2dab02899a2edb618c4b63f16f739ffa9dd7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "c6fd622e7794cd75c1ae5ee957c973021cb8dc3c667e1b48aea7991601563be1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed01fab518e9e8365391e46ef1cf2dab02899a2edb618c4b63f16f739ffa9dd7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed01fab518e9e8365391e46ef1cf2dab02899a2edb618c4b63f16f739ffa9dd7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed01fab518e9e8365391e46ef1cf2dab02899a2edb618c4b63f16f739ffa9dd7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "990b3f48165f0cfa8df7fe50b989fd9e13b71a8f0e058250df437f39b79ce6b2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed01fab518e9e8365391e46ef1cf2dab02899a2edb618c4b63f16f739ffa9dd7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8117fbc8fc05772f0e589a4c12e51bf262b52017a48e16375427916043a0a3ee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "c0104f7aeaf09106dd1b8d168888a882172d362720598edc6dc4a52c84246b0a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8117fbc8fc05772f0e589a4c12e51bf262b52017a48e16375427916043a0a3ee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8117fbc8fc05772f0e589a4c12e51bf262b52017a48e16375427916043a0a3ee",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "targetDigest": "bad1dc79169599e5904e5fa0c47adcbbd76ad51fbb148758cbef9e1a96037fae"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8d6804a0e261576080f9c73e9e7ce7ae609b0539556c72003b13f8649707dcbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8d6804a0e261576080f9c73e9e7ce7ae609b0539556c72003b13f8649707dcbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8d6804a0e261576080f9c73e9e7ce7ae609b0539556c72003b13f8649707dcbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "26957e09a95bf8b6da5e65a31bfee2d58bcc141b44f1253a37a5fb71dad29e6b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8d6804a0e261576080f9c73e9e7ce7ae609b0539556c72003b13f8649707dcbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "4f806ea39214b22e6c022aa4eadd1ae08b9364e266228ce3a3e9c9c744301aa0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8d6804a0e261576080f9c73e9e7ce7ae609b0539556c72003b13f8649707dcbf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+        },
+        "targetDigest": "54f01fbdb8152a71b9e33c1058b05c3e3ed2c17d1287df7d444354b9f4e4c3c0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3791f4e69a8ff0286d20ece900c439440760c3874e2d84a2245039086a207344",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3791f4e69a8ff0286d20ece900c439440760c3874e2d84a2245039086a207344",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3791f4e69a8ff0286d20ece900c439440760c3874e2d84a2245039086a207344",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "26957e09a95bf8b6da5e65a31bfee2d58bcc141b44f1253a37a5fb71dad29e6b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3791f4e69a8ff0286d20ece900c439440760c3874e2d84a2245039086a207344",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "4f806ea39214b22e6c022aa4eadd1ae08b9364e266228ce3a3e9c9c744301aa0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3791f4e69a8ff0286d20ece900c439440760c3874e2d84a2245039086a207344",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+        },
+        "targetDigest": "7fae2bea6be85c6cebae4b395a55ce35b0a94f57f5eb67f493d3aaf880e988df"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "65205202c4cdb5c7a142a075de4ace92cdf1fe6e74978fec402bbf4fe6507bf3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "65205202c4cdb5c7a142a075de4ace92cdf1fe6e74978fec402bbf4fe6507bf3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "65205202c4cdb5c7a142a075de4ace92cdf1fe6e74978fec402bbf4fe6507bf3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "26957e09a95bf8b6da5e65a31bfee2d58bcc141b44f1253a37a5fb71dad29e6b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "65205202c4cdb5c7a142a075de4ace92cdf1fe6e74978fec402bbf4fe6507bf3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "4f806ea39214b22e6c022aa4eadd1ae08b9364e266228ce3a3e9c9c744301aa0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "65205202c4cdb5c7a142a075de4ace92cdf1fe6e74978fec402bbf4fe6507bf3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+        },
+        "targetDigest": "809277e05469717a61701ed0560ea3fde6430d93eee61fce35473d39fd1231d8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "053b0a2145d50ffdb85cbad482d43e40c12121f6f413d953159ac5de9c999600",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "053b0a2145d50ffdb85cbad482d43e40c12121f6f413d953159ac5de9c999600",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "053b0a2145d50ffdb85cbad482d43e40c12121f6f413d953159ac5de9c999600",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "26957e09a95bf8b6da5e65a31bfee2d58bcc141b44f1253a37a5fb71dad29e6b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "053b0a2145d50ffdb85cbad482d43e40c12121f6f413d953159ac5de9c999600",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "4f806ea39214b22e6c022aa4eadd1ae08b9364e266228ce3a3e9c9c744301aa0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "053b0a2145d50ffdb85cbad482d43e40c12121f6f413d953159ac5de9c999600",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+        },
+        "targetDigest": "04fde4d7cab92fca6aba1ec08d74f8406d535f9c7651980da210e7cdc13b60a9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c6090298492566dddd7790c094928c6d4b9fb70d109ae60dfde7bfba933321ea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-display-percent-code"
+        },
+        "targetDigest": "b1a4547e6fd5079288be4a89f1af208d8ffa767238e92e4b4fa6cd0f7b7ba8d6"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "42301cd2d535dc3cb7f43a7aef89d3e2d0d5864349d0b75eecbe9106d366efcf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-467; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+              "value": "+70%"
+            }
+          ],
+          "resolvedText": "+70% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "b348b2af09f6dad4d8e4944f33ff7f8a5922be72cbea86fa241905c74a7de6b0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+              "value": "+80%"
+            }
+          ],
+          "resolvedText": "+80% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "07c1e7d622d9cae3ba9c6d28ff7f7b6db54882b757962096c8b57fe14209dae8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+              "value": "+90%"
+            }
+          ],
+          "resolvedText": "+90% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "3e3f30573da74c0e658db845df12bc0130843edbd4f59fe93f76c0f81f5bd1fa",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+100%"
+            }
+          ],
+          "resolvedText": "+100% Critical Weak Spot Damage.",
+          "resolvedTextSha256": "1ce948e3507c912b6233709ef51ff8475fcf50bff2a0f9bbd28360b8396d50fd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-1",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "75459bb4e9e29d22933b2a0e814464e1cd8492059337f4aa42bb85eab2e75867",
+              "text": " Critical Weak Spot Damage."
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "en",
+          "sourceText": "{crit_weakspot_damage:%s} Critical Weak Spot Damage.",
+          "sourceTextSha256": "512dc33cd0620293935df0fb7516258737d31d2e697206f38565578ba7f940cd"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent",
+              "value": "+70%"
+            }
+          ],
+          "resolvedText": "提高+70%弱點致命一擊傷害。",
+          "resolvedTextSha256": "9660f4d71ad4ed9955dda5517c4e8bbac1247de257f1083b969ec8965e86e3b3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent",
+              "value": "+80%"
+            }
+          ],
+          "resolvedText": "提高+80%弱點致命一擊傷害。",
+          "resolvedTextSha256": "29825c9eb23746fd6fa5a16f5785ee1d9d09594df9a00dc099a6457218a0ba90",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent",
+              "value": "+90%"
+            }
+          ],
+          "resolvedText": "提高+90%弱點致命一擊傷害。",
+          "resolvedTextSha256": "26569f5b1d7f7a931c66988420f66dab7fa29f2fd0d79a1ab2503e79626cf5b6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+100%"
+            }
+          ],
+          "resolvedText": "提高+100%弱點致命一擊傷害。",
+          "resolvedTextSha256": "e4a4eab90c44ee75d6a137cf00eacc34763ae28e12771160aa93431acfbb789c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:6b6877ef:key-unknown:en:1:g-9a7b119e02bd7f09:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Deadly Accurate",
+          "resolvedTextSha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028",
+              "text": "Deadly Accurate"
+            }
+          ],
+          "sourceHash": "6b6877ef",
+          "sourceLocale": "en",
+          "sourceText": "Deadly Accurate",
+          "sourceTextSha256": "ccd7c2547acbe80fbd38cb832ef4dc6889ba13c80d669653711d36a87bc0c028"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-9a7b119e02bd7f09:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命精準",
+          "resolvedTextSha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518",
+              "text": "致命精準"
+            }
+          ],
+          "sourceHash": "6b6877ef",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命精準",
+          "sourceTextSha256": "a128459cd95ba99e297ca9aa15d785932a2b207c1286df35de7ab0947e69e518"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "致命精準",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:6b6877ef:key-unknown:en:1:g-9a7b119e02bd7f09:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-9a7b119e02bd7f09:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:6b6877ef:key-unknown:zh-tw:1:g-9a7b119e02bd7f09:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-crit-weakspot-finesse"
+          },
+          "key": "loc_trait_bespoke_crit_weakspot_finesse_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_weakspot_damage",
+              "sourceKey": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent",
+              "value": "+100%"
+            }
+          ],
+          "resolvedText": "提高+100%弱點致命一擊傷害。",
+          "resolvedTextSha256": "e4a4eab90c44ee75d6a137cf00eacc34763ae28e12771160aa93431acfbb789c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1686f268e494583ff8cf3aaabd8fc14449afcefaf9b90e3880787d4cd5970e61",
+              "text": "提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_weakspot_damage",
+              "segmentId": "segment-2",
+              "sha256": "0f55e23ff1355c7cd2da7e57239d8d8461916f11a799f88033fb4f6da84a6b43",
+              "token": "{crit_weakspot_damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1eda73212ded58eb9beae4b62fccba9d1e917fa33d587951264ff5405afbf4c6",
+              "text": "弱點致命一擊傷害。"
+            }
+          ],
+          "sourceHash": "0989d9b9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "提高{crit_weakspot_damage:%s}弱點致命一擊傷害。",
+          "sourceTextSha256": "ceb7bfce8190d6455a01276393b51480e2f972df5256f983ee6f56b947bbd98b"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:en:1:g-9a7b119e02bd7f09:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0989d9b9:key-known:zh-tw:1:g-9a7b119e02bd7f09:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-crit-weakspot-finesse-crit-weakspot-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_weakspot_damage",
+                  "placeholder": "{crit_weakspot_damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-crit-weakspot-finesse"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d60b125c9ac162f2d76882264986a680c8c9b0c21d1e7617b7044c264f2fb0da",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "584eebae67e49c7830ac1682fb29e54c8fab0ca99c29025e17cced43f43391b6",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0af0efb934072b3c0e37263cfe2c1b643683e311c1d070e6296b3d3255c2039d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "8f14598e778328edd186752f05c2af708f16d6dd246163783926a5d60c3345c4",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d9d679e2456edd3223f49ddafceee820f08225f922ba1f16ac70a98355a56da5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5174b5c7c2fe896bec0cf6aca8743e533c94db956980f54d5c53fc2ab96d9ecf",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2411cf77e478ae0bc41445e9cf4e41e156b925fbff71d75264f768e1706d832a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "92873704652d55d40300ede46765d446731c277a9d477954cdd20765fced0658",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4985728944a55379b59288cc93885ab1f14cc4294c6c5cf7371781c365bffb7b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3c3cfb3b2ad19f7376df7cb94775826130f3c6c821c03a51877cb4ec0f6df700",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "703f62911bdc1bc2f7c9ce7e9b41423e5467976aff624c5fe8b03efd6d97dc88",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "69da3143a2b2941c43e49f3839e850f3daae6e56be66a4625d8f531c6a48dd89",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "d60b125c9ac162f2d76882264986a680c8c9b0c21d1e7617b7044c264f2fb0da",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:content::name"
+        },
+        "targetDigest": "584eebae67e49c7830ac1682fb29e54c8fab0ca99c29025e17cced43f43391b6"
+      },
+      {
+        "dependenciesDigest": "0af0efb934072b3c0e37263cfe2c1b643683e311c1d070e6296b3d3255c2039d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:context::tierapplicability"
+        },
+        "targetDigest": "8f14598e778328edd186752f05c2af708f16d6dd246163783926a5d60c3345c4"
+      },
+      {
+        "dependenciesDigest": "d9d679e2456edd3223f49ddafceee820f08225f922ba1f16ac70a98355a56da5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:0"
+        },
+        "targetDigest": "5174b5c7c2fe896bec0cf6aca8743e533c94db956980f54d5c53fc2ab96d9ecf"
+      },
+      {
+        "dependenciesDigest": "2411cf77e478ae0bc41445e9cf4e41e156b925fbff71d75264f768e1706d832a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:1"
+        },
+        "targetDigest": "92873704652d55d40300ede46765d446731c277a9d477954cdd20765fced0658"
+      },
+      {
+        "dependenciesDigest": "4985728944a55379b59288cc93885ab1f14cc4294c6c5cf7371781c365bffb7b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:2"
+        },
+        "targetDigest": "3c3cfb3b2ad19f7376df7cb94775826130f3c6c821c03a51877cb4ec0f6df700"
+      },
+      {
+        "dependenciesDigest": "703f62911bdc1bc2f7c9ce7e9b41423e5467976aff624c5fe8b03efd6d97dc88",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:boltpistol-p1-crit-weakspot-finesse",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9a7b119e02bd7f09:official::tierpresentations:options:3"
+        },
+        "targetDigest": "69da3143a2b2941c43e49f3839e850f3daae6e56be66a4625d8f531c6a48dd89"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,3842 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/mode-runtime-semantics",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/payload/targetProfileRefs",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            },
+            {
+              "field": "/payload/special-active-and-on-abort-profile-mapping",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/payload/actionResolution",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/displayed-attack-segment-mapping",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/effective-runtime-profile-and-overrides",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "attack-profile",
+        "owner": "source",
+        "payload": {
+          "action": "action_left_heavy",
+          "contexts": [
+            {
+              "action": "action_left_heavy",
+              "markKey": "chainsword_p1_m1",
+              "mode": "unresolved",
+              "templateKey": "chainsword_p1_m1",
+              "weaponRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial"
+              }
+            }
+          ],
+          "damageProfileRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:damage-profile:raw-source:chainsword_p1_m1:heavy_chainsword:9a7cb309"
+            }
+          ],
+          "familyId": "chainsword_p1",
+          "markId": "chainsword_p1_m1",
+          "mode": "unresolved",
+          "sourceBindings": [
+            {
+              "branch": "normal",
+              "profileRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "recordId": "darktide:damage-profile:raw-source:chainsword_p1_m1:heavy_chainsword:9a7cb309"
+              },
+              "rawValue": "heavy_chainsword",
+              "sourceLocator": {
+                "fieldPath": "weapon_template.actions.action_left_heavy.damage_profile",
+                "line": 452,
+                "path": "scripts/settings/equipment/weapon_templates/chain_swords/chainsword_p1_m1.lua",
+                "sourceRef": {
+                  "gameReleaseId": "darktide:1.13.4",
+                  "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+                }
+              }
+            }
+          ],
+          "targetProfileRefs": [],
+          "templateKey": "chainsword_p1_m1",
+          "weaponRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial"
+          }
+        },
+        "recordId": "darktide:attack-profile:chainsword:p1:chainsword_p1_m1:action_left_heavy:e46-normal-partial",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/action"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/sourceBindings"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/targetProfileRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs/unmapped-source-templates",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.65",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.7",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.75",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.8",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.hit_mass.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "value": {
+            "decimal": "65",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.hit_mass.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "value": {
+            "decimal": "70",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.hit_mass.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "value": {
+            "decimal": "75",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.hit_mass.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "value": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/segments",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            },
+            {
+              "field": "/effective-runtime-profile-values",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "damage-profile",
+        "owner": "source",
+        "payload": {
+          "profileKey": "heavy_chainsword",
+          "rawSourceDefinition": {
+            "fieldPath": "damage_templates.heavy_chainsword",
+            "leaves": [
+              {
+                "fieldPath": "damage_templates.heavy_chainsword.targets[1].power_distribution.attack",
+                "line": 189,
+                "path": "scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+                "rawValue": "[135, 270]",
+                "sourceRef": {
+                  "gameReleaseId": "darktide:1.13.4",
+                  "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+                }
+              }
+            ],
+            "line": 159,
+            "path": "scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+            "sourceRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+            }
+          }
+        },
+        "recordId": "darktide:damage-profile:raw-source:chainsword_p1_m1:heavy_chainsword:9a7cb309",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/rawSourceDefinition"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainsword_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value hit_mass at stat_buffs.stat_buffs.max_hit_mass_attack_modifier; defined tier literals are tier 1=0.65, tier 2=0.7, tier 3=0.75, tier 4=0.8.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainsword_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_chainsword_p1_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value time at active_duration; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/player-visible-damage-value",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            },
+            {
+              "field": "/effective-runtime-profile-and-overrides",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            },
+            {
+              "field": "/weapon-stat-definition-and-rating-mapping",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "stat-curve",
+        "owner": "source",
+        "payload": {
+          "callsiteLocators": [
+            {
+              "fieldPath": "DamageProfile.lerp_damage_profile_entry",
+              "line": 379,
+              "path": "scripts/utilities/attack/damage_profile.lua",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+              }
+            },
+            {
+              "fieldPath": "math.lerp",
+              "line": 72,
+              "path": "scripts/foundation/utilities/math.lua",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721"
+              }
+            }
+          ],
+          "edgePolicy": {
+            "scope": "math.lerp function only",
+            "sourceLocator": {
+              "fieldPath": "math.lerp",
+              "line": 72,
+              "path": "scripts/foundation/utilities/math.lua",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721"
+              }
+            },
+            "value": "extrapolate"
+          },
+          "inputUnit": "ratio",
+          "interpolation": {
+            "sourceLocator": {
+              "fieldPath": "DamageProfile.lerp_damage_profile_entry",
+              "line": 379,
+              "path": "scripts/utilities/attack/damage_profile.lua",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+              }
+            },
+            "value": "linear"
+          },
+          "knots": [
+            {
+              "input": "0",
+              "output": "135",
+              "rawEndpoint": "135",
+              "sourceLocator": {
+                "fieldPath": "targets[1].power_distribution.attack.1",
+                "line": 190,
+                "path": "scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+                "sourceRef": {
+                  "gameReleaseId": "darktide:1.13.4",
+                  "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+                }
+              },
+              "sourceOrdinal": 1
+            },
+            {
+              "input": "1",
+              "output": "270",
+              "rawEndpoint": "270",
+              "sourceLocator": {
+                "fieldPath": "targets[1].power_distribution.attack.2",
+                "line": 191,
+                "path": "scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+                "sourceRef": {
+                  "gameReleaseId": "darktide:1.13.4",
+                  "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+                }
+              },
+              "sourceOrdinal": 2
+            }
+          ],
+          "outputUnit": "attack-power-point",
+          "panelInputRange": {
+            "status": "not-applicable"
+          }
+        },
+        "recordId": "darktide:stat-curve:raw-profile:chainsword_p1_m1:heavy_chainsword:5ba9958c",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/knots"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/interpolation"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/edgePolicy"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/claimRefs",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/player-visible-stat-value",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            },
+            {
+              "field": "/gameplay-runtime-value",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+              }
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "stat-definition",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [],
+          "curveMapping": {
+            "outerItemRating": {
+              "obtainableRange": {
+                "reasonCode": "NOT_EXPOSED_BY_SOURCE",
+                "status": "unknown"
+              },
+              "panelComparisonRange": {
+                "inclusive": {
+                  "max": true,
+                  "min": true
+                },
+                "max": "1",
+                "min": "0",
+                "scope": "comparison-metadata-only",
+                "status": "known",
+                "unit": "ratio"
+              },
+              "quantityKind": "normalized-item-stat-value",
+              "sourceLocators": [
+                {
+                  "rawValue": "WeaponStats.get_comparing_stats = function (self)\n\tlocal item = self._item\n\tlocal weapon_template = WeaponTemplate.weapon_template_from_item(item)\n\tlocal item_base_stats = item.base_stats\n\tlocal weapon_base_stats = weapon_template.base_stats\n\tlocal values = {}\n\n\tif item_base_stats then\n\t\tfor ii = 1, #item_base_stats do\n\t\t\tlocal stat = item_base_stats[ii]\n\t\t\tlocal stat_name = stat.name\n\t\t\tlocal stat_value = stat.value or 0\n\t\t\tlocal stat_template = weapon_base_stats[stat_name]\n\n\t\t\tif stat_template then\n\t\t\t\tlocal display_name = stat_template.display_name\n\t\t\t\tlocal description = stat_template.description\n\n\t\t\t\tvalues[#values + 1] = {\n\t\t\t\t\tmax = 1,\n\t\t\t\t\tmin = 0,\n\t\t\t\t\tdisplay_name = display_name,\n\t\t\t\t\tdescription = description,\n\t\t\t\t\tfraction = stat_value,\n\t\t\t\t\tcurrent = stat_value,\n\t\t\t\t\tname = stat_name,\n\t\t\t\t}\n\t\t\tend\n\t\tend\n\tend\n\n\tfor key, stat in pairs(values) do\n\t\tstat.type = key\n\tend\n\n\treturn values",
+                  "sourceLocator": {
+                    "endLine": 850,
+                    "fieldPath": "source.normalized_item_stat_comparison_fraction_and_metadata_range",
+                    "line": 815,
+                    "path": "scripts/utilities/weapon_stats.lua",
+                    "sourceRef": {
+                      "gameReleaseId": "darktide:1.13.4",
+                      "sourceId": "public-code:w07-static-ba6c148-75905d95b005c639"
+                    }
+                  },
+                  "summary": "normalized item-stat comparison fraction and metadata range"
+                }
+              ],
+              "unit": "ratio"
+            },
+            "rawProfileParameter": {
+              "callerDomain": {
+                "reasonCode": "CALLER_DOMAIN_NOT_PROVEN",
+                "status": "unknown"
+              },
+              "quantityKind": "normalized-profile-t",
+              "referenceEndpoints": {
+                "inclusive": {
+                  "max": true,
+                  "min": true
+                },
+                "max": "1",
+                "min": "0",
+                "scope": "reference-endpoints-only"
+              },
+              "selectedWeaponTweakPath": {
+                "accumulatorRange": {
+                  "inclusive": {
+                    "max": true,
+                    "min": true
+                  },
+                  "max": "1",
+                  "min": "0",
+                  "unit": "ratio"
+                },
+                "fallbacks": {
+                  "defaultProfileLerpValue": "0.5",
+                  "defaultTraitValue": "0.5",
+                  "emptyPath": "0"
+                },
+                "sourceLocators": [
+                  {
+                    "rawValue": "WeaponTweakTemplates.calculate_lerp_values = function (weapon_template, base_stats, overclocks, perks, traits, override_lerp_value)\n\tlocal weapon_tweaks = {}\n\tlocal base_template_lookup = weapon_template.__base_template_lookup\n\n\tfor template_type, _ in pairs(template_types) do\n\t\tlocal tweak_targets = {}\n\t\tlocal lookup = base_template_lookup[template_type]\n\t\tlocal iterator = pairs\n\n\t\tfor target_template, _ in iterator(lookup) do\n\t\t\ttweak_targets[target_template] = {}\n\t\tend\n\n\t\tweapon_tweaks[template_type] = tweak_targets\n\tend\n\n\tlocal weapon_name = weapon_template.name\n\tlocal overclock_definitions = weapon_template.overclocks\n\tlocal overclock_modifiers = {}\n\n\tif overclock_definitions then\n\t\tfor i = 1, #overclocks do\n\t\t\tlocal overclock_data = overclocks[i]\n\t\t\tlocal overclock_name = overclock_data.name\n\t\t\tlocal overclock_definition = overclock_definitions[overclock_name]\n\n\t\t\tif overclock_definition then\n\t\t\t\tfor base_stat_name, value in pairs(overclock_definition) do\n\t\t\t\t\toverclock_modifiers[base_stat_name] = (overclock_modifiers[base_stat_name] or 0) + value\n\t\t\t\tend\n\t\t\telse\n\t\t\t\tLog.warning(\"WeaponTweakTemplates\", \"Could not find overclock definition %s for weapon %s when fetching weapon overclocks\", overclock_name, weapon_name)\n\t\t\tend\n\t\tend\n\tend\n\n\tlocal base_stat_values = {}\n\n\tfor i = 1, #base_stats do\n\t\tlocal base_stat_data = base_stats[i]\n\t\tlocal base_stat_name = base_stat_data.name\n\t\tlocal base_stat_value = base_stat_data.value\n\n\t\tbase_stat_values[base_stat_name] = base_stat_value\n\tend\n\n\tlocal base_stat_definitions = weapon_template.base_stats\n\n\tif base_stat_definitions then\n\t\tfor base_stat_name, base_stat_definition in pairs(base_stat_definitions) do\n\t\t\tlocal base_stat_value_or_nil = base_stat_values[base_stat_name]\n\t\t\tlocal overclock_modifier = overclock_modifiers[base_stat_name] or 0\n\n\t\t\t_add_lerped_tweak_modifiers(weapon_tweaks, base_stat_definition, base_stat_value_or_nil, overclock_modifier)\n\t\tend\n\tend\n\n\treturn weapon_tweaks",
+                    "sourceLocator": {
+                      "endLine": 142,
+                      "fieldPath": "source.base_weapon_stat_value_mapping",
+                      "line": 85,
+                      "path": "scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:weapon-tweak-templates-ba6c148"
+                      }
+                    },
+                    "summary": "base weapon stat value mapping"
+                  },
+                  {
+                    "rawValue": "function _add_tweak_stats(start_table, tweak, tweak_value)\n\tlocal path = start_table\n\tlocal entry = tweak\n\tlocal depth = #entry\n\n\tfor j = 1, depth - 2 do\n\t\tlocal key = entry[j]\n\t\tlocal existing_path = path[key]\n\n\t\tif existing_path then\n\t\t\tpath = existing_path\n\t\telse\n\t\t\tlocal new_path = {}\n\n\t\t\tpath[key] = new_path\n\t\t\tpath = new_path\n\t\tend\n\tend\n\n\tlocal key = entry[depth - 1]\n\tlocal existing_value = path[key]\n\n\tif existing_value then\n\t\tpath[key] = math_clamp(existing_value + tweak_value, 0, 1)\n\telse\n\t\tpath[key] = math_clamp(tweak_value, 0, 1)\n\tend\nend",
+                    "sourceLocator": {
+                      "endLine": 345,
+                      "fieldPath": "source.selected_weapon_tweak_accumulator_clamp",
+                      "line": 318,
+                      "path": "scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:weapon-tweak-templates-ba6c148"
+                      }
+                    },
+                    "summary": "selected weapon tweak accumulator clamp"
+                  },
+                  {
+                    "rawValue": "local function _add_lerped_tweak_modifiers_helper(tweak_groups, lerp_t_or_nil, out_tweak_target)\n\tfor tweak_group_idx = 1, #tweak_groups do\n\t\tlocal tweak_group = tweak_groups[tweak_group_idx]\n\n\t\tfor tweak_row_idx = 1, #tweak_group do\n\t\t\tlocal tweak_row = tweak_group[tweak_row_idx]\n\t\t\tlocal tweak_value = tweak_row[#tweak_row]\n\n\t\t\tif type(tweak_value) == \"table\" then\n\t\t\t\tlocal lerp_min = tweak_value.min\n\t\t\t\tlocal lerp_max = tweak_value.max\n\t\t\t\tlocal tweak_name = tweak_row[1]\n\t\t\t\tlocal lerp_t = lerp_t_or_nil or DEFAULT_STAT_TRAIT_VALUE[tweak_name] or DEFAULT_STAT_TRAIT_VALUE.default\n\n\t\t\t\ttweak_value = math_lerp(lerp_min, lerp_max, lerp_t)\n\t\t\tend\n\n\t\t\t_add_tweak_stats(out_tweak_target, tweak_row, tweak_value)\n\t\tend\n\tend\nend",
+                    "sourceLocator": {
+                      "endLine": 454,
+                      "fieldPath": "source.trait_parameter_mapping_into_selected_weapon_tweaks",
+                      "line": 434,
+                      "path": "scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:weapon-tweak-templates-ba6c148"
+                      }
+                    },
+                    "summary": "trait parameter mapping into selected weapon tweaks"
+                  },
+                  {
+                    "rawValue": "Weapon._init_traits = function (self, weapon_template, item, override_trait_lerp_value_or_nil, override_tweak_template_lerp_value_or_nil)\n\tlocal base_stats = item.base_stats or EMPTY_TABLE\n\tlocal overclocks = item.overclocks or EMPTY_TABLE\n\tlocal perks = item.perks or EMPTY_TABLE\n\tlocal traits = item.traits or EMPTY_TABLE\n\tlocal lerp_values = WeaponTweakTemplates.calculate_lerp_values(weapon_template, base_stats, overclocks, perks, EMPTY_TABLE, override_trait_lerp_value_or_nil)\n\tlocal weapon_tweak_templates = WeaponTweakTemplates.create(lerp_values, weapon_template, override_tweak_template_lerp_value_or_nil)\n\tlocal damage_profile_lerp_values = lerp_values[template_types.damage]\n\tlocal explosion_template_lerp_values = lerp_values[template_types.explosion]\n\tlocal buffs = WeaponTweakTemplates.extract_buffs(weapon_template)\n\n\tWeaponTweakTemplates.extract_trait_buffs(weapon_template, buffs, traits)\n\tWeaponTweakTemplates.extract_trait_buffs(weapon_template, buffs, perks)\n\n\treturn weapon_tweak_templates, damage_profile_lerp_values, explosion_template_lerp_values, buffs",
+                    "sourceLocator": {
+                      "endLine": 82,
+                      "fieldPath": "source.weapon_damage_profile_lerp_value_transfer",
+                      "line": 68,
+                      "path": "scripts/extension_systems/weapon/weapon.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:w07-static-ba6c148-08e8490fcd07a089"
+                      }
+                    },
+                    "summary": "weapon damage profile lerp value transfer"
+                  },
+                  {
+                    "rawValue": "PlayerUnitWeaponExtension.damage_profile_lerp_values = function (self, damage_profile_name_or_nil)\n\tlocal weapon = self:_wielded_weapon(self._inventory_component, self._weapons)\n\n\tif not weapon then\n\t\treturn NO_LERP_VALUES\n\tend\n\n\tlocal running_action_name = self._action_handler:running_action_name(\"weapon_action\")\n\n\tif not running_action_name then\n\t\treturn NO_LERP_VALUES\n\tend\n\n\tlocal weapon_damage_profile_lerp_values = weapon.damage_profile_lerp_values\n\tlocal action_lerp_values = weapon_damage_profile_lerp_values[running_action_name]\n\tlocal damage_profile_lerp_values = damage_profile_name_or_nil and action_lerp_values and action_lerp_values[damage_profile_name_or_nil]\n\n\treturn damage_profile_lerp_values or action_lerp_values or NO_LERP_VALUES\nend",
+                    "sourceLocator": {
+                      "endLine": 460,
+                      "fieldPath": "source.action_and_profile_lerp_value_lookup_fallback",
+                      "line": 442,
+                      "path": "scripts/extension_systems/weapon/player_unit_weapon_extension.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:w07-static-ba6c148-95d32e8102f4a789"
+                      }
+                    },
+                    "summary": "action and profile lerp value lookup fallback"
+                  },
+                  {
+                    "rawValue": "local TARGET_SETTINGS_NO_LERP_VALUES = {}\nlocal DAMAGE_PROFILE_NO_LERP_VALUES = {\n\tcurrent_target_settings_lerp_values = TARGET_SETTINGS_NO_LERP_VALUES,\n}\n\nDamageProfile.lerp_values = function (damage_profile, attacking_unit_or_nil, target_index_or_nil)\n\tif not attacking_unit_or_nil then\n\t\treturn DAMAGE_PROFILE_NO_LERP_VALUES\n\tend\n\n\tlocal weapon_extension = ScriptUnit.has_extension(attacking_unit_or_nil, \"weapon_system\")\n\n\tif not weapon_extension then\n\t\treturn DAMAGE_PROFILE_NO_LERP_VALUES\n\tend\n\n\tlocal lerp_values = weapon_extension:damage_profile_lerp_values(damage_profile.name)\n\tlocal targets = target_index_or_nil and lerp_values.targets\n\tlocal target_settings_lerp_values = targets and (targets[target_index_or_nil] or targets.default_target) or TARGET_SETTINGS_NO_LERP_VALUES\n\n\tlerp_values.current_target_settings_lerp_values = target_settings_lerp_values\n\n\treturn lerp_values\nend\n\nlocal EMPTY_PATH = {\n\t[DEFAULT_LERP_VALUE] = 0,\n}\n\nDamageProfile.lerp_value_from_path = function (lerp_values, ...)\n\tlocal default_lerp_value_or_nil = lerp_values[DEFAULT_LERP_VALUE]\n\tlocal local_lerp_values = lerp_values\n\tlocal depth = select(\"#\", ...)\n\n\tfor i = 1, depth - 1 do\n\t\tlocal id = select(i, ...)\n\n\t\tlocal_lerp_values = local_lerp_values[id] or EMPTY_PATH\n\tend\n\n\tlocal last_id = select(depth, ...)\n\tlocal lerp_value = local_lerp_values[last_id] or default_lerp_value_or_nil or DEFAULT_FALLBACK_LERP_VALUE\n\n\treturn lerp_value",
+                    "sourceLocator": {
+                      "endLine": 359,
+                      "fieldPath": "source.damage_profile_empty_default_lerp_fallback_path",
+                      "line": 316,
+                      "path": "scripts/utilities/attack/damage_profile.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+                      }
+                    },
+                    "summary": "damage profile empty/default lerp fallback path"
+                  },
+                  {
+                    "rawValue": "local TARGET_SETTINGS_NO_LERP_VALUES = {}\nlocal DAMAGE_PROFILE_NO_LERP_VALUES = {\n\tcurrent_target_settings_lerp_values = TARGET_SETTINGS_NO_LERP_VALUES,\n}\n\nDamageProfile.lerp_values = function (damage_profile, attacking_unit_or_nil, target_index_or_nil)\n\tif not attacking_unit_or_nil then\n\t\treturn DAMAGE_PROFILE_NO_LERP_VALUES\n\tend\n\n\tlocal weapon_extension = ScriptUnit.has_extension(attacking_unit_or_nil, \"weapon_system\")\n\n\tif not weapon_extension then\n\t\treturn DAMAGE_PROFILE_NO_LERP_VALUES\n\tend\n\n\tlocal lerp_values = weapon_extension:damage_profile_lerp_values(damage_profile.name)\n\tlocal targets = target_index_or_nil and lerp_values.targets\n\tlocal target_settings_lerp_values = targets and (targets[target_index_or_nil] or targets.default_target) or TARGET_SETTINGS_NO_LERP_VALUES\n\n\tlerp_values.current_target_settings_lerp_values = target_settings_lerp_values\n\n\treturn lerp_values\nend\n\nlocal EMPTY_PATH = {\n\t[DEFAULT_LERP_VALUE] = 0,\n}\n\nDamageProfile.lerp_value_from_path = function (lerp_values, ...)\n\tlocal default_lerp_value_or_nil = lerp_values[DEFAULT_LERP_VALUE]\n\tlocal local_lerp_values = lerp_values\n\tlocal depth = select(\"#\", ...)\n\n\tfor i = 1, depth - 1 do\n\t\tlocal id = select(i, ...)\n\n\t\tlocal_lerp_values = local_lerp_values[id] or EMPTY_PATH\n\tend\n\n\tlocal last_id = select(depth, ...)\n\tlocal lerp_value = local_lerp_values[last_id] or default_lerp_value_or_nil or DEFAULT_FALLBACK_LERP_VALUE\n\n\treturn lerp_value",
+                    "sourceLocator": {
+                      "endLine": 359,
+                      "fieldPath": "source.damage_profile_empty_default_lerp_fallback_path",
+                      "line": 316,
+                      "path": "scripts/utilities/attack/damage_profile.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+                      }
+                    },
+                    "summary": "damage profile empty/default lerp fallback path"
+                  },
+                  {
+                    "rawValue": "WeaponTweakTemplateSettings.DEFAULT_LERP_VALUE = {}\nWeaponTweakTemplateSettings.DEFAULT_STAT_TRAIT_VALUE = {\n\tdefault = 0.5,\n}\nWeaponTweakTemplateSettings.DEFAULT_FALLBACK_LERP_VALUE = 0.5",
+                    "sourceLocator": {
+                      "endLine": 11,
+                      "fieldPath": "source.default_trait_and_fallback_lerp_coordinates",
+                      "line": 7,
+                      "path": "scripts/settings/equipment/weapon_templates/weapon_tweak_template_settings.lua",
+                      "sourceRef": {
+                        "gameReleaseId": "darktide:1.13.4",
+                        "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-weapon_tweak_template_settings"
+                      }
+                    },
+                    "summary": "default trait and fallback lerp coordinates"
+                  }
+                ],
+                "status": "known"
+              },
+              "sourceLocators": [
+                {
+                  "fieldPath": "DamageProfile.lerp_damage_profile_entry",
+                  "line": 379,
+                  "path": "scripts/utilities/attack/damage_profile.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+                  }
+                },
+                {
+                  "fieldPath": "math.lerp",
+                  "line": 72,
+                  "path": "scripts/foundation/utilities/math.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721"
+                  }
+                }
+              ],
+              "unit": "ratio"
+            },
+            "schemaVersion": "w07-stat-curve-mapping/1.0.0",
+            "traitParameter": {
+              "quantityKind": "trait-template-t",
+              "range": {
+                "inclusive": {
+                  "max": true,
+                  "min": true
+                },
+                "max": "0.75",
+                "min": "0.25",
+                "status": "known",
+                "unit": "ratio"
+              },
+              "sourceLocators": [
+                {
+                  "fieldPath": "damage_trait_templates.default_melee_dps_stat.1.5.min",
+                  "line": 656,
+                  "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-damage_trait_templates"
+                  }
+                },
+                {
+                  "fieldPath": "damage_trait_templates.default_melee_dps_stat.1.5.max",
+                  "line": 655,
+                  "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-damage_trait_templates"
+                  }
+                }
+              ],
+              "unit": "ratio"
+            }
+          },
+          "curveRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:stat-curve:raw-profile:chainsword_p1_m1:heavy_chainsword:5ba9958c"
+          },
+          "inputUnit": "ratio",
+          "obtainableInputRange": {
+            "reasonCode": "NOT_EXPOSED_BY_SOURCE",
+            "status": "unknown"
+          },
+          "outputUnit": "attack-power-point",
+          "panelInputRange": {
+            "status": "not-applicable"
+          },
+          "quantity": "damage_templates.heavy_chainsword.targets[1].power_distribution.attack",
+          "rangeEvidence": {
+            "checkedSources": [
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.master_item_override_validation",
+                  "line": 91,
+                  "path": "scripts/backend/master_items.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-751802f310669d43"
+                  }
+                },
+                "summary": "master item override validation"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.cached_master_items_and_gear_overrides_merge",
+                  "line": 122,
+                  "path": "scripts/backend/master_items.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-751802f310669d43"
+                  }
+                },
+                "summary": "cached master items and gear overrides merge"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.backend_master_data_items_cache",
+                  "line": 419,
+                  "path": "scripts/backend/master_items.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-751802f310669d43"
+                  }
+                },
+                "summary": "backend master-data items cache"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.master_data_request_boundary",
+                  "line": 183,
+                  "path": "scripts/backend/master_data.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-5bdb1fd355bf77df"
+                  }
+                },
+                "summary": "master-data request boundary"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.gear_backend_data_path",
+                  "line": 36,
+                  "path": "scripts/backend/gear.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-60d62e6dcd32168a"
+                  }
+                },
+                "summary": "gear backend data path"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.gear_response_handling",
+                  "line": 92,
+                  "path": "scripts/backend/gear.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-60d62e6dcd32168a"
+                  }
+                },
+                "summary": "gear response handling"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.server_provided_item_crafting_metadata",
+                  "line": 262,
+                  "path": "scripts/managers/data_service/services/crafting_service.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-27acb51d57f43bb9"
+                  }
+                },
+                "summary": "server-provided item crafting metadata"
+              },
+              {
+                "sourceLocator": {
+                  "fieldPath": "source.server_backed_store_interface_request",
+                  "line": 103,
+                  "path": "scripts/managers/data_service/services/store_service.lua",
+                  "sourceRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "sourceId": "public-code:w07-static-ba6c148-1bb3fa7486dffc0a"
+                  }
+                },
+                "summary": "server-backed store interface request"
+              }
+            ],
+            "impact": "The panel comparison coordinate and client preview rules are documented separately; actual obtainable minimum/maximum remain unknown because the server-side item roll rules are outside the pinned public client source.",
+            "serverBoundary": "The pinned client repository merges cached master item data with overrides and consumes item, crafting and store data from backend interfaces/services. It does not expose the server roll-generation bounds for the selected stat."
+          },
+          "theoreticalInputRange": {
+            "inclusive": {
+              "max": true,
+              "min": true
+            },
+            "max": "0.75",
+            "min": "0.25",
+            "status": "known",
+            "unit": "ratio"
+          }
+        },
+        "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/quantity"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/curveRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/curveMapping"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/rangeEvidence"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-75905d95b005c639"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-tweak-templates-ba6c148"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-08e8490fcd07a089"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-95d32e8102f4a789"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-weapon_tweak_template_settings"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-damage_trait_templates"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-751802f310669d43"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-5bdb1fd355bf77df"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-60d62e6dcd32168a"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-27acb51d57f43bb9"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:w07-static-ba6c148-1bb3fa7486dffc0a"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/actionProfileResolution",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/payload/all-base-stat-definitions-and-rating-mapping",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/payload/all-actions-and-display-segments",
+              "reasonCode": "NOT_IMPORTED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/payload/effective-target-and-override-resolution",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            },
+            {
+              "field": "/player-visible-values-and-game-runtime",
+              "reasonCode": "NOT_VERIFIED",
+              "sourceRef": {
+                "gameReleaseId": "darktide:1.13.4",
+                "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+              }
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "weapon",
+        "owner": "source",
+        "payload": {
+          "attackProfileRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:attack-profile:chainsword:p1:chainsword_p1_m1:action_left_heavy:e46-normal-partial"
+            }
+          ],
+          "familyId": "chainsword_p1",
+          "markId": "chainsword_p1_m1",
+          "statRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46"
+            }
+          ],
+          "templateKey": "chainsword_p1_m1"
+        },
+        "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/statRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/attackProfileRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-damage_trait_templates"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf8af928829eeeb3bb348292a0dee233785cd56e5f561c97bc44a731c92e59c",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/action",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:attack-profile:chainsword:p1:chainsword_p1_m1:action_left_heavy:e46-normal-partial"
+        },
+        "targetDigest": "8960cdf3a7fe792a993aeaa8069fbef101e59eb73b4c7608d88737a335c94242"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf8af928829eeeb3bb348292a0dee233785cd56e5f561c97bc44a731c92e59c",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/sourceBindings",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:attack-profile:chainsword:p1:chainsword_p1_m1:action_left_heavy:e46-normal-partial"
+        },
+        "targetDigest": "fa6d0305fd2778bcf9a2e4cce6946382c7eac3725125ee74c4583d09e9264fc8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9bf8af928829eeeb3bb348292a0dee233785cd56e5f561c97bc44a731c92e59c",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/targetProfileRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:attack-profile:chainsword:p1:chainsword_p1_m1:action_left_heavy:e46-normal-partial"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e417592e26cc578fa0ee5c4b78b2030d4addceabf5a0bbea993cff67d6749f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "536d4199481ccc8373ddcec540a732c12b79fdda8d5f08c697d6e9b019c6477d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e417592e26cc578fa0ee5c4b78b2030d4addceabf5a0bbea993cff67d6749f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e417592e26cc578fa0ee5c4b78b2030d4addceabf5a0bbea993cff67d6749f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e417592e26cc578fa0ee5c4b78b2030d4addceabf5a0bbea993cff67d6749f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "6c8ac65a48a9fab4f252895d56a1e783498fcd0f99f361d209f5131563f37575"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e417592e26cc578fa0ee5c4b78b2030d4addceabf5a0bbea993cff67d6749f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "6168c8e8ba4fe28920716a0a6de1d7f0c07d911f65386bb9b28b7cb84ee09810"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "602d195f0259b838a7e57fb581ab611a757c381e0cbe794302c00fe7742b103d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "9dc36ec2ed0518a85d033c5f920983465607147578a3f956f16e7008a7483d83"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "602d195f0259b838a7e57fb581ab611a757c381e0cbe794302c00fe7742b103d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "602d195f0259b838a7e57fb581ab611a757c381e0cbe794302c00fe7742b103d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "targetDigest": "560bc8e59a55452c435ee59219ebe11d103124aa5e172c2586706048def39588"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7332c66e89b438f55491567d9544fe4cc486ae628b4f620ff61d8e60594dbe79",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7332c66e89b438f55491567d9544fe4cc486ae628b4f620ff61d8e60594dbe79",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7332c66e89b438f55491567d9544fe4cc486ae628b4f620ff61d8e60594dbe79",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+        },
+        "targetDigest": "5b2d474708106756dddfcfec2795a86877b24e4b190618d4e1720f8cdbaa1ff4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7332c66e89b438f55491567d9544fe4cc486ae628b4f620ff61d8e60594dbe79",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+        },
+        "targetDigest": "b1d33babe05fc77f34ff8e587801c6c9d28f9bc6a5ede267339afeabc4c3f8f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7332c66e89b438f55491567d9544fe4cc486ae628b4f620ff61d8e60594dbe79",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+        },
+        "targetDigest": "caaadb9187a1a66d1587c3bb6568c83ce435e5f4845cbaf57542e9c4d522d2be"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b75ea890911637435e13d2a1f757e205d6a9ca84f2f66afc57469dc1c5265d5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b75ea890911637435e13d2a1f757e205d6a9ca84f2f66afc57469dc1c5265d5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b75ea890911637435e13d2a1f757e205d6a9ca84f2f66afc57469dc1c5265d5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+        },
+        "targetDigest": "5b2d474708106756dddfcfec2795a86877b24e4b190618d4e1720f8cdbaa1ff4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b75ea890911637435e13d2a1f757e205d6a9ca84f2f66afc57469dc1c5265d5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+        },
+        "targetDigest": "b1d33babe05fc77f34ff8e587801c6c9d28f9bc6a5ede267339afeabc4c3f8f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b75ea890911637435e13d2a1f757e205d6a9ca84f2f66afc57469dc1c5265d5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+        },
+        "targetDigest": "54f01fbdb8152a71b9e33c1058b05c3e3ed2c17d1287df7d444354b9f4e4c3c0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08dcf3fe498acca50680e0235ddbbd97a25e1216910886188ea3c6f078c443af",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08dcf3fe498acca50680e0235ddbbd97a25e1216910886188ea3c6f078c443af",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08dcf3fe498acca50680e0235ddbbd97a25e1216910886188ea3c6f078c443af",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+        },
+        "targetDigest": "5b2d474708106756dddfcfec2795a86877b24e4b190618d4e1720f8cdbaa1ff4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08dcf3fe498acca50680e0235ddbbd97a25e1216910886188ea3c6f078c443af",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+        },
+        "targetDigest": "b1d33babe05fc77f34ff8e587801c6c9d28f9bc6a5ede267339afeabc4c3f8f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08dcf3fe498acca50680e0235ddbbd97a25e1216910886188ea3c6f078c443af",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+        },
+        "targetDigest": "26112d40d701ddcab5f1cb48a86acd022eeb515fbe7239b1dd445a9de55134fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37674b50b098a9f9044bf1898681099f0422c02548f6f01efbafc7fab6b01ab5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37674b50b098a9f9044bf1898681099f0422c02548f6f01efbafc7fab6b01ab5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37674b50b098a9f9044bf1898681099f0422c02548f6f01efbafc7fab6b01ab5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+        },
+        "targetDigest": "5b2d474708106756dddfcfec2795a86877b24e4b190618d4e1720f8cdbaa1ff4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37674b50b098a9f9044bf1898681099f0422c02548f6f01efbafc7fab6b01ab5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+        },
+        "targetDigest": "b1d33babe05fc77f34ff8e587801c6c9d28f9bc6a5ede267339afeabc4c3f8f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37674b50b098a9f9044bf1898681099f0422c02548f6f01efbafc7fab6b01ab5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+        },
+        "targetDigest": "7fae2bea6be85c6cebae4b395a55ce35b0a94f57f5eb67f493d3aaf880e988df"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "291acb979ee8f325376aca46c06e32aabf5008edfc3815d6ebfe138563f5235d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "291acb979ee8f325376aca46c06e32aabf5008edfc3815d6ebfe138563f5235d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "291acb979ee8f325376aca46c06e32aabf5008edfc3815d6ebfe138563f5235d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+        },
+        "targetDigest": "3fd547ad8dddf8b046752fb08ddac8f3c5f0086ab1cf113e02f2db3340890c64"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "291acb979ee8f325376aca46c06e32aabf5008edfc3815d6ebfe138563f5235d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+        },
+        "targetDigest": "b1d33babe05fc77f34ff8e587801c6c9d28f9bc6a5ede267339afeabc4c3f8f0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "291acb979ee8f325376aca46c06e32aabf5008edfc3815d6ebfe138563f5235d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+        },
+        "targetDigest": "db60253728334e33549e325958aab2ed8cff7ccacaadc2c8eeffcae5a6394769"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9cbd47212b4bc8852904dfb269ec7cf4f50a4cd5882251d8db378cda0c65d54e",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/rawSourceDefinition",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:damage-profile:raw-source:chainsword_p1_m1:heavy_chainsword:9a7cb309"
+        },
+        "targetDigest": "44f3f5bea6e67fb95ef66db883e6e8ee6da3e87f573812dcf6ab50d84715d200"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "43385b838d82c5cbb0fa9b9d1adfe070b282a6cf2696de22b61add6e17b76e5c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-display-percent-code"
+        },
+        "targetDigest": "54932cee04cc406338643cbeb100a63d5c512f08852dacfb7f011ca3c607c661"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f536eade15f95136b4f9d7ae0e3ff65a68c257264fc850eae40c55ca4dba7620",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value-code"
+        },
+        "targetDigest": "dda7ae7b31da458930eaa251e6f69ed60881bac8d5856ad5781b531dd51668ba"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b66966f4868e6815f8b94986fdf8e89f693da7c1296786420ed92083540b58d",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/edgePolicy",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-curve:raw-profile:chainsword_p1_m1:heavy_chainsword:5ba9958c"
+        },
+        "targetDigest": "44f133eefd968eab0e69746376c8de1a406792d6b5f9a9411df0b413f9785575"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b66966f4868e6815f8b94986fdf8e89f693da7c1296786420ed92083540b58d",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/interpolation",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-curve:raw-profile:chainsword_p1_m1:heavy_chainsword:5ba9958c"
+        },
+        "targetDigest": "f25dd22adf2851ef475d939a6f4e6a8f4f0b76aefe42af48a4b9a75ed58a502e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b66966f4868e6815f8b94986fdf8e89f693da7c1296786420ed92083540b58d",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/knots",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-curve:raw-profile:chainsword_p1_m1:heavy_chainsword:5ba9958c"
+        },
+        "targetDigest": "dde9eb4065c5d4f5f83c0b5539da1246350e5106c1e525c9f393a97e4a98d21f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb76d8251b648f10d77a1220f7e6cac791ace858104071d0e5f0d581717686",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/curveMapping",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46"
+        },
+        "targetDigest": "9c2864197c0349d15aa8498ba8be75862c8e8cb0c60985522ef4d59509d2503d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb76d8251b648f10d77a1220f7e6cac791ace858104071d0e5f0d581717686",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/curveRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46"
+        },
+        "targetDigest": "071bf29b7dc24b80fda6f9b8d97a75ece32bdf245c335e2bc0462845bc657fd9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb76d8251b648f10d77a1220f7e6cac791ace858104071d0e5f0d581717686",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/quantity",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46"
+        },
+        "targetDigest": "a508b32bbf58856cf874eac49c7ba4a8d75ab40a2ea7b91db1fc43f11d6f7634"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb76d8251b648f10d77a1220f7e6cac791ace858104071d0e5f0d581717686",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/rangeEvidence",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:stat-definition:chainsword_p1_m1-action_left_heavy-attack-power-source-points-e46"
+        },
+        "targetDigest": "cf51154f48098274d92a7efd6db4388d981db518f9683e17ba602db224e9179a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "598f8100576b4b5622430adca827be814e93bb6b1a0b91528448c487feaa565f",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/attackProfileRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial"
+        },
+        "targetDigest": "c402afcfb920c0c63312ee4e1a552d49f2ac1ac70ca9ce6699b316d159bd5879"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "598f8100576b4b5622430adca827be814e93bb6b1a0b91528448c487feaa565f",
+        "reviewedAt": "2026-11-02T01:16:35.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/statRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:weapon:chainsword:p1-m1:e46-normal-partial"
+        },
+        "targetDigest": "d02427722dd1b4cd5b96e84461439ba29ab4cc7c994c0204fbe22962f10f9efd"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "95594024cbec513410af355382b1e9f1a890677adec4e28556c684b3c8949139",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_chainsword_p1_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_chainsword_p1_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "fec1e4cd06a16cc62cd6fc10402176a4760f385e0ba812755c38db687e49b42d",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainsword_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_chainsword_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-471; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-chainsword-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8c901476637e567bd05d4de0dbf1f04b17f393165873d5b00ad7234fb0436687",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/attack/damage_profile.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/attack/damage_profile.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/attack/damage_profile.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob affe91f44392e5ef1996a9b617bc59d9d1487beb, 20040 bytes, SHA-256 8c901476637e567bd05d4de0dbf1f04b17f393165873d5b00ad7234fb0436687. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-06f7c3f72a72072b",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "2b773f8e5ac2f15315707c87cd7a6a372cebb3842de30f35c5f2e8e9147cd8e4",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/extension_systems/weapon/weapon.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/extension_systems/weapon/weapon.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/weapon.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 0658e9f930f4910985b3958a5b3d3168e6a4db0a, 4815 bytes, SHA-256 2b773f8e5ac2f15315707c87cd7a6a372cebb3842de30f35c5f2e8e9147cd8e4. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-08e8490fcd07a089",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "c49c1d5415f9f93c8bf34f5755df4d63c557d86ac4b52e4a0b9da57750bc521a",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/foundation/utilities/math.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/foundation/utilities/math.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/foundation/utilities/math.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 4fb2485e11f69a90af2321f7067a8f3ac1a45dc4, 17625 bytes, SHA-256 c49c1d5415f9f93c8bf34f5755df4d63c557d86ac4b52e4a0b9da57750bc521a. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-0be6a23d5beb9721",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "6af6b0e2bbd2f94d5ae699cfeedd9e36e2d38960b343a31b3a60589630b70842",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/managers/data_service/services/store_service.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/managers/data_service/services/store_service.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/managers/data_service/services/store_service.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob ab357b7b8705421613b80d7a9e82a195ea752224, 21595 bytes, SHA-256 6af6b0e2bbd2f94d5ae699cfeedd9e36e2d38960b343a31b3a60589630b70842. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-1bb3fa7486dffc0a",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "c551d223bd189c031fc56f8dcf9cf0edd85481a6023439a473f6ef32686c4280",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/managers/data_service/services/crafting_service.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/managers/data_service/services/crafting_service.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/managers/data_service/services/crafting_service.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 360a4ca920c2869e31727009b2f6bdcd4e55ae33, 10986 bytes, SHA-256 c551d223bd189c031fc56f8dcf9cf0edd85481a6023439a473f6ef32686c4280. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-27acb51d57f43bb9",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "12806dbcea3e441f47485a49e8f4926d799cffcb02db4e0f529c670f2b4f16f7",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/backend/master_data.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/backend/master_data.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/backend/master_data.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob fcf3b0f99b950b386b13d811108a9c5c2647c510, 5320 bytes, SHA-256 12806dbcea3e441f47485a49e8f4926d799cffcb02db4e0f529c670f2b4f16f7. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-5bdb1fd355bf77df",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "3e9e12b37ac56b59ab632647875ed8f38871db095b43bd8c1dea711812583ab4",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/backend/gear.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/backend/gear.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/backend/gear.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 4eff99599a07f624ff8c2691b72c8b673eef3abf, 3979 bytes, SHA-256 3e9e12b37ac56b59ab632647875ed8f38871db095b43bd8c1dea711812583ab4. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-60d62e6dcd32168a",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b2df90912c0d5f9b491c2982a95892fc552f31cf631bbec1a814a580e7bbf653",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/backend/master_items.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/backend/master_items.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/backend/master_items.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 8c24a3c10dc1f2d7b755082fd8554a617e062d97, 12962 bytes, SHA-256 b2df90912c0d5f9b491c2982a95892fc552f31cf631bbec1a814a580e7bbf653. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-751802f310669d43",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "9b293f38f12c3d7e493db67e8f5ffbe646beefc8f0c316cdd5cd395160a1088a",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/weapon_stats.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/weapon_stats.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/utilities/weapon_stats.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 82318937aca2e0bc8d686c6864a498a1983f1fc2, 53379 bytes, SHA-256 9b293f38f12c3d7e493db67e8f5ffbe646beefc8f0c316cdd5cd395160a1088a. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-75905d95b005c639",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "f7a3dc357aabce244cbafe8f6f01b8a86a5d90973bab806aeff090b427fd9638",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/extension_systems/weapon/player_unit_weapon_extension.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/extension_systems/weapon/player_unit_weapon_extension.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/player_unit_weapon_extension.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob 1a53136ce5968ccf5afec4b7d8cea373cd55c86a, 70975 bytes, SHA-256 f7a3dc357aabce244cbafe8f6f01b8a86a5d90973bab806aeff090b427fd9638. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:w07-static-ba6c148-95d32e8102f4a789",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "f882c4d718375561a155dcb5983de690e2427297c8f0dbb6b280608b5d0b628d",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_templates/chain_swords/settings_templates/chain_sword_damage_profile_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "e46 pinned Lua contains the selected literal damage_templates raw target-1 attack array.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-chain_sword_damage_profile_templates",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "weapon-source-facts-pilot",
+          "sha256": "f75f6083ead5b37b2c5c07487a6e305ff2d8b4f961af04602d41a9f1de068343",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "artifactSha256": "4bb5362ff700180d72040e0d3faa24c0eb25c712b920dd344e6193b8ade69c3a",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "e46 pinned Lua contains the action-referenced damage-trait template range used by this typed raw-profile mapping.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-damage_trait_templates",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "weapon-source-facts-pilot",
+          "sha256": "f75f6083ead5b37b2c5c07487a6e305ff2d8b4f961af04602d41a9f1de068343",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "artifactSha256": "878945a4bed947f746b1969c43f1e99f59e5267204b5ff14b71c152329798116",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_templates/weapon_tweak_template_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_templates/weapon_tweak_template_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "e46 pinned shared tweak settings expose default/fallback lerp coordinates; they do not prove the selected runtime item domain.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:weapon-source-chainsword_p1_m1-e46b8926cfa3-weapon_tweak_template_settings",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "weapon-source-facts-pilot",
+          "sha256": "f75f6083ead5b37b2c5c07487a6e305ff2d8b4f961af04602d41a9f1de068343",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "artifactSha256": "73da700f0f8e27f097ca5110f541569f4c1ceb24f5cc41873cab9f9aaa31ee45",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords/chainsword_p1_m1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_templates/chain_swords/chainsword_p1_m1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source blob 52e7dd6f260882ee1be6c260499c89c4c02514da for chainsword_p1_m1; the attached source path and transitive static require closure are version-bound to commit e46b8926cfa3fa35503e4b80b15aab7a804314e4.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:weapon-template-chainsword_p1_m1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "weapon-source-facts-pilot",
+          "sha256": "f75f6083ead5b37b2c5c07487a6e305ff2d8b4f961af04602d41a9f1de068343",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "artifactSha256": "ede78ed49f1c73e56fe0a0a5e1e5e58e10d1394c612a0aaf342216a6c1199db2",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public source file scripts/extension_systems/weapon/utilities/weapon_tweak_templates.lua at e46b8926cfa3fa35503e4b80b15aab7a804314e4; Git blob d5fbc52370dec64b9d46e1dd9e1f012f440ee5cf, 25843 bytes, SHA-256 ede78ed49f1c73e56fe0a0a5e1e5e58e10d1394c612a0aaf342216a6c1199db2. Existing baseline file identity is carried only where absent from the complete release diff; direct raw evidence paths were verified against fixed byte receipts. This identifies source bytes only and does not establish a runtime result.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        },
+        "sourceId": "public-code:weapon-tweak-templates-ba6c148",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "w16-upstream-byte-verifier",
+          "sha256": "b87caf9c7688d3a2bb59a22b715ed6ad8672d5469530953701ba345260124e18",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3-source-files"
+        }
+      },
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1a966f66:key-unknown:en:1:g-ca445b0b458acf57:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Devastating Strike",
+          "resolvedTextSha256": "2c12d28bf2e4c3eda625cb2eff4a9a4f9258473b8a44b240f5e69c6a45595188",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2c12d28bf2e4c3eda625cb2eff4a9a4f9258473b8a44b240f5e69c6a45595188",
+              "text": "Devastating Strike"
+            }
+          ],
+          "sourceHash": "1a966f66",
+          "sourceLocale": "en",
+          "sourceText": "Devastating Strike",
+          "sourceTextSha256": "2c12d28bf2e4c3eda625cb2eff4a9a4f9258473b8a44b240f5e69c6a45595188"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1a966f66:key-unknown:zh-tw:1:g-ca445b0b458acf57:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "毀滅打擊",
+          "resolvedTextSha256": "fe13ae98e9799ab93772c0b2412533a5cf175bf41ab65cd8ebad114160175483",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fe13ae98e9799ab93772c0b2412533a5cf175bf41ab65cd8ebad114160175483",
+              "text": "毀滅打擊"
+            }
+          ],
+          "sourceHash": "1a966f66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "毀滅打擊",
+          "sourceTextSha256": "fe13ae98e9799ab93772c0b2412533a5cf175bf41ab65cd8ebad114160175483"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent",
+              "value": "+65%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+65% Cleave for 5 seconds on Critical Hit.",
+          "resolvedTextSha256": "91701038a887e2ba9ac4994ba397317f0f64b54d9135676a13d2d1163c707ad2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-1",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "3d3c5675ab762b251c0c81de135a8d2f425a962bcd6807df7fb5efb008055afb",
+              "text": " Cleave for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "f2bdc380f821d79d7705810feed2d20fef90f13b1f80e6675339e3b535d602f8",
+              "text": " seconds on Critical Hit."
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "en",
+          "sourceText": "{hit_mass:%s} Cleave for {time:%s} seconds on Critical Hit.",
+          "sourceTextSha256": "80817f27663a8356dd7be2ed223964c7659849dbeaa2f07ee89fc53bcd0e0b24"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent",
+              "value": "+70%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+70% Cleave for 5 seconds on Critical Hit.",
+          "resolvedTextSha256": "b08c866363db3204f38f9825fc21af57b93f17af98a12d86fdd8355320c16228",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-1",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "3d3c5675ab762b251c0c81de135a8d2f425a962bcd6807df7fb5efb008055afb",
+              "text": " Cleave for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "f2bdc380f821d79d7705810feed2d20fef90f13b1f80e6675339e3b535d602f8",
+              "text": " seconds on Critical Hit."
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "en",
+          "sourceText": "{hit_mass:%s} Cleave for {time:%s} seconds on Critical Hit.",
+          "sourceTextSha256": "80817f27663a8356dd7be2ed223964c7659849dbeaa2f07ee89fc53bcd0e0b24"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent",
+              "value": "+75%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+75% Cleave for 5 seconds on Critical Hit.",
+          "resolvedTextSha256": "15d8c92724af9441fcad3f0fed9de1cae7f1fb1c1b0e3b3dd515bfb2cb9901ba",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-1",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "3d3c5675ab762b251c0c81de135a8d2f425a962bcd6807df7fb5efb008055afb",
+              "text": " Cleave for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "f2bdc380f821d79d7705810feed2d20fef90f13b1f80e6675339e3b535d602f8",
+              "text": " seconds on Critical Hit."
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "en",
+          "sourceText": "{hit_mass:%s} Cleave for {time:%s} seconds on Critical Hit.",
+          "sourceTextSha256": "80817f27663a8356dd7be2ed223964c7659849dbeaa2f07ee89fc53bcd0e0b24"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent",
+              "value": "+80%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+80% Cleave for 5 seconds on Critical Hit.",
+          "resolvedTextSha256": "a5160a51575eefde9e5510f465885faa23e03586574a0fca883146dc8bec78eb",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-1",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "3d3c5675ab762b251c0c81de135a8d2f425a962bcd6807df7fb5efb008055afb",
+              "text": " Cleave for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "f2bdc380f821d79d7705810feed2d20fef90f13b1f80e6675339e3b535d602f8",
+              "text": " seconds on Critical Hit."
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "en",
+          "sourceText": "{hit_mass:%s} Cleave for {time:%s} seconds on Critical Hit.",
+          "sourceTextSha256": "80817f27663a8356dd7be2ed223964c7659849dbeaa2f07ee89fc53bcd0e0b24"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent",
+              "value": "+65%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "暴擊後順劈增加+65%，持續5秒。",
+          "resolvedTextSha256": "fde01dbc38b54eeb8aa52270e34e058d337f84802d9b6e02aaa8fa221f82c1b2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ef708a053954ae3802dde80085031eb73cbcefb64c4b1638579ad9c518767bb",
+              "text": "暴擊後順劈增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-2",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後順劈增加{hit_mass:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "eedb0ca49bccda7f9da3c7072752066e2b6b6f10353c888f720c0a4f1bab4702"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent",
+              "value": "+70%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "暴擊後順劈增加+70%，持續5秒。",
+          "resolvedTextSha256": "02214ed08d52a939fb920f99de1cef8871876ab45156fafadf378416750f9325",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ef708a053954ae3802dde80085031eb73cbcefb64c4b1638579ad9c518767bb",
+              "text": "暴擊後順劈增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-2",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後順劈增加{hit_mass:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "eedb0ca49bccda7f9da3c7072752066e2b6b6f10353c888f720c0a4f1bab4702"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent",
+              "value": "+75%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "暴擊後順劈增加+75%，持續5秒。",
+          "resolvedTextSha256": "56df974770e3f47c40934bd310b64920964bf5ebeecd81f1c3ed3e7435d3fa22",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ef708a053954ae3802dde80085031eb73cbcefb64c4b1638579ad9c518767bb",
+              "text": "暴擊後順劈增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-2",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後順劈增加{hit_mass:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "eedb0ca49bccda7f9da3c7072752066e2b6b6f10353c888f720c0a4f1bab4702"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent",
+              "value": "+80%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "暴擊後順劈增加+80%，持續5秒。",
+          "resolvedTextSha256": "0bbac913f372727d321ae20d051f2728139b9e6cb3a592e50293155e24139875",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ef708a053954ae3802dde80085031eb73cbcefb64c4b1638579ad9c518767bb",
+              "text": "暴擊後順劈增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-2",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後順劈增加{hit_mass:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "eedb0ca49bccda7f9da3c7072752066e2b6b6f10353c888f720c0a4f1bab4702"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "毀滅打擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1a966f66:key-unknown:en:1:g-ca445b0b458acf57:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1a966f66:key-unknown:zh-tw:1:g-ca445b0b458acf57:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:1a966f66:key-unknown:zh-tw:1:g-ca445b0b458acf57:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:chainsword:p1-infinite-melee-cleave-on-crit"
+          },
+          "key": "loc_trait_bespoke_infinite_melee_cleave_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "hit_mass",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent",
+              "value": "+80%"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "暴擊後順劈增加+80%，持續5秒。",
+          "resolvedTextSha256": "0bbac913f372727d321ae20d051f2728139b9e6cb3a592e50293155e24139875",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ef708a053954ae3802dde80085031eb73cbcefb64c4b1638579ad9c518767bb",
+              "text": "暴擊後順劈增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "hit_mass",
+              "segmentId": "segment-2",
+              "sha256": "055f49ebbd73ab874ad36fe8496cbd3092f76396da4897829ada6466b81c1e78",
+              "token": "{hit_mass:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "f824963f",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後順劈增加{hit_mass:%s}，持續{time:%s}秒。",
+          "sourceTextSha256": "eedb0ca49bccda7f9da3c7072752066e2b6b6f10353c888f720c0a4f1bab4702"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "hit_mass",
+                  "placeholder": "{hit_mass:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "hit_mass",
+                  "placeholder": "{hit_mass:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "hit_mass",
+                  "placeholder": "{hit_mass:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:en:1:g-ca445b0b458acf57:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f824963f:key-known:zh-tw:1:g-ca445b0b458acf57:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-hit-mass-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "hit_mass",
+                  "placeholder": "{hit_mass:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:chainsword:p1-infinite-melee-cleave-on-crit-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:chainsword:p1-infinite-melee-cleave-on-crit"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5d9cdf265ec5e149176197ff75a327af46f3444749b300f4fe18d8abcae0fcd2",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "924e2572cb4bcc0312a6679509fc69fe65d8f9272958413ec70c0bd225fbc936",
+          "targetId": "review:w06:generic:ca445b0b458acf57:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "53f376b10b23406b4694c05a8ebf82e22bc8969c3e0aced5a1daa1b533361462",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2126bfc0d8d6b3e4413872a9c0f86de9ccf331e0d166b125ae1c5da650a297d4",
+          "targetId": "review:w06:generic:ca445b0b458acf57:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "70ad0306195406b6276ab866b69b64ecace90714b5cfe337e8a767af15ab15d3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a4f42a1d57abe66450a02c20f9df9cc26d84b304c295a26227fb3848d7da0eb7",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "586ea6f45b4f690ac1138cc0718bf7f12a19bd143b60d8eb082078dc1ee71b84",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "76b5c9abaf278aabacedcd3c61558926f9857e18e600c8ff6ab8f40a66c170e3",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b90af7a5853a530cc734235a11ff789486ccf620e019afb51e78c399a161d0f5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "8cde7bdbba4033ef36a76cb84deb04f2806a968723fc0d913ef51af408a2bf3c",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ad5a4aa2a056ab455e8fea0bc30b38058e7282648b367e8089f05fc1432f370a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fbbb09e42c3e1256dbbfcaab59e7f4b38950c59a413067a9c6159e306c928582",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "5d9cdf265ec5e149176197ff75a327af46f3444749b300f4fe18d8abcae0fcd2",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:content::name"
+        },
+        "targetDigest": "924e2572cb4bcc0312a6679509fc69fe65d8f9272958413ec70c0bd225fbc936"
+      },
+      {
+        "dependenciesDigest": "53f376b10b23406b4694c05a8ebf82e22bc8969c3e0aced5a1daa1b533361462",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:context::tierapplicability"
+        },
+        "targetDigest": "2126bfc0d8d6b3e4413872a9c0f86de9ccf331e0d166b125ae1c5da650a297d4"
+      },
+      {
+        "dependenciesDigest": "70ad0306195406b6276ab866b69b64ecace90714b5cfe337e8a767af15ab15d3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:0"
+        },
+        "targetDigest": "a4f42a1d57abe66450a02c20f9df9cc26d84b304c295a26227fb3848d7da0eb7"
+      },
+      {
+        "dependenciesDigest": "586ea6f45b4f690ac1138cc0718bf7f12a19bd143b60d8eb082078dc1ee71b84",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:1"
+        },
+        "targetDigest": "76b5c9abaf278aabacedcd3c61558926f9857e18e600c8ff6ab8f40a66c170e3"
+      },
+      {
+        "dependenciesDigest": "b90af7a5853a530cc734235a11ff789486ccf620e019afb51e78c399a161d0f5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:2"
+        },
+        "targetDigest": "8cde7bdbba4033ef36a76cb84deb04f2806a968723fc0d913ef51af408a2bf3c"
+      },
+      {
+        "dependenciesDigest": "ad5a4aa2a056ab455e8fea0bc30b38058e7282648b367e8089f05fc1432f370a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:chainsword-p1-infinite-melee-cleave-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ca445b0b458acf57:official::tierpresentations:options:3"
+        },
+        "targetDigest": "fbbb09e42c3e1256dbbfcaab59e7f4b38950c59a413067a9c6159e306c928582"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,2259 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.0425",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.045",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.0475",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "value": {
+            "decimal": "4.25",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "value": {
+            "decimal": "4.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "value": {
+            "decimal": "4.75",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.power_level.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_dual_autopistols_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value power_level at stat_buffs.stat_buffs.power_level_modifier; defined tier literals are tier 1=0.0425, tier 2=0.045, tier 3=0.0475, tier 4=0.05.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_dual_autopistols_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a8a31e8e5ae2303d6011cd3f6a8ff021e3258e9d9b66781e826d636e492005e1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "00accb79db6fed838e1a427689437947dbbf457730d77aa40138faa96b7d099a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a8a31e8e5ae2303d6011cd3f6a8ff021e3258e9d9b66781e826d636e492005e1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a8a31e8e5ae2303d6011cd3f6a8ff021e3258e9d9b66781e826d636e492005e1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a8a31e8e5ae2303d6011cd3f6a8ff021e3258e9d9b66781e826d636e492005e1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "79abcf6c491d087ab80affb003a37d4c31a7ffa154ba31f4384807b882b7302f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a8a31e8e5ae2303d6011cd3f6a8ff021e3258e9d9b66781e826d636e492005e1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "84ebbf70a77b22f612263c3c6306b58a725442c0e391db7a5160f0a086ba6837",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "132695397b384dcedb0b6d7df7d82c15be08020925eefe86648f92d8e485b3e7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "84ebbf70a77b22f612263c3c6306b58a725442c0e391db7a5160f0a086ba6837",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "84ebbf70a77b22f612263c3c6306b58a725442c0e391db7a5160f0a086ba6837",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "targetDigest": "5b8bbd545aecdbf81e65f36221c5f1f7b47cec03ad6b4d161c828f7a79c782ea"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95036eaf67bcf325d572ee4e74285aba9827a4d676b01912f1defe6c9e569739",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95036eaf67bcf325d572ee4e74285aba9827a4d676b01912f1defe6c9e569739",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95036eaf67bcf325d572ee4e74285aba9827a4d676b01912f1defe6c9e569739",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+        },
+        "targetDigest": "a76d7cab4e85b023a7dceaa6a1492392c182c080ae0ab95e1731f63b81697d84"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95036eaf67bcf325d572ee4e74285aba9827a4d676b01912f1defe6c9e569739",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+        },
+        "targetDigest": "3ab99e3a225cd8cc236bce44c3b72aaa2159f3b74e65046d9f4cc52cf023773c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95036eaf67bcf325d572ee4e74285aba9827a4d676b01912f1defe6c9e569739",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+        },
+        "targetDigest": "16cb4d3c6b2b34a2fba781946cfcf95ffd781d7a633c37e27ad92335bcb3c558"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "087c7e33f99261354b7428c62272b22142c5270df46029784c403d851ff88417",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "087c7e33f99261354b7428c62272b22142c5270df46029784c403d851ff88417",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "087c7e33f99261354b7428c62272b22142c5270df46029784c403d851ff88417",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+        },
+        "targetDigest": "a76d7cab4e85b023a7dceaa6a1492392c182c080ae0ab95e1731f63b81697d84"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "087c7e33f99261354b7428c62272b22142c5270df46029784c403d851ff88417",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+        },
+        "targetDigest": "3ab99e3a225cd8cc236bce44c3b72aaa2159f3b74e65046d9f4cc52cf023773c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "087c7e33f99261354b7428c62272b22142c5270df46029784c403d851ff88417",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+        },
+        "targetDigest": "a7d1f0cde97e951a7a13446658311cbdbbc2324a314d60dc07aff1aa34acacb9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "432ab1f83540fb377938362d5daf83d2f08bb8a7431558a6c66d9ad501d288f5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "432ab1f83540fb377938362d5daf83d2f08bb8a7431558a6c66d9ad501d288f5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "432ab1f83540fb377938362d5daf83d2f08bb8a7431558a6c66d9ad501d288f5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+        },
+        "targetDigest": "a76d7cab4e85b023a7dceaa6a1492392c182c080ae0ab95e1731f63b81697d84"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "432ab1f83540fb377938362d5daf83d2f08bb8a7431558a6c66d9ad501d288f5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+        },
+        "targetDigest": "3ab99e3a225cd8cc236bce44c3b72aaa2159f3b74e65046d9f4cc52cf023773c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "432ab1f83540fb377938362d5daf83d2f08bb8a7431558a6c66d9ad501d288f5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+        },
+        "targetDigest": "ea68b8bb434b6f3761ebf9f3cc86a037fd6540b4f38b3355d1637403b8d730ff"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6ec8a6b389c18acc1a554382dd6c14dcc5d9d42d862767b8ac06b5d0da2f323a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6ec8a6b389c18acc1a554382dd6c14dcc5d9d42d862767b8ac06b5d0da2f323a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6ec8a6b389c18acc1a554382dd6c14dcc5d9d42d862767b8ac06b5d0da2f323a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+        },
+        "targetDigest": "a76d7cab4e85b023a7dceaa6a1492392c182c080ae0ab95e1731f63b81697d84"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6ec8a6b389c18acc1a554382dd6c14dcc5d9d42d862767b8ac06b5d0da2f323a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+        },
+        "targetDigest": "3ab99e3a225cd8cc236bce44c3b72aaa2159f3b74e65046d9f4cc52cf023773c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6ec8a6b389c18acc1a554382dd6c14dcc5d9d42d862767b8ac06b5d0da2f323a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21bb42b5da2f2c5492b4d743cfc7c77712a2dfef424b69e7ea3223761343cdf0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21bb42b5da2f2c5492b4d743cfc7c77712a2dfef424b69e7ea3223761343cdf0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21bb42b5da2f2c5492b4d743cfc7c77712a2dfef424b69e7ea3223761343cdf0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+        },
+        "targetDigest": "17de1d716dea5a5b99eb93e980f3798233b8898fa3b383b19fc0c10b0598705c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21bb42b5da2f2c5492b4d743cfc7c77712a2dfef424b69e7ea3223761343cdf0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+        },
+        "targetDigest": "3ab99e3a225cd8cc236bce44c3b72aaa2159f3b74e65046d9f4cc52cf023773c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "21bb42b5da2f2c5492b4d743cfc7c77712a2dfef424b69e7ea3223761343cdf0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "05272a2ff4bae6814dca821f48d83c19806c3560f2ab99c6861143b4463184f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-display-percent-code"
+        },
+        "targetDigest": "d64f4bcc1c2d8f03421d7d704545eb55e553df40476bea7da1507a0e78ab6b56"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd6324dabe3bda8d34db5b29e6cc6dcde8270b2ebb0405cee66965d300a3c43d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value-code"
+        },
+        "targetDigest": "5307f9114243ba98072bf93008d6fa9e9fe8e375d5e823b64a799e82799397ab"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "148815d5546b8a5c74d3f4f83a127f4992795660be438c2cab1f7d14caccfbd3",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_dual_autopistols_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_dual_autopistols_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-528; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-dual-autopistols-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:3ce9bdc4:key-unknown:en:1:g-5569d2ba9c9d8f3f:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Pinning Fire",
+          "resolvedTextSha256": "7f6ed863bda1999f80d095a2021d867d94f5dc2c368342951ab2a707bab92bdc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7f6ed863bda1999f80d095a2021d867d94f5dc2c368342951ab2a707bab92bdc",
+              "text": "Pinning Fire"
+            }
+          ],
+          "sourceHash": "3ce9bdc4",
+          "sourceLocale": "en",
+          "sourceText": "Pinning Fire",
+          "sourceTextSha256": "7f6ed863bda1999f80d095a2021d867d94f5dc2c368342951ab2a707bab92bdc"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:3ce9bdc4:key-unknown:zh-tw:1:g-5569d2ba9c9d8f3f:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "鉗制射擊",
+          "resolvedTextSha256": "eb1ad34137b5f8f9d77a793f4a144827d1e0c690fac3dd499e51a00e85d389ea",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "eb1ad34137b5f8f9d77a793f4a144827d1e0c690fac3dd499e51a00e85d389ea",
+              "text": "鉗制射擊"
+            }
+          ],
+          "sourceHash": "3ce9bdc4",
+          "sourceLocale": "zh-TW",
+          "sourceText": "鉗制射擊",
+          "sourceTextSha256": "eb1ad34137b5f8f9d77a793f4a144827d1e0c690fac3dd499e51a00e85d389ea"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent",
+              "value": "+4.25%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+4.25% Strength for every Enemy you Stagger. Stacks 5 times. ",
+          "resolvedTextSha256": "3bcc3bf06b5bf544a1ed1015300736fd06a26592bd99d0d15e35fc25d83d53a3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "55e2cf991d16519dc49dda3025feecf111104c115e60eae5144936c95b9a2fd9",
+              "text": " Strength for every Enemy you Stagger. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "ef6e66bc6432f9fc074f4e081a003904bf4db5bf34f33c7617563fc9a90f0d31",
+              "text": " times. "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for every Enemy you Stagger. Stacks {stacks:%s} times. ",
+          "sourceTextSha256": "14aeb133a39d3208c7d1b2a018a338140074c1ba0195abe1a93b3d8c7fe7b570"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent",
+              "value": "+4.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+4.5% Strength for every Enemy you Stagger. Stacks 5 times. ",
+          "resolvedTextSha256": "b00825fbcb11d02f0b39949a0219e3b05b37e109f336813440436687ddd2a01c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "55e2cf991d16519dc49dda3025feecf111104c115e60eae5144936c95b9a2fd9",
+              "text": " Strength for every Enemy you Stagger. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "ef6e66bc6432f9fc074f4e081a003904bf4db5bf34f33c7617563fc9a90f0d31",
+              "text": " times. "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for every Enemy you Stagger. Stacks {stacks:%s} times. ",
+          "sourceTextSha256": "14aeb133a39d3208c7d1b2a018a338140074c1ba0195abe1a93b3d8c7fe7b570"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent",
+              "value": "+4.75%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+4.75% Strength for every Enemy you Stagger. Stacks 5 times. ",
+          "resolvedTextSha256": "1aa772a2f5447f01ea7ff1faae60b345a73b72aa93601ce6aa235a0a70cea685",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "55e2cf991d16519dc49dda3025feecf111104c115e60eae5144936c95b9a2fd9",
+              "text": " Strength for every Enemy you Stagger. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "ef6e66bc6432f9fc074f4e081a003904bf4db5bf34f33c7617563fc9a90f0d31",
+              "text": " times. "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for every Enemy you Stagger. Stacks {stacks:%s} times. ",
+          "sourceTextSha256": "14aeb133a39d3208c7d1b2a018a338140074c1ba0195abe1a93b3d8c7fe7b570"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+5% Strength for every Enemy you Stagger. Stacks 5 times. ",
+          "resolvedTextSha256": "647012bf595602561a972e1185b2ee7c46f8b89a62422597de4746b78d227eff",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-1",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "55e2cf991d16519dc49dda3025feecf111104c115e60eae5144936c95b9a2fd9",
+              "text": " Strength for every Enemy you Stagger. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "ef6e66bc6432f9fc074f4e081a003904bf4db5bf34f33c7617563fc9a90f0d31",
+              "text": " times. "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "en",
+          "sourceText": "{power_level:%s} Strength for every Enemy you Stagger. Stacks {stacks:%s} times. ",
+          "sourceTextSha256": "14aeb133a39d3208c7d1b2a018a338140074c1ba0195abe1a93b3d8c7fe7b570"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent",
+              "value": "+4.25%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "每使一個敵人踉蹌，威力就提升+4.25%，可疊加5層。 ",
+          "resolvedTextSha256": "ab9c98d7c44de9a662a53612f5144bb4232101b5a23967c7ccb87e77f5822c78",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d442cbc8e4d2b2b7d3d50283dfcba6f4ebe14de66ac9adf5a9cb4692ddb19b1",
+              "text": "每使一個敵人踉蹌，威力就提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "d341de7f90e2b6e3e82ddb0c7d0960083dcd89696e2cb7dc28c9acbe47485cec",
+              "text": "，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "7d3cd4fe8c56d9c073c5e5a70f01b5bac0935bdfd5615ab1a6edb8be1a38c40f",
+              "text": "層。 "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "每使一個敵人踉蹌，威力就提升{power_level:%s}，可疊加{stacks:%s}層。 ",
+          "sourceTextSha256": "2cca955ddb90d3405c1f19dfa63ed4fc93db5ba260a7e60d02ff07d8567486ea"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent",
+              "value": "+4.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "每使一個敵人踉蹌，威力就提升+4.5%，可疊加5層。 ",
+          "resolvedTextSha256": "5172e03b2c63f5659eb4ad2268ef79541ddc389da2bdb0d2e7a31077346a333a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d442cbc8e4d2b2b7d3d50283dfcba6f4ebe14de66ac9adf5a9cb4692ddb19b1",
+              "text": "每使一個敵人踉蹌，威力就提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "d341de7f90e2b6e3e82ddb0c7d0960083dcd89696e2cb7dc28c9acbe47485cec",
+              "text": "，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "7d3cd4fe8c56d9c073c5e5a70f01b5bac0935bdfd5615ab1a6edb8be1a38c40f",
+              "text": "層。 "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "每使一個敵人踉蹌，威力就提升{power_level:%s}，可疊加{stacks:%s}層。 ",
+          "sourceTextSha256": "2cca955ddb90d3405c1f19dfa63ed4fc93db5ba260a7e60d02ff07d8567486ea"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent",
+              "value": "+4.75%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "每使一個敵人踉蹌，威力就提升+4.75%，可疊加5層。 ",
+          "resolvedTextSha256": "e41945316ba07e3dadc7ba4d7cfb4d2fc4b545e818d30f8ddaa71f82f98d0906",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d442cbc8e4d2b2b7d3d50283dfcba6f4ebe14de66ac9adf5a9cb4692ddb19b1",
+              "text": "每使一個敵人踉蹌，威力就提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "d341de7f90e2b6e3e82ddb0c7d0960083dcd89696e2cb7dc28c9acbe47485cec",
+              "text": "，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "7d3cd4fe8c56d9c073c5e5a70f01b5bac0935bdfd5615ab1a6edb8be1a38c40f",
+              "text": "層。 "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "每使一個敵人踉蹌，威力就提升{power_level:%s}，可疊加{stacks:%s}層。 ",
+          "sourceTextSha256": "2cca955ddb90d3405c1f19dfa63ed4fc93db5ba260a7e60d02ff07d8567486ea"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "每使一個敵人踉蹌，威力就提升+5%，可疊加5層。 ",
+          "resolvedTextSha256": "66415faed1638fcdccf4c05b4d967a33b25e6e340d907ab2baed9fe7ab56b549",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d442cbc8e4d2b2b7d3d50283dfcba6f4ebe14de66ac9adf5a9cb4692ddb19b1",
+              "text": "每使一個敵人踉蹌，威力就提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "d341de7f90e2b6e3e82ddb0c7d0960083dcd89696e2cb7dc28c9acbe47485cec",
+              "text": "，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "7d3cd4fe8c56d9c073c5e5a70f01b5bac0935bdfd5615ab1a6edb8be1a38c40f",
+              "text": "層。 "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "每使一個敵人踉蹌，威力就提升{power_level:%s}，可疊加{stacks:%s}層。 ",
+          "sourceTextSha256": "2cca955ddb90d3405c1f19dfa63ed4fc93db5ba260a7e60d02ff07d8567486ea"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "鉗制射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:3ce9bdc4:key-unknown:en:1:g-5569d2ba9c9d8f3f:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:3ce9bdc4:key-unknown:zh-tw:1:g-5569d2ba9c9d8f3f:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:3ce9bdc4:key-unknown:zh-tw:1:g-5569d2ba9c9d8f3f:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          },
+          "key": "loc_trait_bespoke_stacking_power_bonus_on_staggering_enemies_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "power_level",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "每使一個敵人踉蹌，威力就提升+5%，可疊加5層。 ",
+          "resolvedTextSha256": "66415faed1638fcdccf4c05b4d967a33b25e6e340d907ab2baed9fe7ab56b549",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d442cbc8e4d2b2b7d3d50283dfcba6f4ebe14de66ac9adf5a9cb4692ddb19b1",
+              "text": "每使一個敵人踉蹌，威力就提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "power_level",
+              "segmentId": "segment-2",
+              "sha256": "00a9d485448682b141cc5e30e37e52c7b58521d1b510d7c8507bc8a06d336cc0",
+              "token": "{power_level:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "d341de7f90e2b6e3e82ddb0c7d0960083dcd89696e2cb7dc28c9acbe47485cec",
+              "text": "，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "7d3cd4fe8c56d9c073c5e5a70f01b5bac0935bdfd5615ab1a6edb8be1a38c40f",
+              "text": "層。 "
+            }
+          ],
+          "sourceHash": "b5a354c9",
+          "sourceLocale": "zh-TW",
+          "sourceText": "每使一個敵人踉蹌，威力就提升{power_level:%s}，可疊加{stacks:%s}層。 ",
+          "sourceTextSha256": "2cca955ddb90d3405c1f19dfa63ed4fc93db5ba260a7e60d02ff07d8567486ea"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:en:1:g-5569d2ba9c9d8f3f:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:b5a354c9:key-known:zh-tw:1:g-5569d2ba9c9d8f3f:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-power-level-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "power_level",
+                  "placeholder": "{power_level:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:dual_autopistols:p1-stacking-power-bonus-on-staggering-enemies"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5ea107137a791d4543ddd22dea4fa17a9939dd28de65884b699e9d8059dcad8e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2672f8de599dc527cd160cde8d6983d6000eb61f56e7f1a7cc9c8d3c0fbb4db2",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2f30f135bab63b71e99cde960c979a96353a70be97b754848e003bbc4afba7ff",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "33a8080ffd9b8198eaca28c803c6bf04ec6b1fe4dae4b8464b98bfbdae9544e6",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ee03780f0fcf96a2e531d973b586cae54206e5d84dea1fbdc585d8a3c0dac545",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a7efdb4f63f518688eb1298bcf867408dc5c36001946fe14bd4461c1ae696145",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e23a97c55ff77eb1120ed735438955de24130713a63739014b094161d6e0aabd",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "93d5f7a6ccab951cc4dd1dc1fea44c811fc99ffac737d003400b010dc4801076",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "cca9557c9b026f8560160fb47663ceed7004c4f28f4351780781054bd4397524",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c469743c67b2463bc855751e3e968b09ae41d142c37f95e55e4a9501f5620e44",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b13599be02866913d8c336223dace97c235c39678ef3bd4b9a508f9ff0296e2d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "74f3923f1dd63f8249e61e646ee6f4580aa4f4c81faafe2cab8034c842fe23e7",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "5ea107137a791d4543ddd22dea4fa17a9939dd28de65884b699e9d8059dcad8e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:content::name"
+        },
+        "targetDigest": "2672f8de599dc527cd160cde8d6983d6000eb61f56e7f1a7cc9c8d3c0fbb4db2"
+      },
+      {
+        "dependenciesDigest": "2f30f135bab63b71e99cde960c979a96353a70be97b754848e003bbc4afba7ff",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:context::tierapplicability"
+        },
+        "targetDigest": "33a8080ffd9b8198eaca28c803c6bf04ec6b1fe4dae4b8464b98bfbdae9544e6"
+      },
+      {
+        "dependenciesDigest": "ee03780f0fcf96a2e531d973b586cae54206e5d84dea1fbdc585d8a3c0dac545",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:0"
+        },
+        "targetDigest": "a7efdb4f63f518688eb1298bcf867408dc5c36001946fe14bd4461c1ae696145"
+      },
+      {
+        "dependenciesDigest": "e23a97c55ff77eb1120ed735438955de24130713a63739014b094161d6e0aabd",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:1"
+        },
+        "targetDigest": "93d5f7a6ccab951cc4dd1dc1fea44c811fc99ffac737d003400b010dc4801076"
+      },
+      {
+        "dependenciesDigest": "cca9557c9b026f8560160fb47663ceed7004c4f28f4351780781054bd4397524",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:2"
+        },
+        "targetDigest": "c469743c67b2463bc855751e3e968b09ae41d142c37f95e55e4a9501f5620e44"
+      },
+      {
+        "dependenciesDigest": "b13599be02866913d8c336223dace97c235c39678ef3bd4b9a508f9ff0296e2d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:dual_autopistols-p1-stacking-power-bonus-on-staggering-enemies",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:5569d2ba9c9d8f3f:official::tierpresentations:options:3"
+        },
+        "targetDigest": "74f3923f1dd63f8249e61e646ee6f4580aa4f4c81faafe2cab8034c842fe23e7"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

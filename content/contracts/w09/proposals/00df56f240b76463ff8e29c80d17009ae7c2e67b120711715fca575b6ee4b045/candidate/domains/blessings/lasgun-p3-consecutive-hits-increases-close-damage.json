@@ -1,0 +1,2352 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.045",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.05",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.055",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.06",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "value": {
+            "decimal": "4.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "value": {
+            "decimal": "5.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "value": {
+            "decimal": "6",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at stat_buffs.stat_buffs.damage_near; defined tier literals are tier 1=0.045, tier 2=0.05, tier 3=0.055, tier 4=0.06.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_lasgun_p3_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf18e4efa73fe3829b561d7631950242ada531a505da9a863ab51f589596aa96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "bc446f20515f92d5072c7064249d55d4fa592d8985a359bc020d14a10ec3b8a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf18e4efa73fe3829b561d7631950242ada531a505da9a863ab51f589596aa96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf18e4efa73fe3829b561d7631950242ada531a505da9a863ab51f589596aa96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf18e4efa73fe3829b561d7631950242ada531a505da9a863ab51f589596aa96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "b26f82b7da224bfad323457240aeebd40f25ff9f518a7dbc357fcf201dea0c14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf18e4efa73fe3829b561d7631950242ada531a505da9a863ab51f589596aa96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e09a439e492dfd99856606603198389bf5207d52f968bf735e6e442f3055c84d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "39c71af4a8484900cb41dbbdc8a2f66cee8abe407a578e5d75e96607f5797f62"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e09a439e492dfd99856606603198389bf5207d52f968bf735e6e442f3055c84d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e09a439e492dfd99856606603198389bf5207d52f968bf735e6e442f3055c84d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "targetDigest": "d86826eb45d2e09ad94c3144066b69e22883572ba1c0de7ecc67d05dc1a9c17f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8912bb57dcc268a8869b34fc74b578c7ef61f4adb8b1861321589c5bf9f79878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8912bb57dcc268a8869b34fc74b578c7ef61f4adb8b1861321589c5bf9f79878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8912bb57dcc268a8869b34fc74b578c7ef61f4adb8b1861321589c5bf9f79878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "740ab5f6ce61abf4f7d2d2cab3ac01ee57df5cb035a5dce6af1a39e14f149d46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8912bb57dcc268a8869b34fc74b578c7ef61f4adb8b1861321589c5bf9f79878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "74c892422c0625951d7e01f4dceceb4ae2d68b9e89c2f4c5366cc029fd5e0619"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8912bb57dcc268a8869b34fc74b578c7ef61f4adb8b1861321589c5bf9f79878",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "a7d1f0cde97e951a7a13446658311cbdbbc2324a314d60dc07aff1aa34acacb9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b4368fc547897f669e07b6dbe174a868675726aaf52e920ee10da6658bf789ef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b4368fc547897f669e07b6dbe174a868675726aaf52e920ee10da6658bf789ef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b4368fc547897f669e07b6dbe174a868675726aaf52e920ee10da6658bf789ef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "740ab5f6ce61abf4f7d2d2cab3ac01ee57df5cb035a5dce6af1a39e14f149d46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b4368fc547897f669e07b6dbe174a868675726aaf52e920ee10da6658bf789ef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "74c892422c0625951d7e01f4dceceb4ae2d68b9e89c2f4c5366cc029fd5e0619"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b4368fc547897f669e07b6dbe174a868675726aaf52e920ee10da6658bf789ef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "2309ec9fd523194ecb43dac047c75000417ba2155ba143eb255cf12ac7a3e3e4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "64f310c9d204d4434a3b36415ffe84669a6d7dfebe945760b06ae042122cb32a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "64f310c9d204d4434a3b36415ffe84669a6d7dfebe945760b06ae042122cb32a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "64f310c9d204d4434a3b36415ffe84669a6d7dfebe945760b06ae042122cb32a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "740ab5f6ce61abf4f7d2d2cab3ac01ee57df5cb035a5dce6af1a39e14f149d46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "64f310c9d204d4434a3b36415ffe84669a6d7dfebe945760b06ae042122cb32a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "74c892422c0625951d7e01f4dceceb4ae2d68b9e89c2f4c5366cc029fd5e0619"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "64f310c9d204d4434a3b36415ffe84669a6d7dfebe945760b06ae042122cb32a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "5c6d5e1c03ce6242bc58d47157a9fda8c44e16b946fe155aa9cf78ff588bafce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "627546328c76b1f17bedbcc9f739f39ff9206512176e254ec5c3c51c6234e40e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "627546328c76b1f17bedbcc9f739f39ff9206512176e254ec5c3c51c6234e40e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "627546328c76b1f17bedbcc9f739f39ff9206512176e254ec5c3c51c6234e40e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "740ab5f6ce61abf4f7d2d2cab3ac01ee57df5cb035a5dce6af1a39e14f149d46"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "627546328c76b1f17bedbcc9f739f39ff9206512176e254ec5c3c51c6234e40e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "74c892422c0625951d7e01f4dceceb4ae2d68b9e89c2f4c5366cc029fd5e0619"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "627546328c76b1f17bedbcc9f739f39ff9206512176e254ec5c3c51c6234e40e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "5251cd53fe45d4339555cfb6a5c7a58b7ea9c49b45d3753f4d8214a59cdc5b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b1c1790df8500dfd054122fc7a6788cd66a835943e17ab5b3664bc1fe47bdd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b1c1790df8500dfd054122fc7a6788cd66a835943e17ab5b3664bc1fe47bdd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b1c1790df8500dfd054122fc7a6788cd66a835943e17ab5b3664bc1fe47bdd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+        },
+        "targetDigest": "ca86beca74d863e176727fe36e0245c75adb02fa8305a14d1ffe8ac68bbf9c64"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b1c1790df8500dfd054122fc7a6788cd66a835943e17ab5b3664bc1fe47bdd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+        },
+        "targetDigest": "74c892422c0625951d7e01f4dceceb4ae2d68b9e89c2f4c5366cc029fd5e0619"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2b1c1790df8500dfd054122fc7a6788cd66a835943e17ab5b3664bc1fe47bdd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "952140a40c754f169cf163190639bbabd1cd53c7d890403b4ae19a963403d612",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-damage-display-percent-code"
+        },
+        "targetDigest": "b48f823e0be32db89d92a86d7b57209f6f699472f17a0df1ace30f673c214e3c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd1b794868ad46aacbc7bc817a35a8a15341ae17a8ad1c9eab46ec43c8a416c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value-code"
+        },
+        "targetDigest": "2b3238b753efd1a88afd67faa326f5eeac6aabfc09bcf9c226706f685dd5fc85"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "dd910154d31c05c64764318542f2ea9c5824f0222861fbca784a30a7504935a7",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_lasgun_p3_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_lasgun_p3_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "76163850199f90bf5cf143ac84841bf8491a939c9fe3ed2ce3675a0c02638855",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-435; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent",
+              "value": "+4.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+4.5% Close Range damage on Repeated Hit. Stacks 5 times.",
+          "resolvedTextSha256": "df4f0e01fd4225dd28a924df3a403d8563940bd1a688af05e3de96418f25d12f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "ccaebedb046decaaf73bef872e7e495e0c8c2cd743061b10d1ab4e3d9fdde008",
+              "text": " Close Range damage on Repeated Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Close Range damage on Repeated Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "b3dca028722cdf30760392ca2583c836d497592a5eadbce47a628ce322e3f47b"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+5% Close Range damage on Repeated Hit. Stacks 5 times.",
+          "resolvedTextSha256": "64cd4df4810cdcc9b9a93502d81c6ae17b51cd40bdae7b6e8dbb669ac3d552b1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "ccaebedb046decaaf73bef872e7e495e0c8c2cd743061b10d1ab4e3d9fdde008",
+              "text": " Close Range damage on Repeated Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Close Range damage on Repeated Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "b3dca028722cdf30760392ca2583c836d497592a5eadbce47a628ce322e3f47b"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+5.5% Close Range damage on Repeated Hit. Stacks 5 times.",
+          "resolvedTextSha256": "43e75597013e22c96b8d0c5b930c9743663fb491b58520effbcd6b81c947406a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "ccaebedb046decaaf73bef872e7e495e0c8c2cd743061b10d1ab4e3d9fdde008",
+              "text": " Close Range damage on Repeated Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Close Range damage on Repeated Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "b3dca028722cdf30760392ca2583c836d497592a5eadbce47a628ce322e3f47b"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+6% Close Range damage on Repeated Hit. Stacks 5 times.",
+          "resolvedTextSha256": "01618b01a4f66b4a4dbf0e58e829ba74a48e7318798bb424ab767d9d51e1883a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "ccaebedb046decaaf73bef872e7e495e0c8c2cd743061b10d1ab4e3d9fdde008",
+              "text": " Close Range damage on Repeated Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Close Range damage on Repeated Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "b3dca028722cdf30760392ca2583c836d497592a5eadbce47a628ce322e3f47b"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent",
+              "value": "+4.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "連續命中後+4.5%近戰傷害，可疊加5次。",
+          "resolvedTextSha256": "3e8fd04fedd3af4ee38c65709e1150426e6991f3bdd8b9d16048de82e6ba2163",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5820324775bb965bb343994883050955c1fd9d2781dd05a70c266654553900a4",
+              "text": "連續命中後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "15c72074e5b71ab4eaaf4a0daeab0c86bb1a2ee447533d4851d577633c273a28",
+              "text": "近戰傷害，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續命中後{damage:%s}近戰傷害，可疊加{stacks:%s}次。",
+          "sourceTextSha256": "26687dd9bdb575ffa98bf31b8d22a2806fa18794b8fc62177f9e558b4edd293b"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent",
+              "value": "+5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "連續命中後+5%近戰傷害，可疊加5次。",
+          "resolvedTextSha256": "c6919c3bfc577729f1e125e252e6ec4e8c7a689186c0a544f4fc7fc67879da00",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5820324775bb965bb343994883050955c1fd9d2781dd05a70c266654553900a4",
+              "text": "連續命中後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "15c72074e5b71ab4eaaf4a0daeab0c86bb1a2ee447533d4851d577633c273a28",
+              "text": "近戰傷害，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續命中後{damage:%s}近戰傷害，可疊加{stacks:%s}次。",
+          "sourceTextSha256": "26687dd9bdb575ffa98bf31b8d22a2806fa18794b8fc62177f9e558b4edd293b"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent",
+              "value": "+5.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "連續命中後+5.5%近戰傷害，可疊加5次。",
+          "resolvedTextSha256": "f63185a9543c70222d93d616726f61900c0cf6f61315ea66de658ece7fd559dd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5820324775bb965bb343994883050955c1fd9d2781dd05a70c266654553900a4",
+              "text": "連續命中後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "15c72074e5b71ab4eaaf4a0daeab0c86bb1a2ee447533d4851d577633c273a28",
+              "text": "近戰傷害，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續命中後{damage:%s}近戰傷害，可疊加{stacks:%s}次。",
+          "sourceTextSha256": "26687dd9bdb575ffa98bf31b8d22a2806fa18794b8fc62177f9e558b4edd293b"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "連續命中後+6%近戰傷害，可疊加5次。",
+          "resolvedTextSha256": "2204c6289fd29d350feb127d7a9602e8ec63418fd5aa83be12604a4a694ab2f9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5820324775bb965bb343994883050955c1fd9d2781dd05a70c266654553900a4",
+              "text": "連續命中後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "15c72074e5b71ab4eaaf4a0daeab0c86bb1a2ee447533d4851d577633c273a28",
+              "text": "近戰傷害，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續命中後{damage:%s}近戰傷害，可疊加{stacks:%s}次。",
+          "sourceTextSha256": "26687dd9bdb575ffa98bf31b8d22a2806fa18794b8fc62177f9e558b4edd293b"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ad18b72c:key-unknown:en:1:g-4cb62cc5a36a59ad:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Dumdum",
+          "resolvedTextSha256": "35761bb290c8029f248ed6f84e363a1688d8063135d67f6e977b996562fda1c3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "35761bb290c8029f248ed6f84e363a1688d8063135d67f6e977b996562fda1c3",
+              "text": "Dumdum"
+            }
+          ],
+          "sourceHash": "ad18b72c",
+          "sourceLocale": "en",
+          "sourceText": "Dumdum",
+          "sourceTextSha256": "35761bb290c8029f248ed6f84e363a1688d8063135d67f6e977b996562fda1c3"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ad18b72c:key-unknown:zh-tw:1:g-4cb62cc5a36a59ad:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "達姆彈",
+          "resolvedTextSha256": "6239eddfb2fa0091a66f7efb36cdb4c8b792649c2bff5627b7bf0559ecaa25a0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "6239eddfb2fa0091a66f7efb36cdb4c8b792649c2bff5627b7bf0559ecaa25a0",
+              "text": "達姆彈"
+            }
+          ],
+          "sourceHash": "ad18b72c",
+          "sourceLocale": "zh-TW",
+          "sourceText": "達姆彈",
+          "sourceTextSha256": "6239eddfb2fa0091a66f7efb36cdb4c8b792649c2bff5627b7bf0559ecaa25a0"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "達姆彈",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:ad18b72c:key-unknown:en:1:g-4cb62cc5a36a59ad:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:ad18b72c:key-unknown:zh-tw:1:g-4cb62cc5a36a59ad:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:ad18b72c:key-unknown:zh-tw:1:g-4cb62cc5a36a59ad:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-consecutive-hits-increases-close-damage"
+          },
+          "key": "loc_trait_bespoke_consecutive_hits_increases_close_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "連續命中後+6%近戰傷害，可疊加5次。",
+          "resolvedTextSha256": "2204c6289fd29d350feb127d7a9602e8ec63418fd5aa83be12604a4a694ab2f9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5820324775bb965bb343994883050955c1fd9d2781dd05a70c266654553900a4",
+              "text": "連續命中後"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "15c72074e5b71ab4eaaf4a0daeab0c86bb1a2ee447533d4851d577633c273a28",
+              "text": "近戰傷害，可疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "3d294b66",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連續命中後{damage:%s}近戰傷害，可疊加{stacks:%s}次。",
+          "sourceTextSha256": "26687dd9bdb575ffa98bf31b8d22a2806fa18794b8fc62177f9e558b4edd293b"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:en:1:g-4cb62cc5a36a59ad:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3d294b66:key-known:zh-tw:1:g-4cb62cc5a36a59ad:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-consecutive-hits-increases-close-damage-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:lasgun:p3-consecutive-hits-increases-close-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0eca26934feca044575fb59bc6427e873dc30f5464504e736bc78260b2455889",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2a829e65b50d4aec4efb42a076e00ba0a01ed2f0fbaf2d8f50a64f2473fb5445",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a8b28738b74bd5a17e30f01704e3e30f2c9a0fc5daba09de4ba4f4edc269af0b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5c40450b776998a44f3b4943c86d5b2649fd8db8c21de9a62ab3a2ba9424366d",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "fcdfc5789f0c02639b9d65fb6d92fd6373188c25b3dfcdcb51374e3068dbe88d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "db3b4771b7a5b7fcfa3bab516c8612dedead1a4ff05850a7d0c4d9cce4fe46a2",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8f4c4d5b1aa3df021a5d06260c1b82c03111194855afd059b2741997c4128dbb",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fe7745c11cdb5b56198c0bd2167fbc10171cbd85695b29fbfa864e64d7bfca36",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c7e80fe17307e47c21e221fdf79ea6be8374284dfb663bbf8e8c541a14003b1d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "235f3d3130a412e0d886964de7a15ee8d5bfcfeab57f86aad4cf3e3bc1226652",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "08f150281655a38764e59e0e880e12d16c7a261ec044e32162b5fd5f950893d7",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "34d7292642a73ba5161a582ca3048c314124cf1b08a32315f0e0e6561b20b010",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "0eca26934feca044575fb59bc6427e873dc30f5464504e736bc78260b2455889",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:content::name"
+        },
+        "targetDigest": "2a829e65b50d4aec4efb42a076e00ba0a01ed2f0fbaf2d8f50a64f2473fb5445"
+      },
+      {
+        "dependenciesDigest": "a8b28738b74bd5a17e30f01704e3e30f2c9a0fc5daba09de4ba4f4edc269af0b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:context::tierapplicability"
+        },
+        "targetDigest": "5c40450b776998a44f3b4943c86d5b2649fd8db8c21de9a62ab3a2ba9424366d"
+      },
+      {
+        "dependenciesDigest": "fcdfc5789f0c02639b9d65fb6d92fd6373188c25b3dfcdcb51374e3068dbe88d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:0"
+        },
+        "targetDigest": "db3b4771b7a5b7fcfa3bab516c8612dedead1a4ff05850a7d0c4d9cce4fe46a2"
+      },
+      {
+        "dependenciesDigest": "8f4c4d5b1aa3df021a5d06260c1b82c03111194855afd059b2741997c4128dbb",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:1"
+        },
+        "targetDigest": "fe7745c11cdb5b56198c0bd2167fbc10171cbd85695b29fbfa864e64d7bfca36"
+      },
+      {
+        "dependenciesDigest": "c7e80fe17307e47c21e221fdf79ea6be8374284dfb663bbf8e8c541a14003b1d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:2"
+        },
+        "targetDigest": "235f3d3130a412e0d886964de7a15ee8d5bfcfeab57f86aad4cf3e3bc1226652"
+      },
+      {
+        "dependenciesDigest": "08f150281655a38764e59e0e880e12d16c7a261ec044e32162b5fd5f950893d7",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:lasgun-p3-consecutive-hits-increases-close-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4cb62cc5a36a59ad:official::tierpresentations:options:3"
+        },
+        "targetDigest": "34d7292642a73ba5161a582ca3048c314124cf1b08a32315f0e0e6561b20b010"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

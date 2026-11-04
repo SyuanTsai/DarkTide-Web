@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p4.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at conditional_stat_buffs.stat_buffs.ranged_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a578f603f12cbd8422af48f0daeb4c264eabab35ecdaaeb221781b4fddb05f85",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "6b24e06b5f951b1bbd9e749857ef2a74a87462845a4e76bb9c013eb38922668d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a578f603f12cbd8422af48f0daeb4c264eabab35ecdaaeb221781b4fddb05f85",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a578f603f12cbd8422af48f0daeb4c264eabab35ecdaaeb221781b4fddb05f85",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a578f603f12cbd8422af48f0daeb4c264eabab35ecdaaeb221781b4fddb05f85",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a578f603f12cbd8422af48f0daeb4c264eabab35ecdaaeb221781b4fddb05f85",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8984b1b337eec96343e153a758b890bafb23a75db7684fa78fac9ed98447265c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "71e6fcedaa4252ef2d479cd78b98b987058167efcf68e90748fcac7251178a44"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8984b1b337eec96343e153a758b890bafb23a75db7684fa78fac9ed98447265c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8984b1b337eec96343e153a758b890bafb23a75db7684fa78fac9ed98447265c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "targetDigest": "5f70811df2785cd8ed7f315ed87d24a3dabab710e8dd795f6d7221f09a35ad3e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b64c7bddf869690d43eb7a22a5a5e304e7e0fb0e5c5e86ffd28b71e619bb83cf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b64c7bddf869690d43eb7a22a5a5e304e7e0fb0e5c5e86ffd28b71e619bb83cf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b64c7bddf869690d43eb7a22a5a5e304e7e0fb0e5c5e86ffd28b71e619bb83cf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "c43f2a6dfa65394f7cc0e113787cf1d4bf7179f267ef9011f8f3a4d0daa173ce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b64c7bddf869690d43eb7a22a5a5e304e7e0fb0e5c5e86ffd28b71e619bb83cf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "2d0c9bc016885f4b75987d5ea02ac67c456c18b652e8c64e1c3d6abee0ed0e13"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b64c7bddf869690d43eb7a22a5a5e304e7e0fb0e5c5e86ffd28b71e619bb83cf",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "deaefe81c5d4a9d3c52675f4987924f6a599ec7076b6a9dca937cc3296228df4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "deaefe81c5d4a9d3c52675f4987924f6a599ec7076b6a9dca937cc3296228df4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "deaefe81c5d4a9d3c52675f4987924f6a599ec7076b6a9dca937cc3296228df4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "c43f2a6dfa65394f7cc0e113787cf1d4bf7179f267ef9011f8f3a4d0daa173ce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "deaefe81c5d4a9d3c52675f4987924f6a599ec7076b6a9dca937cc3296228df4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "2d0c9bc016885f4b75987d5ea02ac67c456c18b652e8c64e1c3d6abee0ed0e13"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "deaefe81c5d4a9d3c52675f4987924f6a599ec7076b6a9dca937cc3296228df4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "220041c92fa5429526f00504859864516d8bff88eaf2223a7599a86354dcc6bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "220041c92fa5429526f00504859864516d8bff88eaf2223a7599a86354dcc6bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "220041c92fa5429526f00504859864516d8bff88eaf2223a7599a86354dcc6bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "c43f2a6dfa65394f7cc0e113787cf1d4bf7179f267ef9011f8f3a4d0daa173ce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "220041c92fa5429526f00504859864516d8bff88eaf2223a7599a86354dcc6bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "2d0c9bc016885f4b75987d5ea02ac67c456c18b652e8c64e1c3d6abee0ed0e13"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "220041c92fa5429526f00504859864516d8bff88eaf2223a7599a86354dcc6bb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a642369c203f6abe95ff218489a4902d0d685601bb6fc76822cda18c359afade",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a642369c203f6abe95ff218489a4902d0d685601bb6fc76822cda18c359afade",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a642369c203f6abe95ff218489a4902d0d685601bb6fc76822cda18c359afade",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "c43f2a6dfa65394f7cc0e113787cf1d4bf7179f267ef9011f8f3a4d0daa173ce"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a642369c203f6abe95ff218489a4902d0d685601bb6fc76822cda18c359afade",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "2d0c9bc016885f4b75987d5ea02ac67c456c18b652e8c64e1c3d6abee0ed0e13"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a642369c203f6abe95ff218489a4902d0d685601bb6fc76822cda18c359afade",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c3651322333daafb1f42560fc383aa5ca6324a0ce595210239a5b34b6cc9f5c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p4-followup-shots-ranged-damage-damage-display-percent-code"
+        },
+        "targetDigest": "580e54a12b72c2399a1653cbf1e865be005a56d160226cf319f78a7caa04f322"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a705898043e388a11fa9bb53ed399ff6215f8f2ba82de8a26d2ad490daa40596",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p4.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p4.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 18 bespoke traits span lines 10-867; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p4-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "58365f07afbd0206c6231babd2e2672c4db43f09c48f265eaaf764377ba40b1a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "5c6bf52558c4f5bad4ef52cca08dfa927fd09ff00a7a7b1be216628aadd81bc2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "+18% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "e4a576d1089cadbe799366d3649ed16a87d399e39d1b334045eafad20fb7e630",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% Damage on Second, Third and Fourth shots in a Salvo.",
+          "resolvedTextSha256": "aa5a47fbdbf1d48f2fbcd431aab7d78b1d2dd52df8c40bd250abc5e853c7b9b4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-1",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "c418a606b7c46292b81a45d87628e5b7560f6c75ac806055c8cfc844f04b2353",
+              "text": " Damage on Second, Third and Fourth shots in a Salvo."
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "en",
+          "sourceText": "{damage:%s} Damage on Second, Third and Fourth shots in a Salvo.",
+          "sourceTextSha256": "0fa2ff700bbb78d668fa722c4b990004edb691144065a40ec46e6da0989e8df5"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+14%傷害。",
+          "resolvedTextSha256": "d1e24bc9f974350e2b6f17aaa7c604698e56b2470acb8a251c804e2296786d33",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+16%傷害。",
+          "resolvedTextSha256": "2fa012f71f344be832e5a477b7da0a703f8b21dc7dad41a1c880b218635e9d8e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+18%傷害。",
+          "resolvedTextSha256": "41915405db8ec6f826f4e4d0814dd35ec593d8641e30221cd18d9399bcf3f9b6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-52a62b432b638d84:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Sustained Fire",
+          "resolvedTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656",
+              "text": "Sustained Fire"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "en",
+          "sourceText": "Sustained Fire",
+          "sourceTextSha256": "98e3f354bb709d4bcb5bfd203a4e399cc529f9eb6077068277f36b9b2da07656"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-52a62b432b638d84:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "持續射擊",
+          "resolvedTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657",
+              "text": "持續射擊"
+            }
+          ],
+          "sourceHash": "a4047175",
+          "sourceLocale": "zh-TW",
+          "sourceText": "持續射擊",
+          "sourceTextSha256": "759293ba74dd29060f56b9aa599afc1f6de029785721650e780824080f43d657"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "持續射擊",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:en:1:g-52a62b432b638d84:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-52a62b432b638d84:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:a4047175:key-unknown:zh-tw:1:g-52a62b432b638d84:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p4-followup-shots-ranged-damage"
+          },
+          "key": "loc_trait_bespoke_followup_shots_ranged_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "齊射的第二、第三和第四發射擊增加+20%傷害。",
+          "resolvedTextSha256": "55bebd38333d1b634061720d1c760c05f6ef74d7f898b9ce2a9dccae907f3c38",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55ccde3b632551ad9c6587f1a572247a10c86d1796a432002862600a3aa69420",
+              "text": "齊射的第二、第三和第四發射擊增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "9df3457b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "齊射的第二、第三和第四發射擊增加{damage:%s}傷害。",
+          "sourceTextSha256": "6e95bb6ca2d71b6e0014f5e140a8fddabd2a0cad84e34c0136f54f2c974e1b06"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:en:1:g-52a62b432b638d84:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:9df3457b:key-known:zh-tw:1:g-52a62b432b638d84:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p4-followup-shots-ranged-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p4-followup-shots-ranged-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "6ec04ebc4edc6ef9f861a3df61350b3d49385176bacbfd43934456a5513b1938",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3422e58af6e954414afc4b7db3af9fc7651f37f1c8f8f35ef9095336b9d1aa4e",
+          "targetId": "review:w06:generic:52a62b432b638d84:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b13c78b5d0c2727338e5814b22f3bbde8919e6aaa2f0f7fd11bdcefa5777493e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7071cacc84996e563732df0ce729611002d241c83047ae8d741ed6d4f15645e6",
+          "targetId": "review:w06:generic:52a62b432b638d84:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8a87361935b95afd67fba99e498bde3b89d0d1da1445e7fc8434f9bb6468418f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d4293b07e895d77d30de87f3ed26b9a6c490b2943628e38dfc3f8b330f654df8",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e68b12d04054dd8c695b01d2673f1ed5f3448d39b0f8d602a23fd380e4b3def7",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ff8568ab3a2e6f84f2fbde28c47029a21d69d42e4497e6f1a6c597bc6f6f45ab",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "cf871a5dea6c15a749f38a987c72f89133d9b84fa2a3a971b561a696ec27bfda",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "919a76956ffda0424723314ca189a53fcba990ad8ccb6f010a47a90dd712a62b",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7fe4f7ef84d79e55dc4ca4306b13336dd9617f200293b9cfe58717134e5d846b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "40d1c9a5c99823361ea616d4626615962f3d6ece13821e15958e29e00ec365c8",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "6ec04ebc4edc6ef9f861a3df61350b3d49385176bacbfd43934456a5513b1938",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:content::name"
+        },
+        "targetDigest": "3422e58af6e954414afc4b7db3af9fc7651f37f1c8f8f35ef9095336b9d1aa4e"
+      },
+      {
+        "dependenciesDigest": "b13c78b5d0c2727338e5814b22f3bbde8919e6aaa2f0f7fd11bdcefa5777493e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:context::tierapplicability"
+        },
+        "targetDigest": "7071cacc84996e563732df0ce729611002d241c83047ae8d741ed6d4f15645e6"
+      },
+      {
+        "dependenciesDigest": "8a87361935b95afd67fba99e498bde3b89d0d1da1445e7fc8434f9bb6468418f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:0"
+        },
+        "targetDigest": "d4293b07e895d77d30de87f3ed26b9a6c490b2943628e38dfc3f8b330f654df8"
+      },
+      {
+        "dependenciesDigest": "e68b12d04054dd8c695b01d2673f1ed5f3448d39b0f8d602a23fd380e4b3def7",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:1"
+        },
+        "targetDigest": "ff8568ab3a2e6f84f2fbde28c47029a21d69d42e4497e6f1a6c597bc6f6f45ab"
+      },
+      {
+        "dependenciesDigest": "cf871a5dea6c15a749f38a987c72f89133d9b84fa2a3a971b561a696ec27bfda",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:2"
+        },
+        "targetDigest": "919a76956ffda0424723314ca189a53fcba990ad8ccb6f010a47a90dd712a62b"
+      },
+      {
+        "dependenciesDigest": "7fe4f7ef84d79e55dc4ca4306b13336dd9617f200293b9cfe58717134e5d846b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p4-followup-shots-ranged-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:52a62b432b638d84:official::tierpresentations:options:3"
+        },
+        "targetDigest": "40d1c9a5c99823361ea616d4626615962f3d6ece13821e15958e29e00ec365c8"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

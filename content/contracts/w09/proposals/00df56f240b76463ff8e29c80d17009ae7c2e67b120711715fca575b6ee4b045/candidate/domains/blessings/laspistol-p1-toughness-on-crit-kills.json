@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.12",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+          },
+          "value": {
+            "decimal": "12",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value toughness at toughness_fixed_percentage; defined tier literals are tier 1=0.1, tier 2=0.12, tier 3=0.14, tier 4=0.16.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5c0ecdcc3ac00b139f1d2c52ab5b3ca7cec59764c8e662766e60e2fb77e3972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "05fe13117718c3af9ddd4e8f329bb10e65cc494a6da0904a38de2c883fdfb39e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5c0ecdcc3ac00b139f1d2c52ab5b3ca7cec59764c8e662766e60e2fb77e3972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5c0ecdcc3ac00b139f1d2c52ab5b3ca7cec59764c8e662766e60e2fb77e3972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5c0ecdcc3ac00b139f1d2c52ab5b3ca7cec59764c8e662766e60e2fb77e3972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "a1305d63e705a6c0584369edad01b362b1fbb76a0bd5f1399465bdab7e395b3d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5c0ecdcc3ac00b139f1d2c52ab5b3ca7cec59764c8e662766e60e2fb77e3972",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "efdb21e8f0bb4e88b4266dd9337e66cd01c7deb2b0856e43824d4d1ac269c71f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "ae25847af1f15295b038d30e30d7825acc0fa1af3ebb503c00457503615979e3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "efdb21e8f0bb4e88b4266dd9337e66cd01c7deb2b0856e43824d4d1ac269c71f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "efdb21e8f0bb4e88b4266dd9337e66cd01c7deb2b0856e43824d4d1ac269c71f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+        },
+        "targetDigest": "2ec01930e50d62d57dbe1df94eb62c68afe10ee963dc31e28a077a8dcfbb93ba"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb75d619db3d5a9669cfff81786c6201487a131900ae0be9ac120767e028ff1b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb75d619db3d5a9669cfff81786c6201487a131900ae0be9ac120767e028ff1b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb75d619db3d5a9669cfff81786c6201487a131900ae0be9ac120767e028ff1b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "cf1020a083e51d772d44c67d805ecb7334086228fc0dde54592a4bdce76e8d1c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb75d619db3d5a9669cfff81786c6201487a131900ae0be9ac120767e028ff1b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "a899c2048a00afb61b477e339b48be8f04936084aed44c49dd98770d5119ecf8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eb75d619db3d5a9669cfff81786c6201487a131900ae0be9ac120767e028ff1b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08f0eccd5b63667ac4da7036c6d3f4a9c5ae8c4d644bfeead077ce11fc2fdad0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08f0eccd5b63667ac4da7036c6d3f4a9c5ae8c4d644bfeead077ce11fc2fdad0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08f0eccd5b63667ac4da7036c6d3f4a9c5ae8c4d644bfeead077ce11fc2fdad0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "cf1020a083e51d772d44c67d805ecb7334086228fc0dde54592a4bdce76e8d1c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08f0eccd5b63667ac4da7036c6d3f4a9c5ae8c4d644bfeead077ce11fc2fdad0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "a899c2048a00afb61b477e339b48be8f04936084aed44c49dd98770d5119ecf8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "08f0eccd5b63667ac4da7036c6d3f4a9c5ae8c4d644bfeead077ce11fc2fdad0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "bbca1ab2aed7babdd1cc33ff5bfd6a83460020c45f502c0fb668ac705ec176f9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28239784f7ce78e7200ff7bc62e38d847a9b1b7fd12ab38ea3b2b7269919a6c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28239784f7ce78e7200ff7bc62e38d847a9b1b7fd12ab38ea3b2b7269919a6c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28239784f7ce78e7200ff7bc62e38d847a9b1b7fd12ab38ea3b2b7269919a6c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "cf1020a083e51d772d44c67d805ecb7334086228fc0dde54592a4bdce76e8d1c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28239784f7ce78e7200ff7bc62e38d847a9b1b7fd12ab38ea3b2b7269919a6c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "a899c2048a00afb61b477e339b48be8f04936084aed44c49dd98770d5119ecf8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "28239784f7ce78e7200ff7bc62e38d847a9b1b7fd12ab38ea3b2b7269919a6c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bb3ae015f29ef225d090526221277e2fd0e09860be7014672268e04a89d4ed7f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bb3ae015f29ef225d090526221277e2fd0e09860be7014672268e04a89d4ed7f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bb3ae015f29ef225d090526221277e2fd0e09860be7014672268e04a89d4ed7f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "cf1020a083e51d772d44c67d805ecb7334086228fc0dde54592a4bdce76e8d1c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bb3ae015f29ef225d090526221277e2fd0e09860be7014672268e04a89d4ed7f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "a899c2048a00afb61b477e339b48be8f04936084aed44c49dd98770d5119ecf8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bb3ae015f29ef225d090526221277e2fd0e09860be7014672268e04a89d4ed7f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56dc3ea851c42e76490506565a9fa864f8ede6e2876bfc28f6dbdd1aa8cf3181",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:laspistol:p1-toughness-on-crit-kills-toughness-display-percent-code"
+        },
+        "targetDigest": "0702b901e88f216c0ac7507023071a629d7813af5b1b3c0950adba2f723ba802"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "3ad40b8defd27ae50563545044765bb930115243d856a715fa666870454968bf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-470; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "+10% Toughness on Critical Hit Kill.",
+          "resolvedTextSha256": "3bc2ce84eeb9fb207832433405139b58dced0e087745ef6a013e27ffc307aff1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "412078e71dc5f279173daa57873a2fb9e6da278fdc3990ec12c5a2286a0e4eab",
+              "text": " Toughness on Critical Hit Kill."
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Critical Hit Kill.",
+          "sourceTextSha256": "681eb4e01e686fb9d0de993f9b17674bc3ad628a802928d7bc1d309464b70772"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent",
+              "value": "+12%"
+            }
+          ],
+          "resolvedText": "+12% Toughness on Critical Hit Kill.",
+          "resolvedTextSha256": "07223b1bb843e7334a1dfcbc3bc616f74b1b1380892280f0967b63671644271f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "412078e71dc5f279173daa57873a2fb9e6da278fdc3990ec12c5a2286a0e4eab",
+              "text": " Toughness on Critical Hit Kill."
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Critical Hit Kill.",
+          "sourceTextSha256": "681eb4e01e686fb9d0de993f9b17674bc3ad628a802928d7bc1d309464b70772"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% Toughness on Critical Hit Kill.",
+          "resolvedTextSha256": "df31f94713072eb7b193dce9e43c50857a4621318fad5a3c1e4e07a182c99f37",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "412078e71dc5f279173daa57873a2fb9e6da278fdc3990ec12c5a2286a0e4eab",
+              "text": " Toughness on Critical Hit Kill."
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Critical Hit Kill.",
+          "sourceTextSha256": "681eb4e01e686fb9d0de993f9b17674bc3ad628a802928d7bc1d309464b70772"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% Toughness on Critical Hit Kill.",
+          "resolvedTextSha256": "9ba691d3c9f61d879e94da7abb0e52ebde1c11db25b89b65a3936b1a96bda9fd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "412078e71dc5f279173daa57873a2fb9e6da278fdc3990ec12c5a2286a0e4eab",
+              "text": " Toughness on Critical Hit Kill."
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Critical Hit Kill.",
+          "sourceTextSha256": "681eb4e01e686fb9d0de993f9b17674bc3ad628a802928d7bc1d309464b70772"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "致命一擊擊殺+10%韌性。",
+          "resolvedTextSha256": "b069d0b7a275b0aa6b8c1c66b07bc0937eed9e7ffce66058ffa5336e2f17cbdd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fca7c8fc161012730a8478943100dfd84de6072c77cee2c7cd57a74fe8bb1fcc",
+              "text": "致命一擊擊殺"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊擊殺{toughness:%s}韌性。",
+          "sourceTextSha256": "6e7a19de1dbf73113ffc1a1b01c063a480891217a947d35483fe4645f4f031fd"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent",
+              "value": "+12%"
+            }
+          ],
+          "resolvedText": "致命一擊擊殺+12%韌性。",
+          "resolvedTextSha256": "63db7f6bd77804c2b792c6555df0c4f99828f4bcbcd4afbba417591dd9368679",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fca7c8fc161012730a8478943100dfd84de6072c77cee2c7cd57a74fe8bb1fcc",
+              "text": "致命一擊擊殺"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊擊殺{toughness:%s}韌性。",
+          "sourceTextSha256": "6e7a19de1dbf73113ffc1a1b01c063a480891217a947d35483fe4645f4f031fd"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "致命一擊擊殺+14%韌性。",
+          "resolvedTextSha256": "1be30ab6f46d571ad4fc0e8854ac6d171d6913783a3c04bc1886ce02102edc47",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fca7c8fc161012730a8478943100dfd84de6072c77cee2c7cd57a74fe8bb1fcc",
+              "text": "致命一擊擊殺"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊擊殺{toughness:%s}韌性。",
+          "sourceTextSha256": "6e7a19de1dbf73113ffc1a1b01c063a480891217a947d35483fe4645f4f031fd"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "致命一擊擊殺+16%韌性。",
+          "resolvedTextSha256": "fbfed962440d248deb3dd40ff3a8afeeb6b6bd684c17d8d111b3583044d1776c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fca7c8fc161012730a8478943100dfd84de6072c77cee2c7cd57a74fe8bb1fcc",
+              "text": "致命一擊擊殺"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊擊殺{toughness:%s}韌性。",
+          "sourceTextSha256": "6e7a19de1dbf73113ffc1a1b01c063a480891217a947d35483fe4645f4f031fd"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:f59c278d:key-unknown:en:1:g-4c2b55bfdd62dd8b:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Reassuringly Accurate",
+          "resolvedTextSha256": "a8e402f0715e4ecfb88be61f43725b07eae673244d2f3d4fb1cef630dbfc050a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "a8e402f0715e4ecfb88be61f43725b07eae673244d2f3d4fb1cef630dbfc050a",
+              "text": "Reassuringly Accurate"
+            }
+          ],
+          "sourceHash": "f59c278d",
+          "sourceLocale": "en",
+          "sourceText": "Reassuringly Accurate",
+          "sourceTextSha256": "a8e402f0715e4ecfb88be61f43725b07eae673244d2f3d4fb1cef630dbfc050a"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:f59c278d:key-unknown:zh-tw:1:g-4c2b55bfdd62dd8b:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "慰藉精準",
+          "resolvedTextSha256": "06a6d3d56407d9c506c4cdebd2875093c5f9f847aea72940ad52c81ccd28f559",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "06a6d3d56407d9c506c4cdebd2875093c5f9f847aea72940ad52c81ccd28f559",
+              "text": "慰藉精準"
+            }
+          ],
+          "sourceHash": "f59c278d",
+          "sourceLocale": "zh-TW",
+          "sourceText": "慰藉精準",
+          "sourceTextSha256": "06a6d3d56407d9c506c4cdebd2875093c5f9f847aea72940ad52c81ccd28f559"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "慰藉精準",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:f59c278d:key-unknown:en:1:g-4c2b55bfdd62dd8b:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:f59c278d:key-unknown:zh-tw:1:g-4c2b55bfdd62dd8b:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:f59c278d:key-unknown:zh-tw:1:g-4c2b55bfdd62dd8b:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-toughness-on-crit-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_crit_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "致命一擊擊殺+16%韌性。",
+          "resolvedTextSha256": "fbfed962440d248deb3dd40ff3a8afeeb6b6bd684c17d8d111b3583044d1776c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fca7c8fc161012730a8478943100dfd84de6072c77cee2c7cd57a74fe8bb1fcc",
+              "text": "致命一擊擊殺"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "f3f6d906",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊擊殺{toughness:%s}韌性。",
+          "sourceTextSha256": "6e7a19de1dbf73113ffc1a1b01c063a480891217a947d35483fe4645f4f031fd"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:en:1:g-4c2b55bfdd62dd8b:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:f3f6d906:key-known:zh-tw:1:g-4c2b55bfdd62dd8b:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-toughness-on-crit-kills-toughness-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:laspistol:p1-toughness-on-crit-kills"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "49b13c2cd272aa3d2c08cd61ce2da68213dac8c0c53ec0060353055e2f7bd4de",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "86922d0a8a265ba130ec1429cc73a4ceaf1b93acb04b7501644deb3fd373ee6e",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "24184d15a876bcc858ee49110431318fcb58537fc76e7b5ec49a5b8fe3ba438b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bbd6172aa20e87f4f97c27b9ee331a6edea46219e972ad8a2db09dad4461c618",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7b24aff58f9ae94c1a109a3e8b5f3937899e01a1df2d048b95d6ca3b6f21a0c5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ad8c96ecdda1f2985b61b1b5e8b67e5797cef7d5fb736f6a2b9b7ea4040e6633",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1aee4e8b3dc4efd6d7f79f04929e76cfd1442b141ae6de90a71ed5b7eb6ad500",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "583ec90043f7df60a2e24c89012a31bea3dafcd30c107bf75639673675336ed3",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7437ff2b465150c2c9667035ce2355b3fcb5218a12cd27e80ed112ecb0a60cf4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ea695dbc6f55d15a14b904bf366b0baa9b94d73fd21e6de0bcbdfce7c1408010",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "bdd4df8d4bc69e26ceeb08f9caa779b3d72dfaca927e6a550c0dbe56de36e79e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6587f9c8ef70a36ad5236c6c16c810e67a6cf46697717eb0e78b2d254ecea3c2",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "49b13c2cd272aa3d2c08cd61ce2da68213dac8c0c53ec0060353055e2f7bd4de",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:content::name"
+        },
+        "targetDigest": "86922d0a8a265ba130ec1429cc73a4ceaf1b93acb04b7501644deb3fd373ee6e"
+      },
+      {
+        "dependenciesDigest": "24184d15a876bcc858ee49110431318fcb58537fc76e7b5ec49a5b8fe3ba438b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:context::tierapplicability"
+        },
+        "targetDigest": "bbd6172aa20e87f4f97c27b9ee331a6edea46219e972ad8a2db09dad4461c618"
+      },
+      {
+        "dependenciesDigest": "7b24aff58f9ae94c1a109a3e8b5f3937899e01a1df2d048b95d6ca3b6f21a0c5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:0"
+        },
+        "targetDigest": "ad8c96ecdda1f2985b61b1b5e8b67e5797cef7d5fb736f6a2b9b7ea4040e6633"
+      },
+      {
+        "dependenciesDigest": "1aee4e8b3dc4efd6d7f79f04929e76cfd1442b141ae6de90a71ed5b7eb6ad500",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:1"
+        },
+        "targetDigest": "583ec90043f7df60a2e24c89012a31bea3dafcd30c107bf75639673675336ed3"
+      },
+      {
+        "dependenciesDigest": "7437ff2b465150c2c9667035ce2355b3fcb5218a12cd27e80ed112ecb0a60cf4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:2"
+        },
+        "targetDigest": "ea695dbc6f55d15a14b904bf366b0baa9b94d73fd21e6de0bcbdfce7c1408010"
+      },
+      {
+        "dependenciesDigest": "bdd4df8d4bc69e26ceeb08f9caa779b3d72dfaca927e6a550c0dbe56de36e79e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:laspistol-p1-toughness-on-crit-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:4c2b55bfdd62dd8b:official::tierpresentations:options:3"
+        },
+        "targetDigest": "6587f9c8ef70a36ad5236c6c16c810e67a6cf46697717eb0e78b2d254ecea3c2"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

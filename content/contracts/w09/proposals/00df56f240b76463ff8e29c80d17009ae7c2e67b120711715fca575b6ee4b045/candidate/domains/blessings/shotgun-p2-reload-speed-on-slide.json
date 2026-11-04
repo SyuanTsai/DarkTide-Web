@@ -1,0 +1,2752 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.07",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.08",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.09",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "7",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "8",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "9",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value reload_speed at stat_buffs.stat_buffs.reload_speed; defined tier literals are tier 1=0.07, tier 2=0.08, tier 3=0.09, tier 4=0.1.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua, scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at child_duration; defined tier literals are tier 1=3, tier 2=3, tier 3=3, tier 4=3.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbf59072bc820bd1a0404972d8261782ec443a3cbdeb4f1a878c5e7c09fca332",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "2d20f51ca0105563a501ad49bdc6ab1bb68c894cb76c425c71720c2bb4738620"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbf59072bc820bd1a0404972d8261782ec443a3cbdeb4f1a878c5e7c09fca332",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbf59072bc820bd1a0404972d8261782ec443a3cbdeb4f1a878c5e7c09fca332",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbf59072bc820bd1a0404972d8261782ec443a3cbdeb4f1a878c5e7c09fca332",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "fad6081f627b6f8f2c76183760aa4aa9e1acdf8a56a17b9222d3f10f30bdbed4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fbf59072bc820bd1a0404972d8261782ec443a3cbdeb4f1a878c5e7c09fca332",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "69a5f3940d02755ac03657a9b7d24f80d1df89ff877f59e291919d74be4857ea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "1b66db06b5b61284fee18eca0f7a56b133f940714016a953e74a556a282afe78"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "69a5f3940d02755ac03657a9b7d24f80d1df89ff877f59e291919d74be4857ea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "69a5f3940d02755ac03657a9b7d24f80d1df89ff877f59e291919d74be4857ea",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+        },
+        "targetDigest": "cb01235c1f801ee3b3eadb81230f6127170097396f71ff120060b8a5fa2fbdfb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2ac649785d2e98fbeaa635bd1ffb25b97738483a7766fe5dfaa345ae0b972b2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2ac649785d2e98fbeaa635bd1ffb25b97738483a7766fe5dfaa345ae0b972b2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2ac649785d2e98fbeaa635bd1ffb25b97738483a7766fe5dfaa345ae0b972b2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "ffa4f909d62b2e994fbe35d77724f34f6a27b7b7703aaa08fe8a94703071e890"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2ac649785d2e98fbeaa635bd1ffb25b97738483a7766fe5dfaa345ae0b972b2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d2ac649785d2e98fbeaa635bd1ffb25b97738483a7766fe5dfaa345ae0b972b2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "40b19dab77bdb13e3713a031338940eed8511eac1614d6d18427655712f60a14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f22b0e0cc9919e908572e853943991da89efb89a4fb73d003a0059019c10bd54",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f22b0e0cc9919e908572e853943991da89efb89a4fb73d003a0059019c10bd54",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f22b0e0cc9919e908572e853943991da89efb89a4fb73d003a0059019c10bd54",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "ffa4f909d62b2e994fbe35d77724f34f6a27b7b7703aaa08fe8a94703071e890"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f22b0e0cc9919e908572e853943991da89efb89a4fb73d003a0059019c10bd54",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f22b0e0cc9919e908572e853943991da89efb89a4fb73d003a0059019c10bd54",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "035637c20d37f580a9be128f5f4ecf27e13367b42d7f19391ffc5ca4a371d4fe"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52293292525de27801a9db0aeba80c0d6d4e7320239ff1d78a9a44c15844da6d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52293292525de27801a9db0aeba80c0d6d4e7320239ff1d78a9a44c15844da6d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52293292525de27801a9db0aeba80c0d6d4e7320239ff1d78a9a44c15844da6d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "ffa4f909d62b2e994fbe35d77724f34f6a27b7b7703aaa08fe8a94703071e890"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52293292525de27801a9db0aeba80c0d6d4e7320239ff1d78a9a44c15844da6d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52293292525de27801a9db0aeba80c0d6d4e7320239ff1d78a9a44c15844da6d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "89c1adb6a033e0fdf2737e085980564d7eeae0d878a6320c5556adf4a9d3c7f3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1b4bf595652894cc683f752bca6d969646c28cfc7dd49ef52cc14488bb61bc3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1b4bf595652894cc683f752bca6d969646c28cfc7dd49ef52cc14488bb61bc3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1b4bf595652894cc683f752bca6d969646c28cfc7dd49ef52cc14488bb61bc3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "ffa4f909d62b2e994fbe35d77724f34f6a27b7b7703aaa08fe8a94703071e890"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1b4bf595652894cc683f752bca6d969646c28cfc7dd49ef52cc14488bb61bc3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1b4bf595652894cc683f752bca6d969646c28cfc7dd49ef52cc14488bb61bc3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fe7817f31ce8194b8f0f3094c5b449be084e603b235518a8ff401466dedc603f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fe7817f31ce8194b8f0f3094c5b449be084e603b235518a8ff401466dedc603f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fe7817f31ce8194b8f0f3094c5b449be084e603b235518a8ff401466dedc603f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+        },
+        "targetDigest": "94483771212aeeacba4d72a00129b0412f0760881f0c3d4f7a92b9cb6659ed16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fe7817f31ce8194b8f0f3094c5b449be084e603b235518a8ff401466dedc603f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fe7817f31ce8194b8f0f3094c5b449be084e603b235518a8ff401466dedc603f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "acca61f85cbf308f0d8484fb45ac017bb1c1ed6a8149e81785d1d93d8df55573",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "acca61f85cbf308f0d8484fb45ac017bb1c1ed6a8149e81785d1d93d8df55573",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "acca61f85cbf308f0d8484fb45ac017bb1c1ed6a8149e81785d1d93d8df55573",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+        },
+        "targetDigest": "6f325a59be8a0fd3cff6ba49b40bb19fa055cd75f0b09cd60f2c2e21af2a6971"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "acca61f85cbf308f0d8484fb45ac017bb1c1ed6a8149e81785d1d93d8df55573",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+        },
+        "targetDigest": "92d3b94f596d99dcd1661d9f14b9f12c123838a318ca63e2335db38306ac52e5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "acca61f85cbf308f0d8484fb45ac017bb1c1ed6a8149e81785d1d93d8df55573",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+        },
+        "targetDigest": "893950895fc1f2b8cb8eebc3751601dcf00d3bac06001938578100258c40645e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "864c57d1f9032f49575ea00e32969bd8cd302b261605747412540d7e73561a59",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-reload-speed-display-percent-code"
+        },
+        "targetDigest": "f1e222c4f60d406cbf753d716927d41d5f1299eb0d9aaff3c17270c4d1cb90bb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "eebb86daa834a853a6393bcdcf341dbf6421c9c1adf7fcf0ca22767d27d4508c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-stacks-display-value-code"
+        },
+        "targetDigest": "ef245b3f6b60874ac24ea4196fc266de62e092620cb433d3883742011d6f52f4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81faf5a953cd2874b60f3c63ccaba2e3b6a1d5f8a570917f0229839148aa2662",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotgun:p2-reload-speed-on-slide-time-display-value-code"
+        },
+        "targetDigest": "79444ead2a3931cf4ba64729eb0d5cc9856efdefb520a11ef186ae1f74c9ffd8"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "ce31de4a5603ea16625bb4355cad9a40587f7adb3be65312e8a76d765460ddd5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/base_weapon_trait_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-base-weapon-trait-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "af514732d0bbff1c5101a16b7f2af0995b295fa55e74b8f15c713d6d1d62f8cd",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_traits_buff_templates/weapon_traits_bespoke_shotgun_p2_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "0c50970de63dfb212853a211e9bf4e88c862ae02e1afec9b154ac4757779b7bc",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotgun_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 12 bespoke traits span lines 9-615; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotgun-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent",
+              "value": "+7%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "+7% Reload Speed for 3 seconds after Close Kill. Stacks 5 times.",
+          "resolvedTextSha256": "47a10772a0e4763566ef0e3fb88dc85cce7d64435fc773487bbbed2471d487f5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "784edfd66629821f4dfc056522ec58b653a965b4fed6b83fc46e2e0cd698ac34",
+              "text": " Reload Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "2b6beebf0fe7403d9a31c0d396bbcdd7b94c18a55a6b33d23060145bc5826223",
+              "text": " seconds after Close Kill. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-5",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-6",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed for {time:%s} seconds after Close Kill. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "64bd819e1e1ba1ff6a55726f34c03f8590904f4ea9d51052532cae811bc75468"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "+8% Reload Speed for 3 seconds after Close Kill. Stacks 5 times.",
+          "resolvedTextSha256": "52a83fa27d3208bd183d384f2cc4bdc89f9915763366854222c2b55bf55236dc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "784edfd66629821f4dfc056522ec58b653a965b4fed6b83fc46e2e0cd698ac34",
+              "text": " Reload Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "2b6beebf0fe7403d9a31c0d396bbcdd7b94c18a55a6b33d23060145bc5826223",
+              "text": " seconds after Close Kill. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-5",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-6",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed for {time:%s} seconds after Close Kill. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "64bd819e1e1ba1ff6a55726f34c03f8590904f4ea9d51052532cae811bc75468"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "+9% Reload Speed for 3 seconds after Close Kill. Stacks 5 times.",
+          "resolvedTextSha256": "6061334f3f3222a36202e5583824a03f730a30e44811a5f9955d17947d34487c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "784edfd66629821f4dfc056522ec58b653a965b4fed6b83fc46e2e0cd698ac34",
+              "text": " Reload Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "2b6beebf0fe7403d9a31c0d396bbcdd7b94c18a55a6b33d23060145bc5826223",
+              "text": " seconds after Close Kill. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-5",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-6",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed for {time:%s} seconds after Close Kill. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "64bd819e1e1ba1ff6a55726f34c03f8590904f4ea9d51052532cae811bc75468"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "+10% Reload Speed for 3 seconds after Close Kill. Stacks 5 times.",
+          "resolvedTextSha256": "5b56b7a81ce7473c6b961bbb146af4f63313fd935167334f2be013228a2efa3c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "784edfd66629821f4dfc056522ec58b653a965b4fed6b83fc46e2e0cd698ac34",
+              "text": " Reload Speed for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-3",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "2b6beebf0fe7403d9a31c0d396bbcdd7b94c18a55a6b33d23060145bc5826223",
+              "text": " seconds after Close Kill. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-5",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-6",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed for {time:%s} seconds after Close Kill. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "64bd819e1e1ba1ff6a55726f34c03f8590904f4ea9d51052532cae811bc75468"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent",
+              "value": "+7%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，武器裝填速度增加+7%，持續3秒，最多疊加5層。",
+          "resolvedTextSha256": "1d0156c4d55576fe692b0bb2be36c9612f393df9ecf5321c1effccf1282e684b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5c154654603b722670ca1fc53ab4d057db9cf04b5c2f7b70fa430b8e2783527f",
+              "text": "近距離擊殺敵人後，武器裝填速度增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，武器裝填速度增加{reload_speed:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "36ef7ac49b6eaf9d0e7950ef29203b75240dd90a605863d9b01dd0cf6f052a83"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent",
+              "value": "+8%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，武器裝填速度增加+8%，持續3秒，最多疊加5層。",
+          "resolvedTextSha256": "b668eede2680f2a5b9079b4027fc78c69c305ea46be0be9ffdc063afde59f36b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5c154654603b722670ca1fc53ab4d057db9cf04b5c2f7b70fa430b8e2783527f",
+              "text": "近距離擊殺敵人後，武器裝填速度增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，武器裝填速度增加{reload_speed:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "36ef7ac49b6eaf9d0e7950ef29203b75240dd90a605863d9b01dd0cf6f052a83"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，武器裝填速度增加+9%，持續3秒，最多疊加5層。",
+          "resolvedTextSha256": "2964d2ea304635eb7e23f0b9f9a8db789749746ed00d68a4c5d9387a876125df",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5c154654603b722670ca1fc53ab4d057db9cf04b5c2f7b70fa430b8e2783527f",
+              "text": "近距離擊殺敵人後，武器裝填速度增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，武器裝填速度增加{reload_speed:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "36ef7ac49b6eaf9d0e7950ef29203b75240dd90a605863d9b01dd0cf6f052a83"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，武器裝填速度增加+10%，持續3秒，最多疊加5層。",
+          "resolvedTextSha256": "2d1d6bfacbb82b7e961f31ce0282d8a2d94c0dcdb3e3c3cedf8316d5b33e2b40",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5c154654603b722670ca1fc53ab4d057db9cf04b5c2f7b70fa430b8e2783527f",
+              "text": "近距離擊殺敵人後，武器裝填速度增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，武器裝填速度增加{reload_speed:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "36ef7ac49b6eaf9d0e7950ef29203b75240dd90a605863d9b01dd0cf6f052a83"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:f4aa4527:key-unknown:en:1:g-66bb63b30c7ecf84:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Speedload",
+          "resolvedTextSha256": "aa81be47e0c5fb12ef7697e98e87b4ad183ea688b964eb6c06e977320ba19879",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "aa81be47e0c5fb12ef7697e98e87b4ad183ea688b964eb6c06e977320ba19879",
+              "text": "Speedload"
+            }
+          ],
+          "sourceHash": "f4aa4527",
+          "sourceLocale": "en",
+          "sourceText": "Speedload",
+          "sourceTextSha256": "aa81be47e0c5fb12ef7697e98e87b4ad183ea688b964eb6c06e977320ba19879"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:f4aa4527:key-unknown:zh-tw:1:g-66bb63b30c7ecf84:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "快速裝彈",
+          "resolvedTextSha256": "48e60bd880eaaaf6b157fcba026a4a66d0143c8af477205bf10b429364feb23d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "48e60bd880eaaaf6b157fcba026a4a66d0143c8af477205bf10b429364feb23d",
+              "text": "快速裝彈"
+            }
+          ],
+          "sourceHash": "f4aa4527",
+          "sourceLocale": "zh-TW",
+          "sourceText": "快速裝彈",
+          "sourceTextSha256": "48e60bd880eaaaf6b157fcba026a4a66d0143c8af477205bf10b429364feb23d"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "快速裝彈",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:f4aa4527:key-unknown:en:1:g-66bb63b30c7ecf84:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:f4aa4527:key-unknown:zh-tw:1:g-66bb63b30c7ecf84:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:f4aa4527:key-unknown:zh-tw:1:g-66bb63b30c7ecf84:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotgun:p2-reload-speed-on-slide"
+          },
+          "key": "loc_trait_bespoke_reload_speed_on_slide_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent",
+              "value": "+10%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value",
+              "value": "5"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "近距離擊殺敵人後，武器裝填速度增加+10%，持續3秒，最多疊加5層。",
+          "resolvedTextSha256": "2d1d6bfacbb82b7e961f31ce0282d8a2d94c0dcdb3e3c3cedf8316d5b33e2b40",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5c154654603b722670ca1fc53ab4d057db9cf04b5c2f7b70fa430b8e2783527f",
+              "text": "近距離擊殺敵人後，武器裝填速度增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "6dd44f4cfc9bf165f496c8293d2b95d139cf61f773b191228d9570b6d33364fb",
+              "text": "，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-4",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3030f33033fcdebb347e08c33867b970175df113925d63ada5f92c4e5169817d",
+              "text": "秒，最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-6",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "38e163a24a7dbef5cb01ccfcf6ff97fd9ec3f1e9b022dc6722358282d2598d57",
+              "text": "層。"
+            }
+          ],
+          "sourceHash": "0a6acca5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "近距離擊殺敵人後，武器裝填速度增加{reload_speed:%s}，持續{time:%s}秒，最多疊加{stacks:%s}層。",
+          "sourceTextSha256": "36ef7ac49b6eaf9d0e7950ef29203b75240dd90a605863d9b01dd0cf6f052a83"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:en:1:g-66bb63b30c7ecf84:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:0a6acca5:key-known:zh-tw:1:g-66bb63b30c7ecf84:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-reload-speed-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotgun:p2-reload-speed-on-slide-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotgun:p2-reload-speed-on-slide"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0bf625d9d5233e865f30ed6b40a0a2177109a2f060083a0b5ee415f7301ea1ab",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3d761b00baea35fd39d614a004fee6c8b2a08bdfa0652c4e0e54fe647d033f2f",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3b359e91f65d8f1a4716fdf003195ee9bdeda1bb62fb35dafacd0fca2df7a104",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "53e451d0502be3375c2864089b695652423798c455a2491c52f97836724ed6ef",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f4a2eed253890a7d288de3c7dab240edd0ad1a9cc641594f7c83d003bb640937",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "932d9ae08a2e4efaaea64fe774dcfa571dedfcab854cbc73e9bec13aa2890bf5",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "20e2f90fd6769fa68b79d252e1e00564e0febac52733157aa84fa7fc4d117f9c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5d0fff40317e326d99fa5fc33413004be0ceebea4d521144526b91561e23bfc9",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "6715c2d3b33a89803f8b98195cb3e8eb1eadf3cb221df974b6fb79c000f6dcce",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "eb95454d50840bdd94cc1143a352bd9c5498f9236c8a10c9a55c06843ded39c0",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d50ae48c24d4252b8c8c86e06052f56aef088db72ec56b9d96616f3b61dca587",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "93a6cb0447fa91ef35b428fcc5f9c67f28fb51b10d3f89e456c8af02b9636388",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "0bf625d9d5233e865f30ed6b40a0a2177109a2f060083a0b5ee415f7301ea1ab",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:content::name"
+        },
+        "targetDigest": "3d761b00baea35fd39d614a004fee6c8b2a08bdfa0652c4e0e54fe647d033f2f"
+      },
+      {
+        "dependenciesDigest": "3b359e91f65d8f1a4716fdf003195ee9bdeda1bb62fb35dafacd0fca2df7a104",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:context::tierapplicability"
+        },
+        "targetDigest": "53e451d0502be3375c2864089b695652423798c455a2491c52f97836724ed6ef"
+      },
+      {
+        "dependenciesDigest": "f4a2eed253890a7d288de3c7dab240edd0ad1a9cc641594f7c83d003bb640937",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:0"
+        },
+        "targetDigest": "932d9ae08a2e4efaaea64fe774dcfa571dedfcab854cbc73e9bec13aa2890bf5"
+      },
+      {
+        "dependenciesDigest": "20e2f90fd6769fa68b79d252e1e00564e0febac52733157aa84fa7fc4d117f9c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:1"
+        },
+        "targetDigest": "5d0fff40317e326d99fa5fc33413004be0ceebea4d521144526b91561e23bfc9"
+      },
+      {
+        "dependenciesDigest": "6715c2d3b33a89803f8b98195cb3e8eb1eadf3cb221df974b6fb79c000f6dcce",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:2"
+        },
+        "targetDigest": "eb95454d50840bdd94cc1143a352bd9c5498f9236c8a10c9a55c06843ded39c0"
+      },
+      {
+        "dependenciesDigest": "d50ae48c24d4252b8c8c86e06052f56aef088db72ec56b9d96616f3b61dca587",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotgun-p2-reload-speed-on-slide",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:66bb63b30c7ecf84:official::tierpresentations:options:3"
+        },
+        "targetDigest": "93a6cb0447fa91ef35b428fcc5f9c67f28fb51b10d3f89e456c8af02b9636388"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

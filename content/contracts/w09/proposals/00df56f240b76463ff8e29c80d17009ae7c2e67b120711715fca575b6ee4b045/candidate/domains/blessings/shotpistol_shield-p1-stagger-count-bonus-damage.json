@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at stat_buffs.stat_buffs.stagger_count_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e6cfecab82817855eac3a8ede90e80296089f7c7e365d4e85e4204bd2039dec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "3f1b22a1f34e0015ebd65ca0b484b2d700efd944fd7bdb92bce002db83168938"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e6cfecab82817855eac3a8ede90e80296089f7c7e365d4e85e4204bd2039dec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e6cfecab82817855eac3a8ede90e80296089f7c7e365d4e85e4204bd2039dec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e6cfecab82817855eac3a8ede90e80296089f7c7e365d4e85e4204bd2039dec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2e6cfecab82817855eac3a8ede90e80296089f7c7e365d4e85e4204bd2039dec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "792160b3b94c168df9192900530e5a58e2814cd12bff8c63e713c9925a3b3fad",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "e26f4cced2cae776d44184e50dc401e36f716411ba562949011686bbedcb5dd8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "792160b3b94c168df9192900530e5a58e2814cd12bff8c63e713c9925a3b3fad",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "792160b3b94c168df9192900530e5a58e2814cd12bff8c63e713c9925a3b3fad",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "targetDigest": "f893ceecb993d9f11c217316bcfaa03216e2a894a329b7cce2cd176f31524a8d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c06b673403107a33c52deecbe4eb113a0134ff8f509063038216118da1be4938",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c06b673403107a33c52deecbe4eb113a0134ff8f509063038216118da1be4938",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c06b673403107a33c52deecbe4eb113a0134ff8f509063038216118da1be4938",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "607e3a92103e0d3898edc98d5d4df467256ac163e7ce5b641414c75c68fd84ab"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c06b673403107a33c52deecbe4eb113a0134ff8f509063038216118da1be4938",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "1f3d5cffa0c1c548102a19952d4e6cf076a5ff4d1595916a23fab1aad59d19fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c06b673403107a33c52deecbe4eb113a0134ff8f509063038216118da1be4938",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9fcfa8caf33f33ebf5ec1d2779ca389f1ec101f67cf670b7e76a375430f34baa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9fcfa8caf33f33ebf5ec1d2779ca389f1ec101f67cf670b7e76a375430f34baa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9fcfa8caf33f33ebf5ec1d2779ca389f1ec101f67cf670b7e76a375430f34baa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "607e3a92103e0d3898edc98d5d4df467256ac163e7ce5b641414c75c68fd84ab"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9fcfa8caf33f33ebf5ec1d2779ca389f1ec101f67cf670b7e76a375430f34baa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "1f3d5cffa0c1c548102a19952d4e6cf076a5ff4d1595916a23fab1aad59d19fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9fcfa8caf33f33ebf5ec1d2779ca389f1ec101f67cf670b7e76a375430f34baa",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c2378b8e444054a39ff567937c49d63ca0b1e57268d5460dd751e0dd9b69e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c2378b8e444054a39ff567937c49d63ca0b1e57268d5460dd751e0dd9b69e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c2378b8e444054a39ff567937c49d63ca0b1e57268d5460dd751e0dd9b69e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "607e3a92103e0d3898edc98d5d4df467256ac163e7ce5b641414c75c68fd84ab"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c2378b8e444054a39ff567937c49d63ca0b1e57268d5460dd751e0dd9b69e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "1f3d5cffa0c1c548102a19952d4e6cf076a5ff4d1595916a23fab1aad59d19fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c2378b8e444054a39ff567937c49d63ca0b1e57268d5460dd751e0dd9b69e1c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9e56417441d6b5f794b42db0503b0f7fbf927b8d43cd6f2483af47c8e81b4c77",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9e56417441d6b5f794b42db0503b0f7fbf927b8d43cd6f2483af47c8e81b4c77",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9e56417441d6b5f794b42db0503b0f7fbf927b8d43cd6f2483af47c8e81b4c77",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "607e3a92103e0d3898edc98d5d4df467256ac163e7ce5b641414c75c68fd84ab"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9e56417441d6b5f794b42db0503b0f7fbf927b8d43cd6f2483af47c8e81b4c77",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "1f3d5cffa0c1c548102a19952d4e6cf076a5ff4d1595916a23fab1aad59d19fc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9e56417441d6b5f794b42db0503b0f7fbf927b8d43cd6f2483af47c8e81b4c77",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "285795d9d7fa31da6d1a1c5b40bdf303ed44befed40fcac75a98f7f967818f16",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:shotpistol_shield:p1-stagger-count-bonus-damage-damage-display-percent-code"
+        },
+        "targetDigest": "beff7d1168cc08a0437c7c7a68d72fb3e3b2e6b7402b4aa9b45918662f61e428"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "c50fe205c3e71abacc00b0c2c7cae96bc2e3d4f8ef62361a7456e89d798ef668",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_shotpistol_shield_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 19 bespoke traits span lines 10-996; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-shotpistol-shield-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-6e8a692fe9b56306:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "No Respite",
+          "resolvedTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+              "text": "No Respite"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "en",
+          "sourceText": "No Respite",
+          "sourceTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-6e8a692fe9b56306:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "刻不容緩",
+          "resolvedTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+              "text": "刻不容緩"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "zh-TW",
+          "sourceText": "刻不容緩",
+          "sourceTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "Up to +14% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "3c4b6a13dffc3ef21544e7db41b8e922aa75a7689e2882420fa70eb01d1404e7",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "Up to +16% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "2e14cc7bcc6422bf785113bf501b75fcbd7649777893a9a0314e3589ec214451",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "Up to +18% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "a1c994ba98978df101c7c5c35d328f05f8a67694a40a42d82094691eb3d32283",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "Up to +20% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "4def3256a1e4e8f12c6336411851b38eafcdd8a52081dbf56e0a1814ea709941",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+14%傷害。",
+          "resolvedTextSha256": "8965732061c98df0a803bc1dd6b10cf7e9258f229503672579ebcf377939ea2b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+16%傷害。",
+          "resolvedTextSha256": "32ad475c27515a52e48269e2fe92721ba36db8e53b94374b094762f942512f0e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+18%傷害。",
+          "resolvedTextSha256": "88e6c8793ff6f1e404fd75736b69bf8eb2e65dca38984213a617d6512a64f022",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "刻不容緩",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-6e8a692fe9b56306:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-6e8a692fe9b56306:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-6e8a692fe9b56306:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:shotpistol_shield:p1-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-6e8a692fe9b56306:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-6e8a692fe9b56306:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:shotpistol_shield:p1-stagger-count-bonus-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:shotpistol_shield:p1-stagger-count-bonus-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ad9d8a75a3b0fa0007f0c52761f4e006801cdabc812a7bdb2a9a60be2c0e04ea",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d6f8df0e09549d3c7e3c0df4109f0357dacfdbb89d1e8f645673f12052465e63",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "50262bf3ddcf468b38ed55608eae05f249db21177d963553465815d080a85722",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "95fba91d42377340d04f82e5970d826046cceb61364d80d341eb86410db47bf4",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c387fee9c98c6966e058ccaabb038a16e1ea1c4618c5acbd664c9bd17cc36e89",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "46cf7ac4ec7e4168e153b0a8139e14b4fad0e6a5b5bb926658ab0445c43594a6",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0c7a15ba141ca31e9579ece709c793f27f6481fb2cddea9491d527d35867867b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "90b1e7ab4466d3b5a0ffdc9b6171133f0cb6128e7a8b66027b13c92c8e2ebfb5",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "932b241fd81aa7737cc8f1ec6b042a113886e2289d2a17a05d589e871937887f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f75f9b5e41e59fe8e2c24370db8f72594c8fceeaa7584820d005a9dfae3303d8",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b64f38eaa72c099b28b06c87c893bfbdca0b9acbb6f0f87b7a63839e8d49fa2c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "53ca7e27fe4e4e1fbeff48e878f8216d1c337f2a6a6fb25b560227671dfab5a1",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "ad9d8a75a3b0fa0007f0c52761f4e006801cdabc812a7bdb2a9a60be2c0e04ea",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:content::name"
+        },
+        "targetDigest": "d6f8df0e09549d3c7e3c0df4109f0357dacfdbb89d1e8f645673f12052465e63"
+      },
+      {
+        "dependenciesDigest": "50262bf3ddcf468b38ed55608eae05f249db21177d963553465815d080a85722",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:context::tierapplicability"
+        },
+        "targetDigest": "95fba91d42377340d04f82e5970d826046cceb61364d80d341eb86410db47bf4"
+      },
+      {
+        "dependenciesDigest": "c387fee9c98c6966e058ccaabb038a16e1ea1c4618c5acbd664c9bd17cc36e89",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:0"
+        },
+        "targetDigest": "46cf7ac4ec7e4168e153b0a8139e14b4fad0e6a5b5bb926658ab0445c43594a6"
+      },
+      {
+        "dependenciesDigest": "0c7a15ba141ca31e9579ece709c793f27f6481fb2cddea9491d527d35867867b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:1"
+        },
+        "targetDigest": "90b1e7ab4466d3b5a0ffdc9b6171133f0cb6128e7a8b66027b13c92c8e2ebfb5"
+      },
+      {
+        "dependenciesDigest": "932b241fd81aa7737cc8f1ec6b042a113886e2289d2a17a05d589e871937887f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:2"
+        },
+        "targetDigest": "f75f9b5e41e59fe8e2c24370db8f72594c8fceeaa7584820d005a9dfae3303d8"
+      },
+      {
+        "dependenciesDigest": "b64f38eaa72c099b28b06c87c893bfbdca0b9acbb6f0f87b7a63839e8d49fa2c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:shotpistol_shield-p1-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:6e8a692fe9b56306:official::tierpresentations:options:3"
+        },
+        "targetDigest": "53ca7e27fe4e4e1fbeff48e878f8216d1c337f2a6a6fb25b560227671dfab5a1"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

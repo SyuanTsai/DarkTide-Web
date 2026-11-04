@@ -1,0 +1,2283 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "-0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "-0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "-0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "-0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage_near.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "value": {
+            "decimal": "6",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage_near.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "value": {
+            "decimal": "9",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage_near.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "value": {
+            "decimal": "12",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage_near.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "value": {
+            "decimal": "15",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.weapon_spread.display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "value": {
+            "decimal": "-30",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage_near at conditional_stat_buffs.stat_buffs.damage_near; defined tier literals are tier 1=0.06, tier 2=0.09, tier 3=0.12, tier 4=0.15.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value weapon_spread at stat_buffs.stat_buffs.spread_modifier; defined tier literals are tier 1=-0.3, tier 2=-0.3, tier 3=-0.3, tier 4=-0.3.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8dccb603da9adb8b0ad430cacf0ee35c877452d111bac11867c8276ef6f46246",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "ce084c24996cb001557d734f195885264bb737e759f16883cd95a4ea3c458dc7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8dccb603da9adb8b0ad430cacf0ee35c877452d111bac11867c8276ef6f46246",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8dccb603da9adb8b0ad430cacf0ee35c877452d111bac11867c8276ef6f46246",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8dccb603da9adb8b0ad430cacf0ee35c877452d111bac11867c8276ef6f46246",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "b553f0f8583da5d3a3b8304cd4bb2df03844ac5b5d32e4ae1288b6875d5a266f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8dccb603da9adb8b0ad430cacf0ee35c877452d111bac11867c8276ef6f46246",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c86a5e4a426c14f6e5793956adf089e9ae93f10a4e952afc5a64602cdc1a7f9f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "3f0d0f27fa87d11cdefeb29f1ee631462071decdb6657f2369458f5adb75d8f4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c86a5e4a426c14f6e5793956adf089e9ae93f10a4e952afc5a64602cdc1a7f9f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c86a5e4a426c14f6e5793956adf089e9ae93f10a4e952afc5a64602cdc1a7f9f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "targetDigest": "15071cee4f23fe94ccd0f79e96c84a70b89441d2b4c7d703d4286df57dc888e9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e80d1ff771bd6005920eb039f9cc1418b2abdc04d79087ddb47a5aca369dd34f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e80d1ff771bd6005920eb039f9cc1418b2abdc04d79087ddb47a5aca369dd34f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e80d1ff771bd6005920eb039f9cc1418b2abdc04d79087ddb47a5aca369dd34f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+        },
+        "targetDigest": "13e76d142a3bc77239ac8fb11336cfb835d773744d6ca7bb9fd1e4565093801d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e80d1ff771bd6005920eb039f9cc1418b2abdc04d79087ddb47a5aca369dd34f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+        },
+        "targetDigest": "ac309cfd3645cc63ae3bf626ae7aff77f1a6f8db094dcb6460e8a1c0f85dca67"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e80d1ff771bd6005920eb039f9cc1418b2abdc04d79087ddb47a5aca369dd34f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+        },
+        "targetDigest": "5251cd53fe45d4339555cfb6a5c7a58b7ea9c49b45d3753f4d8214a59cdc5b14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9c368cca532683344e058e878c624c237814db34125d31e79a7db8b640f2aeff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9c368cca532683344e058e878c624c237814db34125d31e79a7db8b640f2aeff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9c368cca532683344e058e878c624c237814db34125d31e79a7db8b640f2aeff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+        },
+        "targetDigest": "13e76d142a3bc77239ac8fb11336cfb835d773744d6ca7bb9fd1e4565093801d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9c368cca532683344e058e878c624c237814db34125d31e79a7db8b640f2aeff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+        },
+        "targetDigest": "ac309cfd3645cc63ae3bf626ae7aff77f1a6f8db094dcb6460e8a1c0f85dca67"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9c368cca532683344e058e878c624c237814db34125d31e79a7db8b640f2aeff",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+        },
+        "targetDigest": "89c1adb6a033e0fdf2737e085980564d7eeae0d878a6320c5556adf4a9d3c7f3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ac6dd9a1d693dddce7ea0ffb9d4b66f7816cf9df3affd487b5b7ab06a2fe43f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ac6dd9a1d693dddce7ea0ffb9d4b66f7816cf9df3affd487b5b7ab06a2fe43f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ac6dd9a1d693dddce7ea0ffb9d4b66f7816cf9df3affd487b5b7ab06a2fe43f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+        },
+        "targetDigest": "13e76d142a3bc77239ac8fb11336cfb835d773744d6ca7bb9fd1e4565093801d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ac6dd9a1d693dddce7ea0ffb9d4b66f7816cf9df3affd487b5b7ab06a2fe43f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+        },
+        "targetDigest": "ac309cfd3645cc63ae3bf626ae7aff77f1a6f8db094dcb6460e8a1c0f85dca67"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ac6dd9a1d693dddce7ea0ffb9d4b66f7816cf9df3affd487b5b7ab06a2fe43f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+        },
+        "targetDigest": "bbca1ab2aed7babdd1cc33ff5bfd6a83460020c45f502c0fb668ac705ec176f9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c684b06919b9f926479c5d8e22a4fc30423d4dddd1540507593db21dc1ccc5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c684b06919b9f926479c5d8e22a4fc30423d4dddd1540507593db21dc1ccc5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c684b06919b9f926479c5d8e22a4fc30423d4dddd1540507593db21dc1ccc5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+        },
+        "targetDigest": "13e76d142a3bc77239ac8fb11336cfb835d773744d6ca7bb9fd1e4565093801d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c684b06919b9f926479c5d8e22a4fc30423d4dddd1540507593db21dc1ccc5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+        },
+        "targetDigest": "ac309cfd3645cc63ae3bf626ae7aff77f1a6f8db094dcb6460e8a1c0f85dca67"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c684b06919b9f926479c5d8e22a4fc30423d4dddd1540507593db21dc1ccc5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+        },
+        "targetDigest": "739df5e9349af5eb505bd3ba2a4e62bc4772d8de7f00fad260f9b5a1335af027"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9dd1da512a4024aedaa9986db353e2c43f6b602c8f679c43d10061c0f70c401b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9dd1da512a4024aedaa9986db353e2c43f6b602c8f679c43d10061c0f70c401b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9dd1da512a4024aedaa9986db353e2c43f6b602c8f679c43d10061c0f70c401b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+        },
+        "targetDigest": "cc90bb1c0a68119fc17c1d449e3c00b43ac4b0d14dba659efe3ce9cfe23f4edd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9dd1da512a4024aedaa9986db353e2c43f6b602c8f679c43d10061c0f70c401b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+        },
+        "targetDigest": "ac309cfd3645cc63ae3bf626ae7aff77f1a6f8db094dcb6460e8a1c0f85dca67"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9dd1da512a4024aedaa9986db353e2c43f6b602c8f679c43d10061c0f70c401b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+        },
+        "targetDigest": "fa8c40597987def0c8763a6d870380c45e33264082011d5dac361995f2ef5c68"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "536991cf0fa3df97ad85ccd64220644c028fb69a6c9383ad432f17a23299aa71",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-display-percent-code"
+        },
+        "targetDigest": "b8d7c02295647a60c2535cacd27ffe0794a527da65ee60475758525d7e86afd0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "07d61d30b23ecf68afdf24e10210d4a66c7ed028c2d71220cf8f0c22fde59f96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent-code"
+        },
+        "targetDigest": "7877315c73e87c42140f5eb4786b366c4f77613e33d6305166e3c455005ebc31"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b218feaf78ebcecda673671ddb32e831efac907d15d9bd46961a273a5313d2b5",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_thumper_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 9-486; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-thumper-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:168636d5:key-unknown:en:1:g-0f15779355d0d94d:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Run 'n' Gun",
+          "resolvedTextSha256": "66abf6fff36ff09d6c3ae5b4b3eaa07fc10eeef7cabc467661c68cccba59c418",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "66abf6fff36ff09d6c3ae5b4b3eaa07fc10eeef7cabc467661c68cccba59c418",
+              "text": "Run 'n' Gun"
+            }
+          ],
+          "sourceHash": "168636d5",
+          "sourceLocale": "en",
+          "sourceText": "Run 'n' Gun",
+          "sourceTextSha256": "66abf6fff36ff09d6c3ae5b4b3eaa07fc10eeef7cabc467661c68cccba59c418"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:168636d5:key-unknown:zh-tw:1:g-0f15779355d0d94d:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "連跑帶打",
+          "resolvedTextSha256": "9d1dd58cd0157317c7bf70e84ed4e8cbe69d3d0abee386da78e72b9c5417fca2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9d1dd58cd0157317c7bf70e84ed4e8cbe69d3d0abee386da78e72b9c5417fca2",
+              "text": "連跑帶打"
+            }
+          ],
+          "sourceHash": "168636d5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "連跑帶打",
+          "sourceTextSha256": "9d1dd58cd0157317c7bf70e84ed4e8cbe69d3d0abee386da78e72b9c5417fca2"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "You can Hipfire with this weapon while Sprinting. +6% Close Damage while Sprinting. Also reduces weapon spread at all times by -30%.",
+          "resolvedTextSha256": "b76545eed15323d2ebc9822e3f0d676398e449f91f4d0f19813b994c4abfc052",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f9e7c31e04ab3e45a01462ad82d12ca7eeed6785397223d4e1a264e48115811f",
+              "text": "You can Hipfire with this weapon while Sprinting. "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "73b6f0f443e9642ac168d0fe2c0a2cf17fb805ad7dc72764437f04a8356f6cfd",
+              "text": " Close Damage while Sprinting. Also reduces weapon spread at all times by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "en",
+          "sourceText": "You can Hipfire with this weapon while Sprinting. {damage_near:%s} Close Damage while Sprinting. Also reduces weapon spread at all times by {weapon_spread:%s}.",
+          "sourceTextSha256": "7a329529fe8db7b52badbc1e0631ce85f5916a95b514ef0bd7cd356aaf75a088"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "You can Hipfire with this weapon while Sprinting. +9% Close Damage while Sprinting. Also reduces weapon spread at all times by -30%.",
+          "resolvedTextSha256": "422c6457d1291f197c7e70395f41e0b089bc8414decb90a5ab819d851f653869",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f9e7c31e04ab3e45a01462ad82d12ca7eeed6785397223d4e1a264e48115811f",
+              "text": "You can Hipfire with this weapon while Sprinting. "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "73b6f0f443e9642ac168d0fe2c0a2cf17fb805ad7dc72764437f04a8356f6cfd",
+              "text": " Close Damage while Sprinting. Also reduces weapon spread at all times by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "en",
+          "sourceText": "You can Hipfire with this weapon while Sprinting. {damage_near:%s} Close Damage while Sprinting. Also reduces weapon spread at all times by {weapon_spread:%s}.",
+          "sourceTextSha256": "7a329529fe8db7b52badbc1e0631ce85f5916a95b514ef0bd7cd356aaf75a088"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent",
+              "value": "+12%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "You can Hipfire with this weapon while Sprinting. +12% Close Damage while Sprinting. Also reduces weapon spread at all times by -30%.",
+          "resolvedTextSha256": "70eb44ed6f8ab8d704d07ff26fd7d8aa85b0c2872f0374f87254e781f0375737",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f9e7c31e04ab3e45a01462ad82d12ca7eeed6785397223d4e1a264e48115811f",
+              "text": "You can Hipfire with this weapon while Sprinting. "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "73b6f0f443e9642ac168d0fe2c0a2cf17fb805ad7dc72764437f04a8356f6cfd",
+              "text": " Close Damage while Sprinting. Also reduces weapon spread at all times by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "en",
+          "sourceText": "You can Hipfire with this weapon while Sprinting. {damage_near:%s} Close Damage while Sprinting. Also reduces weapon spread at all times by {weapon_spread:%s}.",
+          "sourceTextSha256": "7a329529fe8db7b52badbc1e0631ce85f5916a95b514ef0bd7cd356aaf75a088"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent",
+              "value": "+15%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "You can Hipfire with this weapon while Sprinting. +15% Close Damage while Sprinting. Also reduces weapon spread at all times by -30%.",
+          "resolvedTextSha256": "86cc5e3ebbe058b725c1f8e8097d2d286f8c5a9875f724fa022590bd54e3a840",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f9e7c31e04ab3e45a01462ad82d12ca7eeed6785397223d4e1a264e48115811f",
+              "text": "You can Hipfire with this weapon while Sprinting. "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "73b6f0f443e9642ac168d0fe2c0a2cf17fb805ad7dc72764437f04a8356f6cfd",
+              "text": " Close Damage while Sprinting. Also reduces weapon spread at all times by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "en",
+          "sourceText": "You can Hipfire with this weapon while Sprinting. {damage_near:%s} Close Damage while Sprinting. Also reduces weapon spread at all times by {weapon_spread:%s}.",
+          "sourceTextSha256": "7a329529fe8db7b52badbc1e0631ce85f5916a95b514ef0bd7cd356aaf75a088"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent",
+              "value": "+6%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加+6%。同時子彈擴散範圍將維持縮小-30%。",
+          "resolvedTextSha256": "a3b43bcfc14e88664db4d8e78c9806fa5a7a6a87b3c59cbb14500402bcedceae",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2178d2ed3dc5dfe1e3cec36544de6afc78d9cde496e1624e93793280804534e8",
+              "text": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "936a5f20040247e62cbd691d5eaeaa899b0de559efe3281ed3a63f67c1b51335",
+              "text": "。同時子彈擴散範圍將維持縮小"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "zh-TW",
+          "sourceText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加{damage_near:%s}。同時子彈擴散範圍將維持縮小{weapon_spread:%s}。",
+          "sourceTextSha256": "a3f4181b532742602a43160e25d3e1a398ef647b689a7bc96caaf1750a6f9b86"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent",
+              "value": "+9%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加+9%。同時子彈擴散範圍將維持縮小-30%。",
+          "resolvedTextSha256": "6ab9cffc9ec0d3b3514222b54b75dbd95b13c8460622b3b2782b6221e11fe182",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2178d2ed3dc5dfe1e3cec36544de6afc78d9cde496e1624e93793280804534e8",
+              "text": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "936a5f20040247e62cbd691d5eaeaa899b0de559efe3281ed3a63f67c1b51335",
+              "text": "。同時子彈擴散範圍將維持縮小"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "zh-TW",
+          "sourceText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加{damage_near:%s}。同時子彈擴散範圍將維持縮小{weapon_spread:%s}。",
+          "sourceTextSha256": "a3f4181b532742602a43160e25d3e1a398ef647b689a7bc96caaf1750a6f9b86"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent",
+              "value": "+12%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加+12%。同時子彈擴散範圍將維持縮小-30%。",
+          "resolvedTextSha256": "fe2ad00507a08dda26324d2706798428d7b0476cf46af0acf5f1f75f16411cb9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2178d2ed3dc5dfe1e3cec36544de6afc78d9cde496e1624e93793280804534e8",
+              "text": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "936a5f20040247e62cbd691d5eaeaa899b0de559efe3281ed3a63f67c1b51335",
+              "text": "。同時子彈擴散範圍將維持縮小"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "zh-TW",
+          "sourceText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加{damage_near:%s}。同時子彈擴散範圍將維持縮小{weapon_spread:%s}。",
+          "sourceTextSha256": "a3f4181b532742602a43160e25d3e1a398ef647b689a7bc96caaf1750a6f9b86"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent",
+              "value": "+15%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加+15%。同時子彈擴散範圍將維持縮小-30%。",
+          "resolvedTextSha256": "8f0a3f8a257ae02a265019297ac51e14a6be3477da159433bae0c5fef2abd639",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2178d2ed3dc5dfe1e3cec36544de6afc78d9cde496e1624e93793280804534e8",
+              "text": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "936a5f20040247e62cbd691d5eaeaa899b0de559efe3281ed3a63f67c1b51335",
+              "text": "。同時子彈擴散範圍將維持縮小"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "zh-TW",
+          "sourceText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加{damage_near:%s}。同時子彈擴散範圍將維持縮小{weapon_spread:%s}。",
+          "sourceTextSha256": "a3f4181b532742602a43160e25d3e1a398ef647b689a7bc96caaf1750a6f9b86"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "連跑帶打",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:168636d5:key-unknown:en:1:g-0f15779355d0d94d:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:168636d5:key-unknown:zh-tw:1:g-0f15779355d0d94d:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:168636d5:key-unknown:zh-tw:1:g-0f15779355d0d94d:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_thumper:p3-hipfire-while-sprinting"
+          },
+          "key": "loc_trait_bespoke_allow_hipfire_while_sprinting_and_bonus_stats_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage_near",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent",
+              "value": "+15%"
+            },
+            {
+              "parameterId": "weapon_spread",
+              "sourceKey": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent",
+              "value": "-30%"
+            }
+          ],
+          "resolvedText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加+15%。同時子彈擴散範圍將維持縮小-30%。",
+          "resolvedTextSha256": "8f0a3f8a257ae02a265019297ac51e14a6be3477da159433bae0c5fef2abd639",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2178d2ed3dc5dfe1e3cec36544de6afc78d9cde496e1624e93793280804534e8",
+              "text": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage_near",
+              "segmentId": "segment-2",
+              "sha256": "d3578fa46b4c7c10817258a9a74c74e5501a9d82ca627f081e61b4bec06e1917",
+              "token": "{damage_near:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "936a5f20040247e62cbd691d5eaeaa899b0de559efe3281ed3a63f67c1b51335",
+              "text": "。同時子彈擴散範圍將維持縮小"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "weapon_spread",
+              "segmentId": "segment-4",
+              "sha256": "7995a418d317b5b98fb4f026ba770ca20a05a984c4258d6089d345d6b8fc31a6",
+              "token": "{weapon_spread:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "5ae2e578",
+          "sourceLocale": "zh-TW",
+          "sourceText": "你可以在衝刺時使用這把武器腰射。衝刺時近距離傷害增加{damage_near:%s}。同時子彈擴散範圍將維持縮小{weapon_spread:%s}。",
+          "sourceTextSha256": "a3f4181b532742602a43160e25d3e1a398ef647b689a7bc96caaf1750a6f9b86"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage_near",
+                  "placeholder": "{damage_near:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "weapon_spread",
+                  "placeholder": "{weapon_spread:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage_near",
+                  "placeholder": "{damage_near:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "weapon_spread",
+                  "placeholder": "{weapon_spread:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage_near",
+                  "placeholder": "{damage_near:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "weapon_spread",
+                  "placeholder": "{weapon_spread:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:en:1:g-0f15779355d0d94d:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:5ae2e578:key-known:zh-tw:1:g-0f15779355d0d94d:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-damage-near-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage_near",
+                  "placeholder": "{damage_near:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_thumper:p3-hipfire-while-sprinting-weapon-spread-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "weapon_spread",
+                  "placeholder": "{weapon_spread:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:ogryn_thumper:p3-hipfire-while-sprinting"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "edf5e7478beb7dcf92a2ac0f94d1eb4e28182fb3830e1810794efb696c685376",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2475705f4de9d354caafc14a6968835ff8bc5c7b7d5540b5ef2363a0d1d64427",
+          "targetId": "review:w06:generic:0f15779355d0d94d:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4bc8e67b9097d89c92d17b3d25f3d25a58cb48c1ab0318045052f5ff6d95f536",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d9cd17339806bc0dd850a5c9746cab7f16900008f132d656aaf8704a6e8d91e4",
+          "targetId": "review:w06:generic:0f15779355d0d94d:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "83c31f28730a7bff332d5c5dd19e0466227bfbecc8f746d3b01edc1d9a0a79ed",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5f888096d480cc7128e3cdda1f2e7fa61a5d13957b0dff7ec3b9434643ac2a16",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "70fbf6a0ebfdc183c4e6aceb989ec4e8c076e4a1c7a94970d4704e7897802124",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b4512171b09872a3c3a8c8896469f73e907e8be685186843e93d98422559a8e5",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "286960ea27c19d65c171568d444c085a7945afaf799626c8bb3363844f2bba17",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3b212c133aef9729ff42fac1522e935d71b6d57822311869b8d511f657953fe9",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b8d693ecd40d16bebc912be821936702367324abc20184559852880d1fc5eb92",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "82e749176942d10f91127320a65d48481eef3ece8826093b37293ecba5d844d1",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "edf5e7478beb7dcf92a2ac0f94d1eb4e28182fb3830e1810794efb696c685376",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:content::name"
+        },
+        "targetDigest": "2475705f4de9d354caafc14a6968835ff8bc5c7b7d5540b5ef2363a0d1d64427"
+      },
+      {
+        "dependenciesDigest": "4bc8e67b9097d89c92d17b3d25f3d25a58cb48c1ab0318045052f5ff6d95f536",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:context::tierapplicability"
+        },
+        "targetDigest": "d9cd17339806bc0dd850a5c9746cab7f16900008f132d656aaf8704a6e8d91e4"
+      },
+      {
+        "dependenciesDigest": "83c31f28730a7bff332d5c5dd19e0466227bfbecc8f746d3b01edc1d9a0a79ed",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:0"
+        },
+        "targetDigest": "5f888096d480cc7128e3cdda1f2e7fa61a5d13957b0dff7ec3b9434643ac2a16"
+      },
+      {
+        "dependenciesDigest": "70fbf6a0ebfdc183c4e6aceb989ec4e8c076e4a1c7a94970d4704e7897802124",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:1"
+        },
+        "targetDigest": "b4512171b09872a3c3a8c8896469f73e907e8be685186843e93d98422559a8e5"
+      },
+      {
+        "dependenciesDigest": "286960ea27c19d65c171568d444c085a7945afaf799626c8bb3363844f2bba17",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:2"
+        },
+        "targetDigest": "3b212c133aef9729ff42fac1522e935d71b6d57822311869b8d511f657953fe9"
+      },
+      {
+        "dependenciesDigest": "b8d693ecd40d16bebc912be821936702367324abc20184559852880d1fc5eb92",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:ogryn_thumper-p3-hipfire-while-sprinting",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:0f15779355d0d94d:official::tierpresentations:options:3"
+        },
+        "targetDigest": "82e749176942d10f91127320a65d48481eef3ece8826093b37293ecba5d844d1"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

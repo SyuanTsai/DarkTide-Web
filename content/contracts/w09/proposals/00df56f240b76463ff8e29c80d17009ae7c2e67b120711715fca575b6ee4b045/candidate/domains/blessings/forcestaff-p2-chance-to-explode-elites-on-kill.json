@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.proc_chance.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.proc_chance.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.proc_chance.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.proc_chance.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value proc_chance at proc_events.proc_events.on_kill; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e753f5ea47132a9ff431f97e95d9202da13853bf5d22c83987536e484a81095e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "b90372c81486d7d4df676e44f042c56c2be58190fa06e391537eca65e0bc26ec"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e753f5ea47132a9ff431f97e95d9202da13853bf5d22c83987536e484a81095e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e753f5ea47132a9ff431f97e95d9202da13853bf5d22c83987536e484a81095e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e753f5ea47132a9ff431f97e95d9202da13853bf5d22c83987536e484a81095e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e753f5ea47132a9ff431f97e95d9202da13853bf5d22c83987536e484a81095e",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2a187d2f12b75563ac88168f89af3df10535da1ee3ff4b22354738f11fddd0c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "1adac0dcdfb4e5c6677c220ad1213bd48f8876e071c9a7313571834345f9a107"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2a187d2f12b75563ac88168f89af3df10535da1ee3ff4b22354738f11fddd0c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2a187d2f12b75563ac88168f89af3df10535da1ee3ff4b22354738f11fddd0c7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "targetDigest": "cc35b4ef6372d816f3ac2115fe6b6db0a8047501c81ce5a24557bc613558b201"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd36566c94c0d6dd8242dce9073ce882a3afb4714de6965b7415bd52742161c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd36566c94c0d6dd8242dce9073ce882a3afb4714de6965b7415bd52742161c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd36566c94c0d6dd8242dce9073ce882a3afb4714de6965b7415bd52742161c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+        },
+        "targetDigest": "181b443facd44a611087ced67119f1573dbaeb2292d8b07970399273bbd0aaa4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd36566c94c0d6dd8242dce9073ce882a3afb4714de6965b7415bd52742161c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+        },
+        "targetDigest": "590e3031f2836cc5da32fa259d5262b9b48cc69f50c90e4b8f1855ce5f43d980"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "fd36566c94c0d6dd8242dce9073ce882a3afb4714de6965b7415bd52742161c8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e040ffab0e49fa6e545f0e85ae1eacb50d7430c20da33369aa1e52b63a0b83d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e040ffab0e49fa6e545f0e85ae1eacb50d7430c20da33369aa1e52b63a0b83d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e040ffab0e49fa6e545f0e85ae1eacb50d7430c20da33369aa1e52b63a0b83d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+        },
+        "targetDigest": "181b443facd44a611087ced67119f1573dbaeb2292d8b07970399273bbd0aaa4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e040ffab0e49fa6e545f0e85ae1eacb50d7430c20da33369aa1e52b63a0b83d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+        },
+        "targetDigest": "590e3031f2836cc5da32fa259d5262b9b48cc69f50c90e4b8f1855ce5f43d980"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e040ffab0e49fa6e545f0e85ae1eacb50d7430c20da33369aa1e52b63a0b83d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b25ae12f7928d95fee47eb8a03ae324f512d80840af9fd477441546a075aaba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b25ae12f7928d95fee47eb8a03ae324f512d80840af9fd477441546a075aaba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b25ae12f7928d95fee47eb8a03ae324f512d80840af9fd477441546a075aaba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+        },
+        "targetDigest": "181b443facd44a611087ced67119f1573dbaeb2292d8b07970399273bbd0aaa4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b25ae12f7928d95fee47eb8a03ae324f512d80840af9fd477441546a075aaba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+        },
+        "targetDigest": "590e3031f2836cc5da32fa259d5262b9b48cc69f50c90e4b8f1855ce5f43d980"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6b25ae12f7928d95fee47eb8a03ae324f512d80840af9fd477441546a075aaba",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15388d6d89cbeed922907ee83c1a096091a4c706a75c4c22e64dea61d82b0313",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15388d6d89cbeed922907ee83c1a096091a4c706a75c4c22e64dea61d82b0313",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15388d6d89cbeed922907ee83c1a096091a4c706a75c4c22e64dea61d82b0313",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+        },
+        "targetDigest": "181b443facd44a611087ced67119f1573dbaeb2292d8b07970399273bbd0aaa4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15388d6d89cbeed922907ee83c1a096091a4c706a75c4c22e64dea61d82b0313",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+        },
+        "targetDigest": "590e3031f2836cc5da32fa259d5262b9b48cc69f50c90e4b8f1855ce5f43d980"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15388d6d89cbeed922907ee83c1a096091a4c706a75c4c22e64dea61d82b0313",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2f4c84675718912f4c4e5d929eb70c9df9fc7c42602716cc42e9e803b45e83fd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-display-percent-code"
+        },
+        "targetDigest": "f9a564f20063faf11012102dfafd603c37a2ca5317295248e7a9944208dd7ab6"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "32efccac5390da1f569e955f0ae4e125db489ab519ebc156d9092d7eb4409007",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 8 bespoke traits span lines 11-429; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:2fb3b568:key-unknown:en:1:g-3b9f03cb8d9654dc:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Showstopper",
+          "resolvedTextSha256": "55483a6d56531680a306f2363f41fd087ccb60d45cf1194565adbd4eefd5ddac",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "55483a6d56531680a306f2363f41fd087ccb60d45cf1194565adbd4eefd5ddac",
+              "text": "Showstopper"
+            }
+          ],
+          "sourceHash": "2fb3b568",
+          "sourceLocale": "en",
+          "sourceText": "Showstopper",
+          "sourceTextSha256": "55483a6d56531680a306f2363f41fd087ccb60d45cf1194565adbd4eefd5ddac"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:2fb3b568:key-unknown:zh-tw:1:g-3b9f03cb8d9654dc:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "歎為觀止",
+          "resolvedTextSha256": "651cb104344b5fe2565252e69d2a8c4e33d7920d96238fbd226858c95a571979",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "651cb104344b5fe2565252e69d2a8c4e33d7920d96238fbd226858c95a571979",
+              "text": "歎為觀止"
+            }
+          ],
+          "sourceHash": "2fb3b568",
+          "sourceLocale": "zh-TW",
+          "sourceText": "歎為觀止",
+          "sourceTextSha256": "651cb104344b5fe2565252e69d2a8c4e33d7920d96238fbd226858c95a571979"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "+14% chance Elite and Special enemies Explode on kill.",
+          "resolvedTextSha256": "282bbaeb58790ebab5850ee47c38f7b7f926c43fe499220411c7d4cb69cd0872",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-1",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "a8e25566357bd60d67c680cfe2852d7bb5637013f66c94035aa2c8e2b3bc6e75",
+              "text": " chance Elite and Special enemies Explode on kill."
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "en",
+          "sourceText": "{proc_chance:%s} chance Elite and Special enemies Explode on kill.",
+          "sourceTextSha256": "da2493d39215fc0fde4905944d34861b7ca07f9523afe94e37960dafa254a7ec"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "+16% chance Elite and Special enemies Explode on kill.",
+          "resolvedTextSha256": "d01ecb8c81365305af5b34c3486b6927ec12614b6594d83d288e106bd1fc2adb",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-1",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "a8e25566357bd60d67c680cfe2852d7bb5637013f66c94035aa2c8e2b3bc6e75",
+              "text": " chance Elite and Special enemies Explode on kill."
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "en",
+          "sourceText": "{proc_chance:%s} chance Elite and Special enemies Explode on kill.",
+          "sourceTextSha256": "da2493d39215fc0fde4905944d34861b7ca07f9523afe94e37960dafa254a7ec"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "+18% chance Elite and Special enemies Explode on kill.",
+          "resolvedTextSha256": "e6a6aa2401d85a13d3ad369cf8c91c7b169043b6eddaaf510ab5804bfcfb85f4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-1",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "a8e25566357bd60d67c680cfe2852d7bb5637013f66c94035aa2c8e2b3bc6e75",
+              "text": " chance Elite and Special enemies Explode on kill."
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "en",
+          "sourceText": "{proc_chance:%s} chance Elite and Special enemies Explode on kill.",
+          "sourceTextSha256": "da2493d39215fc0fde4905944d34861b7ca07f9523afe94e37960dafa254a7ec"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% chance Elite and Special enemies Explode on kill.",
+          "resolvedTextSha256": "1ff21ffa441f3be78ba98f34f47eda552fdffabea6398816faf9a35b3172627a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-1",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "a8e25566357bd60d67c680cfe2852d7bb5637013f66c94035aa2c8e2b3bc6e75",
+              "text": " chance Elite and Special enemies Explode on kill."
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "en",
+          "sourceText": "{proc_chance:%s} chance Elite and Special enemies Explode on kill.",
+          "sourceTextSha256": "da2493d39215fc0fde4905944d34861b7ca07f9523afe94e37960dafa254a7ec"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "精英和專家敵人被擊殺後有+14%幾率爆炸。",
+          "resolvedTextSha256": "868feab42a02af6a725ba4bc769b46423d9bd562c45cc7f335c8bc2db0a3c43a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f1ae81128e0e36d423b18cbcf1876a669084bbce0e8eb00a1a208a557fbda3cc",
+              "text": "精英和專家敵人被擊殺後有"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-2",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e780d56086ce1b4976eb8fd35c845bc3a9bf995e3ee3fb14da09d5462141a139",
+              "text": "幾率爆炸。"
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "zh-TW",
+          "sourceText": "精英和專家敵人被擊殺後有{proc_chance:%s}幾率爆炸。",
+          "sourceTextSha256": "a17d52ccdd75e4c0f1d796f9ca74842a21f6e515c48b741526038d24d7a31757"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "精英和專家敵人被擊殺後有+16%幾率爆炸。",
+          "resolvedTextSha256": "7eb4bf162bbe923ba80fe419da6840472ec2753bad313f03de2707354409aa82",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f1ae81128e0e36d423b18cbcf1876a669084bbce0e8eb00a1a208a557fbda3cc",
+              "text": "精英和專家敵人被擊殺後有"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-2",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e780d56086ce1b4976eb8fd35c845bc3a9bf995e3ee3fb14da09d5462141a139",
+              "text": "幾率爆炸。"
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "zh-TW",
+          "sourceText": "精英和專家敵人被擊殺後有{proc_chance:%s}幾率爆炸。",
+          "sourceTextSha256": "a17d52ccdd75e4c0f1d796f9ca74842a21f6e515c48b741526038d24d7a31757"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "精英和專家敵人被擊殺後有+18%幾率爆炸。",
+          "resolvedTextSha256": "a7f4ec1b54b6ce65fd44b3e8ca8f57a319826fec2af36b378876ee7c82fc240a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f1ae81128e0e36d423b18cbcf1876a669084bbce0e8eb00a1a208a557fbda3cc",
+              "text": "精英和專家敵人被擊殺後有"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-2",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e780d56086ce1b4976eb8fd35c845bc3a9bf995e3ee3fb14da09d5462141a139",
+              "text": "幾率爆炸。"
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "zh-TW",
+          "sourceText": "精英和專家敵人被擊殺後有{proc_chance:%s}幾率爆炸。",
+          "sourceTextSha256": "a17d52ccdd75e4c0f1d796f9ca74842a21f6e515c48b741526038d24d7a31757"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "精英和專家敵人被擊殺後有+20%幾率爆炸。",
+          "resolvedTextSha256": "3f251c56e611033f40ec44e28526d47ee58d1e1dd1626ba22b991fb534f6f038",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f1ae81128e0e36d423b18cbcf1876a669084bbce0e8eb00a1a208a557fbda3cc",
+              "text": "精英和專家敵人被擊殺後有"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-2",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e780d56086ce1b4976eb8fd35c845bc3a9bf995e3ee3fb14da09d5462141a139",
+              "text": "幾率爆炸。"
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "zh-TW",
+          "sourceText": "精英和專家敵人被擊殺後有{proc_chance:%s}幾率爆炸。",
+          "sourceTextSha256": "a17d52ccdd75e4c0f1d796f9ca74842a21f6e515c48b741526038d24d7a31757"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "歎為觀止",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:2fb3b568:key-unknown:en:1:g-3b9f03cb8d9654dc:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:2fb3b568:key-unknown:zh-tw:1:g-3b9f03cb8d9654dc:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:2fb3b568:key-unknown:zh-tw:1:g-3b9f03cb8d9654dc:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p2-chance-to-explode-elites-on-kill"
+          },
+          "key": "loc_trait_bespoke_chance_to_explode_elites_on_kill_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "proc_chance",
+              "sourceKey": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "精英和專家敵人被擊殺後有+20%幾率爆炸。",
+          "resolvedTextSha256": "3f251c56e611033f40ec44e28526d47ee58d1e1dd1626ba22b991fb534f6f038",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "f1ae81128e0e36d423b18cbcf1876a669084bbce0e8eb00a1a208a557fbda3cc",
+              "text": "精英和專家敵人被擊殺後有"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "proc_chance",
+              "segmentId": "segment-2",
+              "sha256": "a471aa77add68f4151335f927e17646c51a6cae4b11d0c105b8369ea9b8ab63c",
+              "token": "{proc_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e780d56086ce1b4976eb8fd35c845bc3a9bf995e3ee3fb14da09d5462141a139",
+              "text": "幾率爆炸。"
+            }
+          ],
+          "sourceHash": "6044aa55",
+          "sourceLocale": "zh-TW",
+          "sourceText": "精英和專家敵人被擊殺後有{proc_chance:%s}幾率爆炸。",
+          "sourceTextSha256": "a17d52ccdd75e4c0f1d796f9ca74842a21f6e515c48b741526038d24d7a31757"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "proc_chance",
+                  "placeholder": "{proc_chance:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "proc_chance",
+                  "placeholder": "{proc_chance:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "proc_chance",
+                  "placeholder": "{proc_chance:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:en:1:g-3b9f03cb8d9654dc:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:6044aa55:key-known:zh-tw:1:g-3b9f03cb8d9654dc:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p2-chance-to-explode-elites-on-kill-proc-chance-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "proc_chance",
+                  "placeholder": "{proc_chance:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:forcestaff:p2-chance-to-explode-elites-on-kill"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "104d5f2b1f711f00189b855f31eed25a31a7baf2d5ebd56571e62e8cee7ca448",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b7f6b24c7fb04c9d2db8ffc98c580f1a84e1ce7855296b1ed5cb09e7d0f83c89",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "40bb2b20122b50b800af3b89791db8b18fecbf5feb1dad6aa85031016042026c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bb064c88ff5e3a9ce70395269cb164012d382c35bd911a42871f909ebde7fbbf",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "6fed3c78d8e661619b73f0306329f130382af9a153f810fa2c0abc4327d150ae",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c0563f829b455bf45b3559f5b809d17caaf991a74557f82b383288a38a599d58",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ad54d44f089b4285e084a01785122d147d638b81a210f0d3ef3f4ad362925d3f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f0504f5dc5b96eaf2c8fa49336e0815f5d155dc2ae92730e94be651c8668ec5e",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b96acbfc0c186f7dd21cfb72742449a998a9b9580cce647b8ad3fbe47e97d310",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "58fb88555a2bef106cda6fe825d95e742569b314391408aaeb206d5f3875785d",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e7425c87612f7778ca639cb23886662ae6b324b5210bd5e94ecd1a3d3458b15b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "299d8950781f8c2678d239a3bc170a7897047441ef71af7b4ad0651b5f47b29f",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "104d5f2b1f711f00189b855f31eed25a31a7baf2d5ebd56571e62e8cee7ca448",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:content::name"
+        },
+        "targetDigest": "b7f6b24c7fb04c9d2db8ffc98c580f1a84e1ce7855296b1ed5cb09e7d0f83c89"
+      },
+      {
+        "dependenciesDigest": "40bb2b20122b50b800af3b89791db8b18fecbf5feb1dad6aa85031016042026c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:context::tierapplicability"
+        },
+        "targetDigest": "bb064c88ff5e3a9ce70395269cb164012d382c35bd911a42871f909ebde7fbbf"
+      },
+      {
+        "dependenciesDigest": "6fed3c78d8e661619b73f0306329f130382af9a153f810fa2c0abc4327d150ae",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:0"
+        },
+        "targetDigest": "c0563f829b455bf45b3559f5b809d17caaf991a74557f82b383288a38a599d58"
+      },
+      {
+        "dependenciesDigest": "ad54d44f089b4285e084a01785122d147d638b81a210f0d3ef3f4ad362925d3f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:1"
+        },
+        "targetDigest": "f0504f5dc5b96eaf2c8fa49336e0815f5d155dc2ae92730e94be651c8668ec5e"
+      },
+      {
+        "dependenciesDigest": "b96acbfc0c186f7dd21cfb72742449a998a9b9580cce647b8ad3fbe47e97d310",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:2"
+        },
+        "targetDigest": "58fb88555a2bef106cda6fe825d95e742569b314391408aaeb206d5f3875785d"
+      },
+      {
+        "dependenciesDigest": "e7425c87612f7778ca639cb23886662ae6b324b5210bd5e94ecd1a3d3458b15b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:forcestaff-p2-chance-to-explode-elites-on-kill",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3b9f03cb8d9654dc:official::tierpresentations:options:3"
+        },
+        "targetDigest": "299d8950781f8c2678d239a3bc170a7897047441ef71af7b4ad0651b5f47b29f"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

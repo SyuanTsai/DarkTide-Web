@@ -11,7 +11,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const modsCommit = '241ad76ce62330472aa423055a5b85db59bb6c0d';
 const sourceCommit = 'e46b8926cfa3fa35503e4b80b15aab7a804314e4';
 const checkoutAction = 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803';
-const currentCompositionCommit = 'bfa9fd93c74eef47353f71b94d8cede987cd2b9e';
+const currentCompositionCommit = '43d17200984d2e0d598cb8db09a335047d030f70';
 const retainedRootsEnv = ['SYP_W07_RETAINED_MODS_ROOT', 'SYP_W07_RETAINED_SOURCE_ROOT'];
 const retainedInputsAction = './.github/actions/retained-name-inputs';
 
