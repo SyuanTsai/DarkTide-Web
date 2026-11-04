@@ -72,6 +72,8 @@ function padJson(bytes, targetBytes) {
   return Buffer.concat([bytes, Buffer.alloc(targetBytes - bytes.byteLength, 0x20)]);
 }
 
+// Scenario: A compiled split package contains indexes and detail domains.
+// Purpose: Keep indexes within their tighter build budget and routes within client limits.
 test('UnitT10_split_files_and_every_named_route_stay_within_the_existing_limits', async t => {
   installTestLocation(t);
   const { manifest, manifestBytes, domainBytes } = await readCandidate();
@@ -80,6 +82,7 @@ test('UnitT10_split_files_and_every_named_route_stay_within_the_existing_limits'
     assert.equal(bytes.byteLength, file.sizeBytes, `${file.path} exact size`);
     assert.equal(sha256(bytes), file.sha256, `${file.path} exact digest`);
     assert.ok(file.sizeBytes <= MAX_DOMAIN_BYTES, `${file.path} is within 16 MiB`);
+    if (file.kind.endsWith('-index')) assert.ok(file.sizeBytes <= 8 * 1024 * 1024, `${file.path} is within 8 MiB`);
   }
 
   const weaponIndex = manifest.files.find(file => file.kind === 'weapons-index');

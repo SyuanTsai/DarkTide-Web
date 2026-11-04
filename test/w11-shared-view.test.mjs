@@ -124,6 +124,36 @@ test('UnitT50_switches_blessing_tier_as_one_exact_family_mark_view', () => {
   assert.match(tier4.sections[1].items[0].text, /第 4 級/);
 });
 
+// Scenario: A slim index and complete shard describe the same four-tier blessing.
+// Purpose: Preserve positional projections so list and detail views stay ready.
+test('UnitT52_slim_index_merges_with_every_detail_tier', () => {
+  const shard = makeBlessingDomains();
+  const presentation = shard.web.presentations[0];
+  const variant = shard.source.records.find(row => row.kind === 'blessing-variant');
+  variant.payload.definedTiers = [1, 2, 3, 4];
+  presentation.tierApplicability[0].tiers = [1, 2, 3, 4];
+  for (const tier of [2, 3]) {
+    const option = structuredClone(presentation.tierPresentations.options[0]);
+    option.tier = tier;
+    variant.payload.tierValues.push({ ...structuredClone(variant.payload.tierValues[0]), tier });
+    option.officialLocaleRefs[0].officialSourceId += ':' + tier;
+    presentation.tierPresentations.options.splice(tier - 1, 0, option);
+    const source = structuredClone(shard.web.officialInputs.sources[1]);
+    source.officialSourceId += ':' + tier;
+    source.bindingContext.tier = tier;
+    shard.web.officialInputs.sources.push(source);
+  }
+  const index = structuredClone(shard);
+  index.web.presentations[0] = Object.fromEntries(['authoringId', 'entityRef', 'locale', 'name', 'nameOfficialSourceId', 'tierApplicability'].map(key => [key, structuredClone(presentation[key])]));
+  index.web.presentations[0].tierPresentations = { options: presentation.tierPresentations.options.map(option => option.tier === 4 ? { tier: 4, officialLocaleRefs: structuredClone(option.officialLocaleRefs) } : { tier: option.tier }) };
+  index.web.officialInputs.sources = index.web.officialInputs.sources.filter(source => [officialIds.blessingName, officialIds.blessingTier4].includes(source.officialSourceId));
+  const query = { blessingRef: refs.blessing, variantRef: refs.blessingVariant };
+  const list = createSharedViewModel({ domains: [index], gameReleaseId: RELEASE });
+  assert.equal(list.getBlessingListItem({ ...query, tier: 4 }).status, 'ready');
+  const detail = createSharedViewModel({ domains: [index, shard], gameReleaseId: RELEASE });
+  for (const tier of [1, 2, 3, 4]) assert.equal(detail.getBlessing({ ...query, tier }).status, 'ready', `tier ${tier}`);
+});
+
 // Scenario: A blessing query has an unknown tier, conflicting mark/family, or no explicit variant-to-weapon ref.
 // Purpose: Never default an unknown level to the highest tier or infer family/mark applicability from identifiers.
 // Given unsupported or contradictory identity inputs, When the blessing is requested, Then no implicit tier or weapon binding is selected.
