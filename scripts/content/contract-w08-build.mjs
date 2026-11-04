@@ -731,7 +731,7 @@ export function evaluateW08PublicationGate({ sourceBuild, review, requiredConten
   };
 }
 
-function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, modeRows, termRules = null, presentationRows = null }) {
+function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, modeRows, termRules = null, presentationRows = null, reviewFieldFilter = null }) {
   const presentations = presentationRows ?? modeRows.flatMap(({ mode }) => mode.authoring.presentations.filter(item => item.entityRef.gameReleaseId === releaseId
     && ((kind === 'skills' && item.entityRef.kind === 'skill') || (kind === 'blessings' && item.entityRef.kind === 'blessing')
       || (kind === 'weapons' && item.entityRef.kind === 'weapon'))));
@@ -757,8 +757,10 @@ function makeDomainDocument({ kind, releaseId, sourceContract, sourceRecords, mo
     ...gameChanges.map(item => item.changeId),
     ...officialTextChanges.map(item => item.changeId),
   ]);
+  const presentationsByOwner = new Map(presentations.flatMap(item => [[item.authoringId, item], [item.entityRef.recordId, item]]));
   const reviewRows = modeRows.flatMap(({ mode, name }) => (mode.authoring.reviewTargets ?? [])
-    .filter(target => ownerIds.has(target.ownerId)).map(target => reviewRow(mode, name, target)))
+    .filter(target => ownerIds.has(target.ownerId) && (!reviewFieldFilter || !presentationsByOwner.has(target.ownerId)
+      || reviewFieldFilter(presentationsByOwner.get(target.ownerId), target.fieldPath))).map(target => reviewRow(mode, name, target)))
     .sort((left, right) => compareUtf8(left.mode + '\u0000' + left.target.targetId, right.mode + '\u0000' + right.target.targetId));
   const reviewIds = new Set(reviewRows.map(row => row.target.targetId));
   const reviewReceipts = modeRows.flatMap(({ mode, name }) => (mode.authoring.reviewReceipts ?? [])
@@ -1059,6 +1061,13 @@ function indexPresentation(presentation, kind) {
   return canonicalize(projected);
 }
 
+function indexReviewFieldFilter(presentation, fieldPath) {
+  const excluded = new Set(['authoringId', 'entityRef', 'locale', 'tierPresentations']);
+  if (Object.keys(presentation).some(key => !excluded.has(key) && fieldPath === '/' + key)) return true;
+  return (presentation.tierPresentations?.options ?? []).some((option, index) =>
+    Object.hasOwn(option, 'officialLocaleRefs') && fieldPath === '/tierPresentations/options/' + index);
+}
+
 function splitDetailRecords(primaryRecords, presentations, sourceContract, releaseId) {
   const recordsByKey = new Map(sourceContract.records.map(record => [sourceRecordKey(record), record]));
   const seeds = [...primaryRecords, ...releaseCompatibilityRecords(sourceContract, releaseId)];
@@ -1100,6 +1109,7 @@ function createDomainBytes(sourceContract, modes, releaseId) {
     sourceRecords: uniqueSortedRecords([...weaponRecords, ...compatibilityRecords]),
     modeRows: modes,
     presentationRows: weaponPresentations.map(presentation => indexPresentation(presentation, 'weapon')),
+    reviewFieldFilter: indexReviewFieldFilter,
   }));
   const familyIds = [...new Set(weaponRecords.map(record => record.payload?.familyId))];
   if (familyIds.some(familyId => typeof familyId !== 'string' || !SAFE_SHARD_SEGMENT.test(familyId))) {
@@ -1125,6 +1135,7 @@ function createDomainBytes(sourceContract, modes, releaseId) {
     sourceRecords: uniqueSortedRecords([...blessingRecords, ...compatibilityRecords]),
     modeRows: modes,
     presentationRows: blessingPresentations.map(presentation => indexPresentation(presentation, 'blessing')),
+    reviewFieldFilter: indexReviewFieldFilter,
   }));
   const slugs = new Map();
   const lowerSlugs = new Set();

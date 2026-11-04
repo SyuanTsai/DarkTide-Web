@@ -27,3 +27,5 @@ List indexes contain the main Source records, release-compatibility records, and
 Every file remains limited to 16 MiB and every selected route remains limited to 24 MiB, including its manifest bytes. Historical legacy manifests keep their existing loading and rendering behavior.
 
 The blessing index keeps every tier option in its original position but projects non-list tiers to their tier number. For each list tier it retains only the full zh-TW official reference, keeping other locale entries as positional projections; detail shards retain the full presentations.
+
+Index files carry presentation review rows only for projected fields.
