@@ -148,8 +148,13 @@ test('UnitT52_slim_index_merges_with_every_detail_tier', () => {
   index.web.presentations[0].tierPresentations = { options: presentation.tierPresentations.options.map(option => option.tier === 4 ? { tier: 4, officialLocaleRefs: structuredClone(option.officialLocaleRefs) } : { tier: option.tier }) };
   index.web.officialInputs.sources = index.web.officialInputs.sources.filter(source => [officialIds.blessingName, officialIds.blessingTier4].includes(source.officialSourceId));
   const query = { blessingRef: refs.blessing, variantRef: refs.blessingVariant };
-  const list = createSharedViewModel({ domains: [index], gameReleaseId: RELEASE });
-  assert.equal(list.getBlessingListItem({ ...query, tier: 4 }).status, 'ready');
+  const digest = 'a'.repeat(64);
+  index.web.reviewTargets = [{ mode: 'w06', target: { targetId: 'name', ownerKind: 'presentation', ownerId: presentation.authoringId, fieldPath: '/name' }, state: 'approved', targetDigest: digest, dependenciesDigest: digest }];
+  index.web.reviewReceipts = [{ mode: 'w06', receipt: { targetId: 'name', decision: 'approved', targetDigest: digest, dependenciesDigest: digest, reviewer: { kind: 'human', id: 'test' } } }];
+  const listItem = createSharedViewModel({ domains: [index], gameReleaseId: RELEASE }).getBlessingListItem({ ...query, tier: 4 });
+  assert.equal(listItem.status, 'ready');
+  assert.equal(listItem.name, presentation.name);
+  assert.equal(listItem.official.resolvedText, shard.web.officialInputs.sources.find(source => source.officialSourceId === officialIds.blessingTier4).resolvedText);
   const detail = createSharedViewModel({ domains: [index, shard], gameReleaseId: RELEASE });
   for (const tier of [1, 2, 3, 4]) assert.equal(detail.getBlessing({ ...query, tier }).status, 'ready', `tier ${tier}`);
 });
