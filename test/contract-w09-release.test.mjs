@@ -594,6 +594,39 @@ test('InterT14_formal-source-replay-prepares-a-candidate-package-and-reuses-its-
   const request = requests.find(row => row.gameReleaseId === 'darktide:1.13.2');
   assert.ok(request, 'Source W05 packet must include the selected W07 game release');
   assert.equal(request.eligibility.status, 'eligible');
+  // Exercise the split reader against committed blobs, including chunked weapon paths.
+  const splitDirectory = path.join(sourceRoot, 'content/authoring/v2/w07');
+  await mkdir(path.join(splitDirectory, 'weapons'), { recursive: true });
+  const { schemaVersion, contractKind, fixtureOnly, publicationEligible, gameReleases, sourceRefs, records, tombstones, reviewReceipts, sourceSnapshots } = formalSource;
+  const splitParts = [
+    ['shared.json', { records: [], reviewReceipts: [], gameReleases, sourceRefs, tombstones, sourceSnapshots }],
+    ['weapons/family.1.json', { records: records.slice(0, 1), reviewReceipts: reviewReceipts.slice(0, 1) }],
+    ['weapons/family.2.json', { records: records.slice(1), reviewReceipts: reviewReceipts.slice(1) }],
+  ];
+  const partRows = [];
+  for (const [name, value] of splitParts) {
+    const bytes = jsonBytes(value);
+    await writeFile(path.join(splitDirectory, ...name.split('/')), bytes);
+    partRows.push({ path: name, sizeBytes: bytes.length, sha256: sha256(bytes) });
+  }
+  await writeFile(path.join(splitDirectory, 'index.json'), jsonBytes({
+    schema: 'w07-authoring-split/1', bundle: { schemaVersion, contractKind, fixtureOnly, publicationEligible }, parts: partRows,
+  }));
+  git(sourceRoot, ['add', '--all']);
+  git(sourceRoot, ['commit', '-m', 'W09 split source fixture']);
+  const splitCommit = git(sourceRoot, ['rev-parse', 'HEAD']);
+  const splitRefs = inputRefs.map(ref => ref.role === 'baseline' ? ref : { ...ref, path: sourceApi.W09_SOURCE_INPUT_PATHS.w07Split });
+  const splitRequests = await sourceApi.createW09SourceRequests({ packetDir: packetRoot, sourceRoot, expectedCommit: splitCommit, inputRefs: splitRefs });
+  assert.ok(splitRequests.length > 0);
+  for (const row of splitRequests) for (const input of row.sourceInputs.slice(1)) {
+    assert.equal(input.path, sourceApi.W09_SOURCE_INPUT_PATHS.w07Split);
+    assert.equal(input.sha256, inputSha256);
+  }
+  await writeFile(path.join(splitDirectory, 'weapons/family.1.json'), jsonBytes({ records: [], reviewReceipts: [] }));
+  git(sourceRoot, ['add', '--all']);
+  git(sourceRoot, ['commit', '-m', 'W09 tampered split fixture']);
+  await assert.rejects(sourceApi.createW09SourceRequests({ packetDir: packetRoot, sourceRoot, expectedCommit: git(sourceRoot, ['rev-parse', 'HEAD']), inputRefs: splitRefs }), /Authoring part integrity mismatch/);
+  git(sourceRoot, ['reset', '--hard', sourceCommit]);
   const archivedRequests = await Promise.all(requests.map(async (row, index) => ({
     request: row,
     archiveBytes: await sourceApi.createW09SourceArchive({ request: row, packetDir: packetRoot }),
