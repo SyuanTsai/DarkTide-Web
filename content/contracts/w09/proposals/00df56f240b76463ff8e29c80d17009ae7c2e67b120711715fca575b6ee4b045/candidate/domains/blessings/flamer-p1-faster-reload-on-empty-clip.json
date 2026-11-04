@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.24",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.28",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.32",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.36",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "value": {
+            "decimal": "24",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "value": {
+            "decimal": "28",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "value": {
+            "decimal": "32",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.reload_speed.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "value": {
+            "decimal": "36",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value reload_speed at stat_buffs.stat_buffs.reload_speed; defined tier literals are tier 1=0.24, tier 2=0.28, tier 3=0.32, tier 4=0.36.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "df5f04e8e5acf79f0905f27b783d967732b937e130c259ae3b0e8fa929f83ec1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "e41ab9c6d00548753e901d50cf867ab5b5277f698fe4eb7fd24d3de6dff37dd5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "df5f04e8e5acf79f0905f27b783d967732b937e130c259ae3b0e8fa929f83ec1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "df5f04e8e5acf79f0905f27b783d967732b937e130c259ae3b0e8fa929f83ec1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "df5f04e8e5acf79f0905f27b783d967732b937e130c259ae3b0e8fa929f83ec1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "664f2a25344810cd97ae1b2a9c98991cc0df5d5d72af76b402c7f834e713735d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "df5f04e8e5acf79f0905f27b783d967732b937e130c259ae3b0e8fa929f83ec1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13bef69d83b5204f97ff959a2ed605f7d42f7f86271f139026761e8b7b389f1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "29d0472121d8da9dcdfd5b06de340444c4db31667eb05cac4f911ad3b014625f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13bef69d83b5204f97ff959a2ed605f7d42f7f86271f139026761e8b7b389f1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13bef69d83b5204f97ff959a2ed605f7d42f7f86271f139026761e8b7b389f1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "targetDigest": "41990304389f177e4dde02f789bca7ab78fcfb7bc19b58d77ad7c5e333883c66"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b8c373e7898f792fbc0e16625bdbaf0870b72963f3e771535d5f49301b82322",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b8c373e7898f792fbc0e16625bdbaf0870b72963f3e771535d5f49301b82322",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b8c373e7898f792fbc0e16625bdbaf0870b72963f3e771535d5f49301b82322",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "249438ea15adc134352053c2c1be15e7aad812c0adbbbcdaad27227cbc5ef7d0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b8c373e7898f792fbc0e16625bdbaf0870b72963f3e771535d5f49301b82322",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "21fb95c7727d7911d40684b67e5da0441bb3f464e0f05e4de019a2227259f32e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7b8c373e7898f792fbc0e16625bdbaf0870b72963f3e771535d5f49301b82322",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+        },
+        "targetDigest": "9a73fdb452ed5a8732a333f7a79491ed2313beeab1c3e7cb2f5ca77bbed63bca"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5af7afd062799785097b90f2ae86731a478f69ee71324127debecf2cdcbb01b1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5af7afd062799785097b90f2ae86731a478f69ee71324127debecf2cdcbb01b1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5af7afd062799785097b90f2ae86731a478f69ee71324127debecf2cdcbb01b1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "249438ea15adc134352053c2c1be15e7aad812c0adbbbcdaad27227cbc5ef7d0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5af7afd062799785097b90f2ae86731a478f69ee71324127debecf2cdcbb01b1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "21fb95c7727d7911d40684b67e5da0441bb3f464e0f05e4de019a2227259f32e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5af7afd062799785097b90f2ae86731a478f69ee71324127debecf2cdcbb01b1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+        },
+        "targetDigest": "f477c823d92ee8a258e8a260b48e07b557ade3f392714f8ae715a995d1a4b8a5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55a779d59760b1dbd498bb2c1b6d37754c869420212521b594c7d7bfa5aac6ae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55a779d59760b1dbd498bb2c1b6d37754c869420212521b594c7d7bfa5aac6ae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55a779d59760b1dbd498bb2c1b6d37754c869420212521b594c7d7bfa5aac6ae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "249438ea15adc134352053c2c1be15e7aad812c0adbbbcdaad27227cbc5ef7d0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55a779d59760b1dbd498bb2c1b6d37754c869420212521b594c7d7bfa5aac6ae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "21fb95c7727d7911d40684b67e5da0441bb3f464e0f05e4de019a2227259f32e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55a779d59760b1dbd498bb2c1b6d37754c869420212521b594c7d7bfa5aac6ae",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+        },
+        "targetDigest": "25a5d67701ad62da99a05cb6709838c1c10e5d7460555581e6bb65e0e4949db5"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31709aa95e02df8b18213dbedb36828bc2b3b7a58bb7b9890721ae3380275442",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31709aa95e02df8b18213dbedb36828bc2b3b7a58bb7b9890721ae3380275442",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31709aa95e02df8b18213dbedb36828bc2b3b7a58bb7b9890721ae3380275442",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "249438ea15adc134352053c2c1be15e7aad812c0adbbbcdaad27227cbc5ef7d0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31709aa95e02df8b18213dbedb36828bc2b3b7a58bb7b9890721ae3380275442",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "21fb95c7727d7911d40684b67e5da0441bb3f464e0f05e4de019a2227259f32e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31709aa95e02df8b18213dbedb36828bc2b3b7a58bb7b9890721ae3380275442",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+        },
+        "targetDigest": "b580ec9a0231fd615e66dbf2fe7cc034719769bafb27851d12a18fc5fd9c98c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15e1cebadc9e57bef0d09527ccdec20acc715401273bf00cd9f26dea3b2c33a2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:flamer:p1-faster-reload-on-empty-clip-reload-speed-display-percent-code"
+        },
+        "targetDigest": "a0f883fb6acd4546ff5e90b9e149969b60bb278b30dea0ad1ef110c5428a4021"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b2b9adf72f1817bed354fa457d860697316b887a2a2fd359090d30a8d2ba6c4a",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_flamer_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 8 bespoke traits span lines 11-378; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-flamer-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:13547a5e:key-unknown:en:1:g-e51178471421d637:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Quickflame",
+          "resolvedTextSha256": "7ffdd8442b49aad88c35826da55be8f5df39700796f4538c0ec7d4526ca92bea",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7ffdd8442b49aad88c35826da55be8f5df39700796f4538c0ec7d4526ca92bea",
+              "text": "Quickflame"
+            }
+          ],
+          "sourceHash": "13547a5e",
+          "sourceLocale": "en",
+          "sourceText": "Quickflame",
+          "sourceTextSha256": "7ffdd8442b49aad88c35826da55be8f5df39700796f4538c0ec7d4526ca92bea"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:13547a5e:key-unknown:zh-tw:1:g-e51178471421d637:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "迅捷火焰",
+          "resolvedTextSha256": "193c7360ee7eaed306d97ce4860246f8f3898f4a2a577ba9c3564d024fe7c225",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "193c7360ee7eaed306d97ce4860246f8f3898f4a2a577ba9c3564d024fe7c225",
+              "text": "迅捷火焰"
+            }
+          ],
+          "sourceHash": "13547a5e",
+          "sourceLocale": "zh-TW",
+          "sourceText": "迅捷火焰",
+          "sourceTextSha256": "193c7360ee7eaed306d97ce4860246f8f3898f4a2a577ba9c3564d024fe7c225"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent",
+              "value": "+24%"
+            }
+          ],
+          "resolvedText": "+24% Reload Speed if empty.",
+          "resolvedTextSha256": "d506ee0057ab0350eb03de45f1cfe21cf73c2a247ee1260f62774743099b11b9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "88c914822dccf4885fd0cb10c2b567b82abec5bcf8786a9ca18eaa2cbde9e5b5",
+              "text": " Reload Speed if empty."
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed if empty.",
+          "sourceTextSha256": "b66603638678c59f99acf61e1738eeaf3218bffcf720b051dc60efd16734257e"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent",
+              "value": "+28%"
+            }
+          ],
+          "resolvedText": "+28% Reload Speed if empty.",
+          "resolvedTextSha256": "dad5a85604fa4f9ab1a96575df05e528a7b94a8bc067ceb1550d21f18af0cdc0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "88c914822dccf4885fd0cb10c2b567b82abec5bcf8786a9ca18eaa2cbde9e5b5",
+              "text": " Reload Speed if empty."
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed if empty.",
+          "sourceTextSha256": "b66603638678c59f99acf61e1738eeaf3218bffcf720b051dc60efd16734257e"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent",
+              "value": "+32%"
+            }
+          ],
+          "resolvedText": "+32% Reload Speed if empty.",
+          "resolvedTextSha256": "ebbb0ae8e1f3a80fde86e5a2a66978b2bf0cb954699a3472d67f655171097d04",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "88c914822dccf4885fd0cb10c2b567b82abec5bcf8786a9ca18eaa2cbde9e5b5",
+              "text": " Reload Speed if empty."
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed if empty.",
+          "sourceTextSha256": "b66603638678c59f99acf61e1738eeaf3218bffcf720b051dc60efd16734257e"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent",
+              "value": "+36%"
+            }
+          ],
+          "resolvedText": "+36% Reload Speed if empty.",
+          "resolvedTextSha256": "ae4e75a045b605227cfb437c718972952bf4ac6ba72f5e94fbca89fcd8476296",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-1",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "88c914822dccf4885fd0cb10c2b567b82abec5bcf8786a9ca18eaa2cbde9e5b5",
+              "text": " Reload Speed if empty."
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "en",
+          "sourceText": "{reload_speed:%s} Reload Speed if empty.",
+          "sourceTextSha256": "b66603638678c59f99acf61e1738eeaf3218bffcf720b051dc60efd16734257e"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent",
+              "value": "+24%"
+            }
+          ],
+          "resolvedText": "彈夾打空時，裝填速度提高+24%。",
+          "resolvedTextSha256": "4610de62d62be65cb9de31ec88995e545bbed0ea8ea452cbb9dfd4d4f4b67770",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "007060469105820e9f859032e20b3289d70141d91f8f994acbadb2a2a0197dff",
+              "text": "彈夾打空時，裝填速度提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "彈夾打空時，裝填速度提高{reload_speed:%s}。",
+          "sourceTextSha256": "be33e7991db86f588362e9b87b1e06f0b3b7f2a51ba7833cf01df1e5cab23ab2"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent",
+              "value": "+28%"
+            }
+          ],
+          "resolvedText": "彈夾打空時，裝填速度提高+28%。",
+          "resolvedTextSha256": "f8787d17fd3f7a0ba4e4d4c52def458013abdf2db07a1fba6df1199821df100d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "007060469105820e9f859032e20b3289d70141d91f8f994acbadb2a2a0197dff",
+              "text": "彈夾打空時，裝填速度提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "彈夾打空時，裝填速度提高{reload_speed:%s}。",
+          "sourceTextSha256": "be33e7991db86f588362e9b87b1e06f0b3b7f2a51ba7833cf01df1e5cab23ab2"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent",
+              "value": "+32%"
+            }
+          ],
+          "resolvedText": "彈夾打空時，裝填速度提高+32%。",
+          "resolvedTextSha256": "e4e96c01fdbe550e96348bdd46dbf43f833e29a9ea9cdfa5f8ad6e07d6abaf78",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "007060469105820e9f859032e20b3289d70141d91f8f994acbadb2a2a0197dff",
+              "text": "彈夾打空時，裝填速度提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "彈夾打空時，裝填速度提高{reload_speed:%s}。",
+          "sourceTextSha256": "be33e7991db86f588362e9b87b1e06f0b3b7f2a51ba7833cf01df1e5cab23ab2"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent",
+              "value": "+36%"
+            }
+          ],
+          "resolvedText": "彈夾打空時，裝填速度提高+36%。",
+          "resolvedTextSha256": "80618dfcc510fe2f9b9c9f77ae032e2e1382b312049fa8c1a322b72fdb9dda83",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "007060469105820e9f859032e20b3289d70141d91f8f994acbadb2a2a0197dff",
+              "text": "彈夾打空時，裝填速度提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "彈夾打空時，裝填速度提高{reload_speed:%s}。",
+          "sourceTextSha256": "be33e7991db86f588362e9b87b1e06f0b3b7f2a51ba7833cf01df1e5cab23ab2"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "迅捷火焰",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:13547a5e:key-unknown:en:1:g-e51178471421d637:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:13547a5e:key-unknown:zh-tw:1:g-e51178471421d637:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:13547a5e:key-unknown:zh-tw:1:g-e51178471421d637:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:flamer:p1-faster-reload-on-empty-clip"
+          },
+          "key": "loc_trait_bespoke_faster_reload_on_empty_clip_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "reload_speed",
+              "sourceKey": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent",
+              "value": "+36%"
+            }
+          ],
+          "resolvedText": "彈夾打空時，裝填速度提高+36%。",
+          "resolvedTextSha256": "80618dfcc510fe2f9b9c9f77ae032e2e1382b312049fa8c1a322b72fdb9dda83",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "007060469105820e9f859032e20b3289d70141d91f8f994acbadb2a2a0197dff",
+              "text": "彈夾打空時，裝填速度提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "reload_speed",
+              "segmentId": "segment-2",
+              "sha256": "1d4f3ea8b47c1c165fad2e2ad645d367ca2f21a6e5df29f3e62e8ceb8fd4d9d1",
+              "token": "{reload_speed:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "d39317a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "彈夾打空時，裝填速度提高{reload_speed:%s}。",
+          "sourceTextSha256": "be33e7991db86f588362e9b87b1e06f0b3b7f2a51ba7833cf01df1e5cab23ab2"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:en:1:g-e51178471421d637:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d39317a1:key-known:zh-tw:1:g-e51178471421d637:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:flamer:p1-faster-reload-on-empty-clip-reload-speed-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "reload_speed",
+                  "placeholder": "{reload_speed:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:flamer:p1-faster-reload-on-empty-clip"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f7420d874fdb36cdcccaa6e7c6dd46af0efcb291f4977803a8e554f4c16c510b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5638283236e1f9e019ff4e2d2f7f4780918ab47485b4101105203d41ea8fa392",
+          "targetId": "review:w06:generic:e51178471421d637:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0db6477a6d4dacdddeb0437cfdc5f8d20937ab93f20702ab83a3b635e4b96972",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "589b75768370145b63f33e1af60b958a89a16797fcee0492dea5bbd5005f1d66",
+          "targetId": "review:w06:generic:e51178471421d637:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "21d5f18a92d855b21728e37d528693632500a4f514005f5785b76b42dbaade50",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "300e302896366a4b90521320adf9d153448ca5b38098641be74a944cfaece7d5",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d44dd9b1c8b83ed4dede9c809e9d109eec2e16a8b09264704fe3faafffb899bd",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "8a4f6a6782d9f2e0b288f49f2145a717ed14152228f98e7aef2230671fc6d833",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7dc541356a38cedb6da783b03922c9955975e1e61770acd15822d716ac73e7b2",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "884ade8b93017e05729be753ce3d7819409b065ba297bc2956edf4a508d81c6a",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2526bc1e142876ae12e6b4b114039937dd7fc442744dfdc5d9f14c01ba0c0cfe",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "cb8c23a332e30e2ff3168d4f36a9e81f79819d6879642d97ab28eb75e03fad64",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "f7420d874fdb36cdcccaa6e7c6dd46af0efcb291f4977803a8e554f4c16c510b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:content::name"
+        },
+        "targetDigest": "5638283236e1f9e019ff4e2d2f7f4780918ab47485b4101105203d41ea8fa392"
+      },
+      {
+        "dependenciesDigest": "0db6477a6d4dacdddeb0437cfdc5f8d20937ab93f20702ab83a3b635e4b96972",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:context::tierapplicability"
+        },
+        "targetDigest": "589b75768370145b63f33e1af60b958a89a16797fcee0492dea5bbd5005f1d66"
+      },
+      {
+        "dependenciesDigest": "21d5f18a92d855b21728e37d528693632500a4f514005f5785b76b42dbaade50",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:0"
+        },
+        "targetDigest": "300e302896366a4b90521320adf9d153448ca5b38098641be74a944cfaece7d5"
+      },
+      {
+        "dependenciesDigest": "d44dd9b1c8b83ed4dede9c809e9d109eec2e16a8b09264704fe3faafffb899bd",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:1"
+        },
+        "targetDigest": "8a4f6a6782d9f2e0b288f49f2145a717ed14152228f98e7aef2230671fc6d833"
+      },
+      {
+        "dependenciesDigest": "7dc541356a38cedb6da783b03922c9955975e1e61770acd15822d716ac73e7b2",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:2"
+        },
+        "targetDigest": "884ade8b93017e05729be753ce3d7819409b065ba297bc2956edf4a508d81c6a"
+      },
+      {
+        "dependenciesDigest": "2526bc1e142876ae12e6b4b114039937dd7fc442744dfdc5d9f14c01ba0c0cfe",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:flamer-p1-faster-reload-on-empty-clip",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:e51178471421d637:official::tierpresentations:options:3"
+        },
+        "targetDigest": "cb8c23a332e30e2ff3168d4f36a9e81f79819d6879642d97ab28eb75e03fad64"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.15",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.25",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:boltpistol:p1-close-explosion",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.radius.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.radius.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+          },
+          "value": {
+            "decimal": "15",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.radius.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.radius.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+          },
+          "value": {
+            "decimal": "25",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value radius at stat_buffs.stat_buffs.explosion_radius_modifier; defined tier literals are tier 1=0.1, tier 2=0.15, tier 3=0.2, tier 4=0.25.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb6afe1b28f0523c13dd133c12ecfe0193429851113309ab1abf0f26d80e0c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "8fd897168b3501552be942d80545dba808017c8783806d1d089e1120067dff70"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb6afe1b28f0523c13dd133c12ecfe0193429851113309ab1abf0f26d80e0c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb6afe1b28f0523c13dd133c12ecfe0193429851113309ab1abf0f26d80e0c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb6afe1b28f0523c13dd133c12ecfe0193429851113309ab1abf0f26d80e0c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "20231496c759b33215963d707ccdde60c5c7dc51623f5feeed93938c2f3d7db6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "15fb6afe1b28f0523c13dd133c12ecfe0193429851113309ab1abf0f26d80e0c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed59678ef1c24d27651f5e0c77f32663b68ecd7f50003ae2fda2bd1c8dafb2ca",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "d5b3b63efed45e963c59d8205e5531834bc4c096d91a2057e25386c5a8bb734a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed59678ef1c24d27651f5e0c77f32663b68ecd7f50003ae2fda2bd1c8dafb2ca",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ed59678ef1c24d27651f5e0c77f32663b68ecd7f50003ae2fda2bd1c8dafb2ca",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+        },
+        "targetDigest": "c6478ecb0beb8d225733803fb34f1d3c4bb17ec2c039642be525902a7f6ba7b6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9899bb375a871a55e6e4697f89b2a9575a1321b99d2e3b34fcde526cd7a905ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9899bb375a871a55e6e4697f89b2a9575a1321b99d2e3b34fcde526cd7a905ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9899bb375a871a55e6e4697f89b2a9575a1321b99d2e3b34fcde526cd7a905ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+        },
+        "targetDigest": "ae8c64abf9f313a1acc60ed014d8304624603abe2e5cbee49c4953aabbe9c49b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9899bb375a871a55e6e4697f89b2a9575a1321b99d2e3b34fcde526cd7a905ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+        },
+        "targetDigest": "41130933fd0d3c6d228ab58d5bacd339f2dff160e97d640be869f823d6251488"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9899bb375a871a55e6e4697f89b2a9575a1321b99d2e3b34fcde526cd7a905ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2632107c8c889b57733dfb39513d42f8279dad263df15a0b893d1cac5127c142",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2632107c8c889b57733dfb39513d42f8279dad263df15a0b893d1cac5127c142",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2632107c8c889b57733dfb39513d42f8279dad263df15a0b893d1cac5127c142",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+        },
+        "targetDigest": "ae8c64abf9f313a1acc60ed014d8304624603abe2e5cbee49c4953aabbe9c49b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2632107c8c889b57733dfb39513d42f8279dad263df15a0b893d1cac5127c142",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+        },
+        "targetDigest": "41130933fd0d3c6d228ab58d5bacd339f2dff160e97d640be869f823d6251488"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2632107c8c889b57733dfb39513d42f8279dad263df15a0b893d1cac5127c142",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+        },
+        "targetDigest": "739df5e9349af5eb505bd3ba2a4e62bc4772d8de7f00fad260f9b5a1335af027"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5d85bf1c787ca971ca16958ac41936e72acaa07b72586eacde09668d8f0de60",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5d85bf1c787ca971ca16958ac41936e72acaa07b72586eacde09668d8f0de60",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5d85bf1c787ca971ca16958ac41936e72acaa07b72586eacde09668d8f0de60",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+        },
+        "targetDigest": "ae8c64abf9f313a1acc60ed014d8304624603abe2e5cbee49c4953aabbe9c49b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5d85bf1c787ca971ca16958ac41936e72acaa07b72586eacde09668d8f0de60",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+        },
+        "targetDigest": "41130933fd0d3c6d228ab58d5bacd339f2dff160e97d640be869f823d6251488"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a5d85bf1c787ca971ca16958ac41936e72acaa07b72586eacde09668d8f0de60",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cfe9da62078c96c7cdc0a8931b12d46beb5668e6bd78cb74e38ef0f2389afcdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cfe9da62078c96c7cdc0a8931b12d46beb5668e6bd78cb74e38ef0f2389afcdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cfe9da62078c96c7cdc0a8931b12d46beb5668e6bd78cb74e38ef0f2389afcdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+        },
+        "targetDigest": "ae8c64abf9f313a1acc60ed014d8304624603abe2e5cbee49c4953aabbe9c49b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cfe9da62078c96c7cdc0a8931b12d46beb5668e6bd78cb74e38ef0f2389afcdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+        },
+        "targetDigest": "41130933fd0d3c6d228ab58d5bacd339f2dff160e97d640be869f823d6251488"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cfe9da62078c96c7cdc0a8931b12d46beb5668e6bd78cb74e38ef0f2389afcdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+        },
+        "targetDigest": "861da65833839a9f1ead7b9255c54b5007850f45311db7ef3b9dfeff753071cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e2424a59dc10f7abcc9d03314c150dcfc41242f702a12060382a4e6377a51abb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:boltpistol:p1-close-explosion-radius-display-percent-code"
+        },
+        "targetDigest": "05f89e64f82c8ed0ea499a8f408b997f299aa999aec897f79fe0c6f466931800"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "42301cd2d535dc3cb7f43a7aef89d3e2d0d5864349d0b75eecbe9106d366efcf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_boltpistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-467; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-boltpistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "Point blank shots cause an explosion. Explosion Radius increases by +10%.",
+          "resolvedTextSha256": "a70efbaa7238d1486d51c5ad57a83b34f6fb3f77e6bf0740f60d241a3133705e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5afec86bf25ccf9067fd6d4c13d876495356456271ca51959be705cac30f4a1c",
+              "text": "Point blank shots cause an explosion. Explosion Radius increases by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "en",
+          "sourceText": "Point blank shots cause an explosion. Explosion Radius increases by {radius:%s}.",
+          "sourceTextSha256": "37bed2485d9a7606880e451e4b7b1d67c8140ce05350d251fbaee2032afb4558"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "Point blank shots cause an explosion. Explosion Radius increases by +15%.",
+          "resolvedTextSha256": "8c8a1734efabc91f871379a67f2f5c7c11fa67840cf840414bdd932cc6c3796f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5afec86bf25ccf9067fd6d4c13d876495356456271ca51959be705cac30f4a1c",
+              "text": "Point blank shots cause an explosion. Explosion Radius increases by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "en",
+          "sourceText": "Point blank shots cause an explosion. Explosion Radius increases by {radius:%s}.",
+          "sourceTextSha256": "37bed2485d9a7606880e451e4b7b1d67c8140ce05350d251fbaee2032afb4558"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "Point blank shots cause an explosion. Explosion Radius increases by +20%.",
+          "resolvedTextSha256": "6799fda5d466b80bdac2be3609adc27e4b1ffc239614cb3fdfe553f0b5420846",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5afec86bf25ccf9067fd6d4c13d876495356456271ca51959be705cac30f4a1c",
+              "text": "Point blank shots cause an explosion. Explosion Radius increases by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "en",
+          "sourceText": "Point blank shots cause an explosion. Explosion Radius increases by {radius:%s}.",
+          "sourceTextSha256": "37bed2485d9a7606880e451e4b7b1d67c8140ce05350d251fbaee2032afb4558"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "Point blank shots cause an explosion. Explosion Radius increases by +25%.",
+          "resolvedTextSha256": "691b6e5505a56393934e22088c57c73146f306c2654c7cd030f273b609e0dc8f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5afec86bf25ccf9067fd6d4c13d876495356456271ca51959be705cac30f4a1c",
+              "text": "Point blank shots cause an explosion. Explosion Radius increases by "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+              "text": "."
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "en",
+          "sourceText": "Point blank shots cause an explosion. Explosion Radius increases by {radius:%s}.",
+          "sourceTextSha256": "37bed2485d9a7606880e451e4b7b1d67c8140ce05350d251fbaee2032afb4558"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "零距離射擊會造成爆炸。爆炸範圍增加+10%。",
+          "resolvedTextSha256": "bc2ccfc0654139ab8e8d4281bb385bf8bd59f2513af48d823cabaf3c512257bf",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c64d588234561476c8e29b0367a20f46531a2287e4106c2214922a6e152ba9d0",
+              "text": "零距離射擊會造成爆炸。爆炸範圍增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "零距離射擊會造成爆炸。爆炸範圍增加{radius:%s}。",
+          "sourceTextSha256": "e68e13b70726ed7d2b0d44b4c7e789f909444538cefdeafa08f7186af106adba"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "零距離射擊會造成爆炸。爆炸範圍增加+15%。",
+          "resolvedTextSha256": "49b1d0d70fe1c8221aa410d4d1eb6255127047f6f071c276d48b6738a2567155",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c64d588234561476c8e29b0367a20f46531a2287e4106c2214922a6e152ba9d0",
+              "text": "零距離射擊會造成爆炸。爆炸範圍增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "零距離射擊會造成爆炸。爆炸範圍增加{radius:%s}。",
+          "sourceTextSha256": "e68e13b70726ed7d2b0d44b4c7e789f909444538cefdeafa08f7186af106adba"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "零距離射擊會造成爆炸。爆炸範圍增加+20%。",
+          "resolvedTextSha256": "4990712c776906277779d116daf419c3e1737a761c2ef9e254f69341a47a880c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c64d588234561476c8e29b0367a20f46531a2287e4106c2214922a6e152ba9d0",
+              "text": "零距離射擊會造成爆炸。爆炸範圍增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "零距離射擊會造成爆炸。爆炸範圍增加{radius:%s}。",
+          "sourceTextSha256": "e68e13b70726ed7d2b0d44b4c7e789f909444538cefdeafa08f7186af106adba"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "零距離射擊會造成爆炸。爆炸範圍增加+25%。",
+          "resolvedTextSha256": "bd8ee595013cbb92d4ccb2f65a7f10cbe857360e442969e33e497d8b7b5f4bb8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c64d588234561476c8e29b0367a20f46531a2287e4106c2214922a6e152ba9d0",
+              "text": "零距離射擊會造成爆炸。爆炸範圍增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "零距離射擊會造成爆炸。爆炸範圍增加{radius:%s}。",
+          "sourceTextSha256": "e68e13b70726ed7d2b0d44b4c7e789f909444538cefdeafa08f7186af106adba"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:9fbc423b:key-unknown:en:1:g-9f8110cf250d1cec:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Lethal Proximity",
+          "resolvedTextSha256": "ac4a9d99401aaea488a7f5a56b6171889be6567d75370f3bb1166c73b5c18d39",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "ac4a9d99401aaea488a7f5a56b6171889be6567d75370f3bb1166c73b5c18d39",
+              "text": "Lethal Proximity"
+            }
+          ],
+          "sourceHash": "9fbc423b",
+          "sourceLocale": "en",
+          "sourceText": "Lethal Proximity",
+          "sourceTextSha256": "ac4a9d99401aaea488a7f5a56b6171889be6567d75370f3bb1166c73b5c18d39"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:9fbc423b:key-unknown:zh-tw:1:g-9f8110cf250d1cec:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "致命零距離",
+          "resolvedTextSha256": "666b9e9e3c2e10fe213e82d8755db0cb98e1147307b3ce2f2b4de368730af38a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "666b9e9e3c2e10fe213e82d8755db0cb98e1147307b3ce2f2b4de368730af38a",
+              "text": "致命零距離"
+            }
+          ],
+          "sourceHash": "9fbc423b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命零距離",
+          "sourceTextSha256": "666b9e9e3c2e10fe213e82d8755db0cb98e1147307b3ce2f2b4de368730af38a"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:boltpistol-p1-close-explosion",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "致命零距離",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:9fbc423b:key-unknown:en:1:g-9f8110cf250d1cec:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:9fbc423b:key-unknown:zh-tw:1:g-9f8110cf250d1cec:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:9fbc423b:key-unknown:zh-tw:1:g-9f8110cf250d1cec:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:boltpistol:p1-close-explosion"
+          },
+          "key": "loc_trait_bespoke_close_explosion_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "radius",
+              "sourceKey": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "零距離射擊會造成爆炸。爆炸範圍增加+25%。",
+          "resolvedTextSha256": "bd8ee595013cbb92d4ccb2f65a7f10cbe857360e442969e33e497d8b7b5f4bb8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c64d588234561476c8e29b0367a20f46531a2287e4106c2214922a6e152ba9d0",
+              "text": "零距離射擊會造成爆炸。爆炸範圍增加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "radius",
+              "segmentId": "segment-2",
+              "sha256": "3a206a563eae645e0f7557d5a815cb33988e0638783158660b6d456402f924a1",
+              "token": "{radius:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "eb0d5884569b398e475b89e77a068c6c575a0064ff6a72fafc173102c4cfcd57",
+              "text": "。"
+            }
+          ],
+          "sourceHash": "4823386b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "零距離射擊會造成爆炸。爆炸範圍增加{radius:%s}。",
+          "sourceTextSha256": "e68e13b70726ed7d2b0d44b4c7e789f909444538cefdeafa08f7186af106adba"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "radius",
+                  "placeholder": "{radius:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "radius",
+                  "placeholder": "{radius:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "radius",
+                  "placeholder": "{radius:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:en:1:g-9f8110cf250d1cec:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4823386b:key-known:zh-tw:1:g-9f8110cf250d1cec:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:boltpistol:p1-close-explosion-radius-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "radius",
+                  "placeholder": "{radius:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:boltpistol:p1-close-explosion"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "83b98990f0f9c05e7cb693f06931c17c44a00915c818a0a717711e711491f724",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f0e3262c4f2995cdc7a49f8f875835bce7640d6cf8d7eeb02c2f0e6e9937d100",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d7c3016e53d05228ae794636cc7a4f1e444c571e2da7b1c76b66866dee058066",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "1c6b0b6dc82f2cc35d13aa9305f61e390d2da065afb9c5d798f408168e3f0ecb",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b800deea09292f999f8ef80b8bc636d2e5bbaa98fe100e606cac8c357b572b4b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7bdb5b2ac6b10d140cae95a0cc95d1488d092fadfd640f2df55e3272a080019e",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ba102f61fba9c310eddcb8515c29fceaf713c505b0b662d41b8aefa35afd8ec1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "e7c911cb10a36bd999b80431cf0d406136218bbad1238ffddf379f9339445a90",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "823c76154c04f09161f75d16dcb6eb3ede499ce96459a086192e729f6457bed1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "9d4c7eba28b62d3c417fa59eca69642d2eacfe91c4b9f3938e8abf5799f9c701",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a13455f9e9e32263f75004137cbccad52b40a9c4a96099f397d53763df0a86d1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7cab81097a9b920c0d4aad0ba4038f4219416d460b864abe97d4ca687bcda4d2",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "83b98990f0f9c05e7cb693f06931c17c44a00915c818a0a717711e711491f724",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:content::name"
+        },
+        "targetDigest": "f0e3262c4f2995cdc7a49f8f875835bce7640d6cf8d7eeb02c2f0e6e9937d100"
+      },
+      {
+        "dependenciesDigest": "d7c3016e53d05228ae794636cc7a4f1e444c571e2da7b1c76b66866dee058066",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:context::tierapplicability"
+        },
+        "targetDigest": "1c6b0b6dc82f2cc35d13aa9305f61e390d2da065afb9c5d798f408168e3f0ecb"
+      },
+      {
+        "dependenciesDigest": "b800deea09292f999f8ef80b8bc636d2e5bbaa98fe100e606cac8c357b572b4b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:0"
+        },
+        "targetDigest": "7bdb5b2ac6b10d140cae95a0cc95d1488d092fadfd640f2df55e3272a080019e"
+      },
+      {
+        "dependenciesDigest": "ba102f61fba9c310eddcb8515c29fceaf713c505b0b662d41b8aefa35afd8ec1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:1"
+        },
+        "targetDigest": "e7c911cb10a36bd999b80431cf0d406136218bbad1238ffddf379f9339445a90"
+      },
+      {
+        "dependenciesDigest": "823c76154c04f09161f75d16dcb6eb3ede499ce96459a086192e729f6457bed1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:2"
+        },
+        "targetDigest": "9d4c7eba28b62d3c417fa59eca69642d2eacfe91c4b9f3938e8abf5799f9c701"
+      },
+      {
+        "dependenciesDigest": "a13455f9e9e32263f75004137cbccad52b40a9c4a96099f397d53763df0a86d1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:boltpistol-p1-close-explosion",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9f8110cf250d1cec:official::tierpresentations:options:3"
+        },
+        "targetDigest": "7cab81097a9b920c0d4aad0ba4038f4219416d460b864abe97d4ca687bcda4d2"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

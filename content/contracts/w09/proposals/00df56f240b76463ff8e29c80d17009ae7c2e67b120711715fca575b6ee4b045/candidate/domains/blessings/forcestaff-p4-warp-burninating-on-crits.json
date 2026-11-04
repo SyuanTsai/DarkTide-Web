@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "2",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "3",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "4",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "value": {
+            "decimal": "1",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "value": {
+            "decimal": "4",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at target_buff_data.num_stacks_on_proc; defined tier literals are tier 1=1, tier 2=2, tier 3=3, tier 4=4.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1a9f02004b5433f4278b6b0b032cfd6a72f9923b81ae456bd385c8901a4d6917",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "97703901975629551d4ec4e3b25cafc6ad885c7d62ca9c86e32af123282f4510"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1a9f02004b5433f4278b6b0b032cfd6a72f9923b81ae456bd385c8901a4d6917",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1a9f02004b5433f4278b6b0b032cfd6a72f9923b81ae456bd385c8901a4d6917",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1a9f02004b5433f4278b6b0b032cfd6a72f9923b81ae456bd385c8901a4d6917",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "55f5840a24ed62c410491e222cabc7f9d644da9d8251ecc3361a86eeab3d73cf"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1a9f02004b5433f4278b6b0b032cfd6a72f9923b81ae456bd385c8901a4d6917",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55f23589bde8b04790493d3a5c4375482af08f4a08925b4305ead9df3750f229",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "472c3dd9058f829fc1035f4b9ea1d43b95e609a38b8f338fd3327e3ed3cb9cb4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55f23589bde8b04790493d3a5c4375482af08f4a08925b4305ead9df3750f229",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55f23589bde8b04790493d3a5c4375482af08f4a08925b4305ead9df3750f229",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "targetDigest": "fb07893a11963a1793a538f83fa9226c43bdcf3828f53c1370ce555f913f891c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52bce497e7b15d62f64d03b43686037a45193b3cfb4fd2066c55e24ff171e2ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52bce497e7b15d62f64d03b43686037a45193b3cfb4fd2066c55e24ff171e2ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52bce497e7b15d62f64d03b43686037a45193b3cfb4fd2066c55e24ff171e2ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+        },
+        "targetDigest": "13992839847bb6424cff3f89a93045ef5e5936c8b8c1e739a79d2a7d8937b3c8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52bce497e7b15d62f64d03b43686037a45193b3cfb4fd2066c55e24ff171e2ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+        },
+        "targetDigest": "2fb7e131f686bc26561c0bbb10183bc1774b62c2658d06d72b4d56f8e7be3714"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "52bce497e7b15d62f64d03b43686037a45193b3cfb4fd2066c55e24ff171e2ec",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+        },
+        "targetDigest": "27a6a51c52f2b3a75c75bbf8dff4deb8070a9582b8b36cad3eef453c18e0b164"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bee8fc7b65c461d36b5e1708b963967367da9dff4be820f8ff96956afdc5d1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bee8fc7b65c461d36b5e1708b963967367da9dff4be820f8ff96956afdc5d1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bee8fc7b65c461d36b5e1708b963967367da9dff4be820f8ff96956afdc5d1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+        },
+        "targetDigest": "13992839847bb6424cff3f89a93045ef5e5936c8b8c1e739a79d2a7d8937b3c8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bee8fc7b65c461d36b5e1708b963967367da9dff4be820f8ff96956afdc5d1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+        },
+        "targetDigest": "2fb7e131f686bc26561c0bbb10183bc1774b62c2658d06d72b4d56f8e7be3714"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1bee8fc7b65c461d36b5e1708b963967367da9dff4be820f8ff96956afdc5d1d",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+        },
+        "targetDigest": "a23605c8b064ca7a4b25c895e0b46467d0dfa0de1c10f9fc8fc799b0678c8498"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f026b785d0978cbbef66f93e03d963659e4ca86bd8a8fba82b6d8cd9dd5b1375",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f026b785d0978cbbef66f93e03d963659e4ca86bd8a8fba82b6d8cd9dd5b1375",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f026b785d0978cbbef66f93e03d963659e4ca86bd8a8fba82b6d8cd9dd5b1375",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+        },
+        "targetDigest": "13992839847bb6424cff3f89a93045ef5e5936c8b8c1e739a79d2a7d8937b3c8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f026b785d0978cbbef66f93e03d963659e4ca86bd8a8fba82b6d8cd9dd5b1375",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+        },
+        "targetDigest": "2fb7e131f686bc26561c0bbb10183bc1774b62c2658d06d72b4d56f8e7be3714"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f026b785d0978cbbef66f93e03d963659e4ca86bd8a8fba82b6d8cd9dd5b1375",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+        },
+        "targetDigest": "9926c02f3a35cfd08b23139f1903cde86470e0e90bdb7b23c3291922d0146f10"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13f195bb9acf800c25bd947cc7685b3ea25975e2a573ffb0b9de5657cd2c3516",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13f195bb9acf800c25bd947cc7685b3ea25975e2a573ffb0b9de5657cd2c3516",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13f195bb9acf800c25bd947cc7685b3ea25975e2a573ffb0b9de5657cd2c3516",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+        },
+        "targetDigest": "13992839847bb6424cff3f89a93045ef5e5936c8b8c1e739a79d2a7d8937b3c8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13f195bb9acf800c25bd947cc7685b3ea25975e2a573ffb0b9de5657cd2c3516",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+        },
+        "targetDigest": "2fb7e131f686bc26561c0bbb10183bc1774b62c2658d06d72b4d56f8e7be3714"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "13f195bb9acf800c25bd947cc7685b3ea25975e2a573ffb0b9de5657cd2c3516",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+        },
+        "targetDigest": "5ebe08cae0ceaf5d7b4ff259a9f06433242775129fdc59151422a2013e4c57bc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1992ed26b36aecf1eff8e05c78de30eb9fb2e932249022d8cc8efdba8854bb9a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p4-warp-burninating-on-crits-stacks-display-value-code"
+        },
+        "targetDigest": "c9223ee47f00dbc08b92c5a17deb3fc0742510c357dc3ee82cd0c0ff46cfb8b0"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "7abdafe6906ff86178d83c0c7de92983581f950e234bc20de77a1f2152d1ec2c",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-424; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:47a95669:key-unknown:en:1:g-08707f3b911fb7d6:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Blazing Spirit",
+          "resolvedTextSha256": "551d6dd1707011c07fde45723272128d044d1cda9a39fa0f4aa8c28a36f6e641",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "551d6dd1707011c07fde45723272128d044d1cda9a39fa0f4aa8c28a36f6e641",
+              "text": "Blazing Spirit"
+            }
+          ],
+          "sourceHash": "47a95669",
+          "sourceLocale": "en",
+          "sourceText": "Blazing Spirit",
+          "sourceTextSha256": "551d6dd1707011c07fde45723272128d044d1cda9a39fa0f4aa8c28a36f6e641"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:47a95669:key-unknown:zh-tw:1:g-08707f3b911fb7d6:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "燃燒靈魂（靈能法杖與雙手力場劍）",
+          "resolvedTextSha256": "4e466e02e522c9e1bd23c3beb6d918c477896dff11986761798ada9a8435de9c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "4e466e02e522c9e1bd23c3beb6d918c477896dff11986761798ada9a8435de9c",
+              "text": "燃燒靈魂（靈能法杖與雙手力場劍）"
+            }
+          ],
+          "sourceHash": "47a95669",
+          "sourceLocale": "zh-TW",
+          "sourceText": "燃燒靈魂（靈能法杖與雙手力場劍）",
+          "sourceTextSha256": "4e466e02e522c9e1bd23c3beb6d918c477896dff11986761798ada9a8435de9c"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "Enemy gains 1 Stacks of Soulblaze on Critical Hit.",
+          "resolvedTextSha256": "aa410ea416dfc11f594fd6b4bea093ca61f7ec00d30ac6aa1633e77c8b2b26c9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0b0e79751d75d68ef6e8cdf7523841e9c63025ec92f6ad227ffd07508bcd5267",
+              "text": "Enemy gains "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "61f28165810f888dc912c34f3dca6496b3c85db7efc292d7f1018b80b6270bfe",
+              "text": " Stacks of Soulblaze on Critical Hit."
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "en",
+          "sourceText": "Enemy gains {stacks:%s} Stacks of Soulblaze on Critical Hit.",
+          "sourceTextSha256": "b0dfa522970d0221b64725c561ee085131abcd80141e36803a922e2031702a30"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "Enemy gains 2 Stacks of Soulblaze on Critical Hit.",
+          "resolvedTextSha256": "b6077e5e0eff3cba881b6a213d460ff5657303475038bdc2bd18d3f6661d35e1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0b0e79751d75d68ef6e8cdf7523841e9c63025ec92f6ad227ffd07508bcd5267",
+              "text": "Enemy gains "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "61f28165810f888dc912c34f3dca6496b3c85db7efc292d7f1018b80b6270bfe",
+              "text": " Stacks of Soulblaze on Critical Hit."
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "en",
+          "sourceText": "Enemy gains {stacks:%s} Stacks of Soulblaze on Critical Hit.",
+          "sourceTextSha256": "b0dfa522970d0221b64725c561ee085131abcd80141e36803a922e2031702a30"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "Enemy gains 3 Stacks of Soulblaze on Critical Hit.",
+          "resolvedTextSha256": "11ab390b7f30d72c4822509df30ae6c269959ba8677df94feadde0fead8ac3d0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0b0e79751d75d68ef6e8cdf7523841e9c63025ec92f6ad227ffd07508bcd5267",
+              "text": "Enemy gains "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "61f28165810f888dc912c34f3dca6496b3c85db7efc292d7f1018b80b6270bfe",
+              "text": " Stacks of Soulblaze on Critical Hit."
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "en",
+          "sourceText": "Enemy gains {stacks:%s} Stacks of Soulblaze on Critical Hit.",
+          "sourceTextSha256": "b0dfa522970d0221b64725c561ee085131abcd80141e36803a922e2031702a30"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "Enemy gains 4 Stacks of Soulblaze on Critical Hit.",
+          "resolvedTextSha256": "263d6babd89d6d90f569a329019829dbb2e966dfd82e4c4c6c956668577e4510",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0b0e79751d75d68ef6e8cdf7523841e9c63025ec92f6ad227ffd07508bcd5267",
+              "text": "Enemy gains "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "61f28165810f888dc912c34f3dca6496b3c85db7efc292d7f1018b80b6270bfe",
+              "text": " Stacks of Soulblaze on Critical Hit."
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "en",
+          "sourceText": "Enemy gains {stacks:%s} Stacks of Soulblaze on Critical Hit.",
+          "sourceTextSha256": "b0dfa522970d0221b64725c561ee085131abcd80141e36803a922e2031702a30"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "致命一擊命中後，使敵人疊加1層靈魂之火。",
+          "resolvedTextSha256": "c77f980f3d200da56adbf1666fabf7fc2557948ef0d0124d81813cf6ec65e04c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "17c0aacd05ce530a098e9f9f24cde8a70bc209c27e792daa6d76b9e3f4a5b95a",
+              "text": "致命一擊命中後，使敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ae502183c8b90e567d43dc780b3ef9c94f3284e2768987ad03842eaf681b9788",
+              "text": "層靈魂之火。"
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊命中後，使敵人疊加{stacks:%s}層靈魂之火。",
+          "sourceTextSha256": "1581c281f54716949a4fc2dd942192b0be3791e904081a5fdc30cdc8ea81c090"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value",
+              "value": "2"
+            }
+          ],
+          "resolvedText": "致命一擊命中後，使敵人疊加2層靈魂之火。",
+          "resolvedTextSha256": "77020807a26b2dad5eec4a10803fddc3b6821d8313a62f6f8775aa61df67908e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "17c0aacd05ce530a098e9f9f24cde8a70bc209c27e792daa6d76b9e3f4a5b95a",
+              "text": "致命一擊命中後，使敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ae502183c8b90e567d43dc780b3ef9c94f3284e2768987ad03842eaf681b9788",
+              "text": "層靈魂之火。"
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊命中後，使敵人疊加{stacks:%s}層靈魂之火。",
+          "sourceTextSha256": "1581c281f54716949a4fc2dd942192b0be3791e904081a5fdc30cdc8ea81c090"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value",
+              "value": "3"
+            }
+          ],
+          "resolvedText": "致命一擊命中後，使敵人疊加3層靈魂之火。",
+          "resolvedTextSha256": "aec035b8a983b3dfa37ed60112f7b91156339fe25d005791156e07f9791ffddd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "17c0aacd05ce530a098e9f9f24cde8a70bc209c27e792daa6d76b9e3f4a5b95a",
+              "text": "致命一擊命中後，使敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ae502183c8b90e567d43dc780b3ef9c94f3284e2768987ad03842eaf681b9788",
+              "text": "層靈魂之火。"
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊命中後，使敵人疊加{stacks:%s}層靈魂之火。",
+          "sourceTextSha256": "1581c281f54716949a4fc2dd942192b0be3791e904081a5fdc30cdc8ea81c090"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "致命一擊命中後，使敵人疊加4層靈魂之火。",
+          "resolvedTextSha256": "4ffe94f2961d66569b8fcfc810e7bfa6372540e7c34e75ad779610045ecda745",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "17c0aacd05ce530a098e9f9f24cde8a70bc209c27e792daa6d76b9e3f4a5b95a",
+              "text": "致命一擊命中後，使敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ae502183c8b90e567d43dc780b3ef9c94f3284e2768987ad03842eaf681b9788",
+              "text": "層靈魂之火。"
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊命中後，使敵人疊加{stacks:%s}層靈魂之火。",
+          "sourceTextSha256": "1581c281f54716949a4fc2dd942192b0be3791e904081a5fdc30cdc8ea81c090"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "燃燒靈魂（靈能法杖與雙手力場劍）",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:47a95669:key-unknown:en:1:g-08707f3b911fb7d6:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:47a95669:key-unknown:zh-tw:1:g-08707f3b911fb7d6:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:47a95669:key-unknown:zh-tw:1:g-08707f3b911fb7d6:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-warp-burninating-on-crits"
+          },
+          "key": "loc_trait_bespoke_warpfire_burn_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value",
+              "value": "4"
+            }
+          ],
+          "resolvedText": "致命一擊命中後，使敵人疊加4層靈魂之火。",
+          "resolvedTextSha256": "4ffe94f2961d66569b8fcfc810e7bfa6372540e7c34e75ad779610045ecda745",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "17c0aacd05ce530a098e9f9f24cde8a70bc209c27e792daa6d76b9e3f4a5b95a",
+              "text": "致命一擊命中後，使敵人疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "ae502183c8b90e567d43dc780b3ef9c94f3284e2768987ad03842eaf681b9788",
+              "text": "層靈魂之火。"
+            }
+          ],
+          "sourceHash": "d687cdb8",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊命中後，使敵人疊加{stacks:%s}層靈魂之火。",
+          "sourceTextSha256": "1581c281f54716949a4fc2dd942192b0be3791e904081a5fdc30cdc8ea81c090"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier1-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier2-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier3-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:en:1:g-08707f3b911fb7d6:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d687cdb8:key-known:zh-tw:1:g-08707f3b911fb7d6:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-warp-burninating-on-crits-stacks-tier4-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-warp-burninating-on-crits"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "609b2d0589acbe43726c5804ab1f33a6e7fcbb7d1fdcd07ed5232bd5824bd08a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6401449e7a846bf2104a8488a5cf9514d3eaf161d179e17dbaf95f7d4ac58e38",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0a2d5bf5e5bbd5c915ba53f55bbced7ab209ffc80057ea73aaa30b2eaf8e92d0",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fd48ce62844b822f2a1d0fb618aa717950bb338d35a615ce149f6340ebb47ebb",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d57d445f990a22eea515af9f1a81ce8d5c3b77b5ab524fac9d3bcb09169d7718",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "272db0e5ca7601dee12b97ead40a46d9278465b2c80650399d81f787a80a9484",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a028d6ad432338dc0609ef2a2ff585a8f44a924a6ee65dd30fcdac15d16bb9e8",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "3c0b65cda086c47a8eeb6ee895d7b3dd2996b2ce0681eb0f9335ba7c5398817a",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e6bd577528d0883d1c1ba585e38c6bc9523e02246a1701c1c1965457e2a93cca",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7968a177f1c2f818befb154088cac4abc2d0f889bf6b9df4edc79fed3051d70a",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "e50eb99b31d449bf2ff51e749176c66d8bece746cc94860ff618d98751c47486",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "af1cf959a729def790d99c4ddc4545aafb5c04366a248b307433b5ec46e97454",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "609b2d0589acbe43726c5804ab1f33a6e7fcbb7d1fdcd07ed5232bd5824bd08a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:content::name"
+        },
+        "targetDigest": "6401449e7a846bf2104a8488a5cf9514d3eaf161d179e17dbaf95f7d4ac58e38"
+      },
+      {
+        "dependenciesDigest": "0a2d5bf5e5bbd5c915ba53f55bbced7ab209ffc80057ea73aaa30b2eaf8e92d0",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:context::tierapplicability"
+        },
+        "targetDigest": "fd48ce62844b822f2a1d0fb618aa717950bb338d35a615ce149f6340ebb47ebb"
+      },
+      {
+        "dependenciesDigest": "d57d445f990a22eea515af9f1a81ce8d5c3b77b5ab524fac9d3bcb09169d7718",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:0"
+        },
+        "targetDigest": "272db0e5ca7601dee12b97ead40a46d9278465b2c80650399d81f787a80a9484"
+      },
+      {
+        "dependenciesDigest": "a028d6ad432338dc0609ef2a2ff585a8f44a924a6ee65dd30fcdac15d16bb9e8",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:1"
+        },
+        "targetDigest": "3c0b65cda086c47a8eeb6ee895d7b3dd2996b2ce0681eb0f9335ba7c5398817a"
+      },
+      {
+        "dependenciesDigest": "e6bd577528d0883d1c1ba585e38c6bc9523e02246a1701c1c1965457e2a93cca",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:2"
+        },
+        "targetDigest": "7968a177f1c2f818befb154088cac4abc2d0f889bf6b9df4edc79fed3051d70a"
+      },
+      {
+        "dependenciesDigest": "e50eb99b31d449bf2ff51e749176c66d8bece746cc94860ff618d98751c47486",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:forcestaff-p4-warp-burninating-on-crits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08707f3b911fb7d6:official::tierpresentations:options:3"
+        },
+        "targetDigest": "af1cf959a729def790d99c4ddc4545aafb5c04366a248b307433b5ec46e97454"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

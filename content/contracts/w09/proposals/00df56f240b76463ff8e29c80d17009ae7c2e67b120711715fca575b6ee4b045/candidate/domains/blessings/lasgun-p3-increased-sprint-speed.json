@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.8",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.7",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.6",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.5",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.stamina.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+          },
+          "value": {
+            "decimal": "80",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.stamina.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+          },
+          "value": {
+            "decimal": "70",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.stamina.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+          },
+          "value": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.stamina.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+          },
+          "value": {
+            "decimal": "50",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stamina at conditional_threshold; defined tier literals are tier 1=0.8, tier 2=0.7, tier 3=0.6, tier 4=0.5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2be5c4898f2c2559d2cf0bb6d5b6374a0847bbae58b38f8203f5518867a4630a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "c458d3e44a0d48acd06a80e3bb62d16abfb5ae4470131a16fbdc91407176d1ee"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2be5c4898f2c2559d2cf0bb6d5b6374a0847bbae58b38f8203f5518867a4630a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2be5c4898f2c2559d2cf0bb6d5b6374a0847bbae58b38f8203f5518867a4630a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2be5c4898f2c2559d2cf0bb6d5b6374a0847bbae58b38f8203f5518867a4630a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "bba1e9ab0c6f5fa857015db53e62f23216292c7ba707d55b1ccb7dd79af4bc16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "2be5c4898f2c2559d2cf0bb6d5b6374a0847bbae58b38f8203f5518867a4630a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f44936d24d7479566709214c9c2c25662c32f861d473e6d14451aa110c4298c3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "28ffa60430b967caa79ffc88dee553b76e64cc8c8c168b7fb97e61dc9d23565f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f44936d24d7479566709214c9c2c25662c32f861d473e6d14451aa110c4298c3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f44936d24d7479566709214c9c2c25662c32f861d473e6d14451aa110c4298c3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+        },
+        "targetDigest": "a088f1eb4415eadaad8a749dc3f1f962b5ea3e60b0e2b7c3dc5baf9ea6d13275"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aee7605b4cf5ab51250165ab6d18fc9ab135ca32e79aecbff4727b822f5462b8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aee7605b4cf5ab51250165ab6d18fc9ab135ca32e79aecbff4727b822f5462b8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aee7605b4cf5ab51250165ab6d18fc9ab135ca32e79aecbff4727b822f5462b8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+        },
+        "targetDigest": "8bb91fc3a404ac4546ee7a1345fb983242a7d523bab002231d228abb697e6339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aee7605b4cf5ab51250165ab6d18fc9ab135ca32e79aecbff4727b822f5462b8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+        },
+        "targetDigest": "0e9a3d02bd20547559dd0bcb5a0220bf82f9c06994c2d3bbb59103006ce4b71f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aee7605b4cf5ab51250165ab6d18fc9ab135ca32e79aecbff4727b822f5462b8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+        },
+        "targetDigest": "7fae2bea6be85c6cebae4b395a55ce35b0a94f57f5eb67f493d3aaf880e988df"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37a4121d30a6334e0edef5cc6e66e531feefe7adc0e5bc9703c8b4db960826d1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37a4121d30a6334e0edef5cc6e66e531feefe7adc0e5bc9703c8b4db960826d1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37a4121d30a6334e0edef5cc6e66e531feefe7adc0e5bc9703c8b4db960826d1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+        },
+        "targetDigest": "8bb91fc3a404ac4546ee7a1345fb983242a7d523bab002231d228abb697e6339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37a4121d30a6334e0edef5cc6e66e531feefe7adc0e5bc9703c8b4db960826d1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+        },
+        "targetDigest": "0e9a3d02bd20547559dd0bcb5a0220bf82f9c06994c2d3bbb59103006ce4b71f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "37a4121d30a6334e0edef5cc6e66e531feefe7adc0e5bc9703c8b4db960826d1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+        },
+        "targetDigest": "54f01fbdb8152a71b9e33c1058b05c3e3ed2c17d1287df7d444354b9f4e4c3c0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d2e81d27ce4844d73fdb86f1f0a4b471528a55c5e074f5a5c6a4ce8b6b06fd0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d2e81d27ce4844d73fdb86f1f0a4b471528a55c5e074f5a5c6a4ce8b6b06fd0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d2e81d27ce4844d73fdb86f1f0a4b471528a55c5e074f5a5c6a4ce8b6b06fd0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+        },
+        "targetDigest": "8bb91fc3a404ac4546ee7a1345fb983242a7d523bab002231d228abb697e6339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d2e81d27ce4844d73fdb86f1f0a4b471528a55c5e074f5a5c6a4ce8b6b06fd0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+        },
+        "targetDigest": "0e9a3d02bd20547559dd0bcb5a0220bf82f9c06994c2d3bbb59103006ce4b71f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5d2e81d27ce4844d73fdb86f1f0a4b471528a55c5e074f5a5c6a4ce8b6b06fd0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+        },
+        "targetDigest": "337665de755d05566163fca839b7143986a3a062bc7c2c797255a213fc0abd06"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f600d98edf94f396b8c251a10ff9ced068a10057459c0890c3e4f385f7bef8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f600d98edf94f396b8c251a10ff9ced068a10057459c0890c3e4f385f7bef8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f600d98edf94f396b8c251a10ff9ced068a10057459c0890c3e4f385f7bef8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+        },
+        "targetDigest": "8bb91fc3a404ac4546ee7a1345fb983242a7d523bab002231d228abb697e6339"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f600d98edf94f396b8c251a10ff9ced068a10057459c0890c3e4f385f7bef8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+        },
+        "targetDigest": "0e9a3d02bd20547559dd0bcb5a0220bf82f9c06994c2d3bbb59103006ce4b71f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "56f600d98edf94f396b8c251a10ff9ced068a10057459c0890c3e4f385f7bef8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+        },
+        "targetDigest": "612b43b54d511cbf2a51283b5916035b35b23f2ab2c78e77bd3e36206b22b053"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0f36330186a126f1d5e9f22857da637897654d0ae5089825126745eeafcad329",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:lasgun:p3-increased-sprint-speed-stamina-display-percent-code"
+        },
+        "targetDigest": "ca6efa655bb655fa16d0d4b79b1d3211ed271a5a02f158301416c43bd353cad4"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "76163850199f90bf5cf143ac84841bf8491a939c9fe3ed2ce3675a0c02638855",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_lasgun_p3.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-435; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-lasgun-p3-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:05774d98:key-unknown:en:1:g-3de2c072e89635cb:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Stripped Down",
+          "resolvedTextSha256": "fb4d774d6e148d0529aef09d9796dc464564388f6ec1cbccac2fb0c509b7cee7",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fb4d774d6e148d0529aef09d9796dc464564388f6ec1cbccac2fb0c509b7cee7",
+              "text": "Stripped Down"
+            }
+          ],
+          "sourceHash": "05774d98",
+          "sourceLocale": "en",
+          "sourceText": "Stripped Down",
+          "sourceTextSha256": "fb4d774d6e148d0529aef09d9796dc464564388f6ec1cbccac2fb0c509b7cee7"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:05774d98:key-unknown:zh-tw:1:g-3de2c072e89635cb:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "輕裝",
+          "resolvedTextSha256": "8dee5bd94d6b2ce526035a8d89495850719624ea7c1477710ca6bbca2a20d0eb",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "8dee5bd94d6b2ce526035a8d89495850719624ea7c1477710ca6bbca2a20d0eb",
+              "text": "輕裝"
+            }
+          ],
+          "sourceHash": "05774d98",
+          "sourceLocale": "zh-TW",
+          "sourceText": "輕裝",
+          "sourceTextSha256": "8dee5bd94d6b2ce526035a8d89495850719624ea7c1477710ca6bbca2a20d0eb"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent",
+              "value": "+80%"
+            }
+          ],
+          "resolvedText": "Gain Ranged Attack Immunity while sprinting with over +80% Stamina.",
+          "resolvedTextSha256": "6a7b9fd0e5c1e42dc86cf0bc19b96ecd8a4fa9c370ac9a697d6e73f88bdeae53",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "12da5cbd3d6b8a8482ec46aac5a9c95ecaced9669eb2f3789244f607c4a22444",
+              "text": "Gain Ranged Attack Immunity while sprinting with over "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "8857a06b2329c46a453cb12171a4b10d425e1dd85d242eabcfdfb525ac16ef4e",
+              "text": " Stamina."
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "en",
+          "sourceText": "Gain Ranged Attack Immunity while sprinting with over {stamina:%s} Stamina.",
+          "sourceTextSha256": "5b7567c1a9c705952d58198449c7f1cfec70f9a06720c67ee0111a34405b120d"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent",
+              "value": "+70%"
+            }
+          ],
+          "resolvedText": "Gain Ranged Attack Immunity while sprinting with over +70% Stamina.",
+          "resolvedTextSha256": "51b0a91153024908b14aa279cea71196b3d21b7de04ab8c74642c823710a1659",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "12da5cbd3d6b8a8482ec46aac5a9c95ecaced9669eb2f3789244f607c4a22444",
+              "text": "Gain Ranged Attack Immunity while sprinting with over "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "8857a06b2329c46a453cb12171a4b10d425e1dd85d242eabcfdfb525ac16ef4e",
+              "text": " Stamina."
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "en",
+          "sourceText": "Gain Ranged Attack Immunity while sprinting with over {stamina:%s} Stamina.",
+          "sourceTextSha256": "5b7567c1a9c705952d58198449c7f1cfec70f9a06720c67ee0111a34405b120d"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "Gain Ranged Attack Immunity while sprinting with over +60% Stamina.",
+          "resolvedTextSha256": "188e5edd1cbca417e227d873629982ecf6aef5e8538d2d17c5191764f9ba12ae",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "12da5cbd3d6b8a8482ec46aac5a9c95ecaced9669eb2f3789244f607c4a22444",
+              "text": "Gain Ranged Attack Immunity while sprinting with over "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "8857a06b2329c46a453cb12171a4b10d425e1dd85d242eabcfdfb525ac16ef4e",
+              "text": " Stamina."
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "en",
+          "sourceText": "Gain Ranged Attack Immunity while sprinting with over {stamina:%s} Stamina.",
+          "sourceTextSha256": "5b7567c1a9c705952d58198449c7f1cfec70f9a06720c67ee0111a34405b120d"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "Gain Ranged Attack Immunity while sprinting with over +50% Stamina.",
+          "resolvedTextSha256": "e5c5d24ae8fcb664bdaf22a5cff1ce8a296c18d83e8443ba3361c2cf8302848a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "12da5cbd3d6b8a8482ec46aac5a9c95ecaced9669eb2f3789244f607c4a22444",
+              "text": "Gain Ranged Attack Immunity while sprinting with over "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "8857a06b2329c46a453cb12171a4b10d425e1dd85d242eabcfdfb525ac16ef4e",
+              "text": " Stamina."
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "en",
+          "sourceText": "Gain Ranged Attack Immunity while sprinting with over {stamina:%s} Stamina.",
+          "sourceTextSha256": "5b7567c1a9c705952d58198449c7f1cfec70f9a06720c67ee0111a34405b120d"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent",
+              "value": "+80%"
+            }
+          ],
+          "resolvedText": "衝刺耐力消耗超過+80%時，使你免疫遠程攻擊。",
+          "resolvedTextSha256": "1495091fd08fc766c4f80c0b01bf8ad615fec32748ec4f05b7ab49b90d7e5af9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9e8a964970a0b2bd43046da66cac4592d28fb5b01f3ac811ef361cf93349742a",
+              "text": "衝刺耐力消耗超過"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "558176daa6d2c4eea6b11d1769444c29304d754e1ee5b37b10d729dce30e1768",
+              "text": "時，使你免疫遠程攻擊。"
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "衝刺耐力消耗超過{stamina:%s}時，使你免疫遠程攻擊。",
+          "sourceTextSha256": "46d94ffaa2bc8edf767351d83541c01fa61ffd43c3f8a2dd1e989253cc070f23"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent",
+              "value": "+70%"
+            }
+          ],
+          "resolvedText": "衝刺耐力消耗超過+70%時，使你免疫遠程攻擊。",
+          "resolvedTextSha256": "17037832376b4407668ba58e672bc88dafa624d2816579b0f8cff2b47080b6ce",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9e8a964970a0b2bd43046da66cac4592d28fb5b01f3ac811ef361cf93349742a",
+              "text": "衝刺耐力消耗超過"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "558176daa6d2c4eea6b11d1769444c29304d754e1ee5b37b10d729dce30e1768",
+              "text": "時，使你免疫遠程攻擊。"
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "衝刺耐力消耗超過{stamina:%s}時，使你免疫遠程攻擊。",
+          "sourceTextSha256": "46d94ffaa2bc8edf767351d83541c01fa61ffd43c3f8a2dd1e989253cc070f23"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "衝刺耐力消耗超過+60%時，使你免疫遠程攻擊。",
+          "resolvedTextSha256": "c8409633b3c65358909e9b7665e936c87cec1a9df56b0946803f3137e940b803",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9e8a964970a0b2bd43046da66cac4592d28fb5b01f3ac811ef361cf93349742a",
+              "text": "衝刺耐力消耗超過"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "558176daa6d2c4eea6b11d1769444c29304d754e1ee5b37b10d729dce30e1768",
+              "text": "時，使你免疫遠程攻擊。"
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "衝刺耐力消耗超過{stamina:%s}時，使你免疫遠程攻擊。",
+          "sourceTextSha256": "46d94ffaa2bc8edf767351d83541c01fa61ffd43c3f8a2dd1e989253cc070f23"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "衝刺耐力消耗超過+50%時，使你免疫遠程攻擊。",
+          "resolvedTextSha256": "ba9880fc117068da3fd61cdcf517100bd2872f3664c55a49416a67fa2ca8fbb4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9e8a964970a0b2bd43046da66cac4592d28fb5b01f3ac811ef361cf93349742a",
+              "text": "衝刺耐力消耗超過"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "558176daa6d2c4eea6b11d1769444c29304d754e1ee5b37b10d729dce30e1768",
+              "text": "時，使你免疫遠程攻擊。"
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "衝刺耐力消耗超過{stamina:%s}時，使你免疫遠程攻擊。",
+          "sourceTextSha256": "46d94ffaa2bc8edf767351d83541c01fa61ffd43c3f8a2dd1e989253cc070f23"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:lasgun-p3-increased-sprint-speed",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "輕裝",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:05774d98:key-unknown:en:1:g-3de2c072e89635cb:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:05774d98:key-unknown:zh-tw:1:g-3de2c072e89635cb:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:05774d98:key-unknown:zh-tw:1:g-3de2c072e89635cb:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:lasgun:p3-increased-sprint-speed"
+          },
+          "key": "loc_trait_bespoke_increased_sprint_speed_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "stamina",
+              "sourceKey": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "衝刺耐力消耗超過+50%時，使你免疫遠程攻擊。",
+          "resolvedTextSha256": "ba9880fc117068da3fd61cdcf517100bd2872f3664c55a49416a67fa2ca8fbb4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "9e8a964970a0b2bd43046da66cac4592d28fb5b01f3ac811ef361cf93349742a",
+              "text": "衝刺耐力消耗超過"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stamina",
+              "segmentId": "segment-2",
+              "sha256": "686c9f547d6e3b80b98c4e71c65a50bb19e6c53ae24dfa08dd1dbbb14681bf0a",
+              "token": "{stamina:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "558176daa6d2c4eea6b11d1769444c29304d754e1ee5b37b10d729dce30e1768",
+              "text": "時，使你免疫遠程攻擊。"
+            }
+          ],
+          "sourceHash": "4f33ede2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "衝刺耐力消耗超過{stamina:%s}時，使你免疫遠程攻擊。",
+          "sourceTextSha256": "46d94ffaa2bc8edf767351d83541c01fa61ffd43c3f8a2dd1e989253cc070f23"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "stamina",
+                  "placeholder": "{stamina:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "stamina",
+                  "placeholder": "{stamina:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "stamina",
+                  "placeholder": "{stamina:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:en:1:g-3de2c072e89635cb:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:4f33ede2:key-known:zh-tw:1:g-3de2c072e89635cb:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:lasgun:p3-increased-sprint-speed-stamina-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "stamina",
+                  "placeholder": "{stamina:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:lasgun:p3-increased-sprint-speed"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "802a4b8196262f58c8bab361c09a8a157dd62e1a6ec19dbc43e5032a6e502846",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7e55e1ffbd1b2fd72091e2d85e27a9f0b4c8095af74354c93ff409bfd7ad1e94",
+          "targetId": "review:w06:generic:3de2c072e89635cb:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7e14d47a55aab1d0f2a7a837d619d922dfd922610c3d7dc40194b3b83cc15e3d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c6690c43b306c50c6643b2d2e9bea980c561eb37f10a8d936f99eb70d3677d07",
+          "targetId": "review:w06:generic:3de2c072e89635cb:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3a923ac50d1b6ee0dc6a669ddab7b2da77549f4eaef6273407798348686fd93b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "ce0e9acc0ff56e0bd47982e6c643b88b2e22c3de60b9ffaef8f642d4230ea039",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c8269944eb3b80cd0662b2d831c398e429dad3f76cc39c4bd6d64bf23c0383c6",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7bc5c08b957878bdd3a9c775e7e4d5624b7628d31e225a5730800f84b0884342",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a6be4ab34accfcefe202e76d4827d87cd31813979178764085f58cc15e45eb02",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c6e87e94ebb7d6ced500143c6d3c375050f2061c401c3188c81e16808049ce32",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f7c1273f2c073219375c57def65dc14e408123ed9191b5924283d5ee2c4b8997",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b6157ecb9aa026bdeab53fd60f90c7f88e532c26baee91a6fd707e5aaf082682",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "802a4b8196262f58c8bab361c09a8a157dd62e1a6ec19dbc43e5032a6e502846",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:content::name"
+        },
+        "targetDigest": "7e55e1ffbd1b2fd72091e2d85e27a9f0b4c8095af74354c93ff409bfd7ad1e94"
+      },
+      {
+        "dependenciesDigest": "7e14d47a55aab1d0f2a7a837d619d922dfd922610c3d7dc40194b3b83cc15e3d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:context::tierapplicability"
+        },
+        "targetDigest": "c6690c43b306c50c6643b2d2e9bea980c561eb37f10a8d936f99eb70d3677d07"
+      },
+      {
+        "dependenciesDigest": "3a923ac50d1b6ee0dc6a669ddab7b2da77549f4eaef6273407798348686fd93b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:0"
+        },
+        "targetDigest": "ce0e9acc0ff56e0bd47982e6c643b88b2e22c3de60b9ffaef8f642d4230ea039"
+      },
+      {
+        "dependenciesDigest": "c8269944eb3b80cd0662b2d831c398e429dad3f76cc39c4bd6d64bf23c0383c6",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:1"
+        },
+        "targetDigest": "7bc5c08b957878bdd3a9c775e7e4d5624b7628d31e225a5730800f84b0884342"
+      },
+      {
+        "dependenciesDigest": "a6be4ab34accfcefe202e76d4827d87cd31813979178764085f58cc15e45eb02",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:2"
+        },
+        "targetDigest": "c6e87e94ebb7d6ced500143c6d3c375050f2061c401c3188c81e16808049ce32"
+      },
+      {
+        "dependenciesDigest": "f7c1273f2c073219375c57def65dc14e408123ed9191b5924283d5ee2c4b8997",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:lasgun-p3-increased-sprint-speed",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3de2c072e89635cb:official::tierpresentations:options:3"
+        },
+        "targetDigest": "b6157ecb9aa026bdeab53fd60f90c7f88e532c26baee91a6fd707e5aaf082682"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

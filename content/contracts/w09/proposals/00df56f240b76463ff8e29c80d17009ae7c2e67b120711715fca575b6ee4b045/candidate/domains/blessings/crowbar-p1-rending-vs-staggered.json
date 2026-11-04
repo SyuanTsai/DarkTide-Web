@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.1",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.15",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.25",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rending.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+          },
+          "value": {
+            "decimal": "10",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rending.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+          },
+          "value": {
+            "decimal": "15",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rending.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rending.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+          },
+          "value": {
+            "decimal": "25",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value rending at conditional_stat_buffs.stat_buffs.melee_rending_vs_staggered_multiplier; defined tier literals are tier 1=0.1, tier 2=0.15, tier 3=0.2, tier 4=0.25.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "88c1eca198b30662c16c95da74db513e08053887d6c9fc091e97da29c5944eb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "f61288f21aba9277fd2398bd0d7ce6c00800c14a179d183911fbc41bc14d6d0e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "88c1eca198b30662c16c95da74db513e08053887d6c9fc091e97da29c5944eb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "88c1eca198b30662c16c95da74db513e08053887d6c9fc091e97da29c5944eb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "88c1eca198b30662c16c95da74db513e08053887d6c9fc091e97da29c5944eb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "20231496c759b33215963d707ccdde60c5c7dc51623f5feeed93938c2f3d7db6"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "88c1eca198b30662c16c95da74db513e08053887d6c9fc091e97da29c5944eb3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "83e1bf8dda187c61c87470cf732bd5cbe599cf47ea6efa1654d35c492099c1e2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "1733987322f02210c3fa15d3fa4adb8d0f3a6c575c588f6c84d133a80ce1e3ed"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "83e1bf8dda187c61c87470cf732bd5cbe599cf47ea6efa1654d35c492099c1e2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "83e1bf8dda187c61c87470cf732bd5cbe599cf47ea6efa1654d35c492099c1e2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+        },
+        "targetDigest": "70bbdefe27613f9c15517875ecbd781858c833c3346cc1e49be50cfef334977a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e18468bfa1d975d0b6168cf69dac8fcab2c52bfc283b115223004e484d48c834",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e18468bfa1d975d0b6168cf69dac8fcab2c52bfc283b115223004e484d48c834",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e18468bfa1d975d0b6168cf69dac8fcab2c52bfc283b115223004e484d48c834",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+        },
+        "targetDigest": "119eea70ba2f3e0e82979bbc11cdfc79f9dacd57278a07949b5d2653362139cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e18468bfa1d975d0b6168cf69dac8fcab2c52bfc283b115223004e484d48c834",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+        },
+        "targetDigest": "9bbbae48198f4e6fdb8bc6200af1ccf9bb454b5d6c44ddb71930eb3dcbf0eede"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "e18468bfa1d975d0b6168cf69dac8fcab2c52bfc283b115223004e484d48c834",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+        },
+        "targetDigest": "4a359a3c0d4901f80a2f4356f9a4dbdb367050473f282ce3b7a11a5928091c16"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31ccf0cebf8827f46483b19405c88ebf16cb3e479c4fbd6cf6858b56728165ac",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31ccf0cebf8827f46483b19405c88ebf16cb3e479c4fbd6cf6858b56728165ac",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31ccf0cebf8827f46483b19405c88ebf16cb3e479c4fbd6cf6858b56728165ac",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+        },
+        "targetDigest": "119eea70ba2f3e0e82979bbc11cdfc79f9dacd57278a07949b5d2653362139cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31ccf0cebf8827f46483b19405c88ebf16cb3e479c4fbd6cf6858b56728165ac",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+        },
+        "targetDigest": "9bbbae48198f4e6fdb8bc6200af1ccf9bb454b5d6c44ddb71930eb3dcbf0eede"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "31ccf0cebf8827f46483b19405c88ebf16cb3e479c4fbd6cf6858b56728165ac",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+        },
+        "targetDigest": "739df5e9349af5eb505bd3ba2a4e62bc4772d8de7f00fad260f9b5a1335af027"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "04594d3de68f8b303de6439327da36601efd0c440b1dc38e4e6bb17874221619",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "04594d3de68f8b303de6439327da36601efd0c440b1dc38e4e6bb17874221619",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "04594d3de68f8b303de6439327da36601efd0c440b1dc38e4e6bb17874221619",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+        },
+        "targetDigest": "119eea70ba2f3e0e82979bbc11cdfc79f9dacd57278a07949b5d2653362139cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "04594d3de68f8b303de6439327da36601efd0c440b1dc38e4e6bb17874221619",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+        },
+        "targetDigest": "9bbbae48198f4e6fdb8bc6200af1ccf9bb454b5d6c44ddb71930eb3dcbf0eede"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "04594d3de68f8b303de6439327da36601efd0c440b1dc38e4e6bb17874221619",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6b163e1a5930104a607fa8804aed304e106354b2b0cd50d4959600a969b0ac8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6b163e1a5930104a607fa8804aed304e106354b2b0cd50d4959600a969b0ac8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6b163e1a5930104a607fa8804aed304e106354b2b0cd50d4959600a969b0ac8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+        },
+        "targetDigest": "119eea70ba2f3e0e82979bbc11cdfc79f9dacd57278a07949b5d2653362139cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6b163e1a5930104a607fa8804aed304e106354b2b0cd50d4959600a969b0ac8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+        },
+        "targetDigest": "9bbbae48198f4e6fdb8bc6200af1ccf9bb454b5d6c44ddb71930eb3dcbf0eede"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6b163e1a5930104a607fa8804aed304e106354b2b0cd50d4959600a969b0ac8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+        },
+        "targetDigest": "861da65833839a9f1ead7b9255c54b5007850f45311db7ef3b9dfeff753071cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "6548da92190eaf2654d796ff188fc39bbae56de46b90845190aa5802be248dc1",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:crowbar:p1-rending-vs-staggered-rending-display-percent-code"
+        },
+        "targetDigest": "42d99a98b8e6cdcef5c6b110e5678de9e577fe23daf4d113158a9b0a131afad2"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8ded8f0d0e98430eb1c65e2007d75b38d300b2f7870d85eafda07b77b259f290",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 12 bespoke traits span lines 10-664; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:738f6c19:key-unknown:en:1:g-337d4087a321856a:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Opportunist",
+          "resolvedTextSha256": "2d801be4995af35552b50c8f4168f6581033fc5a9b40e65897fa17c02ba69d44",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d801be4995af35552b50c8f4168f6581033fc5a9b40e65897fa17c02ba69d44",
+              "text": "Opportunist"
+            }
+          ],
+          "sourceHash": "738f6c19",
+          "sourceLocale": "en",
+          "sourceText": "Opportunist",
+          "sourceTextSha256": "2d801be4995af35552b50c8f4168f6581033fc5a9b40e65897fa17c02ba69d44"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:738f6c19:key-unknown:zh-tw:1:g-337d4087a321856a:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "機會主義者",
+          "resolvedTextSha256": "77fd2619e584a3db3aea4486b07892482d1e7c53bb31b995615e3d9f7dc95e4d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "77fd2619e584a3db3aea4486b07892482d1e7c53bb31b995615e3d9f7dc95e4d",
+              "text": "機會主義者"
+            }
+          ],
+          "sourceHash": "738f6c19",
+          "sourceLocale": "zh-TW",
+          "sourceText": "機會主義者",
+          "sourceTextSha256": "77fd2619e584a3db3aea4486b07892482d1e7c53bb31b995615e3d9f7dc95e4d"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "+10% Melee Rending vs Staggered Enemies.",
+          "resolvedTextSha256": "6972731e2bfdc026f3b0b3614a15fdf30737fe34f1568c91b09e18db6db9e0ad",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-1",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cd2d1390e771e8e1ea44cf2b2d8840264278188e98493cbe59be10215792ec0",
+              "text": " Melee Rending vs Staggered Enemies."
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "en",
+          "sourceText": "{rending:%s} Melee Rending vs Staggered Enemies.",
+          "sourceTextSha256": "3581f94f95a1a66c323122304cc5ca74fb9dd8f4a69d46fd54876e9c6623aa74"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "+15% Melee Rending vs Staggered Enemies.",
+          "resolvedTextSha256": "1c00e265043f6b2e14e52a7af65bd6ec7e52112828eebdf7ffe3a3ada822de21",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-1",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cd2d1390e771e8e1ea44cf2b2d8840264278188e98493cbe59be10215792ec0",
+              "text": " Melee Rending vs Staggered Enemies."
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "en",
+          "sourceText": "{rending:%s} Melee Rending vs Staggered Enemies.",
+          "sourceTextSha256": "3581f94f95a1a66c323122304cc5ca74fb9dd8f4a69d46fd54876e9c6623aa74"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% Melee Rending vs Staggered Enemies.",
+          "resolvedTextSha256": "ee04f3f30f9e7c56c9ea2c9d8466420e7cf9d17120d006700f574096a1bd8c84",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-1",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cd2d1390e771e8e1ea44cf2b2d8840264278188e98493cbe59be10215792ec0",
+              "text": " Melee Rending vs Staggered Enemies."
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "en",
+          "sourceText": "{rending:%s} Melee Rending vs Staggered Enemies.",
+          "sourceTextSha256": "3581f94f95a1a66c323122304cc5ca74fb9dd8f4a69d46fd54876e9c6623aa74"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "+25% Melee Rending vs Staggered Enemies.",
+          "resolvedTextSha256": "88eb1988160b487dd79c19af35f2e16544fdde7c11a11ebcb1f90cf210242a5f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-1",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cd2d1390e771e8e1ea44cf2b2d8840264278188e98493cbe59be10215792ec0",
+              "text": " Melee Rending vs Staggered Enemies."
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "en",
+          "sourceText": "{rending:%s} Melee Rending vs Staggered Enemies.",
+          "sourceTextSha256": "3581f94f95a1a66c323122304cc5ca74fb9dd8f4a69d46fd54876e9c6623aa74"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent",
+              "value": "+10%"
+            }
+          ],
+          "resolvedText": "對抗踉蹌的敵人時，造成+10%近戰撕裂。",
+          "resolvedTextSha256": "2ab3a07d690cd83caeb8ccb5de1b1d5048d7e9eb8d0f7ad6092c9a20dca09f0f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2456904eb3b5c68d8adf50e240ab75695b7ac6be904d5f7d324d6ff8b23e5ba6",
+              "text": "對抗踉蹌的敵人時，造成"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-2",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "bd9b44870c11a17da1a644cb24127928f2c7412d5e2186f0d82ea7befc7a59f5",
+              "text": "近戰撕裂。"
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "zh-TW",
+          "sourceText": "對抗踉蹌的敵人時，造成{rending:%s}近戰撕裂。",
+          "sourceTextSha256": "c262717221d33213e3fbb52720305aa647ad370ebe9446224833ff31dbc478fe"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent",
+              "value": "+15%"
+            }
+          ],
+          "resolvedText": "對抗踉蹌的敵人時，造成+15%近戰撕裂。",
+          "resolvedTextSha256": "8c5b8d1bee150d055e7374a3eb319e27b7e4be6300bb325c222974cc5cb82f52",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2456904eb3b5c68d8adf50e240ab75695b7ac6be904d5f7d324d6ff8b23e5ba6",
+              "text": "對抗踉蹌的敵人時，造成"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-2",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "bd9b44870c11a17da1a644cb24127928f2c7412d5e2186f0d82ea7befc7a59f5",
+              "text": "近戰撕裂。"
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "zh-TW",
+          "sourceText": "對抗踉蹌的敵人時，造成{rending:%s}近戰撕裂。",
+          "sourceTextSha256": "c262717221d33213e3fbb52720305aa647ad370ebe9446224833ff31dbc478fe"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "對抗踉蹌的敵人時，造成+20%近戰撕裂。",
+          "resolvedTextSha256": "7907ebd2c1b15935b5db3596334786cc707f7058b4d24fcc347c8a2168852ab6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2456904eb3b5c68d8adf50e240ab75695b7ac6be904d5f7d324d6ff8b23e5ba6",
+              "text": "對抗踉蹌的敵人時，造成"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-2",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "bd9b44870c11a17da1a644cb24127928f2c7412d5e2186f0d82ea7befc7a59f5",
+              "text": "近戰撕裂。"
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "zh-TW",
+          "sourceText": "對抗踉蹌的敵人時，造成{rending:%s}近戰撕裂。",
+          "sourceTextSha256": "c262717221d33213e3fbb52720305aa647ad370ebe9446224833ff31dbc478fe"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "對抗踉蹌的敵人時，造成+25%近戰撕裂。",
+          "resolvedTextSha256": "cd0611fc356c0f72a68e2403a8e8af37f172cf0db5942cbb9c1c5ed5c7905419",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2456904eb3b5c68d8adf50e240ab75695b7ac6be904d5f7d324d6ff8b23e5ba6",
+              "text": "對抗踉蹌的敵人時，造成"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-2",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "bd9b44870c11a17da1a644cb24127928f2c7412d5e2186f0d82ea7befc7a59f5",
+              "text": "近戰撕裂。"
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "zh-TW",
+          "sourceText": "對抗踉蹌的敵人時，造成{rending:%s}近戰撕裂。",
+          "sourceTextSha256": "c262717221d33213e3fbb52720305aa647ad370ebe9446224833ff31dbc478fe"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:crowbar-p1-rending-vs-staggered",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "機會主義者",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:738f6c19:key-unknown:en:1:g-337d4087a321856a:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:738f6c19:key-unknown:zh-tw:1:g-337d4087a321856a:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:738f6c19:key-unknown:zh-tw:1:g-337d4087a321856a:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-rending-vs-staggered"
+          },
+          "key": "loc_trait_bespoke_melee_rending_vs_staggered_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "對抗踉蹌的敵人時，造成+25%近戰撕裂。",
+          "resolvedTextSha256": "cd0611fc356c0f72a68e2403a8e8af37f172cf0db5942cbb9c1c5ed5c7905419",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2456904eb3b5c68d8adf50e240ab75695b7ac6be904d5f7d324d6ff8b23e5ba6",
+              "text": "對抗踉蹌的敵人時，造成"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-2",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "bd9b44870c11a17da1a644cb24127928f2c7412d5e2186f0d82ea7befc7a59f5",
+              "text": "近戰撕裂。"
+            }
+          ],
+          "sourceHash": "a93676c3",
+          "sourceLocale": "zh-TW",
+          "sourceText": "對抗踉蹌的敵人時，造成{rending:%s}近戰撕裂。",
+          "sourceTextSha256": "c262717221d33213e3fbb52720305aa647ad370ebe9446224833ff31dbc478fe"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:en:1:g-337d4087a321856a:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a93676c3:key-known:zh-tw:1:g-337d4087a321856a:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-rending-vs-staggered-rending-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:crowbar:p1-rending-vs-staggered"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "bf2ab5607b8978fbf8cef4b318713e42f65d27f965444b4a4d652b41e0dbf679",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5ab1e394fcf23990f20d2bfd1c3bae56efbc8aa745a70e4cbc32dfb756747f5a",
+          "targetId": "review:w06:generic:337d4087a321856a:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "61b5dcc974c09eb0f1f7a2ce3cee7c3741e438c8d7c3f25bd5654167cb3d39a2",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "187fc00a48be21e856e97f7f625869855dab82337fe6bf69de53dfebfa23841a",
+          "targetId": "review:w06:generic:337d4087a321856a:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7636a464f0590057b7ebbf06f87dc5227745db5c2667d5d7a02d9b39f20f20a4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7c994f422259102a60bd25959826bbc5d79dd6a507e5f01d11934f10258c3f13",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "174f9f32eed2c3245932812d84a895673d1a85395d7f19b4fa7d12d41293994f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4b55249639d2593089589e754545513efdd3a4fbd89b818019fa77f6263f2283",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "9088ecb4ef4a08d0f8f44d429774100be7ad8d7c41a658a606661719db28987e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b5e8544414ca0c9c2a680c103f3135cf69cc8f95c1816cd7950848c09565a1aa",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "55312868de77124013f54828de0a1fb1315185cbb88cac6b679528ac9555a721",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "005cb305c731b26f64eb40334bf0ecd7c5a3e70ca7b6487cd913bfcb2efeb389",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "bf2ab5607b8978fbf8cef4b318713e42f65d27f965444b4a4d652b41e0dbf679",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:content::name"
+        },
+        "targetDigest": "5ab1e394fcf23990f20d2bfd1c3bae56efbc8aa745a70e4cbc32dfb756747f5a"
+      },
+      {
+        "dependenciesDigest": "61b5dcc974c09eb0f1f7a2ce3cee7c3741e438c8d7c3f25bd5654167cb3d39a2",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:context::tierapplicability"
+        },
+        "targetDigest": "187fc00a48be21e856e97f7f625869855dab82337fe6bf69de53dfebfa23841a"
+      },
+      {
+        "dependenciesDigest": "7636a464f0590057b7ebbf06f87dc5227745db5c2667d5d7a02d9b39f20f20a4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:0"
+        },
+        "targetDigest": "7c994f422259102a60bd25959826bbc5d79dd6a507e5f01d11934f10258c3f13"
+      },
+      {
+        "dependenciesDigest": "174f9f32eed2c3245932812d84a895673d1a85395d7f19b4fa7d12d41293994f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:1"
+        },
+        "targetDigest": "4b55249639d2593089589e754545513efdd3a4fbd89b818019fa77f6263f2283"
+      },
+      {
+        "dependenciesDigest": "9088ecb4ef4a08d0f8f44d429774100be7ad8d7c41a658a606661719db28987e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:2"
+        },
+        "targetDigest": "b5e8544414ca0c9c2a680c103f3135cf69cc8f95c1816cd7950848c09565a1aa"
+      },
+      {
+        "dependenciesDigest": "55312868de77124013f54828de0a1fb1315185cbb88cac6b679528ac9555a721",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:crowbar-p1-rending-vs-staggered",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:337d4087a321856a:official::tierpresentations:options:3"
+        },
+        "targetDigest": "005cb305c731b26f64eb40334bf0ecd7c5a3e70ca7b6487cd913bfcb2efeb389"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

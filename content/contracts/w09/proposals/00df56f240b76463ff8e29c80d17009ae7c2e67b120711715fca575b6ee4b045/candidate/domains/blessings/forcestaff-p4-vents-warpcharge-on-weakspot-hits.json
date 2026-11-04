@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.065",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.07",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.075",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.08",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.warp_charge.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "value": {
+            "decimal": "6.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.warp_charge.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "value": {
+            "decimal": "7",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.warp_charge.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "value": {
+            "decimal": "7.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.warp_charge.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "value": {
+            "decimal": "8",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value warp_charge at vent_percentage; defined tier literals are tier 1=0.065, tier 2=0.07, tier 3=0.075, tier 4=0.08.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "41b21e9e5f48f1ff6e6a7a6cbbbb6355442419a425f34ad03f6827bd6a47d55b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "923e9672f8543569ea830772262b32a7b0e4a869f1296186cea540dbf4b60572"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "41b21e9e5f48f1ff6e6a7a6cbbbb6355442419a425f34ad03f6827bd6a47d55b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "41b21e9e5f48f1ff6e6a7a6cbbbb6355442419a425f34ad03f6827bd6a47d55b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "41b21e9e5f48f1ff6e6a7a6cbbbb6355442419a425f34ad03f6827bd6a47d55b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "310d7dd166020c3ebc4e44c7670bb5baa2fd243e4543fe687ef620a1959bf1ac"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "41b21e9e5f48f1ff6e6a7a6cbbbb6355442419a425f34ad03f6827bd6a47d55b",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1b90dd26bc0957b78ba90c214aa7a79d5b3fdfaa966a10fda1182ac0268b8957",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "852651d9d722e9dc509ec9f0c53628e1fcd94a842aec0606611ea8900461379d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1b90dd26bc0957b78ba90c214aa7a79d5b3fdfaa966a10fda1182ac0268b8957",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1b90dd26bc0957b78ba90c214aa7a79d5b3fdfaa966a10fda1182ac0268b8957",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "targetDigest": "d83881dd56634e36234ea7264ecf9f7d88901fda4b10dd63f0f96c6861fceb11"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5a6a2398014bb1f1e1fcab8d834e956177a915e2c3ebd22bf46eeab3a211c2f3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5a6a2398014bb1f1e1fcab8d834e956177a915e2c3ebd22bf46eeab3a211c2f3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5a6a2398014bb1f1e1fcab8d834e956177a915e2c3ebd22bf46eeab3a211c2f3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+        },
+        "targetDigest": "d45c4fd627829ec39333ded7e7c74240933c8d600150a26c247ebb95856571a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5a6a2398014bb1f1e1fcab8d834e956177a915e2c3ebd22bf46eeab3a211c2f3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+        },
+        "targetDigest": "b3a2d739570b2c3108e103fc460ad6313540f0d60e690b13fa21b0d1568cbb6e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5a6a2398014bb1f1e1fcab8d834e956177a915e2c3ebd22bf46eeab3a211c2f3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+        },
+        "targetDigest": "67f1cebfb2d282ea4414c9f8871fa79e13d0fcca8c1220a1281a7e4ba08e8d9f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6955e8ba6599d7071726ef87eb9beb87f4dacd750c823c204a5e52324eecd96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6955e8ba6599d7071726ef87eb9beb87f4dacd750c823c204a5e52324eecd96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6955e8ba6599d7071726ef87eb9beb87f4dacd750c823c204a5e52324eecd96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+        },
+        "targetDigest": "d45c4fd627829ec39333ded7e7c74240933c8d600150a26c247ebb95856571a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6955e8ba6599d7071726ef87eb9beb87f4dacd750c823c204a5e52324eecd96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+        },
+        "targetDigest": "b3a2d739570b2c3108e103fc460ad6313540f0d60e690b13fa21b0d1568cbb6e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d6955e8ba6599d7071726ef87eb9beb87f4dacd750c823c204a5e52324eecd96",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+        },
+        "targetDigest": "40b19dab77bdb13e3713a031338940eed8511eac1614d6d18427655712f60a14"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e931c3e40c2e40cd6af365fbc17cc6c80daf289154cfa0eadf6cdfd5c247e97",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e931c3e40c2e40cd6af365fbc17cc6c80daf289154cfa0eadf6cdfd5c247e97",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e931c3e40c2e40cd6af365fbc17cc6c80daf289154cfa0eadf6cdfd5c247e97",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+        },
+        "targetDigest": "d45c4fd627829ec39333ded7e7c74240933c8d600150a26c247ebb95856571a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e931c3e40c2e40cd6af365fbc17cc6c80daf289154cfa0eadf6cdfd5c247e97",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+        },
+        "targetDigest": "b3a2d739570b2c3108e103fc460ad6313540f0d60e690b13fa21b0d1568cbb6e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0e931c3e40c2e40cd6af365fbc17cc6c80daf289154cfa0eadf6cdfd5c247e97",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+        },
+        "targetDigest": "3417672b5a4f4aaae12565ff2723f7b7d5343a582bd72fa864981f1680560dd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38a5925f847bbb1f4149048d59358a46fac83ba19e512936d932e2fd7d5516b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38a5925f847bbb1f4149048d59358a46fac83ba19e512936d932e2fd7d5516b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38a5925f847bbb1f4149048d59358a46fac83ba19e512936d932e2fd7d5516b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+        },
+        "targetDigest": "d45c4fd627829ec39333ded7e7c74240933c8d600150a26c247ebb95856571a0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38a5925f847bbb1f4149048d59358a46fac83ba19e512936d932e2fd7d5516b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+        },
+        "targetDigest": "b3a2d739570b2c3108e103fc460ad6313540f0d60e690b13fa21b0d1568cbb6e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "38a5925f847bbb1f4149048d59358a46fac83ba19e512936d932e2fd7d5516b0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+        },
+        "targetDigest": "035637c20d37f580a9be128f5f4ecf27e13367b42d7f19391ffc5ca4a371d4fe"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d3e7944b1f0a574b804593807571ab9c14a9178fc9aeccdbb0940802d08400e7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-display-percent-code"
+        },
+        "targetDigest": "f32e0b92d53618a6c3da1d3c080291019266cfe08340caa2023dd6ad3d89e32c"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "7abdafe6906ff86178d83c0c7de92983581f950e234bc20de77a1f2152d1ec2c",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_forcestaff_p4.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-424; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-forcestaff-p4-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent",
+              "value": "+6.5%"
+            }
+          ],
+          "resolvedText": "Quell +6.5% of your Peril on Weak Spot Hit.",
+          "resolvedTextSha256": "8e1cb743ea12a2511e99e55b0cba08b0fbef76864b6747e6e6d05b1673244336",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "86bee6cc425ee9727f3557bdc51cf2f167d2aff6e8f539f127525c2b660f32c5",
+              "text": "Quell "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e9dac3f7babc87dd84dad5fdaa15da3a46817f2d551fe7fea7baac087899486c",
+              "text": " of your Peril on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "en",
+          "sourceText": "Quell {warp_charge:%s} of your Peril on Weak Spot Hit.",
+          "sourceTextSha256": "47c1987b10c892c9d70f8059b543de8dc3abc08948b3f91760bdd9e2d9512322"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent",
+              "value": "+7%"
+            }
+          ],
+          "resolvedText": "Quell +7% of your Peril on Weak Spot Hit.",
+          "resolvedTextSha256": "d1fe5edaa3a5bc2c3f6aa2950dfef74de0a477da80e68d5b1f05ed3e3572c596",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "86bee6cc425ee9727f3557bdc51cf2f167d2aff6e8f539f127525c2b660f32c5",
+              "text": "Quell "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e9dac3f7babc87dd84dad5fdaa15da3a46817f2d551fe7fea7baac087899486c",
+              "text": " of your Peril on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "en",
+          "sourceText": "Quell {warp_charge:%s} of your Peril on Weak Spot Hit.",
+          "sourceTextSha256": "47c1987b10c892c9d70f8059b543de8dc3abc08948b3f91760bdd9e2d9512322"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent",
+              "value": "+7.5%"
+            }
+          ],
+          "resolvedText": "Quell +7.5% of your Peril on Weak Spot Hit.",
+          "resolvedTextSha256": "b134bb785d28fed182f968368bbf222a74f97863b064b6ec605cdbbd34a7ca1a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "86bee6cc425ee9727f3557bdc51cf2f167d2aff6e8f539f127525c2b660f32c5",
+              "text": "Quell "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e9dac3f7babc87dd84dad5fdaa15da3a46817f2d551fe7fea7baac087899486c",
+              "text": " of your Peril on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "en",
+          "sourceText": "Quell {warp_charge:%s} of your Peril on Weak Spot Hit.",
+          "sourceTextSha256": "47c1987b10c892c9d70f8059b543de8dc3abc08948b3f91760bdd9e2d9512322"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent",
+              "value": "+8%"
+            }
+          ],
+          "resolvedText": "Quell +8% of your Peril on Weak Spot Hit.",
+          "resolvedTextSha256": "0d082abc2d361e7c43f36592eda631acde85de4526ec19b371b2ee4df92a4bd4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "86bee6cc425ee9727f3557bdc51cf2f167d2aff6e8f539f127525c2b660f32c5",
+              "text": "Quell "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "e9dac3f7babc87dd84dad5fdaa15da3a46817f2d551fe7fea7baac087899486c",
+              "text": " of your Peril on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "en",
+          "sourceText": "Quell {warp_charge:%s} of your Peril on Weak Spot Hit.",
+          "sourceTextSha256": "47c1987b10c892c9d70f8059b543de8dc3abc08948b3f91760bdd9e2d9512322"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent",
+              "value": "+6.5%"
+            }
+          ],
+          "resolvedText": "弱點攻擊命中後，消除自身+6.5%反噬。",
+          "resolvedTextSha256": "d5834ce8604821c3b26284e86a7acf1e8ad5f065c68403d0108c352989ecb1c8",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1dec37dd021afd15eb075b6db67278d60b13e7f0f6cffc22118ed18286a438d3",
+              "text": "弱點攻擊命中後，消除自身"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2254476d50ce7367f59c28b88db32ec368acf8076de34553f64bd97ebe7a6ab0",
+              "text": "反噬。"
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊命中後，消除自身{warp_charge:%s}反噬。",
+          "sourceTextSha256": "cf5737994778f48f4ce66b8dab67db0acc9e0247bce8533d172c3162d411d2e6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent",
+              "value": "+7%"
+            }
+          ],
+          "resolvedText": "弱點攻擊命中後，消除自身+7%反噬。",
+          "resolvedTextSha256": "f5aca30e01c366c076ace1f96b3323c8f90729190f63391ac64603f3249e67db",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1dec37dd021afd15eb075b6db67278d60b13e7f0f6cffc22118ed18286a438d3",
+              "text": "弱點攻擊命中後，消除自身"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2254476d50ce7367f59c28b88db32ec368acf8076de34553f64bd97ebe7a6ab0",
+              "text": "反噬。"
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊命中後，消除自身{warp_charge:%s}反噬。",
+          "sourceTextSha256": "cf5737994778f48f4ce66b8dab67db0acc9e0247bce8533d172c3162d411d2e6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent",
+              "value": "+7.5%"
+            }
+          ],
+          "resolvedText": "弱點攻擊命中後，消除自身+7.5%反噬。",
+          "resolvedTextSha256": "efba70f27ce531020509c4aa73d33d89c4baa70c34cda38b998f62d7679e0d90",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1dec37dd021afd15eb075b6db67278d60b13e7f0f6cffc22118ed18286a438d3",
+              "text": "弱點攻擊命中後，消除自身"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2254476d50ce7367f59c28b88db32ec368acf8076de34553f64bd97ebe7a6ab0",
+              "text": "反噬。"
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊命中後，消除自身{warp_charge:%s}反噬。",
+          "sourceTextSha256": "cf5737994778f48f4ce66b8dab67db0acc9e0247bce8533d172c3162d411d2e6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent",
+              "value": "+8%"
+            }
+          ],
+          "resolvedText": "弱點攻擊命中後，消除自身+8%反噬。",
+          "resolvedTextSha256": "ad5042697a190a4a1a6395441704617269eef874d80ad18546ba8d466da9ee72",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1dec37dd021afd15eb075b6db67278d60b13e7f0f6cffc22118ed18286a438d3",
+              "text": "弱點攻擊命中後，消除自身"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2254476d50ce7367f59c28b88db32ec368acf8076de34553f64bd97ebe7a6ab0",
+              "text": "反噬。"
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊命中後，消除自身{warp_charge:%s}反噬。",
+          "sourceTextSha256": "cf5737994778f48f4ce66b8dab67db0acc9e0247bce8533d172c3162d411d2e6"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ad0c7fb2:key-unknown:en:1:g-ad71190df051e66f:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Transfer Peril",
+          "resolvedTextSha256": "40212e312888a4bc203c24854f52fa845eec8390e0a506d09ba113014f76b5a9",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "40212e312888a4bc203c24854f52fa845eec8390e0a506d09ba113014f76b5a9",
+              "text": "Transfer Peril"
+            }
+          ],
+          "sourceHash": "ad0c7fb2",
+          "sourceLocale": "en",
+          "sourceText": "Transfer Peril",
+          "sourceTextSha256": "40212e312888a4bc203c24854f52fa845eec8390e0a506d09ba113014f76b5a9"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ad0c7fb2:key-unknown:zh-tw:1:g-ad71190df051e66f:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "轉移反噬",
+          "resolvedTextSha256": "d1eae2e1a362231813399dd2bb9189090e4ecf5c4102e875644082457056a252",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "d1eae2e1a362231813399dd2bb9189090e4ecf5c4102e875644082457056a252",
+              "text": "轉移反噬"
+            }
+          ],
+          "sourceHash": "ad0c7fb2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "轉移反噬",
+          "sourceTextSha256": "d1eae2e1a362231813399dd2bb9189090e4ecf5c4102e875644082457056a252"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "轉移反噬",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:ad0c7fb2:key-unknown:en:1:g-ad71190df051e66f:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:ad0c7fb2:key-unknown:zh-tw:1:g-ad71190df051e66f:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:ad0c7fb2:key-unknown:zh-tw:1:g-ad71190df051e66f:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          },
+          "key": "loc_trait_bespoke_peril_vent_on_weakspot_hit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "warp_charge",
+              "sourceKey": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent",
+              "value": "+8%"
+            }
+          ],
+          "resolvedText": "弱點攻擊命中後，消除自身+8%反噬。",
+          "resolvedTextSha256": "ad5042697a190a4a1a6395441704617269eef874d80ad18546ba8d466da9ee72",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "1dec37dd021afd15eb075b6db67278d60b13e7f0f6cffc22118ed18286a438d3",
+              "text": "弱點攻擊命中後，消除自身"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "warp_charge",
+              "segmentId": "segment-2",
+              "sha256": "851584d2657d00c2a3a854eb022d7bad2a5c6f0748ae0954f610170e8f6c33f6",
+              "token": "{warp_charge:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2254476d50ce7367f59c28b88db32ec368acf8076de34553f64bd97ebe7a6ab0",
+              "text": "反噬。"
+            }
+          ],
+          "sourceHash": "70e57225",
+          "sourceLocale": "zh-TW",
+          "sourceText": "弱點攻擊命中後，消除自身{warp_charge:%s}反噬。",
+          "sourceTextSha256": "cf5737994778f48f4ce66b8dab67db0acc9e0247bce8533d172c3162d411d2e6"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "warp_charge",
+                  "placeholder": "{warp_charge:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "warp_charge",
+                  "placeholder": "{warp_charge:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "warp_charge",
+                  "placeholder": "{warp_charge:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:en:1:g-ad71190df051e66f:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:70e57225:key-known:zh-tw:1:g-ad71190df051e66f:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:forcestaff:p4-vents-warpcharge-on-weakspot-hits-warp-charge-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "warp_charge",
+                  "placeholder": "{warp_charge:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:forcestaff:p4-vents-warpcharge-on-weakspot-hits"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c404a77b7f7325baf7c8f7319b384a4ef403c62e531b000005cd6e74d09d7445",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "14c7899c7b78f5df0d111ac4325425456f954c5d899ad7f9549d6293c1cd3b64",
+          "targetId": "review:w06:generic:ad71190df051e66f:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1cc5bf2a3fc22591df0309d7e4d958dcd9653a24c7ffeb11826e53828b74ba97",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "154216282587431d6e5916c1f80c8a8b0fe4a500b3924e3ad264616fe6ce49d2",
+          "targetId": "review:w06:generic:ad71190df051e66f:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "50a74a9f340da7c064b6434e225522cca532a116b25f16666b29a526bf24b9f1",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5244a881fca30d346bf60f0b6c7459547edd084062ea8cb76d700bb66371a723",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a26b933f31500f491538b3b0c599f2a01259a3a259419458dc59e91b17b88e61",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0222d2750a379fbb7a516471cea58a303396189b5f9a372c8558bef2d326f327",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a42ce22110fa3dd3dbf1b081d14d0d26873d1086cfe66ab0c3bc0237031bd812",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "417eadaa213018ec90b0d47f88793392aed0ee7c76870e931d23a9a639944ef0",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b266cb84af43a09ba5365974ed6c4c598e8064ae063da670941c3aaf1b456e11",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "25227254f25471334344f3ef559b762b520d9e402025265e3acdeaa65ec262a4",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "c404a77b7f7325baf7c8f7319b384a4ef403c62e531b000005cd6e74d09d7445",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:content::name"
+        },
+        "targetDigest": "14c7899c7b78f5df0d111ac4325425456f954c5d899ad7f9549d6293c1cd3b64"
+      },
+      {
+        "dependenciesDigest": "1cc5bf2a3fc22591df0309d7e4d958dcd9653a24c7ffeb11826e53828b74ba97",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:context::tierapplicability"
+        },
+        "targetDigest": "154216282587431d6e5916c1f80c8a8b0fe4a500b3924e3ad264616fe6ce49d2"
+      },
+      {
+        "dependenciesDigest": "50a74a9f340da7c064b6434e225522cca532a116b25f16666b29a526bf24b9f1",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:0"
+        },
+        "targetDigest": "5244a881fca30d346bf60f0b6c7459547edd084062ea8cb76d700bb66371a723"
+      },
+      {
+        "dependenciesDigest": "a26b933f31500f491538b3b0c599f2a01259a3a259419458dc59e91b17b88e61",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:1"
+        },
+        "targetDigest": "0222d2750a379fbb7a516471cea58a303396189b5f9a372c8558bef2d326f327"
+      },
+      {
+        "dependenciesDigest": "a42ce22110fa3dd3dbf1b081d14d0d26873d1086cfe66ab0c3bc0237031bd812",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:2"
+        },
+        "targetDigest": "417eadaa213018ec90b0d47f88793392aed0ee7c76870e931d23a9a639944ef0"
+      },
+      {
+        "dependenciesDigest": "b266cb84af43a09ba5365974ed6c4c598e8064ae063da670941c3aaf1b456e11",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:forcestaff-p4-vents-warpcharge-on-weakspot-hits",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:ad71190df051e66f:official::tierpresentations:options:3"
+        },
+        "targetDigest": "25227254f25471334344f3ef559b762b520d9e402025265e3acdeaa65ec262a4"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

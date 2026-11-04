@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.damage.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value damage at stat_buffs.stat_buffs.stagger_count_damage; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c73ad81f05d33be251a16defdf9da601eb7b72145f2dc504d914b5c4019ea2e6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "e24407789a623be7c3fd4cedbd2220ce822acbcfafc7f9b27d7f80e333ef558b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c73ad81f05d33be251a16defdf9da601eb7b72145f2dc504d914b5c4019ea2e6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c73ad81f05d33be251a16defdf9da601eb7b72145f2dc504d914b5c4019ea2e6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c73ad81f05d33be251a16defdf9da601eb7b72145f2dc504d914b5c4019ea2e6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c73ad81f05d33be251a16defdf9da601eb7b72145f2dc504d914b5c4019ea2e6",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f823a75bd9b1213161da1d630fb7b5c5f3bd6d3e2e0d0c2e280f616d3dcfec25",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "4724b22b26d6fb8f5d43028552ec6ce7c805719d253e58f482296c3e809aa606"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f823a75bd9b1213161da1d630fb7b5c5f3bd6d3e2e0d0c2e280f616d3dcfec25",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f823a75bd9b1213161da1d630fb7b5c5f3bd6d3e2e0d0c2e280f616d3dcfec25",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "targetDigest": "0316cb69b0925af7c3cd8ae2e49cfe7e2dcfa4d653dc4eeaabbfc81362e14bc2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd9e11256775757b1dcb20a3f8ccf5100ef50c0fe7432babc098d28df3b95b44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd9e11256775757b1dcb20a3f8ccf5100ef50c0fe7432babc098d28df3b95b44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd9e11256775757b1dcb20a3f8ccf5100ef50c0fe7432babc098d28df3b95b44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "7a601f52f88f074206209c550a2f57ae9ad6ee8e6320d6f607522fc06a5cf4a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd9e11256775757b1dcb20a3f8ccf5100ef50c0fe7432babc098d28df3b95b44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "ee184f6c07a17d8ed6c6edeecdc9f56323ade8aac767b1c3215f9236bbdbcdef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bd9e11256775757b1dcb20a3f8ccf5100ef50c0fe7432babc098d28df3b95b44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c9caa25b9f383bfa4107a7ea8b5818eed38768b7940a0cf16f642d44eb6fd5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c9caa25b9f383bfa4107a7ea8b5818eed38768b7940a0cf16f642d44eb6fd5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c9caa25b9f383bfa4107a7ea8b5818eed38768b7940a0cf16f642d44eb6fd5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "7a601f52f88f074206209c550a2f57ae9ad6ee8e6320d6f607522fc06a5cf4a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c9caa25b9f383bfa4107a7ea8b5818eed38768b7940a0cf16f642d44eb6fd5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "ee184f6c07a17d8ed6c6edeecdc9f56323ade8aac767b1c3215f9236bbdbcdef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b3c9caa25b9f383bfa4107a7ea8b5818eed38768b7940a0cf16f642d44eb6fd5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81b04a8355ece9b1bea0e00915f816c7147af337e2ca1f94ba88695dcdb17ba7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81b04a8355ece9b1bea0e00915f816c7147af337e2ca1f94ba88695dcdb17ba7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81b04a8355ece9b1bea0e00915f816c7147af337e2ca1f94ba88695dcdb17ba7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "7a601f52f88f074206209c550a2f57ae9ad6ee8e6320d6f607522fc06a5cf4a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81b04a8355ece9b1bea0e00915f816c7147af337e2ca1f94ba88695dcdb17ba7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "ee184f6c07a17d8ed6c6edeecdc9f56323ade8aac767b1c3215f9236bbdbcdef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "81b04a8355ece9b1bea0e00915f816c7147af337e2ca1f94ba88695dcdb17ba7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d54367f43fd43df4681b8a9a682a3f69502d3e0efbed1c12a529e4d50944b697",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d54367f43fd43df4681b8a9a682a3f69502d3e0efbed1c12a529e4d50944b697",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d54367f43fd43df4681b8a9a682a3f69502d3e0efbed1c12a529e4d50944b697",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "7a601f52f88f074206209c550a2f57ae9ad6ee8e6320d6f607522fc06a5cf4a3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d54367f43fd43df4681b8a9a682a3f69502d3e0efbed1c12a529e4d50944b697",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "ee184f6c07a17d8ed6c6edeecdc9f56323ade8aac767b1c3215f9236bbdbcdef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d54367f43fd43df4681b8a9a682a3f69502d3e0efbed1c12a529e4d50944b697",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "98c938a2c685793d2f6505fac71ccd961dde2ab6187183a97a9aa37f2b72fbbb",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-display-percent-code"
+        },
+        "targetDigest": "fed3e58ce32d662a2c64bd92b80799f624366e75a8cca61c2fad527fd558f0c7"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "362393978bf7ba0b2dbb16f112dabb1565200bbc6443477998027225992f4576",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 20 bespoke traits span lines 9-1031; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-83221ea8a2788e29:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "No Respite",
+          "resolvedTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5",
+              "text": "No Respite"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "en",
+          "sourceText": "No Respite",
+          "sourceTextSha256": "803784a54e24ed0e8d52e59f8cff787c0048f004f3f49797c78051fcb0faf5c5"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-83221ea8a2788e29:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "刻不容緩",
+          "resolvedTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272",
+              "text": "刻不容緩"
+            }
+          ],
+          "sourceHash": "0d7da51d",
+          "sourceLocale": "zh-TW",
+          "sourceText": "刻不容緩",
+          "sourceTextSha256": "5489e40c703091255fd7e79715383d2e5ef55e15f64bafdff2e49207e1b31272"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "Up to +14% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "3c4b6a13dffc3ef21544e7db41b8e922aa75a7689e2882420fa70eb01d1404e7",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "Up to +16% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "2e14cc7bcc6422bf785113bf501b75fcbd7649777893a9a0314e3589ec214451",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "Up to +18% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "a1c994ba98978df101c7c5c35d328f05f8a67694a40a42d82094691eb3d32283",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "Up to +20% Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "resolvedTextSha256": "4def3256a1e4e8f12c6336411851b38eafcdd8a52081dbf56e0a1814ea709941",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08c05eadf48e4cc48e7e0236fed6fa540e032ba4878e3dd32c15becffa6e2547",
+              "text": "Up to "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "5d70218c811139468febbb550d6638ce2e508ae99b609f98c86ea0cef2c7bc27",
+              "text": " Damage on Hit (Staggered Enemy), scaling with Stagger."
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "en",
+          "sourceText": "Up to {damage:%s} Damage on Hit (Staggered Enemy), scaling with Stagger.",
+          "sourceTextSha256": "17e6eaba6b177d9ac8c213e38d2ea937708791e879a76f3704bc7cef02e701c6"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent",
+              "value": "+14%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+14%傷害。",
+          "resolvedTextSha256": "8965732061c98df0a803bc1dd6b10cf7e9258f229503672579ebcf377939ea2b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent",
+              "value": "+16%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+16%傷害。",
+          "resolvedTextSha256": "32ad475c27515a52e48269e2fe92721ba36db8e53b94374b094762f942512f0e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent",
+              "value": "+18%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+18%傷害。",
+          "resolvedTextSha256": "88e6c8793ff6f1e404fd75736b69bf8eb2e65dca38984213a617d6512a64f022",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "刻不容緩",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:en:1:g-83221ea8a2788e29:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-83221ea8a2788e29:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:0d7da51d:key-unknown:zh-tw:1:g-83221ea8a2788e29:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          },
+          "key": "loc_trait_bespoke_stagger_count_bonus_damage_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "damage",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "命中硬直敵人後，根據硬直程度提升+20%傷害。",
+          "resolvedTextSha256": "bdaed8f07b906b610e84b074eecfc428c4ee7f5b33d624d6e670c18c2af4ea6f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "28840d05e939f6de6582785ed33c1bc69a14356dcb937c96ca522b7bf566bcb5",
+              "text": "命中硬直敵人後，根據硬直程度提升"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "damage",
+              "segmentId": "segment-2",
+              "sha256": "e0edcbc7d0e405c62c3b6d68240c8037158467a2196b37e871ccfa5ade6139dd",
+              "token": "{damage:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "2fd63b1255be2e616c758b6ae8f98a4e1e8ac9fdc74e8fc58c0cd97f4590294f",
+              "text": "傷害。"
+            }
+          ],
+          "sourceHash": "1ac5c173",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中硬直敵人後，根據硬直程度提升{damage:%s}傷害。",
+          "sourceTextSha256": "0ae34fce15fba68569557f78953f0bab354b3a863eb27ba24b28cb9c92dbe382"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:en:1:g-83221ea8a2788e29:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:1ac5c173:key-known:zh-tw:1:g-83221ea8a2788e29:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stagger-count-bonus-damage-damage-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "damage",
+                  "placeholder": "{damage:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stagger-count-bonus-damage"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "f8a7c89b672c551ac9ebdbcda35fa6c432410f03038086d83e4bfc49ac1d49ca",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a64c6052871b1b9ac2c9e5a91836bf085f61a255c86682cfd0b8326bb1c1911a",
+          "targetId": "review:w06:generic:83221ea8a2788e29:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d8585e9a7cedba832649aadc73c261bad565abddfc92d6f31461578943f77893",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b0b68af1e1fe00cda83f3fbe74a90e898a000b1c57867849c97cd929feb3d16a",
+          "targetId": "review:w06:generic:83221ea8a2788e29:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "81601c0e0d30612b5031466acfdd4d8b14b22dc129e1e389c9d924a971896b9a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2cc88c2f4510089b2728fb4d7fe35184432405957abf552d9b4daf2239886480",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "4922397104eccc4d2a7d00122de6e8135787dfffc0da4bc9a66428ad8c8644f3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "a456d0301cfce8926f3c02a81ad95ae3e341d20d5e5c3e1ed6679255786fbeac",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "91b4985743bc8b72087109654c6fda17b108a41becb90bcd381b1d4e9be4b079",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0ee9c0226c10d8343ca52e821b1231cbd75cb0f3a5258d92e28212c4f6dde5dd",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "5f7ed77d9c7bcd96caef313aa20ae400bbcd8b28922dd56488f0880861950d24",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "455225433c96d5420d5a0aa2403d96921b27d769e9958124be4987e8dc64d005",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "f8a7c89b672c551ac9ebdbcda35fa6c432410f03038086d83e4bfc49ac1d49ca",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:content::name"
+        },
+        "targetDigest": "a64c6052871b1b9ac2c9e5a91836bf085f61a255c86682cfd0b8326bb1c1911a"
+      },
+      {
+        "dependenciesDigest": "d8585e9a7cedba832649aadc73c261bad565abddfc92d6f31461578943f77893",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:context::tierapplicability"
+        },
+        "targetDigest": "b0b68af1e1fe00cda83f3fbe74a90e898a000b1c57867849c97cd929feb3d16a"
+      },
+      {
+        "dependenciesDigest": "81601c0e0d30612b5031466acfdd4d8b14b22dc129e1e389c9d924a971896b9a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:0"
+        },
+        "targetDigest": "2cc88c2f4510089b2728fb4d7fe35184432405957abf552d9b4daf2239886480"
+      },
+      {
+        "dependenciesDigest": "4922397104eccc4d2a7d00122de6e8135787dfffc0da4bc9a66428ad8c8644f3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:1"
+        },
+        "targetDigest": "a456d0301cfce8926f3c02a81ad95ae3e341d20d5e5c3e1ed6679255786fbeac"
+      },
+      {
+        "dependenciesDigest": "91b4985743bc8b72087109654c6fda17b108a41becb90bcd381b1d4e9be4b079",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:2"
+        },
+        "targetDigest": "0ee9c0226c10d8343ca52e821b1231cbd75cb0f3a5258d92e28212c4f6dde5dd"
+      },
+      {
+        "dependenciesDigest": "5f7ed77d9c7bcd96caef313aa20ae400bbcd8b28922dd56488f0880861950d24",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stagger-count-bonus-damage",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:83221ea8a2788e29:official::tierpresentations:options:3"
+        },
+        "targetDigest": "455225433c96d5420d5a0aa2403d96921b27d769e9958124be4987e8dc64d005"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

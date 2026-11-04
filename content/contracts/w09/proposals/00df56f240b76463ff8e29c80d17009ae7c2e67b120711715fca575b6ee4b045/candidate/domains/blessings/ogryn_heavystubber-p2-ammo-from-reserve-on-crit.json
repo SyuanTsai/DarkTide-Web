@@ -1,0 +1,1418 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value-code"
+            }
+          ],
+          "property": "description.format_values.bullet_amount.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "value": {
+            "decimal": "1",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value bullet_amount at num_ammmo_to_move; defined tier literals are tier 1=1, tier 2=1, tier 3=1, tier 4=1.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f5397a9100f1361ca60e848ea645379c5bd8c46b63e8aacc6775d3abd306589",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "bd1923a4c166d49f5f591f8605648cdd22598916411d6906d6a2c7cb0b6bdbbc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f5397a9100f1361ca60e848ea645379c5bd8c46b63e8aacc6775d3abd306589",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f5397a9100f1361ca60e848ea645379c5bd8c46b63e8aacc6775d3abd306589",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f5397a9100f1361ca60e848ea645379c5bd8c46b63e8aacc6775d3abd306589",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "826460d7a18f63e199f4eb9941a1bd5b9c97d34825706da8fdaf754de70e7104"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "5f5397a9100f1361ca60e848ea645379c5bd8c46b63e8aacc6775d3abd306589",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f35e23e88ad06e956bd03260730f7531f23d0db9a32a2518c3ebbb8a4da754d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "3dca1475b0a43d745529bcbad1c626fd668595381a8f08e681ac92e88fae3d7c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f35e23e88ad06e956bd03260730f7531f23d0db9a32a2518c3ebbb8a4da754d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f35e23e88ad06e956bd03260730f7531f23d0db9a32a2518c3ebbb8a4da754d4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "targetDigest": "23e8084fe9d9d75fd404e19fb70e0dd59e641aaa7e686e5e672af0c17a51b41b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "30c04e5feb42b46b48851f7a0a0efe810d521cd15e0c1c706ebe14bd1018e6d8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "30c04e5feb42b46b48851f7a0a0efe810d521cd15e0c1c706ebe14bd1018e6d8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "30c04e5feb42b46b48851f7a0a0efe810d521cd15e0c1c706ebe14bd1018e6d8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+        },
+        "targetDigest": "c3089955cfc294f35f6bc399def01b3892a83f8c072751a15a76eb37fa0c258d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "30c04e5feb42b46b48851f7a0a0efe810d521cd15e0c1c706ebe14bd1018e6d8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+        },
+        "targetDigest": "5a329f9638d71e4096d7aa2b546d1d36485d324067e6b3e211b733c67b7ccc66"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "30c04e5feb42b46b48851f7a0a0efe810d521cd15e0c1c706ebe14bd1018e6d8",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+        },
+        "targetDigest": "27a6a51c52f2b3a75c75bbf8dff4deb8070a9582b8b36cad3eef453c18e0b164"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "51689adc4181f877c3641cb1fffdff5a68320fb0a0d7952bed25ed51ad9cf0b3",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value-code"
+        },
+        "targetDigest": "26203166a1de6d2eb0e3807846736b303ad73e23371693a5acc8e6b1c4aaa5a9"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "362393978bf7ba0b2dbb16f112dabb1565200bbc6443477998027225992f4576",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 20 bespoke traits span lines 9-1031; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0c513155:key-unknown:en:1:g-08ab20cc9a46265a:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Charmed Reload",
+          "resolvedTextSha256": "42e47b0e9cb9e4e733e0c741fca85d32754bbafea92a6adb9c9216b92a9e2773",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "42e47b0e9cb9e4e733e0c741fca85d32754bbafea92a6adb9c9216b92a9e2773",
+              "text": "Charmed Reload"
+            }
+          ],
+          "sourceHash": "0c513155",
+          "sourceLocale": "en",
+          "sourceText": "Charmed Reload",
+          "sourceTextSha256": "42e47b0e9cb9e4e733e0c741fca85d32754bbafea92a6adb9c9216b92a9e2773"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:0c513155:key-unknown:zh-tw:1:g-08ab20cc9a46265a:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "魔力彈藥",
+          "resolvedTextSha256": "a4555f0301fff6c8b79270efdfcca7626b3f7d9f4de3ea295bd01dd1b40c3292",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "a4555f0301fff6c8b79270efdfcca7626b3f7d9f4de3ea295bd01dd1b40c3292",
+              "text": "魔力彈藥"
+            }
+          ],
+          "sourceHash": "0c513155",
+          "sourceLocale": "zh-TW",
+          "sourceText": "魔力彈藥",
+          "sourceTextSha256": "a4555f0301fff6c8b79270efdfcca7626b3f7d9f4de3ea295bd01dd1b40c3292"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "1 bullets loaded from Reserve on Critical Hit.",
+          "resolvedTextSha256": "b1fb1946a637022fdc9e6307d0e9ba876ff7bf143c21b9c6cbeb432aba141b4f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-1",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cedd92763043d3b963701dc2a7e57a46128b73d55080611452e66777c782f44",
+              "text": " bullets loaded from Reserve on Critical Hit."
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "en",
+          "sourceText": "{bullet_amount:%s} bullets loaded from Reserve on Critical Hit.",
+          "sourceTextSha256": "804b97b845012a9cbfbf5387feeb63e6a276d5073b78379e1bb623d0d777ad67"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "1 bullets loaded from Reserve on Critical Hit.",
+          "resolvedTextSha256": "b1fb1946a637022fdc9e6307d0e9ba876ff7bf143c21b9c6cbeb432aba141b4f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-1",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cedd92763043d3b963701dc2a7e57a46128b73d55080611452e66777c782f44",
+              "text": " bullets loaded from Reserve on Critical Hit."
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "en",
+          "sourceText": "{bullet_amount:%s} bullets loaded from Reserve on Critical Hit.",
+          "sourceTextSha256": "804b97b845012a9cbfbf5387feeb63e6a276d5073b78379e1bb623d0d777ad67"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "1 bullets loaded from Reserve on Critical Hit.",
+          "resolvedTextSha256": "b1fb1946a637022fdc9e6307d0e9ba876ff7bf143c21b9c6cbeb432aba141b4f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-1",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cedd92763043d3b963701dc2a7e57a46128b73d55080611452e66777c782f44",
+              "text": " bullets loaded from Reserve on Critical Hit."
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "en",
+          "sourceText": "{bullet_amount:%s} bullets loaded from Reserve on Critical Hit.",
+          "sourceTextSha256": "804b97b845012a9cbfbf5387feeb63e6a276d5073b78379e1bb623d0d777ad67"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "1 bullets loaded from Reserve on Critical Hit.",
+          "resolvedTextSha256": "b1fb1946a637022fdc9e6307d0e9ba876ff7bf143c21b9c6cbeb432aba141b4f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-1",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "1cedd92763043d3b963701dc2a7e57a46128b73d55080611452e66777c782f44",
+              "text": " bullets loaded from Reserve on Critical Hit."
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "en",
+          "sourceText": "{bullet_amount:%s} bullets loaded from Reserve on Critical Hit.",
+          "sourceTextSha256": "804b97b845012a9cbfbf5387feeb63e6a276d5073b78379e1bb623d0d777ad67"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "暴擊後從預留彈藥中裝填1發子彈。",
+          "resolvedTextSha256": "ea04360a076be44acb843395febda1298c248064dfe6451b372f8ba88796763a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa367479cbfd518438ebd3d06fcbc2349dfec0e59159dbb83aa55e016e6439f9",
+              "text": "暴擊後從預留彈藥中裝填"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-2",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "109b704e4fd350066b1148616b82eaca15e905c3ab8fe3309dcf0f8ebd0dd6e3",
+              "text": "發子彈。"
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後從預留彈藥中裝填{bullet_amount:%s}發子彈。",
+          "sourceTextSha256": "df773c055c44d28af23a794163f9002a4ae008be706fa4d779fccb582d73f4f6"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "暴擊後從預留彈藥中裝填1發子彈。",
+          "resolvedTextSha256": "ea04360a076be44acb843395febda1298c248064dfe6451b372f8ba88796763a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa367479cbfd518438ebd3d06fcbc2349dfec0e59159dbb83aa55e016e6439f9",
+              "text": "暴擊後從預留彈藥中裝填"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-2",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "109b704e4fd350066b1148616b82eaca15e905c3ab8fe3309dcf0f8ebd0dd6e3",
+              "text": "發子彈。"
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後從預留彈藥中裝填{bullet_amount:%s}發子彈。",
+          "sourceTextSha256": "df773c055c44d28af23a794163f9002a4ae008be706fa4d779fccb582d73f4f6"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "暴擊後從預留彈藥中裝填1發子彈。",
+          "resolvedTextSha256": "ea04360a076be44acb843395febda1298c248064dfe6451b372f8ba88796763a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa367479cbfd518438ebd3d06fcbc2349dfec0e59159dbb83aa55e016e6439f9",
+              "text": "暴擊後從預留彈藥中裝填"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-2",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "109b704e4fd350066b1148616b82eaca15e905c3ab8fe3309dcf0f8ebd0dd6e3",
+              "text": "發子彈。"
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後從預留彈藥中裝填{bullet_amount:%s}發子彈。",
+          "sourceTextSha256": "df773c055c44d28af23a794163f9002a4ae008be706fa4d779fccb582d73f4f6"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "暴擊後從預留彈藥中裝填1發子彈。",
+          "resolvedTextSha256": "ea04360a076be44acb843395febda1298c248064dfe6451b372f8ba88796763a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa367479cbfd518438ebd3d06fcbc2349dfec0e59159dbb83aa55e016e6439f9",
+              "text": "暴擊後從預留彈藥中裝填"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-2",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "109b704e4fd350066b1148616b82eaca15e905c3ab8fe3309dcf0f8ebd0dd6e3",
+              "text": "發子彈。"
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後從預留彈藥中裝填{bullet_amount:%s}發子彈。",
+          "sourceTextSha256": "df773c055c44d28af23a794163f9002a4ae008be706fa4d779fccb582d73f4f6"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "魔力彈藥",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:0c513155:key-unknown:en:1:g-08ab20cc9a46265a:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:0c513155:key-unknown:zh-tw:1:g-08ab20cc9a46265a:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:0c513155:key-unknown:zh-tw:1:g-08ab20cc9a46265a:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          },
+          "key": "loc_trait_bespoke_ammo_refill_from_reserve_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "bullet_amount",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value",
+              "value": "1"
+            }
+          ],
+          "resolvedText": "暴擊後從預留彈藥中裝填1發子彈。",
+          "resolvedTextSha256": "ea04360a076be44acb843395febda1298c248064dfe6451b372f8ba88796763a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa367479cbfd518438ebd3d06fcbc2349dfec0e59159dbb83aa55e016e6439f9",
+              "text": "暴擊後從預留彈藥中裝填"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "bullet_amount",
+              "segmentId": "segment-2",
+              "sha256": "c6dfc77e22c640842021ce4b8837bad923cb10085ff716530642906768dea648",
+              "token": "{bullet_amount:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "109b704e4fd350066b1148616b82eaca15e905c3ab8fe3309dcf0f8ebd0dd6e3",
+              "text": "發子彈。"
+            }
+          ],
+          "sourceHash": "d343e6d7",
+          "sourceLocale": "zh-TW",
+          "sourceText": "暴擊後從預留彈藥中裝填{bullet_amount:%s}發子彈。",
+          "sourceTextSha256": "df773c055c44d28af23a794163f9002a4ae008be706fa4d779fccb582d73f4f6"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "bullet_amount",
+                  "placeholder": "{bullet_amount:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "bullet_amount",
+                  "placeholder": "{bullet_amount:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "bullet_amount",
+                  "placeholder": "{bullet_amount:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:en:1:g-08ab20cc9a46265a:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:d343e6d7:key-known:zh-tw:1:g-08ab20cc9a46265a:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-ammo-from-reserve-on-crit-bullet-amount-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "bullet_amount",
+                  "placeholder": "{bullet_amount:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-ammo-from-reserve-on-crit"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "984c8b1e25a5f6e06db6334c73e29ec6dc8b44386245cb290a1eaae3a8817557",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "65aad59fbc777e1fe30a5b6adf18a423fc52d89783de8d8ab146acc72b17c29c",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "347f23a548c18ee1ef9c5edd8f4c1af1d14dae8db414ba640939a35802340e9c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c007296a64c2c785b9727d83cb42c39cf39e50b5e900bd53792d4403b2c0cbd2",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "bea6c7f417cc70fa682d7d39e222b06580c5042613ce282172e94c8cba02b869",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6e73286275c39abdf0be3896840592848c75ff5c0a50f1b41a97d99d86f1f0f4",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "28dd3b5e0d334e5c266b022d7685291e772de8b6502bd0e072ee2d68f74b7d4b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d9b67234fded4a2ad4d149020abc755ecec4d63c89a87d6205e236e814409f4b",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "587bd6e277f643c5f522f0e77c5f25fae792226f9230b4a153f7fcaf66e10c40",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4039ec262899c8c700c0af6c21fb9db0910253f023049dbbf68cd1f69f533bc5",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "2a215e08e5a9f63acd1de20391a4400f4c262f2497d8570e2db54e74d827c90b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "58ab8bc7a351d4993c117ae5556948331cfea24e8da8988d55d4bc0b125b32d2",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "984c8b1e25a5f6e06db6334c73e29ec6dc8b44386245cb290a1eaae3a8817557",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:content::name"
+        },
+        "targetDigest": "65aad59fbc777e1fe30a5b6adf18a423fc52d89783de8d8ab146acc72b17c29c"
+      },
+      {
+        "dependenciesDigest": "347f23a548c18ee1ef9c5edd8f4c1af1d14dae8db414ba640939a35802340e9c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:context::tierapplicability"
+        },
+        "targetDigest": "c007296a64c2c785b9727d83cb42c39cf39e50b5e900bd53792d4403b2c0cbd2"
+      },
+      {
+        "dependenciesDigest": "bea6c7f417cc70fa682d7d39e222b06580c5042613ce282172e94c8cba02b869",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:0"
+        },
+        "targetDigest": "6e73286275c39abdf0be3896840592848c75ff5c0a50f1b41a97d99d86f1f0f4"
+      },
+      {
+        "dependenciesDigest": "28dd3b5e0d334e5c266b022d7685291e772de8b6502bd0e072ee2d68f74b7d4b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:1"
+        },
+        "targetDigest": "d9b67234fded4a2ad4d149020abc755ecec4d63c89a87d6205e236e814409f4b"
+      },
+      {
+        "dependenciesDigest": "587bd6e277f643c5f522f0e77c5f25fae792226f9230b4a153f7fcaf66e10c40",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:2"
+        },
+        "targetDigest": "4039ec262899c8c700c0af6c21fb9db0910253f023049dbbf68cd1f69f533bc5"
+      },
+      {
+        "dependenciesDigest": "2a215e08e5a9f63acd1de20391a4400f4c262f2497d8570e2db54e74d827c90b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-ammo-from-reserve-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:08ab20cc9a46265a:official::tierpresentations:options:3"
+        },
+        "targetDigest": "58ab8bc7a351d4993c117ae5556948331cfea24e8da8988d55d4bc0b125b32d2"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

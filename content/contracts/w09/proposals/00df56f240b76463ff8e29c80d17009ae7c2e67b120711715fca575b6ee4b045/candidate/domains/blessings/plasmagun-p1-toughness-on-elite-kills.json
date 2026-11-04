@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.175",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.225",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.25",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "17.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "22.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.toughness.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "value": {
+            "decimal": "25",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_plasmagun_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value toughness at toughness_fixed_percentage; defined tier literals are tier 1=0.175, tier 2=0.2, tier 3=0.225, tier 4=0.25.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "44efe52ae3c8bc92fe7ff307eca58cd24afd85ae9ff5d165cb11e3e6be16e787",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "88012df894655b69739030e297da42e0e505fb8a4c8908e4389969964934f88f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "44efe52ae3c8bc92fe7ff307eca58cd24afd85ae9ff5d165cb11e3e6be16e787",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "44efe52ae3c8bc92fe7ff307eca58cd24afd85ae9ff5d165cb11e3e6be16e787",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "44efe52ae3c8bc92fe7ff307eca58cd24afd85ae9ff5d165cb11e3e6be16e787",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "ee0fdf64c53a337928bc79e8b027ea27d5b1770ac4bf0b313d8fd1c725906bde"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "44efe52ae3c8bc92fe7ff307eca58cd24afd85ae9ff5d165cb11e3e6be16e787",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8857802da50a1e4e2c6adaf72270b3b745b861e990ac88805a14cd556af145ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "322b807e9edea0f1bb3e6db9b5442a92c2461dd987e2fb0bea33ecfe02aba6c9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8857802da50a1e4e2c6adaf72270b3b745b861e990ac88805a14cd556af145ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8857802da50a1e4e2c6adaf72270b3b745b861e990ac88805a14cd556af145ce",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "targetDigest": "2043dd3075cf30d56dc18450f94e8ea5d10e6c2dadbc33074ef4fe6163714679"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c81da7318cbc03a7ceec1d4e78163c48eda32e72c827973ad46a334172db4cdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c81da7318cbc03a7ceec1d4e78163c48eda32e72c827973ad46a334172db4cdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c81da7318cbc03a7ceec1d4e78163c48eda32e72c827973ad46a334172db4cdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "dbea8f477f711e6e5cf01dc290d32a2629aa9fc3d87b66dcfca083b305aca197"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c81da7318cbc03a7ceec1d4e78163c48eda32e72c827973ad46a334172db4cdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "912fb717903f991458c4e91b5de7a1079b8dcd954025ee26875c323b87d1790a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "c81da7318cbc03a7ceec1d4e78163c48eda32e72c827973ad46a334172db4cdd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+        },
+        "targetDigest": "3001afc3737a1614bb9509429ab3d5b1717db97dacb6b7a6d5b612c76f0a9b59"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "620c9cab7e250eb4325942f457c3f278692bc2a4dc1d3aad543536d140034768",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "620c9cab7e250eb4325942f457c3f278692bc2a4dc1d3aad543536d140034768",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "620c9cab7e250eb4325942f457c3f278692bc2a4dc1d3aad543536d140034768",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "dbea8f477f711e6e5cf01dc290d32a2629aa9fc3d87b66dcfca083b305aca197"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "620c9cab7e250eb4325942f457c3f278692bc2a4dc1d3aad543536d140034768",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "912fb717903f991458c4e91b5de7a1079b8dcd954025ee26875c323b87d1790a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "620c9cab7e250eb4325942f457c3f278692bc2a4dc1d3aad543536d140034768",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "80c677f8e8fdd8c0d871dc1acc147618aaf475a703672034f78a2fb3396b5541",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "80c677f8e8fdd8c0d871dc1acc147618aaf475a703672034f78a2fb3396b5541",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "80c677f8e8fdd8c0d871dc1acc147618aaf475a703672034f78a2fb3396b5541",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "dbea8f477f711e6e5cf01dc290d32a2629aa9fc3d87b66dcfca083b305aca197"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "80c677f8e8fdd8c0d871dc1acc147618aaf475a703672034f78a2fb3396b5541",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "912fb717903f991458c4e91b5de7a1079b8dcd954025ee26875c323b87d1790a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "80c677f8e8fdd8c0d871dc1acc147618aaf475a703672034f78a2fb3396b5541",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+        },
+        "targetDigest": "db65e12df4204f7524fd72bc02eff8ea671b1f12ab6429441ff1895a8321bbb7"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3251891fcbc1d66c2e25e22485f2459d7c76e0b5fc2fa8d8578a6c9100588287",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3251891fcbc1d66c2e25e22485f2459d7c76e0b5fc2fa8d8578a6c9100588287",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3251891fcbc1d66c2e25e22485f2459d7c76e0b5fc2fa8d8578a6c9100588287",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "dbea8f477f711e6e5cf01dc290d32a2629aa9fc3d87b66dcfca083b305aca197"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3251891fcbc1d66c2e25e22485f2459d7c76e0b5fc2fa8d8578a6c9100588287",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "912fb717903f991458c4e91b5de7a1079b8dcd954025ee26875c323b87d1790a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3251891fcbc1d66c2e25e22485f2459d7c76e0b5fc2fa8d8578a6c9100588287",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+        },
+        "targetDigest": "861da65833839a9f1ead7b9255c54b5007850f45311db7ef3b9dfeff753071cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b531bc9e0aa8e9c6767ff5763cc752c70e4de13a495a2dda57c7f3c8a22e02dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:plasmagun:p1-toughness-on-elite-kills-toughness-display-percent-code"
+        },
+        "targetDigest": "03c7e2465e6191b93d195040ef60ca5e7e2564d6c4a7278fbeecffd6d00e2416"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "b356486926200505bd5f879dc6d3dcc46daf99cdcc2bcc3bf354c1430e176ce4",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_plasmagun_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_plasmagun_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 9 bespoke traits span lines 10-442; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-plasmagun-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent",
+              "value": "+17.5%"
+            }
+          ],
+          "resolvedText": "+17.5% Toughness on Elite Kill.",
+          "resolvedTextSha256": "28551bacbfdde79cadc2f4d8deda5d84bf91fd6a94da82efcc50810a9e367a0d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "+20% Toughness on Elite Kill.",
+          "resolvedTextSha256": "6c02aa4b005ba37f73d005a1d749ba05f0d354c7f27a0f401f4b384e1503d3c1",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent",
+              "value": "+22.5%"
+            }
+          ],
+          "resolvedText": "+22.5% Toughness on Elite Kill.",
+          "resolvedTextSha256": "af16cac101b4eb4176ccf68bc4968022fabd9348daa60e6f4d4bc858543f4882",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "+25% Toughness on Elite Kill.",
+          "resolvedTextSha256": "c390b308d655ec6d7144b298d8d0381c8acf498b66f83174481db7d85b23d5b0",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-1",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "388ff0b8b75fb1773c791685c311daff420e336d8eded6578610236a99d89c9f",
+              "text": " Toughness on Elite Kill."
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "en",
+          "sourceText": "{toughness:%s} Toughness on Elite Kill.",
+          "sourceTextSha256": "c753fac5ab5155720576b790df20472b7c764d7255818e83de53b169d8b650ee"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent",
+              "value": "+17.5%"
+            }
+          ],
+          "resolvedText": "擊殺精英+17.5%韌性。",
+          "resolvedTextSha256": "38b5c41a1bde4190d439068f37fdf77b77e3a9c2217e7cef78fb80b0b4185a9a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent",
+              "value": "+20%"
+            }
+          ],
+          "resolvedText": "擊殺精英+20%韌性。",
+          "resolvedTextSha256": "7d091e0dd6ce2f9024c2f76cacdfb0a7729fea54e6228e99e098604ea3546742",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent",
+              "value": "+22.5%"
+            }
+          ],
+          "resolvedText": "擊殺精英+22.5%韌性。",
+          "resolvedTextSha256": "48ed7f20b2f514a984fbfead87a40676a1db29ea4ebe05463f937e967ef5d222",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "擊殺精英+25%韌性。",
+          "resolvedTextSha256": "6140baad36f889536b170ee905f815ce69097ca51a718d6c7be3caf93702a508",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:e31c381b:key-unknown:en:1:g-8d863197ff5cc0a3:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Gloryhunter",
+          "resolvedTextSha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6",
+              "text": "Gloryhunter"
+            }
+          ],
+          "sourceHash": "e31c381b",
+          "sourceLocale": "en",
+          "sourceText": "Gloryhunter",
+          "sourceTextSha256": "0de8e5cb0ee9217db457b6b828ba490d2c8b59a141977dfcd2fc82ff3a1418e6"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-8d863197ff5cc0a3:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "榮耀獵手",
+          "resolvedTextSha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f",
+              "text": "榮耀獵手"
+            }
+          ],
+          "sourceHash": "e31c381b",
+          "sourceLocale": "zh-TW",
+          "sourceText": "榮耀獵手",
+          "sourceTextSha256": "964ecddd500fb545be67d9fb59ec4a268b2cd54da153c693f9adf9762cf2080f"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "榮耀獵手",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:e31c381b:key-unknown:en:1:g-8d863197ff5cc0a3:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-8d863197ff5cc0a3:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:e31c381b:key-unknown:zh-tw:1:g-8d863197ff5cc0a3:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:plasmagun:p1-toughness-on-elite-kills"
+          },
+          "key": "loc_trait_bespoke_toughness_on_elite_kills_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "toughness",
+              "sourceKey": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent",
+              "value": "+25%"
+            }
+          ],
+          "resolvedText": "擊殺精英+25%韌性。",
+          "resolvedTextSha256": "6140baad36f889536b170ee905f815ce69097ca51a718d6c7be3caf93702a508",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "afb90db44d9a3afa42f2c854060b138c7fcb2a4e48016b8b86640e17799247fe",
+              "text": "擊殺精英"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "toughness",
+              "segmentId": "segment-2",
+              "sha256": "56744fbcc2a831771a992a3e7a8f6d6b83f9865d47305ed3a5770490dbd5a36d",
+              "token": "{toughness:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "77bca5bcd418e73f385460c27aa9afc1de0a76d0db87dc0ba415a03be61fa4ad",
+              "text": "韌性。"
+            }
+          ],
+          "sourceHash": "50e9547a",
+          "sourceLocale": "zh-TW",
+          "sourceText": "擊殺精英{toughness:%s}韌性。",
+          "sourceTextSha256": "c9fc2e831683a3f2e6b6d029573e2ba7b9099f3c4c98e10258dfb475dd1542db"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:en:1:g-8d863197ff5cc0a3:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:50e9547a:key-known:zh-tw:1:g-8d863197ff5cc0a3:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:plasmagun:p1-toughness-on-elite-kills-toughness-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "toughness",
+                  "placeholder": "{toughness:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:plasmagun:p1-toughness-on-elite-kills"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "106a63f501e879772f1daa907ea85ee6367f184ba811143927c0f029996be639",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d80dead12e7d9212d58a8f3f3bc7292da66e5f9d4f7c1e0bb7f011304d0f5214",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "a37f701009e8fbc03a5d556fe88c2c1727bc4e4249b051880a9246a476aa66e8",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "c8e20062cefa115d6024d09146652bc3909d65b3a25fdcb9f6f2c3b8cfb9b3f2",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "05e41aed2f9b5037e9b18f4a35f5f547b38aed42cec1a278549a8557e0912715",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6270084862d1ceaed303312d9725cae025be9cacc359c4dcbf1c03bb5dc1627a",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c77d5453ba6d72902d2a2ac955eb28b09de7f9fbf88354ed542bde394dab8126",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d07cec7d54b6811dface051790ff649593caa0c238f138ca4db9c55bc6f9820c",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "97663e59a22ea77edefbf7de1438d8eda955593c6ce412c196d447f45bfe420f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "e2560018649b0fc901f5c8204f9a5723771e87fb728b5be05c9908665b7899c1",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7acd05eb0a42d88f539b8265334ee6f60b151016e948b3831a1fae03b5c1747b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "67a6634010f5945648f84885785fd1399653e1bb4195733828d8c7f0d4b4c922",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "106a63f501e879772f1daa907ea85ee6367f184ba811143927c0f029996be639",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:content::name"
+        },
+        "targetDigest": "d80dead12e7d9212d58a8f3f3bc7292da66e5f9d4f7c1e0bb7f011304d0f5214"
+      },
+      {
+        "dependenciesDigest": "a37f701009e8fbc03a5d556fe88c2c1727bc4e4249b051880a9246a476aa66e8",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:context::tierapplicability"
+        },
+        "targetDigest": "c8e20062cefa115d6024d09146652bc3909d65b3a25fdcb9f6f2c3b8cfb9b3f2"
+      },
+      {
+        "dependenciesDigest": "05e41aed2f9b5037e9b18f4a35f5f547b38aed42cec1a278549a8557e0912715",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:0"
+        },
+        "targetDigest": "6270084862d1ceaed303312d9725cae025be9cacc359c4dcbf1c03bb5dc1627a"
+      },
+      {
+        "dependenciesDigest": "c77d5453ba6d72902d2a2ac955eb28b09de7f9fbf88354ed542bde394dab8126",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:1"
+        },
+        "targetDigest": "d07cec7d54b6811dface051790ff649593caa0c238f138ca4db9c55bc6f9820c"
+      },
+      {
+        "dependenciesDigest": "97663e59a22ea77edefbf7de1438d8eda955593c6ce412c196d447f45bfe420f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:2"
+        },
+        "targetDigest": "e2560018649b0fc901f5c8204f9a5723771e87fb728b5be05c9908665b7899c1"
+      },
+      {
+        "dependenciesDigest": "7acd05eb0a42d88f539b8265334ee6f60b151016e948b3831a1fae03b5c1747b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:plasmagun-p1-toughness-on-elite-kills",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:8d863197ff5cc0a3:official::tierpresentations:options:3"
+        },
+        "targetDigest": "67a6634010f5945648f84885785fd1399653e1bb4195733828d8c7f0d4b4c922"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

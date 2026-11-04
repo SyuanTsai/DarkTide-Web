@@ -1,0 +1,3177 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "1",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "2",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "3",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "4",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.max_stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rending.display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "2.5",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "1",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "2",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "3",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "4",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value max_stacks at max_stacks; defined tier literals are tier 1=16, tier 2=16, tier 3=16, tier 4=16.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value rending at stat_buffs.stat_buffs.rending_multiplier; defined tier literals are tier 1=0.025, tier 2=0.025, tier 3=0.025, tier 4=0.025.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at target_buff_data.num_stacks_on_proc; defined tier literals are tier 1=1, tier 2=2, tier 3=3, tier 4=4.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua, scripts/utilities/trait_value_parser.lua, scripts/settings/buff/weapon_buff_templates.lua, scripts/settings/buff/buff_settings.lua resolve buff_template format value time at duration; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd5e78b32b74153a8a6d85d85c675cb578bedebbb29dee07de95d6c40326a4d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "eff9c5e267f2c8b62df7ea1161e799319c91755d3098d5eb8ce7699891ea683f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd5e78b32b74153a8a6d85d85c675cb578bedebbb29dee07de95d6c40326a4d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd5e78b32b74153a8a6d85d85c675cb578bedebbb29dee07de95d6c40326a4d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd5e78b32b74153a8a6d85d85c675cb578bedebbb29dee07de95d6c40326a4d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "55f5840a24ed62c410491e222cabc7f9d644da9d8251ecc3361a86eeab3d73cf"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "dd5e78b32b74153a8a6d85d85c675cb578bedebbb29dee07de95d6c40326a4d2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "72e3f40662a93c993dd048daa62c382bb1daafa629b19e31303d5f872b33c3bc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "bf88db8f6c97333a23d58d93a9f4c32648862bdbf1c1236eee536e508e417649"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "72e3f40662a93c993dd048daa62c382bb1daafa629b19e31303d5f872b33c3bc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "72e3f40662a93c993dd048daa62c382bb1daafa629b19e31303d5f872b33c3bc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "targetDigest": "9add23cacd47e9cfc72658976a3ec7f75f4a46437aff219635c80fdcd01618cd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ea4f4097f7d0fe422a68bfef1935af99eff63f6b2bce1e105d5347014d844117",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ea4f4097f7d0fe422a68bfef1935af99eff63f6b2bce1e105d5347014d844117",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ea4f4097f7d0fe422a68bfef1935af99eff63f6b2bce1e105d5347014d844117",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+        },
+        "targetDigest": "25ff7e6a7ecd14085b8f909c664202a87720ec685f5d531c30d4004c38871315"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ea4f4097f7d0fe422a68bfef1935af99eff63f6b2bce1e105d5347014d844117",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "ea4f4097f7d0fe422a68bfef1935af99eff63f6b2bce1e105d5347014d844117",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+        },
+        "targetDigest": "532d0589016e1d44293e3bceb991e0506d435c126f48eb2d52ec630bca1fe8bb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55b525705c3bc097a8ed9005833d686017811142f771411ca2ca0797bd646881",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55b525705c3bc097a8ed9005833d686017811142f771411ca2ca0797bd646881",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55b525705c3bc097a8ed9005833d686017811142f771411ca2ca0797bd646881",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+        },
+        "targetDigest": "6532d54b28f3fc86f0dacb28d8f4492c6b6457ff4b2bbba024b71dc893846b28"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55b525705c3bc097a8ed9005833d686017811142f771411ca2ca0797bd646881",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "55b525705c3bc097a8ed9005833d686017811142f771411ca2ca0797bd646881",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+        },
+        "targetDigest": "1d45bb4e72bc8f4aea1095f387342025e9b8b3bb7196897ffbfe6d9bf8e701ef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "33f969ce00cfe943ab2153c0eb98157307c6d6fcad45763d6916ea3b1ad08bb7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "33f969ce00cfe943ab2153c0eb98157307c6d6fcad45763d6916ea3b1ad08bb7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "33f969ce00cfe943ab2153c0eb98157307c6d6fcad45763d6916ea3b1ad08bb7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+        },
+        "targetDigest": "333df90e79a2adadba3ba8fdc9da2b007b1270100f1ac051bf6ac3a7e360724c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "33f969ce00cfe943ab2153c0eb98157307c6d6fcad45763d6916ea3b1ad08bb7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "33f969ce00cfe943ab2153c0eb98157307c6d6fcad45763d6916ea3b1ad08bb7",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+        },
+        "targetDigest": "27a6a51c52f2b3a75c75bbf8dff4deb8070a9582b8b36cad3eef453c18e0b164"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9984b2a3e4c71e23d24c71a0d7b9dd15d66dd248fa10a599df90bbde80512b6f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9984b2a3e4c71e23d24c71a0d7b9dd15d66dd248fa10a599df90bbde80512b6f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9984b2a3e4c71e23d24c71a0d7b9dd15d66dd248fa10a599df90bbde80512b6f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+        },
+        "targetDigest": "333df90e79a2adadba3ba8fdc9da2b007b1270100f1ac051bf6ac3a7e360724c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9984b2a3e4c71e23d24c71a0d7b9dd15d66dd248fa10a599df90bbde80512b6f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "9984b2a3e4c71e23d24c71a0d7b9dd15d66dd248fa10a599df90bbde80512b6f",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+        },
+        "targetDigest": "a23605c8b064ca7a4b25c895e0b46467d0dfa0de1c10f9fc8fc799b0678c8498"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f1c449a5f5b5fe0efc4c1ec31092e861e1b2e6da1ab7d2fd163cedf1bf537437",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f1c449a5f5b5fe0efc4c1ec31092e861e1b2e6da1ab7d2fd163cedf1bf537437",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f1c449a5f5b5fe0efc4c1ec31092e861e1b2e6da1ab7d2fd163cedf1bf537437",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+        },
+        "targetDigest": "333df90e79a2adadba3ba8fdc9da2b007b1270100f1ac051bf6ac3a7e360724c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f1c449a5f5b5fe0efc4c1ec31092e861e1b2e6da1ab7d2fd163cedf1bf537437",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f1c449a5f5b5fe0efc4c1ec31092e861e1b2e6da1ab7d2fd163cedf1bf537437",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+        },
+        "targetDigest": "9926c02f3a35cfd08b23139f1903cde86470e0e90bdb7b23c3291922d0146f10"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a6129a908095982a86dd51259fc827efe079376ca7b7a1162241bec3b2ab9209",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a6129a908095982a86dd51259fc827efe079376ca7b7a1162241bec3b2ab9209",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a6129a908095982a86dd51259fc827efe079376ca7b7a1162241bec3b2ab9209",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+        },
+        "targetDigest": "333df90e79a2adadba3ba8fdc9da2b007b1270100f1ac051bf6ac3a7e360724c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a6129a908095982a86dd51259fc827efe079376ca7b7a1162241bec3b2ab9209",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a6129a908095982a86dd51259fc827efe079376ca7b7a1162241bec3b2ab9209",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+        },
+        "targetDigest": "5ebe08cae0ceaf5d7b4ff259a9f06433242775129fdc59151422a2013e4c57bc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d57a2fa7374d25962dbca66849a2474565eef6d92ec469b0b8d66e3ad916d870",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d57a2fa7374d25962dbca66849a2474565eef6d92ec469b0b8d66e3ad916d870",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d57a2fa7374d25962dbca66849a2474565eef6d92ec469b0b8d66e3ad916d870",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+        },
+        "targetDigest": "d9e767646b1abe0c5009433acbb202c0a58962e0745d1852aca478ce41b7ee51"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d57a2fa7374d25962dbca66849a2474565eef6d92ec469b0b8d66e3ad916d870",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+        },
+        "targetDigest": "60b75b809885a39927f2cf4d062e5dfb53d3d16652a48cb074865f24d03d856b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d57a2fa7374d25962dbca66849a2474565eef6d92ec469b0b8d66e3ad916d870",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+        },
+        "targetDigest": "db60253728334e33549e325958aab2ed8cff7ccacaadc2c8eeffcae5a6394769"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "86d96df72464ab34ced8e41f06817c75e03e8c10a9bb2881468cc6e837bbba15",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value-code"
+        },
+        "targetDigest": "396f738d41183a5ab798b51a4cf5b4affec9d104c1119c82fd35dec72f2fee93"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7365fcdd5bf7736e58e3a6fc814d8dbb68f6f34e1627efcab5a60c4f42803eef",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent-code"
+        },
+        "targetDigest": "86b55bcd446d3041e0b0409d16ec4e145697177a48fea9eecbe567ee07323f97"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "7e6c8c89a7725e7add5eb1204c894ad19457d50bb358f52e252db05823296d6a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-display-value-code"
+        },
+        "targetDigest": "219055df57f8d6853c6098ca506699d74793c9fcee8e01cd94a9aef9e0df9817"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "74df91d006ef2c0c3d163b91ba076522bc4efb0add035a1f04f75799b8724660",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value-code"
+        },
+        "targetDigest": "be778d8dba2dc1718cfed602747fd2b5c73299596a9db67c73899acf7bade39a"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "a6565c694391fbfdc6be436b1f8d74717835ec21a6467d4bea5b603c6521b101",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/buff_settings.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/buff_settings.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-buff-settings-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "deea6baa9c848def306ebe5ba96a523f3bb2e9cdb7f2fa432a7f8964a059ac0c",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/buff/weapon_buff_templates.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/buff/weapon_buff_templates.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-buff-templates-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8ded8f0d0e98430eb1c65e2007d75b38d300b2f7870d85eafda07b77b259f290",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_crowbar_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 12 bespoke traits span lines 10-664; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-crowbar-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value",
+              "value": "1"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "Hitting an enemy while in secondary mode gives them 1 stacks of +2.5% Brittleness. Debuff lasts for 5 seconds and can have a maximum of 16 stacks.",
+          "resolvedTextSha256": "00e102cc0d5f42382936f0affcf9c66aca80c6aaa8766c7980d921f2ea64972c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fc7548cc17f18fd4f37185a769135ed47c2c81b72989a3c30fd8c56584054331",
+              "text": "Hitting an enemy while in secondary mode gives them "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "12af4da720b7a7ef701866c80c1a6327f43e6a189516bd0e348f2c436db46d85",
+              "text": " stacks of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cf8421e1572065616bb67ab3aab50530a4cbf1f4436d1d5ae6b4dab0d0d08424",
+              "text": " Brittleness. Debuff lasts for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-6",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "cb6abcdddd35bfcf6ee6b8dadbe3084d189e687bde58afc815327a283035a146",
+              "text": " seconds and can have a maximum of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-8",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "efe41685eb30ba94e426933fde1d91da41cf8da13e8e13c6ca8773335616d278",
+              "text": " stacks."
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "en",
+          "sourceText": "Hitting an enemy while in secondary mode gives them {stacks:%s} stacks of {rending:%s} Brittleness. Debuff lasts for {time:%s} seconds and can have a maximum of {max_stacks:%s} stacks.",
+          "sourceTextSha256": "3892f85d13f780623d0cab74ca0a283bb1e0c12f3e4aa5530f782088879bdb84"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value",
+              "value": "2"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "Hitting an enemy while in secondary mode gives them 2 stacks of +2.5% Brittleness. Debuff lasts for 5 seconds and can have a maximum of 16 stacks.",
+          "resolvedTextSha256": "5e0182578cc302c3c34bfd4d83ac0b6f171be320ec9db3dfa38690288bf0e081",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fc7548cc17f18fd4f37185a769135ed47c2c81b72989a3c30fd8c56584054331",
+              "text": "Hitting an enemy while in secondary mode gives them "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "12af4da720b7a7ef701866c80c1a6327f43e6a189516bd0e348f2c436db46d85",
+              "text": " stacks of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cf8421e1572065616bb67ab3aab50530a4cbf1f4436d1d5ae6b4dab0d0d08424",
+              "text": " Brittleness. Debuff lasts for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-6",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "cb6abcdddd35bfcf6ee6b8dadbe3084d189e687bde58afc815327a283035a146",
+              "text": " seconds and can have a maximum of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-8",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "efe41685eb30ba94e426933fde1d91da41cf8da13e8e13c6ca8773335616d278",
+              "text": " stacks."
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "en",
+          "sourceText": "Hitting an enemy while in secondary mode gives them {stacks:%s} stacks of {rending:%s} Brittleness. Debuff lasts for {time:%s} seconds and can have a maximum of {max_stacks:%s} stacks.",
+          "sourceTextSha256": "3892f85d13f780623d0cab74ca0a283bb1e0c12f3e4aa5530f782088879bdb84"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value",
+              "value": "3"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "Hitting an enemy while in secondary mode gives them 3 stacks of +2.5% Brittleness. Debuff lasts for 5 seconds and can have a maximum of 16 stacks.",
+          "resolvedTextSha256": "c2ee52074a8c4d098beb1aef48c7f4eb8d9399537c12728c33eeee59c7806a36",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fc7548cc17f18fd4f37185a769135ed47c2c81b72989a3c30fd8c56584054331",
+              "text": "Hitting an enemy while in secondary mode gives them "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "12af4da720b7a7ef701866c80c1a6327f43e6a189516bd0e348f2c436db46d85",
+              "text": " stacks of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cf8421e1572065616bb67ab3aab50530a4cbf1f4436d1d5ae6b4dab0d0d08424",
+              "text": " Brittleness. Debuff lasts for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-6",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "cb6abcdddd35bfcf6ee6b8dadbe3084d189e687bde58afc815327a283035a146",
+              "text": " seconds and can have a maximum of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-8",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "efe41685eb30ba94e426933fde1d91da41cf8da13e8e13c6ca8773335616d278",
+              "text": " stacks."
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "en",
+          "sourceText": "Hitting an enemy while in secondary mode gives them {stacks:%s} stacks of {rending:%s} Brittleness. Debuff lasts for {time:%s} seconds and can have a maximum of {max_stacks:%s} stacks.",
+          "sourceTextSha256": "3892f85d13f780623d0cab74ca0a283bb1e0c12f3e4aa5530f782088879bdb84"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value",
+              "value": "4"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "Hitting an enemy while in secondary mode gives them 4 stacks of +2.5% Brittleness. Debuff lasts for 5 seconds and can have a maximum of 16 stacks.",
+          "resolvedTextSha256": "a980a9c1db10719743405de3ba903a72acd7fbe82eb9a24af3d4c79c27942243",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fc7548cc17f18fd4f37185a769135ed47c2c81b72989a3c30fd8c56584054331",
+              "text": "Hitting an enemy while in secondary mode gives them "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "12af4da720b7a7ef701866c80c1a6327f43e6a189516bd0e348f2c436db46d85",
+              "text": " stacks of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "cf8421e1572065616bb67ab3aab50530a4cbf1f4436d1d5ae6b4dab0d0d08424",
+              "text": " Brittleness. Debuff lasts for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-6",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "cb6abcdddd35bfcf6ee6b8dadbe3084d189e687bde58afc815327a283035a146",
+              "text": " seconds and can have a maximum of "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-8",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "efe41685eb30ba94e426933fde1d91da41cf8da13e8e13c6ca8773335616d278",
+              "text": " stacks."
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "en",
+          "sourceText": "Hitting an enemy while in secondary mode gives them {stacks:%s} stacks of {rending:%s} Brittleness. Debuff lasts for {time:%s} seconds and can have a maximum of {max_stacks:%s} stacks.",
+          "sourceTextSha256": "3892f85d13f780623d0cab74ca0a283bb1e0c12f3e4aa5530f782088879bdb84"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value",
+              "value": "1"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "以次要攻擊命中敵人時使其疊加1層+2.5%脆弱。減益效果最高疊加16層，持續5秒。",
+          "resolvedTextSha256": "11ad35d8bc06dab8f7f69cb5568bcb04454d6210c67a6c82632c074ce3028e20",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08bfda78e29568709a3b4f582239e4fde5b0f0c6f26bb6c885fbd1ac3792a6b4",
+              "text": "以次要攻擊命中敵人時使其疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "9e0aa95bd40f3ec47056caa62497d5c3415f7638ce38c0163c1098e89dfd28a1",
+              "text": "層"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "ba50fef6c77bdcc9ad5ea84361120b0bfb03c9c6494a7107475b99d6c75c9d14",
+              "text": "脆弱。減益效果最高疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-6",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "c2418778f96037d255929286ecece3af99da26e3559d341012360747e6207b56",
+              "text": "層，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-8",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "zh-TW",
+          "sourceText": "以次要攻擊命中敵人時使其疊加{stacks:%s}層{rending:%s}脆弱。減益效果最高疊加{max_stacks:%s}層，持續{time:%s}秒。",
+          "sourceTextSha256": "64405bb7c4513f469a1ebc940d0da61b1567b8ae6a3048c3b0f1ed5689d43c7e"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value",
+              "value": "2"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "以次要攻擊命中敵人時使其疊加2層+2.5%脆弱。減益效果最高疊加16層，持續5秒。",
+          "resolvedTextSha256": "00f042cc85b2ed707478b02c46f7d805d89b3c9e656d0809296e938c210e5ec2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08bfda78e29568709a3b4f582239e4fde5b0f0c6f26bb6c885fbd1ac3792a6b4",
+              "text": "以次要攻擊命中敵人時使其疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "9e0aa95bd40f3ec47056caa62497d5c3415f7638ce38c0163c1098e89dfd28a1",
+              "text": "層"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "ba50fef6c77bdcc9ad5ea84361120b0bfb03c9c6494a7107475b99d6c75c9d14",
+              "text": "脆弱。減益效果最高疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-6",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "c2418778f96037d255929286ecece3af99da26e3559d341012360747e6207b56",
+              "text": "層，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-8",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "zh-TW",
+          "sourceText": "以次要攻擊命中敵人時使其疊加{stacks:%s}層{rending:%s}脆弱。減益效果最高疊加{max_stacks:%s}層，持續{time:%s}秒。",
+          "sourceTextSha256": "64405bb7c4513f469a1ebc940d0da61b1567b8ae6a3048c3b0f1ed5689d43c7e"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value",
+              "value": "3"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "以次要攻擊命中敵人時使其疊加3層+2.5%脆弱。減益效果最高疊加16層，持續5秒。",
+          "resolvedTextSha256": "4643b6ba21c6af7151efc32741779b4c288b2cc8667e1a7378270de8545e142f",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08bfda78e29568709a3b4f582239e4fde5b0f0c6f26bb6c885fbd1ac3792a6b4",
+              "text": "以次要攻擊命中敵人時使其疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "9e0aa95bd40f3ec47056caa62497d5c3415f7638ce38c0163c1098e89dfd28a1",
+              "text": "層"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "ba50fef6c77bdcc9ad5ea84361120b0bfb03c9c6494a7107475b99d6c75c9d14",
+              "text": "脆弱。減益效果最高疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-6",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "c2418778f96037d255929286ecece3af99da26e3559d341012360747e6207b56",
+              "text": "層，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-8",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "zh-TW",
+          "sourceText": "以次要攻擊命中敵人時使其疊加{stacks:%s}層{rending:%s}脆弱。減益效果最高疊加{max_stacks:%s}層，持續{time:%s}秒。",
+          "sourceTextSha256": "64405bb7c4513f469a1ebc940d0da61b1567b8ae6a3048c3b0f1ed5689d43c7e"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value",
+              "value": "4"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "以次要攻擊命中敵人時使其疊加4層+2.5%脆弱。減益效果最高疊加16層，持續5秒。",
+          "resolvedTextSha256": "2cdbae15cd8a6030f9b958760ab18d0c855abb34f64b1c11126a6d17472f1261",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08bfda78e29568709a3b4f582239e4fde5b0f0c6f26bb6c885fbd1ac3792a6b4",
+              "text": "以次要攻擊命中敵人時使其疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "9e0aa95bd40f3ec47056caa62497d5c3415f7638ce38c0163c1098e89dfd28a1",
+              "text": "層"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "ba50fef6c77bdcc9ad5ea84361120b0bfb03c9c6494a7107475b99d6c75c9d14",
+              "text": "脆弱。減益效果最高疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-6",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "c2418778f96037d255929286ecece3af99da26e3559d341012360747e6207b56",
+              "text": "層，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-8",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "zh-TW",
+          "sourceText": "以次要攻擊命中敵人時使其疊加{stacks:%s}層{rending:%s}脆弱。減益效果最高疊加{max_stacks:%s}層，持續{time:%s}秒。",
+          "sourceTextSha256": "64405bb7c4513f469a1ebc940d0da61b1567b8ae6a3048c3b0f1ed5689d43c7e"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:9011c283:key-unknown:en:1:g-3cff4e2bd2b477e1:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Can Opener",
+          "resolvedTextSha256": "93bcaf8e84abd2fdf92dd058777ada66da72899480acc703c87bb18e55132a32",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "93bcaf8e84abd2fdf92dd058777ada66da72899480acc703c87bb18e55132a32",
+              "text": "Can Opener"
+            }
+          ],
+          "sourceHash": "9011c283",
+          "sourceLocale": "en",
+          "sourceText": "Can Opener",
+          "sourceTextSha256": "93bcaf8e84abd2fdf92dd058777ada66da72899480acc703c87bb18e55132a32"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:9011c283:key-unknown:zh-tw:1:g-3cff4e2bd2b477e1:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "開罐器",
+          "resolvedTextSha256": "403445f41a66f5c553a1b792efa4006f354c08ab2e61abb0da98cdabc2dd1021",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "403445f41a66f5c553a1b792efa4006f354c08ab2e61abb0da98cdabc2dd1021",
+              "text": "開罐器"
+            }
+          ],
+          "sourceHash": "9011c283",
+          "sourceLocale": "zh-TW",
+          "sourceText": "開罐器",
+          "sourceTextSha256": "403445f41a66f5c553a1b792efa4006f354c08ab2e61abb0da98cdabc2dd1021"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "開罐器",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:9011c283:key-unknown:en:1:g-3cff4e2bd2b477e1:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:9011c283:key-unknown:zh-tw:1:g-3cff4e2bd2b477e1:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:9011c283:key-unknown:zh-tw:1:g-3cff4e2bd2b477e1:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          },
+          "key": "loc_trait_bespoke_armor_rending_bayonette_crowbar_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "max_stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value",
+              "value": "16"
+            },
+            {
+              "parameterId": "rending",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent",
+              "value": "+2.5%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value",
+              "value": "4"
+            },
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "以次要攻擊命中敵人時使其疊加4層+2.5%脆弱。減益效果最高疊加16層，持續5秒。",
+          "resolvedTextSha256": "2cdbae15cd8a6030f9b958760ab18d0c855abb34f64b1c11126a6d17472f1261",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "08bfda78e29568709a3b4f582239e4fde5b0f0c6f26bb6c885fbd1ac3792a6b4",
+              "text": "以次要攻擊命中敵人時使其疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-2",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "9e0aa95bd40f3ec47056caa62497d5c3415f7638ce38c0163c1098e89dfd28a1",
+              "text": "層"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rending",
+              "segmentId": "segment-4",
+              "sha256": "75304e87d34491a5c7f3c69c2c27e8c52e6f3a885a9c227da9e2724398c631af",
+              "token": "{rending:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "ba50fef6c77bdcc9ad5ea84361120b0bfb03c9c6494a7107475b99d6c75c9d14",
+              "text": "脆弱。減益效果最高疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "max_stacks",
+              "segmentId": "segment-6",
+              "sha256": "ae68de69b3dfbc7912418900bd3abc50cbb1ef93aa38d38d540932fe77a76d8d",
+              "token": "{max_stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-7",
+              "sha256": "c2418778f96037d255929286ecece3af99da26e3559d341012360747e6207b56",
+              "text": "層，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-8",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-9",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "2bf30b00",
+          "sourceLocale": "zh-TW",
+          "sourceText": "以次要攻擊命中敵人時使其疊加{stacks:%s}層{rending:%s}脆弱。減益效果最高疊加{max_stacks:%s}層，持續{time:%s}秒。",
+          "sourceTextSha256": "64405bb7c4513f469a1ebc940d0da61b1567b8ae6a3048c3b0f1ed5689d43c7e"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "max_stacks",
+                  "placeholder": "{max_stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier1-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "max_stacks",
+                  "placeholder": "{max_stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier2-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "max_stacks",
+                  "placeholder": "{max_stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier3-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:en:1:g-3cff4e2bd2b477e1:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:2bf30b00:key-known:zh-tw:1:g-3cff4e2bd2b477e1:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-max-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "max_stacks",
+                  "placeholder": "{max_stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-rending-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rending",
+                  "placeholder": "{rending:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-stacks-tier4-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:crowbar:p1-targets-receive-rending-debuff-on-weapon-special-time-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:crowbar:p1-targets-receive-rending-debuff-on-weapon-special"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "33085a49879ed85bf36ec94225d3ea767a363df0c1abd18fc21db5c20fdd6a5a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0d7ba5604baad66d09f25052e8f4887e3d81089b536145af38f4b65ac1e0b830",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0aa83521cebf1e3847a0820487050babf4d9b8b2fc90c11e00e3727c40ca0494",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "0f124001d547d9017b394ff69e1774dd45c1919be9755c1247234e6300c135ea",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0e7a68f534e233864ea3d8b4156d842333df0c19b4be32762967151189eefc1c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "88b2395914373a63a692934718ba32349b59683e50e6dd8f964949481960725f",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "955bc488b1296569ed4c4eb6a1e462f896960d8a88e31687639ccb0195d1b8a8",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "7ce898d661b6968cca93d45ca092aaa7095f2458d8e5156100a5dc27ffb5ba90",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "fb74555a16a99f478caf6789f23eda1d9c72a3befe72ffbe24b298ccaadd404c",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "bfc315ffc55110ac571da109bf20a226c628a4ff54b02ee7e4465d6d8f519158",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "862a1acaba928b1bd7cffc09c86e1b89badbc95a2a62ea07920844c114df175d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5547b27dd150c92bcc6ea90321a15206b7cefa6ef3ba77076eb56db4b8ec4cfc",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "33085a49879ed85bf36ec94225d3ea767a363df0c1abd18fc21db5c20fdd6a5a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:content::name"
+        },
+        "targetDigest": "0d7ba5604baad66d09f25052e8f4887e3d81089b536145af38f4b65ac1e0b830"
+      },
+      {
+        "dependenciesDigest": "0aa83521cebf1e3847a0820487050babf4d9b8b2fc90c11e00e3727c40ca0494",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:context::tierapplicability"
+        },
+        "targetDigest": "0f124001d547d9017b394ff69e1774dd45c1919be9755c1247234e6300c135ea"
+      },
+      {
+        "dependenciesDigest": "0e7a68f534e233864ea3d8b4156d842333df0c19b4be32762967151189eefc1c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:0"
+        },
+        "targetDigest": "88b2395914373a63a692934718ba32349b59683e50e6dd8f964949481960725f"
+      },
+      {
+        "dependenciesDigest": "955bc488b1296569ed4c4eb6a1e462f896960d8a88e31687639ccb0195d1b8a8",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:1"
+        },
+        "targetDigest": "7ce898d661b6968cca93d45ca092aaa7095f2458d8e5156100a5dc27ffb5ba90"
+      },
+      {
+        "dependenciesDigest": "fb74555a16a99f478caf6789f23eda1d9c72a3befe72ffbe24b298ccaadd404c",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:2"
+        },
+        "targetDigest": "bfc315ffc55110ac571da109bf20a226c628a4ff54b02ee7e4465d6d8f519158"
+      },
+      {
+        "dependenciesDigest": "862a1acaba928b1bd7cffc09c86e1b89badbc95a2a62ea07920844c114df175d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:crowbar-p1-targets-receive-rending-debuff-on-weapon-special",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:3cff4e2bd2b477e1:official::tierpresentations:options:3"
+        },
+        "targetDigest": "5547b27dd150c92bcc6ea90321a15206b7cefa6ef3ba77076eb56db4b8ec4cfc"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

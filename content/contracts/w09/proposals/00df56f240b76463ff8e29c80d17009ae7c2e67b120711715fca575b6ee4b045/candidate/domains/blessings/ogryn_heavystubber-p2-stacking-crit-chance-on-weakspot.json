@@ -1,0 +1,2259 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.14",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.16",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.18",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.2",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "14",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "16",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "18",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.crit_chance.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "20",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value-code"
+            }
+          ],
+          "property": "description.format_values.stacks.display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "value": {
+            "decimal": "5",
+            "status": "known",
+            "unit": "point"
+          }
+        },
+        "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value crit_chance at stat_buffs.stat_buffs.critical_strike_chance; defined tier literals are tier 1=0.14, tier 2=0.16, tier 3=0.18, tier 4=0.2.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value stacks at max_stacks; defined tier literals are tier 1=5, tier 2=5, tier 3=5, tier 4=5.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aca72634584a6c5d7b1087934f76e2d0b36f7788694e3603c15aecf551a088e5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "531c3673efd7de287717e8b07fb4ca65246349414c226d07d69efcc2e207d6ef"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aca72634584a6c5d7b1087934f76e2d0b36f7788694e3603c15aecf551a088e5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aca72634584a6c5d7b1087934f76e2d0b36f7788694e3603c15aecf551a088e5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aca72634584a6c5d7b1087934f76e2d0b36f7788694e3603c15aecf551a088e5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "258061b6f8798dc0addf8c49258eed7c20538060a897d11529a9f7882083c14c"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "aca72634584a6c5d7b1087934f76e2d0b36f7788694e3603c15aecf551a088e5",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "63183e6babe102cb9a5fb6d433d6b56fc589b3cceacdf00987593c97211e3093",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "b54ebd54d4a0ee71a2feefa1999d9984147a9a2e90d3568ce6a169881ee41b33"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "63183e6babe102cb9a5fb6d433d6b56fc589b3cceacdf00987593c97211e3093",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "63183e6babe102cb9a5fb6d433d6b56fc589b3cceacdf00987593c97211e3093",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "targetDigest": "cf8db3c4e0de2d7aa783ed037fc80e52f92e2e4e6b73c728e9df529b53717f63"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71fb9723a2c5e8f1c474f3c8e0e4810fa471a2b3443153bbf15fdd9e7fca6f1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71fb9723a2c5e8f1c474f3c8e0e4810fa471a2b3443153bbf15fdd9e7fca6f1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71fb9723a2c5e8f1c474f3c8e0e4810fa471a2b3443153bbf15fdd9e7fca6f1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "7813251ef7056ae19c5049e5306d2c29dde34f9d9ca6f9205105e3fd97e5e3eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71fb9723a2c5e8f1c474f3c8e0e4810fa471a2b3443153bbf15fdd9e7fca6f1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "13ee01f734676420105c6e3e62669ed73e1f1ff09587ffaac8c1955143ca8fbd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71fb9723a2c5e8f1c474f3c8e0e4810fa471a2b3443153bbf15fdd9e7fca6f1a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+        },
+        "targetDigest": "55e17fee047cdde990efba6208b55b264fd8c7bde6ccac0897de1a76da052039"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "246c0bc8df1cedd7ede28feafd0d204ec85d4cc01aad73d23c893fe9d73fdc44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "246c0bc8df1cedd7ede28feafd0d204ec85d4cc01aad73d23c893fe9d73fdc44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "246c0bc8df1cedd7ede28feafd0d204ec85d4cc01aad73d23c893fe9d73fdc44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "7813251ef7056ae19c5049e5306d2c29dde34f9d9ca6f9205105e3fd97e5e3eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "246c0bc8df1cedd7ede28feafd0d204ec85d4cc01aad73d23c893fe9d73fdc44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "13ee01f734676420105c6e3e62669ed73e1f1ff09587ffaac8c1955143ca8fbd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "246c0bc8df1cedd7ede28feafd0d204ec85d4cc01aad73d23c893fe9d73fdc44",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+        },
+        "targetDigest": "fd58fba94a25690fa07901402c861a83b853a3b0c4a44ea476747f80cc281cd1"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf555b835faaf22593d32a943aa86ca0e3c615c529f0eddc850ab4156d4934f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf555b835faaf22593d32a943aa86ca0e3c615c529f0eddc850ab4156d4934f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf555b835faaf22593d32a943aa86ca0e3c615c529f0eddc850ab4156d4934f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "7813251ef7056ae19c5049e5306d2c29dde34f9d9ca6f9205105e3fd97e5e3eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf555b835faaf22593d32a943aa86ca0e3c615c529f0eddc850ab4156d4934f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "13ee01f734676420105c6e3e62669ed73e1f1ff09587ffaac8c1955143ca8fbd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "bf555b835faaf22593d32a943aa86ca0e3c615c529f0eddc850ab4156d4934f4",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+        },
+        "targetDigest": "3b913c325fe7046448f8976698f8612630ee059cc10f84bce81c9d4f942cfedc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b6ec7477f5021dfbdc560622b6fb927d9babc74f721e4f4a49e175f7d942bebc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b6ec7477f5021dfbdc560622b6fb927d9babc74f721e4f4a49e175f7d942bebc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b6ec7477f5021dfbdc560622b6fb927d9babc74f721e4f4a49e175f7d942bebc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "7813251ef7056ae19c5049e5306d2c29dde34f9d9ca6f9205105e3fd97e5e3eb"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b6ec7477f5021dfbdc560622b6fb927d9babc74f721e4f4a49e175f7d942bebc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "13ee01f734676420105c6e3e62669ed73e1f1ff09587ffaac8c1955143ca8fbd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "b6ec7477f5021dfbdc560622b6fb927d9babc74f721e4f4a49e175f7d942bebc",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+        },
+        "targetDigest": "de57b6ee77e6c9eab34864c1a63d24aa6892775a5e9c6cdea7df1becf4313026"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1895eb8c0d85bef6bcd02a787055474228561535e7c99a72a9c4228e20899735",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1895eb8c0d85bef6bcd02a787055474228561535e7c99a72a9c4228e20899735",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1895eb8c0d85bef6bcd02a787055474228561535e7c99a72a9c4228e20899735",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "19d62e6f49771ec3b9b743ecb04dfb79069893fa0a17425546fe88d647a964c9"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1895eb8c0d85bef6bcd02a787055474228561535e7c99a72a9c4228e20899735",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "13ee01f734676420105c6e3e62669ed73e1f1ff09587ffaac8c1955143ca8fbd"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1895eb8c0d85bef6bcd02a787055474228561535e7c99a72a9c4228e20899735",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+        },
+        "targetDigest": "6afaaffab16fa72b4859197b560e2cd11caa4532a89cac9b10d5a4c8d08d9933"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "711f120f4e16b5e959d77a319117881c1ebf5ab8c144858082e48b5be5b61990",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-display-percent-code"
+        },
+        "targetDigest": "2117bbc09dae8ad11c612a1de72677bd9448969aa7dd8bfba9e6f54a3f58f2b4"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "4854790ea870e0632bdc1b15af104961ce5ac0df04ef5af2b9385b7e12b37950",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value-code"
+        },
+        "targetDigest": "e2883dc8a3b43763b13242cb007ab779444177c4729eb57c1fb977e09e96c9bd"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "362393978bf7ba0b2dbb16f112dabb1565200bbc6443477998027225992f4576",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_ogryn_heavystubber_p2.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 20 bespoke traits span lines 9-1031; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-ogryn-heavystubber-p2-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+14% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "5a0dced8bf14a8c4fb9f69aa0662443b3dc8aa6590db74146ec8012e95a4a801",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+16% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "bd7eabfa5460fbf48c99a86c850d79bb8e8239e7a044df977d2839ffb5d5b7ec",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+18% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "507046bd41303395f6ca06ad56a875760ebd2fe9e0d98e1839f0f3708128f10d",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "+20% Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks 5 times.",
+          "resolvedTextSha256": "c59b8371dab074a402504f9e0f75a2d8f527afd04bc8b89e886a4e735eb2bee3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-1",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "2b93190ca54cf01bc23a0e3d64f6b8c47173a597e123c8c902cdf18793668271",
+              "text": " Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-3",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-4",
+              "sha256": "b3d6cc29d24f00166cbbae16cad8d1a2deb9f5b8f24eec1d20905c9419c61d31",
+              "text": " times."
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "en",
+          "sourceText": "{crit_chance:%s} Critical Chance on Weak Spot Hit until your next Critical Hit. Stacks {stacks:%s} times.",
+          "sourceTextSha256": "ef8d9f326778de28bd1f398894d3808fbfd3f0ff5bb3eb26b2d73d3446cb1981"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent",
+              "value": "+14%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+14%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "e41a31ac0384ab3a806b6e3b5840b5e1013e9a74cb8d4343d1eeb61b0987509b",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent",
+              "value": "+16%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+16%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "c7a1ba216eee4b137e1e1ed8b606a4d5d91bf1514313ae514cd995fd608a1c24",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent",
+              "value": "+18%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+18%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "5746631e01ff6eb34847fd8904ca2d66b849b5cb2461c780fc8cb44a1987e0cc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+20%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "baa6f819fdce92abceec55e45a4b9bfbd7925584a71de79ad6cfc3fbc766edb3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ddb302e2:key-unknown:en:1:g-219fa50810760796:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Headhunter",
+          "resolvedTextSha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2",
+              "text": "Headhunter"
+            }
+          ],
+          "sourceHash": "ddb302e2",
+          "sourceLocale": "en",
+          "sourceText": "Headhunter",
+          "sourceTextSha256": "7f6475cc08272202ad9cf84ac9d6c303684a87e95ae3c9433b0f4acf3b6e8ad2"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-219fa50810760796:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "獵頭者",
+          "resolvedTextSha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330",
+              "text": "獵頭者"
+            }
+          ],
+          "sourceHash": "ddb302e2",
+          "sourceLocale": "zh-TW",
+          "sourceText": "獵頭者",
+          "sourceTextSha256": "d9b0e44ccb3a793fe9e5c8fc10fb21882af767991e4020af7a15d4436ccde330"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "獵頭者",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:ddb302e2:key-unknown:en:1:g-219fa50810760796:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-219fa50810760796:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:ddb302e2:key-unknown:zh-tw:1:g-219fa50810760796:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_weakspot_stacking_crit_chance_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "crit_chance",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent",
+              "value": "+20%"
+            },
+            {
+              "parameterId": "stacks",
+              "sourceKey": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value",
+              "value": "5"
+            }
+          ],
+          "resolvedText": "命中弱點後提高+20%致命一擊機率，直至下次致命一擊。最多疊加5次。",
+          "resolvedTextSha256": "baa6f819fdce92abceec55e45a4b9bfbd7925584a71de79ad6cfc3fbc766edb3",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e3be508817fe131ddc0f1d4603618570be89a6d2292244e31cada9cb7f836c8d",
+              "text": "命中弱點後提高"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "crit_chance",
+              "segmentId": "segment-2",
+              "sha256": "7de642e8c44ad765a8699ae837da8d35524b1d5803c619b551c39d343b8821e5",
+              "token": "{crit_chance:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "afb61ce83dcfb5303759d672d57fd1564180bc03bde5958586ee4bd13e2fd26d",
+              "text": "致命一擊機率，直至下次致命一擊。最多疊加"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "stacks",
+              "segmentId": "segment-4",
+              "sha256": "01bae479e66b3b6ab3a3962440974f3801f15ff6338de93a1819c8962b297173",
+              "token": "{stacks:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-5",
+              "sha256": "3d6550d07da5054287cb5271df9257df279c03f0706735b95f0e00d14095e23f",
+              "text": "次。"
+            }
+          ],
+          "sourceHash": "a8474234",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後提高{crit_chance:%s}致命一擊機率，直至下次致命一擊。最多疊加{stacks:%s}次。",
+          "sourceTextSha256": "587e31adac9a33e6184feb4126146fecf236dd3172c309ecfbf772f4439d4920"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:en:1:g-219fa50810760796:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:a8474234:key-known:zh-tw:1:g-219fa50810760796:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-crit-chance-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "crit_chance",
+                  "placeholder": "{crit_chance:%s}"
+                },
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot-stacks-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "stacks",
+                  "placeholder": "{stacks:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:ogryn_heavystubber:p2-stacking-crit-chance-on-weakspot"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "1ef3281324d5d2844a12c3ec70da1bc88abd345d7db8d3f2660c3ca1c3b96af3",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fef73132313cf02af67bfdf19eb0aed529e25c697540937c88e8a769d189b832",
+          "targetId": "review:w06:generic:219fa50810760796:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "8f40d4a429136061038e2c5280549ab6568fa33e20935b2ca3ae39879a362f4e",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2a4279af3068cf41c8748a276c8afe24412ac73d1e484707275d5b4c09b2ad30",
+          "targetId": "review:w06:generic:219fa50810760796:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "7cd2a72336b08eaf332bafa12a30d8e8e8ee8a288feb1d854a6c9ce1d0d08fff",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "b3f0242909b96e837481e07192206953b696b060816d6eab542933576021a421",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "39b1eaa2530706f439b2c67746865ea1b78bd166daa080f14db00332011eba75",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "9b917c501ec73e4b71191600fa5410f7c6b1235673ef51254f0184184aaf613b",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "ebcf05762dded5eaebdaf794acd8057beb584a5d3e84f3f1f61cdc7de2c539d5",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4c2c1b228bcfd5ce303cd1eae8f0f6ab44cef574445dccf29a3776ac2848d505",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "71ead44a7c07b6778dc7bfb69329f0e97f4d90cd9e709e659f9baa0059c1d48f",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "2e799de9954747974425cda73ff5c517b0fd8486f1a5f2fbcf596bc80fbd5aef",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "1ef3281324d5d2844a12c3ec70da1bc88abd345d7db8d3f2660c3ca1c3b96af3",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:content::name"
+        },
+        "targetDigest": "fef73132313cf02af67bfdf19eb0aed529e25c697540937c88e8a769d189b832"
+      },
+      {
+        "dependenciesDigest": "8f40d4a429136061038e2c5280549ab6568fa33e20935b2ca3ae39879a362f4e",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:context::tierapplicability"
+        },
+        "targetDigest": "2a4279af3068cf41c8748a276c8afe24412ac73d1e484707275d5b4c09b2ad30"
+      },
+      {
+        "dependenciesDigest": "7cd2a72336b08eaf332bafa12a30d8e8e8ee8a288feb1d854a6c9ce1d0d08fff",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:0"
+        },
+        "targetDigest": "b3f0242909b96e837481e07192206953b696b060816d6eab542933576021a421"
+      },
+      {
+        "dependenciesDigest": "39b1eaa2530706f439b2c67746865ea1b78bd166daa080f14db00332011eba75",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:1"
+        },
+        "targetDigest": "9b917c501ec73e4b71191600fa5410f7c6b1235673ef51254f0184184aaf613b"
+      },
+      {
+        "dependenciesDigest": "ebcf05762dded5eaebdaf794acd8057beb584a5d3e84f3f1f61cdc7de2c539d5",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:2"
+        },
+        "targetDigest": "4c2c1b228bcfd5ce303cd1eae8f0f6ab44cef574445dccf29a3776ac2848d505"
+      },
+      {
+        "dependenciesDigest": "71ead44a7c07b6778dc7bfb69329f0e97f4d90cd9e709e659f9baa0059c1d48f",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:ogryn_heavystubber-p2-stacking-crit-chance-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:219fa50810760796:official::tierpresentations:options:3"
+        },
+        "targetDigest": "2e799de9954747974425cda73ff5c517b0fd8486f1a5f2fbcf596bc80fbd5aef"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

@@ -1,0 +1,1883 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "2.4",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "2.8",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "3.2",
+                "status": "known",
+                "unit": "point"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "3.6",
+                "status": "known",
+                "unit": "point"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_1_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "value": {
+            "decimal": "2.4",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_2_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "value": {
+            "decimal": "2.8",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_3_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "value": {
+            "decimal": "3.2",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code"
+            }
+          ],
+          "property": "description.format_values.time.defined_tier_4_display_value",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "value": {
+            "decimal": "3.6",
+            "status": "known",
+            "unit": "s"
+          }
+        },
+        "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value time at active_duration; defined tier literals are tier 1=2.4, tier 2=2.8, tier 3=3.2, tier 4=3.6.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95f8715aa6ca65180d17b3ecaa552c8cc84972df23d76992f6dd8d58f1f4eac2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "d401446d7900210f36ee962459bb4cb4af08895213bfa8d977c122078530bac3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95f8715aa6ca65180d17b3ecaa552c8cc84972df23d76992f6dd8d58f1f4eac2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95f8715aa6ca65180d17b3ecaa552c8cc84972df23d76992f6dd8d58f1f4eac2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95f8715aa6ca65180d17b3ecaa552c8cc84972df23d76992f6dd8d58f1f4eac2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "19fa600a5c7b4f812b09e41fa8e5bca2c0efb01e6201827f7ed062980affa740"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "95f8715aa6ca65180d17b3ecaa552c8cc84972df23d76992f6dd8d58f1f4eac2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "96bc4cebf3e13440c03fc6d1308111be2082803e98e73f72780b841c2c3b6bd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "49f20c61d93e7da1932abb65b43c2baf3a34d836950698e05b5ec0e5d53cd80e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "96bc4cebf3e13440c03fc6d1308111be2082803e98e73f72780b841c2c3b6bd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "96bc4cebf3e13440c03fc6d1308111be2082803e98e73f72780b841c2c3b6bd2",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "targetDigest": "5305d18727137a4e5032b6b1cc98777993158a33bc3fda80b55d433c4333ec2b"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "db5398433d3b322141534e1b5d1562d1f41e74b2e2c9ce3089555b5841e99b74",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "db5398433d3b322141534e1b5d1562d1f41e74b2e2c9ce3089555b5841e99b74",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "db5398433d3b322141534e1b5d1562d1f41e74b2e2c9ce3089555b5841e99b74",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "fbb345fbefef16bb13e54ecc51ad65d77146fa94b6aec9e849c23877c7f6182f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "db5398433d3b322141534e1b5d1562d1f41e74b2e2c9ce3089555b5841e99b74",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "692f974000c65345e38f7ca5dd78abc12e95546c95f5b4e1a2cec262503b0c96"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "db5398433d3b322141534e1b5d1562d1f41e74b2e2c9ce3089555b5841e99b74",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+        },
+        "targetDigest": "29df415a10ca0890bfa18733f90037200b8b04bcd68f4eb0caf26cad8ad10b94"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e2b73b153e79328aa0bff0add19129da87d49b37dc1ed7d24a34b6d79037dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e2b73b153e79328aa0bff0add19129da87d49b37dc1ed7d24a34b6d79037dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e2b73b153e79328aa0bff0add19129da87d49b37dc1ed7d24a34b6d79037dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "fbb345fbefef16bb13e54ecc51ad65d77146fa94b6aec9e849c23877c7f6182f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e2b73b153e79328aa0bff0add19129da87d49b37dc1ed7d24a34b6d79037dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "692f974000c65345e38f7ca5dd78abc12e95546c95f5b4e1a2cec262503b0c96"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "22e2b73b153e79328aa0bff0add19129da87d49b37dc1ed7d24a34b6d79037dd",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+        },
+        "targetDigest": "ce7b266ac93f68867e0ac1f0fe39d678c47ceee3bb0ab5542f4a2da0d204da30"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1453823821b6ee86ffd88ed214fa211d6f7b2132d91c5565d0cd683be4097f00",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1453823821b6ee86ffd88ed214fa211d6f7b2132d91c5565d0cd683be4097f00",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1453823821b6ee86ffd88ed214fa211d6f7b2132d91c5565d0cd683be4097f00",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "fbb345fbefef16bb13e54ecc51ad65d77146fa94b6aec9e849c23877c7f6182f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1453823821b6ee86ffd88ed214fa211d6f7b2132d91c5565d0cd683be4097f00",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "692f974000c65345e38f7ca5dd78abc12e95546c95f5b4e1a2cec262503b0c96"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "1453823821b6ee86ffd88ed214fa211d6f7b2132d91c5565d0cd683be4097f00",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+        },
+        "targetDigest": "ff3a10d519e49d956a957d94cfbba2db62ea013a0ab481686628c115dd18dfd8"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0d95c521a2d7fd5fcb23fd960c97fdab41ff580fc88157b7d722fb35254e85d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0d95c521a2d7fd5fcb23fd960c97fdab41ff580fc88157b7d722fb35254e85d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0d95c521a2d7fd5fcb23fd960c97fdab41ff580fc88157b7d722fb35254e85d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "fbb345fbefef16bb13e54ecc51ad65d77146fa94b6aec9e849c23877c7f6182f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0d95c521a2d7fd5fcb23fd960c97fdab41ff580fc88157b7d722fb35254e85d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "692f974000c65345e38f7ca5dd78abc12e95546c95f5b4e1a2cec262503b0c96"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "0d95c521a2d7fd5fcb23fd960c97fdab41ff580fc88157b7d722fb35254e85d0",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+        },
+        "targetDigest": "af804a6974bd7198b08a7b69bb650887707a75076541161dc0e7e01fc0825d90"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "cf9677183304284e032eda57fc4f637fcb79fd2ea5d9771e91c989dd75db791c",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:laspistol:p1-suppression-negation-on-weakspot-time-display-value-code"
+        },
+        "targetDigest": "396490b46fec332f2084dfcb8629afbb331cce8d5ad1bcf43539b0a0e3a22d27"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "3ad40b8defd27ae50563545044765bb930115243d856a715fa666870454968bf",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_laspistol_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-470; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-laspistol-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:d3144a13:key-unknown:en:1:g-f1d3a3b5ebfc5427:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Between the Eyes",
+          "resolvedTextSha256": "c7385de109d542abe71a5ddab3455e574036035154db3f9fe150a2d1f54c2033",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "c7385de109d542abe71a5ddab3455e574036035154db3f9fe150a2d1f54c2033",
+              "text": "Between the Eyes"
+            }
+          ],
+          "sourceHash": "d3144a13",
+          "sourceLocale": "en",
+          "sourceText": "Between the Eyes",
+          "sourceTextSha256": "c7385de109d542abe71a5ddab3455e574036035154db3f9fe150a2d1f54c2033"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:d3144a13:key-unknown:zh-tw:1:g-f1d3a3b5ebfc5427:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "正中眉心",
+          "resolvedTextSha256": "e18443d841df58030804205eb87685b2c4fa3d86908f324c0fed10972efbf83c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e18443d841df58030804205eb87685b2c4fa3d86908f324c0fed10972efbf83c",
+              "text": "正中眉心"
+            }
+          ],
+          "sourceHash": "d3144a13",
+          "sourceLocale": "zh-TW",
+          "sourceText": "正中眉心",
+          "sourceTextSha256": "e18443d841df58030804205eb87685b2c4fa3d86908f324c0fed10972efbf83c"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value",
+              "value": "2.4"
+            }
+          ],
+          "resolvedText": "Gain Suppression Immunity for 2.4s on Weak Spot Hit.",
+          "resolvedTextSha256": "eeb3c0a8cda4c0534a4a4d2f5dcae0cc945c2ce7b208a60e3bbc73e025b0c817",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa8b80c764b28d8f1b1f44e39d8a5ee68387796e1f53bdf8d57261be48eb7367",
+              "text": "Gain Suppression Immunity for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "en",
+          "sourceText": "Gain Suppression Immunity for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "e017a7e6af1815c72d99305f1886e96fd9ec64eca49476d04bc25adcfaf967f0"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value",
+              "value": "2.8"
+            }
+          ],
+          "resolvedText": "Gain Suppression Immunity for 2.8s on Weak Spot Hit.",
+          "resolvedTextSha256": "2401a00da2cf22062a9e6a3620c2a7c9b86d18965b27f16d9ceb7e53cb7634f2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa8b80c764b28d8f1b1f44e39d8a5ee68387796e1f53bdf8d57261be48eb7367",
+              "text": "Gain Suppression Immunity for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "en",
+          "sourceText": "Gain Suppression Immunity for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "e017a7e6af1815c72d99305f1886e96fd9ec64eca49476d04bc25adcfaf967f0"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value",
+              "value": "3.2"
+            }
+          ],
+          "resolvedText": "Gain Suppression Immunity for 3.2s on Weak Spot Hit.",
+          "resolvedTextSha256": "21a9c18ca17ae8573a331d1010911f9c3ac1d7d2cbf1eeea9a08fe1d25d02ae4",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa8b80c764b28d8f1b1f44e39d8a5ee68387796e1f53bdf8d57261be48eb7367",
+              "text": "Gain Suppression Immunity for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "en",
+          "sourceText": "Gain Suppression Immunity for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "e017a7e6af1815c72d99305f1886e96fd9ec64eca49476d04bc25adcfaf967f0"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value",
+              "value": "3.6"
+            }
+          ],
+          "resolvedText": "Gain Suppression Immunity for 3.6s on Weak Spot Hit.",
+          "resolvedTextSha256": "1cd81a89e74cd9126e928be713831a082cfbb6f52a374445ba87d50b55bc652a",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "fa8b80c764b28d8f1b1f44e39d8a5ee68387796e1f53bdf8d57261be48eb7367",
+              "text": "Gain Suppression Immunity for "
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "34f5e051ba325786df65cf68484c45d2500ff4f5bc19f8825b7fcc09f8747741",
+              "text": "s on Weak Spot Hit."
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "en",
+          "sourceText": "Gain Suppression Immunity for {time:%s}s on Weak Spot Hit.",
+          "sourceTextSha256": "e017a7e6af1815c72d99305f1886e96fd9ec64eca49476d04bc25adcfaf967f0"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value",
+              "value": "2.4"
+            }
+          ],
+          "resolvedText": "命中弱點後獲得壓制免疫，持續2.4秒。",
+          "resolvedTextSha256": "43ee09ce027043c073ecd20f68daa9ec341212e9d1d8befb6e155ae2fc438a96",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d5ac518f7e35b2e91e8b7a8d5278c594520235fc8fac77c92e55a5de3a00ba4",
+              "text": "命中弱點後獲得壓制免疫，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後獲得壓制免疫，持續{time:%s}秒。",
+          "sourceTextSha256": "be1e26471429ad25eab8b987da7380e86216d9ea7d7e36cb6b516332cf7898c9"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value",
+              "value": "2.8"
+            }
+          ],
+          "resolvedText": "命中弱點後獲得壓制免疫，持續2.8秒。",
+          "resolvedTextSha256": "c41651d11484f3c4dc3111b551c06d933deaf78ed35098e926e68fbd714a6a34",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d5ac518f7e35b2e91e8b7a8d5278c594520235fc8fac77c92e55a5de3a00ba4",
+              "text": "命中弱點後獲得壓制免疫，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後獲得壓制免疫，持續{time:%s}秒。",
+          "sourceTextSha256": "be1e26471429ad25eab8b987da7380e86216d9ea7d7e36cb6b516332cf7898c9"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value",
+              "value": "3.2"
+            }
+          ],
+          "resolvedText": "命中弱點後獲得壓制免疫，持續3.2秒。",
+          "resolvedTextSha256": "e221f9dbf6340af3ff2790443beebe41f28c3f0f96cf29bb302db9bc835e5f23",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d5ac518f7e35b2e91e8b7a8d5278c594520235fc8fac77c92e55a5de3a00ba4",
+              "text": "命中弱點後獲得壓制免疫，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後獲得壓制免疫，持續{time:%s}秒。",
+          "sourceTextSha256": "be1e26471429ad25eab8b987da7380e86216d9ea7d7e36cb6b516332cf7898c9"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value",
+              "value": "3.6"
+            }
+          ],
+          "resolvedText": "命中弱點後獲得壓制免疫，持續3.6秒。",
+          "resolvedTextSha256": "6e9392ab3f21f61d8a7c88917497564883fc0ee279d157a5d2c32063e89fe826",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d5ac518f7e35b2e91e8b7a8d5278c594520235fc8fac77c92e55a5de3a00ba4",
+              "text": "命中弱點後獲得壓制免疫，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後獲得壓制免疫，持續{time:%s}秒。",
+          "sourceTextSha256": "be1e26471429ad25eab8b987da7380e86216d9ea7d7e36cb6b516332cf7898c9"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "正中眉心",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:d3144a13:key-unknown:en:1:g-f1d3a3b5ebfc5427:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:d3144a13:key-unknown:zh-tw:1:g-f1d3a3b5ebfc5427:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:d3144a13:key-unknown:zh-tw:1:g-f1d3a3b5ebfc5427:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:laspistol:p1-suppression-negation-on-weakspot"
+          },
+          "key": "loc_trait_bespoke_suppression_negation_on_weakspot_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "time",
+              "sourceKey": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value",
+              "value": "3.6"
+            }
+          ],
+          "resolvedText": "命中弱點後獲得壓制免疫，持續3.6秒。",
+          "resolvedTextSha256": "6e9392ab3f21f61d8a7c88917497564883fc0ee279d157a5d2c32063e89fe826",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "2d5ac518f7e35b2e91e8b7a8d5278c594520235fc8fac77c92e55a5de3a00ba4",
+              "text": "命中弱點後獲得壓制免疫，持續"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "time",
+              "segmentId": "segment-2",
+              "sha256": "2d212f1ac5d4db37be5c062021f992049208948382bd333e83e93022d2b5ae2b",
+              "token": "{time:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "b84a191d9dc891aeff735561bdfc8b107d0ff78ead311b7c475ee5782efd73fe",
+              "text": "秒。"
+            }
+          ],
+          "sourceHash": "ec414ad5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "命中弱點後獲得壓制免疫，持續{time:%s}秒。",
+          "sourceTextSha256": "be1e26471429ad25eab8b987da7380e86216d9ea7d7e36cb6b516332cf7898c9"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier1-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier2-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier3-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:en:1:g-f1d3a3b5ebfc5427:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:ec414ad5:key-known:zh-tw:1:g-f1d3a3b5ebfc5427:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:laspistol:p1-suppression-negation-on-weakspot-time-tier4-display-value"
+                  },
+                  "format": "plain-number",
+                  "name": "time",
+                  "placeholder": "{time:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:laspistol:p1-suppression-negation-on-weakspot"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b5e4866e8c3db48713f34db58258b144345284ae3147581babaaa9ae6af8fca4",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "975dc9d5bbfb80d7cd6035b6040f8d63206c4b479e19021c78a66b9bdc6ffb97",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "b340bc1aa4c2507b681456eff0a550f05d3e070eae9241025dcc9568ba026605",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "9aee762c900bdf7f21d5ae0e3d79a751f4b337092860a66573efa6ac8b817750",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "250d2695b48091875019c371ce4bca4380c93b23a51396f1370cebb2cb1b6a26",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "6467fcf73923ca0c583b6f11bed1636788b4e4ea67667705e8d50e6e331d1ff9",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "c8d87b8a812c6047b6e37dff0016d7ce19ea6846ae3f0f837354f37d2859754a",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "70993ec49e69bed76fd50f15def81fc7b11fc647331dca48148f1bc296dcfecf",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "0029ea3ac56651e0b7bb8fe9c56c9aca0877c6f627943f028db56f603cbe1e16",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "fed56d1ce843d0581add0c20ffcf4be2b55246bf2a182bdb5fc041c21b702fd3",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "440ff910f74258e7eda6fe632355d37b57bb01361bd951cc345851f2c07ca057",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "8191f139a88379096ca9e0dc6fc5ee9197da2a653c704347ab7a3f0d1f90b159",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "b5e4866e8c3db48713f34db58258b144345284ae3147581babaaa9ae6af8fca4",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:content::name"
+        },
+        "targetDigest": "975dc9d5bbfb80d7cd6035b6040f8d63206c4b479e19021c78a66b9bdc6ffb97"
+      },
+      {
+        "dependenciesDigest": "b340bc1aa4c2507b681456eff0a550f05d3e070eae9241025dcc9568ba026605",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:context::tierapplicability"
+        },
+        "targetDigest": "9aee762c900bdf7f21d5ae0e3d79a751f4b337092860a66573efa6ac8b817750"
+      },
+      {
+        "dependenciesDigest": "250d2695b48091875019c371ce4bca4380c93b23a51396f1370cebb2cb1b6a26",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:0"
+        },
+        "targetDigest": "6467fcf73923ca0c583b6f11bed1636788b4e4ea67667705e8d50e6e331d1ff9"
+      },
+      {
+        "dependenciesDigest": "c8d87b8a812c6047b6e37dff0016d7ce19ea6846ae3f0f837354f37d2859754a",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:1"
+        },
+        "targetDigest": "70993ec49e69bed76fd50f15def81fc7b11fc647331dca48148f1bc296dcfecf"
+      },
+      {
+        "dependenciesDigest": "0029ea3ac56651e0b7bb8fe9c56c9aca0877c6f627943f028db56f603cbe1e16",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:2"
+        },
+        "targetDigest": "fed56d1ce843d0581add0c20ffcf4be2b55246bf2a182bdb5fc041c21b702fd3"
+      },
+      {
+        "dependenciesDigest": "440ff910f74258e7eda6fe632355d37b57bb01361bd951cc345851f2c07ca057",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:laspistol-p1-suppression-negation-on-weakspot",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:f1d3a3b5ebfc5427:official::tierpresentations:options:3"
+        },
+        "targetDigest": "8191f139a88379096ca9e0dc6fc5ee9197da2a653c704347ab7a3f0d1f90b159"
+      }
+    ],
+    "termLocalizations": []
+  }
+}

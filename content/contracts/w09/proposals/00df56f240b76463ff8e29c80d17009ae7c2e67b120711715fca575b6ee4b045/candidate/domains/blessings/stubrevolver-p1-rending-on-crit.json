@@ -1,0 +1,1859 @@
+{
+  "gameReleaseId": "darktide:1.13.4",
+  "kind": "blessing",
+  "schemaVersion": "w08-shared-domain/1.0.0",
+  "source": {
+    "gameReleases": [
+      {
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "gameVersion": "1.13.4",
+        "releaseOrder": 4,
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "bb25e56225a3b2ca66f6c5aca79d6cc34012d7d39989d2d631c8e3d7748b6c16",
+          "manifestSha256": "86e01834b348ba29d9a3ce66ce03ca986b040cf5dc1aed65ca0dc6e551f56e42",
+          "snapshotId": "game-version-update-comparison-evidence-1-13-4-e46b8926cfa3"
+        }
+      }
+    ],
+    "records": [
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/obtainableTiers",
+              "reasonCode": "NOT_VERIFIED"
+            },
+            {
+              "field": "/payload/weaponRefs",
+              "reasonCode": "NOT_IMPORTED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing-variant",
+        "owner": "source",
+        "payload": {
+          "blessingRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "definedTiers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "obtainableTiers": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "tierValues": [
+            {
+              "tier": 1,
+              "value": {
+                "decimal": "0.3",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 2,
+              "value": {
+                "decimal": "0.4",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 3,
+              "value": {
+                "decimal": "0.5",
+                "status": "known",
+                "unit": "ratio"
+              }
+            },
+            {
+              "tier": 4,
+              "value": {
+                "decimal": "0.6",
+                "status": "known",
+                "unit": "ratio"
+              }
+            }
+          ],
+          "weaponRefs": []
+        },
+        "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/blessingRef"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/weaponRefs"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/definedTiers"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/obtainableTiers"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/tierValues"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [
+            {
+              "field": "/payload/nameKey",
+              "reasonCode": "NOT_VERIFIED"
+            }
+          ],
+          "status": "partial"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "blessing",
+        "owner": "source",
+        "payload": {
+          "claimRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+            },
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+            }
+          ],
+          "nameKey": {
+            "reasonCode": "NOT_VERIFIED",
+            "status": "unknown"
+          },
+          "variantRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          ]
+        },
+        "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/nameKey"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/variantRefs"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/claimRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_1_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "30",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_2_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "40",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_3_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "50",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "claim",
+        "owner": "source",
+        "payload": {
+          "basis": "code-derived",
+          "context": {},
+          "evidenceRefs": [
+            {
+              "gameReleaseId": "darktide:1.13.4",
+              "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code"
+            }
+          ],
+          "property": "description.format_values.rend.defined_tier_4_display_percent",
+          "targetRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+          },
+          "value": {
+            "decimal": "60",
+            "status": "known",
+            "unit": "percent"
+          }
+        },
+        "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "identity",
+            "fieldPath": "/payload/targetRef"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/value"
+          },
+          {
+            "dimension": "context",
+            "fieldPath": "/payload/context"
+          },
+          {
+            "dimension": "technical",
+            "fieldPath": "/payload/basis"
+          },
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload/evidenceRefs"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      },
+      {
+        "dataCoverage": {
+          "missing": [],
+          "status": "complete"
+        },
+        "gameReleaseId": "darktide:1.13.4",
+        "kind": "evidence",
+        "owner": "source",
+        "payload": {
+          "evidenceKind": "code-observed",
+          "safeSummary": "Pinned Lua source paths scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_stubrevolver_p1.lua, scripts/utilities/trait_value_parser.lua resolve trait_override format value rend at stat_buffs.stat_buffs.critical_strike_rending_multiplier; defined tier literals are tier 1=0.3, tier 2=0.4, tier 3=0.5, tier 4=0.6.",
+          "sourceRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        },
+        "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code",
+        "reviewState": "approved",
+        "reviewTargets": [
+          {
+            "dimension": "evidence",
+            "fieldPath": "/payload"
+          }
+        ],
+        "sourceRefs": [
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3"
+          },
+          {
+            "gameReleaseId": "darktide:1.13.4",
+            "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3"
+          }
+        ]
+      }
+    ],
+    "repository": "https://github.com/SyuanTsai/DarkTide-Source-Data",
+    "reviewReceipts": [
+      {
+        "decision": "approved",
+        "dependenciesDigest": "763a1699ee11be6f537783c3b386038ebaf3dd0ec7ebbd4daab7d330cc828231",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/blessingRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "f11918aa8d05ca89f3018e81b76c96eeceba3a2ae49dd74038569d38d43b760d"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "763a1699ee11be6f537783c3b386038ebaf3dd0ec7ebbd4daab7d330cc828231",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/definedTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "f6bd10506e9a4daed7c03eda2f2fde54be3bd58eee49dab471c18a888ffbdb6f"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "763a1699ee11be6f537783c3b386038ebaf3dd0ec7ebbd4daab7d330cc828231",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/obtainableTiers",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "763a1699ee11be6f537783c3b386038ebaf3dd0ec7ebbd4daab7d330cc828231",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/tierValues",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "b6f3712757a9edcaa0002a536de2c43fecd09ba623956710bb1aed9602ec72e0"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "763a1699ee11be6f537783c3b386038ebaf3dd0ec7ebbd4daab7d330cc828231",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/weaponRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d51c9d2a802510bf20b3fb23b10e80cad20179f7fba479dcf97230c249fe6447",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/claimRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "382c56e7f7d61de44bbbf15e39bc6ed67d8f2f61484ba8590b62b584ad257c33"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d51c9d2a802510bf20b3fb23b10e80cad20179f7fba479dcf97230c249fe6447",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/nameKey",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "5d139595ba9da6941c993f48cd01767076d5454a3a8452dd18519c4490a19cfa"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "d51c9d2a802510bf20b3fb23b10e80cad20179f7fba479dcf97230c249fe6447",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/variantRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+        },
+        "targetDigest": "d18addfc07cefa930fd92fc92e5c04fe0012b525159f059f75c5f82675ee43cc"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c603994c7d120d07b8dc44c01547dc2ecf173150480a7745813580a7d5fd895",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c603994c7d120d07b8dc44c01547dc2ecf173150480a7745813580a7d5fd895",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c603994c7d120d07b8dc44c01547dc2ecf173150480a7745813580a7d5fd895",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "9cc665aa887c898d85ec913b215b8896395aca3f6bd5078ed6d671a4ae81169e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c603994c7d120d07b8dc44c01547dc2ecf173150480a7745813580a7d5fd895",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "4321ca76ea77ec3b2f0601db40df0eb0ee0fa250676212c9aa28b1e0b494e312"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "8c603994c7d120d07b8dc44c01547dc2ecf173150480a7745813580a7d5fd895",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+        },
+        "targetDigest": "ef0dd9a793fecab39f4909719a148a56c16e28e4d88f075b52773de00876b2c2"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1e79e3cafe33d3f254a3d6dd8d3b7803e3702a833ec7f26e532bdc3884f5193",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1e79e3cafe33d3f254a3d6dd8d3b7803e3702a833ec7f26e532bdc3884f5193",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1e79e3cafe33d3f254a3d6dd8d3b7803e3702a833ec7f26e532bdc3884f5193",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "9cc665aa887c898d85ec913b215b8896395aca3f6bd5078ed6d671a4ae81169e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1e79e3cafe33d3f254a3d6dd8d3b7803e3702a833ec7f26e532bdc3884f5193",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "4321ca76ea77ec3b2f0601db40df0eb0ee0fa250676212c9aa28b1e0b494e312"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "a1e79e3cafe33d3f254a3d6dd8d3b7803e3702a833ec7f26e532bdc3884f5193",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+        },
+        "targetDigest": "24b0fc6e847fa1044517906b7c9f8dc5444f44534ec9f9e45f541a4c8ac94f4e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f70680a962223aaba60a2263e7b3e5f0d7d8801ad58391cf6c00e817cce60ef9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f70680a962223aaba60a2263e7b3e5f0d7d8801ad58391cf6c00e817cce60ef9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f70680a962223aaba60a2263e7b3e5f0d7d8801ad58391cf6c00e817cce60ef9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "9cc665aa887c898d85ec913b215b8896395aca3f6bd5078ed6d671a4ae81169e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f70680a962223aaba60a2263e7b3e5f0d7d8801ad58391cf6c00e817cce60ef9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "4321ca76ea77ec3b2f0601db40df0eb0ee0fa250676212c9aa28b1e0b494e312"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "f70680a962223aaba60a2263e7b3e5f0d7d8801ad58391cf6c00e817cce60ef9",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+        },
+        "targetDigest": "612b43b54d511cbf2a51283b5916035b35b23f2ab2c78e77bd3e36206b22b053"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ce0cddfa02274bb106ab5e823d41560ebf597d7766a168d0c8ae2f095255449",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/basis",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "f42ef7c08e9c0c2be702eeb923d24d08333308dc970e1c54fee3ce17e8bc07d3"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ce0cddfa02274bb106ab5e823d41560ebf597d7766a168d0c8ae2f095255449",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/payload/context",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ce0cddfa02274bb106ab5e823d41560ebf597d7766a168d0c8ae2f095255449",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload/evidenceRefs",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "9cc665aa887c898d85ec913b215b8896395aca3f6bd5078ed6d671a4ae81169e"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ce0cddfa02274bb106ab5e823d41560ebf597d7766a168d0c8ae2f095255449",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "identity",
+          "fieldPath": "/payload/targetRef",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "4321ca76ea77ec3b2f0601db40df0eb0ee0fa250676212c9aa28b1e0b494e312"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "3ce0cddfa02274bb106ab5e823d41560ebf597d7766a168d0c8ae2f095255449",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "technical",
+          "fieldPath": "/payload/value",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+        },
+        "targetDigest": "337665de755d05566163fca839b7143986a3a062bc7c2c797255a213fc0abd06"
+      },
+      {
+        "decision": "approved",
+        "dependenciesDigest": "71ed1c24ebb97b8f5c790d4f547df6d26211cf87e0a5d10de62df36a89eb123a",
+        "reviewedAt": "2026-11-03T10:58:07.000Z",
+        "reviewer": {
+          "id": "SyuanTsai",
+          "kind": "human"
+        },
+        "target": {
+          "dimension": "evidence",
+          "fieldPath": "/payload",
+          "gameReleaseId": "darktide:1.13.4",
+          "recordId": "darktide:evidence:stubrevolver:p1-rending-on-crit-rend-display-percent-code"
+        },
+        "targetDigest": "db51b57f93535b5bcf1afd6bd621f42178f0774c8242fb807edb6e195bd65f18"
+      }
+    ],
+    "sourceRefs": [
+      {
+        "artifactSha256": "29c84a0ea78f0fa10e90973fd345fbe3b1aad77c931df796601a5a1861685b30",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/utilities/trait_value_parser.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/utilities/trait_value_parser.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source was read without execution to resolve a static buff-template value referenced by a bespoke trait description.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-trait-value-parser-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "artifactSha256": "8d06f80075c6ab661fd1a9f257d5fbc49991315cc1765986722a535d26ff64a6",
+        "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+        "gameBuild": "26101089",
+        "gameReleaseId": "darktide:1.13.4",
+        "path": "scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_stubrevolver_p1.lua",
+        "publicUrl": "https://github.com/Aussiemon/Darktide-Source-Code/blob/e46b8926cfa3fa35503e4b80b15aab7a804314e4/scripts/settings/equipment/weapon_traits/weapon_traits_bespoke_stubrevolver_p1.lua",
+        "repository": "https://github.com/Aussiemon/Darktide-Source-Code",
+        "safeSummary": "Pinned public Lua source parsed without execution. 10 bespoke traits span lines 10-520; generated records, when present, are derived from parsed trait tables and tier nodes.",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        },
+        "sourceId": "public-code:generic-blessings-weapon-traits-bespoke-stubrevolver-p1-e46b8926cfa3",
+        "sourceKind": "public-code",
+        "tool": {
+          "name": "generic-blessings-static-import",
+          "sha256": "c8be0354ff1d5a0a42602a147a1ce3542eaa704f45aec1159a9088df5a834942",
+          "version": "1.0.0"
+        }
+      }
+    ],
+    "sourceSnapshots": [
+      {
+        "gameReleaseId": "darktide:1.13.4",
+        "snapshot": {
+          "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+          "contentSha256": "866dcfcd832d3cb3b6d4958e3ee62a944592679704aee1a527ba4f9f7571d832",
+          "manifestSha256": "2eaed7a5afa40e4261dc2e398492bd857e7ed750498605bee57d17221d964b35",
+          "snapshotId": "generic-blessings-1.13.4-e46b8926cfa3"
+        }
+      }
+    ],
+    "tombstones": []
+  },
+  "web": {
+    "announcements": [],
+    "gameChanges": [],
+    "officialInputs": {
+      "sources": [
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1391c6e5:key-unknown:en:1:g-9138d1c8e3f88929:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "Hand-Cannon",
+          "resolvedTextSha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd",
+              "text": "Hand-Cannon"
+            }
+          ],
+          "sourceHash": "1391c6e5",
+          "sourceLocale": "en",
+          "sourceText": "Hand-Cannon",
+          "sourceTextSha256": "3b4d1cf39a566641e9f7be00c2e2a082c9c3831acc17cc8a8d9937a890d809fd"
+        },
+        {
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": null,
+          "occurrence": 1,
+          "officialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-9138d1c8e3f88929:name",
+          "origin": "game-localization",
+          "params": [],
+          "resolvedText": "手銃",
+          "resolvedTextSha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c",
+              "text": "手銃"
+            }
+          ],
+          "sourceHash": "1391c6e5",
+          "sourceLocale": "zh-TW",
+          "sourceText": "手銃",
+          "sourceTextSha256": "e6f27329e9e553a8d67945d503495433f5fefa2f9e701386298704f320cb226c"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent",
+              "value": "+30%"
+            }
+          ],
+          "resolvedText": "+30% Rending on Critical Hit.",
+          "resolvedTextSha256": "8dc26c8a204f89e82389df1816c05c3596cf9c39f83b0521aadd883008009f74",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent",
+              "value": "+40%"
+            }
+          ],
+          "resolvedText": "+40% Rending on Critical Hit.",
+          "resolvedTextSha256": "716214a10740f74f5a59903a5bbe2fa63e5c19ca0eb141b9bffdcb4efd4eb71e",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "+50% Rending on Critical Hit.",
+          "resolvedTextSha256": "ef3df88dc72598779bdfe73107c1f2ccc2e31e5fb443eeea0622e375086345d2",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "+60% Rending on Critical Hit.",
+          "resolvedTextSha256": "5b9219de762a8983216a9c9edcfde56038f731c978af406f4871834ee39171fc",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-1",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-2",
+              "sha256": "9e2840ca4418c23e3dedbbc3fabde64214d806e697d3619f331587ce4ce3c682",
+              "text": " Rending on Critical Hit."
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "en",
+          "sourceText": "{rend:%s} Rending on Critical Hit.",
+          "sourceTextSha256": "b9b70555db989d3bdfd0c0e4cdce1f56bc20c33f2c6ce2677cb403aabffaa6c2"
+        },
+        {
+          "bindingContext": {
+            "tier": 1,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-1",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent",
+              "value": "+30%"
+            }
+          ],
+          "resolvedText": "致命一擊時+30%撕裂。",
+          "resolvedTextSha256": "100553bb849e18f29a884feae0021e248579400848ef82787dc5a6b4cb68c93c",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 2,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-2",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent",
+              "value": "+40%"
+            }
+          ],
+          "resolvedText": "致命一擊時+40%撕裂。",
+          "resolvedTextSha256": "f243d88804919e5e509f9bec794ae23eb3d74bce92634f7bcc7f6c2d2cb61298",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 3,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-3",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent",
+              "value": "+50%"
+            }
+          ],
+          "resolvedText": "致命一擊時+50%撕裂。",
+          "resolvedTextSha256": "58e559356ed8a56321352e98e9d8fc82fb917ceef91a639d0da3d985f0eb9fa6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "致命一擊時+60%撕裂。",
+          "resolvedTextSha256": "d309606deb301af50d8d10d4f6d973b92019a1e338f4e53d766f30d4b1df2ae6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        }
+      ]
+    },
+    "officialTextChanges": [],
+    "presentations": [
+      {
+        "authoringId": "web:presentation:stubrevolver-p1-rending-on-crit",
+        "detailSections": [],
+        "entityRef": {
+          "gameReleaseId": "darktide:1.13.4",
+          "kind": "blessing",
+          "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+        },
+        "errata": [],
+        "locale": "zh-TW",
+        "name": "手銃",
+        "nameOfficialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:1391c6e5:key-unknown:en:1:g-9138d1c8e3f88929:name",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-9138d1c8e3f88929:name",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "nameOfficialSourceId": "official:items:1391c6e5:key-unknown:zh-tw:1:g-9138d1c8e3f88929:name",
+        "nameTermRuleRefs": [],
+        "official": {
+          "bindingContext": {
+            "tier": 4,
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          },
+          "entityRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing",
+            "recordId": "darktide:blessing:stubrevolver:p1-rending-on-crit"
+          },
+          "key": "loc_trait_bespoke_rending_on_crit_desc",
+          "occurrence": 1,
+          "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-4",
+          "origin": "game-localization",
+          "params": [
+            {
+              "parameterId": "rend",
+              "sourceKey": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent",
+              "value": "+60%"
+            }
+          ],
+          "resolvedText": "致命一擊時+60%撕裂。",
+          "resolvedTextSha256": "d309606deb301af50d8d10d4f6d973b92019a1e338f4e53d766f30d4b1df2ae6",
+          "resource": "items",
+          "segments": [
+            {
+              "kind": "text",
+              "segmentId": "segment-1",
+              "sha256": "25c395decddb3630a50cfc47b5de937c5caf115cf5b4d6faacd4d3b483b06336",
+              "text": "致命一擊時"
+            },
+            {
+              "kind": "parameter",
+              "parameterId": "rend",
+              "segmentId": "segment-2",
+              "sha256": "e082ce8c18c6c27eba83cb8469b584fc40364163678406c6c9176e8fd09f7ea0",
+              "token": "{rend:%s}"
+            },
+            {
+              "kind": "text",
+              "segmentId": "segment-3",
+              "sha256": "1bac725d5acb884c13c19936fd8e326679cca9475ca91149062ae16b7ee7297c",
+              "text": "撕裂。"
+            }
+          ],
+          "sourceHash": "3dea63a1",
+          "sourceLocale": "zh-TW",
+          "sourceText": "致命一擊時{rend:%s}撕裂。",
+          "sourceTextSha256": "ee73ddc2a5e2ec6b7e3630cb16eb47a1bc9f2037ca69677bb2920cd6ee038c76"
+        },
+        "officialLocaleRefs": [
+          {
+            "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-4",
+            "sourceLocale": "en"
+          },
+          {
+            "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-4",
+            "sourceLocale": "zh-TW"
+          }
+        ],
+        "tierApplicability": [
+          {
+            "tiers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "variantRef": {
+              "gameReleaseId": "darktide:1.13.4",
+              "kind": "blessing-variant",
+              "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+            }
+          }
+        ],
+        "tierPresentations": {
+          "defaultTier": 4,
+          "options": [
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-1",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-1",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier1-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 1
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-2",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-2",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier2-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 2
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-3",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-3",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier3-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 3
+            },
+            {
+              "detailSections": [],
+              "officialLocaleRefs": [
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:en:1:g-9138d1c8e3f88929:tier-4",
+                  "sourceLocale": "en"
+                },
+                {
+                  "officialSourceId": "official:items:3dea63a1:key-known:zh-tw:1:g-9138d1c8e3f88929:tier-4",
+                  "sourceLocale": "zh-TW"
+                }
+              ],
+              "params": [
+                {
+                  "bindingRef": {
+                    "gameReleaseId": "darktide:1.13.4",
+                    "kind": "claim",
+                    "recordId": "darktide:claim:stubrevolver:p1-rending-on-crit-rend-tier4-display-percent"
+                  },
+                  "format": "signed-percent",
+                  "name": "rend",
+                  "placeholder": "{rend:%s}"
+                }
+              ],
+              "tier": 4
+            }
+          ],
+          "variantRef": {
+            "gameReleaseId": "darktide:1.13.4",
+            "kind": "blessing-variant",
+            "recordId": "darktide:blessing-variant:stubrevolver:p1-rending-on-crit"
+          }
+        }
+      }
+    ],
+    "reviewReceipts": [
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "9e5a373030319368920c141d23272ee6c2aa4beb025c99181eb8915d102a6e41",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "d9def7b2921982fd6399313c09f3f5771dd1d0baaebd73aa0ea3d2145de2b6f1",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:content::name"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3d4ff0cae7b6385f83ad2453dd0620b2332e2364a0f2fff357160bf32963ef6b",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "00e19a40f046bb6a6377c3c5928dad5057a3bb48164588b1ba4655c39ca1921f",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:context::tierapplicability"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "d0f3b5ad84732b52aeb4b7b8c33c9bc6f2cac4f55bdc5ebe21cf3a643d62d05d",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "08ecc167bccffa9858acea2fe093c3b74da1a49cb3147108843a924b2e801cc9",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:0"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "995a44c17b06d1b1082faf74ce6af1e7de2770584d88b7b0554e606a2f303da2",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "f83d124293e52faf5c990047a3b8fad0ab648df7dfe28f6ae110da6c8b62ef7c",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:1"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "84acd537e8fe0ec40f209393ffa31e179d7a2e1544ddf543615e2c52fe1156ae",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "4710deee7033703f43836ce472daa2d365d92882f610369bbc77516b89f36443",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:2"
+        }
+      },
+      {
+        "mode": "w06",
+        "receipt": {
+          "decision": "approved",
+          "dependenciesDigest": "3495775fe7d514e37d8c48d95ca5e0f23551cbe0e4a5f6b24f8cc6f51cad9073",
+          "reviewedAt": "2026-11-04T03:03:21.000Z",
+          "reviewer": {
+            "id": "SyuanTsai",
+            "kind": "human"
+          },
+          "targetDigest": "5743bb3d5fe98f7391fe471ccceab5bcdc7894d316244d4e3dea76189538fa49",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:3"
+        }
+      }
+    ],
+    "reviewTargets": [
+      {
+        "dependenciesDigest": "9e5a373030319368920c141d23272ee6c2aa4beb025c99181eb8915d102a6e41",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "content",
+          "fieldPath": "/name",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:content::name"
+        },
+        "targetDigest": "d9def7b2921982fd6399313c09f3f5771dd1d0baaebd73aa0ea3d2145de2b6f1"
+      },
+      {
+        "dependenciesDigest": "3d4ff0cae7b6385f83ad2453dd0620b2332e2364a0f2fff357160bf32963ef6b",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "context",
+          "fieldPath": "/tierApplicability",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:context::tierapplicability"
+        },
+        "targetDigest": "00e19a40f046bb6a6377c3c5928dad5057a3bb48164588b1ba4655c39ca1921f"
+      },
+      {
+        "dependenciesDigest": "d0f3b5ad84732b52aeb4b7b8c33c9bc6f2cac4f55bdc5ebe21cf3a643d62d05d",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/0",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:0"
+        },
+        "targetDigest": "08ecc167bccffa9858acea2fe093c3b74da1a49cb3147108843a924b2e801cc9"
+      },
+      {
+        "dependenciesDigest": "995a44c17b06d1b1082faf74ce6af1e7de2770584d88b7b0554e606a2f303da2",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/1",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:1"
+        },
+        "targetDigest": "f83d124293e52faf5c990047a3b8fad0ab648df7dfe28f6ae110da6c8b62ef7c"
+      },
+      {
+        "dependenciesDigest": "84acd537e8fe0ec40f209393ffa31e179d7a2e1544ddf543615e2c52fe1156ae",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/2",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:2"
+        },
+        "targetDigest": "4710deee7033703f43836ce472daa2d365d92882f610369bbc77516b89f36443"
+      },
+      {
+        "dependenciesDigest": "3495775fe7d514e37d8c48d95ca5e0f23551cbe0e4a5f6b24f8cc6f51cad9073",
+        "mode": "w06",
+        "state": "approved",
+        "target": {
+          "dimension": "official",
+          "fieldPath": "/tierPresentations/options/3",
+          "ownerId": "web:presentation:stubrevolver-p1-rending-on-crit",
+          "ownerKind": "presentation",
+          "targetId": "review:w06:generic:9138d1c8e3f88929:official::tierpresentations:options:3"
+        },
+        "targetDigest": "5743bb3d5fe98f7391fe471ccceab5bcdc7894d316244d4e3dea76189538fa49"
+      }
+    ],
+    "termLocalizations": []
+  }
+}
