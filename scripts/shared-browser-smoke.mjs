@@ -27,6 +27,30 @@ export function assertExactDataRequestPaths(requestedPaths, currentPaths, retain
     'the app loads exactly the current pinned data files plus the fixed retained catalog, trees, and assets');
 }
 
+// Split manifests load only the domains each visited route needs (the singletons plus the opened
+// blessing and weapon-family shards and their declared dependencies), not every shard up front.
+export function expectedSplitRouteRequestPaths(manifest, manifestPath, shardPaths) {
+  const filesByPath = new Map(manifest.files.map(file => [file.path, file]));
+  const selected = new Set();
+  const add = relativePath => {
+    const file = filesByPath.get(relativePath);
+    assert.ok(file, `split route request names a manifest file: ${relativePath}`);
+    if (selected.has(file.path)) return;
+    selected.add(file.path);
+    for (const dependency of file.dependencies ?? []) add(dependency);
+  };
+  for (const kind of SPLIT_SINGLETON_KINDS) {
+    const rows = manifest.files.filter(file => file.kind === kind);
+    assert.equal(rows.length, 1, `split manifest has one ${kind} singleton`);
+    add(rows[0].path);
+  }
+  for (const shardPath of shardPaths) {
+    assert.ok(SPLIT_SHARD_KINDS.includes(filesByPath.get(shardPath)?.kind), `split route shard is a split shard: ${shardPath}`);
+    add(shardPath);
+  }
+  return [manifestPath, ...[...selected].map(relativePath => `/data/${manifest.dataRevision}/${relativePath}`)].sort();
+}
+
 function parseJson(bytes, label) {
   let text;
   try { text = new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
@@ -121,6 +145,7 @@ export async function readVerifiedCoreDomains(distPath, verification) {
   assert.equal(manifest.gameVersion, verification.shared_game_version);
 
   const domains = [];
+  const domainPaths = new Map();
   const requestedPaths = [pointer.manifest_path];
   const selectedRows = split
     ? manifest.files.filter(file => [...SPLIT_SINGLETON_KINDS, ...SPLIT_SHARD_KINDS].includes(file.kind))
@@ -148,12 +173,15 @@ export async function readVerifiedCoreDomains(distPath, verification) {
     assert.equal(domain.kind, kind);
     assert.equal(domain.gameReleaseId, manifest.gameReleaseId);
     domains.push(domain);
+    domainPaths.set(domain, row.path);
     requestedPaths.push(urlPath);
   }
   return {
     pointer,
     manifest,
+    split,
     domains,
+    domainPaths,
     requestedPaths: requestedPaths.sort(),
     view: createSharedViewModel({ domains, gameReleaseId: manifest.gameReleaseId, fixtureOnly: verification.package_kind === 'fixture' }),
   };
@@ -182,7 +210,10 @@ function selectBlessing(domains, view) {
         variantRef: applicability.variantRef,
         tier,
       }));
-      if (views.every(item => item.status === 'ready')) return { presentation, applicability, views };
+      if (views.every(item => item.status === 'ready')) {
+        const domain = blessingDomains.find(row => (row.web.presentations ?? []).includes(presentation));
+        return { presentation, applicability, views, domain };
+      }
     }
   }
   throw new Error('verified shared package has no exact blessing variant with all four readable tiers');
@@ -489,7 +520,12 @@ export async function runSharedBrowserSmoke(distPath, verification) {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
       'expanded source details fit the mobile viewport');
 
-    const expectedPaths = [...shared.requestedPaths].sort();
+    const expectedPaths = shared.split
+      ? expectedSplitRouteRequestPaths(shared.manifest, shared.pointer.manifest_path, [
+        shared.domainPaths.get(blessing.domain),
+        `domains/weapons/${weapon.familyId}.json`,
+      ])
+      : [...shared.requestedPaths].sort();
     assertExactRequestedPaths(requestedPaths, expectedPaths);
     assertExactDataRequestPaths(requestedDataPaths, expectedPaths, [...expectedRetainedPaths]);
     assert.deepEqual([...requestedHistoryPaths].sort(), [
