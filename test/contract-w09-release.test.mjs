@@ -33,6 +33,7 @@ import {
   restoreW09ActivePointersFromSnapshot,
   updateW09RetentionReferences,
   writeW09ReleaseStateAtomic,
+  W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES,
 } from '../scripts/content/contract-w09-release.mjs';
 import { loadSharedReleaseFixture, validateSharedStaticFiles } from '../src/static/shared-release.mjs';
 
@@ -341,6 +342,23 @@ test('UnitT23_runtime-snapshot-archive-preserves-large-domains-and-rejects-nonca
   }
   assert.throws(() => encodeW09RuntimeSnapshotArchive(buildId, new Map([['C:/escape.txt', Buffer.from('x')]])), /unsafe file path/);
   assert.throws(() => encodeW09RuntimeSnapshotArchive(buildId, new Map([['assets/unsafe\0name', Buffer.from('x')]])), /unsafe file path/);
+  {
+    // A whole-site snapshot above the original 128 MiB decoded bound must still round-trip.
+    assert.ok(W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES >= 256 * 1024 * 1024);
+    assert.ok(W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES < 512 * 1024 * 1024);
+    const bulkBytes = Buffer.alloc(100 * 1024 * 1024, 0);
+    const bulkArchive = encodeW09RuntimeSnapshotArchive(buildId, new Map([
+      ['artifact-manifest.json', Buffer.from('{"fixtureOnly":true}\n', 'utf8')],
+      ['data/shared/domains/bulk.json', bulkBytes],
+    ]));
+    assert.ok(gunzipSync(bulkArchive, { maxOutputLength: W09_RUNTIME_SNAPSHOT_MAX_DECODED_BYTES }).byteLength > 128 * 1024 * 1024);
+    const bulkRoot = await materializeW09RuntimeSnapshotArchive(bulkArchive, buildId);
+    try {
+      assert.equal(sha256(await readFile(path.join(bulkRoot, 'data/shared/domains/bulk.json'))), sha256(bulkBytes));
+    } finally {
+      await rm(bulkRoot, { recursive: true, force: true });
+    }
+  }
   for (const unsafePath of ['C:/escape.txt', 'assets/unsafe\0name']) {
     const forged = JSON.parse(gunzipSync(archiveBytes).toString('utf8'));
     forged.files[0].path = unsafePath;
