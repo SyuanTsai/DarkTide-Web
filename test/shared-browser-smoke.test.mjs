@@ -6,8 +6,10 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { makeSharedPackage } from './w11-shared-client.fixture.mjs';
 import {
-  assertExactDataRequestPaths, assertExactRequestedPaths, expectedSplitRouteRequestPaths, readVerifiedCoreDomains,
+  assertExactDataRequestPaths, assertExactRequestedPaths, expectedSplitRouteRequestPaths,
+  readVerifiedCoreDomains, retainedBlessingDetailForCurrentBlessing,
 } from '../scripts/shared-browser-smoke.mjs';
+import { currentBlessingIdForRetainedVariantId } from '../web/shared-render.mjs';
 
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -172,4 +174,22 @@ test('UnitT60_shared_smoke_expects_only_route_loaded_split_shards', () => {
     /without legacy data files/u);
   assert.throws(() => expectedSplitRouteRequestPaths(manifest, manifestPath, ['domains/announcements.json']), /split shard/u);
   assert.throws(() => expectedSplitRouteRequestPaths(manifest, manifestPath, ['domains/weapons/missing.json']), /split shard/u);
+});
+
+test('UnitT70_shared_smoke_expects_the_retained_detail_of_the_selected_current_blessing', () => {
+  const retainedVariantId = 'weapon_trait_bespoke_ogryn_thumper_p2_close_combat';
+  const currentBlessingId = currentBlessingIdForRetainedVariantId(retainedVariantId);
+  const blessing = {
+    kind: 'blessing', id: 'charmed-reload', detail_path: 'details/blessings/charmed-reload.json',
+  };
+  const catalog = {
+    entries: [
+      blessing,
+      { kind: 'variant', id: retainedVariantId, route: '/blessings/charmed-reload/variants/close-combat/' },
+    ],
+  };
+
+  assert.equal(retainedBlessingDetailForCurrentBlessing(currentBlessingId, catalog), blessing);
+  assert.equal(retainedBlessingDetailForCurrentBlessing(
+    'darktide:blessing:ogryn_thumper:p2-other', catalog), null);
 });

@@ -7,6 +7,7 @@ import { DOMAIN_KINDS, validateManifest } from './content/contract-release.mjs';
 import { FIXED_HISTORY_SOURCE } from './content/contract-w14-history.mjs';
 import { hashNamedFiles } from '../src/static/common.mjs';
 import { createSharedViewModel } from '../web/shared-view.mjs';
+import { retainedBlessingIdForCurrentId } from '../web/shared-render.mjs';
 import { revisionAssetUrl, validateCatalog, validateTalentTree } from '../web/client.mjs';
 import { createStaticServer } from './serve.mjs';
 
@@ -25,6 +26,11 @@ export function assertExactDataRequestPaths(requestedPaths, currentPaths, retain
   const expectedPaths = [...new Set([...currentPaths, ...retainedPaths])];
   assert.deepEqual([...requestedPaths].sort(), expectedPaths.sort(),
     'the app loads exactly the current pinned data files plus the fixed retained catalog, trees, and assets');
+}
+
+export function retainedBlessingDetailForCurrentBlessing(recordId, catalog) {
+  const retainedId = retainedBlessingIdForCurrentId(recordId, catalog);
+  return catalog?.entries?.find(entry => entry?.kind === 'blessing' && entry.id === retainedId) ?? null;
 }
 
 // Split manifests load only the domains each visited route needs (the singletons plus the opened
@@ -458,6 +464,9 @@ export async function runSharedBrowserSmoke(distPath, verification) {
       'the unified blessing directory links all retained variant details');
 
     const blessingPath = `/blessings/?id=${encodeURIComponent(blessing.presentation.entityRef.recordId)}&variant=${encodeURIComponent(blessing.applicability.variantRef.recordId)}`;
+    const selectedRetainedBlessingDetail = retainedBlessingDetailForCurrentBlessing(
+      blessing.presentation.entityRef.recordId, retained.catalog);
+    if (selectedRetainedBlessingDetail) addRetainedDetail(selectedRetainedBlessingDetail);
     await page.goto(new URL(blessingPath, origin).href, { waitUntil: 'domcontentloaded' });
     await page.locator('.shared-official-text').waitFor({ state: 'visible' });
     assert.equal(await page.getByRole('link', { name: 'LV4', exact: true }).getAttribute('aria-current'), 'page',
