@@ -5,7 +5,9 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { makeSharedPackage } from './w11-shared-client.fixture.mjs';
-import { assertExactDataRequestPaths, assertExactRequestedPaths, readVerifiedCoreDomains } from '../scripts/shared-browser-smoke.mjs';
+import {
+  assertExactDataRequestPaths, assertExactRequestedPaths, expectedSplitRouteRequestPaths, readVerifiedCoreDomains,
+} from '../scripts/shared-browser-smoke.mjs';
 
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -133,4 +135,41 @@ test('UnitT50_shared_smoke_rejects_unknown_data_revisions_and_unlisted_retained_
     ...expected, `/data/${retainedRevision}/details/skills/psyker/unrequested.json`,
   ], currentPaths, retainedPaths), /current pinned data/u,
   'a file outside the retained catalog, trees, and requested assets is rejected');
+});
+
+// Scenario: A split manifest lists hundreds of blessing and weapon-family shards plus announcements and game-changes.
+// Purpose: Prove the smoke expects only the singletons and the shards the visited routes open, with their dependencies.
+test('UnitT60_shared_smoke_expects_only_route_loaded_split_shards', () => {
+  const rev = 'r'.repeat(64);
+  const file = (kind, filePath, dependencies = []) => ({ kind, path: filePath, dependencies });
+  const manifest = {
+    dataRevision: rev,
+    files: [
+      file('skills', 'domains/skills.json', ['domains/terms.json']),
+      file('terms', 'domains/terms.json'),
+      file('weapons-index', 'domains/weapons-index.json'),
+      file('blessings-index', 'domains/blessings-index.json'),
+      file('weapon-family', 'domains/weapons/a.json'),
+      file('weapon-family', 'domains/weapons/b.json'),
+      file('blessing', 'domains/blessings/x.json', ['domains/blessings-index.json']),
+      file('blessing', 'domains/blessings/y.json'),
+      file('announcements', 'domains/announcements.json'),
+      file('game-changes', 'domains/game-changes.json'),
+    ],
+  };
+  const manifestPath = `/data/${rev}/manifest.json`;
+  const expected = expectedSplitRouteRequestPaths(manifest, manifestPath, ['domains/blessings/x.json', 'domains/weapons/b.json']);
+  assert.deepEqual(expected, [
+    `/data/${rev}/domains/blessings-index.json`,
+    `/data/${rev}/domains/blessings/x.json`,
+    `/data/${rev}/domains/skills.json`,
+    `/data/${rev}/domains/terms.json`,
+    `/data/${rev}/domains/weapons-index.json`,
+    `/data/${rev}/domains/weapons/b.json`,
+    manifestPath,
+  ]);
+  assert.throws(() => assertExactRequestedPaths([...expected, `/data/${rev}/domains/blessings/y.json`], expected),
+    /without legacy data files/u);
+  assert.throws(() => expectedSplitRouteRequestPaths(manifest, manifestPath, ['domains/announcements.json']), /split shard/u);
+  assert.throws(() => expectedSplitRouteRequestPaths(manifest, manifestPath, ['domains/weapons/missing.json']), /split shard/u);
 });
