@@ -2260,7 +2260,7 @@ function renderSourceItem(parent, item) {
 function renderSourcePage({ main, buildMeta, result, url }) {
   main.replaceChildren(); main.removeAttribute('aria-busy');
   buildMeta.textContent = `遊戲版本 ${result.manifest.gameVersion} · 資料修訂 ${result.manifest.dataRevision.slice(0,12)}`;
-  const versionNav=node('nav');versionNav.setAttribute('aria-label','遊戲版本');
+  const versionNav=node('nav',null,'source-data-nav');versionNav.setAttribute('aria-label','遊戲版本');
   for(const pointer of result.versions) {const target=new URL(url);target.searchParams.set('version',pointer.game_version);versionNav.append(link(target.pathname+target.search,pointer.game_version));}
   main.append(versionNav);
   const domain = kind => result.domains.find(d=>d.kind===kind)?.document;
@@ -2289,25 +2289,25 @@ function renderSourcePage({ main, buildMeta, result, url }) {
     const href=params=>`/${route}/?${new URLSearchParams({...params,...(version?{version}:{})})}`;
     const name=item=>`${item.name.zh || '名稱待確認'}${item.name.origin==='glossary'?'（非官方譯名）':''}`;
     if(route==='weapons') {
-      const family=url.searchParams.get('family');const nav=node('nav');nav.setAttribute('aria-label','武器型號');
+      const family=url.searchParams.get('family');const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','武器型號');
       for(const f of [...new Set(indexItems.map(i=>i.family))]) nav.append(link(href({family:f}),name(indexItems.find(i=>i.family===f))));
       main.append(nav); if(family) items=items.filter(i=>i.values.family===family);
       else { main.focus();return; }
     }
     if(route==='skills') {
       const classes={psyker:'靈能者',veteran:'老兵',zealot:'狂信徒',ogryn:'歐格林',arbites:'法務官',scum:'巢都渣滓',skitarii:'護教軍'};
-      const nav=node('nav');nav.setAttribute('aria-label','職業與天賦樹');
+      const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','職業與天賦樹');
       for(const key of [...new Set(items.map(i=>`${i.values.archetype}\0${i.values.tree}`))]) {const [archetype,tree]=key.split('\0');nav.append(link(href({archetype,tree}),`${classes[archetype] ?? '職業'}／天賦樹`));}
       main.append(nav);if(url.searchParams.has('archetype'))items=items.filter(i=>i.values.archetype===url.searchParams.get('archetype'));
       if(url.searchParams.has('tree'))items=items.filter(i=>i.values.tree===url.searchParams.get('tree'));
     }
     if(route==='terms') {
-      const nav=node('nav');nav.setAttribute('aria-label','術語分類');const labels={keyword:'關鍵字',class:'職業','skill-type':'技能類型','weapon-type':'武器類型','weapon-stat':'武器素質','weapon-perk':'武器特長',quality:'品質',curio:'珍品','curio-perk':'珍品特長','curio-trait':'珍品特性','mortis-buff':'死神試煉增益'};
+      const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','術語分類');const labels={keyword:'關鍵字',class:'職業','skill-type':'技能類型','weapon-type':'武器類型','weapon-stat':'武器素質','weapon-perk':'武器特長',quality:'品質',curio:'珍品','curio-perk':'珍品特長','curio-trait':'珍品特性','mortis-buff':'死神試煉增益'};
       for(const category of [...new Set(items.map(i=>i.values.category))])nav.append(link(href({category}),labels[category]??'其他'));main.append(nav);
       if(url.searchParams.has('category'))items=items.filter(i=>i.values.category===url.searchParams.get('category'));
     }
     const id=url.searchParams.get('id');if(id)items=items.filter(i=>i.id===id);
-    if(route==='blessings'&&!id) {for(const item of indexItems)main.append(link(href({id:item.id}),name(item)));main.focus();return;}
+    if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
     for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));renderSourceItem(main,item);}
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
   } else {
