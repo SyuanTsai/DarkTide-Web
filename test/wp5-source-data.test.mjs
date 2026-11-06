@@ -27,6 +27,10 @@ test('InterT10_讀取指定commit與兩版資料並拒絕錯誤輸入', async ()
     await writeFile(file, JSON.stringify(data));
     await assert.rejects(loadSourceData({ directory: root }), /explanation/);
     await writeFile(file, original);
+    const weaponFile=path.join(root,'data/9.9.2/weapons.json');const weapons=JSON.parse(await readFile(weaponFile));
+    weapons.items[0].values.bars[0].stats=null;await writeFile(weaponFile,JSON.stringify(weapons));
+    await assert.rejects(loadSourceData({directory:root}),/weapon bars/);
+    await cp(new URL('./fixtures/source-data/data/9.9.2/weapons.json',import.meta.url),weaponFile);
     await rm(path.join(root, 'data/current.json'));
     await assert.rejects(loadSourceData({ directory: root }), /current.json/);
   } finally { await rm(root, { recursive: true, force: true }); }

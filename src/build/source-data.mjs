@@ -44,6 +44,11 @@ function validateItem(item, category, ids) {
   const v = item.values; requireValue(object(v), `${label} values required`); params(v.params, label);
   if (category === 'skills') requireValue(['archetype', 'tree', 'nodeType'].every(key => typeof v[key] === 'string') && Array.isArray(v.parents) && Number.isInteger(v.maxPoints), `${label} skill values invalid`);
   if (category === 'weapons') requireValue(['family', 'mark', 'weaponType'].every(key => typeof v[key] === 'string' && v[key]) && ['archetypes', 'actions', 'bars', 'blessings'].every(key => Array.isArray(v[key])), `${label} weapon values invalid`);
+  if (category === 'weapons') {
+    requireValue(v.actions.every(action => object(action) && object(action.name) && ['zh','en'].every(key => action.name[key] === null || typeof action.name[key] === 'string')), `${label} weapon actions invalid`);
+    requireValue(v.bars.every(bar => object(bar) && object(bar.name) && ['zh','en'].every(key => bar.name[key] === null || typeof bar.name[key] === 'string') && Array.isArray(bar.stats)
+      && bar.stats.every(stat => object(stat) && object(stat.name) && ['zh','en'].every(key => stat.name[key] === null || typeof stat.name[key] === 'string') && Number.isFinite(stat.min) && Number.isFinite(stat.max))), `${label} weapon bars invalid`);
+  }
   if (category === 'terms') requireValue(typeof v.category === 'string' && Array.isArray(v.refs), `${label} term values invalid`);
   if (category === 'blessings') {
     requireValue(Array.isArray(v.weapons) && Array.isArray(v.tiers) && v.tiers.length > 0, `${label} blessing values invalid`);
