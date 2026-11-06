@@ -19,7 +19,7 @@ permissions:
 jobs:
   contract:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - run: node --test test/operations.test.mjs
+      - run: node --test test/operations-source.test.mjs
       - name: Read-only public content smoke
         run: node scripts/operations-monitor.mjs
       - name: Save PR probe report
@@ -43,7 +43,7 @@ jobs:
           retention-days: 14
   monitor:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'SyuanTsai/DarkTide-Web'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 5
     permissions:
       contents: read
@@ -63,7 +63,7 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Verify HTTPS and content against retained backup
+      - name: Verify public Source-Data manifests and content
         id: probe
         run: node scripts/operations-monitor.mjs
         env:

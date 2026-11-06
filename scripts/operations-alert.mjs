@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { readFile } from 'node:fs/promises';
 import { INCIDENT_TITLE, incidentAction } from '../src/operations/monitor.mjs';
-import { REPOSITORY } from '../src/operations/backup.mjs';
+import { REPOSITORY } from '../src/operations/monitor.mjs';
 const exec = promisify(execFile);
 if (process.env.GITHUB_REPOSITORY !== REPOSITORY || process.env.GITHUB_REF !== 'refs/heads/main') throw new Error('Incident writes require repository main');
 const report = await readFile('.operations/monitor-report.json', 'utf8').then(JSON.parse, () => ({ status: 'failed', error: 'Monitor did not produce a report.' }));

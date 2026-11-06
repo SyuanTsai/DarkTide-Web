@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import { sha256, safeRelativePath } from '../static/common.mjs';
+import { sha256, safeRelativePath, jsonBytes } from '../static/common.mjs';
 import { verifyOrigin } from '../deploy/cloudflare.mjs';
-import { REPOSITORY } from './backup.mjs';
+export const REPOSITORY = 'SyuanTsai/DarkTide-Web';
 
 export const INCIDENT_TITLE = '[Operations] Static site incident';
 export function assertSamePublication(origins) {
@@ -13,116 +13,87 @@ export function incidentAction(healthy, issues) {
   return issue ? { action: healthy ? 'close' : 'keep', number: issue.number } : { action: healthy ? 'none' : 'open' };
 }
 
-export async function loadBackupManifest(version, { fetch: fetcher = globalThis.fetch } = {}) {
-  const get = async url => {
-    const response = await fetcher(url, { signal: AbortSignal.timeout(20000), headers: { Accept: 'application/vnd.github+json' } });
-    assert.equal(response.status, 200, 'backup lookup HTTP status');
+// Verify the public contract directly; no release-state or retained backup authority.
+export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch } = {}) {
+  const checks = [];
+  const get = async name => {
+    const response = await fetcher(new URL(name, origin), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(15000) });
+    assert.equal(response.status, 200, 'public content HTTP status: ' + name);
+    assert.match(response.headers.get('content-type') ?? '', /application\/json/i, 'public JSON MIME');
     return Buffer.from(await response.arrayBuffer());
   };
-  const releases = JSON.parse(await get('https://api.github.com/repos/' + REPOSITORY + '/releases?per_page=100'));
-  const release = releases.find(row => !row.draft && !row.prerelease && /^site-[a-f0-9]{40}-\d+-\d+$/.test(row.tag_name) && row.name === 'Static site ' + version.build_id);
-  assert.ok(release, 'no retained GitHub Release for live build');
-  const assetUrl = name => {
-    const expected = 'https://github.com/' + REPOSITORY + '/releases/download/' + release.tag_name + '/' + name;
-    assert.ok(release.assets.some(row => row.name === name && row.browser_download_url === expected), 'missing trusted backup asset ' + name);
-    return expected;
-  };
-  const record = JSON.parse(await get(assetUrl('backup.json')));
-  assert.equal(record.repository, REPOSITORY);
-  assert.equal(record.tag, release.tag_name);
-  assert.ok(record.tag.startsWith('site-' + record.commit + '-'));
-  assert.equal(record.build_id, version.build_id);
-  assert.equal(record.data_revision, version.data_revision);
-  const bytes = await get(assetUrl('artifact-manifest.json'));
-  assert.equal(sha256(bytes), record.files.find(row => row.name === 'artifact-manifest.json')?.sha256, 'retained manifest hash mismatch');
-  return { manifest: JSON.parse(bytes), backup_url: release.html_url, commit: record.commit };
-}
-
-function retainedExpected(manifest, version) {
-  if (!Object.hasOwn(version, 'game_releases')) return manifest;
-  assert.equal(version.data_revision, manifest.data_revision, 'retained W09 version data mismatch');
-  assert.ok(Array.isArray(version.game_releases) && version.game_releases.length > 0,
-    'retained W09 version has no game releases');
-  const runtimeCatalogs = manifest.files.map(row => /^data\/([a-f0-9]{64})\/catalog\.json$/u.exec(row.path))
-    .filter(Boolean);
-  assert.equal(runtimeCatalogs.length, 1, 'retained W09 package must contain one runtime catalog');
-  const runtimeRevision = runtimeCatalogs[0][1];
-  assert.notEqual(runtimeRevision, manifest.data_revision, 'retained W09 runtime and shared revisions must differ');
-  const sharedFiles = manifest.files
-    .filter(row => (row.path.startsWith('data/') && !row.path.startsWith('data/' + runtimeRevision + '/'))
-      || row.path.startsWith('source-locks/'))
-    .map(row => ({ path: '/' + row.path, size_bytes: row.size_bytes, sha256: row.sha256 }));
-  assert.ok(sharedFiles.length > 0, 'retained W09 package has no shared file closure');
-  for (const pointer of version.game_releases) {
-    const retained = sharedFiles.find(row => row.path === pointer.manifest_path);
-    assert.ok(retained, 'retained W09 package is missing a game release manifest');
-    assert.equal(retained.sha256, pointer.manifest_sha256, 'retained W09 game release manifest hash mismatch');
-  }
-  const historyPaths = ['history/1.13.1/manifest.json', 'history/1.13.1/player-index.json'];
-  const historyFiles = historyPaths.map(name => manifest.files.find(row => row.path === name)).filter(Boolean)
-    .map(row => ({ path: '/' + row.path, size_bytes: row.size_bytes, sha256: row.sha256 }));
-  assert.ok(historyFiles.length === 0 || historyFiles.length === historyPaths.length,
-    'retained W09 package has an incomplete history file closure');
-  return {
-    ...manifest,
-    runtime_data_revision: runtimeRevision,
-    shared_data_revision: manifest.data_revision,
-    game_releases: version.game_releases,
-    shared_files: sharedFiles,
-    ...(historyFiles.length ? { history_files: historyFiles } : {}),
-  };
-}
-
-export async function monitorOrigin(origin, manifest, { fetch: fetcher = globalThis.fetch } = {}) {
-  assert.equal(manifest.package_kind, 'published');
-  assert.match(manifest.build_id, /^[a-f0-9]{64}$/);
-  assert.match(manifest.data_revision, /^[a-f0-9]{64}$/);
-  const entries = new Map();
-  for (const row of manifest.files) {
-    safeRelativePath(row.path, 'retained manifest path');
-    assert.match(row.sha256, /^[a-f0-9]{64}$/);
-    assert.ok(!entries.has(row.path), 'duplicate manifest path');
-    entries.set(row.path, row);
-  }
-  const started = Date.now();
-  const checks = [];
-  const check = async name => {
-    const expected = entries.get(name);
-    assert.ok(expected, 'backup manifest missing ' + name);
-    // Static Assets canonicalizes /index.html to /; compare the root document's bytes.
-    const response = await fetcher(new URL(name === 'index.html' ? '/' : '/' + name, origin), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(15000) });
-    assert.equal(response.status, 200, 'content HTTP status: ' + name);
-    const bytes = Buffer.from(await response.arrayBuffer());
-    assert.equal(bytes.length, expected.size_bytes, 'content integrity size: ' + name);
-    assert.equal(sha256(bytes), expected.sha256, 'content hash: ' + name);
-    checks.push({ path: name, sha256: expected.sha256, size_bytes: bytes.length });
+  const check = async (name, hash, size) => {
+    const bytes = await get(name);
+    if (hash) assert.equal(sha256(bytes), hash, 'public content hash: ' + name);
+    if (size !== undefined) assert.equal(bytes.length, size, 'public content size: ' + name);
+    const row = { path: name, sha256: sha256(bytes), size_bytes: bytes.length };
+    checks.push(row);
     return bytes;
   };
-  const version = JSON.parse(await check('version.json'));
-  const expected = retainedExpected(manifest, version);
-  const runtimeRevision = expected.runtime_data_revision ?? manifest.data_revision;
-  await verifyOrigin(origin, expected, { fetch: fetcher });
-  // Cloudflare may inject per-request security JavaScript into HTML at the edge.
-  // Check the public document contract; immutable JSON/JS/CSS below stay byte-pinned.
-  const documentResponse = await fetcher(new URL('/', origin), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(15000) });
-  assert.equal(documentResponse.status, 200);
-  assert.match(documentResponse.headers.get('content-type') || '', /text\/html/i);
-  const html = await documentResponse.text();
-  const context = JSON.parse(html.match(/window\.__BUILD__\s*=\s*(\{[^<]*\})\s*;?\s*<\/script>/u)?.[1] || 'null');
-  assert.equal(context?.build_id, manifest.build_id, 'initial HTML build mismatch');
-  assert.equal(context?.data_revision, runtimeRevision, 'initial HTML data mismatch');
-  const credit = html.match(/<a\b[^>]*href="https:\/\/darktide\.gameslantern\.com\/"[^>]*>Games Lantern<\/a>/)?.[0];
-  assert.ok(credit && !/rel=["'][^"']*(?:nofollow|ugc|sponsored)/i.test(credit), 'initial Games Lantern attribution must remain follow');
-  await check('robots.txt');
-  if (entries.has('sitemap.xml')) await check('sitemap.xml');
-  const catalog = JSON.parse(await check('data/' + runtimeRevision + '/catalog.json'));
-  for (const kind of ['skill', 'weapon', 'blessing']) {
-    const entry = catalog.entries.find(row => row.kind === kind);
-    assert.ok(entry, 'catalog missing ' + kind);
-    await check('data/' + runtimeRevision + '/' + entry.detail_path);
+  const version = JSON.parse(await get('/version.json'));
+  assert.equal(version.source_data, true, 'monitor requires Source-Data publication');
+  assert.equal(version.package_kind, 'published');
+  assert.match(version.build_id, /^[a-f0-9]{64}$/);
+  assert.match(version.data_revision, /^[a-f0-9]{64}$/);
+  assert.ok(Array.isArray(version.game_releases) && version.game_releases.length > 0);
+  let commit;
+  for (const pointer of version.game_releases) {
+    assert.match(pointer.data_revision, /^[a-f0-9]{64}$/);
+    assert.equal(pointer.manifest_path, `/data/${pointer.data_revision}/manifest.json`);
+    assert.match(pointer.manifest_sha256, /^[a-f0-9]{64}$/);
+    const manifest = JSON.parse(await check(pointer.manifest_path, pointer.manifest_sha256));
+    const { dataRevision, ...material } = manifest;
+    assert.equal(dataRevision, pointer.data_revision);
+    assert.equal(sha256(jsonBytes(material)), dataRevision, 'manifest revision hash');
+    assert.equal(manifest.schemaVersion, '3.0.0');
+    assert.equal(manifest.gameVersion, pointer.game_version);
+    assert.equal(manifest.source.repository, 'SyuanTsai/DarkTide-Source-Data');
+    assert.match(manifest.source.commit, /^[a-f0-9]{40}$/);
+    if (commit) assert.equal(manifest.source.commit, commit, 'versions must use the same source commit');
+    commit = manifest.source.commit;
+    const paths = new Set();
+    for (const row of manifest.files) {
+      safeRelativePath(row.path);
+      assert.ok(row.path.startsWith('domains/') && !paths.has(row.path));
+      paths.add(row.path);
+      assert.match(row.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(row.sizeBytes) && row.sizeBytes >= 0 && row.sizeBytes <= 16 * 1024 * 1024);
+      await check(`/data/${dataRevision}/${row.path}`, row.sha256, row.sizeBytes);
+    }
+    for (const row of manifest.files) assert.ok(Array.isArray(row.dependencies) && row.dependencies.every(p => paths.has(p)));
   }
-  for (const row of manifest.files.filter(row => row.path.startsWith('assets/'))) await check(row.path);
-  return { origin, status: 'healthy', build_id: manifest.build_id, data_revision: manifest.data_revision,
-    ...(expected.runtime_data_revision ? { runtime_data_revision: runtimeRevision } : {}),
-    elapsed_ms: Date.now() - started, document_check: 'build/data context and direct follow attribution; edge HTML is not byte-pinned', hash_checks: checks };
+  const current = JSON.parse(await check('/source-data/current.json'));
+  assert.equal(current.gameVersion, version.game_version);
+  assert.deepEqual(current.versions, version.game_releases.map(p => p.game_version));
+  assert.equal(version.game_releases.find(p => p.game_version === version.game_version)?.data_revision, version.data_revision);
+  for (const release of current.versions) {
+    assert.match(release, /^[0-9]+(?:\.[0-9]+){1,3}$/);
+    for (const category of ['skills', 'weapons', 'blessings', 'terms']) await check(`/source-data/${release}/${category}.json`);
+  }
+  await verifyOrigin(origin, { ...version, source_commit: commit, source_files: checks }, { fetch: fetcher });
+  // Use the injectable fetch for all checks, including deployment contract verification.
+  const document = await fetcher(new URL('/', origin));
+  const html = await document.text();
+  const context = JSON.parse(html.match(/window\.__BUILD__\s*=\s*(\{[^<]*\})\s*;?\s*<\/script>/u)?.[1] || 'null');
+  assert.equal(context?.build_id, version.build_id, 'HTML build context');
+  assert.equal(context?.data_revision, version.data_revision, 'HTML data context');
+  const credit = html.match(/<a\b[^>]*href="https:\/\/darktide\.gameslantern\.com\/"[^>]*>Games Lantern<\/a>/)?.[0];
+  assert.ok(credit && !/rel=["'][^"']*(?:nofollow|ugc|sponsored)/i.test(credit), 'Games Lantern attribution must remain follow');
+  const pending = [...html.matchAll(/(?:src|href)="(\/assets\/[a-f0-9]{64}\.(?:mjs|css))"/g)].map(m => m[1]);
+  const seen = new Set();
+  while (pending.length) {
+    const name = pending.pop();
+    if (seen.has(name)) continue;
+    seen.add(name);
+    const response = await fetcher(new URL(name, origin));
+    assert.equal(response.status, 200);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    assert.equal(sha256(bytes), name.match(/[a-f0-9]{64}/)[0], 'asset hash');
+    checks.push({ path: name, sha256: sha256(bytes), size_bytes: bytes.length });
+    for (const match of bytes.toString().matchAll(/['"](?:\.\/|\/assets\/)([a-f0-9]{64}\.mjs)['"]/g)) pending.push('/assets/' + match[1]);
+  }
+  assert.ok(seen.size > 0, 'missing executable assets');
+  return { origin, status: 'healthy', build_id: version.build_id, data_revision: version.data_revision, source_commit: commit, hash_checks: checks };
 }
+
+

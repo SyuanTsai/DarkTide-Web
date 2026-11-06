@@ -7,8 +7,9 @@ import { fileURLToPath } from 'node:url';
 test('UnitT10_公告八筆ID與顯示欄位符合現行分檔', async () => {
   const root = fileURLToPath(new URL('../', import.meta.url));
   const actual = await loadAnnouncements(root);
-  const old = JSON.parse(await readFile(new URL('../content/contracts/w09/proposals/00df56f240b76463ff8e29c80d17009ae7c2e67b120711715fca575b6ee4b045/candidate/domains/announcements.json', import.meta.url))).web.announcements;
-  const display = x => Object.fromEntries(['announcementId', 'scope', 'title', 'publishedOn', 'revision', 'source', 'blocks', 'assets'].map(k=>[k,x[k]]));
-  assert.deepStrictEqual(actual.items, old.map(display));
+  const expected = JSON.parse(await readFile(new URL('./fixtures/wp5/announcements-expected.json', import.meta.url)));
+  assert.match(expected.source.sha256, /^[a-f0-9]{64}$/);
+  const project = x=>{const text={announcementId:x.announcementId}; const walk=(v,p)=>{if(Array.isArray(v))v.forEach((r,i)=>walk(r,p+'['+i+']'));else if(v&&typeof v==='object')for(const [k,r]of Object.entries(v)){if(typeof r==='string'&&/^(?:text|title|alt|caption|label|heading)$/.test(k))text[p?p+'.'+k:k]=r;else if(r&&typeof r==='object')walk(r,p?p+'.'+k:k);}};walk(x,'');return text;};
+  assert.deepStrictEqual(actual.items.map(project), expected.items);
   assert.equal(actual.items.length, 8);
 });
