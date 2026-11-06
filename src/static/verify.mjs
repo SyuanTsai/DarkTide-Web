@@ -412,7 +412,7 @@ export async function verifyStaticPackage(directory) {
   if (!versionBytes) fail('static artifact is missing version.json');
   const version = parseJson(versionBytes, 'version.json');
   if (version.source_data === true) return verifySourceStaticFiles(files, version);
-  
+
   assertExactKeys(version, VERSION_FIELDS, 'version');
   if (version.schema_version !== 2 || version.package_kind !== manifest.package_kind ||
       version.build_id !== manifest.build_id || version.data_revision !== manifest.data_revision) {

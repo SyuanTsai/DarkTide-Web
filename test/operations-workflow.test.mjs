@@ -29,4 +29,3 @@ test('UnitT15_static_ci_rejects_secret_bearing_deploy_job', async () => {
 
   assert.throws(() => assertStaticCiWorkflow(ci), /static CI must not deploy|static CI must never receive secrets/u);
 });
-

@@ -95,5 +95,3 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch 
   assert.ok(seen.size > 0, 'missing executable assets');
   return { origin, status: 'healthy', build_id: version.build_id, data_revision: version.data_revision, source_commit: commit, hash_checks: checks };
 }
-
-
