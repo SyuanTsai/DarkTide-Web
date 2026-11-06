@@ -340,7 +340,7 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
   });
 }
 
-function validateAnnouncement(row, gameReleaseId) {
+export function validateAnnouncement(row, gameReleaseId) {
   announcementKeys(row, ['announcementId', 'scope', 'publishedOn', 'revision', 'source', 'blocks', 'assets', ...(Object.hasOwn(row ?? {}, 'title') ? ['title'] : []), ...(row?.scope === 'gameplay' ? ['gameReleaseId'] : [])], 'announcement');
   if (typeof row.announcementId !== 'string' || !ANNOUNCEMENT_ID.test(row.announcementId)) throw new Error('announcement id is invalid');
   if (!['site', 'gameplay', 'official-document'].includes(row.scope)) throw new Error('announcement scope is invalid');

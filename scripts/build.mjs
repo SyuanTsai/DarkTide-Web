@@ -1,4 +1,5 @@
 import { buildStaticSite } from '../src/static/build.mjs';
+import { buildSourceSite } from '../src/build/build.mjs';
 import { fixturePublicContent } from '../src/static/fixture.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,17 +20,24 @@ export function parseBuildArgs(args) {
     } else if (argument === '--root' && !seen.has(argument) && args[index + 1]) {
       seen.add(argument);
       result.root = path.resolve(args[++index]);
+    } else if (['--source-data', '--source-data-commit'].includes(argument) && !seen.has(argument) && args[index + 1]) {
+      seen.add(argument);
+      result[argument === '--source-data' ? 'sourceData' : 'sourceDataCommit'] = args[++index];
     } else {
       throw new Error('Usage: node scripts/build.mjs [--fixture] [--site-origin https://example.test] [--root path]');
     }
   }
+  if (result.sourceDataCommit && (!result.sourceData || !/^[0-9a-f]{40}$/.test(result.sourceDataCommit))) throw new Error('Usage: --source-data-commit requires --source-data and a 40 lowercase hex SHA');
+  if (result.mode === 'fixture' && result.sourceData) throw new Error('Usage: --fixture and --source-data are mutually exclusive');
   return result;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const options = parseBuildArgs(process.argv.slice(2));
-    const result = await buildStaticSite({
+    const result = options.sourceData || options.mode === 'fixture' ? await buildSourceSite({
+      ...options, fixture: options.mode === 'fixture', sourceData: options.sourceData ?? path.join(SCRIPT_ROOT, 'test/fixtures/source-data'),
+    }) : await buildStaticSite({
       ...options,
       ...(options.mode === 'fixture' ? { data: fixturePublicContent() } : {})
     });

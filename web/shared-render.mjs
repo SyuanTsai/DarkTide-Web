@@ -1,4 +1,4 @@
-import { sourceItemPresentation, createSharedViewModel } from './shared-view.mjs';
+import { sourceItemPresentation, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
 
 export function blessingListTier(applicability) {
   return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
@@ -2266,7 +2266,7 @@ function renderSourcePage({ main, buildMeta, result, url }) {
   const domain = kind => result.domains.find(d=>d.kind===kind)?.document;
   const route = url.pathname.split('/')[1];
   if(route==='announcements') {
-    const items=domain('announcements')?.items ?? [];
+    const items=(domain('announcements')?.items ?? []).map(item=>validateAnnouncement(item,`darktide:${result.manifest.gameVersion}`));
     renderAnnouncements(main,{...result,view:{getAnnouncements:()=>({status:'ready',items}),getAnnouncement:id=>items.find(i=>i.announcementId===id)}},url,buildMeta);
   } else if(route==='game-changes') {
     const changes=domain('game-changes');

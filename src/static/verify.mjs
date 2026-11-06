@@ -1,4 +1,5 @@
 import { lstat, readdir, readFile } from 'node:fs/promises';
+import { verifySourceStaticFiles } from '../build/verify.mjs';
 import path from 'node:path';
 import {
   assertExactKeys, compareUtf8, hashNamedFiles, parseJson, safeRelativePath, sha256
@@ -480,6 +481,7 @@ export async function verifyStaticPackage(directory) {
   const versionBytes = files.get('version.json');
   if (!versionBytes) fail('static artifact is missing version.json');
   const version = parseJson(versionBytes, 'version.json');
+  if (version.source_data === true) return verifySourceStaticFiles(files, version);
   const hasSharedRelease = Object.hasOwn(version, 'game_releases');
   assertExactKeys(version, hasSharedRelease ? [...VERSION_FIELDS, 'game_releases'] : VERSION_FIELDS, 'version');
   if (version.schema_version !== 2 || version.package_kind !== manifest.package_kind ||
