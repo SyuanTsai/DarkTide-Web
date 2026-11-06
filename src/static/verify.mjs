@@ -8,9 +8,6 @@ import { validateCacheHeaders } from './header-policy.mjs';
 import { renderStaticRewrites } from './routing-policy.mjs';
 import { verifyHashedModuleGraph } from './module-graph.mjs';
 import { validatePublicFiles } from '../published/contract.mjs';
-import { validateVersion as validateW02Version } from '../../scripts/content/contract-release.mjs';
-import { createSharedReleaseIdentity, validateSharedStaticFiles } from './shared-release.mjs';
-import { SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY } from '../../web/shared-render.mjs';
 import { verifyW14HistoryPublicFiles, W14_HISTORY_OUTPUT_PREFIX } from '../../scripts/content/contract-w14-history.mjs';
 
 const MANIFEST_FIELDS = ['schema_version', 'package_kind', 'build_id', 'data_revision', 'files'];
@@ -210,33 +207,8 @@ function scanPublicBoundary(value, location = '$', {
   }
 }
 
-function collectOfficialInputDomainFiles(sharedBundle) {
-  const files = new Set();
-  const gameChangeFiles = new Set();
-  const weaponFiles = new Set();
-  if (!sharedBundle) return { files, gameChangeFiles, weaponFiles };
-  for (const pointer of sharedBundle.metadata.retained_releases) {
-    const manifestPath = pointer.manifest_path.slice(1);
-    const bytes = sharedBundle.files.get(manifestPath);
-    if (!bytes) continue;
-    const manifest = parseJson(bytes, manifestPath);
-    for (const row of manifest.files) {
-      const isCoreDomain = (row.kind === 'skills' || row.kind === 'blessings') &&
-        (row.path === row.kind + '.json' || row.path === 'domains/' + row.kind + '.json')
-        || row.kind === 'blessings-index' || row.kind === 'blessing';
-      const isWeaponDomain = row.kind === 'weapons' && (row.path === 'weapons.json' || row.path === 'domains/weapons.json')
-        || row.kind === 'weapons-index' || row.kind === 'weapon-family';
-      // Optional game-change official inputs are trusted only at the exact manifest-declared index path.
-      const isDeclaredChangeIndex = row.kind === 'game-changes' && manifest.changeIndexPath === row.path;
-      if (isCoreDomain || isWeaponDomain || isDeclaredChangeIndex) {
-        const publicPath = 'data/' + pointer.data_revision + '/' + row.path;
-        files.add(publicPath);
-        if (isDeclaredChangeIndex) gameChangeFiles.add(publicPath);
-        if (isWeaponDomain) weaponFiles.add(publicPath);
-      }
-    }
-  }
-  return { files, gameChangeFiles, weaponFiles };
+function collectOfficialInputDomainFiles() {
+  return { files: new Set(), gameChangeFiles: new Set(), weaponFiles: new Set() };
 }
 
 async function collectDirectory(root) {
@@ -316,27 +288,20 @@ function validateDirectorySet(files, directories) {
   }
 }
 
-function validateOutputPaths(files, revision, { sharedBundle = null, runtimeRevision = revision, hasHistory = false } = {}) {
+function validateOutputPaths(files, revision, { hasHistory = false } = {}) {
   for (const required of FIXED_REQUIRED) if (!files.has(required)) fail('static artifact is missing ' + required);
-  const allowedDataRoots = new Set(['data/' + revision + '/', 'data/' + runtimeRevision + '/']);
-  if (sharedBundle) for (const relativePath of sharedBundle.files.keys()) {
-    const match = /^(data\/[^/]+\/)/u.exec(relativePath);
-    if (match) allowedDataRoots.add(match[1]);
-  }
-  const allowedSourceLocks = new Set(sharedBundle ? [...sharedBundle.files.keys()].filter(name => name.startsWith('source-locks/')) : []);
+  const allowedDataRoots = new Set(['data/' + revision + '/']);
   const historyPaths = new Set([
     `${W14_HISTORY_OUTPUT_PREFIX}/manifest.json`, `${W14_HISTORY_OUTPUT_PREFIX}/player-index.json`,
   ]);
   for (const name of files.keys()) {
     if (FIXED_REQUIRED.has(name) || name === 'sitemap.xml' || HASHED_ASSET.test(name)) continue;
-    if (name === 'shared-fixture.json' && sharedBundle?.packageKind === 'fixture') continue;
     if (hasHistory && historyPaths.has(name)) continue;
     const prefix = [...allowedDataRoots].find(value => name.startsWith(value));
     if (prefix) {
       safeRelativePath(name.slice(prefix.length), 'published data path');
       continue;
     }
-    if (allowedSourceLocks.has(name)) continue;
     fail('artifact contains an unsupported file path: ' + name);
   }
   const html = [...files.keys()].filter(name => name.endsWith('.html'));
@@ -349,14 +314,6 @@ function validateHeaders(bytes, catalog, hasSitemap, includeAnnouncements = fals
   } catch (error) {
     fail(error.message);
   }
-}
-
-function hasAnnouncementRoutingCapability(assetFiles) {
-  const marker = Buffer.from(SHARED_ANNOUNCEMENT_ROUTING_CAPABILITY, 'utf8');
-  const matches = [...assetFiles].filter(([name, bytes]) => /^assets\/[a-f0-9]{64}\.(?:mjs|js)$/u.test(name)
-    && Buffer.from(bytes).includes(marker));
-  if (matches.length > 1) fail('artifact duplicates the announcement routing capability marker');
-  return matches.length === 1;
 }
 
 function validateRobotsAndSitemap(files, catalog, includeHistory = false) {
@@ -396,40 +353,13 @@ function validateRobotsAndSitemap(files, catalog, includeHistory = false) {
   return origin;
 }
 
-function validateBuildContext(indexBytes, version, { sharedBundle = null, runtimeGameVersion = null, runtimePackageKind = null } = {}) {
+function validateBuildContext(indexBytes, version) {
   const index = Buffer.from(indexBytes).toString('utf8');
   const matches = [...index.matchAll(/<script>\s*window\.__BUILD__\s*=\s*(\{[^<]*?\})\s*;?\s*<\/script>/g)];
   if (matches.length !== 1) fail('index.html must inject one build context');
   const context = parseJson(Buffer.from(matches[0][1], 'utf8'), 'build context');
-  if (!sharedBundle) {
-    assertExactKeys(context, VERSION_FIELDS, 'build context');
-    for (const field of VERSION_FIELDS) if (context[field] !== version[field]) fail('build context does not match version.json');
-  } else {
-    const sharedFields = ['shared_data_revision', 'shared_game_version', 'shared_package_kind', 'game_releases', 'retained_releases', 'source_locks', 'shared_files'];
-    const fixtureFields = sharedBundle.packageKind === 'fixture' ? ['shared_fixture_only', 'fixture_id'] : [];
-    assertExactKeys(context, [...VERSION_FIELDS, ...sharedFields, ...fixtureFields], 'shared build context');
-    for (const field of VERSION_FIELDS) {
-      if (field === 'data_revision' || field === 'game_version' || field === 'package_kind') continue;
-      if (context[field] !== version[field]) fail('legacy build context does not match version.json');
-    }
-    if (!/^[a-f0-9]{64}$/.test(context.data_revision) || typeof runtimeGameVersion !== 'string'
-        || context.game_version !== runtimeGameVersion || context.package_kind !== runtimePackageKind
-        || !['published', 'fixture'].includes(context.package_kind)) {
-      fail('shared build context does not match the retained legacy runtime package');
-    }
-    if (context.shared_data_revision !== version.data_revision || context.shared_game_version !== version.game_version ||
-        context.shared_package_kind !== version.package_kind ||
-        JSON.stringify(context.game_releases) !== JSON.stringify(version.game_releases) ||
-        JSON.stringify(context.retained_releases) !== JSON.stringify(sharedBundle.metadata.retained_releases) ||
-        JSON.stringify(context.source_locks) !== JSON.stringify(sharedBundle.metadata.source_locks) ||
-        JSON.stringify(context.shared_files) !== JSON.stringify(sharedBundle.metadata.shared_files)) {
-      fail('shared build context does not match the W02 shared release pointers');
-    }
-    if (sharedBundle.packageKind === 'fixture' && (context.shared_fixture_only !== true ||
-        context.fixture_id !== sharedBundle.fixtureMarker.fixtureId)) {
-      fail('shared fixture build context is missing its explicit non-publishable marker');
-    }
-  }
+  assertExactKeys(context, VERSION_FIELDS, 'build context');
+  for (const field of VERSION_FIELDS) if (context[field] !== version[field]) fail('build context does not match version.json');
   if (index.includes('__BUILD_CONTEXT__')) fail('index.html has an unreplaced build context placeholder');
   return {
     index,
@@ -482,56 +412,15 @@ export async function verifyStaticPackage(directory) {
   if (!versionBytes) fail('static artifact is missing version.json');
   const version = parseJson(versionBytes, 'version.json');
   if (version.source_data === true) return verifySourceStaticFiles(files, version);
-  const hasSharedRelease = Object.hasOwn(version, 'game_releases');
-  assertExactKeys(version, hasSharedRelease ? [...VERSION_FIELDS, 'game_releases'] : VERSION_FIELDS, 'version');
+  
+  assertExactKeys(version, VERSION_FIELDS, 'version');
   if (version.schema_version !== 2 || version.package_kind !== manifest.package_kind ||
       version.build_id !== manifest.build_id || version.data_revision !== manifest.data_revision) {
     fail('version.json does not match artifact manifest');
   }
   if (typeof version.game_version !== 'string' || !version.game_version.trim()) fail('version game_version must be a nonempty string');
   if (!/^[a-f0-9]{64}$/.test(version.data_revision)) fail('version data_revision is invalid');
-  let sharedBundle = null;
-  let runtimeRevision = version.data_revision;
-  if (hasSharedRelease) {
-    const contextMatch = /<script>\s*window\.__BUILD__\s*=\s*(\{[^<]*?\})\s*;?\s*<\/script>/u.exec(Buffer.from(files.get('index.html') ?? []).toString('utf8'));
-    if (!contextMatch) fail('index.html must inject one build context');
-    const initialContext = parseJson(Buffer.from(contextMatch[1], 'utf8'), 'build context');
-    runtimeRevision = initialContext.data_revision;
-    if (!Array.isArray(initialContext.retained_releases)) fail('shared build context is missing retained release pointers');
-    const retainedReleases = initialContext.retained_releases.map(pointer => ({
-      game_version: pointer.game_version,
-      content_version: pointer.content_version,
-      data_revision: pointer.data_revision,
-      manifest_path: pointer.manifest_path,
-      manifest_sha256: pointer.manifest_sha256,
-    }));
-    const sharedFiles = new Map([...files].filter(([name]) => (name.startsWith('data/') && !name.startsWith('data/' + runtimeRevision + '/')) || name.startsWith('source-locks/')));
-    if (version.package_kind === 'fixture') {
-      const markerBytes = files.get('shared-fixture.json');
-      if (!markerBytes) fail('shared fixture is missing its non-publishable marker');
-      const fixtureMarker = parseJson(markerBytes, 'shared-fixture.json');
-      sharedBundle = validateSharedStaticFiles({ version, fixtureMarker, retainedReleases, files: sharedFiles });
-    } else {
-      sharedBundle = validateSharedStaticFiles({ version, retainedReleases, files: sharedFiles });
-    }
-    if (!/^[a-f0-9]{64}$/.test(runtimeRevision) || runtimeRevision === version.data_revision) {
-      fail('shared static package must preserve a distinct legacy runtime data revision');
-    }
-    for (const [relativePath, expectedBytes] of sharedBundle.files) {
-      const actualBytes = files.get(relativePath);
-      if (!actualBytes || !Buffer.from(actualBytes).equals(expectedBytes)) fail('shared static lock or data bytes differ: ' + relativePath);
-    }
-    const actualLocks = new Set([...files.keys()].filter(name => name.startsWith('source-locks/')));
-    const expectedLocks = new Set([...sharedBundle.files.keys()].filter(name => name.startsWith('source-locks/')));
-    if (actualLocks.size !== expectedLocks.size || [...actualLocks].some(name => !expectedLocks.has(name))) {
-      fail('shared static package contains an unreferenced Source lock');
-    }
-  }
-  if (hasSharedRelease) {
-    try { validateW02Version({ ...version, package_kind: 'published' }); }
-    catch (error) { fail('shared version.json violates the closed W02 version contract: ' + error.message); }
-    if (sharedBundle.packageKind !== version.package_kind) fail('shared package kind differs from its validated marker');
-  }
+  const runtimeRevision = version.data_revision;
   const historyManifestPath = `${W14_HISTORY_OUTPUT_PREFIX}/manifest.json`;
   const historyProjectionPath = `${W14_HISTORY_OUTPUT_PREFIX}/player-index.json`;
   const hasHistoryManifest = files.has(historyManifestPath);
@@ -547,13 +436,13 @@ export async function verifyStaticPackage(directory) {
       verifyW14HistoryPublicFiles({ manifestBytes: files.get(historyManifestPath), projectionBytes: files.get(historyProjectionPath) });
     } catch (error) { fail('historical player files failed fixed verification: ' + error.message); }
   }
-  validateOutputPaths(files, version.data_revision, { sharedBundle, runtimeRevision, hasHistory });
+  validateOutputPaths(files, version.data_revision, { hasHistory });
 
   const {
     files: officialInputFiles,
     gameChangeFiles: gameChangeInputFiles,
     weaponFiles: weaponInputFiles,
-  } = collectOfficialInputDomainFiles(sharedBundle);
+  } = collectOfficialInputDomainFiles();
   const validatedParameterSegments = new WeakSet();
   for (const [name, bytes] of files) {
     if (name.endsWith('.json') && name !== 'artifact-manifest.json') {
@@ -574,7 +463,7 @@ export async function verifyStaticPackage(directory) {
   const dataRoot = 'data/' + runtimeRevision + '/';
   const dataFiles = new Map();
   for (const [name, bytes] of files) if (name.startsWith(dataRoot)) dataFiles.set(name.slice(dataRoot.length), bytes);
-  const expectedRuntimeRevision = hasSharedRelease ? runtimeRevision : version.data_revision;
+  const expectedRuntimeRevision = version.data_revision;
   // Reject downloaded files at the publication boundary before the immutable runtime digest check
   // obscures the more specific policy error for an otherwise listed local image.
   const earlyCatalogBytes = dataFiles.get('catalog.json');
@@ -597,28 +486,18 @@ export async function verifyStaticPackage(directory) {
   const { catalog } = validatePublicFiles(validationFiles);
 
   const siteOrigin = validateRobotsAndSitemap(files, catalog, hasHistory);
-  const { index, normalized, context } = validateBuildContext(files.get('index.html'), version, {
-    sharedBundle,
-    ...(sharedBundle ? { runtimeGameVersion: catalog.game_version, runtimePackageKind: catalog.package_kind } : {}),
-  });
+  const { index, normalized } = validateBuildContext(files.get('index.html'), version);
   validateInitialGamesLanternCredit(index, catalog, dataFiles);
   const assetFiles = new Map([...files].filter(([name]) => name.startsWith('assets/')));
   verifyHashedModuleGraph(Buffer.from(files.get('index.html')).toString('utf8'), assetFiles);
-  const includeAnnouncements = hasSharedRelease && hasAnnouncementRoutingCapability(assetFiles);
+  const includeAnnouncements = false;
   if (Buffer.from(files.get('_redirects') ?? []).toString('utf8') !== renderStaticRewrites(catalog,
     { includeAnnouncements, includeHistory: hasHistory })) fail('Cloudflare document rewrites do not match catalog');
   validateHeaders(files.get('_headers'), catalog, files.has('sitemap.xml'), includeAnnouncements, hasHistory);
 
   const buildInputs = new Map(assetFiles);
   buildInputs.set('index.html', normalized);
-  if (sharedBundle) {
-    for (const [name, bytes] of dataFiles) buildInputs.set('data/' + runtimeRevision + '/' + name, bytes);
-    for (const [name, bytes] of sharedBundle.files) buildInputs.set(name, bytes);
-    if (sharedBundle.packageKind === 'fixture') buildInputs.set('shared-fixture.json', files.get('shared-fixture.json'));
-    buildInputs.set('shared-release-identity.json', createSharedReleaseIdentity(sharedBundle));
-  } else {
-    for (const [name, bytes] of dataFiles) buildInputs.set('data/' + name, bytes);
-  }
+  for (const [name, bytes] of dataFiles) buildInputs.set('data/' + name, bytes);
   if (hasHistory) {
     buildInputs.set(historyManifestPath, files.get(historyManifestPath));
     buildInputs.set(historyProjectionPath, files.get(historyProjectionPath));
@@ -633,16 +512,6 @@ export async function verifyStaticPackage(directory) {
     schema_version: version.schema_version,
     package_kind: version.package_kind,
     data_revision: version.data_revision,
-    ...(sharedBundle ? {
-      runtime_package_kind: context.package_kind,
-      runtime_data_revision: runtimeRevision,
-      shared_data_revision: version.data_revision,
-      shared_game_version: version.game_version,
-      game_releases: version.game_releases,
-      retained_releases: sharedBundle.metadata.retained_releases,
-      source_locks: sharedBundle.metadata.source_locks,
-      shared_files: sharedBundle.metadata.shared_files,
-    } : {}),
     build_id: version.build_id,
     file_count: files.size,
     catalog_counts: catalog.counts,

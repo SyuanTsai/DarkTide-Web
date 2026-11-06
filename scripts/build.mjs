@@ -1,4 +1,3 @@
-import { buildStaticSite } from '../src/static/build.mjs';
 import { buildSourceSite } from '../src/build/build.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,15 +27,16 @@ export function parseBuildArgs(args) {
   }
   if (result.sourceDataCommit && (!result.sourceData || !/^[0-9a-f]{40}$/.test(result.sourceDataCommit))) throw new Error('Usage: --source-data-commit requires --source-data and a 40 lowercase hex SHA');
   if (result.mode === 'fixture' && result.sourceData) throw new Error('Usage: --fixture and --source-data are mutually exclusive');
+  if (result.mode !== 'fixture' && !result.sourceData) throw new Error('Usage: --source-data is required for a published build');
   return result;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const options = parseBuildArgs(process.argv.slice(2));
-    const result = options.sourceData || options.mode === 'fixture' ? await buildSourceSite({
+    const result = await buildSourceSite({
       ...options, fixture: options.mode === 'fixture', sourceData: options.sourceData ?? path.join(SCRIPT_ROOT, 'test/fixtures/source-data'),
-    }) : await buildStaticSite(options);
+    });
     process.stdout.write(
       'Built ' + result.file_count + ' static files (' + result.package_kind +
       ') build_id=' + result.build_id + ' data_revision=' + result.data_revision + '\n'

@@ -283,7 +283,7 @@ test('InterT10_build_and_verify_CLIs_work_with_a_temporary_root_containing_space
     for (const name of ['content/authoring/v2', 'content/history']) await cp(join(REPO_ROOT, name), join(root, name), { recursive: true });
     const formal = spawnSync(process.execPath, [BUILD_CLI, '--root', root], { encoding: 'utf8', timeout: 120_000 });
     assert.notEqual(formal.status, 0);
-    assert.match(formal.stderr, /content\/published\/content\.json/);
+    assert.match(formal.stderr, /--source-data is required/);
     assert.equal(await readFile(join(root, 'dist', 'index.html'), 'utf8').then(() => true, () => false), false);
 
     const fixture = spawnSync(process.execPath, [BUILD_CLI, '--fixture', '--site-origin', 'https://example.test', '--root', root], {
