@@ -13,13 +13,13 @@ export function assertStaticCiWorkflow(ci){
  assert.ok(!JSON.stringify(ci).includes('secrets.'),'static CI must never receive secrets');
 }
 
-export function assertSharedReleaseWorkflow(release){
- assert.ok(!Object.hasOwn(release.on,'pull_request'),'shared release must not run from pull_request');
- const deploy=release.jobs['shared-release'];
- assert.ok(deploy,'shared-release deployment job is required');
- assert.equal(deploy.concurrency['cancel-in-progress'],false);
- assert.ok(JSON.stringify(deploy).includes('CLOUDFLARE_API_TOKEN'));
- assert.ok(JSON.stringify(deploy).includes('secrets.CLOUDFLARE_API_TOKEN'));
+export function assertDeployWorkflow(workflow){
+ assert.deepEqual(Object.keys(workflow.on),['workflow_dispatch']);
+ assert.equal(workflow.on.workflow_dispatch.inputs.source_data_commit.required,true);
+ assert.equal(workflow.concurrency.group,'darktide-cloudflare-production');
+ assert.equal(workflow.concurrency['cancel-in-progress'],false);
+ assert.equal(workflow.jobs.deploy.environment,'production');
+ assert.ok(JSON.stringify(workflow.jobs.deploy).includes('secrets.CLOUDFLARE_API_TOKEN'));
 }
 
 async function main(){
@@ -28,8 +28,8 @@ async function main(){
  }
  const ci=parse(await readFile(new URL('../.github/workflows/static-ci.yml',import.meta.url),'utf8'));
  assertStaticCiWorkflow(ci);
- const release=parse(await readFile(new URL('../.github/workflows/shared-release.yml',import.meta.url),'utf8'));
- assertSharedReleaseWorkflow(release);
+ const release=parse(await readFile(new URL('../.github/workflows/deploy.yml',import.meta.url),'utf8'));
+ assertDeployWorkflow(release);
  console.log('Cloudflare config and CI boundaries verified');
 }
 

@@ -32,6 +32,7 @@ function isHashedAsset(relativePath) {
   return /^assets\/[a-f0-9]{64}\.(?:mjs|js|css)$/.test(relativePath);
 }
 function cacheControl(relativePath, isDocument = false) {
+  if (relativePath.startsWith('source-data/') && relativePath !== 'source-data/current.json') return IMMUTABLE;
   if (isDocument || relativePath === 'index.html' || relativePath === 'version.json') return REVALIDATE;
   if (relativePath.startsWith('data/') || isHashedAsset(relativePath)) return IMMUTABLE;
   return REVALIDATE;
@@ -95,6 +96,10 @@ export async function createStaticServer({ distPath = path.join(ROOT, 'dist') } 
     try { url = new URL(request.url ?? '/', 'http://127.0.0.1'); }
     catch { return send(response, 400, 'Bad Request\n', 'text/plain; charset=utf-8', 'no-store', method); }
     const pathname = safeUrlPath(url.pathname);
+    if (pathname?.startsWith('/source-data/')) {
+      response.setHeader('Access-Control-Allow-Origin', '*');
+      response.setHeader('Access-Control-Allow-Methods', 'GET, HEAD');
+    }
     if (pathname === null) return send(response, 400, 'Bad Request\n', 'text/plain; charset=utf-8', 'no-store', method);
     const historyBase = '/history/1.13.1';
     const isHistoryDocumentPath = pathname === historyBase || pathname === historyBase + '/';

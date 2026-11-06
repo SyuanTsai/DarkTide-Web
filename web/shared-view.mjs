@@ -1,3 +1,19 @@
+export function sourceChangeValueText(value) {
+  return value === null ? '原始碼未公開' : JSON.stringify(value, (_key, entry) => entry === null ? '原始碼未公開' : entry);
+}
+
+export function sourceItemPresentation(item) {
+  const parameters = params => Object.entries(params ?? {}).map(([key, param]) => ({ key, value: param.unknown ? '原始碼未公開' : Array.isArray(param.value) ? param.value.join('、') : String(param.value), unit: param.unit ?? '' }));
+  return {
+    id: item.id, name: item.name.zh || '名稱待確認', unofficial: item.name.origin === 'glossary',
+    official: item.official, errata: item.errata,
+    sections: [['effect', '效果'], ['conditions', '條件'], ['calculation', '計算'], ['notes', '補充'], ['extra', '額外']]
+      .filter(([key]) => item.explanation[key].trim()).map(([key, label]) => ({ key, label, text: item.explanation[key] })),
+    params: parameters(item.values.params),
+    tiers: (item.values.tiers ?? []).map(tier => ({ label: `LV${tier.tier}`, params: parameters(tier.params) })),
+  };
+}
+
 const SECTION_ORDER = Object.freeze([
   ['effects', '效果'],
   ['conditions', '條件'],
@@ -328,7 +344,7 @@ function validateAnnouncementBlocks(blocks, assets, seenIds, depth = 0) {
   });
 }
 
-function validateAnnouncement(row, gameReleaseId) {
+export function validateAnnouncement(row, gameReleaseId) {
   announcementKeys(row, ['announcementId', 'scope', 'publishedOn', 'revision', 'source', 'blocks', 'assets', ...(Object.hasOwn(row ?? {}, 'title') ? ['title'] : []), ...(row?.scope === 'gameplay' ? ['gameReleaseId'] : [])], 'announcement');
   if (typeof row.announcementId !== 'string' || !ANNOUNCEMENT_ID.test(row.announcementId)) throw new Error('announcement id is invalid');
   if (!['site', 'gameplay', 'official-document'].includes(row.scope)) throw new Error('announcement scope is invalid');

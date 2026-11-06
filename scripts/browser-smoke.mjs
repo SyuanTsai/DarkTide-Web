@@ -6,6 +6,7 @@ import { chromium } from 'playwright';
 import { createStaticServer } from './serve.mjs';
 import { verifyStaticPackage } from '../src/static/verify.mjs';
 import { runSharedBrowserSmoke } from './shared-browser-smoke.mjs';
+import { runSourceBrowserSmoke } from './source-browser-smoke.mjs';
 
 const REQUIRED_KINDS = ['skill', 'mechanics', 'weapon', 'mark', 'blessing', 'variant'];
 const LIST_PAGES = [
@@ -526,10 +527,11 @@ async function closeServer(server) {
   await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
 }
 
-async function run(distArgument) {
+async function run(distArgument, origin) {
   const distPath = path.resolve(distArgument);
   const verification = await verifyStaticPackage(distPath);
-  if (typeof verification.shared_data_revision === 'string') {
+  if (origin) return runSourceBrowserSmoke(distPath, verification, { origin });
+  if (verification.source_data === true || typeof verification.shared_data_revision === 'string') {
     await runSharedBrowserSmoke(distPath, verification);
     return;
   }
@@ -652,13 +654,13 @@ async function run(distArgument) {
   }
 }
 
-const args = process.argv.slice(2);
-if (args.length !== 1) {
+const args = process.argv.length === 2 ? ['dist'] : process.argv.slice(2);
+if (args.length !== 1 && !(args.length === 3 && args[1] === '--origin')) {
   process.stderr.write('Usage: node scripts/browser-smoke.mjs <verified-dist-directory>\n');
   process.exitCode = 2;
 } else {
   try {
-    await run(args[0]);
+    await run(args[0], args[2]);
   } catch (error) {
     process.stderr.write('Browser smoke failed: ' + (error?.message ?? String(error)) + '\n');
     process.exitCode = 1;

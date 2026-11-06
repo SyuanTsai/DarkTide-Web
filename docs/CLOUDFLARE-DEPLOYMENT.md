@@ -8,10 +8,10 @@
 2. 選 New repository secret。
 3. Name：`CLOUDFLARE_API_TOKEN`；Secret：貼入 Cloudflare Token。
 4. 前往 [GitHub Actions](https://github.com/SyuanTsai/DarkTide-Web/actions)。
-5. 選 `Static package CI and Cloudflare deployment` → Run workflow → main → Run workflow。
+5. 選 `Deploy pinned Source-Data to Cloudflare` → Run workflow → main，填入 `source_data_commit`（40 碼小寫 SHA）→ Run workflow。
 
 Token 存入 GitHub Secret，勿貼到對話、Issue、PR 或程式碼。Account ID 已固定，無需另外新增 Account ID Secret。
-新增 Secret 不會自動觸發 workflow；首次設定後需 Run workflow。之後 main 的 push 自動執行。Run workflow 僅能從 main 正式部署。
+新增 Secret 與 main push 不會自動觸發部署；正式部署只接受 workflow_dispatch，並使用 production environment 的保護設定。
 
 ## Cloudflare 目標
 - 產品：Workers Static Assets，純靜態、Free。
@@ -25,14 +25,14 @@ Token 存入 GitHub Secret，勿貼到對話、Issue、PR 或程式碼。Account
 若帳號 workers.dev 子網域尚未設定、Token權限不足或現有網域紀錄衝突，工作流會報出診斷並停止，不改動其他服務。
 
 ## 自動流程
-1. PR／fork：無部署 secrets，執行測試、公開 JSON 正式建置、strict verify、Wrangler dry-run、Cloudflare 本機 runtime 與瀏覽器 smoke。
-2. main／手動 main：同樣建置一次，保存完整已驗證 artifact。
-3. 部署 job 下載同一 artifact，再驗證；不重建、不讀私人來源。
-4. Token 未設定：摘要標示等待 Token，部署跳過。
-5. 驗證 SHA 仍為 main 最新，避免舊任務覆蓋新版；部署 job 序列化。
-6. 先部署預覽並驗首頁、深層路由、版本、三類 JSON、缺檔404、快取與可見署名。
-7. 通過才將相同產物的精確版本發佈至正式 Worker，保留既有 Custom Domain、DNS 與憑證連線，再檢查正式 HTTPS。
-8. 在 Actions artifacts 保存完整網站與不含 Token 的版本 receipt。憑證若仍待驗證而超過重試期限，稍後重跑工作流。
+1. PR／push：static-ci 執行測試、Source-Data fixture 建置與瀏覽器 smoke，不部署。
+2. 手動部署：先驗證輸入 SHA，再 checkout Web 與 Source-Data 指定 commit；兩者皆不保留 Git credentials。
+3. Windows runner 使用 Node 24、`npm ci` 與 Chromium，執行 `npm test`。
+4. 建置前確認 Source-Data HEAD 與輸入相同，執行來源 validator 與 Web 驗證。缺 current.json 或資料無效即失敗，不進入部署。
+5. 以正式 origin 建置，再驗證產物及 browser smoke。Token 未設定時既有 credential 檢查中止部署。`darktide-cloudflare-production` 序列化正式部署，不取消進行中工作。
+6. 先部署預覽並驗路由、版本、所有 manifest／分檔、`/source-data/` 位元組、CORS、快取、缺檔 404 與署名。
+7. 通過才將同一產物發佈至正式 Worker，保留既有 Custom Domain、DNS 與憑證連線。
+8. 部署後在線上 origin 執行 runtime 與 browser smoke，核對 manifest.source.commit 等於輸入 SHA。receipt 在工作目錄 `.deployment/` 產生。
 
 worker回復：正式部署／檢查失敗，有前版則透過 API 恢復之前完整 versions/percentage，receipt 記錄 api-accepted；是否實際恢復仍須線上驗證。首次沒有前版不虛構回復。Custom Domain／DNS 不會因 Worker版本回復而自動移除。
 

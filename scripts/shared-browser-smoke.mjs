@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { runSourceBrowserSmoke } from './source-browser-smoke.mjs';
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -344,6 +345,7 @@ async function assertWeaponView(page, mark) {
 }
 
 export async function runSharedBrowserSmoke(distPath, verification) {
+  if (verification.source_data === true) return runSourceBrowserSmoke(distPath, verification);
   const shared = await readVerifiedCoreDomains(distPath, verification);
   const retained = await readVerifiedRetainedTreeData(distPath, verification);
   const skill = selectSkill(shared.domains, shared.view);

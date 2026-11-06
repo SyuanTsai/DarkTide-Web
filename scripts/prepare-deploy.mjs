@@ -3,9 +3,11 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const env={...process.env,CLOUDFLARE_API_TOKEN:'',WRANGLER_SEND_METRICS:'false',CI:'true'};
+const buildArgs=process.argv.slice(2);
+if(!buildArgs.includes('--source-data'))throw new Error('Usage: npm run prepare:deploy -- --source-data <checkout> --source-data-commit <SHA>');
 const commands=[
  ['scripts/verify-deploy-config.mjs'],
- ['scripts/build.mjs','--site-origin','https://darktide.tw-syuan.com'],
+ ['scripts/build.mjs',...buildArgs,'--site-origin','https://darktide.tw-syuan.com'],
  ['scripts/verify-static.mjs'],
  ['node_modules/wrangler/bin/wrangler.js','deploy','--config','wrangler.preview.json','--dry-run','--outdir','.cloudflare-dry-run/preview'],
  ['node_modules/wrangler/bin/wrangler.js','deploy','--config','wrangler.json','--dry-run','--outdir','.cloudflare-dry-run/production'],
