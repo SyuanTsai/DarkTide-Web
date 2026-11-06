@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { sourceItemPresentation } from '../web/shared-view.mjs';
+import { sourceItemPresentation, sourceChangeValueText } from '../web/shared-view.mjs';
 // Scenario: Source items contain explanations, unknown parameters, glossary and tiers.
 // Purpose: Keep display fields distinct and suppress empty sections.
 test('UnitT10_直接欄位顯示五節勘誤未知值與祝福等級', async () => {
@@ -13,4 +13,12 @@ test('UnitT10_直接欄位顯示五節勘誤未知值與祝福等級', async () 
   const second = sourceItemPresentation(skills[1]); assert.equal(second.sections.length, 1); assert.equal(second.unofficial, true);
   assert.deepEqual(sourceItemPresentation(blessings[0]).tiers.map(t=>t.label), ['LV1', 'LV2', 'LV3', 'LV4']);
   assert.ok(sourceItemPresentation(blessings[0]).errata.length > 0);
+});
+
+// Scenario: A version diff changes a known parameter into an unpublished value.
+// Purpose: Do not expose null as a player-facing value in the changes page.
+test('UnitT20_變更紀錄未知值亦使用固定文字',()=>{
+  assert.equal(sourceChangeValueText(null),'原始碼未公開');
+  assert.equal(sourceChangeValueText(0.123456789),'0.123456789');
+  assert.ok(!sourceChangeValueText({bonus:{value:null,unknown:'NOT_EXPOSED_BY_SOURCE'}}).includes('null'));
 });

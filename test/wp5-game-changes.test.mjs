@@ -16,6 +16,7 @@ test('UnitT10_比較版本並忽略來源差異', () => {
     ['skills', 'a', 'removed'], ['skills', 'b', 'changed'], ['skills', 'c', 'added']
   ]);
   assert.deepStrictEqual(changes[1].fields, [{ path: 'values.value', previous: 2, current: 2.125 }]);
+  assert.deepStrictEqual(changes[1].name, { zh: 'b' });
   assert.equal(JSON.stringify(changes), JSON.stringify(diffGameVersions({ previous, current })));
 });
 

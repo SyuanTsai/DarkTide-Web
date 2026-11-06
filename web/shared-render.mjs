@@ -1,4 +1,4 @@
-import { sourceItemPresentation, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
+import { sourceItemPresentation, sourceChangeValueText, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
 
 export function blessingListTier(applicability) {
   return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
@@ -2277,8 +2277,8 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       main.append(node('h1','遊戲變更紀錄'));
       if(!changes?.changes?.length) main.append(node('p','此版本尚無遊戲變更紀錄','source-changes-empty'));
       for(const change of changes?.changes ?? []) {
-        const article=node('article');article.append(node('h2',`${({added:'新增',removed:'移除',changed:'變動'})[change.type]}：${change.current?.name?.zh || change.previous?.name?.zh || change.id}`));
-        for(const field of change.fields ?? []) article.append(node('p',`${field.path}：${JSON.stringify(field.previous)} → ${JSON.stringify(field.current)}`));main.append(article);
+        const article=node('article');article.append(node('h2',`${({added:'新增',removed:'移除',changed:'變動'})[change.type]}：${change.name?.zh || change.current?.name?.zh || change.previous?.name?.zh || '名稱待確認'}`));
+        for(const field of change.fields ?? []) article.append(node('p',`${field.path}：${sourceChangeValueText(field.previous)} → ${sourceChangeValueText(field.current)}`));main.append(article);
       }
     }
   } else if(['skills','weapons','blessings','terms'].includes(route)) {

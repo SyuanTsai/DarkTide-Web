@@ -32,7 +32,7 @@ export function diffGameVersions({ previous, current }) {
         const fields = [];
         for (const field of FIELDS) fieldChanges(oldItem[field], newItem[field], field, fields);
         fields.sort((a, b) => compare(a.path, b.path));
-        if (fields.length) result.push({ category, id, type: 'changed', fields });
+        if (fields.length) result.push({ category, id, type: 'changed', name: newItem.name, fields });
       }
     }
   }

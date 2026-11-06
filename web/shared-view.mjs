@@ -1,3 +1,7 @@
+export function sourceChangeValueText(value) {
+  return value === null ? '原始碼未公開' : JSON.stringify(value, (_key, entry) => entry === null ? '原始碼未公開' : entry);
+}
+
 export function sourceItemPresentation(item) {
   const parameters = params => Object.entries(params ?? {}).map(([key, param]) => ({ key, value: param.unknown ? '原始碼未公開' : Array.isArray(param.value) ? param.value.join('、') : String(param.value), unit: param.unit ?? '' }));
   return {
