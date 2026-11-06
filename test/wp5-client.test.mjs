@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { loadSourceData } from '../src/build/source-data.mjs';
-import { buildSiteData } from '../src/build/site-data.mjs';
+import { buildSiteData, weaponFamilyPaths } from '../src/build/site-data.mjs';
 import { createSourceClient } from '../web/source-client.mjs';
 // Scenario: A history filter refers to a version without a data manifest.
 // Purpose: Fetch only the selected Source-Data version.
@@ -51,5 +51,6 @@ test('UnitT20_路由僅讀取需要的分檔',async()=>{
   await client.load({pathname:'/skills/'});
   assert.deepEqual(paths.map(p=>p.split('/').at(-1)).sort(),['manifest.json','skills.json','terms.json']);
   paths.length=0;await client.load({pathname:'/weapons/',search:'?family=family_a'});
-  assert.ok(paths.some(p=>p.endsWith(`/weapons/${Buffer.from('family_a').toString('hex')}.json`)));assert.ok(!paths.some(p=>p.endsWith(`/weapons/${Buffer.from('family_b').toString('hex')}.json`)));
+  const names=weaponFamilyPaths(['family_a','family_b']);
+  assert.ok(paths.some(p=>p.endsWith(names.get('family_a'))));assert.ok(!paths.some(p=>p.endsWith(names.get('family_b'))));
 });

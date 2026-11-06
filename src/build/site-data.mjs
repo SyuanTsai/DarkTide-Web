@@ -1,8 +1,21 @@
 import { jsonBytes, sha256, safeRelativePath, compareUtf8 } from '../static/common.mjs';
 import { buildGameChangesDomain } from './game-changes.mjs';
+import { isSourceDomainPath } from '../../web/source-client.mjs';
 // Same per-file limit as scripts/content/contract-release.mjs (MAX_DOMAIN_BYTES).
 export const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
 const slug = value => { const result = encodeURIComponent(value).replaceAll('%', '_'); return result; };
+
+export function weaponFamilyPaths(families, hash = value => sha256(Buffer.from(value, 'utf8'))) {
+  const paths = new Map(); const owners = new Map();
+  for (const family of families) {
+    const prefix = family.replace(/[^A-Za-z0-9._-]/gu, '_').slice(0, 40);
+    const path = `domains/weapons/${prefix}-${hash(family).slice(0, 16)}.json`;
+    if (!isSourceDomainPath(path)) throw new Error(`Invalid weapon family path for ${family}: ${path}`);
+    if (owners.has(path)) throw new Error(`Weapon family filename collision: ${owners.get(path)} and ${family}`);
+    owners.set(path, family); paths.set(family, path);
+  }
+  return paths;
+}
 
 export function buildSiteData({ source, announcements = null, frozen = {} }) {
   const files = new Map(); const pointers = [];
@@ -19,9 +32,11 @@ export function buildSiteData({ source, announcements = null, frozen = {} }) {
     for (const category of ['skills', 'terms']) add(category, `domains/${category}.json`, data[category]);
     const index = (item, path) => ({ id: item.id, name: item.name, ...(item.values.family ? { family: item.values.family, mark: item.values.mark } : {}), path });
     const weaponIndex = [];
-    for (const family of [...new Set(data.weapons.items.map(item => item.values.family))].sort(compareUtf8)) {
+    const families = [...new Set(data.weapons.items.map(item => item.values.family))].sort(compareUtf8);
+    const familyPaths = weaponFamilyPaths(families);
+    for (const family of families) {
       const items = data.weapons.items.filter(item => item.values.family === family);
-      const path = `domains/weapons/${Buffer.from(family, 'utf8').toString('hex')}.json`;
+      const path = familyPaths.get(family);
       add('weapon-family', path, { ...data.weapons, items });
       weaponIndex.push(...items.map(item => index(item, path)));
     }
