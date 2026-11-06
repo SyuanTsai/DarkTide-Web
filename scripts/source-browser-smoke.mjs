@@ -2,6 +2,10 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { createStaticServer } from './serve.mjs';
 import { existsSync } from 'node:fs';
+export function assertBlessingTiers(text, tiers, fixture = false) {
+  for (const { tier } of tiers) assert.ok(text.includes(`LV${tier}`), `missing LV${tier}`);
+  if (fixture) for (const tier of [1, 2, 3, 4]) assert.ok(text.includes(`LV${tier}`), `missing fixture LV${tier}`);
+}
 export async function runSourceBrowserSmoke(distPath, verification, { origin } = {}) {
   let server;
   if(!origin){server=await createStaticServer({distPath});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));origin=`http://127.0.0.1:${server.address().port}`;}
@@ -20,7 +24,12 @@ export async function runSourceBrowserSmoke(distPath, verification, { origin } =
       assert.ok(await page.locator('[data-item-id]').count());
       await goto(`/blessings/?version=${pointer.game_version}`);
       await page.locator('#main a[href*="id="]').first().click();await page.locator('[data-item-id]').first().waitFor();
-      const tierText=await page.locator('#main').innerText();for(const tier of [1,2,3,4])assert.ok(tierText.includes(`LV${tier}`));
+      const id=new URL(page.url()).searchParams.get('id');
+      const blessingFile=manifest.files.find(f=>f.kind==='blessings-index');
+      const index=await(await page.request.get(origin+`/data/${manifest.dataRevision}/${blessingFile.path}`)).json();
+      const shard=index.items.find(item=>item.id===id);
+      const blessing=await(await page.request.get(origin+`/data/${manifest.dataRevision}/${shard.path}`)).json();
+      assertBlessingTiers(await page.locator('#main').innerText(),blessing.items.find(item=>item.id===id).values.tiers,verification.package_kind==='fixture');
       await goto(`/weapons/?version=${pointer.game_version}`);
       await page.locator('nav[aria-label="武器型號"] a').first().click();await page.locator('[data-item-id]').first().waitFor();
       await goto(`/terms/?version=${pointer.game_version}`);
