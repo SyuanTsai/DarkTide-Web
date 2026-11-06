@@ -82,6 +82,22 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
    assert.doesNotMatch(await response.text(),/<!doctype html|<html/i,'missing history file returned an HTML shell '+route);
   }
  }
+ if(expected.source_data===true){
+  for(const row of expected.source_files){
+   const response=await get(row.path,{redirect:'error'});assert.equal(response.status,200,'source file status '+row.path);
+   assert.match(response.headers.get('content-type')??'',/application\/json/i);
+   const bytes=Buffer.from(await response.arrayBuffer());assert.equal(bytes.length,row.size_bytes);assert.equal(sha256(bytes),row.sha256);
+   if(row.path.startsWith('/source-data/')){
+    assert.equal(response.headers.get('access-control-allow-origin'),'*');
+    assert.equal(response.headers.get('access-control-allow-methods'),'GET, HEAD');
+    assert.match(response.headers.get('cache-control')??'',row.path==='/source-data/current.json'?/no-cache|no-store/:/immutable/);
+   }
+  }
+  const pointer=version.game_releases.find(p=>p.game_version===version.game_version);
+  const manifest=await(await get(pointer.manifest_path)).json();assert.equal(manifest.source.commit,expected.source_commit,'deployed Source-Data commit mismatch');
+  for(const route of ['/data/'+runtimeRevision+'/missing.json','/source-data/missing.json','/assets/missing.mjs']){const r=await get(route,{headers:{'Sec-Fetch-Mode':'navigate'}});assert.equal(r.status,404);assert.doesNotMatch(await r.text(),/<!doctype html/i);}
+  return {origin,build_id:version.build_id,data_revision:version.data_revision,source_commit:manifest.source.commit};
+ }
  const catalogResponse=await get('/data/'+runtimeRevision+'/catalog.json');
  assert.equal(catalogResponse.status,200);
  assert.match(catalogResponse.headers.get('content-type')??'',/application\/json/i);

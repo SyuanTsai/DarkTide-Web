@@ -8,6 +8,14 @@ import {verifyOrigin} from '../src/deploy/cloudflare.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const artifact=await verifyStaticPackage(path.join(root,'dist'));
 if(artifact.package_kind!=='published')throw new Error('Cloudflare smoke requires published artifact');
+const originIndex=process.argv.indexOf('--origin');
+if(originIndex!==-1){
+ const origin=process.argv[originIndex+1];const commitIndex=process.argv.indexOf('--source-data-commit');
+ if(commitIndex===-1||!/^[a-f0-9]{40}$/.test(process.argv[commitIndex+1]??''))throw new Error('--source-data-commit is required for online smoke');
+ if(artifact.source_commit!==process.argv[commitIndex+1])throw new Error('local source.commit differs from requested commit');
+ await verifyOrigin(origin,artifact);console.log('Online Cloudflare runtime verified including source.commit');
+ process.exit(0);
+}
 const port=await new Promise((resolve,reject)=>{
  const s=net.createServer();s.once('error',reject);
  s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>resolve(p));});

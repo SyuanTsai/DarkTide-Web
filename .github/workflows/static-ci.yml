@@ -1,14 +1,13 @@
-name: Static package CI and Cloudflare deployment
+name: Static package fixture CI
 on:
   pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
 permissions:
   contents: read
 jobs:
   static-package:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 45
     steps:
       - name: Check out source without persisted credentials
@@ -33,3 +32,7 @@ jobs:
         env:
           SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-name-inputs.outputs.mods-root }}
           SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-name-inputs.outputs.source-root }}
+      - name: Build Source-Data fixture
+        run: npm run build:fixture
+      - name: Browser smoke
+        run: npm run smoke:browser
