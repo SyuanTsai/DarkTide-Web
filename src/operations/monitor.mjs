@@ -18,7 +18,13 @@ async function monitorLegacy(origin, version, fetcher, check, checks) {
   assert.match(version.build_id, /^[a-f0-9]{64}$/);
   assert.match(version.data_revision, /^[a-f0-9]{64}$/);
   assert.ok(Array.isArray(version.game_releases) && version.game_releases.length > 0);
+  const seen = new Set();
   for (const pointer of version.game_releases) {
+    assert.match(pointer.game_version, /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/);
+    assert.match(pointer.content_version, /^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.([1-9][0-9]*)$/);
+    assert.equal(pointer.content_version.slice(0, pointer.content_version.lastIndexOf('.')), pointer.game_version);
+    assert.ok(!seen.has(pointer.game_version), 'duplicate game version');
+    seen.add(pointer.game_version);
     assert.match(pointer.data_revision, /^[a-f0-9]{64}$/);
     assert.equal(pointer.manifest_path, `/data/${pointer.data_revision}/manifest.json`);
     assert.match(pointer.manifest_sha256, /^[a-f0-9]{64}$/);
@@ -26,6 +32,7 @@ async function monitorLegacy(origin, version, fetcher, check, checks) {
     assert.equal(manifest.schemaVersion, '2.0.0');
     assert.equal(manifest.dataRevision, pointer.data_revision);
     assert.equal(manifest.gameVersion, pointer.game_version);
+    assert.equal(manifest.contentVersion, pointer.content_version);
     assert.ok(Array.isArray(manifest.files) && manifest.files.length > 0);
     const kinds = new Set();
     for (const row of manifest.files) {
