@@ -1,4 +1,5 @@
 import { createSharedViewModel } from './shared-view.mjs';
+import { createSourceClient } from './source-client.mjs';
 
 const CORE_KINDS = Object.freeze(['skills', 'blessings', 'weapons', 'terms']);
 const SPLIT_CORE_KINDS = Object.freeze(['skills', 'terms', 'weapons-index', 'blessings-index']);
@@ -98,6 +99,7 @@ async function sha256(bytes, cryptoApi) {
 function versionManifestPath(revision) { return `/data/${revision}/manifest.json`; }
 
 export function hasSharedContext(build) {
+  if (build?.source_data === true) return true;
   return isObject(build) && ['shared_game_version', 'shared_data_revision', 'shared_files', 'shared_package_kind']
     .some(key => Object.hasOwn(build, key));
 }
@@ -717,6 +719,7 @@ export async function loadSharedRelease({
 }
 
 export function createSharedClient(options = {}) {
+  if (options.build?.source_data === true) return createSourceClient(options);
   const cache = { identity: null, manifestPromise: null, domainPromises: new Map(), domainValues: new Map() };
   return Object.freeze({
     load: ({ signal, pathname, search = '', force = false } = {}) => loadSharedRelease({

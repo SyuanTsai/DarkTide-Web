@@ -1214,6 +1214,17 @@ function restoreSharedDetailUiState(state) {
 }
 
 async function showSharedPage(force = false) {
+  if (build.source_data === true) {
+    const generation = ++sharedNavigationGeneration;
+    const url = new URL(window.location.href);
+    try {
+      const result = await sharedClient.load({ pathname: url.pathname, search: url.search, force });
+      if (generation === sharedNavigationGeneration) renderSharedPage({ main, buildMeta, result, url });
+    } catch (error) {
+      if (generation === sharedNavigationGeneration) renderSharedPage({ main, buildMeta, url, error });
+    }
+    return;
+  }
   const generation = ++sharedNavigationGeneration;
   const url = new URL(window.location.href);
   sharedLoadPromise = sharedClient.load({ pathname: url.pathname, search: url.search, force });
@@ -1382,6 +1393,7 @@ function showCurrentPage(force = false) {
   const pathname = url.pathname;
   if (pathname === W14_HISTORY_PATH.slice(0, -1) || pathname.startsWith(W14_HISTORY_PATH)) return showW14HistoryPage(force);
   if (sharedMode) {
+    if (build.source_data === true) return showSharedPage(force);
     if (isLegacySkillPath(url)) return showLegacySkillPage(url, force);
     if (isLegacyWeaponBlessingPath(url)) return showLegacyWeaponBlessingPage(url, force);
     return showSharedPage(force);

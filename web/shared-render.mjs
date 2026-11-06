@@ -1,3 +1,5 @@
+import { sourceItemPresentation, createSharedViewModel } from './shared-view.mjs';
+
 export function blessingListTier(applicability) {
   return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
 }
@@ -2171,6 +2173,7 @@ function renderAnnouncements(main, result, url, buildMeta) {
 export function renderSharedPage({ main, buildMeta, result, url = new URL(location.href), error = null,
   historyPackage = null, historyError = null, historyLoading = false, currentError = null, currentLoading = false,
   retainedBlessingDetail = null, retainedWeaponDetail = null } = {}) {
+  if (result?.sourceData === true) return renderSourcePage({ main, buildMeta, result, url });
   if (!main || !buildMeta) throw new TypeError('main and buildMeta are required');
   main.replaceChildren();
   buildMeta.textContent = '';
@@ -2220,5 +2223,94 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
     renderAnnouncements(main, result, url, buildMeta);
   }
   else renderHome(main, result);
+  main.focus();
+}
+
+function renderSourceItem(parent, item) {
+  const p = sourceItemPresentation(item);
+  const article = node('article', null, 'shared-entry'); article.dataset.itemId = item.id;
+  article.append(node('h2', p.name));
+  if (p.unofficial) article.append(node('p', '非官方譯名', 'shared-muted'));
+  if (p.official.zh || p.official.en) {
+    const official = node('section', null, 'source-official'); official.append(node('h3', '官方原文'));
+    if (p.official.zh) official.append(node('p', p.official.zh));
+    if (p.official.en) { const details = node('details'); details.append(node('summary', '英文原文'), node('p', p.official.en)); official.append(details); }
+    article.append(official);
+  }
+  if (p.errata.length) {
+    const errata = node('section', null, 'source-errata'); errata.append(node('h3', '勘誤'));
+    for (const row of p.errata) errata.append(node('p', `${row.official} → ${row.corrected}`));
+    article.append(errata);
+  }
+  for (const section of p.sections) { const block = node('section'); block.dataset.section = section.key; block.append(node('h3', section.label), node('p', section.text)); article.append(block); }
+  const parameters = (parent, params) => { const list = node('dl'); for (const p of params) list.append(node('dt', p.key), node('dd', `${p.value}${p.unit ? ` ${UNIT_LABELS[p.unit] ?? p.unit}` : ''}`)); parent.append(list); };
+  parameters(article, p.params);
+  for (const tier of p.tiers) { const block=node('section'); block.append(node('h3',tier.label)); parameters(block,tier.params);article.append(block); }
+  if (item.values.mark) article.append(node('p', `型號：${item.values.mark}`));
+  if (item.values.nodeType) {
+    const labels={ability:'能力',ability_modifier:'能力強化',aura:'光環',keystone:'關鍵天賦',keystone_modifier:'關鍵天賦強化',tactical:'戰術',tactical_modifier:'戰術強化',stat:'屬性',start:'起點',default:'預設',broker_stimm:'興奮劑'};
+    article.append(node('p', `${labels[item.values.nodeType] ?? '天賦'} · 點數 ${item.values.maxPoints}`));
+    for(const id of item.values.parents) { const route = new URL(location.href); route.searchParams.set('id',id); article.append(link(route.pathname+route.search,'前置天賦')); }
+  }
+  for(const bar of item.values.bars ?? []) { const block=node('section'); block.append(node('h3',bar.name.zh || '武器素質')); for(const stat of bar.stats) block.append(node('p', `${stat.name.zh || '素質'}：${stat.min}–${stat.max}`));article.append(block); }
+  for(const action of item.values.actions ?? []) if(action.name.zh) article.append(node('p',action.name.zh));
+  parent.append(article);
+}
+
+function renderSourcePage({ main, buildMeta, result, url }) {
+  main.replaceChildren(); main.removeAttribute('aria-busy');
+  buildMeta.textContent = `遊戲版本 ${result.manifest.gameVersion} · 資料修訂 ${result.manifest.dataRevision.slice(0,12)}`;
+  const versionNav=node('nav');versionNav.setAttribute('aria-label','遊戲版本');
+  for(const pointer of result.versions) {const target=new URL(url);target.searchParams.set('version',pointer.game_version);versionNav.append(link(target.pathname+target.search,pointer.game_version));}
+  main.append(versionNav);
+  const domain = kind => result.domains.find(d=>d.kind===kind)?.document;
+  const route = url.pathname.split('/')[1];
+  if(route==='announcements') {
+    const items=domain('announcements')?.items ?? [];
+    renderAnnouncements(main,{...result,view:{getAnnouncements:()=>({status:'ready',items}),getAnnouncement:id=>items.find(i=>i.announcementId===id)}},url,buildMeta);
+  } else if(route==='game-changes') {
+    const changes=domain('game-changes');
+    if(changes?.web) {
+      const view=createSharedViewModel({domains:[changes],gameReleaseId:changes.gameReleaseId});
+      renderGameChanges(main,{...result,view},url);
+    } else {
+      main.append(node('h1','遊戲變更紀錄'));
+      if(!changes?.changes?.length) main.append(node('p','此版本尚無遊戲變更紀錄','source-changes-empty'));
+      for(const change of changes?.changes ?? []) {
+        const article=node('article');article.append(node('h2',`${({added:'新增',removed:'移除',changed:'變動'})[change.type]}：${change.current?.name?.zh || change.previous?.name?.zh || change.id}`));
+        for(const field of change.fields ?? []) article.append(node('p',`${field.path}：${JSON.stringify(field.previous)} → ${JSON.stringify(field.current)}`));main.append(article);
+      }
+    }
+  } else if(['skills','weapons','blessings','terms'].includes(route)) {
+    const labels={skills:'技能／天賦',weapons:'武器',blessings:'祝福',terms:'術語'};main.append(node('h1',labels[route]));
+    let items = route==='weapons' ? result.domains.filter(d=>d.kind==='weapon-family').flatMap(d=>d.document.items) : route==='blessings' ? result.domains.filter(d=>d.kind==='blessing').flatMap(d=>d.document.items) : domain(route)?.items ?? [];
+    const version=url.searchParams.get('version');
+    const href=params=>`/${route}/?${new URLSearchParams({...params,...(version?{version}:{})})}`;
+    if(route==='weapons') {
+      const family=url.searchParams.get('family');const nav=node('nav');nav.setAttribute('aria-label','武器型號');
+      for(const f of [...new Set(items.map(i=>i.values.family))]) nav.append(link(href({family:f}),items.find(i=>i.values.family===f).name.zh || '名稱待確認'));
+      main.append(nav); if(family) items=items.filter(i=>i.values.family===family);
+      else { main.focus();return; }
+    }
+    if(route==='skills') {
+      const classes={psyker:'靈能者',veteran:'老兵',zealot:'狂信徒',ogryn:'歐格林',arbites:'法務官',scum:'巢都渣滓',skitarii:'護教軍'};
+      const nav=node('nav');nav.setAttribute('aria-label','職業與天賦樹');
+      for(const key of [...new Set(items.map(i=>`${i.values.archetype}\0${i.values.tree}`))]) {const [archetype,tree]=key.split('\0');nav.append(link(href({archetype,tree}),`${classes[archetype] ?? '職業'}／天賦樹`));}
+      main.append(nav);if(url.searchParams.has('archetype'))items=items.filter(i=>i.values.archetype===url.searchParams.get('archetype'));
+      if(url.searchParams.has('tree'))items=items.filter(i=>i.values.tree===url.searchParams.get('tree'));
+    }
+    if(route==='terms') {
+      const nav=node('nav');nav.setAttribute('aria-label','術語分類');const labels={keyword:'關鍵字',class:'職業','skill-type':'技能類型','weapon-type':'武器類型','weapon-stat':'武器素質','weapon-perk':'武器特長',quality:'品質',curio:'珍品','curio-perk':'珍品特長','curio-trait':'珍品特性','mortis-buff':'死神試煉增益'};
+      for(const category of [...new Set(items.map(i=>i.values.category))])nav.append(link(href({category}),labels[category]??'其他'));main.append(nav);
+      if(url.searchParams.has('category'))items=items.filter(i=>i.values.category===url.searchParams.get('category'));
+    }
+    const id=url.searchParams.get('id');if(id)items=items.filter(i=>i.id===id);
+    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));renderSourceItem(main,item);}
+    if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
+  } else {
+    main.append(node('h1','黑潮繁體資料庫'));
+    for(const [route,label] of [['skills','技能'],['weapons','武器'],['blessings','祝福'],['terms','術語'],['game-changes','遊戲變更紀錄'],['announcements','公告']])main.append(link(`/${route}/?version=${result.manifest.gameVersion}`,label));
+  }
+  setMetadata(main.querySelector('h1')?.textContent ?? '黑潮繁體資料庫','繁體中文遊戲資料',url);
   main.focus();
 }
