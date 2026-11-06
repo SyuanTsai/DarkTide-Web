@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test",
+    "test": "node --test \"test/**/*.test.mjs\"",
     "build": "node scripts/build.mjs",
     "build:fixture": "node scripts/build.mjs --fixture",
     "verify:static": "node scripts/verify-static.mjs",

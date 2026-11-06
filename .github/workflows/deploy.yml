@@ -39,7 +39,7 @@ jobs:
         with:
           repository: SyuanTsai/DarkTide-Source-Data
           ref: ${{ inputs.source_data_commit }}
-          path: source-data
+          path: .source-data
           persist-credentials: false
       - name: Install dependencies
         run: npm ci
@@ -50,7 +50,7 @@ jobs:
       - name: Build pinned production data
         env:
           SOURCE_DATA_COMMIT: ${{ inputs.source_data_commit }}
-        run: node scripts/build.mjs --source-data source-data --source-data-commit $env:SOURCE_DATA_COMMIT --site-origin https://darktide.tw-syuan.com
+        run: node scripts/build.mjs --source-data .source-data --source-data-commit $env:SOURCE_DATA_COMMIT --site-origin https://darktide.tw-syuan.com
       - name: Verify static package and browser
         run: |
           node scripts/verify-static.mjs dist
