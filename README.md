@@ -52,4 +52,3 @@ npm run smoke:browser
 公告直接讀取 `content/authoring/v2/w15/announcement-candidate.json`（5 筆）及 `content/authoring/v2/official-announcements/20261030/announcements.json`（3 筆），不經 compose。與既有公告分檔的 8 筆 ID 及全部顯示欄位深度比對一致。遊戲變更只經 `src/build/game-changes.mjs` 取得；沒有上一版及凍結資料時顯示空狀態，1.13.4 使用凍結 W12 資料。
 
 正式部署由 `.github/workflows/deploy.yml` 的 workflow_dispatch 觸發，需明確輸入 Source-Data commit；使用 production environment 與既有 Cloudflare versions upload／deploy、預覽驗證及回復流程。部署後核對線上 manifest 的 source.commit，再執行線上 browser smoke。PR／push 的 static-ci 只執行測試、fixture 建置與 smoke，不部署。此工作未觸發部署或 push。
-
