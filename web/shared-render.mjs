@@ -1884,7 +1884,8 @@ function renderGameChangeDetail(main, result, url, item) {
   facts.append(node('p', `遊戲版本：${item.comparison.fromGameVersion} → ${item.comparison.toGameVersion}`));
   facts.append(node('p', `變動類型：${GAME_CHANGE_OPERATION_LABELS[item.operation] ?? '內容變更'}`));
   facts.append(node('p', `驗證方式：${item.verificationLabel ?? '驗證方式未確認'}`));
-  facts.append(node('p', `網站資料版本：${result.pointer.content_version}`));
+  facts.append(node('p', `網站資料版本：${result.sourceData ? result.manifest.dataRevision : result.pointer.content_version}`));
+  if (result.sourceData) facts.append(node('p', `Source-Data commit：${result.manifest.source.commit}`));
   main.append(facts);
   renderChangeFields(main, item, result);
   renderChangeComparison(main, item.comparison);
