@@ -20,18 +20,12 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Acquire retained-name inputs
-        id: retained-name-inputs
-        uses: ./.github/actions/retained-name-inputs
       - name: Install locked dependencies
         run: npm ci
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test
         run: npm test
-        env:
-          SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-name-inputs.outputs.mods-root }}
-          SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-name-inputs.outputs.source-root }}
       - name: Build Source-Data fixture
         run: npm run build:fixture
       - name: Browser smoke
