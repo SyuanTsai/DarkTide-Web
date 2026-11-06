@@ -55,7 +55,7 @@ Web 直接讀取 W15 announcement-candidate.json 的 5 筆及 official-announcem
 
 ## 顯示與相容性限制
 
-必需的五節、官方原文／勘誤、unknown、glossary 標示、LV1–4、family／mark、職業／tree／parents／nodeType、術語分類均已對應。空節不顯示，unknown 不以 null 呈現。params 的鍵名及未列入單位對照的 unit 仍使用來源識別字；未額外建立 icon、context、refs 或 aliases 的專用互動頁面，這些欄位仍完整保存在 item 與原樣來源檔。Source-Data 尚未提供真實正式版輸入的驗證，以本輪兩版本合格 fixture 為依據。
+必需的五節、官方原文／勘誤、unknown、glossary 標示、LV1–4、family／mark、職業／tree／parents／nodeType、術語分類均已對應。空節不顯示，unknown 不以 null 呈現。params 的鍵名及未列入單位對照的 unit 仍使用來源識別字；未額外建立 icon、context、refs 或 aliases 的專用互動頁面，這些欄位仍完整保存在 item 與原樣來源檔。本輪未使用真實 WP8 正式版輸入，驗證以兩版本合格 fixture 為依據。
 
 回復方式：新舊入口並存，可回復本輪 commits 恢復原建置；Source-Data 原始 repo 與已凍結歷史檔無需修改。遠端部署沿用既有 preview-first、versions upload／deploy 與失敗回復流程，部署後另核對線上 source.commit。
 
