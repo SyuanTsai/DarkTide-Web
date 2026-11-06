@@ -4,6 +4,16 @@ import { fileURLToPath } from 'node:url';
 import { loadSourceData } from '../src/build/source-data.mjs';
 import { buildSiteData } from '../src/build/site-data.mjs';
 import { createSourceClient } from '../web/source-client.mjs';
+// Scenario: A history filter refers to a version without a data manifest.
+// Purpose: Fetch only the selected Source-Data version.
+test('UnitT05_紀錄篩選不載入其他版本的 manifest', async () => {
+  const source = await loadSourceData({ directory: fileURLToPath(new URL('./fixtures/source-data/', import.meta.url)), fixture: true });
+  const bundle = buildSiteData({ source }); const paths = [];
+  const client = createSourceClient({ build: { game_version: '9.9.2', game_releases: bundle.pointers }, fetchImpl: async url => { paths.push(url); return new Response(bundle.files.get(url.slice(1)), { headers: { 'content-type': 'application/json' } }); } });
+  const result = await client.load({ pathname: '/game-changes/', search: '?version=9.9.2&changes_version=1.13.3' });
+  assert.equal(result.manifest.gameVersion, '9.9.2');
+  assert.equal(paths.filter(path => path.endsWith('/manifest.json')).length, 1);
+});
 // Scenario: The browser receives verified manifests and domains, then corrupted bytes.
 // Purpose: Keep version selection exact and refuse a file which differs from its manifest pin.
 test('UnitT10_用戶端驗證版本與分檔雜湊並拒絕損毀資料',async()=>{

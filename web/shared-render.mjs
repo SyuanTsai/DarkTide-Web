@@ -1874,7 +1874,8 @@ function renderGameChangeDetail(main, result, url, item) {
   setMetadata(item.entityName, `${item.gameVersion} 遊戲內容變動：${item.summary}`, url);
   const header = node('header', null, 'page-intro');
   header.append(node('p', '遊戲版本更新紀錄', 'eyebrow'), node('h1', item.entityName));
-  main.append(link('/game-changes/', '返回更新紀錄', 'secondary-link'), header);
+  const back = new URL(url); back.searchParams.delete('id');
+  main.append(link(back.pathname + back.search, '返回更新紀錄', 'secondary-link'), header);
   main.append(node('p', item.summary, 'shared-change-summary'));
   renderBlessingVariantContext(main, item.blessingVariant);
   const facts = detailBlock('紀錄摘要');
@@ -1897,6 +1898,12 @@ function compareGameVersions(left, right) {
   return 0;
 }
 
+export function sourceChangesFilter(url, items) {
+  const version = url.searchParams.get('changes_version') ?? '';
+  const type = url.searchParams.get('type') ?? '';
+  return items.filter(item => (!version || item.gameVersion === version) && (!type || gameChangeType(item) === type));
+}
+
 function renderGameChanges(main, result, url) {
   const allItems = result.view.getGameChanges({}).items;
   const id = url.searchParams.get('id');
@@ -1905,7 +1912,8 @@ function renderGameChanges(main, result, url) {
     return renderGameChangeDetail(main, result, url, item);
   }
 
-  const requestedVersion = url.searchParams.get('version') ?? '';
+  const versionKey = result.sourceData ? 'changes_version' : 'version';
+  const requestedVersion = url.searchParams.get(versionKey) ?? '';
   const requestedType = url.searchParams.get('type') ?? '';
   const versions = [...new Set([result.pointer.game_version, ...allItems.map(row => row.gameVersion)])].sort(compareGameVersions);
   const types = ['skill', 'blessing', 'weapon'];
@@ -1921,7 +1929,7 @@ function renderGameChanges(main, result, url) {
   const form = node('form', null, 'shared-change-filters');
   form.method = 'get'; form.action = '/game-changes/';
   const versionLabel = node('label', '遊戲版本');
-  const versionSelect = node('select'); versionSelect.name = 'version'; versionSelect.setAttribute('aria-label', '遊戲版本');
+  const versionSelect = node('select'); versionSelect.name = versionKey; versionSelect.setAttribute('aria-label', '遊戲版本');
   versionSelect.append(node('option', '全部版本')); versionSelect.options[0].value = '';
   for (const version of versions) {
     const option = node('option', version); option.value = version;
@@ -1938,11 +1946,12 @@ function renderGameChanges(main, result, url) {
     typeSelect.append(option);
   }
   typeLabel.append(typeSelect);
+  if (result.sourceData) { const input = node('input'); input.type = 'hidden'; input.name = 'version'; input.value = result.manifest.gameVersion; form.append(input); }
   form.append(versionLabel, typeLabel);
   const submit = node('button', '套用篩選', 'button'); submit.type = 'submit'; form.append(submit);
   main.append(form);
 
-  const filtered = allItems.filter(item => (!requestedVersion || item.gameVersion === requestedVersion)
+  const filtered = result.sourceData ? sourceChangesFilter(url, allItems) : allItems.filter(item => (!requestedVersion || item.gameVersion === requestedVersion)
     && (!requestedType || gameChangeType(item) === requestedType));
   if (!filtered.length) {
     main.append(node('p', allItems.length || requestedVersion || requestedType
@@ -1952,7 +1961,7 @@ function renderGameChanges(main, result, url) {
   const list = node('ul', null, 'shared-entry-list shared-change-list');
   for (const item of filtered) {
     const entry = node('li', null, 'shared-entry shared-change-entry');
-    const href = paramsUrl('/game-changes/', { id: item.changeId, ...(requestedVersion ? { version: requestedVersion } : {}), ...(requestedType ? { type: requestedType } : {}) });
+    const href = paramsUrl('/game-changes/', { id: item.changeId, ...(result.sourceData ? { version: result.manifest.gameVersion } : {}), ...(requestedVersion ? { [versionKey]: requestedVersion } : {}), ...(requestedType ? { type: requestedType } : {}) });
     entry.append(link(href, item.entityName));
     entry.append(node('p', `${item.gameVersion} · ${GAME_CHANGE_TYPE_LABELS[gameChangeType(item)] ?? '其他'} · ${item.verificationLabel ?? '驗證方式未確認'}`, 'shared-muted'));
     entry.append(node('p', item.summary));
