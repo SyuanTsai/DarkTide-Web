@@ -3,18 +3,20 @@ import { buildGameChangesDomain } from './game-changes.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
 // Same per-file limit as scripts/content/contract-release.mjs (MAX_DOMAIN_BYTES).
 export const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
-const slug = value => { const result = encodeURIComponent(value).replaceAll('%', '_'); return result; };
-
-export function weaponFamilyPaths(families, hash = value => sha256(Buffer.from(value, 'utf8'))) {
+export function boundedShardPaths(category, values, hash = value => sha256(Buffer.from(value, 'utf8'))) {
   const paths = new Map(); const owners = new Map();
-  for (const family of families) {
-    const prefix = family.replace(/[^A-Za-z0-9._-]/gu, '_').slice(0, 40);
-    const path = `domains/weapons/${prefix}-${hash(family).slice(0, 16)}.json`;
-    if (!isSourceDomainPath(path)) throw new Error(`Invalid weapon family path for ${family}: ${path}`);
-    if (owners.has(path)) throw new Error(`Weapon family filename collision: ${owners.get(path)} and ${family}`);
-    owners.set(path, family); paths.set(family, path);
+  for (const value of values) {
+    const prefix = value.replace(/[^A-Za-z0-9._-]/gu, '_').slice(0, 40);
+    const path = `domains/${category}/${prefix}-${hash(value).slice(0, 16)}.json`;
+    if (!isSourceDomainPath(path)) throw new Error(`Invalid ${category} shard path for ${value}: ${path}`);
+    if (owners.has(path)) throw new Error(`${category} shard filename collision: ${owners.get(path)} and ${value}`);
+    owners.set(path, value); paths.set(value, path);
   }
   return paths;
+}
+
+export function weaponFamilyPaths(families, hash) {
+  return boundedShardPaths('weapons', families, hash);
 }
 
 export function buildSiteData({ source, announcements = null, frozen = {} }) {
@@ -43,8 +45,9 @@ export function buildSiteData({ source, announcements = null, frozen = {} }) {
     add('weapons-index', 'domains/weapons-index.json', { gameVersion, category: 'weapons-index', items: weaponIndex });
     // The existing W08 split uses one blessing record per shard.
     const blessingIndex = [];
+    const blessingPaths = boundedShardPaths('blessings', data.blessings.items.map(item => item.id));
     for (const item of data.blessings.items) {
-      const path = `domains/blessings/${slug(item.id)}.json`;
+      const path = blessingPaths.get(item.id);
       add('blessing', path, { ...data.blessings, items: [item] }); blessingIndex.push(index(item, path));
     }
     add('blessings-index', 'domains/blessings-index.json', { gameVersion, category: 'blessings-index', items: blessingIndex });

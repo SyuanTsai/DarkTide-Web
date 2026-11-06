@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadSourceData, CATEGORIES } from '../src/build/source-data.mjs';
-import { buildSiteData, MAX_DOMAIN_BYTES, weaponFamilyPaths } from '../src/build/site-data.mjs';
+import { buildSiteData, MAX_DOMAIN_BYTES, boundedShardPaths, weaponFamilyPaths } from '../src/build/site-data.mjs';
 import { sha256 } from '../src/static/common.mjs';
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
@@ -9,6 +9,22 @@ import { createSharedViewModel } from '../web/shared-view.mjs';
 // Scenario: Two families map to the same generated name. Purpose: Fail with both identities rather than overwrite a shard.
 test('UnitT05_型號檔名碰撞時列出衝突型號', () => {
   assert.throws(() => weaponFamilyPaths(['a?', 'a!'], () => '0'.repeat(64)), /a[?!].*a[?!]/);
+});
+// Scenario: Blessing IDs are mapped repeatedly and then collide under a simulated digest.
+// Purpose: Keep names deterministic, within the client path contract, and fail with both conflicting IDs.
+test('UnitT06_祝福分檔名稱決定性與碰撞失敗', () => {
+  const ids = ['darktide:blessing:' + 'a'.repeat(240), 'darktide:blessing:' + ':'.repeat(100)];
+  const first = boundedShardPaths('blessings', ids);
+  const second = boundedShardPaths('blessings', ids);
+  assert.deepEqual(first, second);
+  for (const [id, path] of first) {
+    assert.ok(path.startsWith('domains/blessings/'));
+    assert.ok(path.split('/').at(-1).length <= 64);
+    assert.ok(path.endsWith('.json'));
+    assert.ok(id.length > 0);
+  }
+  const collisionIds = ['darktide:blessing:' + 'x'.repeat(30) + 'a', 'darktide:blessing:' + 'x'.repeat(30) + 'b'];
+  assert.throws(() => boundedShardPaths('blessings', collisionIds, () => '0'.repeat(64)), /darktide:blessing:.*darktide:blessing:/);
 });
 // Scenario: Split both fixture versions twice. Purpose: preserve source items and deterministic manifests.
 test('UnitT10_分檔保留完整item且雜湊大小與決定性正確', async () => {

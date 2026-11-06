@@ -7,7 +7,40 @@ import { buildSourceSite } from '../src/build/build.mjs';
 import { verifyStaticPackage } from '../src/static/verify.mjs';
 import { execFileSync } from 'node:child_process';
 import { createStaticServer } from '../scripts/serve.mjs';
+import { createSourceClient } from '../web/source-client.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
+// Scenario: Legal blessing IDs contain enough repeated characters or separators to exceed filesystem filename limits.
+// Purpose: A complete build keeps their shard names bounded and the browser can load each original ID.
+test('InterT06_長祝福ID完整建置與用戶端讀取', async () => {
+  const temp = await mkdtemp(path.join(root, '.static-build-staging-wp5-long-blessing-'));
+  try {
+    for (const name of ['web', 'content/history', 'content/authoring/v2', 'test/fixtures/source-data']) await cp(path.join(root, name), path.join(temp, name), { recursive: true });
+    const source = path.join(temp, 'test/fixtures/source-data');
+    const blessingsFile = path.join(source, 'data/9.9.2/blessings.json');
+    const blessings = JSON.parse(await readFile(blessingsFile));
+    const ids = ['darktide:blessing:' + 'a'.repeat(240), 'darktide:blessing:' + ':'.repeat(100)];
+    blessings.items.slice(0, ids.length).forEach((item, i) => { item.id = ids[i]; });
+    await writeFile(blessingsFile, JSON.stringify(blessings));
+    const opts = { root: temp, sourceData: source, fixture: true };
+    await buildSourceSite(opts);
+    const version = JSON.parse(await readFile(path.join(temp, 'dist/version.json')));
+    const pointer = version.game_releases.find(row => row.game_version === version.game_version);
+    const manifest = JSON.parse(await readFile(path.join(temp, 'dist', pointer.manifest_path.slice(1))));
+    const index = JSON.parse(await readFile(path.join(temp, 'dist', 'data', manifest.dataRevision, 'domains/blessings-index.json')));
+    const shards = ids.map(id => index.items.find(item => item.id === id));
+    assert.ok(shards.every(item => item && path.basename(item.path).length <= 64));
+    const server = await createStaticServer({ distPath: path.join(temp, 'dist') });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    try {
+      const origin = `http://127.0.0.1:${server.address().port}`;
+      const client = createSourceClient({ build: version, fetchImpl: url => fetch(new URL(url, origin)) });
+      for (let i = 0; i < ids.length; i++) {
+        const result = await client.load({ pathname: '/blessings/', search: `?id=${encodeURIComponent(ids[i])}` });
+        assert.equal(result.domains.find(domain => domain.kind === 'blessing').document.items[0].id, ids[i]);
+      }
+    } finally { await new Promise(resolve => server.close(resolve)); }
+  } finally { await rm(temp, { recursive: true, force: true }); }
+});
 // Scenario: A valid family exceeds typical Windows filename limits when hex encoded.
 // Purpose: The complete build emits a bounded, deterministic filename and preserves the family.
 test('InterT05_長型號完整建置與檔名長度', async () => {
