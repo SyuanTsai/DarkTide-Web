@@ -41,18 +41,12 @@ jobs:
           ref: ${{ inputs.source_data_commit }}
           path: source-data
           persist-credentials: false
-      - name: Acquire retained-name inputs
-        id: retained-name-inputs
-        uses: ./.github/actions/retained-name-inputs
       - name: Install dependencies
         run: npm ci
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test
         run: npm test
-        env:
-          SYP_W07_RETAINED_MODS_ROOT: ${{ steps.retained-name-inputs.outputs.mods-root }}
-          SYP_W07_RETAINED_SOURCE_ROOT: ${{ steps.retained-name-inputs.outputs.source-root }}
       - name: Build pinned production data
         env:
           SOURCE_DATA_COMMIT: ${{ inputs.source_data_commit }}
