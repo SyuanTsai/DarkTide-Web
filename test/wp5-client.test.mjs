@@ -14,6 +14,20 @@ test('UnitT05_紀錄篩選不載入其他版本的 manifest', async () => {
   assert.equal(result.manifest.gameVersion, '9.9.2');
   assert.equal(paths.filter(path => path.endsWith('/manifest.json')).length, 1);
 });
+// Scenario: Weapon families include parentheses, Chinese and spaces.
+// Purpose: Every generated shard path is accepted by the browser manifest validator.
+test('UnitT07_特殊型號分檔可由用戶端讀取', async () => {
+  const source = await loadSourceData({ directory: fileURLToPath(new URL('./fixtures/source-data/', import.meta.url)), fixture: true });
+  const families = ['family(test)', '中文', 'family test'];
+  const items = source.dataByVersion['9.9.2'].weapons.items;
+  source.dataByVersion['9.9.2'].weapons.items = families.map((family, i) => ({ ...items[i % items.length], id: `weapon-${i}`, values: { ...items[i % items.length].values, family } }));
+  const bundle = buildSiteData({ source });
+  const client = createSourceClient({ build: { game_version: '9.9.2', game_releases: bundle.pointers }, fetchImpl: async url => new Response(bundle.files.get(url.slice(1)), { headers: { 'content-type': 'application/json' } }) });
+  for (const family of families) {
+    const result = await client.load({ pathname: '/weapons/', search: `?family=${encodeURIComponent(family)}` });
+    assert.equal(result.domains.find(domain => domain.kind === 'weapon-family').document.items[0].values.family, family);
+  }
+});
 // Scenario: The browser receives verified manifests and domains, then corrupted bytes.
 // Purpose: Keep version selection exact and refuse a file which differs from its manifest pin.
 test('UnitT10_用戶端驗證版本與分檔雜湊並拒絕損毀資料',async()=>{
@@ -37,5 +51,5 @@ test('UnitT20_路由僅讀取需要的分檔',async()=>{
   await client.load({pathname:'/skills/'});
   assert.deepEqual(paths.map(p=>p.split('/').at(-1)).sort(),['manifest.json','skills.json','terms.json']);
   paths.length=0;await client.load({pathname:'/weapons/',search:'?family=family_a'});
-  assert.ok(paths.some(p=>p.endsWith('/weapons/family_a.json')));assert.ok(!paths.some(p=>p.endsWith('/weapons/family_b.json')));
+  assert.ok(paths.some(p=>p.endsWith(`/weapons/${Buffer.from('family_a').toString('hex')}.json`)));assert.ok(!paths.some(p=>p.endsWith(`/weapons/${Buffer.from('family_b').toString('hex')}.json`)));
 });

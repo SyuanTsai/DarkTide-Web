@@ -21,7 +21,7 @@ export function buildSiteData({ source, announcements = null, frozen = {} }) {
     const weaponIndex = [];
     for (const family of [...new Set(data.weapons.items.map(item => item.values.family))].sort(compareUtf8)) {
       const items = data.weapons.items.filter(item => item.values.family === family);
-      const path = `domains/weapons/${slug(family)}.json`;
+      const path = `domains/weapons/${Buffer.from(family, 'utf8').toString('hex')}.json`;
       add('weapon-family', path, { ...data.weapons, items });
       weaponIndex.push(...items.map(item => index(item, path)));
     }
