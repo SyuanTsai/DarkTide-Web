@@ -30,6 +30,7 @@ test('InterT10_monitor_checks_source_manifests_domains_assets_and_attribution', 
   };
   const result = await monitorOrigin(origin, { fetch: fetcher });
   assert.equal(result.status, 'healthy');
+  assert.equal(result.publication, 'source-data');
   assert.ok(result.hash_checks.some(row => row.path.includes('/domains/')));
   assert.ok(result.hash_checks.some(row => row.path.startsWith('/assets/')));
   for (const target of ['domain', 'attribution', '404']) {

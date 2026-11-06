@@ -10,7 +10,7 @@
 
 新增或更新 Secret 與 main 更新均不會觸發部署；正式部署只接受手動 Run workflow。缺 Secret 時既有 credential 檢查會中止部署。
 
-回滾時，從上一個成功部署記錄取得 Source-Data commit，用該 commit 重跑 `deploy.yml`。工作流重新建置、驗證及部署，不依賴舊 state branch 或 shared release 備份。`operations-monitor.yml` 定期驗證公開版本、manifest、分檔雜湊、靜態資產及 404；它不查詢舊備份。歷史部署與備份手冊保留於 docs，舊入口已退役。
+回滾時，從上一個成功部署記錄取得 Source-Data commit，用該 commit 重跑 `deploy.yml`。工作流重新建置、驗證及部署，不依賴舊 state branch 或 shared release 備份。`operations-monitor.yml` 定期驗證公開版本、manifest、分檔雜湊、靜態資產及 404；它不查詢舊備份。WP8 首次部署後，可另開單移除 monitor 的 legacy-w09 相容分支。歷史部署與備份手冊保留於 docs，舊入口已退役。
 
 ## 網站內容
 - 七職業圖示天賦樹、技能清單圖片與條列效果／機制。

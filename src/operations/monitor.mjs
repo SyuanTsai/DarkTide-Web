@@ -13,6 +13,49 @@ export function incidentAction(healthy, issues) {
   return issue ? { action: healthy ? 'close' : 'keep', number: issue.number } : { action: healthy ? 'none' : 'open' };
 }
 
+async function monitorLegacy(origin, version, fetcher, check, checks) {
+  assert.equal(version.package_kind, 'published');
+  assert.match(version.build_id, /^[a-f0-9]{64}$/);
+  assert.match(version.data_revision, /^[a-f0-9]{64}$/);
+  assert.ok(Array.isArray(version.game_releases) && version.game_releases.length > 0);
+  for (const pointer of version.game_releases) {
+    assert.match(pointer.data_revision, /^[a-f0-9]{64}$/);
+    assert.equal(pointer.manifest_path, `/data/${pointer.data_revision}/manifest.json`);
+    assert.match(pointer.manifest_sha256, /^[a-f0-9]{64}$/);
+    const manifest = JSON.parse(await check(pointer.manifest_path, pointer.manifest_sha256));
+    assert.equal(manifest.schemaVersion, '2.0.0');
+    assert.equal(manifest.dataRevision, pointer.data_revision);
+    assert.equal(manifest.gameVersion, pointer.game_version);
+    assert.ok(Array.isArray(manifest.files) && manifest.files.length > 0);
+    const kinds = new Set();
+    for (const row of manifest.files) {
+      assert.ok(typeof row.kind === 'string' && row.kind.length > 0);
+      safeRelativePath(row.path);
+      assert.ok(row.path.startsWith('domains/'));
+      assert.match(row.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(row.sizeBytes) && row.sizeBytes >= 0);
+      if (!kinds.has(row.kind)) {
+        kinds.add(row.kind);
+        await check(`/data/${pointer.data_revision}/${row.path}`, row.sha256, row.sizeBytes);
+      }
+    }
+  }
+  assert.equal(version.game_releases.find(p => p.game_version === version.game_version)?.data_revision, version.data_revision);
+  const document = await fetcher(new URL('/', origin), { redirect: 'error', signal: AbortSignal.timeout(15000) });
+  assert.equal(document.status, 200, 'homepage HTTP status');
+  assert.match(document.headers.get('content-type') ?? '', /text\/html/i);
+  const html = await document.text();
+  const assets = [...html.matchAll(/(?:src|href)=["'](\/assets\/[^"']+)["']/g)].map(match => match[1]);
+  assert.ok(assets.length > 0, 'missing main assets');
+  for (const asset of new Set(assets)) {
+    const response = await fetcher(new URL(asset, origin), { redirect: 'error', signal: AbortSignal.timeout(15000) });
+    assert.equal(response.status, 200, 'asset HTTP status: ' + asset);
+  }
+  const missing = await fetcher(new URL('/assets/missing.mjs', origin), { redirect: 'error', signal: AbortSignal.timeout(15000) });
+  assert.equal(missing.status, 404, 'unknown path HTTP status');
+  return { origin, status: 'healthy', publication: 'legacy-w09', build_id: version.build_id, data_revision: version.data_revision, hash_checks: checks };
+}
+
 // Verify the public contract directly; no release-state or retained backup authority.
 export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch } = {}) {
   const checks = [];
@@ -31,6 +74,10 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch 
     return bytes;
   };
   const version = JSON.parse(await get('/version.json'));
+  const publication = version.source_data === true ? 'source-data' : version.source_data === undefined && version.schema_version === 2 ? 'legacy-w09' : undefined;
+  assert.ok(publication, 'unknown publication format');
+  try {
+  if (publication === 'legacy-w09') return await monitorLegacy(origin, version, fetcher, check, checks);
   assert.equal(version.source_data, true, 'monitor requires Source-Data publication');
   assert.equal(version.package_kind, 'published');
   assert.match(version.build_id, /^[a-f0-9]{64}$/);
@@ -93,5 +140,9 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch 
     for (const match of bytes.toString().matchAll(/['"](?:\.\/|\/assets\/)([a-f0-9]{64}\.mjs)['"]/g)) pending.push('/assets/' + match[1]);
   }
   assert.ok(seen.size > 0, 'missing executable assets');
-  return { origin, status: 'healthy', build_id: version.build_id, data_revision: version.data_revision, source_commit: commit, hash_checks: checks };
+  return { origin, status: 'healthy', publication, build_id: version.build_id, data_revision: version.data_revision, source_commit: commit, hash_checks: checks };
+  } catch (error) {
+    error.publication = publication;
+    throw error;
+  }
 }

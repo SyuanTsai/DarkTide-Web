@@ -8,7 +8,7 @@ for (const origin of [SITE_ORIGIN, PREVIEW_ORIGIN, 'https://darktide-zh-tw.syuan
     report.origins.push(await monitorOrigin(origin));
   } catch (error) {
     report.status = 'failed';
-    report.origins.push({ origin, status: 'failed', error: error.message.slice(0, 500) });
+    report.origins.push({ origin, status: 'failed', ...(error.publication ? { publication: error.publication } : {}), error: error.message.slice(0, 500) });
   }
 }
 if (report.status === 'healthy') {
