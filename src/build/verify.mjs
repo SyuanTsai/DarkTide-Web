@@ -2,6 +2,7 @@ import { jsonBytes, sha256, hashNamedFiles, safeRelativePath } from '../static/c
 import { verifyHashedModuleGraph } from '../static/module-graph.mjs';
 import { verifyW14HistoryPublicFiles } from '../../scripts/content/contract-w14-history.mjs';
 import { sourceDataHeaders } from './headers.mjs';
+import { renderStaticRewrites } from '../static/routing-policy.mjs';
 export function verifySourceStaticFiles(files, version) {
   const fail=message=>{throw new Error(`Source static artifact: ${message}`);};
   const artifact=JSON.parse(files.get('artifact-manifest.json'));
@@ -37,6 +38,7 @@ export function verifySourceStaticFiles(files, version) {
   const history=new Map([...files].filter(([name])=>name.startsWith('history/')));verifyW14HistoryPublicFiles({manifestBytes:history.get('history/1.13.1/manifest.json'),projectionBytes:history.get('history/1.13.1/player-index.json')});
   for(const [name,bytes]of history){used.add(name);identity.set(name,bytes);}
   if(files.get('_headers')?.toString()!==sourceDataHeaders())fail('header policy mismatch');
+  if(files.get('_redirects')?.toString()!==renderStaticRewrites({redirects:[]},{includeAnnouncements:true,includeHistory:true})+'/terms/* / 200\n')fail('document rewrite policy mismatch');
   if(hashNamedFiles(identity)!==version.build_id)fail('build identity mismatch');
   if(files.size!==used.size||[...files.keys()].some(name=>!used.has(name)))fail('unexpected output file');
   const robots=files.get('robots.txt')?.toString()??'';const siteOrigin=/Sitemap: (https:\/\/[^/]+)\/sitemap.xml/.exec(robots)?.[1]??null;

@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cp, mkdtemp, readFile, rm, readdir } from 'node:fs/promises';
+import { cp, mkdtemp, readFile, rm, readdir, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildSourceSite } from '../src/build/build.mjs';
 import { verifyStaticPackage } from '../src/static/verify.mjs';
+import { execFileSync } from 'node:child_process';
+import { createStaticServer } from '../scripts/serve.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 // Scenario: Build all fixture versions twice in an isolated workspace output.
 // Purpose: Verify the complete byte closure, original data, headers and deterministic build.
@@ -21,5 +23,31 @@ test('InterT10_完整建置決定性來源原樣複製與history可讀', async (
     assert.deepEqual(first.get('source-data/current.json'),await readFile(path.join(root,'test/fixtures/source-data/data/current.json')));
     const headers=first.get('_headers').toString();assert.match(headers,/Access-Control-Allow-Origin: \*/);assert.match(headers,/Access-Control-Allow-Methods: GET, HEAD/);
     assert.match(headers,/\/source-data\/current.json\n  ! Cache-Control\n  Cache-Control: no-cache/);
+    const server=await createStaticServer({distPath:path.join(temp,'dist')});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+    try{
+      const origin=`http://127.0.0.1:${server.address().port}`;
+      for(const method of ['GET','HEAD']){const response=await fetch(origin+'/source-data/current.json',{method});assert.equal(response.headers.get('content-type'),'application/json; charset=utf-8');assert.equal(response.headers.get('access-control-allow-origin'),'*');assert.match(response.headers.get('cache-control'),/no-cache/);}
+      assert.match((await fetch(origin+'/source-data/9.9.1/skills.json')).headers.get('cache-control'),/immutable/);
+      assert.equal((await fetch(origin+'/source-data/current.json',{method:'POST'})).status,405);
+    }finally{await new Promise(resolve=>server.close(resolve));}
   } finally {await rm(temp,{recursive:true,force:true});}
+});
+
+// Scenario: Invalid inputs are supplied before any output directory exists.
+// Purpose: A missing current file, invalid data, validator failure or wrong commit never emits dist.
+test('InterT20_驗證失敗不產生dist且先執行來源validator',async()=>{
+  const temp=await mkdtemp(path.join(root,'.static-build-staging-wp5-fail-'));
+  try{
+    const source=path.join(temp,'source');await cp(path.join(root,'test/fixtures/source-data'),source,{recursive:true});
+    const opts={root:temp,sourceData:source,fixture:true};
+    const current=path.join(source,'data/current.json'),bytes=await readFile(current);await rm(current);
+    await assert.rejects(buildSourceSite(opts),/current.json/);await assert.rejects(readFile(path.join(temp,'dist/index.html')),/ENOENT/);await writeFile(current,bytes);
+    const skillFile=path.join(source,'data/9.9.2/skills.json');const skillBytes=await readFile(skillFile);const d=JSON.parse(skillBytes);d.gameVersion='9.9.1';await writeFile(skillFile,JSON.stringify(d));
+    await assert.rejects(buildSourceSite(opts),/metadata invalid/);await writeFile(skillFile,skillBytes);
+    const git=(...args)=>execFileSync('git',['-C',source,...args],{stdio:'pipe'});git('init');git('add','.');git('-c','user.name=Fixture','-c','user.email=fixture@example.test','commit','-m','fixture');
+    await assert.rejects(buildSourceSite({...opts,sourceDataCommit:'0'.repeat(40)}),/HEAD/);
+    await mkdir(path.join(source,'pipeline'),{recursive:true});await writeFile(path.join(source,'pipeline/validate.mjs'),'console.error("validator rejection");process.exit(1)');
+    await assert.rejects(buildSourceSite(opts),/pipeline validation failed: validator rejection/);
+    await assert.rejects(readFile(path.join(temp,'dist/index.html')),/ENOENT/);
+  }finally{await rm(temp,{recursive:true,force:true});}
 });

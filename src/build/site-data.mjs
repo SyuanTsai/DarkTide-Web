@@ -41,6 +41,7 @@ export function buildSiteData({ source, announcements = null, frozen = {} }) {
     const dataRevision = sha256(jsonBytes(material));
     const manifest = { ...material, dataRevision };
     const manifestBytes = jsonBytes(manifest);
+    if (manifestBytes.length > 256 * 1024) throw new Error('Source manifest exceeds the browser 256 KiB limit');
     const prefix = `data/${dataRevision}/`;
     for (const [name, bytes] of domains) files.set(prefix + name, bytes);
     files.set(prefix + 'manifest.json', manifestBytes);

@@ -14,7 +14,7 @@ export function createSourceClient({ build, fetchImpl = globalThis.fetch.bind(gl
     if (await hash(bytes) !== expected) throw new Error('Source data hash mismatch');
     return { bytes, value: JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes)) };
   };
-  return { async load({ search = '', force = false } = {}) {
+  return { async load({ pathname = '/', search = '', force = false } = {}) {
     const requested = new URLSearchParams(search).get('version') ?? build.game_version;
     const pointer = build.game_releases.find(p=>p.game_version === requested);
     if (!pointer) throw new Error('Unknown source data version');
@@ -23,17 +23,38 @@ export function createSourceClient({ build, fetchImpl = globalThis.fetch.bind(gl
       const { value: manifest } = await read(pointer.manifest_path, pointer.manifest_sha256, 256 * 1024);
       const { dataRevision, ...material } = manifest;
       if (manifest.schemaVersion !== '3.0.0' || dataRevision !== pointer.data_revision || manifest.gameVersion !== requested || await hash(jsonBytes(material)) !== dataRevision) throw new Error('Invalid source manifest');
-      const domains = [];
       const paths = new Set();
       for (const file of manifest.files) {
         if (!/^domains\/[A-Za-z0-9_./-]+\.json$/.test(file.path) || file.path.includes('..') || paths.has(file.path) || !Number.isSafeInteger(file.sizeBytes) || file.sizeBytes < 1 || file.sizeBytes > 16 * 1024 * 1024) throw new Error('Invalid source domain descriptor');
         paths.add(file.path);
-        const result = await read(`/data/${dataRevision}/${file.path}`, file.sha256, file.sizeBytes);
-        if (result.bytes.length !== file.sizeBytes) throw new Error('Source domain size mismatch');
-        domains.push({ kind: file.kind, document: result.value });
       }
-      return { status: 'ready', sourceData: true, pointer, manifest, domains, versions: build.game_releases, fixtureOnly: build.package_kind === 'fixture' };
+      return { manifest, loaded: new Map() };
     })().catch(error=>{cache.delete(requested);throw error;}));
-    return cache.get(requested);
+    const { manifest, loaded } = await cache.get(requested);
+    const selected = new Map();
+    const load = async file => {
+      if (!file) return null;
+      if (selected.has(file.path)) return selected.get(file.path).document;
+      if (!loaded.has(file.path)) loaded.set(file.path, (async()=>{
+        const result = await read(`/data/${manifest.dataRevision}/${file.path}`,file.sha256,file.sizeBytes);
+        if(result.bytes.length!==file.sizeBytes)throw new Error('Source domain size mismatch');
+        return result.value;
+      })().catch(error=>{loaded.delete(file.path);throw error;}));
+      const document=await loaded.get(file.path);selected.set(file.path,{kind:file.kind,document});
+      for(const dependency of file.dependencies ?? []) {
+        const row=manifest.files.find(f=>f.path===dependency);if(!row)throw new Error('Missing source dependency');await load(row);
+      }
+      return document;
+    };
+    const kind = pathname.split('/')[1];
+    const kinds = {skills:['skills','terms'],terms:['terms'],weapons:['weapons-index'],blessings:['blessings-index'],'game-changes':['game-changes'],announcements:['announcements']}[kind] ?? [];
+    for(const name of kinds)await load(manifest.files.find(f=>f.kind===name));
+    const query=new URLSearchParams(search);
+    if(kind==='weapons'||kind==='blessings') {
+      const index=selected.get(`domains/${kind}-index.json`)?.document;
+      const items=(index?.items ?? []).filter(item=>kind==='weapons' ? query.has('family')&&item.family===query.get('family') : query.has('id')&&item.id===query.get('id'));
+      for(const item of items) { const row=manifest.files.find(f=>f.path===item.path);if(!row||row.kind!==(kind==='weapons'?'weapon-family':'blessing'))throw new Error('Invalid index shard');await load(row); }
+    }
+    return { status:'ready',sourceData:true,pointer,manifest,domains:[...selected.values()],versions:build.game_releases,fixtureOnly:build.package_kind==='fixture' };
   } };
 }

@@ -5,10 +5,10 @@
 ## 在 GitHub 部署
 1. 本 PR 合併至 main 後，開啟 Repository Settings → Secrets and variables → Actions。
 2. 新增 Repository Secret，名稱為 `CLOUDFLARE_API_TOKEN`，值填入 Cloudflare Token。
-3. 開啟 Actions → Static package CI and Cloudflare deployment → Run workflow，選 main。
-4. 工作流建置、測試、驗證，部署預覽站，通過後發布正式站 `https://darktide.tw-syuan.com`。
+3. 開啟 Actions → Deploy pinned Source-Data to Cloudflare → Run workflow，選 main，輸入 Source-Data 的完整 40 碼 commit。
+4. 工作流測試、建置指定來源、驗證及部署預覽站，通過後發布正式站 `https://darktide.tw-syuan.com`，再核對線上來源 commit 與瀏覽器頁面。
 
-新增或更新 Secret 本身不會觸發部署；首次設定後需手動 Run workflow。之後 main 更新會自動建置與部署。缺 Secret 時建置照常驗證，部署標示等候憑證。
+新增或更新 Secret 與 main 更新均不會觸發部署；正式部署只接受手動 Run workflow。缺 Secret 時既有 credential 檢查會中止部署。
 
 詳見 [GitHub 部署說明](docs/CLOUDFLARE-DEPLOYMENT.md)；日常維護請看 [監控、備份與回復手冊](docs/OPERATIONS.md)。
 
@@ -30,3 +30,26 @@ npm run prepare:deploy
 ```
 此流程只建置與驗證，不需要部署 Token，也不建立 Cloudflare 資源。
 `npm run serve:static -- 8087` 可在本機預覽。
+# Source-Data 直接建置（SYP-388）
+
+```powershell
+node scripts/build.mjs --source-data <checkout目錄> --source-data-commit <40碼小寫SHA> --site-origin https://darktide.tw-syuan.com
+npm run build:fixture
+npm run smoke:browser
+```
+
+指定 commit 必須等於 checkout 的 HEAD。若來源含 `pipeline/validate.mjs`，先執行它，再驗證 Web 所需欄位、唯一 ID、版本及四類檔案。驗證失敗不寫入新 dist；既有成功產物保留。沒有 `data/current.json` 的過渡版本無法部署。舊建置／W09／compose／overlay／proposal 入口本輪保留。
+
+每個版本各有 `/data/<dataRevision>/manifest.json`，schemaVersion 為 `3.0.0`。manifest 保留 `gameVersion`、`dataRevision`、`files[]`（kind、path、sizeBytes、sha256、dependencies），來源為 `source: {repository: "SyuanTsai/DarkTide-Source-Data", commit, dataSchemaVersion, textBatch}`。`dataRevision` 是不含自身欄位之 manifest 的兩格縮排 JSON 加 LF 的 SHA-256。`/version.json` schema_version 為 3，保留 game_releases 指標位置；每筆包含 game_version、data_revision、manifest_path、manifest_sha256，無 W02／W09 content version 或 receipt。分檔完整保留 Source-Data item；index 只存 id、name、family／mark、path。武器依 family、祝福每筆一個 shard，單檔上限沿用 `scripts/content/contract-release.mjs` 的 `16 * 1024 * 1024`。
+
+給 WP6 外掛的固定路徑契約：
+
+- `/source-data/current.json` 與來源 `data/current.json` 位元組相同，採 `no-cache, must-revalidate`。
+- `/source-data/<version>/{skills,weapons,blessings,terms}.json` 包含 current.versions 全部版本，與來源位元組相同，採一年 immutable 快取；已發布版本資料應保持凍結。
+- `/source-data/*` 使用 `application/json; charset=utf-8`，允許跨來源 GET／HEAD：`Access-Control-Allow-Origin: *` 與 `Access-Control-Allow-Methods: GET, HEAD`。
+- 網站新版本由版本指標切換；`/history/1.13.1/` 仍使用原固定歷史公開投影。
+
+公告直接讀取 `content/authoring/v2/w15/announcement-candidate.json`（5 筆）及 `content/authoring/v2/official-announcements/20261030/announcements.json`（3 筆），不經 compose。與既有公告分檔的 8 筆 ID 及全部顯示欄位深度比對一致。遊戲變更只經 `src/build/game-changes.mjs` 取得；沒有上一版及凍結資料時顯示空狀態，1.13.4 使用凍結 W12 資料。
+
+正式部署由 `.github/workflows/deploy.yml` 的 workflow_dispatch 觸發，需明確輸入 Source-Data commit；使用 production environment 與既有 Cloudflare versions upload／deploy、預覽驗證及回復流程。部署後核對線上 manifest 的 source.commit，再執行線上 browser smoke。PR／push 的 static-ci 只執行測試、fixture 建置與 smoke，不部署。此工作未觸發部署或 push。
+

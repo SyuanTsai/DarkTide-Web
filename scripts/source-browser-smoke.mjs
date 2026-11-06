@@ -19,6 +19,7 @@ export async function runSourceBrowserSmoke(distPath, verification, { origin } =
       await goto(`/skills/?version=${pointer.game_version}`);
       assert.ok(await page.locator('[data-item-id]').count());
       await goto(`/blessings/?version=${pointer.game_version}`);
+      await page.locator('#main a[href*="id="]').first().click();await page.locator('[data-item-id]').first().waitFor();
       const tierText=await page.locator('#main').innerText();for(const tier of [1,2,3,4])assert.ok(tierText.includes(`LV${tier}`));
       await goto(`/weapons/?version=${pointer.game_version}`);
       await page.locator('nav[aria-label="武器型號"] a').first().click();await page.locator('[data-item-id]').first().waitFor();
@@ -31,7 +32,7 @@ export async function runSourceBrowserSmoke(distPath, verification, { origin } =
       await goto('/skills/?version=9.9.2');const text=await page.locator('#main').innerText();
       for(const expected of ['官方原文','原始碼未公開','非官方譯名','效果','條件','計算','補充','額外'])assert.ok(text.includes(expected),expected);
       assert.equal(await page.locator('[data-item-id="darktide:skill:fixture_b"] [data-section]').count(),1);
-      await goto('/blessings/');assert.ok((await page.locator('.source-errata').first().innerText()).includes('勘誤'));
+      await goto('/blessings/?id=darktide%3Ablessing%3Afixture_a');assert.ok((await page.locator('.source-errata').first().innerText()).includes('勘誤'));
     }
     await goto('/announcements/');assert.equal(await page.locator('.shared-announcement-entry').count(),8);
     await page.locator('.shared-announcement-entry a[href^="/announcements/"]').first().click();await page.locator('.shared-announcement-content').waitFor();

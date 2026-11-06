@@ -45,7 +45,7 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
   }
  }
  assert.match(versionResponse.headers.get('cache-control')??'',/no-cache|no-store/,'version must revalidate');
- for(const route of ['/','/skills/ogryn/','/weapons/bolter_p1/','/blessings/terrifying-barrage/']){
+ for(const route of expected.source_data ? ['/','/skills/','/weapons/','/blessings/','/terms/','/game-changes/','/announcements/'] : ['/','/skills/ogryn/','/weapons/bolter_p1/','/blessings/terrifying-barrage/']){
   const r=await get(route,{headers:{'Sec-Fetch-Mode':'navigate'}});
   assert.equal(r.status,200,'document status '+route);
   assert.match(r.headers.get('content-type')??'',/text\/html/i);

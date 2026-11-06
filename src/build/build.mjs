@@ -9,6 +9,7 @@ import { buildHashedAssets } from '../static/module-graph.mjs';
 import { replaceDirectory } from '../static/build.mjs';
 import { loadW14HistoryStaticFiles } from '../../scripts/content/contract-w14-history.mjs';
 import { verifyStaticPackage } from '../static/verify.mjs';
+import { renderStaticRewrites } from '../static/routing-policy.mjs';
 
 export async function buildSourceSite({ root, sourceData, sourceDataCommit, siteOrigin, fixture = false }) {
   root = path.resolve(root);
@@ -37,7 +38,7 @@ export async function buildSourceSite({ root, sourceData, sourceDataCommit, site
     .replace('__GAMES_LANTERN_CREDIT__','<p class="asset-credit">本網站部分圖片素材經 <a href="https://darktide.gameslantern.com/">Games Lantern</a> 許可使用。</p>');
   files.set('index.html',Buffer.from(html));files.set('version.json',jsonBytes(version));files.set('_headers',Buffer.from(sourceDataHeaders()));
   const routes=['/','/skills/','/weapons/','/blessings/','/terms/','/game-changes/','/announcements/','/history/1.13.1/'];
-  files.set('_redirects',Buffer.from(['/ /index.html 200',...routes.filter(x=>x!=='/').map(x=>`${x} /index.html 200`),'/history/1.13.1 /index.html 200'].join('\n')+'\n'));
+  files.set('_redirects',Buffer.from(renderStaticRewrites({redirects:[]},{includeAnnouncements:true,includeHistory:true})+'/terms/* / 200\n'));
   files.set('robots.txt',Buffer.from('User-agent: *\nAllow: /\n'+(siteOrigin?`Sitemap: ${siteOrigin}/sitemap.xml\n`:'')));
   if(siteOrigin)files.set('sitemap.xml',Buffer.from('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+routes.map(route=>`<url><loc>${siteOrigin}${route}</loc></url>`).join('')+'</urlset>\n'));
   const manifest={schema_version:1,package_kind:packageKind,build_id:buildId,data_revision:version.data_revision,files:[...files].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([name,bytes])=>({path:name,size_bytes:bytes.length,sha256:sha256(bytes)}))};
