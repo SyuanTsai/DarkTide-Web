@@ -2,10 +2,12 @@ export function sourceChangeValueText(value) {
   return value === null ? '原始碼未公開' : JSON.stringify(value, (_key, entry) => entry === null ? '原始碼未公開' : entry);
 }
 
-export function sourceItemPresentation(item) {
+export function sourceItemPresentation(item, schemaVersion = '1.0.0') {
   const parameters = params => Object.entries(params ?? {}).map(([key, param]) => ({ key, value: param.unknown ? '原始碼未公開' : Array.isArray(param.value) ? param.value.join('、') : String(param.value), unit: param.unit ?? '' }));
+  const modern = /^(?:darktide:blessing:|darktide:skill:)/.test(item.id) && schemaVersion !== '1.0.0';
   return {
     id: item.id, name: item.name.zh || '名稱待確認', unofficial: item.name.origin === 'glossary',
+    modern, ...(modern ? { effectOrigin: item.explanation.effectOrigin ?? (item.official.zh === null ? 'unofficial-translation' : 'official') } : {}),
     official: item.official, errata: item.errata,
     sections: [['effect', '效果'], ['conditions', '條件'], ['calculation', '計算'], ['notes', '補充'], ['extra', '額外']]
       .filter(([key]) => item.explanation[key].trim()).map(([key, label]) => ({ key, label, text: item.explanation[key] })),

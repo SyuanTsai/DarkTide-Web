@@ -2236,23 +2236,33 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   main.focus();
 }
 
-function renderSourceItem(parent, item) {
-  const p = sourceItemPresentation(item);
+function renderSourceItem(parent, item, schemaVersion) {
+  const p = sourceItemPresentation(item, schemaVersion);
   const article = node('article', null, 'shared-entry'); article.dataset.itemId = item.id;
   article.append(node('h2', p.name));
   if (p.unofficial) article.append(node('p', '非官方譯名', 'shared-muted'));
-  if (p.official.zh || p.official.en) {
+  if (!p.modern && (p.official.zh || p.official.en)) {
     const official = node('section', null, 'source-official'); official.append(node('h3', '官方原文'));
     if (p.official.zh) official.append(node('p', p.official.zh));
     if (p.official.en) { const details = node('details'); details.append(node('summary', '英文原文'), node('p', p.official.en)); official.append(details); }
     article.append(official);
+  }
+  if (p.modern) {
+    const effect = node('section', null, 'source-effect'); const heading = node('h3', '效果');
+    if (p.effectOrigin === 'unofficial-translation') { const badge = node('span', '非官方翻譯', 'source-effect-origin'); badge.dataset.effectOrigin = p.effectOrigin; heading.append(badge); }
+    effect.append(heading, node('p', item.explanation.effect));
+    if (p.effectOrigin === 'unofficial-translation') effect.append(node('p', '遊戲沒有提供繁體中文官方文字，此段由 AI 翻譯，僅供參考。', 'shared-muted'));
+    if (p.official.en) { const details = node('details'); details.append(node('summary', '英文原文'), node('p', p.official.en)); effect.append(details); }
+    article.append(effect);
+    const mechanics = p.sections.filter(section => section.key !== 'effect');
+    if (mechanics.length) { const block = node('section'); block.append(node('h3', '實際運作機制')); for (const section of mechanics) { const sub = node('section'); sub.dataset.section = section.key; sub.append(node('h4', section.label), node('p', section.text)); block.append(sub); } article.append(block); }
   }
   if (p.errata.length) {
     const errata = node('section', null, 'source-errata'); errata.append(node('h3', '勘誤'));
     for (const row of p.errata) errata.append(node('p', `${row.official} → ${row.corrected}`));
     article.append(errata);
   }
-  for (const section of p.sections) { const block = node('section'); block.dataset.section = section.key; block.append(node('h3', section.label), node('p', section.text)); article.append(block); }
+  if (!p.modern) for (const section of p.sections) { const block = node('section'); block.dataset.section = section.key; block.append(node('h3', section.label), node('p', section.text)); article.append(block); }
   const parameters = (parent, params) => { const list = node('dl'); for (const p of params) list.append(node('dt', p.key), node('dd', `${p.value}${p.unit ? ` ${UNIT_LABELS[p.unit] ?? p.unit}` : ''}`)); parent.append(list); };
   parameters(article, p.params);
   for (const tier of p.tiers) { const block=node('section'); block.append(node('h3',tier.label)); parameters(block,tier.params);article.append(block); }
@@ -2312,13 +2322,15 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       if(url.searchParams.has('tree'))items=items.filter(i=>i.values.tree===url.searchParams.get('tree'));
     }
     if(route==='terms') {
+      const rules = domain('term-rules')?.rules?.rules ?? [];
+      if (rules.length) { const section = node('section'); section.append(node('h2', '術語譯名規則'), node('p', '社群譯名規則，非遊戲官方術語')); const list = node('ul'); for (const rule of rules) list.append(node('li', `${rule.sourceText} → ${rule.targetText}`)); section.append(list); main.append(section); }
       const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','術語分類');const labels={keyword:'關鍵字',class:'職業','skill-type':'技能類型','weapon-type':'武器類型','weapon-stat':'武器素質','weapon-perk':'武器特長',quality:'品質',curio:'珍品','curio-perk':'珍品特長','curio-trait':'珍品特性','mortis-buff':'死神試煉增益'};
       for(const category of [...new Set(items.map(i=>i.values.category))])nav.append(link(href({category}),labels[category]??'其他'));main.append(nav);
       if(url.searchParams.has('category'))items=items.filter(i=>i.values.category===url.searchParams.get('category'));
     }
     const id=url.searchParams.get('id');if(id)items=items.filter(i=>i.id===id);
     if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
-    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));renderSourceItem(main,item);}
+    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));const document = result.domains.find(d => d.document.items?.includes(item))?.document;renderSourceItem(main,item,document?.schemaVersion);}
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
   } else {
     main.append(node('h1','黑潮繁體資料庫'));

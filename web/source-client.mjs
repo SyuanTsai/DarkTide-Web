@@ -48,7 +48,7 @@ export function createSourceClient({ build, fetchImpl = globalThis.fetch.bind(gl
       return document;
     };
     const kind = pathname.split('/')[1];
-    const kinds = {skills:['skills','terms'],terms:['terms'],weapons:['weapons-index'],blessings:['blessings-index'],'game-changes':['game-changes'],announcements:['announcements']}[kind] ?? [];
+    const kinds = {skills:['skills','terms','term-rules'],terms:['terms','term-rules'],weapons:['weapons-index'],blessings:['blessings-index'],'game-changes':['game-changes'],announcements:['announcements']}[kind] ?? [];
     for(const name of kinds)await load(manifest.files.find(f=>f.kind===name));
     const query=new URLSearchParams(search);
     if(kind==='weapons'||kind==='blessings') {

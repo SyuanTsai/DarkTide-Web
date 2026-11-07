@@ -3,6 +3,11 @@ import { buildGameChangesDomain } from './game-changes.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
 // Same per-file limit as scripts/content/contract-release.mjs (MAX_DOMAIN_BYTES).
 export const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
+export function validateTermRules(sidecar) {
+  const rules = sidecar?.rules?.rules;
+  if (sidecar?.schemaVersion !== '1.0.0' || !sidecar.provenance || !Array.isArray(rules) || rules.length !== 7 || new Set(rules.map(r => r?.ruleId)).size !== 7 || !rules.every(r => r && ['ruleId','sourceText','targetText'].every(k => typeof r[k] === 'string' && r[k].length > 0))) throw new Error('Invalid term-rules sidecar');
+  return sidecar;
+}
 export function boundedShardPaths(category, values, hash = value => sha256(Buffer.from(value, 'utf8'))) {
   const paths = new Map(); const owners = new Map();
   for (const value of values) {
@@ -19,7 +24,7 @@ export function weaponFamilyPaths(families, hash) {
   return boundedShardPaths('weapons', families, hash);
 }
 
-export function buildSiteData({ source, announcements = null, frozen = {} }) {
+export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
     const data = source.dataByVersion[gameVersion];
@@ -32,6 +37,7 @@ export function buildSiteData({ source, announcements = null, frozen = {} }) {
       domains.set(path, bytes); rows.push({ kind, path, sizeBytes: bytes.length, sha256: sha256(bytes), dependencies });
     };
     for (const category of ['skills', 'terms']) add(category, `domains/${category}.json`, data[category]);
+    if (termRules) add('term-rules', 'domains/term-rules.json', termRules);
     const index = (item, path) => ({ id: item.id, name: item.name, ...(item.values.family ? { family: item.values.family, mark: item.values.mark } : {}), path });
     const weaponIndex = [];
     const families = [...new Set(data.weapons.items.map(item => item.values.family))].sort(compareUtf8);

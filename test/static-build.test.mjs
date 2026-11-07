@@ -280,7 +280,7 @@ test('InterT10_build_and_verify_CLIs_work_with_a_temporary_root_containing_space
   const root = await createBuildRoot({ withSpaces: true });
   try {
     // The new fixture CLI builds direct Source-Data plus the Web announcement/history inputs.
-    for (const name of ['content/authoring/v2', 'content/history']) await cp(join(REPO_ROOT, name), join(root, name), { recursive: true });
+    for (const name of ['content/authoring/v2', 'content/history', 'content/reference']) await cp(join(REPO_ROOT, name), join(root, name), { recursive: true });
     const formal = spawnSync(process.execPath, [BUILD_CLI, '--root', root], { encoding: 'utf8', timeout: 120_000 });
     assert.notEqual(formal.status, 0);
     assert.match(formal.stderr, /--source-data is required/);
