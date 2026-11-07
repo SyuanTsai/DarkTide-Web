@@ -7,6 +7,7 @@ export const CATEGORIES = ['skills', 'weapons', 'blessings', 'terms'];
 export const SUPPORTED_SCHEMA_VERSIONS = Object.freeze({ '1.0.0': { extended: false }, '1.1.0': { extended: true } });
 const versionPattern = /^[0-9]+(?:\.[0-9]+){1,3}$/;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const keysOnly = (value, keys) => object(value) && Object.keys(value).every(key => keys.includes(key));
 const requireValue = (condition, message) => { if (!condition) throw new Error(`Source-Data: ${message}`); };
 
 async function regularBytes(directory, relative) {
@@ -39,11 +40,12 @@ function validateItem(item, category, ids, features) {
     && [item.name.zh, item.name.en].every(x => x === null || typeof x === 'string'), `${label} name invalid`);
   requireValue(object(item.official) && ['zh', 'en'].every(key => item.official[key] === null || typeof item.official[key] === 'string'), `${label} official invalid`);
   requireValue(object(item.explanation) && ['effect', 'conditions', 'calculation', 'notes', 'extra'].every(key => typeof item.explanation[key] === 'string'), `${label} explanation invalid`);
-  requireValue(!Object.hasOwn(item.explanation, 'effectOrigin') || (features.extended && ['official', 'unofficial-translation'].includes(item.explanation.effectOrigin)), `${label} effectOrigin invalid`);
-  requireValue(!Object.hasOwn(item, 'retainedFrom') || (features.extended && object(item.retainedFrom) && versionPattern.test(item.retainedFrom.gameVersion) && /^[a-fA-F0-9]{40}$/.test(item.retainedFrom.sourceCommit) && typeof item.retainedFrom.textBatch === 'string' && item.retainedFrom.textBatch.length > 0), `${label} retainedFrom invalid`);
+  requireValue(keysOnly(item.explanation, ['effect', 'conditions', 'calculation', 'notes', 'extra', 'effectOrigin']), `${label} explanation invalid`);
+  requireValue(!Object.hasOwn(item.explanation, 'effectOrigin') || (features.extended && ['skills', 'blessings'].includes(category) && ['official', 'unofficial-translation'].includes(item.explanation.effectOrigin)), `${label} effectOrigin invalid`);
+  requireValue(!Object.hasOwn(item, 'retainedFrom') || (features.extended && keysOnly(item.retainedFrom, ['gameVersion','sourceCommit','textBatch']) && typeof item.retainedFrom.gameVersion === 'string' && versionPattern.test(item.retainedFrom.gameVersion) && typeof item.retainedFrom.sourceCommit === 'string' && /^[a-fA-F0-9]{40}$/.test(item.retainedFrom.sourceCommit) && typeof item.retainedFrom.textBatch === 'string' && /^[A-Za-z0-9._-]{1,128}$/.test(item.retainedFrom.textBatch)), `${label} retainedFrom invalid`);
   requireValue(Array.isArray(item.errata) && item.errata.every(x => object(x) && ['en', 'zh'].includes(x.locale)
     && ['official', 'corrected', 'valueRef'].every(key => typeof x[key] === 'string')), `${label} errata invalid`);
-  requireValue(item.errata.every(x => !Object.hasOwn(x, 'anchor') || (features.extended && object(x.anchor) && ['official', 'name'].includes(x.anchor.field) && ['en', 'zh'].includes(x.anchor.locale) && typeof x.anchor.text === 'string' && x.anchor.text.length > 0 && Number.isInteger(x.anchor.occurrence) && x.anchor.occurrence >= 1)), `${label} errata anchor invalid`);
+  requireValue(item.errata.every(x => !Object.hasOwn(x, 'anchor') || (features.extended && keysOnly(x.anchor, ['field','locale','text','occurrence']) && ['official', 'name'].includes(x.anchor.field) && ['en', 'zh'].includes(x.anchor.locale) && typeof x.anchor.text === 'string' && x.anchor.text.length > 0 && Number.isInteger(x.anchor.occurrence) && x.anchor.occurrence >= 1)), `${label} errata anchor invalid`);
   requireValue(object(item.source) && /^[a-fA-F0-9]{40}$/.test(item.source.commit) && Array.isArray(item.source.files), `${label} source invalid`);
   const v = item.values; requireValue(object(v), `${label} values required`); params(v.params, label);
   if (category === 'skills') requireValue(['archetype', 'tree', 'nodeType'].every(key => typeof v[key] === 'string') && Array.isArray(v.parents) && Number.isInteger(v.maxPoints), `${label} skill values invalid`);
@@ -61,6 +63,8 @@ function validateItem(item, category, ids, features) {
       requireValue(Array.isArray(v.attackCombos) && v.attackCombos.every(c => object(c) && typeof c.id === 'string' && ['light','heavy'].includes(c.kind) && typeof c.start === 'string' && Array.isArray(c.steps) && c.steps.every(s => object(s) && typeof s.action === 'string' && typeof s.input === 'string' && name(s.name) && (s.damageProfile === null || typeof s.damageProfile === 'string') && (s.damageProfileUnknown === null || typeof s.damageProfileUnknown === 'string')) && (c.loopsTo === null || (Number.isInteger(c.loopsTo) && c.loopsTo >= 0)) && (c.unknown === null || typeof c.unknown === 'string') && source(c.source)), `${label} attackCombos invalid`);
       requireValue(v.curves.every(c => unknowns.includes(c.unknown) && (c.interpolation !== 'unknown' || (c.unknown !== null && c.knots.every(k => k.output === null))) && (c.unknown !== null || (c.interpolation === 'linear' && c.knots.every(k => k.output !== null)))) && v.attackCombos.every(c => unknowns.includes(c.unknown) && c.steps.every(s => unknowns.includes(s.damageProfileUnknown) && (s.damageProfile === null ? s.damageProfileUnknown !== null : s.damageProfileUnknown === null))), `${label} curve or combo unknown invalid`);
       const curveIds = new Set(v.curves.map(c => c.id));
+      requireValue(curveIds.size === v.curves.length, `${label} duplicate curve id`);
+      requireValue(v.curves.every(c => keysOnly(c, ['id','bar','stat','name','input','interpolation','knots','outputUnit','unknown','source']) && keysOnly(c.name, ['zh','en']) && keysOnly(c.input, ['source','unit','min','max']) && keysOnly(c.source, ['path','line']) && c.knots.every(k => keysOnly(k, ['input','output']))) && v.attackCombos.every(c => keysOnly(c, ['id','kind','start','steps','loopsTo','unknown','source']) && keysOnly(c.source, ['path','line']) && c.steps.every(s => keysOnly(s, ['action','input','name','damageProfile','damageProfileUnknown']) && keysOnly(s.name, ['zh','en']))), `${label} curve or combo properties invalid`);
       requireValue(v.bars.every(b => b.stats.every(s => typeof s.curveId === 'string' && curveIds.has(s.curveId))), `${label} curveId invalid`);
     }
   }

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { sourceItemPresentation } from '../web/shared-view.mjs';
 import { loadSourceData } from '../src/build/source-data.mjs';
+import { buildSourceSite } from '../src/build/build.mjs';
 import { cp, mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,6 +37,10 @@ test('InterT20_混合版本與新增欄位驗證', async () => {
     const current = await read('data/current.json'); current.versions.push('9.9.3'); current.gameVersion = '9.9.3'; current.path = 'data/9.9.3'; current.schemaVersion = '1.1.0'; await write('data/current.json', current);
     const load = () => loadSourceData({ directory: root, fixture: true });
     assert.equal((await load()).dataByVersion['9.9.1'].skills.schemaVersion, '1.0.0');
+    const repo = fileURLToPath(new URL('../', import.meta.url));
+    for (const name of ['web','content/history','content/authoring/v2','content/reference']) await cp(path.join(repo,name),path.join(root,name),{recursive:true});
+    await buildSourceSite({root,sourceData:root,fixture:true});
+    current.schemaVersion = '1.0.0'; await write('data/current.json', current); await assert.rejects(load(), /current schemaVersion mismatch/); current.schemaVersion = '1.1.0'; await write('data/current.json', current);
     const wp = 'data/9.9.3/weapons.json'; const weapon = await read(wp); const badCurve = structuredClone(weapon); badCurve.items[0].values.bars[0].stats[0].curveId = 'missing'; await write(wp, badCurve); await assert.rejects(load(), /curveId/); await write(wp, weapon);
     const sp = 'data/9.9.3/skills.json'; const skill = await read(sp); const badOrigin = structuredClone(skill); badOrigin.items[0].explanation.effectOrigin = 'invalid'; await write(sp, badOrigin); await assert.rejects(load(), /effectOrigin/); await write(sp, skill);
     const legacyPath = 'data/9.9.1/skills.json'; const legacy = await read(legacyPath); const badLegacy = structuredClone(legacy); badLegacy.items[0].explanation.effectOrigin = 'official'; await write(legacyPath, badLegacy); await assert.rejects(load(), /effectOrigin/); await write(legacyPath, legacy);
