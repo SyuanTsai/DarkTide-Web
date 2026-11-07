@@ -13,7 +13,7 @@ test('InterT10_monitor_checks_source_manifests_domains_assets_and_attribution', 
   const repo = fileURLToPath(new URL('../', import.meta.url));
   const root = await mkdtemp(path.join(repo, '.static-build-staging-monitor-'));
   t.after(() => rm(root, { recursive: true, force: true }));
-  for (const name of ['web', 'content/history', 'content/authoring/v2']) await cp(path.join(repo, name), path.join(root, name), { recursive: true });
+  for (const name of ['web', 'content/history', 'content/reference', 'content/authoring/v2']) await cp(path.join(repo, name), path.join(root, name), { recursive: true });
   await buildSourceSite({ root, sourceData: path.join(repo, 'test/fixtures/source-data'), fixture: true });
   const server = await createStaticServer({ distPath: path.join(root, 'dist') });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));

@@ -4,8 +4,10 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 const execute = promisify(execFile);
 export const CATEGORIES = ['skills', 'weapons', 'blessings', 'terms'];
+export const SUPPORTED_SCHEMA_VERSIONS = Object.freeze({ '1.0.0': { extended: false }, '1.1.0': { extended: true } });
 const versionPattern = /^[0-9]+(?:\.[0-9]+){1,3}$/;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const keysOnly = (value, keys) => object(value) && Object.keys(value).every(key => keys.includes(key));
 const requireValue = (condition, message) => { if (!condition) throw new Error(`Source-Data: ${message}`); };
 
 async function regularBytes(directory, relative) {
@@ -29,7 +31,7 @@ function params(value, label) {
     requireValue(param.value !== null || typeof param.unknown === 'string', `${label} params.${key} null without unknown`);
   }
 }
-function validateItem(item, category, ids) {
+function validateItem(item, category, ids, features) {
   const label = `${category}/${item?.id}`;
   requireValue(object(item) && typeof item.id === 'string' && item.id.startsWith(`darktide:${category === 'blessings' ? 'blessing' : category.slice(0, -1)}:`), `${label} invalid id`);
   requireValue(!ids.has(item.id), `${label} duplicate id`); ids.add(item.id);
@@ -38,8 +40,12 @@ function validateItem(item, category, ids) {
     && [item.name.zh, item.name.en].every(x => x === null || typeof x === 'string'), `${label} name invalid`);
   requireValue(object(item.official) && ['zh', 'en'].every(key => item.official[key] === null || typeof item.official[key] === 'string'), `${label} official invalid`);
   requireValue(object(item.explanation) && ['effect', 'conditions', 'calculation', 'notes', 'extra'].every(key => typeof item.explanation[key] === 'string'), `${label} explanation invalid`);
+  requireValue(keysOnly(item.explanation, ['effect', 'conditions', 'calculation', 'notes', 'extra', 'effectOrigin']), `${label} explanation invalid`);
+  requireValue(!Object.hasOwn(item.explanation, 'effectOrigin') || (features.extended && ['skills', 'blessings'].includes(category) && ['official', 'unofficial-translation'].includes(item.explanation.effectOrigin)), `${label} effectOrigin invalid`);
+  requireValue(!Object.hasOwn(item, 'retainedFrom') || (features.extended && keysOnly(item.retainedFrom, ['gameVersion','sourceCommit','textBatch']) && typeof item.retainedFrom.gameVersion === 'string' && versionPattern.test(item.retainedFrom.gameVersion) && typeof item.retainedFrom.sourceCommit === 'string' && /^[a-fA-F0-9]{40}$/.test(item.retainedFrom.sourceCommit) && typeof item.retainedFrom.textBatch === 'string' && /^[A-Za-z0-9._-]{1,128}$/.test(item.retainedFrom.textBatch)), `${label} retainedFrom invalid`);
   requireValue(Array.isArray(item.errata) && item.errata.every(x => object(x) && ['en', 'zh'].includes(x.locale)
     && ['official', 'corrected', 'valueRef'].every(key => typeof x[key] === 'string')), `${label} errata invalid`);
+  requireValue(item.errata.every(x => !Object.hasOwn(x, 'anchor') || (features.extended && keysOnly(x.anchor, ['field','locale','text','occurrence']) && ['official', 'name'].includes(x.anchor.field) && ['en', 'zh'].includes(x.anchor.locale) && typeof x.anchor.text === 'string' && x.anchor.text.length > 0 && Number.isInteger(x.anchor.occurrence) && x.anchor.occurrence >= 1)), `${label} errata anchor invalid`);
   requireValue(object(item.source) && /^[a-fA-F0-9]{40}$/.test(item.source.commit) && Array.isArray(item.source.files), `${label} source invalid`);
   const v = item.values; requireValue(object(v), `${label} values required`); params(v.params, label);
   if (category === 'skills') requireValue(['archetype', 'tree', 'nodeType'].every(key => typeof v[key] === 'string') && Array.isArray(v.parents) && Number.isInteger(v.maxPoints), `${label} skill values invalid`);
@@ -48,6 +54,19 @@ function validateItem(item, category, ids) {
     requireValue(v.actions.every(action => object(action) && object(action.name) && ['zh','en'].every(key => action.name[key] === null || typeof action.name[key] === 'string')), `${label} weapon actions invalid`);
     requireValue(v.bars.every(bar => object(bar) && object(bar.name) && ['zh','en'].every(key => bar.name[key] === null || typeof bar.name[key] === 'string') && Array.isArray(bar.stats)
       && bar.stats.every(stat => object(stat) && object(stat.name) && ['zh','en'].every(key => stat.name[key] === null || typeof stat.name[key] === 'string') && Number.isFinite(stat.min) && Number.isFinite(stat.max))), `${label} weapon bars invalid`);
+    if (!features.extended) requireValue(!Object.hasOwn(v, 'curves') && !Object.hasOwn(v, 'attackCombos') && v.bars.every(b => b.stats.every(s => !Object.hasOwn(s, 'curveId'))), `${label} 1.1.0 weapon fields forbidden`);
+    else {
+      const source = x => object(x) && typeof x.path === 'string' && x.path.length > 0 && Number.isInteger(x.line) && x.line >= 1;
+      const name = x => object(x) && ['zh', 'en'].every(k => x[k] === null || typeof x[k] === 'string');
+      const unknowns = [null, 'LERP_T_OUT_OF_RANGE', 'NONLINEAR_COMBINATION', 'NONLINEAR_LERP', 'CONDITIONAL_CHAIN', 'CHAIN_TARGET_NOT_FOUND', 'CHAIN_START_AMBIGUOUS', 'CHAIN_CYCLE_WITHOUT_ATTACK', 'DYNAMIC_VALUE', 'REFERENCE_NOT_FOUND', 'DAMAGE_PROFILE_BINDING_NOT_FOUND'];
+      requireValue(Array.isArray(v.curves) && v.curves.every(c => object(c) && ['id','bar','stat'].every(k => typeof c[k] === 'string') && name(c.name) && object(c.input) && c.input.source === 'base_stat_value' && c.input.unit === 'ratio' && c.input.min === 0 && c.input.max === 1 && ['linear','unknown'].includes(c.interpolation) && Array.isArray(c.knots) && c.knots.length === 2 && c.knots.every(k => object(k) && [0,1].includes(k.input) && (k.output === null || Number.isFinite(k.output) || (Array.isArray(k.output) && k.output.every(Number.isFinite)))) && (c.outputUnit === null || typeof c.outputUnit === 'string') && (c.unknown === null || typeof c.unknown === 'string') && source(c.source)), `${label} curves invalid`);
+      requireValue(Array.isArray(v.attackCombos) && v.attackCombos.every(c => object(c) && typeof c.id === 'string' && ['light','heavy'].includes(c.kind) && typeof c.start === 'string' && Array.isArray(c.steps) && c.steps.every(s => object(s) && typeof s.action === 'string' && typeof s.input === 'string' && name(s.name) && (s.damageProfile === null || typeof s.damageProfile === 'string') && (s.damageProfileUnknown === null || typeof s.damageProfileUnknown === 'string')) && (c.loopsTo === null || (Number.isInteger(c.loopsTo) && c.loopsTo >= 0)) && (c.unknown === null || typeof c.unknown === 'string') && source(c.source)), `${label} attackCombos invalid`);
+      requireValue(v.curves.every(c => unknowns.includes(c.unknown) && (c.interpolation !== 'unknown' || (c.unknown !== null && c.knots.every(k => k.output === null))) && (c.unknown !== null || (c.interpolation === 'linear' && c.knots.every(k => k.output !== null)))) && v.attackCombos.every(c => unknowns.includes(c.unknown) && c.steps.every(s => unknowns.includes(s.damageProfileUnknown) && (s.damageProfile === null ? s.damageProfileUnknown !== null : s.damageProfileUnknown === null))), `${label} curve or combo unknown invalid`);
+      const curveIds = new Set(v.curves.map(c => c.id));
+      requireValue(curveIds.size === v.curves.length, `${label} duplicate curve id`);
+      requireValue(v.curves.every(c => keysOnly(c, ['id','bar','stat','name','input','interpolation','knots','outputUnit','unknown','source']) && keysOnly(c.name, ['zh','en']) && keysOnly(c.input, ['source','unit','min','max']) && keysOnly(c.source, ['path','line']) && c.knots.every(k => keysOnly(k, ['input','output']))) && v.attackCombos.every(c => keysOnly(c, ['id','kind','start','steps','loopsTo','unknown','source']) && keysOnly(c.source, ['path','line']) && c.steps.every(s => keysOnly(s, ['action','input','name','damageProfile','damageProfileUnknown']) && keysOnly(s.name, ['zh','en']))), `${label} curve or combo properties invalid`);
+      requireValue(v.bars.every(b => b.stats.every(s => typeof s.curveId === 'string' && curveIds.has(s.curveId))), `${label} curveId invalid`);
+    }
   }
   if (category === 'terms') requireValue(typeof v.category === 'string' && Array.isArray(v.refs), `${label} term values invalid`);
   if (category === 'blessings') {
@@ -78,7 +97,8 @@ export async function loadSourceData({ directory, commit, fixture = false }) {
     return parse(bytes, relative);
   };
   const current = await read('current.json');
-  requireValue(current.schemaVersion === '1.0.0' && versionPattern.test(current.gameVersion) && current.path === `data/${current.gameVersion}`, 'current.json schema/version/path invalid');
+  requireValue(Object.hasOwn(SUPPORTED_SCHEMA_VERSIONS, current.schemaVersion), `unsupported schemaVersion ${current.schemaVersion}`);
+  requireValue(versionPattern.test(current.gameVersion) && current.path === `data/${current.gameVersion}`, 'current.json schema/version/path invalid');
   requireValue(Array.isArray(current.versions) && current.versions.length > 0 && current.versions.every(v => typeof v === 'string' && versionPattern.test(v))
     && new Set(current.versions).size === current.versions.length && current.versions.includes(current.gameVersion), 'current.json versions invalid');
   const compare = (a, b) => { const x = a.split('.').map(BigInt), y = b.split('.').map(BigInt); for (let i = 0; i < Math.max(x.length, y.length); i++) { if ((x[i] ?? 0n) !== (y[i] ?? 0n)) return (x[i] ?? 0n) < (y[i] ?? 0n) ? -1 : 1; } return 0; };
@@ -89,12 +109,14 @@ export async function loadSourceData({ directory, commit, fixture = false }) {
     const files = {}; const ids = new Set();
     for (const category of CATEGORIES) {
       const file = await read(`${version}/${category}.json`);
-      requireValue(file.category === category && file.gameVersion === version && file.schemaVersion === current.schemaVersion && Array.isArray(file.items), `${version}/${category}.json metadata invalid`);
+      requireValue(Object.hasOwn(SUPPORTED_SCHEMA_VERSIONS, file.schemaVersion), `unsupported schemaVersion ${file.schemaVersion}`);
+      requireValue(file.category === category && file.gameVersion === version && Array.isArray(file.items), `${version}/${category}.json metadata invalid`);
       requireValue(/^[a-fA-F0-9]{40}$/.test(file.sourceCommit) && typeof file.textBatch === 'string', `${version}/${category}.json source metadata invalid`);
-      for (const item of file.items) { validateItem(item, category, ids); requireValue(item.source.commit === file.sourceCommit, `${item.id} source commit mismatch`); }
+      for (const item of file.items) { validateItem(item, category, ids, SUPPORTED_SCHEMA_VERSIONS[file.schemaVersion]); requireValue(item.source.commit === file.sourceCommit, `${item.id} source commit mismatch`); }
       files[category] = file;
     }
-    requireValue(CATEGORIES.every(c => files[c].sourceCommit === files.skills.sourceCommit && files[c].textBatch === files.skills.textBatch), `${version} files disagree`);
+    requireValue(CATEGORIES.every(c => files[c].schemaVersion === files.skills.schemaVersion && files[c].sourceCommit === files.skills.sourceCommit && files[c].textBatch === files.skills.textBatch), `${version} files disagree`);
+    requireValue(version !== current.gameVersion || files.skills.schemaVersion === current.schemaVersion, `${version} current schemaVersion mismatch`);
     dataByVersion[version] = files;
   }
   return { current, dataByVersion, rawFiles, commit: head ?? current.sourceCommit };
