@@ -57,7 +57,6 @@ const cases = [
   ['valueSources pointer', 'skills', i => { i.source.valueSources = {'invalid': [{path:'x',line:1}]}; }],
   ['valueSources empty', 'skills', i => { i.source.valueSources['/mechanics/buff.duration'] = []; }],
   ['valueSources location', 'skills', i => { i.source.valueSources['/mechanics/buff.duration'][0].line = 0; }],
-  ['codeRefs key', 'skills', i => { i.source.codeRefs = {'bad': {path:'x',symbol:'y',sha256:'a'.repeat(64)}}; }],
   ['codeRefs consistency', 'skills', i => { i.source.codeRefs['scripts/example.lua#templates.example'].path = 'other'; }],
   ['codeRefs hash', 'skills', i => { i.source.codeRefs['scripts/example.lua#templates.example'].sha256 = 'A'.repeat(64); }],
   ['citations section', 'skills', i => { i.citations[0].section = 'other'; }],
@@ -118,6 +117,10 @@ const cases = [
 for (const field of ['section','text','codeRefs','valueRefs']) cases.push([`citations missing ${field}`, 'skills', i => { delete i.citations[0][field]; }]);
 for (const field of ['locale','official','corrected','valueRefs','sources']) cases.push([`errata missing ${field}`, 'skills', i => { if (field === 'locale') delete i.errata[0].anchor; delete i.errata[0][field]; }]);
 for (const [name, category, mutate] of cases) test(`schema12 rejects ${name}`, () => check(category, mutate));
+
+// Scenario: A codeRefs key has an invalid pattern while matching its path and symbol.
+// Purpose: Reject the key pattern violation independently of the consistency rule.
+test('InterT30_拒絕codeRefs key pattern', () => check('skills', i => { i.source.codeRefs = {'x.lua#bad!': {path:'x.lua',symbol:'bad!',sha256:'a'.repeat(64)}}; }));
 
 for (const version of ['1.0.0', '1.1.0']) for (const field of ['mechanics', 'valueSources', 'codeRefs', 'citations']) {
   test(`schema ${version} rejects ${field}`, async () => {

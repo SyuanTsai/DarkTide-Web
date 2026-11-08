@@ -34,7 +34,8 @@ const cases = [
   ['combo未知原因enum', 'weapons', i => { i.values.attackCombos[0].unknown = 'invalid'; }],
   ['combo傷害原因不一致', 'weapons', i => { i.values.attackCombos[0].steps[0].damageProfile = null; i.values.attackCombos[0].steps[0].damageProfileUnknown = null; }],
   ['anchor field enum', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'other',locale:'en',text:'x',occurrence:1}}]; }],
-  ['anchor locale enum', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'other',text:'x',occurrence:1}}]; }],
+  ['anchor/errata locale enum (matching invalid values)', 'skills', i => { i.errata = [{locale:'other',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'other',text:'x',occurrence:1}}]; }],
+  ['anchor locale differs from errata locale', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'zh',text:'x',occurrence:1}}]; }],
   ['anchor空text', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'',occurrence:1}}]; }],
 ];
 for (const [label, select, fields] of [
@@ -60,7 +61,7 @@ for (const [label, select, fields] of [
 for (const field of ['gameVersion','sourceCommit','textBatch']) cases.push([`retainedFrom的${field}型別錯誤`, 'skills', i => { i.retainedFrom = {gameVersion:'1.0',sourceCommit:'a'.repeat(40),textBatch:'ok'}; i.retainedFrom[field] = {}; }]);
 for (const field of ['field','locale','text','occurrence']) cases.push([`anchor的${field}型別錯誤`, 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'x',occurrence:1}}]; i.errata[0].anchor[field] = {}; }]);
 for (const [name, category, mutate] of cases) {
-  // Scenario: A single schema field is malformed in an otherwise valid fixture.
+  // Scenario: An otherwise valid fixture contains one malformed schema field or relationship.
   // Purpose: Reject the named contract violation before building.
   test(`InterT30_拒絕${name}`, async () => {
     const dir = await mkdtemp(path.join(os.tmpdir(), 'wp8b-contract-'));
