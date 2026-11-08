@@ -46,3 +46,12 @@ test('UnitT20_武器表格顯示正確比較點曲線祝福與威力',async()=>{
 
 // Scenario: render a legacy weapon. Purpose: preserve the 1.0.0 output byte for byte.
 test('UnitT30_1.0.0 武器頁與修改前快照完全一致',async()=>{const legacy=JSON.parse(await readFile(new URL('./fixtures/source-data/data/9.9.2/weapons.json',import.meta.url))).items[0];const family=[{id:legacy.id,family:legacy.values.family,name:legacy.name}];const snapshot=await read('legacy-snapshot');assert.deepEqual(JSON.parse(JSON.stringify(renderWeapon(legacy,family,[],'1.0.0'))),snapshot);});
+
+// Scenario: The blessing index is absent from a weapon detail result.
+// Purpose: Preserve each blessing ID in its link and display the fallback name.
+test('UnitT40_缺少祝福索引時保留連結與待確認名稱', async () => {
+ const item=(await read('weapons')).items[0]; const page=pageFor(item,[],null);
+ const links=allNodes(tables(page,'blessings')[0]).filter(n=>n.tagName==='a');
+ assert.equal(links.length,item.values.blessings.length);
+ links.forEach((link,i)=>{assert.equal(link.textContent,'名稱待確認'); assert.equal(new URL(link.href,'https://example.test').searchParams.get('id'),item.values.blessings[i]);});
+});

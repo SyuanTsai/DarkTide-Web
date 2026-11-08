@@ -13,7 +13,7 @@ export function renderWeapon(item, family, blessings, schemaVersion='1.1.0') {
   globalThis.document={head:new Element('head'),createElement:tag=>new Element(tag),querySelector:()=>null,querySelectorAll:()=>[]};
   const main=new Element('main');
   const url=new URL(`https://example.test/weapons/?family=${encodeURIComponent(item.values.family)}&id=${encodeURIComponent(item.id)}&version=1.13.4`);
-  try { renderSharedPage({main,buildMeta:new Element('p'),url,result:{sourceData:true,manifest:{gameVersion:'1.13.4',dataRevision:'a'.repeat(64)},versions:[],domains:[{kind:'weapons-index',document:{items:family}},{kind:'weapon-family',document:{schemaVersion,items:[item]}},{kind:'blessings-index',document:{items:blessings}}]}}); }
+  try { renderSharedPage({main,buildMeta:new Element('p'),url,result:{sourceData:true,manifest:{gameVersion:'1.13.4',dataRevision:'a'.repeat(64)},versions:[],domains:[{kind:'weapons-index',document:{items:family}},{kind:'weapon-family',document:{schemaVersion,items:[item]}},...(blessings === null ? [] : [{kind:'blessings-index',document:{items:blessings}}])]}}); }
   finally {globalThis.document=old;}
   return main;
 }
