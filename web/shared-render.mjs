@@ -2236,7 +2236,51 @@ export function renderSharedPage({ main, buildMeta, result, url = new URL(locati
   main.focus();
 }
 
-function renderSourceItem(parent, item, schemaVersion) {
+const SOURCE_UNKNOWN = Object.freeze({
+  CHAIN_START_AMBIGUOUS: '連段起始動作不明確', CONDITIONAL_CHAIN: '連段包含條件',
+  DAMAGE_PROFILE_BINDING_NOT_FOUND: '找不到傷害設定綁定', NOT_EXPOSED_BY_SOURCE: '來源未提供',
+  DYNAMIC_VALUE: '動態數值', NONLINEAR_COMBINATION: '非線性組合', NONLINEAR_LERP: '非線性插值',
+  LERP_T_OUT_OF_RANGE: '插值輸入超出範圍', CHAIN_TARGET_NOT_FOUND: '找不到連段目標',
+  CHAIN_CYCLE_WITHOUT_ATTACK: '連段循環中沒有攻擊', REFERENCE_NOT_FOUND: '找不到參照',
+  NOT_VERIFIED: '尚未驗證', SOURCE_UNAVAILABLE: '來源不可用', CONFLICTING_EVIDENCE: '來源證據互相矛盾',
+});
+const sourceUnknown = value => SOURCE_UNKNOWN[value] ?? `${value}（未翻譯原因）`;
+const sourceNumber = value => value === null ? '來源未提供' : Array.isArray(value) ? value.map(sourceNumber).join('、') : String(Number(value.toFixed(2)));
+function sourceTable(parent, kind, title, headers, rows) {
+  const details = node('details'); details.dataset.sourceTable = kind;
+  details.append(node('summary', `${title}（${rows.length}）`));
+  const table = node('table'); table.append(node('caption', title));
+  const head = node('thead'), tr = node('tr');
+  for (const label of headers) { const th = node('th', label); th.setAttribute('scope', 'col'); tr.append(th); }
+  head.append(tr); table.append(head); const body = node('tbody');
+  for (const row of rows) { const line = node('tr'); for (const value of row) { const cell = node('td'); if (typeof value === 'string') cell.textContent = value; else if (value) cell.append(value); line.append(cell); } body.append(line); }
+  table.append(body); details.append(table); parent.append(details);
+}
+function renderSourceWeaponTables(parent, item, context) {
+  const v = item.values;
+  for (const bar of v.bars) sourceTable(parent, 'stat-comparison', bar.name.zh || bar.id, ['素質', '最小值', '最大值', '面板比較點 60%', '面板比較點 80%'], bar.stats.map(s => [s.name.zh || s.key, sourceNumber(s.min), sourceNumber(s.max), sourceNumber(s.min + (s.max-s.min)*0.6), sourceNumber(s.min + (s.max-s.min)*0.8)]));
+  for (const bar of [...new Set(v.curves.map(c => c.bar))]) {
+    const curves = v.curves.filter(c => c.bar === bar);
+    sourceTable(parent, 'curves', `來源素質定義與曲線：${v.bars.find(b => b.id === bar)?.name.zh || bar}`, ['素質', '輸入範圍', '插值', '曲線節點', '來源'], curves.map(c => [c.name.zh || c.stat, `${c.input.min}–${c.input.max} ${c.input.unit} (${c.input.source})`, c.interpolation + (c.unknown ? `：${sourceUnknown(c.unknown)}` : ''), c.knots.map(k => `${k.input} → ${sourceNumber(k.output)}${c.outputUnit ? ` ${UNIT_LABELS[c.outputUnit] ?? c.outputUnit}` : ''}`).join('；'), `${c.source.path}:${c.source.line}`]));
+  }
+  for (const combo of v.attackCombos) {
+    const rows = combo.steps.map((step, i) => { const matched = (v.damageProfiles ?? []).filter(p => p.bindings.some(b => b.action === step.action)).map(p => p.id); const profile = step.damageProfile ?? (matched.length ? `${matched.join('、')}（依動作綁定對應）` : sourceUnknown(step.damageProfileUnknown)); return [String(i+1), ({light_attack:'輕攻擊', heavy_attack:'重攻擊'})[step.input] ?? step.input, step.name.zh || step.action, profile]; });
+    if (combo.unknown || !rows.length) rows.push(['', '', combo.unknown ? sourceUnknown(combo.unknown) : '來源未提供', '']);
+    sourceTable(parent, 'attack-combos', `${combo.kind === 'light' ? '輕攻擊' : '重攻擊'}：起始動作 ${combo.start}，循環至 ${combo.loopsTo ?? '無'}`, ['段數', '輸入', '動作', '對應傷害設定'], rows);
+  }
+  if (!Object.hasOwn(v, 'damageProfiles')) parent.append(node('p', '此版本未收集原始攻擊威力'));
+  for (const profile of v.damageProfiles ?? []) {
+    const power = p => p.kind === 'unknown' ? sourceUnknown(p.unknown) : p.kind === 'fixed' ? sourceNumber(p.min) : `${sourceNumber(p.min)}–${sourceNumber(p.max)}`;
+    const rows = profile.distributions.map(d => [d.target === null ? '全部' : d.target === 'default' ? '其餘目標' : `第 ${d.target} 個目標`, ({near:'近',far:'遠'})[d.range] ?? '不分', power(d.attack), power(d.impact)]);
+    sourceTable(parent, 'damage-profiles', `${profile.id}：原始攻擊威力端點，尚未套用角色、素質、祝福、距離、護甲等因素，不是最終傷害`, ['目標', '距離', '攻擊威力', '衝擊力'], rows);
+    const types = {action:'動作',hitScan:'射線命中',projectile:'投射物',shotshell:'霰彈',flamerGas:'火焰氣體',explosion:'爆炸'};
+    sourceTable(parent, 'damage-profiles', `${profile.id} 綁定`, ['動作', '類型', 'template', 'powerLevel'], profile.bindings.map(b => [b.action, types[b.kind], b.template ?? '', b.powerLevel ? (b.powerLevel.value === null ? '來源未提供' : sourceNumber(b.powerLevel.value)) : '']));
+  }
+  const family = context.family.filter(x => x.family === v.family);
+  sourceTable(parent, 'family-marks', '同家族型號', ['型號', '狀態'], family.map(x => [link(context.href({family:v.family,id:x.id}), x.name.zh || x.id), x.id === item.id ? '目前型號' : '']));
+  sourceTable(parent, 'blessings', '可用祝福', ['名稱'], v.blessings.map(id => [link(context.blessingHref(id), context.blessings.find(b => b.id === id)?.name.zh || '名稱待確認')]));
+}
+function renderSourceItem(parent, item, schemaVersion, context) {
   const p = sourceItemPresentation(item, schemaVersion);
   const article = node('article', null, 'shared-entry'); article.dataset.itemId = item.id;
   article.append(node('h2', p.name));
@@ -2274,6 +2318,7 @@ function renderSourceItem(parent, item, schemaVersion) {
   }
   for(const bar of item.values.bars ?? []) { const block=node('section'); block.append(node('h3',bar.name.zh || '武器素質')); for(const stat of bar.stats) block.append(node('p', `${stat.name.zh || '素質'}：${stat.min}–${stat.max}`));article.append(block); }
   for(const action of item.values.actions ?? []) if(action.name.zh) article.append(node('p',action.name.zh));
+  if (schemaVersion !== '1.0.0' && context) renderSourceWeaponTables(article, item, context);
   parent.append(article);
 }
 
@@ -2355,7 +2400,7 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       if (!items.length) return renderSourceNotFound(main, url);
     }
     if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
-    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));const document = result.domains.find(d => d.document.items?.includes(item))?.document;renderSourceItem(main,item,document?.schemaVersion);}
+    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));const document = result.domains.find(d => d.document.items?.includes(item))?.document;renderSourceItem(main,item,document?.schemaVersion, route === 'weapons' ? {family:indexItems, blessings:domain('blessings-index')?.items ?? [], href, blessingHref: id => `/blessings/?${new URLSearchParams({id,...(version?{version}:{})})}`} : null);}
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
   } else {
     main.append(node('h1','黑潮繁體資料庫'));

@@ -1,0 +1,908 @@
+{
+  "errata": [],
+  "explanation": {
+    "calculation": "向下輕擊首個目標的原始攻擊威力為175～350，橫掃類輕擊為150～300；前者較集中於首個目標，後者對後續目標保留較多攻擊威力。橫向重擊首個目標為165～345，向下重擊為175～350。這些是攻擊配置的原始區間，尚未套用護甲、素質條與其他傷害修正；鋸切與收尾另有配置，不能直接合計為最終傷害。",
+    "conditions": "一般重擊可在未啟動時貼附鋸切，輕擊與推擊後接的橫掃則需要啟動；仍須命中使揮擊停止的目標，並符合該動作的部位與護甲限制，才會進入貼附。推擊後的接續橫掃會回到後續攻擊準備，適合銜接橫向攻擊。鋸切中止時採用不同配置，完整收尾不能視為每次命中都會發生。",
+    "effect": "輕擊為「打倒」，連段混合向下劈砍、斜砍與橫掃；重擊為「先鋒」，交替使用橫向揮砍與向下劈砍，兼顧敵群與前方重點目標。特殊動作「啟動」可讓後續攻擊貼住命中目標鋸切。",
+    "extra": "輕擊連段含條件分支，循環接回位置未知；重擊連段有循環記錄。連段步驟的攻擊配置綁定均未找到，因此不能把步驟欄位當作完整傷害對照；上述動作差異另由來源中的動作設定確認。",
+    "notes": "「傷害」調整一般打擊威力；「穿透值」調整護甲傷害修正；「順劈目標」調整攻擊與衝擊的順劈能力，不代表固定可命中的人數。「撕碎」影響鋸切及收尾威力；「移動性」影響閃避、衝刺與持武器移動。"
+  },
+  "id": "darktide:weapon:chainsword_2h_p1_m1",
+  "key": "chainsword_2h_p1_m1",
+  "name": {
+    "en": "Tigrus Mk II Heavy Eviscerator",
+    "origin": "official",
+    "zh": "提格魯斯Mk II重型開膛劍"
+  },
+  "official": {
+    "en": null,
+    "zh": null
+  },
+  "source": {
+    "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+    "files": [
+      {
+        "line": 48,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 52,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 60,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 64,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 80,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 92,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 96,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 100,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 128,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 309,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 313,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 319,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 323,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 369,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 373,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 379,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 383,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 389,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 393,
+        "path": "scripts/settings/damage/damage_profile_settings.lua"
+      },
+      {
+        "line": 82,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 87,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 88,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 119,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 124,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 125,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 966,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 971,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 972,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 980,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 984,
+        "path": "scripts/settings/damage/damage_profiles/common_damage_profile_templates.lua"
+      },
+      {
+        "line": 30,
+        "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+      },
+      {
+        "line": 34,
+        "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+      },
+      {
+        "line": 38,
+        "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+      },
+      {
+        "line": 42,
+        "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+      },
+      {
+        "line": 46,
+        "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+      },
+      {
+        "line": 30,
+        "path": "scripts/settings/equipment/weapon_handling_templates/weapon_movement_curve_modifier_templates.lua"
+      },
+      {
+        "line": 31,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 73,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 75,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 76,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 115,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 117,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 157,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 159,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 197,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 199,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 200,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 238,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 240,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 241,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 507,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 510,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 615,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 617,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 619,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 620,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 806,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 808,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 810,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 898,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 900,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 902,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1099,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1101,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1103,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1295,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1297,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1299,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1434,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1436,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1438,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1496,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 1498,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+      },
+      {
+        "line": 182,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 209,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 213,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 229,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 233,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 241,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 245,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 253,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 257,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 265,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 269,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 277,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 281,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 289,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 293,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 356,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 381,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 908,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 934,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 938,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 954,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 958,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 975,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1022,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1084,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1140,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1150,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1184,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1232,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1279,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1310,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1314,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1334,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1338,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1354,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1358,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1374,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1378,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1394,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1398,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1414,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1418,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1434,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1438,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1454,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1458,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1467,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1471,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1480,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1510,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1514,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1538,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1542,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1558,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1562,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1578,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1582,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1591,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1595,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1604,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1632,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1642,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1652,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1662,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1672,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1682,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1737,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1765,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1775,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1785,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1795,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1805,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 1815,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2120,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2152,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2162,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2217,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2268,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2278,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2433,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2481,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2491,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2534,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2578,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2588,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2643,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2687,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2697,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2822,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2877,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2887,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2938,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2986,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 2996,
+        "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/settings_templates/chain_sword_2h_damage_profile_templates.lua"
+      },
+      {
+        "line": 654,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 664,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 674,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 756,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 767,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 778,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 800,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 811,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 820,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 829,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 4586,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 4594,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+      },
+      {
+        "line": 10,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+      },
+      {
+        "line": 17,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+      },
+      {
+        "line": 24,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+      },
+      {
+        "line": 31,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+      },
+      {
+        "line": 38,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+      },
+      {
+        "line": 8,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/movement_curve_modifier_trait_templates.lua"
+      },
+      {
+        "line": 10,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+      },
+      {
+        "line": 17,
+        "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+      },
+      {
+        "line": 9,
+        "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+      },
+      {
+        "line": 13,
+        "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+      },
+      {
+        "line": 14,
+        "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+      }
+    ],
+    "scriptVersion": "pipeline/extract-weapons.mjs@1.1.0",
+    "text": {
+      "batch": "26101089",
+      "keys": {
+        "name": "loc_chainsword_2h_p1_m1"
+      }
+    }
+  },
+  "values": {
+    "actions": [],
+    "archetypes": [],
+    "attackCombos": [
+      {
+        "id": "light",
+        "kind": "light",
+        "loopsTo": null,
+        "source": {
+          "line": 301,
+          "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+        },
+        "start": "action_melee_start_left",
+        "steps": [
+          {
+            "action": "action_left_down_light",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "light_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          },
+          {
+            "action": "action_right_diagonal_light",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "light_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          },
+          {
+            "action": "action_left_light",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "light_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          },
+          {
+            "action": "action_right_down_light",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "light_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          }
+        ],
+        "unknown": "CONDITIONAL_CHAIN"
+      },
+      {
+        "id": "heavy",
+        "kind": "heavy",
+        "loopsTo": 0,
+        "source": {
+          "line": 301,
+          "path": "scripts/settings/equipment/weapon_templates/chain_swords_2h/chainsword_2h_p1_m1.lua"
+        },
+        "start": "action_melee_start_left",
+        "steps": [
+          {
+            "action": "action_left_heavy",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "heavy_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          },
+          {
+            "action": "action_right_heavy",
+            "damageProfile": null,
+            "damageProfileUnknown": "DAMAGE_PROFILE_BINDING_NOT_FOUND",
+            "input": "heavy_attack",
+            "name": {
+              "en": null,
+              "zh": null
+            }
+          }
+        ],
+        "unknown": null
+      }
+    ],
+    "bars": [],
+    "blessings": [],
+    "curves": [],
+    "damageProfiles": [],
+    "family": "chainsword_2h_p1",
+    "mark": "m1",
+    "params": {
+      "displayed_keywords": {
+        "value": [
+          "loc_weapon_keyword_heavy_charge",
+          "loc_weapon_keyword_sawing"
+        ]
+      },
+      "keywords": {
+        "value": [
+          "melee",
+          "chain_sword_2h",
+          "p1",
+          "activated"
+        ]
+      }
+    },
+    "weaponType": "darktide:term:weapon-type:chainsword_2h_p1"
+  }
+}

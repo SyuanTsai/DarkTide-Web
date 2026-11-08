@@ -54,3 +54,16 @@ test('UnitT20_路由僅讀取需要的分檔',async()=>{
   const names=weaponFamilyPaths(['family_a','family_b']);
   assert.ok(paths.some(p=>p.endsWith(names.get('family_a'))));assert.ok(!paths.some(p=>p.endsWith(names.get('family_b'))));
 });
+
+// Scenario: Open the weapon directory, then details selected by family and id.
+// Purpose: Fetch the blessing index only for weapon details, including id-only legacy URLs.
+test('UnitT30_武器首頁不載入祝福索引但詳情會載入', async () => {
+  const source = await loadSourceData({ directory: fileURLToPath(new URL('./fixtures/source-data/', import.meta.url)), fixture: true });
+  const bundle = buildSiteData({ source });
+  for (const search of ['', '?family=family_a', `?id=${encodeURIComponent(source.dataByVersion['9.9.2'].weapons.items[0].id)}`]) {
+    const paths = [];
+    const client = createSourceClient({ build: { game_version: '9.9.2', game_releases: bundle.pointers }, fetchImpl: async url => { paths.push(url); return new Response(bundle.files.get(url.slice(1)), { headers: { 'content-type': 'application/json' } }); } });
+    await client.load({ pathname: '/weapons/', search });
+    assert.equal(paths.some(path => path.endsWith('/blessings-index.json')), search !== '', search);
+  }
+});

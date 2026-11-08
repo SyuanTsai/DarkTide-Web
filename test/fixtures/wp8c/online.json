@@ -1,0 +1,64 @@
+{
+  "capturedAt": "2026-11-08",
+  "capturedBy": "Claude（SYP-402 子對話），用瀏覽器讀 https://darktide.tw-syuan.com 線上頁面（1.13.1 留存＋1.13.4 舊 renderer）",
+  "note": "線上頁面以 <details> 收合大量來源細節；這裡只記『表格種類』與代表數值，作為『線上有的表格新頁都要有』的驗收基準。",
+  "pages": [
+    {
+      "weaponId": "darktide:weapon:chainaxe_p1_m1",
+      "url": "/weapons/?family=chainaxe_p1&mark=chainaxe_p1_m1",
+      "kind": "melee",
+      "tables": {
+        "statComparison": {
+          "online": "各素質欄（傷害、護甲穿透、防禦、鏈鋸、移動性）以 dl 列出『面板比較點 60%／80%』",
+          "samples": [
+            { "statKey": "damage.action_left_down_light.default_light_chainaxe.targets.1.power_distribution.attack", "p60": 113.0, "p80": 119.0 },
+            { "statKey": "damage.action_left_heavy.heavy_chainaxe.targets.1.power_distribution.attack", "p60": 232.5, "p80": 247.5 }
+          ],
+          "derivation": "線性內插：min + (max-min)*0.6 / 0.8；1.13.4 資料 bars.stats 為 95–125 與 187.5–262.5"
+        },
+        "curves": { "online": "H3『來源素質定義與曲線』：曲線節點（輸入→輸出）、來源 path:line" },
+        "attackCombos": {
+          "online": "H2『遊戲顯示的攻擊段定位』12 項、H3『遊戲顯示的攻擊段』6 項（輕攻擊第 1～4 段…）、H3『來源連段與條件』58 項",
+          "dataGap1134": "Source-Data 93185bf 的 chainaxe_p1_m1 light/heavy 兩個 combo 都是 steps=[]、unknown=CHAIN_START_AMBIGUOUS；Web 只能顯示原因，步驟要等 Source-Data 補"
+        },
+        "attackPower": { "online": "H4『來源攻擊威力分布（非最終傷害）』、H3『來源攻擊設定與條件』（重攻擊 4、輕攻擊 5、推擊 1，含對應傷害設定）" },
+        "familyMarks": { "online": "H2『同家族已留存的型號與詳情』", "marks": ["chainaxe_p1_m1", "chainaxe_p1_m2"] },
+        "blessings": { "online": "H3『1.13.1 留存的祝福關聯（8）』", "onlineCount": 8 }
+      }
+    },
+    {
+      "weaponId": "darktide:weapon:autogun_p1_m1",
+      "url": "/weapons/?family=autogun_p1&mark=autogun_p1_m1",
+      "kind": "ranged",
+      "tables": {
+        "curves": {
+          "online": "H3『武器素質來源表』＋『來源素質定義與曲線』：彈匣容量 25→40、備用彈藥 250→400（彈藥單位），輸入 0→1 比例",
+          "samples": [
+            { "curveIdContains": "ammunition_clips", "knots": [[0, 25], [1, 40]] },
+            { "curveIdContains": "ammunition_reserve", "knots": [[0, 250], [1, 400]] }
+          ]
+        },
+        "attackPower": { "online": "H3『來源攻擊設定與條件』：腰射 action_shoot_hip、機瞄 action_shoot_zoomed", "actions": ["action_shoot_hip", "action_shoot_zoomed"] },
+        "familyMarks": { "online": "H2『同家族已留存的型號與詳情』", "marks": ["autogun_p1_m1", "autogun_p1_m2", "autogun_p1_m3"] },
+        "blessings": { "online": "H3『1.13.1 留存的祝福關聯（13）』", "onlineCount": 13 }
+      }
+    },
+    {
+      "weaponId": "darktide:weapon:lasgun_p1_m1",
+      "url": "/weapons/?family=lasgun_p1&mark=lasgun_p1_m1",
+      "kind": "ranged",
+      "tables": {
+        "curves": {
+          "online": "彈匣容量 80→120、備用彈藥 480→960",
+          "samples": [
+            { "curveIdContains": "ammunition_clips", "knots": [[0, 80], [1, 120]] },
+            { "curveIdContains": "ammunition_reserve", "knots": [[0, 480], [1, 960]] }
+          ]
+        },
+        "attackPower": { "online": "H3『來源攻擊設定與條件』：腰射、機瞄", "actions": ["action_shoot_hip", "action_shoot_zoomed"] },
+        "familyMarks": { "online": "H2『同家族已留存的型號與詳情』", "marks": ["lasgun_p1_m1", "lasgun_p1_m2", "lasgun_p1_m3"] },
+        "blessings": { "online": "H3『1.13.1 留存的祝福關聯（10）』", "onlineCount": 10 }
+      }
+    }
+  ]
+}
