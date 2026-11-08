@@ -4,11 +4,23 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 const execute = promisify(execFile);
 export const CATEGORIES = ['skills', 'weapons', 'blessings', 'terms'];
-export const SUPPORTED_SCHEMA_VERSIONS = Object.freeze({ '1.0.0': { extended: false }, '1.1.0': { extended: true } });
+export const SUPPORTED_SCHEMA_VERSIONS = Object.freeze({ '1.0.0': { extended: false, mechanics: false }, '1.1.0': { extended: true, mechanics: false }, '1.2.0': { extended: true, mechanics: true } });
 const versionPattern = /^[0-9]+(?:\.[0-9]+){1,3}$/;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const keysOnly = (value, keys) => object(value) && Object.keys(value).every(key => keys.includes(key));
 const requireValue = (condition, message) => { if (!condition) throw new Error(`Source-Data: ${message}`); };
+const pointer = x => typeof x === 'string' && /^(\/([^~/]|~[01])*)+$/.test(x);
+const location = x => keysOnly(x, ['path', 'line']) && typeof x.path === 'string' && x.path.length > 0 && Number.isInteger(x.line) && x.line >= 1;
+const locations = x => Array.isArray(x) && x.length > 0 && x.every(location);
+const refId = /^[A-Za-z0-9_./-]+#[A-Za-z0-9_.:\[\]-]+$/;
+const unknowns = ['NOT_VERIFIED', 'SOURCE_UNAVAILABLE', 'CONFLICTING_EVIDENCE', 'NOT_EXPOSED_BY_SOURCE', 'DYNAMIC_VALUE'];
+function mechanics(value) {
+  const scalar = x => x === null || typeof x === 'string' || typeof x === 'boolean' || typeof x === 'number' && Number.isFinite(x);
+  return object(value) && Object.entries(value).every(([key, p]) => /^[a-z][a-z0-9_]*(\.[a-z0-9_]+){0,7}$/.test(key)
+    && keysOnly(p, ['value', 'unit', 'unknown']) && Object.hasOwn(p, 'value') && (scalar(p.value) || Array.isArray(p.value) && p.value.every(scalar))
+    && (!Object.hasOwn(p, 'unit') || typeof p.unit === 'string' && /^[a-z][a-z0-9-]*$/.test(p.unit))
+    && (p.value === null ? unknowns.includes(p.unknown) : !Object.hasOwn(p, 'unknown')));
+}
 
 async function regularBytes(directory, relative) {
   let current = directory;
@@ -54,11 +66,15 @@ function validateItem(item, category, ids, features) {
   requireValue(keysOnly(item.explanation, ['effect', 'conditions', 'calculation', 'notes', 'extra', 'effectOrigin']), `${label} explanation invalid`);
   requireValue(!Object.hasOwn(item.explanation, 'effectOrigin') || (features.extended && ['skills', 'blessings'].includes(category) && ['official', 'unofficial-translation'].includes(item.explanation.effectOrigin)), `${label} effectOrigin invalid`);
   requireValue(!Object.hasOwn(item, 'retainedFrom') || (features.extended && keysOnly(item.retainedFrom, ['gameVersion','sourceCommit','textBatch']) && typeof item.retainedFrom.gameVersion === 'string' && versionPattern.test(item.retainedFrom.gameVersion) && typeof item.retainedFrom.sourceCommit === 'string' && /^[a-fA-F0-9]{40}$/.test(item.retainedFrom.sourceCommit) && typeof item.retainedFrom.textBatch === 'string' && /^[A-Za-z0-9._-]{1,128}$/.test(item.retainedFrom.textBatch)), `${label} retainedFrom invalid`);
-  requireValue(Array.isArray(item.errata) && item.errata.every(x => object(x) && ['en', 'zh'].includes(x.locale)
-    && ['official', 'corrected', 'valueRef'].every(key => typeof x[key] === 'string')), `${label} errata invalid`);
-  requireValue(item.errata.every(x => !Object.hasOwn(x, 'anchor') || (features.extended && keysOnly(x.anchor, ['field','locale','text','occurrence']) && ['official', 'name'].includes(x.anchor.field) && ['en', 'zh'].includes(x.anchor.locale) && typeof x.anchor.text === 'string' && x.anchor.text.length > 0 && Number.isInteger(x.anchor.occurrence) && x.anchor.occurrence >= 1)), `${label} errata anchor invalid`);
+  requireValue(Array.isArray(item.errata) && item.errata.every(x => keysOnly(x, ['locale','official','corrected','valueRefs','sources','anchor']) && ['en', 'zh'].includes(x.locale)
+    && ['official', 'corrected'].every(key => typeof x[key] === 'string') && Array.isArray(x.valueRefs) && x.valueRefs.length > 0 && x.valueRefs.every(pointer) && locations(x.sources)), `${label} errata invalid`);
+  requireValue(item.errata.every(x => !Object.hasOwn(x, 'anchor') || (keysOnly(x.anchor, ['field','locale','text','occurrence','itemId','param','tier']) && ['official', 'name', 'displayParameter'].includes(x.anchor.field) && x.anchor.locale === x.locale && typeof x.anchor.text === 'string' && x.anchor.text.length > 0 && Number.isInteger(x.anchor.occurrence) && x.anchor.occurrence >= 1 && (!Object.hasOwn(x.anchor, 'itemId') || typeof x.anchor.itemId === 'string' && /^darktide:(skill|weapon|blessing|term):[a-z0-9_.:-]+$/.test(x.anchor.itemId)) && (x.anchor.field === 'displayParameter' ? typeof x.anchor.param === 'string' && /^[a-z][a-z0-9_]*$/.test(x.anchor.param) && (!Object.hasOwn(x.anchor, 'tier') || Number.isInteger(x.anchor.tier) && x.anchor.tier >= 1 && x.anchor.tier <= 4) && ((x.anchor.itemId?.startsWith('darktide:blessing:') ?? (category === 'blessings')) ? Object.hasOwn(x.anchor, 'tier') : true) : !Object.hasOwn(x.anchor, 'param') && !Object.hasOwn(x.anchor, 'tier')))), `${label} errata anchor invalid`);
   requireValue(object(item.source) && /^[a-fA-F0-9]{40}$/.test(item.source.commit) && Array.isArray(item.source.files), `${label} source invalid`);
+  requireValue(!Object.hasOwn(item.source, 'valueSources') || features.mechanics && object(item.source.valueSources) && Object.entries(item.source.valueSources).every(([key, value]) => pointer(key) && locations(value)), `${label} valueSources invalid`);
+  requireValue(!Object.hasOwn(item.source, 'codeRefs') || features.mechanics && object(item.source.codeRefs) && Object.entries(item.source.codeRefs).every(([key, value]) => refId.test(key) && keysOnly(value, ['path','symbol','sha256']) && typeof value.path === 'string' && typeof value.symbol === 'string' && key === `${value.path}#${value.symbol}` && typeof value.sha256 === 'string' && /^[a-f0-9]{64}$/.test(value.sha256)), `${label} codeRefs invalid`);
+  requireValue(!Object.hasOwn(item, 'citations') || features.mechanics && ['skills','blessings'].includes(category) && Array.isArray(item.citations) && item.citations.every(c => keysOnly(c, ['section','text','codeRefs','valueRefs']) && ['effect','conditions','calculation','notes','extra'].includes(c.section) && typeof c.text === 'string' && c.text.length > 0 && Array.isArray(c.codeRefs) && c.codeRefs.every(x => typeof x === 'string' && refId.test(x)) && new Set(c.codeRefs).size === c.codeRefs.length && Array.isArray(c.valueRefs) && c.valueRefs.every(pointer) && new Set(c.valueRefs).size === c.valueRefs.length && c.codeRefs.length + c.valueRefs.length > 0), `${label} citations invalid`);
   const v = item.values; requireValue(object(v), `${label} values required`); params(v.params, label);
+  requireValue(!Object.hasOwn(v, 'mechanics') || features.mechanics && ['skills','blessings'].includes(category) && mechanics(v.mechanics), `${label} mechanics invalid`);
   requireValue(!Object.hasOwn(v, 'damageProfiles') || (category === 'weapons' && features.extended), `${label} damageProfiles forbidden`);
   if (category === 'skills') requireValue(['archetype', 'tree', 'nodeType'].every(key => typeof v[key] === 'string') && Array.isArray(v.parents) && Number.isInteger(v.maxPoints), `${label} skill values invalid`);
   if (category === 'weapons') requireValue(['family', 'mark', 'weaponType'].every(key => typeof v[key] === 'string' && v[key]) && ['archetypes', 'actions', 'bars', 'blessings'].every(key => Array.isArray(v[key])), `${label} weapon values invalid`);
@@ -88,6 +104,7 @@ function validateItem(item, category, ids, features) {
     for (const tier of v.tiers) {
       requireValue(Number.isInteger(tier.tier) && tier.tier > last && tier.tier <= 4, `${label} tiers invalid`);
       last = tier.tier; params(tier.params, label);
+      requireValue(!Object.hasOwn(tier, 'mechanics') || features.mechanics && mechanics(tier.mechanics), `${label} tier mechanics invalid`);
     }
   }
 }
