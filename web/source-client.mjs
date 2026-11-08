@@ -53,7 +53,9 @@ export function createSourceClient({ build, fetchImpl = globalThis.fetch.bind(gl
     const query=new URLSearchParams(search);
     if(kind==='weapons'||kind==='blessings') {
       const index=selected.get(`domains/${kind}-index.json`)?.document;
-      const items=(index?.items ?? []).filter(item=>kind==='weapons' ? query.has('family')&&item.family===query.get('family') : query.has('id')&&item.id===query.get('id'));
+      const items=(index?.items ?? []).filter(item=>query.has('id')
+        ? item.id===query.get('id')
+        : kind==='weapons'&&query.has('family')&&item.family===query.get('family'));
       for(const item of items) { const row=manifest.files.find(f=>f.path===item.path);if(!row||row.kind!==(kind==='weapons'?'weapon-family':'blessing'))throw new Error('Invalid index shard');await load(row); }
     }
     return { status:'ready',sourceData:true,pointer,manifest,domains:[...selected.values()],versions:build.game_releases,fixtureOnly:build.package_kind==='fixture' };

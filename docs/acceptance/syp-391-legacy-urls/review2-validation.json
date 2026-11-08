@@ -1,0 +1,124 @@
+{
+  "finding": "L2-001",
+  "baseline": "b5908b73524d58182de52e063e2d7ec30a4e1c90",
+  "sourceCommit": "93185bf9c070da578701fa398e85da9a08b8d4c4",
+  "runtime": "PowerShell 7.6.9 / Node v24.19.0 / Windows",
+  "tests": {
+    "command": "node --test --test-reporter=spec test/legacy-urls.test.mjs test/legacy-app.test.mjs test/legacy-app-source-data.test.mjs test/wp5-client.test.mjs test/wp8b-render.test.mjs test/wp5-build.test.mjs test/wp5-display.test.mjs test/wp5-site-data.test.mjs test/static-build.test.mjs test/static-verify.test.mjs test/cloudflare-routing.test.mjs test/client.test.mjs test/weapon-browsing.test.mjs test/blessing-presentation.test.mjs test/blessing-crosswalk.test.mjs test/retained-skill-tree.test.mjs test/w14-skill-search.test.mjs test/syp391-transport.test.mjs",
+    "files": 18,
+    "total": 136,
+    "passed": 136,
+    "failed": 0,
+    "added": 7
+  },
+  "fixtureAppEntry": {
+    "entry": "web/app.mjs",
+    "harness": "test/fixtures/legacy-app-harness.mjs",
+    "source": "test/fixtures/source-data",
+    "cases": [
+      {
+        "path": "/skills/?id=darktide:skill:fixture_a",
+        "version": "9.9.2",
+        "item": "darktide:skill:fixture_a"
+      },
+      {
+        "path": "/skills/?id=darktide:skill:fixture_c&version=9.9.1",
+        "version": "9.9.1",
+        "item": "darktide:skill:fixture_c"
+      },
+      {
+        "path": "/blessings/?id=darktide:blessing:fixture_a",
+        "version": "9.9.2",
+        "item": "darktide:blessing:fixture_a"
+      },
+      {
+        "path": "/blessings/?id=darktide:blessing:fixture_a&version=9.9.1",
+        "version": "9.9.1",
+        "item": "darktide:blessing:fixture_a"
+      }
+    ],
+    "uniqueItems": true,
+    "urlUnchanged": true,
+    "historicalOnlyId": "darktide:skill:fixture_c",
+    "historicalOnlyVersion": "9.9.1",
+    "currentVersionMissingAfterLoad": true,
+    "newIdUnknownVersionKeepsClientValidationError": true
+  },
+  "l1003": {
+    "categories": [
+      "skills",
+      "blessings",
+      "weapons",
+      "terms"
+    ],
+    "versions": [
+      "1.13.2",
+      "does-not-exist"
+    ],
+    "notFoundBeforeLoad": true,
+    "dataRequests": 0
+  },
+  "regressionExperiment": {
+    "baseline": "b5908b7",
+    "testFile": "test/legacy-app-source-data.test.mjs",
+    "exitCode": 1,
+    "summary": [
+      "ℹ tests 6",
+      "ℹ pass 0",
+      "ℹ fail 6"
+    ],
+    "restoredByteForByte": true,
+    "tests": 6,
+    "passed": 0,
+    "failed": 6,
+    "restoredVerification": {
+      "tests": 25,
+      "passed": 25,
+      "failed": 0
+    }
+  },
+  "generatorCheck": {
+    "passed": true,
+    "ids": 694,
+    "paths": 1404,
+    "familyPaths": 68,
+    "unmapped": 151,
+    "outputsChanged": false
+  },
+  "builds": {
+    "fixture": {
+      "command": "node scripts/build.mjs --fixture",
+      "verifyCommand": "node scripts/verify-static.mjs",
+      "verified": true,
+      "files": 60,
+      "gameVersion": "9.9.2",
+      "buildId": "c05b9733c0e0bbf055136772cc0739666dc844bee5f1bc1e4543a2f6ec2cfb63",
+      "dataRevision": "cf4550736d701499294b4f295e023bd2f052ef37bf7dd5c4f293b7bbd8ae7ee3"
+    },
+    "published": {
+      "command": "node scripts/build.mjs --source-data $sourceDataRoot --source-data-commit 93185bf9c070da578701fa398e85da9a08b8d4c4 --site-origin https://darktide.tw-syuan.com",
+      "verifyCommand": "node scripts/verify-static.mjs",
+      "verified": true,
+      "files": 787,
+      "gameVersion": "1.13.4",
+      "buildId": "863ba37b8bd1c3d59152e543f0169532cbec0c7590e5deedc23d10ef2ac87225",
+      "dataRevision": "85468c795dbb9d1caea6a7f8ebb501fcf75343f9f6c68e8d8e6e745be0fe578e"
+    }
+  },
+  "notRun": {
+    "reason": "Dependencies are unavailable locally; no packages were installed or downloaded.",
+    "yaml": [
+      "test/operations-workflow.test.mjs",
+      "test/wp5-workflow.test.mjs"
+    ],
+    "playwright": [
+      "test/w13-ranged-web-render.integration.test.mjs",
+      "test/wp5-frozen-detail.test.mjs",
+      "test/shared-browser-smoke.test.mjs",
+      "test/wp5-smoke-tiers.test.mjs"
+    ],
+    "browserSmoke": "npm run smoke:browser (CI only)"
+  },
+  "deployed": false,
+  "pushed": false
+}
