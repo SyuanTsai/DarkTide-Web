@@ -1,16 +1,51 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createTransport, verifyTransport, SHARD_THRESHOLD, MAX_OUTPUT_FILE_BYTES } from '../src/build/transport.mjs';
-// Scenario: production limits are used without injection. Purpose: protect the published contract.
-test('UnitT10_ production transport limits', () => { assert.equal(SHARD_THRESHOLD,20971520); assert.equal(MAX_OUTPUT_FILE_BYTES,26214400); });
-// Scenario: byte boundaries include a split UTF-8 sequence and BOM/CRLF. Purpose: preserve exact bytes and legacy policy.
-test('UnitT20_ boundaries preserve raw bytes deterministically', () => {
- for (const n of [8,9,10,11]) { const raw=Buffer.from([0xef,0xbb,0xbf,13,10,65,65,0xe4,0xb8,0xad,...Array(12).fill(65)]).subarray(0,n); const result=createTransport('1.2.3','weapons',raw,{threshold:8,maxBytes:10}); assert.deepEqual(result,createTransport('1.2.3','weapons',raw,{threshold:8,maxBytes:10})); assert.equal(result.files.has('weapons.json'),n<=10); assert.ok(verifyTransport(result.manifest,result.files,'1.2.3','weapons',{threshold:8,maxBytes:10}).equals(raw)); }
+const options = { threshold: 4, maxBytes: 6 };
+const create = bytes => createTransport('1.2.3', 'weapons', bytes, options);
+const verify = ({manifest, files}) => verifyTransport(manifest, files, '1.2.3', 'weapons', options);
+const fixture = () => create(Buffer.from('abcdefgh'));
+// Scenario: Input sizes straddle both transport limits. Purpose: Preserve the exact representation and legacy availability at each boundary.
+test('UnitT10_transport_boundaries_and_default_constants', () => {
+  assert.equal(SHARD_THRESHOLD, 20971520); assert.equal(MAX_OUTPUT_FILE_BYTES, 26214400);
+  for (const [size, representation, legacy, count] of [[4,'single',true,1],[5,'raw-byte-shards',true,2],[6,'raw-byte-shards',true,2],[7,'raw-byte-shards',false,2]]) {
+    const result = create(Buffer.alloc(size, 65));
+    assert.equal(result.manifest.representation, representation); assert.equal(result.files.has('weapons.json'), legacy); assert.equal(result.manifest.parts.length, count);
+    assert.deepEqual(verify(result), Buffer.alloc(size, 65));
+  }
 });
-// Scenario: corrupt or inconsistent manifests and part bytes. Purpose: reject incomplete or tampered transport.
-test('UnitT30_ rejects malformed transport', () => {
- const raw=Buffer.from('abcdefghijk'); const original=createTransport('1.2.3','weapons',raw,{threshold:4,maxBytes:8});
- const cases=[m=>m.parts.pop(),m=>m.parts.push({...m.parts[0]}),m=>m.parts.reverse(),m=>m.parts[1].offset++,m=>m.parts[0].sha256='0'.repeat(64),m=>m.totalSha256='0'.repeat(64)];
- for(const mutate of cases){const manifest=structuredClone(original.manifest);mutate(manifest);assert.throws(()=>verifyTransport(manifest,original.files,'1.2.3','weapons',{threshold:4,maxBytes:8}));}
- const missing=new Map(original.files); missing.delete('weapons.part-0002.bin'); assert.throws(()=>verifyTransport(original.manifest,missing,'1.2.3','weapons',{threshold:4,maxBytes:8}));
+// Scenario: BOM, CRLF and a multibyte character cross a byte boundary. Purpose: Prove byte preservation and deterministic output without decoding.
+test('UnitT20_transport_preserves_bytes_and_is_deterministic', () => {
+  const bytes = Buffer.concat([Buffer.from([0xef,0xbb,0xbf]), Buffer.from('中\r\n')]);
+  const a = create(bytes), b = create(bytes);
+  assert.deepEqual(a, b); assert.deepEqual(verify(a), bytes);
+  assert.deepEqual(a.files.get('weapons.part-0001.bin'), bytes.subarray(0,4));
+});
+const cases = [
+  ['missing part', x => x.files.delete('weapons.part-0002.bin')],
+  ['extra manifest part', x => x.manifest.parts.push({...x.manifest.parts[1],index:3})],
+  ['duplicate part', x => x.manifest.parts[1] = {...x.manifest.parts[0]}],
+  ['reordered parts', x => x.manifest.parts.reverse()],
+  ['wrong index', x => x.manifest.parts[0].index = 2],
+  ['wrong offset', x => x.manifest.parts[1].offset++],
+  ['wrong size', x => x.manifest.parts[0].sizeBytes--],
+  ['wrong part hash', x => x.manifest.parts[0].sha256 = '0'.repeat(64)],
+  ['wrong total hash', x => x.manifest.totalSha256 = '0'.repeat(64)],
+  ['extra manifest key', x => x.manifest.extra = true],
+  ['missing manifest key', x => delete x.manifest.category],
+  ['extra part key', x => x.manifest.parts[0].extra = true],
+  ['missing part key', x => delete x.manifest.parts[0].offset],
+  ['wrong representation', x => x.manifest.representation = 'single'],
+  ['unexpected legacy', x => x.files.set('weapons.json', Buffer.from('abcdefgh'))],
+  ['parent path', x => x.manifest.parts[0].path = '../weapons.part-0001.bin'],
+  ['nested path', x => x.manifest.parts[0].path = 'sub/weapons.part-0001.bin'],
+];
+// Scenario: Each manifest or part invariant is independently corrupted. Purpose: Reject inconsistent and unsafe transport descriptions.
+test('UnitT30_transport_rejects_independent_corruptions', async t => {
+  for (const [name, mutate] of cases) await t.test(name, () => { const x = fixture(); mutate(x); assert.throws(() => verify(x)); });
+});
+// Scenario: A permitted legacy copy is missing or differs from the reconstructed bytes. Purpose: Enforce the dual-output contract.
+test('UnitT40_transport_rejects_missing_or_different_legacy', () => {
+  const missing = create(Buffer.from('abcde')); missing.files.delete('weapons.json'); assert.throws(() => verify(missing));
+  const different = create(Buffer.from('abcde')); different.files.set('weapons.json', Buffer.from('xxxxx')); assert.throws(() => verify(different));
 });

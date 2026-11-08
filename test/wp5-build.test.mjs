@@ -129,3 +129,35 @@ test('InterT40_output_limit_covers_every_directory_and_manifest', async () => {
     }
   } finally { await rm(temp,{recursive:true,force:true}); }
 });
+
+// Scenario: The built package contains manifests and an undeclared binary is inserted afterward.
+// Purpose: Verify source closure and reject files absent from the transport manifest.
+test('InterT50_source_transport_closure_and_headers', async t => {
+  const temp = await mkdtemp(path.join(root, '.static-build-staging-transport-'));
+  t.after(() => rm(temp, { recursive:true, force:true }));
+  for (const name of ['web','content/history','content/authoring/v2','content/reference']) await cp(path.join(root,name),path.join(temp,name),{recursive:true});
+  await buildSourceSite({root:temp,sourceData:path.join(root,'test/fixtures/source-data'),fixture:true});
+  const dir = path.join(temp,'dist');
+  const collect = async (folder, prefix='') => { const result = new Map(); for (const entry of await readdir(folder,{withFileTypes:true})) { const name = prefix + entry.name; if (entry.isDirectory()) for (const row of await collect(path.join(folder,entry.name),name+'/')) result.set(...row); else result.set(name,await readFile(path.join(folder,entry.name))); } return result; };
+  const files = await collect(dir);
+  const { verifySourceStaticFiles } = await import('../src/build/verify.mjs');
+  const version = JSON.parse(files.get('version.json'));
+  assert.doesNotThrow(() => verifySourceStaticFiles(files,version));
+  files.set('source-data/9.9.1/skills.part-9999.bin',Buffer.from('extra'));
+  assert.throws(() => verifySourceStaticFiles(files,version),/unexpected output file/);
+  const headers = files.get('_headers').toString();
+  assert.match(headers,/\/source-data\/\*\n  Content-Type: application\/json; charset=utf-8\n  Access-Control-Allow-Origin: \*\n  Access-Control-Allow-Methods: GET, HEAD\n  Cache-Control: public, max-age=31536000, immutable/);
+  assert.match(headers,/\/source-data\/\*\.bin\n  ! Content-Type\n  Content-Type: application\/octet-stream/);
+  assert.match(headers,/\/source-data\/current\.json\n  ! Cache-Control\n  Cache-Control: no-cache/);
+  const server = await createStaticServer({distPath:dir});
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(() => new Promise(resolve=>server.close(resolve)));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  const response = await fetch(origin+'/source-data/9.9.1/skills.manifest.json');
+  assert.equal(response.headers.get('content-type'),'application/json; charset=utf-8');
+  assert.equal(response.headers.get('access-control-allow-origin'),'*'); assert.equal(response.headers.get('access-control-allow-methods'),'GET, HEAD'); assert.match(response.headers.get('cache-control'),/immutable/);
+  for (const name of ['missing.manifest.json','missing.part-0001.bin','missing.json']) {
+    const missing = await fetch(origin+'/source-data/9.9.1/'+name,{headers:{Accept:'text/html'}});
+    assert.equal(missing.status,404); assert.doesNotMatch(await missing.text(),/<html/i);
+  }
+});

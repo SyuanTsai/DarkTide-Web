@@ -33,6 +33,17 @@ test('InterT10_monitor_checks_source_manifests_domains_assets_and_attribution', 
   assert.equal(result.publication, 'source-data');
   const legacy = async (url, options) => new URL(url).pathname.endsWith('.manifest.json') && new URL(url).pathname.startsWith('/source-data/') ? new Response('missing',{status:404}) : fetcher(url,options);
   assert.equal((await monitorOrigin(origin, {fetch:legacy})).status, 'healthy');
+  for (const status of [403, 500]) {
+    let fallback = false;
+    const rejected = async (url, options) => {
+      const name = new URL(url).pathname;
+      if (name.startsWith('/source-data/') && name.endsWith('.manifest.json')) return new Response('error',{status});
+      if (name.startsWith('/source-data/') && /\/(skills|weapons|blessings|terms)\.json$/.test(name)) fallback = true;
+      return fetcher(url,options);
+    };
+    await assert.rejects(monitorOrigin(origin,{fetch:rejected}), /HTTP status/);
+    assert.equal(fallback,false,`manifest ${status} must not fall back`);
+  }
   const badManifest = async (url, options) => new URL(url).pathname.endsWith('.manifest.json') && new URL(url).pathname.startsWith('/source-data/') ? new Response('<html>',{headers:{'content-type':'text/html'}}) : fetcher(url,options);
   await assert.rejects(monitorOrigin(origin, {fetch:badManifest}), /MIME/);
   assert.ok(result.hash_checks.some(row => row.path.includes('/domains/')));
