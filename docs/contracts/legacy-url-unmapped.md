@@ -155,7 +155,3 @@
 | skills | `/skills/veteran/veteran_supression_immunity/` | missing-class-key:base-effect | 0 |
 | skills | `/skills/veteran/veteran_survivalist_passive/` | missing-class-key:base-effect | 0 |
 | weapons | `/weapons/laspistol_p1/marks/laspistol_p1_m2/` | missing-mark-key | 0 |
-| weapons | `/weapons/ogryn_thumper_p2/` | missing-family | 0 |
-| weapons | `/weapons/ogryn_thumper_p2/marks/ogryn_thumper_p1_m2/` | missing-mark-key | 0 |
-| weapons | `/weapons/ogryn_thumper_p3/` | missing-family | 0 |
-| weapons | `/weapons/ogryn_thumper_p3/marks/ogryn_thumper_p1_m3/` | missing-mark-key | 0 |

@@ -646,5 +646,1253 @@
         }
       ]
     }
+  },
+  {
+    "kind": "weapons",
+    "document": {
+      "schemaVersion": "1.1.0",
+      "items": [
+        {
+          "errata": [],
+          "explanation": {
+            "calculation": "射擊原始攻擊威力端點為 1000～2000，衝擊端點為 50～100；猛砸對首個目標的原始攻擊威力為 40～80，後續預設目標的攻擊威力為 0。射擊明顯偏重直接威力，猛砸另提供近身衝擊。這些原始端點不是每顆散彈或每次射擊的最終傷害，仍受素質條、散彈命中、護甲、距離與命中部位影響。",
+            "conditions": "彈匣容量為 1，射擊後需要重新裝彈；備彈端點為 32～62。腰射與固守共用射擊傷害資料，散彈實際命中情況及交戰距離會影響傷害。",
+            "effect": "以大威力散彈進行腰射或固守射擊，特殊動作「猛砸」可用槍身近戰打擊，並有左右不同的砸擊動作。射擊與猛砸各自使用不同的攻擊資料。",
+            "extra": "容量有限，裝填動作是射擊節奏的一部分；猛砸提供貼身時的替代動作，不能用射擊威力推定其傷害。",
+            "notes": "「傷害」調整射擊威力；「裝彈速度」影響裝填動作速度；「移動性」涵蓋閃避、衝刺及動作移動；「射程」影響距離衰減；「停止力」影響對不同護甲的傷害與衝擊表現。"
+          },
+          "id": "darktide:weapon:ogryn_thumper_p1_m1",
+          "key": "ogryn_thumper_p1_m1",
+          "name": {
+            "en": "Lorenz Mk V Kickback",
+            "origin": "official",
+            "zh": "洛倫茲Mk V反衝槍"
+          },
+          "official": {
+            "en": null,
+            "zh": null
+          },
+          "source": {
+            "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+            "files": [
+              {
+                "line": 40,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 60,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 64,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 76,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 84,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 116,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 187,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 191,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 195,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 199,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 203,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 4,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 5,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 6,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 56,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 6,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_movement_curve_modifier_templates.lua"
+              },
+              {
+                "line": 28,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m1.lua"
+              },
+              {
+                "line": 540,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m1.lua"
+              },
+              {
+                "line": 651,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m1.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 84,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 88,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 97,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 101,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 110,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 111,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 120,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 121,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 152,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 153,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 163,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 175,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 179,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 231,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 235,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 32,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_shotshell_templates.lua"
+              },
+              {
+                "line": 56,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_shotshell_templates.lua"
+              },
+              {
+                "line": 285,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 295,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 305,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 315,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 323,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5159,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5167,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5177,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5187,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5197,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5207,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5217,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5227,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 31,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 38,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 8,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/movement_curve_modifier_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 229,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/weapon_handling_trait_templates.lua"
+              },
+              {
+                "line": 62,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 66,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 67,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              }
+            ],
+            "scriptVersion": "pipeline/extract-weapons.mjs@1.1.0",
+            "text": {
+              "batch": "26101089",
+              "keys": {
+                "name": "loc_ogryn_thumper_p1_m1"
+              }
+            }
+          },
+          "values": {
+            "family": "ogryn_thumper_p1",
+            "mark": "m1",
+            "params": {
+              "ammo_clip": {
+                "value": [
+                  1,
+                  1
+                ]
+              },
+              "ammo_reserve": {
+                "value": [
+                  32,
+                  62
+                ]
+              },
+              "displayed_keywords": {
+                "value": [
+                  "loc_weapon_keyword_spread_shot",
+                  "loc_weapon_keyword_close_combat"
+                ]
+              },
+              "keywords": {
+                "value": [
+                  "ranged",
+                  "shotgun_grenade",
+                  "p1"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "errata": [],
+          "explanation": {
+            "calculation": "彈體直接命中的原始攻擊威力端點為 200～400；近距離爆炸為 500～1000，外圍爆炸資料的近端為 100～200、遠端為 10～20。猛砸對首個目標為 40～80。這些分屬不同命中流程的原始端點，不能任意相加成單發總傷害；實際結果還受爆心距離、護甲與素質條影響。彈體綁定的威力等級未知。",
+            "conditions": "彈匣容量為 1，備彈端點為 15～30。首次碰撞會啟動引信，是否在後續碰撞時爆炸仍受彈體條件限制；引信時間與最短存續時間未提供於可引用的輸入數值，因此確切時間未知。",
+            "effect": "腰射與固守都發射榴彈，彈體的直接命中與後續爆炸分別處理，特殊動作「猛砸」提供近身槍身打擊。爆炸有近距離與外圍不同的攻擊資料，適合利用落點影響周圍敵人。",
+            "extra": "腰射與固守的彈體操控設定不同，但均使用榴彈流程。原始攻擊威力不是最終傷害，爆心附近與外圍目標也不應沿用相同傷害數字。",
+            "notes": "「彈藥量」調整備彈；「爆破傷害」調整爆炸威力；「爆炸範圍」調整爆炸與壓制範圍，其半徑端點為 5～10、近距離半徑為 2～3；「移動性」涵蓋閃避、衝刺及動作移動；「穿透（爆破）」影響爆炸與直接命中對護甲的表現。"
+          },
+          "id": "darktide:weapon:ogryn_thumper_p1_m2",
+          "key": "ogryn_thumper_p1_m2",
+          "name": {
+            "en": "Lorenz Mk VI Rumbler",
+            "origin": "official",
+            "zh": "洛倫茲Mk VI震盪槍"
+          },
+          "official": {
+            "en": null,
+            "zh": null
+          },
+          "source": {
+            "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+            "files": [
+              {
+                "line": 40,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 52,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 60,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 64,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 80,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 84,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 100,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 108,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 116,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 128,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 104,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 106,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 107,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 110,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 111,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 116,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1381,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1385,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1389,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1393,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1413,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1417,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1421,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1425,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1430,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1434,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1438,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1442,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1446,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1450,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1454,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 1459,
+                "path": "scripts/settings/damage/damage_profiles/demolitions_damage_profile_templates.lua"
+              },
+              {
+                "line": 285,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 292,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 296,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 300,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 301,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 311,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 322,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 323,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 327,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 333,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 337,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 338,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 341,
+                "path": "scripts/settings/damage/damage_profiles/grenade_damage_profile_templates.lua"
+              },
+              {
+                "line": 88,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 92,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 96,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 98,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 108,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 112,
+                "path": "scripts/settings/damage/explosion_templates/player_weapon_explosion_templates.lua"
+              },
+              {
+                "line": 124,
+                "path": "scripts/settings/damage/power_level_settings.lua"
+              },
+              {
+                "line": 7,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 11,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 15,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 19,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 23,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 482,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_ammo_templates.lua"
+              },
+              {
+                "line": 48,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_movement_curve_modifier_templates.lua"
+              },
+              {
+                "line": 29,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m2.lua"
+              },
+              {
+                "line": 550,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m2.lua"
+              },
+              {
+                "line": 661,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m2.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 84,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 88,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 97,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 101,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 110,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 111,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 120,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 121,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 152,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 153,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 163,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 231,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 235,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 32,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_shotshell_templates.lua"
+              },
+              {
+                "line": 53,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/ammo_trait_templates.lua"
+              },
+              {
+                "line": 3304,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3313,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3322,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3331,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3340,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3349,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3359,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3369,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3379,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3389,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3399,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3409,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3536,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3545,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3553,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3562,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3571,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3580,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3589,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3599,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3609,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3619,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3629,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3639,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 3649,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 31,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 38,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 8,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/explosion_trait_templates.lua"
+              },
+              {
+                "line": 15,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/explosion_trait_templates.lua"
+              },
+              {
+                "line": 23,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/explosion_trait_templates.lua"
+              },
+              {
+                "line": 31,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/explosion_trait_templates.lua"
+              },
+              {
+                "line": 8,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/movement_curve_modifier_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 65,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 69,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 74,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 75,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 81,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 83,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 86,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 93,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 94,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 95,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 100,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 107,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 111,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 116,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 117,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 123,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 125,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 130,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 131,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 132,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 137,
+                "path": "scripts/settings/projectile/player_projectile_templates.lua"
+              },
+              {
+                "line": 9,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 13,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 14,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              }
+            ],
+            "scriptVersion": "pipeline/extract-weapons.mjs@1.1.0",
+            "text": {
+              "batch": "26101089",
+              "keys": {
+                "name": "loc_ogryn_thumper_p1_m2"
+              }
+            }
+          },
+          "values": {
+            "family": "ogryn_thumper_p1",
+            "mark": "m2",
+            "params": {
+              "ammo_clip": {
+                "value": [
+                  1,
+                  1
+                ]
+              },
+              "ammo_reserve": {
+                "value": [
+                  15,
+                  30
+                ]
+              },
+              "displayed_keywords": {
+                "value": [
+                  "loc_weapon_keyword_explosive",
+                  "loc_weapon_keyword_delayed_detonation"
+                ]
+              },
+              "keywords": {
+                "value": [
+                  "ranged",
+                  "shotgun_grenade",
+                  "p1"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "errata": [],
+          "explanation": {
+            "calculation": "射擊原始攻擊威力端點為 900～1800，衝擊為 30～60；猛砸對首個目標的原始攻擊威力為 40～80，後續預設目標為 0。射擊的原始威力明顯高於槍身打擊，但這些端點未套用素質條與護甲等修正，不是最終傷害。射擊綁定的威力等級未知。",
+            "conditions": "彈匣容量為 1，射擊後需要裝填；備彈端點為 28～48。腰射與固守綁定同一組攻擊資料，命中結果仍受護甲、距離與命中部位影響；可穿過多少目標不能由攻擊威力直接判定。",
+            "effect": "腰射與固守都使用集中的穿透射擊，特殊動作「猛砸」則以槍身處理近身目標。射擊採直接命中判定，與發射延遲爆炸榴彈的操作方式不同。",
+            "extra": "單發裝填使每次出手後的換位與裝彈時機相當重要。腰射、固守與猛砸各有操作用途，不能僅憑原始威力比較全部實戰效果。",
+            "notes": "「傷害」調整射擊威力；「裝彈速度」影響裝填節奏；「移動性」涵蓋閃避、衝刺及動作移動；「射程」影響遠距離傷害修正；「停止力」調整對不同護甲的傷害與衝擊表現。"
+          },
+          "id": "darktide:weapon:ogryn_thumper_p1_m3",
+          "key": "ogryn_thumper_p1_m3",
+          "name": {
+            "en": "Lorenz Mk VII Thugshot",
+            "origin": "official",
+            "zh": "洛倫茲Mk VII惡棍槍"
+          },
+          "official": {
+            "en": null,
+            "zh": null
+          },
+          "source": {
+            "commit": "e46b8926cfa3fa35503e4b80b15aab7a804314e4",
+            "files": [
+              {
+                "line": 52,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 60,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 64,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 76,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 80,
+                "path": "scripts/settings/damage/damage_profile_settings.lua"
+              },
+              {
+                "line": 187,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 191,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 195,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 199,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 203,
+                "path": "scripts/settings/dodge/weapon_dodge_templates.lua"
+              },
+              {
+                "line": 4,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 5,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 6,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 56,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_handling_templates.lua"
+              },
+              {
+                "line": 6,
+                "path": "scripts/settings/equipment/weapon_handling_templates/weapon_movement_curve_modifier_templates.lua"
+              },
+              {
+                "line": 29,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m3.lua"
+              },
+              {
+                "line": 551,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m3.lua"
+              },
+              {
+                "line": 648,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/ogryn_thumper_p1_m3.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 84,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 88,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 97,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 101,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 110,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 111,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 120,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 121,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 152,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 153,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 263,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 270,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 271,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 320,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 324,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_damage_profile_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_hitscan_templates.lua"
+              },
+              {
+                "line": 14,
+                "path": "scripts/settings/equipment/weapon_templates/thumpers/settings_templates/thumper_hitscan_templates.lua"
+              },
+              {
+                "line": 285,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 295,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 305,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 315,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 323,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5159,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5167,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5177,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5187,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5197,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5207,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5217,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 5227,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/damage_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 24,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 31,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 38,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/dodge_trait_templates.lua"
+              },
+              {
+                "line": 8,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/movement_curve_modifier_trait_templates.lua"
+              },
+              {
+                "line": 10,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 17,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/sprint_trait_templates.lua"
+              },
+              {
+                "line": 229,
+                "path": "scripts/settings/equipment/weapon_templates/weapon_trait_templates/weapon_handling_trait_templates.lua"
+              },
+              {
+                "line": 62,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 66,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              },
+              {
+                "line": 67,
+                "path": "scripts/settings/sprint/weapon_sprint_templates.lua"
+              }
+            ],
+            "scriptVersion": "pipeline/extract-weapons.mjs@1.1.0",
+            "text": {
+              "batch": "26101089",
+              "keys": {
+                "name": "loc_ogryn_thumper_p1_m3"
+              }
+            }
+          },
+          "values": {
+            "family": "ogryn_thumper_p1",
+            "mark": "m3",
+            "params": {
+              "ammo_clip": {
+                "value": [
+                  1,
+                  1
+                ]
+              },
+              "ammo_reserve": {
+                "value": [
+                  28,
+                  48
+                ]
+              },
+              "displayed_keywords": {
+                "value": [
+                  "loc_weapon_keyword_high_damage",
+                  "loc_weapon_keyword_piercing_shots"
+                ]
+              },
+              "keywords": {
+                "value": [
+                  "ranged",
+                  "shotgun_grenade",
+                  "p1"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 ]

@@ -6,7 +6,7 @@
     "package_kind": "published",
     "game_version": "1.13.4",
     "data_revision": "85468c795dbb9d1caea6a7f8ebb501fcf75343f9f6c68e8d8e6e745be0fe578e",
-    "build_id": "461ea89ad94f043e0ca31bdca884506a40223f851a4f177b60a09c7a29c6186c",
+    "build_id": "97df08e9e0e72e71cf1fd5f462d6a3ce1ab57bbfdb11aff8559635d80a575995",
     "game_releases": [
       {
         "game_version": "1.13.4",
@@ -19,12 +19,13 @@
   },
   "roundTrip": {
     "ids": 694,
-    "paths": 1400,
+    "paths": 1404,
+    "familyPaths": 68,
     "allTargetsPresent": true
   },
   "runtimeMap": {
-    "path": "assets/1f7f19cd83279fa12eb219f613ecf7cc03644f96ac230897046afa77a7220225.mjs",
-    "bytes": 305651,
+    "path": "assets/cc3490a33d8626ec9689efb490026d6f54d9c3a690969f44bb64fa112e5a3cf6.mjs",
+    "bytes": 316663,
     "directAppImport": true,
     "bytesMatch": true
   },
@@ -217,9 +218,97 @@
   "allFilesWithin25MiB": true,
   "artifactManifestBytes": 223044,
   "offlineArtifactRoundTrip": {
-    "idAndDetailUrls": 2094,
+    "idAndDetailUrls": 2098,
     "familyUrls": 68,
     "verifiedDataReads": 684,
     "allSelectedTargetsPresent": true
+  },
+  "r5": {
+    "unmapped": {
+      "before": 155,
+      "after": 151
+    },
+    "tests": {
+      "files": 17,
+      "total": 129,
+      "passed": 129,
+      "failed": 0
+    },
+    "appEntryMutation": {
+      "removedCall": "applyLegacyUrl",
+      "test": "InterT10_實際app啟動四個舊網址會改寫請求並只顯示目標",
+      "exitCode": 1,
+      "passed": 0,
+      "failed": 1,
+      "restoredByteForByte": true
+    },
+    "appCases": [
+      {
+        "path": "/skills/?id=darktide%3Askill%3Apsyker%3Abrain-burst-improved",
+        "target": "darktide:skill:psyker:psyker_brain_burst_improved",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/blessings/?id=darktide%3Ablessing%3Aarc_rifle%3Ap1-ammo-from-reserve-on-crit&variant=darktide%3Ablessing-variant%3Aarc_rifle%3Ap1-ammo-from-reserve-on-crit&tier=4",
+        "target": "darktide:blessing:weapon_trait_bespoke_arc_rifle_p1_ammo_from_reserve_on_crit",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/skills/arbites/adamant_ammo_belt/",
+        "target": "darktide:skill:adamant:adamant_ammo_belt",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/skills/arbites/adamant_area_buff_drone_improved/",
+        "target": "darktide:skill:adamant:adamant_area_buff_drone_improved",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/weapons/ogryn_thumper_p2/",
+        "target": "darktide:weapon:ogryn_thumper_p1_m2",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/weapons/ogryn_thumper_p2/marks/ogryn_thumper_p1_m2/",
+        "target": "darktide:weapon:ogryn_thumper_p1_m2",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/weapons/ogryn_thumper_p3/",
+        "target": "darktide:weapon:ogryn_thumper_p1_m3",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/weapons/ogryn_thumper_p3/marks/ogryn_thumper_p1_m3/",
+        "target": "darktide:weapon:ogryn_thumper_p1_m3",
+        "version": "1.13.4",
+        "replaceState": 1,
+        "uniqueItem": true
+      },
+      {
+        "path": "/skills/?id=darktide:skill:psyker:no-such-old-id&version=1.13.2",
+        "notFound": true,
+        "dataRequests": 0
+      },
+      {
+        "path": "/skills/?id=darktide:skill:psyker:no-such-old-id&version=does-not-exist",
+        "notFound": true,
+        "dataRequests": 0
+      }
+    ]
   }
 }

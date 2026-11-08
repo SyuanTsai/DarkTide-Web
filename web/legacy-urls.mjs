@@ -1,4 +1,11 @@
 const routes = { skills: 'skill', weapons: 'weapon', blessings: 'blessing', terms: 'term' };
+const currentIdsByMap = new WeakMap();
+
+function isCurrentId(map, id) {
+  if (!currentIdsByMap.has(map)) currentIdsByMap.set(map,
+    new Set([...Object.values(map.ids), ...Object.values(map.paths), ...map.additionalIds]));
+  return currentIdsByMap.get(map).has(id);
+}
 
 export function resolveLegacyUrl(input, map) {
   const url = new URL(input);
@@ -11,7 +18,10 @@ export function resolveLegacyUrl(input, map) {
   const target = detailPath ? lookup(map.paths, pathname) : lookup(map.ids, oldId);
   const family = detailPath ? lookup(map.familyPaths, pathname) : null;
   if (detailPath && !target && !family) return { status: 'not-found', url };
-  if (!target && !family) return { status: 'unchanged', url };
+  if (!target && !family) {
+    if (url.searchParams.has('id') && (!isCurrentId(map, oldId) || !oldId.startsWith(`darktide:${routes[domain]}:`))) return { status: 'not-found', url };
+    return { status: 'unchanged', url };
+  }
   if (!detailPath && target === oldId) return { status: 'unchanged', url };
   if (target && !target.startsWith(`darktide:${routes[domain]}:`)) return { status: 'not-found', url };
   if (domain === 'blessings' && url.searchParams.has('variant')) {

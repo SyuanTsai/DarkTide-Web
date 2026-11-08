@@ -74,8 +74,9 @@ test('InterT10_四個舊網址改寫並呈現正確項目', async () => {
 // Scenario: Every committed alias is followed once against the pinned Source-Data identity inventory.
 // Purpose: Reject missing targets, collisions, chains and cycles across the entire map.
 test('UnitT20_全量對應終止於固定來源且無鏈或循環', () => {
-  assert.deepEqual(runtimeMap, { targetVersion: map.targetVersion, ids: map.ids, paths: map.paths, familyPaths: map.familyPaths });
+  assert.deepEqual(runtimeMap, { targetVersion: map.targetVersion, ids: map.ids, paths: map.paths, familyPaths: map.familyPaths, additionalIds: map.additionalIds });
   const targets = new Set(Object.values(inventory.categories).flat());
+  assert.deepEqual(new Set([...Object.values(map.ids), ...Object.values(map.paths), ...map.additionalIds]), targets);
   assert.equal(inventory.commit, '93185bf9c070da578701fa398e85da9a08b8d4c4');
   assert.equal(Object.keys(map.ids).length, 694);
   for (const [old, id] of Object.entries(map.ids)) {
@@ -115,8 +116,8 @@ test('UnitT30_留存技能逐筆核對與所有無對應網址顯示找不到', 
   }
   const additional = map.unmapped.filter(e => e.reason.endsWith(':not-in-player-index'));
   assert.deepEqual(additional.map(e => e.value), ['/skills/veteran/veteran_cover_peeking/']);
-  assert.equal(map.unmapped.length, 155);
-  assert.deepEqual(Object.fromEntries(Object.entries(Object.groupBy(map.unmapped, r => r.reason)).map(([k,v]) => [k,v.length])), {'ambiguous-targets':122,'missing-class-key:base-effect':27,'missing-class-key:base-effect:not-in-player-index':1,'missing-mark-key':3,'missing-family':2});
+  assert.equal(map.unmapped.length, 151);
+  assert.deepEqual(Object.fromEntries(Object.entries(Object.groupBy(map.unmapped, r => r.reason)).map(([k,v]) => [k,v.length])), {'ambiguous-targets':122,'missing-class-key:base-effect':27,'missing-class-key:base-effect:not-in-player-index':1,'missing-mark-key':1});
   for (const row of missing) {
     assert.equal(row.reason, 'missing-class-key:base-effect');
     assert.equal(retained.find(e => `/skills/${e.id}/` === row.value).category, '基礎效果');
@@ -149,10 +150,29 @@ test('UnitT50_舊網址固定版本而新網址不改寫', () => {
     const resolved = resolveLegacyUrl(old, map);
     assert.equal(resolved.url.searchParams.get('version'), '1.13.4'); assert.equal(resolved.url.hash, '#notes');
   }
-  const current = url(`/skills/?id=${examples[0][1]}&version=1.13.2`);
-  const calls = []; const resolved = applyLegacyUrl(current, map, { replaceState: (...args) => calls.push(args) });
-  assert.equal(resolved.status, 'unchanged'); assert.equal(resolved.url.href, current.href); assert.equal(calls.length, 0);
+  for (const [domain, ids] of Object.entries(inventory.categories)) for (const id of ids) {
+    for (const version of ['1.13.2', 'does-not-exist']) {
+      const current = url(`/${domain}/?id=${encodeURIComponent(id)}&version=${version}`);
+      const calls = []; const resolved = applyLegacyUrl(current, map, { replaceState: (...args) => calls.push(args) });
+      assert.equal(resolved.status, 'unchanged', id); assert.equal(resolved.url.href, current.href); assert.equal(calls.length, 0);
+    }
+  }
   assert.equal(resolveLegacyUrl(url('/skills/arbites/adamant_ammo_belt'), map).url.searchParams.get('id'), examples[2][1]);
+});
+
+// Scenario: An unknown query identity arrives with a historical or unknown version.
+// Purpose: Decide not-found before data/version validation, without changing legitimate new ids.
+test('UnitT55_無對應舊id不受歷史或未知版本影響', () => {
+  for (const version of ['1.13.2', 'does-not-exist']) for (const path of [
+    '/skills/?id=darktide:skill:psyker:no-such-old-id',
+    '/blessings/?id=darktide:blessing:unknown:p1-no-such-old-id',
+    '/weapons/?id=darktide:weapon:unknown:p1-m1:e46',
+    '/skills/?id=constructor', '/skills/?id='
+  ]) {
+    const calls = []; const input = url(path); input.searchParams.set('version', version);
+    const resolved = applyLegacyUrl(input, map, { replaceState: (...args) => calls.push(args) });
+    assert.equal(resolved.status, 'not-found', input.href); assert.equal(calls.length, 0);
+  }
 });
 
 // Scenario: A migration target disappears from the selected release after alias resolution.
@@ -160,6 +180,22 @@ test('UnitT50_舊網址固定版本而新網址不改寫', () => {
 test('UnitT60_對應目標缺失仍顯示找不到', () => {
   const resolved = resolveLegacyUrl(url(examples[0][0]), map);
   assert.match(render(resolved.url.href, []).textContent, /找不到/);
+});
+
+// Scenario: Two retained weapon families have moved into a broader Source-Data family.
+// Purpose: Recover all four canonical URLs to the exact mark, without widening their selection.
+test('UnitT65_family重組的四個網址仍還原成唯一武器id', () => {
+  for (const suffix of ['2', '3']) {
+    const id = `darktide:weapon:ogryn_thumper_p1_m${suffix}`;
+    assert.deepEqual(inventory.weaponIdentities.find(([target]) => target === id), [id, `ogryn_thumper_p1_m${suffix}`, 'ogryn_thumper_p1']);
+    for (const path of [`/weapons/ogryn_thumper_p${suffix}/`, `/weapons/ogryn_thumper_p${suffix}/marks/ogryn_thumper_p1_m${suffix}/`]) {
+      const resolved = resolveLegacyUrl(url(path), map);
+      assert.equal(resolved.status, 'migrated', path);
+      assert.equal(resolved.url.searchParams.get('id'), id);
+      assert.equal(resolved.url.searchParams.has('family'), false);
+      assert.equal(resolved.url.searchParams.get('version'), '1.13.4');
+    }
+  }
 });
 
 // Scenario: Weapon detail uses only id, or keeps an existing family/mark pair.
@@ -204,6 +240,35 @@ test('UnitT85_線上技能只用class與nameKey精確對應', () => {
   assert.equal(generateLegacyUrls(input).unmapped.find(r => r.value.endsWith(':old')).reason, 'ambiguous-targets');
 });
 
+// Scenario: A renamed family has complete, missing, or ambiguous exact mark keys.
+// Purpose: Require the entire retained membership and canonical source evidence before aliasing.
+test('UnitT87_family重組只接受完整且唯一的mark集合與canonical來源', () => {
+  const input = { migration: { items: [] }, onlineSkills: { source: { records: [] } }, retainedIndex: { entries: [] },
+    retainedContent: { skills: [], blessings: [], marks: [{ mark_id: 'exact', weapon_id: 'old' }],
+      weapons: [{ weapon_id: 'old', mark_ids: ['exact'] }], routes: [
+        { route_kind: 'canonical', content_kind: 'mark', content_key: 'exact', target_route: '/weapons/old/marks/exact/' },
+        { route_kind: 'canonical', content_kind: 'weapon', content_key: 'old', target_route: '/weapons/old/' }
+      ] },
+    sourceData: { skills: { items: [] }, weapons: { items: [{ id: 'darktide:weapon:exact', key: 'exact', values: { family: 'new' } }] }, blessings: { items: [] }, terms: { items: [] } } };
+  const generated = generateLegacyUrls(input);
+  assert.deepEqual(generated.paths, { '/weapons/old/': 'darktide:weapon:exact', '/weapons/old/marks/exact/': 'darktide:weapon:exact' });
+  input.sourceData.weapons.items.push({ id: 'darktide:weapon:second', key: 'second', values: { family: 'new' } });
+  input.retainedContent.weapons[0].mark_ids.push('second');
+  assert.equal(generateLegacyUrls(input).unmapped.find(r => r.value === '/weapons/old/').reason, 'ambiguous-targets');
+  input.sourceData.weapons.items.pop(); input.retainedContent.weapons[0].mark_ids.pop();
+  input.retainedContent.weapons[0].mark_ids.push('absent');
+  assert.ok(generateLegacyUrls(input).unmapped.some(r => r.value === '/weapons/old/'));
+  input.retainedContent.weapons[0].mark_ids = ['exact'];
+  input.sourceData.weapons.items.push({ id: 'darktide:weapon:other', key: 'exact', values: { family: 'another' } });
+  assert.equal(generateLegacyUrls(input).unmapped.length, 2);
+  input.sourceData.weapons.items.pop();
+  input.retainedContent.routes[0].target_route = '/weapons/forged/marks/exact/';
+  assert.throws(() => generateLegacyUrls(input), /unverified retained mark route/);
+  input.retainedContent.routes.shift();
+  input.retainedContent.routes[0].target_route = '/weapons/forged/';
+  assert.throws(() => generateLegacyUrls(input), /unverified retained weapon route/);
+});
+
 // Scenario: The supplied migration map references an item absent from the target category.
 // Purpose: Missing targets must be listed as unmapped rather than shipped as broken redirects.
 test('UnitT90_產生器明列缺失目標且不產生導向', () => {
@@ -220,7 +285,7 @@ test('UnitT95_不相容變體找不到且可用參數與錨點保留', () => {
   assert.equal(migrated.url.searchParams.get('q'), '測試'); assert.equal(migrated.url.hash, '#notes');
   old.searchParams.set('variant', 'unrelated');
   const calls = []; assert.equal(applyLegacyUrl(old, map, {replaceState:(...args)=>calls.push(args)}).status, 'not-found'); assert.equal(calls.length, 0);
-  assert.equal(resolveLegacyUrl(url('/skills/?id=constructor'), map).status, 'unchanged');
+  assert.equal(resolveLegacyUrl(url('/skills/?id=constructor'), map).status, 'not-found');
   const wrongDomain = url(examples[0][0]); wrongDomain.pathname = '/blessings/';
   assert.equal(resolveLegacyUrl(wrongDomain, map).status, 'not-found');
 });
