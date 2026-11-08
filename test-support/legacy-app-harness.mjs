@@ -3,18 +3,18 @@ import { mock } from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildSiteData } from '../../src/build/site-data.mjs';
-import * as shared from '../../web/shared-client.mjs';
+import { buildSiteData } from '../src/build/site-data.mjs';
+import * as shared from '../web/shared-client.mjs';
 
 const { path, includeHistory = false, dist = null } = JSON.parse(process.argv[2]);
 const loadCalls = [], pendingLoads = [], requests = [], replacements = [];
 let build, files;
 if (dist) {
-  const directory = dist === true ? fileURLToPath(new URL('../../dist/', import.meta.url)) : dist;
+  const directory = dist === true ? fileURLToPath(new URL('../dist/', import.meta.url)) : dist;
   build = JSON.parse(await readFile(join(directory, 'version.json')));
   files = { get: name => readFile(join(directory, name)) };
 } else {
-  const details = JSON.parse(await readFile(new URL('./legacy-url-details.json', import.meta.url)));
+  const details = JSON.parse(await readFile(new URL('../test/fixtures/legacy-url-details.json', import.meta.url)));
   const versions = includeHistory ? ['1.13.2', '1.13.4'] : ['1.13.4'];
   const dataByVersion = Object.fromEntries(versions.map(version => [version, Object.fromEntries(
     ['skills', 'weapons', 'blessings', 'terms'].map(category => [category, {
@@ -31,7 +31,7 @@ if (dist) {
 }
 
 // Observe the actual app -> client boundary while delegating every load to the real client.
-mock.module('../../web/shared-client.mjs', { exports: { ...shared, createSharedClient(options) {
+mock.module('../web/shared-client.mjs', { exports: { ...shared, createSharedClient(options) {
   const client = shared.createSharedClient(options);
   return { ...client, load(request) { loadCalls.push(request); const promise = client.load(request); pendingLoads.push(promise); return promise; } };
 } } });
@@ -59,7 +59,7 @@ globalThis.fetch = async path => {
   return new Response(bytes, { headers: { 'content-type': 'application/json' } });
 };
 try {
-  await import('../../web/app.mjs');
+  await import('../web/app.mjs');
   await Promise.allSettled(pendingLoads);
   console.log(JSON.stringify({ replacements, loadCalls, requests, text: main.textContent, meta: buildMeta.textContent,
     itemIds: main.childNodes.filter(n => n.dataset.itemId).map(n => n.dataset.itemId) }));

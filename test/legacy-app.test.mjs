@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const startup = options => JSON.parse(execFileSync(process.execPath,
-  ['--experimental-test-module-mocks', fileURLToPath(new URL('./fixtures/legacy-app-harness.mjs', import.meta.url)), JSON.stringify(options)],
+  ['--experimental-test-module-mocks', fileURLToPath(new URL('../test-support/legacy-app-harness.mjs', import.meta.url)), JSON.stringify(options)],
   { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
 const examples = [
   ['/skills/?id=darktide%3Askill%3Apsyker%3Abrain-burst-improved', 'darktide:skill:psyker:psyker_brain_burst_improved', '顱腦崩裂'],

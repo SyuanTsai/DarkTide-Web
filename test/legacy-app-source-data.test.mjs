@@ -18,7 +18,7 @@ before(async () => {
 after(async () => { if (fixtureRoot) await rm(fixtureRoot, { recursive: true, force: true }); });
 
 const startup = path => JSON.parse(execFileSync(process.execPath,
-  ['--experimental-test-module-mocks', fileURLToPath(new URL('./fixtures/legacy-app-harness.mjs', import.meta.url)),
+  ['--experimental-test-module-mocks', fileURLToPath(new URL('../test-support/legacy-app-harness.mjs', import.meta.url)),
     JSON.stringify({ path, dist: join(fixtureRoot, 'dist') })],
   { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }));
 
