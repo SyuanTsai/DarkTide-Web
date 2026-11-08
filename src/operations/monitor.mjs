@@ -1,3 +1,4 @@
+import { verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { sha256, safeRelativePath, jsonBytes } from '../static/common.mjs';
 import { verifyOrigin } from '../deploy/cloudflare.mjs';
@@ -66,10 +67,11 @@ async function monitorLegacy(origin, version, fetcher, check, checks) {
 // Verify the public contract directly; no release-state or retained backup authority.
 export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch } = {}) {
   const checks = [];
-  const get = async name => {
+  const get = async (name, allow404 = false) => {
     const response = await fetcher(new URL(name, origin), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(15000) });
+    if (allow404 && response.status === 404) return null;
     assert.equal(response.status, 200, 'public content HTTP status: ' + name);
-    assert.match(response.headers.get('content-type') ?? '', /application\/json/i, 'public JSON MIME');
+    assert.match(response.headers.get('content-type') ?? '', name.endsWith('.bin') ? /^application\/octet-stream(?:\s*;|$)/i : /^application\/json(?:\s*;|$)/i, 'public content MIME');
     return Buffer.from(await response.arrayBuffer());
   };
   const check = async (name, hash, size) => {
@@ -122,7 +124,20 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch 
   assert.equal(version.game_releases.find(p => p.game_version === version.game_version)?.data_revision, version.data_revision);
   for (const release of current.versions) {
     assert.match(release, /^[0-9]+(?:\.[0-9]+){1,3}$/);
-    for (const category of ['skills', 'weapons', 'blessings', 'terms']) await check(`/source-data/${release}/${category}.json`);
+    for (const category of ['skills', 'weapons', 'blessings', 'terms']) {
+      const prefix = `/source-data/${release}/`, name = `${prefix}${category}.manifest.json`, bytes = await get(name, true);
+      if (!bytes) { await check(`${prefix}${category}.json`); continue; }
+      checks.push({ path: name, sha256: sha256(bytes), size_bytes: bytes.length });
+      const manifest = JSON.parse(bytes), local = new Map();
+      if (!Array.isArray(manifest.parts) || manifest.parts.length > 9999) throw new Error('invalid transport parts');
+      for (const [i, part] of manifest.parts.entries()) {
+        const expected = manifest.representation === 'single' ? `${category}.json` : `${category}.part-${String(i+1).padStart(4,'0')}.bin`;
+        assert.equal(part.path, expected, 'unsafe transport part path');
+        local.set(expected, await check(prefix + expected));
+      }
+      if (manifest.representation === 'raw-byte-shards' && manifest.totalBytes <= MAX_OUTPUT_FILE_BYTES) local.set(`${category}.json`, await check(`${prefix}${category}.json`));
+      verifyTransport(manifest, local, release, category);
+    }
   }
   await verifyOrigin(origin, { ...version, source_commit: commit, source_files: checks }, { fetch: fetcher });
   // Use the injectable fetch for all checks, including deployment contract verification.

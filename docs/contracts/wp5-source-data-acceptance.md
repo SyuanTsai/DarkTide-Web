@@ -10,8 +10,8 @@
 - /version.json 使用 schema_version 3，game_releases 每筆保留 game_version、data_revision、manifest_path、manifest_sha256。
 - 詳情分檔的 item 與 Source-Data 深度相等；index 只存清單所需欄位。武器依 family；祝福依既有 W08 每筆一個 shard。瀏覽器依路由及選定 family／祝福載入需要的分檔。
 - 單檔 16 MiB，來自 scripts/content/contract-release.mjs 的 MAX_DOMAIN_BYTES；manifest 保留既有瀏覽器 256 KiB 上限，超限在建置時拒絕。
-- /source-data/current.json 與 current.versions 中所有版本的四類 JSON 原樣複製；current 採 no-cache, must-revalidate，版本目錄採一年 immutable。
-- /source-data/* 回傳 application/json; charset=utf-8、Access-Control-Allow-Origin: *、Access-Control-Allow-Methods: GET, HEAD。本機 server 拒絕 POST。
+- /source-data/current.json 原樣複製；current.versions 每版四類依下述 transport manifest 提供原始 bytes，current 採 no-cache, must-revalidate，版本目錄採一年 immutable。
+- JSON 使用 application/json; charset=utf-8，.bin 使用 application/octet-stream；均回傳 Access-Control-Allow-Origin: *、Access-Control-Allow-Methods: GET, HEAD。本機 server 拒絕 POST。
 - 1.13.1 history 的兩份公開固定檔維持原位元組；1.13.4 凍結 game-changes 的 SHA-256 為 2569ddfeb2b8e1250a69869163a66f132776569e64558ab8ff8806f6cb66bc5c，已核對線上 manifest。
 
 ## 公告比對
@@ -110,3 +110,6 @@ Web 直接讀取 W15 announcement-candidate.json 的 5 筆及 official-announcem
 - web/source-client.mjs
 - web/style.css
 - docs/contracts/wp5-source-data-acceptance.md
+
+
+`/source-data/<version>/<category>.manifest.json` describes the immutable raw-byte transport (`transportSchemaVersion` 1.0.0): total byte length and SHA-256, and ordered parts with index, relative path, offset, length and SHA-256. At most 20 MiB uses the original JSON as a single part. Above 20 MiB, raw bytes are split into 20 MiB `.part-NNNN.bin` files; the original JSON is also provided through 25 MiB. Above 25 MiB the original JSON is unavailable (404), so older extensions must upgrade before the Web release. Reassemble bytes before decoding. JSON manifests use `application/json; charset=utf-8`, binary parts use `application/octet-stream`; both retain CORS GET/HEAD and immutable caching. `current.json` remains byte-identical and no-cache. Missing files return 404. Deploy Extension support first.

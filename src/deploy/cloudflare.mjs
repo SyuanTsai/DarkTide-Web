@@ -1,3 +1,4 @@
+import { verifyTransport } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { safeRelativePath, sha256 } from '../static/common.mjs';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
@@ -83,15 +84,23 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
   }
  }
  if(expected.source_data===true){
+  const transportFiles = new Map();
   for(const row of expected.source_files){
    const response=await get(row.path,{redirect:'error'});assert.equal(response.status,200,'source file status '+row.path);
-   assert.match(response.headers.get('content-type')??'',/application\/json/i);
+   assert.match(response.headers.get('content-type')??'',row.path.endsWith('.bin')?/^application\/octet-stream(?:\s*;|$)/i:/^application\/json(?:\s*;|$)/i);
    const bytes=Buffer.from(await response.arrayBuffer());assert.equal(bytes.length,row.size_bytes);assert.equal(sha256(bytes),row.sha256);
+   transportFiles.set(row.path,bytes);
    if(row.path.startsWith('/source-data/')){
     assert.equal(response.headers.get('access-control-allow-origin'),'*');
     assert.equal(response.headers.get('access-control-allow-methods'),'GET, HEAD');
     assert.match(response.headers.get('cache-control')??'',row.path==='/source-data/current.json'?/no-cache|no-store/:/immutable/);
    }
+  }
+  for (const [name, bytes] of transportFiles) if (/^\/source-data\/[^/]+\/(skills|weapons|blessings|terms)\.manifest\.json$/.test(name)) {
+   const manifest = JSON.parse(bytes), prefix = name.slice(0,name.lastIndexOf('/')+1), local = new Map();
+   for (const [path, value] of transportFiles) if (path.startsWith(prefix)) local.set(path.slice(prefix.length),value);
+   const match = /^\/source-data\/([^/]+)\/(skills|weapons|blessings|terms)\.manifest\.json$/.exec(name);
+   verifyTransport(manifest, local, match[1], match[2]);
   }
   const pointer=version.game_releases.find(p=>p.game_version===version.game_version);
   const manifest=await(await get(pointer.manifest_path)).json();assert.equal(manifest.source.commit,expected.source_commit,'deployed Source-Data commit mismatch');

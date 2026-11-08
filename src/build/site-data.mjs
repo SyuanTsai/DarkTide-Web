@@ -1,3 +1,4 @@
+import { createTransport, verifyTransport } from './transport.mjs';
 import { jsonBytes, sha256, safeRelativePath, compareUtf8 } from '../static/common.mjs';
 import { buildGameChangesDomain } from './game-changes.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
@@ -71,6 +72,15 @@ export function buildSiteData({ source, announcements = null, frozen = {}, termR
     files.set(prefix + 'manifest.json', manifestBytes);
     pointers.push({ game_version: gameVersion, data_revision: dataRevision, manifest_path: `/${prefix}manifest.json`, manifest_sha256: sha256(manifestBytes) });
   }
-  for (const [name, bytes] of source.rawFiles) files.set(`source-data/${name}`, bytes);
+  for (const [name, bytes] of source.rawFiles) {
+    if (name === 'current.json') { files.set(`source-data/${name}`, bytes); continue; }
+    const match = /^([^/]+)\/(skills|weapons|blessings|terms)\.json$/.exec(name);
+    if (!match) throw new Error(`unexpected raw source path ${name}`);
+    const [, version, category] = match;
+    const transport = createTransport(version, category, bytes);
+    if (!verifyTransport(transport.manifest, transport.files, version, category).equals(bytes)) throw new Error(`source bytes differ: ${name}`);
+    files.set(`source-data/${version}/${category}.manifest.json`, jsonBytes(transport.manifest));
+    for (const [part, value] of transport.files) files.set(`source-data/${version}/${part}`, value);
+  }
   return { files, pointers, current: pointers.find(p => p.game_version === source.current.gameVersion) };
 }

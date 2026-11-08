@@ -11,7 +11,7 @@ import { loadW14HistoryStaticFiles } from '../../scripts/content/contract-w14-hi
 import { verifyStaticPackage } from '../static/verify.mjs';
 import { renderStaticRewrites } from '../static/routing-policy.mjs';
 
-export async function buildSourceSite({ root, sourceData, sourceDataCommit, siteOrigin, fixture = false }) {
+export async function buildSourceSite({ root, sourceData, sourceDataCommit, siteOrigin, fixture = false, maxOutputFileBytes }) {
   root = path.resolve(root);
   if (siteOrigin) { const u=new URL(siteOrigin);if(u.protocol!=='https:' || u.origin!==siteOrigin || u.username || u.password)throw new Error('site origin must be an HTTPS origin'); }
   // Validate all inputs before creating a staging directory or replacing dist.
@@ -47,7 +47,7 @@ export async function buildSourceSite({ root, sourceData, sourceDataCommit, site
   const stage=await mkdtemp(path.join(root,'.static-build-staging-'));let installed=false;
   try {
     for(const [name,bytes] of files){safeRelativePath(name);const target=path.join(stage,name);await mkdir(path.dirname(target),{recursive:true});await writeFile(target,bytes);}
-    await verifyStaticPackage(stage);await replaceDirectory(stage,path.join(root,'dist'));installed=true;
+    await verifyStaticPackage(stage, { maxOutputFileBytes });await replaceDirectory(stage,path.join(root,'dist'));installed=true;
   } finally {if(!installed)await rm(stage,{recursive:true,force:true});}
   return {...version,file_count:files.size,outputDirectory:path.join(root,'dist')};
 }

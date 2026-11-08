@@ -31,6 +31,10 @@ test('InterT10_monitor_checks_source_manifests_domains_assets_and_attribution', 
   const result = await monitorOrigin(origin, { fetch: fetcher });
   assert.equal(result.status, 'healthy');
   assert.equal(result.publication, 'source-data');
+  const legacy = async (url, options) => new URL(url).pathname.endsWith('.manifest.json') && new URL(url).pathname.startsWith('/source-data/') ? new Response('missing',{status:404}) : fetcher(url,options);
+  assert.equal((await monitorOrigin(origin, {fetch:legacy})).status, 'healthy');
+  const badManifest = async (url, options) => new URL(url).pathname.endsWith('.manifest.json') && new URL(url).pathname.startsWith('/source-data/') ? new Response('<html>',{headers:{'content-type':'text/html'}}) : fetcher(url,options);
+  await assert.rejects(monitorOrigin(origin, {fetch:badManifest}), /MIME/);
   assert.ok(result.hash_checks.some(row => row.path.includes('/domains/')));
   assert.ok(result.hash_checks.some(row => row.path.startsWith('/assets/')));
   for (const target of ['domain', 'attribution', '404']) {

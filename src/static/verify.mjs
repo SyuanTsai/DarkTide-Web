@@ -1,3 +1,4 @@
+import { MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import { lstat, readdir, readFile } from 'node:fs/promises';
 import { verifySourceStaticFiles } from '../build/verify.mjs';
 import path from 'node:path';
@@ -399,9 +400,10 @@ function validateInitialGamesLanternCredit(index, catalog, dataFiles) {
     fail('index.html declares a Games Lantern credit without using Games Lantern assets');
   }
 }
-export async function verifyStaticPackage(directory) {
+export async function verifyStaticPackage(directory, { maxOutputFileBytes = MAX_OUTPUT_FILE_BYTES } = {}) {
   const root = path.resolve(directory);
   const { files, directories } = await collectDirectory(root);
+  for (const [name, bytes] of files) if (bytes.length > maxOutputFileBytes) fail(`${name} exceeds ${maxOutputFileBytes} bytes`);
   const manifestBytes = files.get('artifact-manifest.json');
   if (!manifestBytes) fail('static artifact is missing artifact-manifest.json');
   const manifest = parseJson(manifestBytes, 'artifact-manifest.json');

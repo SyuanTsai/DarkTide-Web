@@ -105,3 +105,27 @@ test('InterT20_驗證失敗不產生dist且先執行來源validator',async()=>{
     await assert.rejects(readFile(path.join(temp,'dist/index.html')),/ENOENT/);
   }finally{await rm(temp,{recursive:true,force:true});}
 });
+
+// Scenario: A staged build exceeds an injected output limit after a successful build.
+// Purpose: The verifier rejects it before replacing the previous dist.
+test('InterT30_output_limit_preserves_previous_dist', async () => {
+  const temp = await mkdtemp(path.join(root,'.static-build-staging-limit-'));
+  try {
+    for (const name of ['web','content/history','content/authoring/v2','content/reference']) await cp(path.join(root,name),path.join(temp,name),{recursive:true});
+    const opts = {root:temp,sourceData:path.join(root,'test/fixtures/source-data'),fixture:true};
+    await buildSourceSite(opts); const before=await readFile(path.join(temp,'dist/version.json'));
+    await assert.rejects(buildSourceSite({...opts,maxOutputFileBytes:1}),/exceeds/);
+    assert.deepEqual(await readFile(path.join(temp,'dist/version.json')),before);
+  } finally { await rm(temp,{recursive:true,force:true}); }
+});
+// Scenario: Any file, including the artifact manifest, exceeds a small injected limit.
+// Purpose: Reject oversize files before parsing or trusting their metadata.
+test('InterT40_output_limit_covers_every_directory_and_manifest', async () => {
+  const temp = await mkdtemp(path.join(root,'.static-build-staging-guard-'));
+  try {
+    for (const name of ['artifact-manifest.json','data/x','assets/x','history/x','source-data/x']) {
+      const dir=path.join(temp,String(name.length)); await mkdir(path.dirname(path.join(dir,name)),{recursive:true}); await writeFile(path.join(dir,name),'12345');
+      await assert.rejects(verifyStaticPackage(dir,{maxOutputFileBytes:4}),/exceeds 4 bytes/);
+    }
+  } finally { await rm(temp,{recursive:true,force:true}); }
+});

@@ -22,4 +22,6 @@ test('InterT10_線上檢查核對sourceCommit與來源檔案雜湊',async()=>{
   };
   assert.equal((await verifyOrigin('https://example.test',expected,{fetch})).source_commit,commit);
   await assert.rejects(verifyOrigin('https://example.test',{...expected,source_commit:'d'.repeat(40)},{fetch}),/commit mismatch/);
+  const wrongMime=async (url,options)=>{const response=await fetch(url,options);if(new URL(url).pathname==='/source-data/9.9.2/skills.json')return new Response(await response.arrayBuffer(),{headers:{...Object.fromEntries(response.headers),'content-type':'text/html'}});return response;};
+  await assert.rejects(verifyOrigin('https://example.test',expected,{fetch:wrongMime}),/application/);
 });
