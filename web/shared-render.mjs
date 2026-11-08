@@ -2277,7 +2277,7 @@ function renderSourceWeaponTables(parent, item, context) {
     sourceTable(parent, 'damage-profiles', `${profile.id} 綁定`, ['動作', '類型', 'template', 'powerLevel'], profile.bindings.map(b => [b.action, types[b.kind], b.template ?? '', b.powerLevel ? (b.powerLevel.value === null ? '來源未提供' : sourceNumber(b.powerLevel.value)) : '']));
   }
   const family = context.family.filter(x => x.family === v.family);
-  sourceTable(parent, 'family-marks', '同家族已留存的型號與詳情', ['型號', '狀態'], family.map(x => [link(context.href({family:v.family,id:x.id}), x.name.zh || x.id), x.id === item.id ? '目前型號' : '']));
+  sourceTable(parent, 'family-marks', '同家族型號', ['型號', '狀態'], family.map(x => [link(context.href({family:v.family,id:x.id}), x.name.zh || x.id), x.id === item.id ? '目前型號' : '']));
   sourceTable(parent, 'blessings', '可用祝福', ['名稱'], v.blessings.map(id => [link(context.blessingHref(id), context.blessings.find(b => b.id === id)?.name.zh || '名稱待確認')]));
 }
 function renderSourceItem(parent, item, schemaVersion, context) {
