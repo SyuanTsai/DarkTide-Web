@@ -45,6 +45,7 @@ npm run smoke:browser
 
 - `/source-data/current.json` 與來源 `data/current.json` 位元組相同，採 `no-cache, must-revalidate`。
 - `current.versions` 每版四類各有 transport manifest；原始 bytes 依下述門檻提供單檔或分片，採一年 immutable 快取；已發布版本資料應保持凍結。
+- 與 Extension loader 一致，每個版本的單一類別原始檔上限為 32 MiB（33,554,432 bytes），四類加 `current.json` 合計上限為 64 MiB（67,108,864 bytes）；超過時建置失敗。
 - JSON 使用 `application/json; charset=utf-8`，`.bin` 使用 `application/octet-stream`，允許跨來源 GET／HEAD：`Access-Control-Allow-Origin: *` 與 `Access-Control-Allow-Methods: GET, HEAD`。
 - 網站新版本由版本指標切換；`/history/1.13.1/` 仍使用原固定歷史公開投影。
 

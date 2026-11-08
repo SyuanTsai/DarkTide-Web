@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createTransport, verifyTransport, SHARD_THRESHOLD, MAX_OUTPUT_FILE_BYTES } from '../src/build/transport.mjs';
+import { createTransport, verifyTransport, SHARD_THRESHOLD, MAX_OUTPUT_FILE_BYTES, MAX_SOURCE_CATEGORY_BYTES, MAX_SOURCE_VERSION_BYTES } from '../src/build/transport.mjs';
 const options = { threshold: 4, maxBytes: 6 };
 const create = bytes => createTransport('1.2.3', 'weapons', bytes, options);
 const verify = ({manifest, files}) => verifyTransport(manifest, files, '1.2.3', 'weapons', options);
@@ -8,6 +8,7 @@ const fixture = () => create(Buffer.from('abcdefgh'));
 // Scenario: Input sizes straddle both transport limits. Purpose: Preserve the exact representation and legacy availability at each boundary.
 test('UnitT10_transport_boundaries_and_default_constants', () => {
   assert.equal(SHARD_THRESHOLD, 20971520); assert.equal(MAX_OUTPUT_FILE_BYTES, 26214400);
+  assert.equal(MAX_SOURCE_CATEGORY_BYTES, 33554432); assert.equal(MAX_SOURCE_VERSION_BYTES, 67108864);
   for (const [size, representation, legacy, count] of [[4,'single',true,1],[5,'raw-byte-shards',true,2],[6,'raw-byte-shards',true,2],[7,'raw-byte-shards',false,2]]) {
     const result = create(Buffer.alloc(size, 65));
     assert.equal(result.manifest.representation, representation); assert.equal(result.files.has('weapons.json'), legacy); assert.equal(result.manifest.parts.length, count);

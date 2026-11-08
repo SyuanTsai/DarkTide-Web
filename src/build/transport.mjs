@@ -1,6 +1,9 @@
 import { sha256 } from '../static/common.mjs';
 export const SHARD_THRESHOLD = 20 * 1024 * 1024;
 export const MAX_OUTPUT_FILE_BYTES = 25 * 1024 * 1024;
+// Aligned with the Extension loader limits.
+export const MAX_SOURCE_CATEGORY_BYTES = 32 * 1024 * 1024;
+export const MAX_SOURCE_VERSION_BYTES = 64 * 1024 * 1024;
 const keys = (o, names) => o && typeof o === 'object' && !Array.isArray(o) && Object.keys(o).sort().join(',') === names.sort().join(',');
 export function createTransport(gameVersion, category, raw, { threshold = SHARD_THRESHOLD, maxBytes = MAX_OUTPUT_FILE_BYTES } = {}) {
   const files = new Map(), parts = [];
@@ -14,18 +17,28 @@ export function createTransport(gameVersion, category, raw, { threshold = SHARD_
   }
   return { manifest: { transportSchemaVersion: '1.0.0', representation: single ? 'single' : 'raw-byte-shards', gameVersion, category, totalBytes: raw.length, totalSha256: sha256(raw), parts }, files };
 }
-export function verifyTransport(manifest, files, gameVersion, category, { threshold = SHARD_THRESHOLD, maxBytes = MAX_OUTPUT_FILE_BYTES } = {}) {
+export function validateTransportManifest(manifest, gameVersion, category, { threshold = SHARD_THRESHOLD } = {}) {
   const fail = () => { throw new Error(`invalid source transport ${gameVersion}/${category}`); };
   if (!keys(manifest,['transportSchemaVersion','representation','gameVersion','category','totalBytes','totalSha256','parts']) || manifest.transportSchemaVersion !== '1.0.0' || manifest.gameVersion !== gameVersion || manifest.category !== category || !Number.isSafeInteger(manifest.totalBytes) || manifest.totalBytes < 0 || !/^[a-f0-9]{64}$/.test(manifest.totalSha256) || !Array.isArray(manifest.parts)) fail();
   const single = manifest.totalBytes <= threshold;
   if (manifest.representation !== (single ? 'single' : 'raw-byte-shards') || manifest.parts.length !== (single ? 1 : Math.ceil(manifest.totalBytes / threshold)) || manifest.parts.length > 9999) fail();
-  let offset = 0; const chunks = [];
+  let offset = 0;
   for (const [i, part] of manifest.parts.entries()) {
     const name = single ? `${category}.json` : `${category}.part-${String(i+1).padStart(4,'0')}.bin`;
     const size = single ? manifest.totalBytes : Math.min(threshold, manifest.totalBytes-offset);
     if (!keys(part,['index','path','offset','sizeBytes','sha256']) || part.index !== i+1 || part.path !== name || part.offset !== offset || part.sizeBytes !== size || !/^[a-f0-9]{64}$/.test(part.sha256)) fail();
-    const bytes = files.get(name); if (!Buffer.isBuffer(bytes) || bytes.length !== size || sha256(bytes) !== part.sha256) fail();
-    chunks.push(bytes); offset += size;
+    offset += size;
+  }
+}
+export function verifyTransport(manifest, files, gameVersion, category, options = {}) {
+  validateTransportManifest(manifest, gameVersion, category, options);
+  const { maxBytes = MAX_OUTPUT_FILE_BYTES } = options;
+  const fail = () => { throw new Error(`invalid source transport ${gameVersion}/${category}`); };
+  const chunks = [];
+  for (const part of manifest.parts) {
+    const bytes = files.get(part.path);
+    if (!Buffer.isBuffer(bytes) || bytes.length !== part.sizeBytes || sha256(bytes) !== part.sha256) fail();
+    chunks.push(bytes);
   }
   const raw = Buffer.concat(chunks); if (raw.length !== manifest.totalBytes || sha256(raw) !== manifest.totalSha256) fail();
   const legacy = files.get(`${category}.json`);

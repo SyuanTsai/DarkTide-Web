@@ -11,6 +11,7 @@
 - 詳情分檔的 item 與 Source-Data 深度相等；index 只存清單所需欄位。武器依 family；祝福依既有 W08 每筆一個 shard。瀏覽器依路由及選定 family／祝福載入需要的分檔。
 - 單檔 16 MiB，來自 scripts/content/contract-release.mjs 的 MAX_DOMAIN_BYTES；manifest 保留既有瀏覽器 256 KiB 上限，超限在建置時拒絕。
 - /source-data/current.json 原樣複製；current.versions 每版四類依下述 transport manifest 提供原始 bytes，current 採 no-cache, must-revalidate，版本目錄採一年 immutable。
+- 與 Extension loader 一致，每個版本的單一類別原始檔最多 32 MiB（33,554,432 bytes），四類原始檔加 current.json 最多 64 MiB（67,108,864 bytes）；建置對每個版本檢查，超過即失敗。
 - JSON 使用 application/json; charset=utf-8，.bin 使用 application/octet-stream；均回傳 Access-Control-Allow-Origin: *、Access-Control-Allow-Methods: GET, HEAD。本機 server 拒絕 POST。
 - 1.13.1 history 的兩份公開固定檔維持原位元組；1.13.4 凍結 game-changes 的 SHA-256 為 2569ddfeb2b8e1250a69869163a66f132776569e64558ab8ff8806f6cb66bc5c，已核對線上 manifest。
 

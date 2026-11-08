@@ -1,4 +1,4 @@
-import { verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
+import { validateTransportManifest, verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { sha256, safeRelativePath, jsonBytes } from '../static/common.mjs';
 import { verifyOrigin } from '../deploy/cloudflare.mjs';
@@ -129,7 +129,7 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch,
       if (!bytes) { await check(`${prefix}${category}.json`); continue; }
       checks.push({ path: name, sha256: sha256(bytes), size_bytes: bytes.length });
       const manifest = JSON.parse(bytes), local = new Map();
-      if (!Array.isArray(manifest.parts) || manifest.parts.length > 9999) throw new Error('invalid transport parts');
+      validateTransportManifest(manifest, release, category, transportOptions);
       for (const [i, part] of manifest.parts.entries()) {
         const expected = manifest.representation === 'single' ? `${category}.json` : `${category}.part-${String(i+1).padStart(4,'0')}.bin`;
         assert.equal(part.path, expected, 'unsafe transport part path');

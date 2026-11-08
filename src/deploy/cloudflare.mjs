@@ -1,4 +1,4 @@
-import { verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
+import { validateTransportManifest, verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { safeRelativePath, sha256 } from '../static/common.mjs';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
@@ -85,11 +85,17 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
  }
  if(expected.source_data===true){
   const transportFiles = new Map();
-  for(const row of expected.source_files){
+  const isTransportManifest = row => /^\/source-data\/[^/]+\/(skills|weapons|blessings|terms)\.manifest\.json$/.test(row.path);
+  const orderedFiles = [...expected.source_files.filter(isTransportManifest), ...expected.source_files.filter(row => !isTransportManifest(row))];
+  for(const row of orderedFiles){
    const response=await get(row.path,{redirect:'error'});assert.equal(response.status,200,'source file status '+row.path);
    assert.match(response.headers.get('content-type')??'',row.path.endsWith('.bin')?/^application\/octet-stream(?:\s*;|$)/i:/^application\/json(?:\s*;|$)/i);
    const bytes=Buffer.from(await response.arrayBuffer());assert.equal(bytes.length,row.size_bytes);assert.equal(sha256(bytes),row.sha256);
    transportFiles.set(row.path,bytes);
+   if (isTransportManifest(row)) {
+    const match = /^\/source-data\/([^/]+)\/(skills|weapons|blessings|terms)\.manifest\.json$/.exec(row.path);
+    validateTransportManifest(JSON.parse(bytes), match[1], match[2], transportOptions);
+   }
    if(row.path.startsWith('/source-data/')){
     assert.equal(response.headers.get('access-control-allow-origin'),'*');
     assert.equal(response.headers.get('access-control-allow-methods'),'GET, HEAD');

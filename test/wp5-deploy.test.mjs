@@ -6,6 +6,20 @@ import { buildSourceSite } from '../src/build/build.mjs';
 import { verifySourceStaticFiles } from '../src/build/verify.mjs';
 import { mixedSourceFixture, collectFiles, publicationFetch, transportOptions } from './syp391-fixture.mjs';
 import path from 'node:path';
+// Scenario: An oversized transport falsely declares a single file with a resealed outer hash.
+// Purpose: Reject the manifest before downloading any source category or shard.
+test('InterT05_deploy_rejects_oversized_single_before_download', async t => {
+  const opts = await mixedSourceFixture(t); await buildSourceSite(opts);
+  const files = await collectFiles(path.join(opts.root, 'dist'));
+  const expected = verifySourceStaticFiles(files, JSON.parse(files.get('version.json')), { transportOptions });
+  const name = 'source-data/9.9.1/skills.manifest.json', manifest = JSON.parse(files.get(name));
+  manifest.totalBytes = transportOptions.threshold + 1;
+  const bytes = Buffer.from(JSON.stringify(manifest)); files.set(name, bytes);
+  expected.source_files = expected.source_files.map(row => row.path === '/' + name ? { ...row, size_bytes: bytes.length, sha256: sha256(bytes) } : row);
+  const origin = publicationFetch(files);
+  await assert.rejects(verifyOrigin('https://example.test', expected, { fetch: origin.fetch, transportOptions }), /invalid source transport/);
+  assert.ok(!origin.requests.some(r => r.method === 'GET' && /\/source-data\/[^/]+\/(?:skills|weapons|blessings|terms)(?:\.json|\.part-\d+\.bin)$/.test(r.name)));
+});
 // Scenario: Online files have exact hashes, source CORS and the requested commit.
 // Purpose: The deployment check must detect stale source.commit even when the site is reachable.
 test('InterT10_線上檢查核對sourceCommit與來源檔案雜湊',async()=>{

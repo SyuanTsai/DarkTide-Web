@@ -8,6 +8,19 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { mixedSourceFixture, collectFiles, publicationFetch, transportOptions } from './syp391-fixture.mjs';
 
+// Scenario: An oversized transport falsely declares a single file.
+// Purpose: Reject the manifest before fetching its category or shards.
+test('InterT05_monitor_rejects_oversized_single_before_download', async t => {
+  const opts = await mixedSourceFixture(t); await buildSourceSite(opts);
+  const files = await collectFiles(path.join(opts.root, 'dist'));
+  const name = 'source-data/9.9.1/skills.manifest.json', manifest = JSON.parse(files.get(name));
+  manifest.totalBytes = transportOptions.threshold + 1;
+  files.set(name, Buffer.from(JSON.stringify(manifest)));
+  const origin = publicationFetch(files);
+  await assert.rejects(monitorOrigin('https://example.test', { fetch: origin.fetch, transportOptions }), /invalid source transport/);
+  assert.ok(!origin.requests.some(r => r.method === 'GET' && /\/source-data\/9\.9\.1\/(?:skills\.json|.*\.bin)$/.test(r.name)));
+});
+
 // Scenario: A public Source-Data site is healthy, then serves corrupt domain bytes or HTML attribution.
 // Purpose: Monitor the new publication without a retained backup or state branch and reject corruption.
 test('InterT10_monitor_checks_source_manifests_domains_assets_and_attribution', async t => {
@@ -84,7 +97,7 @@ test('InterT30_monitor_shards_fail_closed_without_legacy_downloads', async t => 
   const scenarios = [
     ['InterT10_shards_succeed', null, null],
     ['InterT20_malformed_JSON', files => files.set(manifestName, Buffer.from('{')), null, /JSON/],
-    ['InterT30_invalid_manifest', files => files.set(manifestName, Buffer.from('{}')), null, /transport parts/],
+    ['InterT30_invalid_manifest', files => files.set(manifestName, Buffer.from('{}')), null, /invalid source transport/],
     ['InterT40_wrong_part_hash', files => files.set('source-data/9.9.2/weapons.part-0002.bin', Buffer.alloc(2049)), null, /invalid source transport/],
     ['InterT50_wrong_total_hash', files => {
       const manifest = JSON.parse(files.get(manifestName)); manifest.totalSha256 = '0'.repeat(64);

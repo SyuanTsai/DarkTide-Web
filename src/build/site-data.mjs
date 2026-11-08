@@ -1,4 +1,4 @@
-import { createTransport, verifyTransport } from './transport.mjs';
+import { createTransport, verifyTransport, MAX_SOURCE_CATEGORY_BYTES, MAX_SOURCE_VERSION_BYTES } from './transport.mjs';
 import { jsonBytes, sha256, safeRelativePath, compareUtf8 } from '../static/common.mjs';
 import { buildGameChangesDomain } from './game-changes.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
@@ -28,6 +28,15 @@ export function weaponFamilyPaths(families, hash) {
 export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, transportOptions }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
+    const categories = ['skills', 'weapons', 'blessings', 'terms'];
+    const { maxCategoryBytes = MAX_SOURCE_CATEGORY_BYTES, maxVersionBytes = MAX_SOURCE_VERSION_BYTES } = transportOptions ?? {};
+    let total = source.rawFiles.get('current.json').length;
+    for (const category of categories) {
+      const size = source.rawFiles.get(`${gameVersion}/${category}.json`).length;
+      if (size > maxCategoryBytes) throw new Error(`source ${gameVersion}/${category} size ${size} bytes exceeds limit ${maxCategoryBytes} bytes`);
+      total += size;
+    }
+    if (total > maxVersionBytes) throw new Error(`source ${gameVersion} skills, weapons, blessings, terms and current.json size ${total} bytes exceeds limit ${maxVersionBytes} bytes`);
     const data = source.dataByVersion[gameVersion];
     const domains = new Map(); const rows = [];
     const add = (kind, path, value, dependencies = []) => {
