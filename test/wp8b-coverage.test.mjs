@@ -17,6 +17,7 @@ test('InterT10_離線基準保留公告變更與譯名規則', async () => {
   const frozen = await json('../content/history/1.13.4/game-changes.json');
   const source = await loadSourceData({ directory: fileURLToPath(new URL('./fixtures/source-data/', import.meta.url)), fixture: true });
   source.dataByVersion['1.13.4'] = source.dataByVersion['9.9.1']; source.current.versions = ['1.13.4']; source.current.gameVersion = '1.13.4';
+  for (const category of ['skills', 'weapons', 'blessings', 'terms']) source.rawFiles.set(`1.13.4/${category}.json`, source.rawFiles.get(`9.9.1/${category}.json`));
   const bundle = buildSiteData({ source, announcements: await loadAnnouncements(root), frozen: { '1.13.4': frozen }, termRules: sidecar });
   const readDomain = name => JSON.parse(bundle.files.get(`data/${bundle.current.data_revision}/domains/${name}.json`));
   const ids = new Set(readDomain('announcements').items.map(x => x.announcementId));

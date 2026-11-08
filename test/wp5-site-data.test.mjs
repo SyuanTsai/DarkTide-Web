@@ -6,6 +6,18 @@ import { sha256 } from '../src/static/common.mjs';
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
 import { createSharedViewModel } from '../web/shared-view.mjs';
+// Scenario: The second version reaches each injected reader limit and then exceeds it by one byte.
+// Purpose: Protect both per-category and per-version capacity boundaries at build time.
+test('UnitT08_source_capacity_boundaries', async () => {
+  const source = await loadSourceData({ directory: fileURLToPath(new URL('./fixtures/source-data/', import.meta.url)), fixture: true });
+  const version = source.current.versions[1], names = CATEGORIES.map(c => `${version}/${c}.json`);
+  const largest = Math.max(...names.map(n => source.rawFiles.get(n).length));
+  const total = source.rawFiles.get('current.json').length + names.reduce((n, name) => n + source.rawFiles.get(name).length, 0);
+  assert.doesNotThrow(() => buildSiteData({ source, transportOptions: { maxCategoryBytes: largest, maxVersionBytes: total } }));
+  const category = names.find(n => source.rawFiles.get(n).length === largest).split('/')[1].replace('.json', '');
+  assert.throws(() => buildSiteData({ source, transportOptions: { maxCategoryBytes: largest - 1, maxVersionBytes: total } }), new RegExp(`${version}/${category}.*${largest}.*${largest - 1}`));
+  assert.throws(() => buildSiteData({ source, transportOptions: { maxCategoryBytes: largest, maxVersionBytes: total - 1 } }), new RegExp(`${version}.*skills.*weapons.*blessings.*terms.*current.json.*${total}.*${total - 1}`));
+});
 // Scenario: Two families map to the same generated name. Purpose: Fail with both identities rather than overwrite a shard.
 test('UnitT05_型號檔名碰撞時列出衝突型號', () => {
   assert.throws(() => weaponFamilyPaths(['a?', 'a!'], () => '0'.repeat(64)), /a[?!].*a[?!]/);

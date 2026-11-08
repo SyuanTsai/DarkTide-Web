@@ -1,9 +1,10 @@
+import { verifyTransport } from './transport.mjs';
 import { jsonBytes, sha256, hashNamedFiles, safeRelativePath } from '../static/common.mjs';
 import { verifyHashedModuleGraph } from '../static/module-graph.mjs';
 import { verifyW14HistoryPublicFiles } from '../../scripts/content/contract-w14-history.mjs';
 import { sourceDataHeaders } from './headers.mjs';
 import { renderStaticRewrites } from '../static/routing-policy.mjs';
-export function verifySourceStaticFiles(files, version) {
+export function verifySourceStaticFiles(files, version, { transportOptions } = {}) {
   const fail=message=>{throw new Error(`Source static artifact: ${message}`);};
   const artifact=JSON.parse(files.get('artifact-manifest.json'));
   if(version.schema_version!==3 || !['fixture','published'].includes(version.package_kind) || artifact.build_id!==version.build_id || artifact.data_revision!==version.data_revision || artifact.package_kind!==version.package_kind)fail('version identity mismatch');
@@ -30,7 +31,15 @@ export function verifySourceStaticFiles(files, version) {
   }
   const sourceCurrent=JSON.parse(files.get('source-data/current.json'));
   if(sourceCurrent.gameVersion!==version.game_version || JSON.stringify(sourceCurrent.versions)!==JSON.stringify(version.game_releases.map(p=>p.game_version)))fail('source current versions mismatch');
-  for(const name of ['source-data/current.json',...sourceCurrent.versions.flatMap(v=>['skills','weapons','blessings','terms'].map(c=>`source-data/${v}/${c}.json`))]){if(!files.has(name))fail('missing source copy');used.add(name);identity.set(name,files.get(name));}
+  used.add('source-data/current.json'); identity.set('source-data/current.json', files.get('source-data/current.json'));
+  for (const v of sourceCurrent.versions) for (const c of ['skills','weapons','blessings','terms']) {
+    const prefix = `source-data/${v}/`, manifestName = `${prefix}${c}.manifest.json`, bytes = files.get(manifestName);
+    if (!bytes) fail('missing source manifest');
+    const manifest = JSON.parse(bytes), local = new Map();
+    for (const [name, value] of files) if (name.startsWith(prefix)) local.set(name.slice(prefix.length), value);
+    verifyTransport(manifest, local, v, c, transportOptions);
+    for (const name of [manifestName, ...manifest.parts.map(p => prefix + p.path), ...(files.has(`${prefix}${c}.json`) ? [`${prefix}${c}.json`] : [])]) { used.add(name); identity.set(name,files.get(name)); }
+  }
   const assets=new Map([...files].filter(([name])=>name.startsWith('assets/')));
   const html=files.get('index.html').toString();verifyHashedModuleGraph(html,assets);
   const context=/<script>window\.__BUILD__=(.*?)<\/script>/s.exec(html);if(!context || JSON.stringify(JSON.parse(context[1]))!==JSON.stringify(version))fail('build context mismatch');

@@ -44,10 +44,14 @@ npm run smoke:browser
 給 WP6 外掛的固定路徑契約：
 
 - `/source-data/current.json` 與來源 `data/current.json` 位元組相同，採 `no-cache, must-revalidate`。
-- `/source-data/<version>/{skills,weapons,blessings,terms}.json` 包含 current.versions 全部版本，與來源位元組相同，採一年 immutable 快取；已發布版本資料應保持凍結。
-- `/source-data/*` 使用 `application/json; charset=utf-8`，允許跨來源 GET／HEAD：`Access-Control-Allow-Origin: *` 與 `Access-Control-Allow-Methods: GET, HEAD`。
+- `current.versions` 每版四類各有 transport manifest；原始 bytes 依下述門檻提供單檔或分片，採一年 immutable 快取；已發布版本資料應保持凍結。
+- 與 Extension loader 一致，每個版本的單一類別原始檔上限為 32 MiB（33,554,432 bytes），四類加 `current.json` 合計上限為 64 MiB（67,108,864 bytes）；超過時建置失敗。
+- JSON 使用 `application/json; charset=utf-8`，`.bin` 使用 `application/octet-stream`，允許跨來源 GET／HEAD：`Access-Control-Allow-Origin: *` 與 `Access-Control-Allow-Methods: GET, HEAD`。
 - 網站新版本由版本指標切換；`/history/1.13.1/` 仍使用原固定歷史公開投影。
 
 公告直接讀取 `content/authoring/v2/w15/announcement-candidate.json`（5 筆）及 `content/authoring/v2/official-announcements/20261030/announcements.json`（3 筆），不經 compose。與既有公告分檔的 8 筆 ID 及全部顯示欄位深度比對一致。遊戲變更只經 `src/build/game-changes.mjs` 取得；沒有上一版及凍結資料時顯示空狀態，1.13.4 使用凍結 W12 資料。
 
 正式部署由 `.github/workflows/deploy.yml` 的 workflow_dispatch 觸發，需明確輸入 Source-Data commit；使用 production environment 與既有 Cloudflare versions upload／deploy、預覽驗證及回復流程。部署後核對線上 manifest 的 source.commit，再執行線上 browser smoke。PR／push 的 static-ci 只執行測試、fixture 建置與 smoke，不部署。此工作未觸發部署或 push。
+
+
+`/source-data/<version>/<category>.manifest.json` describes the immutable raw-byte transport (`transportSchemaVersion` 1.0.0): total byte length and SHA-256, and ordered parts with index, relative path, offset, length and SHA-256. At most 20 MiB uses the original JSON as a single part. Above 20 MiB, raw bytes are split into 20 MiB `.part-NNNN.bin` files; the original JSON is also provided through 25 MiB. Above 25 MiB the original JSON is unavailable (404), so older extensions must upgrade before the Web release. Reassemble bytes before decoding. JSON manifests use `application/json; charset=utf-8`, binary parts use `application/octet-stream`; both retain CORS GET/HEAD and immutable caching. `current.json` remains byte-identical and no-cache. Missing files return 404. Deploy Extension support first.

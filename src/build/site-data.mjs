@@ -1,3 +1,4 @@
+import { createTransport, verifyTransport, MAX_SOURCE_CATEGORY_BYTES, MAX_SOURCE_VERSION_BYTES } from './transport.mjs';
 import { jsonBytes, sha256, safeRelativePath, compareUtf8 } from '../static/common.mjs';
 import { buildGameChangesDomain } from './game-changes.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
@@ -24,9 +25,18 @@ export function weaponFamilyPaths(families, hash) {
   return boundedShardPaths('weapons', families, hash);
 }
 
-export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null }) {
+export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, transportOptions }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
+    const categories = ['skills', 'weapons', 'blessings', 'terms'];
+    const { maxCategoryBytes = MAX_SOURCE_CATEGORY_BYTES, maxVersionBytes = MAX_SOURCE_VERSION_BYTES } = transportOptions ?? {};
+    let total = source.rawFiles.get('current.json').length;
+    for (const category of categories) {
+      const size = source.rawFiles.get(`${gameVersion}/${category}.json`).length;
+      if (size > maxCategoryBytes) throw new Error(`source ${gameVersion}/${category} size ${size} bytes exceeds limit ${maxCategoryBytes} bytes`);
+      total += size;
+    }
+    if (total > maxVersionBytes) throw new Error(`source ${gameVersion} skills, weapons, blessings, terms and current.json size ${total} bytes exceeds limit ${maxVersionBytes} bytes`);
     const data = source.dataByVersion[gameVersion];
     const domains = new Map(); const rows = [];
     const add = (kind, path, value, dependencies = []) => {
@@ -71,6 +81,15 @@ export function buildSiteData({ source, announcements = null, frozen = {}, termR
     files.set(prefix + 'manifest.json', manifestBytes);
     pointers.push({ game_version: gameVersion, data_revision: dataRevision, manifest_path: `/${prefix}manifest.json`, manifest_sha256: sha256(manifestBytes) });
   }
-  for (const [name, bytes] of source.rawFiles) files.set(`source-data/${name}`, bytes);
+  for (const [name, bytes] of source.rawFiles) {
+    if (name === 'current.json') { files.set(`source-data/${name}`, bytes); continue; }
+    const match = /^([^/]+)\/(skills|weapons|blessings|terms)\.json$/.exec(name);
+    if (!match) throw new Error(`unexpected raw source path ${name}`);
+    const [, version, category] = match;
+    const transport = createTransport(version, category, bytes, transportOptions);
+    if (!verifyTransport(transport.manifest, transport.files, version, category, transportOptions).equals(bytes)) throw new Error(`source bytes differ: ${name}`);
+    files.set(`source-data/${version}/${category}.manifest.json`, jsonBytes(transport.manifest));
+    for (const [part, value] of transport.files) files.set(`source-data/${version}/${part}`, value);
+  }
   return { files, pointers, current: pointers.find(p => p.game_version === source.current.gameVersion) };
 }

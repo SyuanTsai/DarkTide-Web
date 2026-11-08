@@ -1,3 +1,4 @@
+import { sha256 } from '../src/static/common.mjs';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { createStaticServer } from './serve.mjs';
@@ -49,6 +50,12 @@ export async function runSourceBrowserSmoke(distPath, verification, { origin } =
     assert.deepEqual(errors,[]);
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile layout overflows');
     const response=await page.request.get(origin+'/source-data/current.json');assert.equal(response.headers()['access-control-allow-origin'],'*');assert.match(response.headers()['cache-control'],/no-cache/);
+    const rawPrefix=`/source-data/${version.game_version}/`;
+    const transportResponse=await page.request.get(origin+rawPrefix+'weapons.manifest.json');
+    assert.equal(transportResponse.status(),200); assert.match(transportResponse.headers()['content-type'],/application\/json/i); assert.equal(transportResponse.headers()['access-control-allow-origin'],'*');
+    const transport=await transportResponse.json(), part=transport.parts[0], partResponse=await page.request.get(origin+rawPrefix+part.path);
+    assert.equal(partResponse.status(),200); assert.match(partResponse.headers()['content-type'],part.path.endsWith('.bin')?/application\/octet-stream/i:/application\/json/i); assert.equal(partResponse.headers()['access-control-allow-origin'],'*');
+    const partBytes=await partResponse.body(); assert.equal(partBytes.length,part.sizeBytes); assert.equal(sha256(partBytes),part.sha256);
     console.log('Source-Data browser smoke passed: versions, explanations, tiers, family pages, announcements, history and mobile layout.');
   }finally{if(browser)await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}
 }

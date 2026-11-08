@@ -1,3 +1,4 @@
+import { validateTransportManifest, verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { safeRelativePath, sha256 } from '../static/common.mjs';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
@@ -24,7 +25,7 @@ export function assertDeploymentConfig(config,{preview=false}={}) {
  assert.equal(config.workers_dev,true);
  assert.deepEqual(config.routes??[],preview?[]:[{pattern:'darktide.tw-syuan.com',custom_domain:true}],'unexpected custom domain');
 }
-export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fetch}={}) {
+export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fetch,transportOptions}={}) {
  const get=async(p,options={})=>fetcher(new URL(p,origin),{redirect:'follow',signal:AbortSignal.timeout(15000),...options});
  const versionResponse=await get('/version.json',{cache:'no-store'});
  assert.equal(versionResponse.status,200,'version HTTP status');
@@ -83,14 +84,33 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
   }
  }
  if(expected.source_data===true){
-  for(const row of expected.source_files){
+  const transportFiles = new Map();
+  const isTransportManifest = row => /^\/source-data\/[^/]+\/(skills|weapons|blessings|terms)\.manifest\.json$/.test(row.path);
+  const orderedFiles = [...expected.source_files.filter(isTransportManifest), ...expected.source_files.filter(row => !isTransportManifest(row))];
+  for(const row of orderedFiles){
    const response=await get(row.path,{redirect:'error'});assert.equal(response.status,200,'source file status '+row.path);
-   assert.match(response.headers.get('content-type')??'',/application\/json/i);
+   assert.match(response.headers.get('content-type')??'',row.path.endsWith('.bin')?/^application\/octet-stream(?:\s*;|$)/i:/^application\/json(?:\s*;|$)/i);
    const bytes=Buffer.from(await response.arrayBuffer());assert.equal(bytes.length,row.size_bytes);assert.equal(sha256(bytes),row.sha256);
+   transportFiles.set(row.path,bytes);
+   if (isTransportManifest(row)) {
+    const match = /^\/source-data\/([^/]+)\/(skills|weapons|blessings|terms)\.manifest\.json$/.exec(row.path);
+    validateTransportManifest(JSON.parse(bytes), match[1], match[2], transportOptions);
+   }
    if(row.path.startsWith('/source-data/')){
     assert.equal(response.headers.get('access-control-allow-origin'),'*');
     assert.equal(response.headers.get('access-control-allow-methods'),'GET, HEAD');
     assert.match(response.headers.get('cache-control')??'',row.path==='/source-data/current.json'?/no-cache|no-store/:/immutable/);
+   }
+  }
+  for (const [name, bytes] of transportFiles) if (/^\/source-data\/[^/]+\/(skills|weapons|blessings|terms)\.manifest\.json$/.test(name)) {
+   const manifest = JSON.parse(bytes), prefix = name.slice(0,name.lastIndexOf('/')+1), local = new Map();
+   for (const [path, value] of transportFiles) if (path.startsWith(prefix)) local.set(path.slice(prefix.length),value);
+   const match = /^\/source-data\/([^/]+)\/(skills|weapons|blessings|terms)\.manifest\.json$/.exec(name);
+   verifyTransport(manifest, local, match[1], match[2], transportOptions);
+   if (manifest.totalBytes > (transportOptions?.maxBytes ?? MAX_OUTPUT_FILE_BYTES)) {
+    // HEAD verifies absence without transferring a forbidden oversized legacy body.
+    const legacy = await get(`${prefix}${match[2]}.json`, { method: 'HEAD', redirect: 'error' });
+    assert.equal(legacy.status, 404, 'oversized legacy URL must be 404 ' + prefix + match[2] + '.json');
    }
   }
   const pointer=version.game_releases.find(p=>p.game_version===version.game_version);
