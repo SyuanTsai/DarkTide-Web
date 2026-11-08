@@ -78,9 +78,9 @@ async function readRegularFile(distPath, relativePath) {
   return readFile(target);
 }
 
-export async function createStaticServer({ distPath = path.join(ROOT, 'dist') } = {}) {
+export async function createStaticServer({ distPath = path.join(ROOT, 'dist'), transportOptions } = {}) {
   const resolvedDist = path.resolve(distPath);
-  const verified = await verifyStaticPackage(resolvedDist);
+  const verified = await verifyStaticPackage(resolvedDist, { transportOptions });
   const manifestBytes = await readFile(path.join(resolvedDist, 'artifact-manifest.json'));
   const manifest = parseJson(manifestBytes, 'artifact-manifest.json');
   const available = new Set(manifest.files.map(file => file.path));

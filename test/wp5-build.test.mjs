@@ -8,6 +8,9 @@ import { verifyStaticPackage } from '../src/static/verify.mjs';
 import { execFileSync } from 'node:child_process';
 import { createStaticServer } from '../scripts/serve.mjs';
 import { createSourceClient } from '../web/source-client.mjs';
+import { verifySourceStaticFiles } from '../src/build/verify.mjs';
+import { sha256, hashNamedFiles, jsonBytes } from '../src/static/common.mjs';
+import { mixedSourceFixture, collectFiles, sourceSizes, transportOptions } from './syp391-fixture.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 // Scenario: Legal blessing IDs contain enough repeated characters or separators to exceed filesystem filename limits.
 // Purpose: A complete build keeps their shard names bounded and the browser can load each original ID.
@@ -113,9 +116,9 @@ test('InterT30_output_limit_preserves_previous_dist', async () => {
   try {
     for (const name of ['web','content/history','content/authoring/v2','content/reference']) await cp(path.join(root,name),path.join(temp,name),{recursive:true});
     const opts = {root:temp,sourceData:path.join(root,'test/fixtures/source-data'),fixture:true};
-    await buildSourceSite(opts); const before=await readFile(path.join(temp,'dist/version.json'));
+    await buildSourceSite(opts); const before=await collectFiles(path.join(temp,'dist'));
     await assert.rejects(buildSourceSite({...opts,maxOutputFileBytes:1}),/exceeds/);
-    assert.deepEqual(await readFile(path.join(temp,'dist/version.json')),before);
+    assert.deepEqual(await collectFiles(path.join(temp,'dist')),before);
   } finally { await rm(temp,{recursive:true,force:true}); }
 });
 // Scenario: Any file, including the artifact manifest, exceeds a small injected limit.
@@ -160,4 +163,99 @@ test('InterT50_source_transport_closure_and_headers', async t => {
     const missing = await fetch(origin+'/source-data/9.9.1/'+name,{headers:{Accept:'text/html'}});
     assert.equal(missing.status,404); assert.doesNotMatch(await missing.text(),/<html/i);
   }
+});
+
+// Scenario: Two versions cover single, dual and shards-only output with reduced limits.
+// Purpose: Verify raw bytes, artifact closure, determinism and corruption through the full build.
+test('InterT60_mixed_versions_preserve_transport_and_reject_corrupt_artifacts', async t => {
+  const opts = await mixedSourceFixture(t);
+  await buildSourceSite(opts);
+  const dir = path.join(opts.root, 'dist'), files = await collectFiles(dir);
+  const version = JSON.parse(files.get('version.json'));
+  const verify = values => verifySourceStaticFiles(values, version, { transportOptions });
+  const verified = verify(files);
+  assert.equal(verified.game_releases.length, 2);
+  assert.deepEqual(files.get('source-data/current.json'), opts.rawFiles.get('current.json'));
+  const artifact = JSON.parse(files.get('artifact-manifest.json'));
+  for (const [v, categories] of Object.entries(sourceSizes)) for (const [c, size] of Object.entries(categories)) {
+    const prefix = `source-data/${v}/`, manifestName = `${prefix}${c}.manifest.json`;
+    const manifest = JSON.parse(files.get(manifestName)), raw = opts.rawFiles.get(`${v}/${c}.json`);
+    assert.equal(manifest.representation, size <= transportOptions.threshold ? 'single' : 'raw-byte-shards');
+    assert.equal(manifest.totalBytes, size); assert.equal(manifest.totalSha256, sha256(raw));
+    assert.equal(manifest.parts.length, size <= transportOptions.threshold ? 1 : Math.ceil(size / transportOptions.threshold));
+    const chunks = manifest.parts.map((part, i) => {
+      const bytes = files.get(prefix + part.path);
+      assert.equal(part.index, i + 1); assert.equal(part.offset, i * transportOptions.threshold);
+      assert.equal(part.sizeBytes, bytes.length); assert.equal(part.sha256, sha256(bytes));
+      assert.deepEqual(bytes, raw.subarray(part.offset, part.offset + part.sizeBytes));
+      return bytes;
+    });
+    assert.deepEqual(Buffer.concat(chunks), raw);
+    assert.equal(files.has(`${prefix}${c}.json`), size <= transportOptions.maxBytes);
+    if (size <= transportOptions.maxBytes) assert.deepEqual(files.get(`${prefix}${c}.json`), raw);
+    for (const name of [manifestName, ...manifest.parts.map(p => prefix + p.path), ...(size <= transportOptions.maxBytes ? [`${prefix}${c}.json`] : [])]) {
+      assert.deepEqual(artifact.files.find(row => row.path === name), { path: name, size_bytes: files.get(name).length, sha256: sha256(files.get(name)) });
+      assert.ok(verified.source_files.some(row => row.path === '/' + name));
+    }
+    if (size > transportOptions.maxBytes) assert.ok(!verified.source_files.some(row => row.path === `/${prefix}${c}.json`));
+  }
+  assert.equal((await verifyStaticPackage(dir, { transportOptions })).build_id, version.build_id);
+  await buildSourceSite(opts); assert.deepEqual(await collectFiles(dir), files);
+  const part = 'source-data/9.9.2/weapons.part-0002.bin';
+  for (const [name, change, message] of [
+    ['undeclared', values => values.set('source-data/9.9.2/weapons.part-9999.bin', Buffer.from('extra')), /unexpected output file/],
+    ['missing', values => values.delete(part), /invalid source transport/],
+    ['changed', values => values.set(part, Buffer.alloc(files.get(part).length)), /invalid source transport/],
+  ]) {
+    const changed = new Map(files); change(changed);
+    assert.throws(() => verify(changed), message, name);
+  }
+});
+// Scenario: GET and HEAD hit actual shards, manifests, current and absent source URLs with HTML navigation headers.
+// Purpose: Check the local HTTP server's MIME, CORS, caching and true 404 behavior on built bytes.
+test('InterT70_transport_HTTP_GET_and_HEAD_headers_and_missing_files', async t => {
+  const opts = await mixedSourceFixture(t); await buildSourceSite(opts);
+  const server = await createStaticServer({ distPath: path.join(opts.root, 'dist'), transportOptions });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  for (const method of ['GET', 'HEAD']) {
+    for (const [name, mime, cache] of [
+      ['9.9.2/weapons.part-0001.bin', 'application/octet-stream', /immutable/],
+      ['9.9.2/weapons.manifest.json', 'application/json; charset=utf-8', /immutable/],
+      ['current.json', 'application/json; charset=utf-8', /no-cache/],
+    ]) {
+      const response = await fetch(`${origin}/source-data/${name}`, { method });
+      assert.equal(response.status, 200); assert.equal(response.headers.get('content-type'), mime);
+      assert.equal(response.headers.get('access-control-allow-origin'), '*');
+      assert.equal(response.headers.get('access-control-allow-methods'), 'GET, HEAD');
+      assert.match(response.headers.get('cache-control'), cache);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      if (method === 'HEAD') assert.equal(bytes.length, 0);
+      else assert.deepEqual(bytes, await readFile(path.join(opts.root, 'dist/source-data', name)));
+    }
+    for (const name of ['missing.manifest.json', 'weapons.part-9999.bin', 'weapons.json']) {
+      const response = await fetch(`${origin}/source-data/9.9.2/${name}`, { method, headers: { Accept: 'text/html', 'Sec-Fetch-Mode': 'navigate' } });
+      assert.equal(response.status, 404, `${method} ${name}`);
+      assert.doesNotMatch(response.headers.get('content-type'), /text\/html/);
+      assert.doesNotMatch(await response.text(), /<!doctype html|<html/i);
+    }
+  }
+});
+
+// Scenario: A manifest total hash changes and every artifact/build identity is recalculated.
+// Purpose: Require semantic source manifest validation even for an internally resealed package.
+test('InterT80_resealed_transport_manifest_still_requires_validation', async t => {
+  const opts = await mixedSourceFixture(t); await buildSourceSite(opts);
+  const files = await collectFiles(path.join(opts.root, 'dist'));
+  const name = 'source-data/9.9.2/weapons.manifest.json', manifest = JSON.parse(files.get(name));
+  manifest.totalSha256 = '0'.repeat(64); files.set(name, jsonBytes(manifest));
+  const version = JSON.parse(files.get('version.json')), previous = version.build_id;
+  version.build_id = hashNamedFiles(new Map([...files].filter(([name]) => /^(data|source-data|assets|history)\//.test(name))));
+  files.set('version.json', jsonBytes(version));
+  files.set('index.html', Buffer.from(files.get('index.html').toString().replaceAll(previous, version.build_id)));
+  const artifact = JSON.parse(files.get('artifact-manifest.json')); artifact.build_id = version.build_id;
+  artifact.files = artifact.files.map(row => ({ path: row.path, size_bytes: files.get(row.path).length, sha256: sha256(files.get(row.path)) }));
+  files.set('artifact-manifest.json', jsonBytes(artifact));
+  assert.throws(() => verifySourceStaticFiles(files, version, { transportOptions }), /invalid source transport/);
 });

@@ -49,3 +49,12 @@ test('UnitT40_transport_rejects_missing_or_different_legacy', () => {
   const missing = create(Buffer.from('abcde')); missing.files.delete('weapons.json'); assert.throws(() => verify(missing));
   const different = create(Buffer.from('abcde')); different.files.set('weapons.json', Buffer.from('xxxxx')); assert.throws(() => verify(different));
 });
+
+// Scenario: An extra zero-byte tail has valid index, path, offset, size and hash, preserving total bytes/hash.
+// Purpose: Isolate the part-count invariant from every other validation check.
+test('UnitT50_transport_rejects_empty_tail_even_when_all_other_checks_match', () => {
+  const x = fixture(), empty = Buffer.alloc(0);
+  x.manifest.parts.push({ index: 3, path: 'weapons.part-0003.bin', offset: 8, sizeBytes: 0, sha256: create(empty).manifest.totalSha256 });
+  x.files.set('weapons.part-0003.bin', empty);
+  assert.throws(() => verify(x), /invalid source transport/);
+});

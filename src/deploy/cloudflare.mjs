@@ -1,4 +1,4 @@
-import { verifyTransport } from '../build/transport.mjs';
+import { verifyTransport, MAX_OUTPUT_FILE_BYTES } from '../build/transport.mjs';
 import assert from 'node:assert/strict';
 import { safeRelativePath, sha256 } from '../static/common.mjs';
 export const ACCOUNT_ID='38d350980998e83d3f405aff0170921a';
@@ -25,7 +25,7 @@ export function assertDeploymentConfig(config,{preview=false}={}) {
  assert.equal(config.workers_dev,true);
  assert.deepEqual(config.routes??[],preview?[]:[{pattern:'darktide.tw-syuan.com',custom_domain:true}],'unexpected custom domain');
 }
-export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fetch}={}) {
+export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fetch,transportOptions}={}) {
  const get=async(p,options={})=>fetcher(new URL(p,origin),{redirect:'follow',signal:AbortSignal.timeout(15000),...options});
  const versionResponse=await get('/version.json',{cache:'no-store'});
  assert.equal(versionResponse.status,200,'version HTTP status');
@@ -100,7 +100,12 @@ export async function verifyOrigin(origin,expected,{fetch:fetcher=globalThis.fet
    const manifest = JSON.parse(bytes), prefix = name.slice(0,name.lastIndexOf('/')+1), local = new Map();
    for (const [path, value] of transportFiles) if (path.startsWith(prefix)) local.set(path.slice(prefix.length),value);
    const match = /^\/source-data\/([^/]+)\/(skills|weapons|blessings|terms)\.manifest\.json$/.exec(name);
-   verifyTransport(manifest, local, match[1], match[2]);
+   verifyTransport(manifest, local, match[1], match[2], transportOptions);
+   if (manifest.totalBytes > (transportOptions?.maxBytes ?? MAX_OUTPUT_FILE_BYTES)) {
+    // HEAD verifies absence without transferring a forbidden oversized legacy body.
+    const legacy = await get(`${prefix}${match[2]}.json`, { method: 'HEAD', redirect: 'error' });
+    assert.equal(legacy.status, 404, 'oversized legacy URL must be 404 ' + prefix + match[2] + '.json');
+   }
   }
   const pointer=version.game_releases.find(p=>p.game_version===version.game_version);
   const manifest=await(await get(pointer.manifest_path)).json();assert.equal(manifest.source.commit,expected.source_commit,'deployed Source-Data commit mismatch');

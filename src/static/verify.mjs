@@ -400,7 +400,7 @@ function validateInitialGamesLanternCredit(index, catalog, dataFiles) {
     fail('index.html declares a Games Lantern credit without using Games Lantern assets');
   }
 }
-export async function verifyStaticPackage(directory, { maxOutputFileBytes = MAX_OUTPUT_FILE_BYTES } = {}) {
+export async function verifyStaticPackage(directory, { maxOutputFileBytes = MAX_OUTPUT_FILE_BYTES, transportOptions } = {}) {
   const root = path.resolve(directory);
   const { files, directories } = await collectDirectory(root);
   for (const [name, bytes] of files) if (bytes.length > maxOutputFileBytes) fail(`${name} exceeds ${maxOutputFileBytes} bytes`);
@@ -413,7 +413,7 @@ export async function verifyStaticPackage(directory, { maxOutputFileBytes = MAX_
   const versionBytes = files.get('version.json');
   if (!versionBytes) fail('static artifact is missing version.json');
   const version = parseJson(versionBytes, 'version.json');
-  if (version.source_data === true) return verifySourceStaticFiles(files, version);
+  if (version.source_data === true) return verifySourceStaticFiles(files, version, { transportOptions });
 
   assertExactKeys(version, VERSION_FIELDS, 'version');
   if (version.schema_version !== 2 || version.package_kind !== manifest.package_kind ||

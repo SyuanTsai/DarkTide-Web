@@ -4,7 +4,7 @@ import { verifyHashedModuleGraph } from '../static/module-graph.mjs';
 import { verifyW14HistoryPublicFiles } from '../../scripts/content/contract-w14-history.mjs';
 import { sourceDataHeaders } from './headers.mjs';
 import { renderStaticRewrites } from '../static/routing-policy.mjs';
-export function verifySourceStaticFiles(files, version) {
+export function verifySourceStaticFiles(files, version, { transportOptions } = {}) {
   const fail=message=>{throw new Error(`Source static artifact: ${message}`);};
   const artifact=JSON.parse(files.get('artifact-manifest.json'));
   if(version.schema_version!==3 || !['fixture','published'].includes(version.package_kind) || artifact.build_id!==version.build_id || artifact.data_revision!==version.data_revision || artifact.package_kind!==version.package_kind)fail('version identity mismatch');
@@ -37,7 +37,7 @@ export function verifySourceStaticFiles(files, version) {
     if (!bytes) fail('missing source manifest');
     const manifest = JSON.parse(bytes), local = new Map();
     for (const [name, value] of files) if (name.startsWith(prefix)) local.set(name.slice(prefix.length), value);
-    verifyTransport(manifest, local, v, c);
+    verifyTransport(manifest, local, v, c, transportOptions);
     for (const name of [manifestName, ...manifest.parts.map(p => prefix + p.path), ...(files.has(`${prefix}${c}.json`) ? [`${prefix}${c}.json`] : [])]) { used.add(name); identity.set(name,files.get(name)); }
   }
   const assets=new Map([...files].filter(([name])=>name.startsWith('assets/')));

@@ -65,7 +65,7 @@ async function monitorLegacy(origin, version, fetcher, check, checks) {
 }
 
 // Verify the public contract directly; no release-state or retained backup authority.
-export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch } = {}) {
+export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch, transportOptions } = {}) {
   const checks = [];
   const get = async (name, allow404 = false) => {
     const response = await fetcher(new URL(name, origin), { redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(15000) });
@@ -135,11 +135,11 @@ export async function monitorOrigin(origin, { fetch: fetcher = globalThis.fetch 
         assert.equal(part.path, expected, 'unsafe transport part path');
         local.set(expected, await check(prefix + expected));
       }
-      if (manifest.representation === 'raw-byte-shards' && manifest.totalBytes <= MAX_OUTPUT_FILE_BYTES) local.set(`${category}.json`, await check(`${prefix}${category}.json`));
-      verifyTransport(manifest, local, release, category);
+      if (manifest.representation === 'raw-byte-shards' && manifest.totalBytes <= (transportOptions?.maxBytes ?? MAX_OUTPUT_FILE_BYTES)) local.set(`${category}.json`, await check(`${prefix}${category}.json`));
+      verifyTransport(manifest, local, release, category, transportOptions);
     }
   }
-  await verifyOrigin(origin, { ...version, source_commit: commit, source_files: checks }, { fetch: fetcher });
+  await verifyOrigin(origin, { ...version, source_commit: commit, source_files: checks }, { fetch: fetcher, transportOptions });
   // Use the injectable fetch for all checks, including deployment contract verification.
   const document = await fetcher(new URL('/', origin));
   const html = await document.text();

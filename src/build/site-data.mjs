@@ -25,7 +25,7 @@ export function weaponFamilyPaths(families, hash) {
   return boundedShardPaths('weapons', families, hash);
 }
 
-export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null }) {
+export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, transportOptions }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
     const data = source.dataByVersion[gameVersion];
@@ -77,8 +77,8 @@ export function buildSiteData({ source, announcements = null, frozen = {}, termR
     const match = /^([^/]+)\/(skills|weapons|blessings|terms)\.json$/.exec(name);
     if (!match) throw new Error(`unexpected raw source path ${name}`);
     const [, version, category] = match;
-    const transport = createTransport(version, category, bytes);
-    if (!verifyTransport(transport.manifest, transport.files, version, category).equals(bytes)) throw new Error(`source bytes differ: ${name}`);
+    const transport = createTransport(version, category, bytes, transportOptions);
+    if (!verifyTransport(transport.manifest, transport.files, version, category, transportOptions).equals(bytes)) throw new Error(`source bytes differ: ${name}`);
     files.set(`source-data/${version}/${category}.manifest.json`, jsonBytes(transport.manifest));
     for (const [part, value] of transport.files) files.set(`source-data/${version}/${part}`, value);
   }
