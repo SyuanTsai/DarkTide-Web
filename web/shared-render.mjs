@@ -2265,7 +2265,7 @@ function renderSourceWeaponTables(parent, item, context) {
   }
   for (const combo of v.attackCombos) {
     const rows = combo.steps.map((step, i) => { const matched = (v.damageProfiles ?? []).filter(p => p.bindings.some(b => b.action === step.action)).map(p => p.id); const profile = step.damageProfile ?? (matched.length ? `${matched.join('、')}（依動作綁定對應）` : sourceUnknown(step.damageProfileUnknown)); return [String(i+1), ({light_attack:'輕攻擊', heavy_attack:'重攻擊'})[step.input] ?? step.input, step.name.zh || step.action, profile]; });
-    if (!rows.length) rows.push(['', '', combo.unknown ? sourceUnknown(combo.unknown) : '來源未提供', '']);
+    if (combo.unknown || !rows.length) rows.push(['', '', combo.unknown ? sourceUnknown(combo.unknown) : '來源未提供', '']);
     sourceTable(parent, 'attack-combos', `${combo.kind === 'light' ? '輕攻擊' : '重攻擊'}：起始動作 ${combo.start}，循環至 ${combo.loopsTo ?? '無'}`, ['段數', '輸入', '動作', '對應傷害設定'], rows);
   }
   if (!Object.hasOwn(v, 'damageProfiles')) parent.append(node('p', '此版本未收集原始攻擊威力'));
