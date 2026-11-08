@@ -122,6 +122,22 @@ for (const [name, category, mutate] of cases) test(`schema12 rejects ${name}`, (
 // Purpose: Reject the key pattern violation independently of the consistency rule.
 test('InterT30_拒絕codeRefs key pattern', () => check('skills', i => { i.source.codeRefs = {'x.lua#bad!': {path:'x.lua',symbol:'bad!',sha256:'a'.repeat(64)}}; }));
 
+// Scenario: A schema 1.2.0 weapons item includes a syntactically valid valueSources map.
+// Purpose: Reject valueSources on categories that do not support the field.
+test('InterT40_拒絕weapons valueSources', () => check('weapons', i => { i.source.valueSources = {'/values/params/bonus': [{path:'scripts/example.lua',line:1}]}; }));
+
+// Scenario: A schema 1.2.0 weapons item includes a syntactically valid codeRefs map.
+// Purpose: Reject codeRefs on categories that do not support the field.
+test('InterT41_拒絕weapons codeRefs', () => check('weapons', i => { i.source.codeRefs = {'scripts/example.lua#templates.example': {path:'scripts/example.lua',symbol:'templates.example',sha256:'a'.repeat(64)}}; }));
+
+// Scenario: A schema 1.2.0 terms item includes a syntactically valid valueSources map.
+// Purpose: Reject valueSources on categories that do not support the field.
+test('InterT42_拒絕terms valueSources', () => check('terms', i => { i.source.valueSources = {'/values/params/bonus': [{path:'scripts/example.lua',line:1}]}; }));
+
+// Scenario: A schema 1.2.0 terms item includes a syntactically valid codeRefs map.
+// Purpose: Reject codeRefs on categories that do not support the field.
+test('InterT43_拒絕terms codeRefs', () => check('terms', i => { i.source.codeRefs = {'scripts/example.lua#templates.example': {path:'scripts/example.lua',symbol:'templates.example',sha256:'a'.repeat(64)}}; }));
+
 for (const version of ['1.0.0', '1.1.0']) for (const field of ['mechanics', 'valueSources', 'codeRefs', 'citations']) {
   test(`schema ${version} rejects ${field}`, async () => {
     const source = version === '1.0.0' ? './fixtures/source-data/' : './fixtures/source-data-1.1/';
