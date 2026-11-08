@@ -42,6 +42,16 @@
 
 - L1-001：保留留存 canonical route 與實體的來源驗證，mark 以精確 key 判斷唯一性。family 重組時，以完整 mark_ids 證明所有成員均存在且唯一指向同一 item 才改成 id；不得擴大成包含其他型號的新 family。先加入兩個 mark、兩個 family 路徑及歧義／缺失成員／未驗證來源的失敗測試，再修產生器並重產五份輸出；預期 unmapped 由 155 降到 151。
 - L1-002：以 DOM stub、本機 fetch fixture 載入實際 `web/app.mjs`，從啟動入口驗證四個原 spec 網址的 replaceState、載入參數的新 id／版本，以及唯一呈現項目。測試不得自行呼叫解析器代替 app。暫時移除 app 解析器呼叫，確認此測試失敗，再逐 byte 還原。
-- L1-003：未知舊 query id 在版本驗證前進入 not-found。用固定來源的精簡新 id 身分清單辨別合法新 id，保留新 id 的既有版本選擇。先測未知舊 id 搭配歷史／未知版本，再測合法新 id 的歷史版選擇與未知版本錯誤維持原狀。
+- L1-003（原方案，辨識方式由第 7 節取代）：未知舊 query id 在版本驗證前進入 not-found。原先以固定來源的新 id 清單辨識，造成 L2-001；修正後以明確舊格式判斷，保留新 id 的既有版本選擇。測未知舊 id 搭配歷史／未知版本，以及合法新 id 的歷史版選擇與未知版本錯誤。
 - 驗證：只跑明列且無第三方依賴的相關測試；離線產生器 `--check`；以 Source-Data `93185bf` 建置及執行 verify-static。同步更新契約、驗收統計與固定建置證據，檢查驗收目錄與本計畫不含本機絕對路徑或暫存目錄。
 - 邊界與回復：只修改本 worktree、不安裝或下載、不部署或 push；暫時變更用備份 bytes 還原，完成所有 finding 後建立指定的新 commit。沒有持久資料遷移；若需回復產品行為，可還原本次 commit 並重建。
+
+## 7. R5 review 2：L2-001 修正計畫
+
+- 目標：移除 `web/legacy-urls.mjs` 對固定 1.13.4 新 id 集合的依賴；只有對應表舊 id 或明確舊格式才進入相容處理。其他新 id 交由實際 build 的 client／版本資料判斷，保留原本選版與未知版本錯誤。
+- 判斷依據：對應表 `ids` 的 own key 是已知身分；未收錄者以舊 query 的 kebab slug、祝福 family/slug、武器 family/part-mark/可選 effect 格式辨認。文件逐項寫明格式；空 id 或類別前綴錯誤維持既有找不到行為。`additionalIds` 僅為固定來源驗證清單，不作 runtime 白名單。
+- Red：補解析器單元測試，並以既有 `test/fixtures/source-data` 完整建置後，透過本機 fetch 與 DOM stub 啟動實際 `web/app.mjs`。驗證四個指定網址、只存在 9.9.1 的 id、資料確實缺失及未知版本；確認新測試在 `b5908b7` 行為下失敗。
+- Green／Refactor：最小修改舊格式判斷，保留 L1-003 各類舊 id × 歷史／未知版本的找不到分支與零載入；測試新 id 不改寫、依選定版本只呈現唯一項目。
+- 回歸實驗：暫時換回 `b5908b7` 的 resolver，確認新增入口測試失敗；以備份 bytes 還原後重跑。只執行無第三方依賴的相關測試、產生器 `--check`、fixture build／verify-static，以及 Source-Data `93185bf` build／verify-static。Playwright browser smoke 留給 CI，不安裝依賴。
+- 相容與回復：不變更對應目標或來源資料；未知舊 id 仍在資料驗證前顯示找不到。建立指定的新 commit，不 push；產品回復可還原該 commit 並重建，無持久資料遷移。
+- 完成證據：新增 7 項測試，18 個相關測試檔共 136 項通過；換回 `b5908b7` resolver 後 6 項新增 app 測試全部失敗，逐 byte 還原後通過。fixture 與固定來源建置／verify-static、產生器 `--check` 均通過，詳見[第二輪修正驗證](../acceptance/syp-391-legacy-urls/review2-validation.json)。

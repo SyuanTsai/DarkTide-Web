@@ -53,8 +53,13 @@ test('InterT20_實際app將重組family的四個網址呈現為正確武器', ()
 // Scenario: An unmapped old id supplies a historical or unknown version absent from the build.
 // Purpose: Show deterministic not-found before any version/data load or retryable error screen.
 test('InterT30_實際app對未知舊id與歷史或未知版本一律顯示找不到', () => {
-  for (const version of ['1.13.2', 'does-not-exist']) {
-    const result = startup({ path: `/skills/?id=darktide:skill:psyker:no-such-old-id&version=${version}` });
+  for (const version of ['1.13.2', 'does-not-exist']) for (const path of [
+    '/skills/?id=darktide:skill:psyker:no-such-old-id',
+    '/blessings/?id=darktide:blessing:unknown:p1-no-such-old-id',
+    '/weapons/?id=darktide:weapon:unknown:p1-m1:e46',
+    '/terms/?id=darktide:term:psyker:no-such-old-term'
+  ]) {
+    const result = startup({ path: `${path}&version=${version}` });
     assert.match(result.text, /找不到/); assert.doesNotMatch(result.text, /驗證失敗|稍後再試/);
     assert.deepEqual(result.itemIds, []); assert.deepEqual(result.replacements, []);
     assert.deepEqual(result.loadCalls, []); assert.deepEqual(result.requests, []);

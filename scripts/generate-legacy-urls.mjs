@@ -88,8 +88,8 @@ export function generateLegacyUrls({ migration, onlineSkills, retainedIndex, ret
     if (unmapped.some(r => r.kind === 'id' && r.value === old)) throw new Error(`mapped/unmapped conflict: ${old}`);
   }
   for (const row of unmapped) if (row.kind === 'path' && (Object.hasOwn(paths, row.value) || Object.hasOwn(familyPaths, row.value))) throw new Error(`mapped/unmapped conflict: ${row.value}`);
-  // Alias targets already identify most new ids. Store only the remaining identities
-  // so unknown legacy queries can be rejected before attempting version/data loading.
+  // Preserve the remaining pinned identities for offline inventory verification.
+  // Runtime validity comes from the selected build's data, never this inventory.
   const represented = new Set([...Object.values(ids), ...Object.values(paths)]);
   const additionalIds = [...new Set(categories.flatMap(category => [...targetIds[category]]))].filter(id => !represented.has(id)).sort();
   return { schemaVersion: 1, generatorVersion: GENERATOR_VERSION, targetVersion: TARGET_VERSION, sources, ids: sorted(ids), paths: sorted(paths), familyPaths: sorted(familyPaths), additionalIds, unmapped: unmapped.sort((a, b) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0) };

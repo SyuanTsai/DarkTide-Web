@@ -166,12 +166,31 @@ test('UnitT55_無對應舊id不受歷史或未知版本影響', () => {
   for (const version of ['1.13.2', 'does-not-exist']) for (const path of [
     '/skills/?id=darktide:skill:psyker:no-such-old-id',
     '/blessings/?id=darktide:blessing:unknown:p1-no-such-old-id',
+    '/blessings/?id=darktide:blessing:unknown:missing',
     '/weapons/?id=darktide:weapon:unknown:p1-m1:e46',
+    '/weapons/?id=darktide:weapon:unknown:p1-m1',
+    '/weapons/?id=darktide:weapon:unknown:p1-m1:e46-normal-partial',
+    '/terms/?id=darktide:term:psyker:no-such-old-term',
     '/skills/?id=constructor', '/skills/?id='
   ]) {
     const calls = []; const input = url(path); input.searchParams.set('version', version);
     const resolved = applyLegacyUrl(input, map, { replaceState: (...args) => calls.push(args) });
     assert.equal(resolved.status, 'not-found', input.href); assert.equal(calls.length, 0);
+  }
+});
+
+// Scenario: New identities outside the pinned migration inventory select any build version.
+// Purpose: Let the real client decide data availability instead of using a 1.13.4 allowlist.
+test('UnitT57_未列於固定來源的新id保留網址與版本交由client載入', () => {
+  for (const [domain, id] of [
+    ['skills', 'darktide:skill:fixture_a'], ['skills', 'darktide:skill:psyker:future_skill'],
+    ['blessings', 'darktide:blessing:fixture_a'], ['weapons', 'darktide:weapon:example_family:m1'],
+    ['terms', 'darktide:term:future_parameter']
+  ]) for (const version of ['', '&version=9.9.1', '&version=does-not-exist']) {
+    const input = url(`/${domain}/?id=${id}${version}#notes`); const calls = [];
+    const resolved = applyLegacyUrl(input, map, { replaceState: (...args) => calls.push(args) });
+    assert.equal(resolved.status, 'unchanged', input.href);
+    assert.equal(resolved.url.href, input.href); assert.deepEqual(calls, []);
   }
 });
 

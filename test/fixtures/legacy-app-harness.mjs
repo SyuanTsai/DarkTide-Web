@@ -1,6 +1,8 @@
 // Runs one real app startup in an isolated Node process; all fetches stay in memory.
 import { mock } from 'node:test';
 import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildSiteData } from '../../src/build/site-data.mjs';
 import * as shared from '../../web/shared-client.mjs';
 
@@ -8,8 +10,9 @@ const { path, includeHistory = false, dist = null } = JSON.parse(process.argv[2]
 const loadCalls = [], pendingLoads = [], requests = [], replacements = [];
 let build, files;
 if (dist) {
-  build = JSON.parse(await readFile(new URL('../../dist/version.json', import.meta.url)));
-  files = { get: name => readFile(new URL(`../../dist/${name}`, import.meta.url)) };
+  const directory = dist === true ? fileURLToPath(new URL('../../dist/', import.meta.url)) : dist;
+  build = JSON.parse(await readFile(join(directory, 'version.json')));
+  files = { get: name => readFile(join(directory, name)) };
 } else {
   const details = JSON.parse(await readFile(new URL('./legacy-url-details.json', import.meta.url)));
   const versions = includeHistory ? ['1.13.2', '1.13.4'] : ['1.13.4'];

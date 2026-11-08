@@ -10,8 +10,19 @@
 - migration map 的 1 筆術語 id 前後相同，保留在表中作為已核對的終點，不觸發 replaceState，也不改其版本。
 - 能繼續使用的其他參數與 hash 保留。舊祝福的 variant 已由 Source-Data 合併為新 blessing item；當 variant 等於該舊 id 對應的 `darktide:blessing-variant:...` 或新 item 的內部 key 時移除，保留 `tier=4` 等其他參數。不相容的 variant 顯示「找不到」。
 - 空 id、不存在的 id、未知詳情路徑、unmapped 路徑，以及對應後目標不在該版資料中，均明確顯示「找不到」與返回列表連結，不呈現未篩選的列表。返回連結是使用者主動操作。
-- 未知 query id 在資料載入與版本驗證前直接判為 not-found，即使帶歷史或未知 `version` 也不顯示可重試的驗證錯誤。產生器以全部對應目標加上 `additionalIds` 補集保存固定來源的完整新 id 身分集合，不以字串外觀猜測新舊；這些合法新 id 仍交由原 client 選版，未知版本維持原驗證錯誤。
+- 只有已知舊 id 或符合下列舊格式的 query id 進入相容判斷。沒有對應的舊 id 在資料載入與版本驗證前直接判為 not-found，即使帶歷史或未知 `version` 也不顯示可重試的驗證錯誤。其他新 id 交由原 source-client，依實際 build 的選定版本資料判斷是否存在；不以固定 1.13.4 的對應目標或 `additionalIds` 作有效 id 白名單。新 id 的未知版本維持原驗證錯誤。
 - 靜態部署沿用 `/skills/*`、`/blessings/*`、`/weapons/*` 的 SPA 200 rewrite；client 保留原 pathname 解析。總共仍為 8 條 rewrite，沒有新增逐筆規則，低於 `src/static/routing-policy.mjs` 的 2,000 條上限。`/data/` 與 `/assets/` 缺檔規則不變。
+
+### 舊 query id 的明確判斷規則
+
+1. `ids` 對應表的 own key 是已知舊 id，採精確查表，不以 prototype 屬性當成對應。前後相同的術語 id 依上述終點規則保留版本。
+2. 未收錄的技能／術語使用 `darktide:skill:<class>:<kebab>` 或 `darktide:term:<class>:<kebab>`，其中 `<kebab>` 符合 `[a-z0-9]+(?:-[a-z0-9]+)+`，至少有一個連字號；例如 `darktide:skill:psyker:no-such-old-id`。包含底線的內部 key 不屬於此格式。
+3. 未收錄的祝福使用 `darktide:blessing:<family>:<kebab>`；最後一段符合 `[a-z0-9]+(?:-[a-z0-9]+)*`，可為單字。family 與 slug 分成兩段是舊格式的身分邊界；例如 `darktide:blessing:arc_rifle:p1-ammo-from-reserve-on-crit`。新格式 `darktide:blessing:fixture_a` 沒有 family 段。
+4. 未收錄的武器使用 `darktide:weapon:<family>:p<數字>-m<數字>[:<effect>]`；可選的 effect 符合 `[a-z0-9]+(?:-[a-z0-9]+)*`，例如 `e46` 或 `e46-normal-partial`。新格式的內部 mark key（如 `darktide:weapon:ogryn_thumper_p1_m2`）及既有 fixture 的 `darktide:weapon:example_family:m1` 不符合舊格式。
+
+上述 `<class>`／`<family>` 均符合 `[a-z0-9_]+`，整個格式必須完整匹配。空 id 或與頁面類別不符的 `darktide:<kind>:` 前綴維持既有找不到行為。格式規則只用來辨別未收錄的舊 id，不能用於推測映射目標。
+
+例如 `darktide:skill:fixture_c` 只存在既有 fixture 的 9.9.1：帶 `version=9.9.1` 時正常顯示唯一項目；選目前 9.9.2 時，先載入該版資料，再顯示找不到。這些 id 不必加入 migration map；新版本 build 也不必擴增相容表才能使用新 id。
 
 ## 可重現的身分依據
 
@@ -27,7 +38,7 @@
 | 留存武器 mark | canonical route 與留存 `weapon_id/mark_id` 相符，以完整 `mark_id` 精確唯一對到 `key`，允許 family 重組 | 134 paths |
 | 留存武器 family | canonical route 與留存 weapon 相符；原 family 仍存在，或完整 `mark_ids` 可證明唯一 item | 68 family paths、2 id paths |
 
-共 **694 ids、1,404 個詳情路徑、68 個 family 路徑**。`additionalIds` 僅保存未出現在 alias 目標中的 175 個新 id，與所有 alias 目標合起來等於固定來源全部 1,540 個 id。只有精確且唯一的結果才會導向，沒有名稱相似度、slug 猜測或任選第一筆。
+共 **694 ids、1,404 個詳情路徑、68 個 family 路徑**。`additionalIds` 僅保存未出現在 alias 目標中的 175 個新 id，與所有 alias 目標合起來等於固定來源全部 1,540 個 id，供離線來源完整性驗證，不限制 runtime 可讀的 id 或版本。只有精確且唯一的結果才會導向，沒有名稱相似度、slug 猜測或任選第一筆。
 
 family 重組的四條網址：`/weapons/ogryn_thumper_p2/` 與其 `/marks/ogryn_thumper_p1_m2/` 詳情都指向 `darktide:weapon:ogryn_thumper_p1_m2`；`/weapons/ogryn_thumper_p3/` 與其 `/marks/ogryn_thumper_p1_m3/` 詳情都指向 `darktide:weapon:ogryn_thumper_p1_m3`。兩個舊 family 的完整 `mark_ids` 各只有該型號；不導向含其他型號的 `ogryn_thumper_p1` family。
 
@@ -72,6 +83,8 @@ node scripts/generate-legacy-urls.mjs `
   --source-data $sourceDataRoot --check
 ```
 
-來源 checkout 必須有 Git HEAD，且等於 `93185bf9c070da578701fa398e85da9a08b8d4c4`。產生器同時輸出精簡 Source-Data id／class/key 與武器 key/family 身分 fixture、原 spec 四個網址與重組武器的詳情 fixture。武器 fixture 保留同 family 的三筆身分與呈現欄位，省略與網址無關的戰鬥曲線。測試完全離線。新增支援版本或替換來源時，必須同步更新新 id 身分集合、腳本版本、固定 commit／目標版本、測試預期與本契約；重跑並審查 unmapped 增減。來源衝突或非終點映射使產生失敗；唯一但缺失的目標列為 unmapped。
+來源 checkout 必須有 Git HEAD，且等於 `93185bf9c070da578701fa398e85da9a08b8d4c4`。產生器同時輸出精簡 Source-Data id／class/key 與武器 key/family 身分 fixture、原 spec 四個網址與重組武器的詳情 fixture。武器 fixture 保留同 family 的三筆身分與呈現欄位，省略與網址無關的戰鬥曲線。測試完全離線。替換相容映射的固定來源／目標版本時，必須同步更新驗證用身分集合、腳本版本、固定 commit／目標版本、測試預期與本契約；重跑並審查 unmapped 增減。一般 build 新增資料版本不需修改這份固定來源的相容表。來源衝突或非終點映射使產生失敗；唯一但缺失的目標列為 unmapped。
 
 回復本次相容變更只需還原 Web commit 並重建；無持久資料遷移。建置與驗證證據、最大檔案及原始資料 manifest 全文見[驗證報告](../acceptance/syp-391-legacy-urls/build-report.json)。
+
+L2-001 修正的 fixture／固定來源建置、136 項測試及舊 resolver 回歸實驗見[第二輪修正驗證](../acceptance/syp-391-legacy-urls/review2-validation.json)。

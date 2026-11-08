@@ -1,11 +1,11 @@
 const routes = { skills: 'skill', weapons: 'weapon', blessings: 'blessing', terms: 'term' };
-const currentIdsByMap = new WeakMap();
-
-function isCurrentId(map, id) {
-  if (!currentIdsByMap.has(map)) currentIdsByMap.set(map,
-    new Set([...Object.values(map.ids), ...Object.values(map.paths), ...map.additionalIds]));
-  return currentIdsByMap.get(map).has(id);
-}
+// Unmapped legacy queries still fail before version validation. New identities
+// belong to the selected build's data, not the pinned migration target inventory.
+const legacyIdPatterns = [
+  /^darktide:(?:skill|term):[a-z0-9_]+:[a-z0-9]+(?:-[a-z0-9]+)+$/,
+  /^darktide:blessing:[a-z0-9_]+:[a-z0-9]+(?:-[a-z0-9]+)*$/,
+  /^darktide:weapon:[a-z0-9_]+:p\d+-m\d+(?::[a-z0-9]+(?:-[a-z0-9]+)*)?$/
+];
 
 export function resolveLegacyUrl(input, map) {
   const url = new URL(input);
@@ -19,7 +19,7 @@ export function resolveLegacyUrl(input, map) {
   const family = detailPath ? lookup(map.familyPaths, pathname) : null;
   if (detailPath && !target && !family) return { status: 'not-found', url };
   if (!target && !family) {
-    if (url.searchParams.has('id') && (!isCurrentId(map, oldId) || !oldId.startsWith(`darktide:${routes[domain]}:`))) return { status: 'not-found', url };
+    if (url.searchParams.has('id') && (!oldId?.startsWith(`darktide:${routes[domain]}:`) || legacyIdPatterns.some(pattern => pattern.test(oldId)))) return { status: 'not-found', url };
     return { status: 'unchanged', url };
   }
   if (!detailPath && target === oldId) return { status: 'unchanged', url };
