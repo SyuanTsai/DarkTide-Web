@@ -41,7 +41,20 @@ test('UnitT20_武器表格顯示正確比較點曲線祝福與威力',async()=>{
   for(const mark of sample.tables.familyMarks.marks) assert.ok(allNodes(tables(page,'family-marks')[0]).some(x=>x.tagName==='a'&&x.href?.includes(encodeURIComponent(mark))),mark);
  }
  const chain=weapons.find(x=>x.key==='chainaxe_p1_m1'); assert.match(tables(pageFor(chain,index,blessings),'attack-combos')[0].textContent,/連段起始動作不明確/);
- const chain2=weapons.find(x=>x.key==='chainaxe_p1_m2'); assert.match(tables(pageFor(chain2,index,blessings),'attack-combos').map(t=>t.textContent).join(''),/依動作綁定對應/);
+});
+
+// Scenario: render the first light-combo step using action bindings or an explicit profile.
+// Purpose: verify the complete ordered fallback list and ensure an explicit profile takes precedence without a fallback label.
+test('UnitT25_連段傷害設定依綁定完整對應並優先顯示指定設定',async()=>{
+ const item=(await read('weapons')).items.find(x=>x.key==='chainaxe_p1_m2');
+ const comboIndex=item.values.attackCombos.findIndex(x=>x.id==='light'); const combo=item.values.attackCombos[comboIndex]; const step=combo.steps[0];
+ assert.equal(step.action,'action_left_down_light'); assert.equal(step.damageProfile,null);
+ const expected=item.values.damageProfiles.filter(p=>p.bindings.some(b=>b.action===step.action)).map(p=>p.id);
+ assert.ok(expected.length>1);
+ const profileCell=weapon=>cell(rows(tables(pageFor(weapon,[],[]),'attack-combos')[comboIndex])[0],3);
+ assert.equal(profileCell(item),`${expected.join('、')}（依動作綁定對應）`);
+ const explicit=structuredClone(item); explicit.values.attackCombos[comboIndex].steps[0].damageProfile=expected[0];
+ assert.equal(profileCell(explicit),expected[0]);
 });
 
 // Scenario: render a legacy weapon. Purpose: preserve the 1.0.0 output byte for byte.
