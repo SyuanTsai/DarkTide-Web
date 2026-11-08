@@ -23,8 +23,8 @@ const cases = [
   ['combo step額外欄位', 'weapons', i => { i.values.attackCombos[0].steps[0].extra = 1; }],
   ['retainedFrom textBatch格式', 'skills', i => { i.retainedFrom = {gameVersion:'1.0', sourceCommit:'a'.repeat(40), textBatch:'bad value'}; }],
   ['retainedFrom額外欄位', 'skills', i => { i.retainedFrom = {gameVersion:'1.0', sourceCommit:'a'.repeat(40), textBatch:'ok', extra:1}; }],
-  ['anchor occurrence下界', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'en',text:'x',occurrence:0}}]; }],
-  ['anchor額外欄位', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'en',text:'x',occurrence:1,extra:1}}]; }],
+  ['anchor occurrence下界', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'x',occurrence:0}}]; }],
+  ['anchor額外欄位', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'x',occurrence:1,extra:1}}]; }],
   ['curve source line下界', 'weapons', i => { i.values.curves[0].source.line = 0; }],
   ['curve source空path', 'weapons', i => { i.values.curves[0].source.path = ''; }],
   ['curve未知原因enum', 'weapons', i => { i.values.curves[0].unknown = 'invalid'; }],
@@ -33,9 +33,10 @@ const cases = [
   ['combo loopsTo下界', 'weapons', i => { i.values.attackCombos[0].loopsTo = -1; }],
   ['combo未知原因enum', 'weapons', i => { i.values.attackCombos[0].unknown = 'invalid'; }],
   ['combo傷害原因不一致', 'weapons', i => { i.values.attackCombos[0].steps[0].damageProfile = null; i.values.attackCombos[0].steps[0].damageProfileUnknown = null; }],
-  ['anchor field enum', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'other',locale:'en',text:'x',occurrence:1}}]; }],
-  ['anchor locale enum', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'other',text:'x',occurrence:1}}]; }],
-  ['anchor空text', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'en',text:'',occurrence:1}}]; }],
+  ['anchor field enum', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'other',locale:'en',text:'x',occurrence:1}}]; }],
+  ['anchor/errata locale enum (matching invalid values)', 'skills', i => { i.errata = [{locale:'other',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'other',text:'x',occurrence:1}}]; }],
+  ['anchor locale differs from errata locale', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'zh',text:'x',occurrence:1}}]; }],
+  ['anchor空text', 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'',occurrence:1}}]; }],
 ];
 for (const [label, select, fields] of [
   ['curve', i => i.values.curves[0], ['id','bar','stat','name','input','interpolation','knots','outputUnit','unknown','source']],
@@ -47,7 +48,7 @@ for (const [label, select, fields] of [
   ['stat', i => i.values.bars[0].stats[0], ['curveId']],
 ]) for (const field of fields) cases.push([`${label}缺少${field}`, 'weapons', i => { delete select(i)[field]; }]);
 for (const field of ['gameVersion','sourceCommit','textBatch']) cases.push([`retainedFrom缺少${field}`, 'skills', i => { i.retainedFrom = {gameVersion:'1.0',sourceCommit:'a'.repeat(40),textBatch:'ok'}; delete i.retainedFrom[field]; }]);
-for (const field of ['field','locale','text','occurrence']) cases.push([`anchor缺少${field}`, 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'en',text:'x',occurrence:1}}]; delete i.errata[0].anchor[field]; }]);
+for (const field of ['field','locale','text','occurrence']) cases.push([`anchor缺少${field}`, 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'x',occurrence:1}}]; delete i.errata[0].anchor[field]; }]);
 for (const [label, select, fields] of [
   ['curve', i => i.values.curves[0], ['id','bar','stat','name','input','interpolation','knots','outputUnit','unknown','source']],
   ['curve input', i => i.values.curves[0].input, ['source','unit','min','max']],
@@ -58,9 +59,9 @@ for (const [label, select, fields] of [
   ['stat', i => i.values.bars[0].stats[0], ['curveId']],
 ]) for (const field of fields) cases.push([`${label}的${field}型別錯誤`, 'weapons', i => { select(i)[field] = {}; }]);
 for (const field of ['gameVersion','sourceCommit','textBatch']) cases.push([`retainedFrom的${field}型別錯誤`, 'skills', i => { i.retainedFrom = {gameVersion:'1.0',sourceCommit:'a'.repeat(40),textBatch:'ok'}; i.retainedFrom[field] = {}; }]);
-for (const field of ['field','locale','text','occurrence']) cases.push([`anchor的${field}型別錯誤`, 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRef:'/x',anchor:{field:'official',locale:'en',text:'x',occurrence:1}}]; i.errata[0].anchor[field] = {}; }]);
+for (const field of ['field','locale','text','occurrence']) cases.push([`anchor的${field}型別錯誤`, 'skills', i => { i.errata = [{locale:'en',official:'x',corrected:'x',valueRefs:['/x'],sources:[{path:'scripts/example.lua',line:1}],anchor:{field:'official',locale:'en',text:'x',occurrence:1}}]; i.errata[0].anchor[field] = {}; }]);
 for (const [name, category, mutate] of cases) {
-  // Scenario: A single schema field is malformed in an otherwise valid fixture.
+  // Scenario: An otherwise valid fixture contains one malformed schema field or relationship.
   // Purpose: Reject the named contract violation before building.
   test(`InterT30_拒絕${name}`, async () => {
     const dir = await mkdtemp(path.join(os.tmpdir(), 'wp8b-contract-'));

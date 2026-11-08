@@ -44,6 +44,6 @@ test('InterT20_混合版本與新增欄位驗證', async () => {
     const wp = 'data/9.9.3/weapons.json'; const weapon = await read(wp); const badCurve = structuredClone(weapon); badCurve.items[0].values.bars[0].stats[0].curveId = 'missing'; await write(wp, badCurve); await assert.rejects(load(), /curveId/); await write(wp, weapon);
     const sp = 'data/9.9.3/skills.json'; const skill = await read(sp); const badOrigin = structuredClone(skill); badOrigin.items[0].explanation.effectOrigin = 'invalid'; await write(sp, badOrigin); await assert.rejects(load(), /effectOrigin/); await write(sp, skill);
     const legacyPath = 'data/9.9.1/skills.json'; const legacy = await read(legacyPath); const badLegacy = structuredClone(legacy); badLegacy.items[0].explanation.effectOrigin = 'official'; await write(legacyPath, badLegacy); await assert.rejects(load(), /effectOrigin/); await write(legacyPath, legacy);
-    current.schemaVersion = '1.2.0'; await write('data/current.json', current); await assert.rejects(load(), /unsupported schemaVersion/);
+    current.schemaVersion = '1.3.0'; await write('data/current.json', current); await assert.rejects(load(), /unsupported schemaVersion/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
