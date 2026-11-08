@@ -138,6 +138,20 @@ test('InterT42_拒絕terms valueSources', () => check('terms', i => { i.source.v
 // Purpose: Reject codeRefs on categories that do not support the field.
 test('InterT43_拒絕terms codeRefs', () => check('terms', i => { i.source.codeRefs = {'scripts/example.lua#templates.example': {path:'scripts/example.lua',symbol:'templates.example',sha256:'a'.repeat(64)}}; }));
 
+// Scenario: A blessings item anchors a display parameter on a skill item without a tier.
+// Purpose: Require a tier according to the target item's category rather than the current category.
+test('InterT44_接受blessings錨點指向skill且無tier', () => check('blessings', i => {
+  i.errata[0].anchor.itemId = 'darktide:skill:psyker:example_keystone';
+  delete i.errata[0].anchor.tier;
+}, true));
+
+// Scenario: A skills item anchors a display parameter on a blessing item without a tier.
+// Purpose: Reject a missing tier when the target item is a blessing, regardless of the current category.
+test('InterT45_拒絕skills錨點指向blessing且無tier', () => check('skills', i => {
+  i.errata[0].anchor.itemId = 'darktide:blessing:example_trait';
+  delete i.errata[0].anchor.tier;
+}));
+
 for (const version of ['1.0.0', '1.1.0']) for (const field of ['mechanics', 'valueSources', 'codeRefs', 'citations']) {
   test(`schema ${version} rejects ${field}`, async () => {
     const source = version === '1.0.0' ? './fixtures/source-data/' : './fixtures/source-data-1.1/';
