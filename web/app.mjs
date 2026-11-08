@@ -17,7 +17,9 @@ import {
   writeListState
 } from './client.mjs';
 import { createSharedClient, hasSharedContext } from './shared-client.mjs';
-import { currentSkillIdForLegacyId, renderSharedPage, retainedBlessingIdForCurrentId, shouldRenderSkillMechanics } from './shared-render.mjs';
+import { currentSkillIdForLegacyId, renderSharedPage, renderSourceNotFound, retainedBlessingIdForCurrentId, shouldRenderSkillMechanics } from './shared-render.mjs';
+import legacyUrlMap from './legacy-url-map.mjs';
+import { applyLegacyUrl } from './legacy-urls.mjs';
 import { loadW14HistoryPackage, renderW14HistoryPage, W14_HISTORY_PATH } from './history-page.mjs';
 
 const main = document.getElementById('main');
@@ -1216,7 +1218,12 @@ function restoreSharedDetailUiState(state) {
 async function showSharedPage(force = false) {
   if (build.source_data === true) {
     const generation = ++sharedNavigationGeneration;
-    const url = new URL(window.location.href);
+    const resolved = applyLegacyUrl(window.location.href, legacyUrlMap, history);
+    const url = resolved.url;
+    if (resolved.status === 'not-found') {
+      renderSourceNotFound(main, url);
+      return;
+    }
     try {
       const result = await sharedClient.load({ pathname: url.pathname, search: url.search, force });
       if (generation === sharedNavigationGeneration) renderSharedPage({ main, buildMeta, result, url });

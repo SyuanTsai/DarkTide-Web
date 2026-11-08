@@ -18,6 +18,7 @@
 - 圖示依核准來源引用並保留 Games Lantern 署名；缺來源專屬素材使用明示的通用圖示。
 - 網站由指定 Source-Data commit 的 `data/` 建置；1.13.1 是獨立唯讀歷史摘要，見[歷史入口](https://darktide.tw-syuan.com/history/1.13.1/)。
 - 完整固定來源、current/history 範圍與逐列遷移 outcome 請見[W14 遷移索引](docs/contracts/w14/README.md)。
+- 舊 query id 與詳情路徑的精確對應、固定 1.13.4 策略、離線更新方式與「找不到」清單，見[舊網址相容契約](docs/contracts/legacy-urls.md)。
 
 ## 開發
 需要 Node.js 24。網站直接讀 Source-Data；公開部署不包含私人來源 checkout 或原始素材包。

@@ -2277,6 +2277,15 @@ function renderSourceItem(parent, item, schemaVersion) {
   parent.append(article);
 }
 
+export function renderSourceNotFound(main, url) {
+  main.replaceChildren(); main.removeAttribute('aria-busy');
+  main.append(node('h1', '找不到'), node('p', '找不到此網址對應的項目。可能沒有唯一對應，或此版本未提供該項目。'));
+  const domain = url.pathname.split('/')[1];
+  main.append(link(`/${domain}/`, '返回列表'));
+  setMetadata('找不到', '找不到此網址對應的項目。', url);
+  main.focus();
+}
+
 function renderSourcePage({ main, buildMeta, result, url }) {
   main.replaceChildren(); main.removeAttribute('aria-busy');
   buildMeta.textContent = `遊戲版本 ${result.manifest.gameVersion} · 資料修訂 ${result.manifest.dataRevision.slice(0,12)}`;
@@ -2302,9 +2311,14 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       }
     }
   } else if(['skills','weapons','blessings','terms'].includes(route)) {
+    if (url.pathname !== `/${route}/` && url.pathname !== `/${route}`) return renderSourceNotFound(main, url);
     const labels={skills:'技能／天賦',weapons:'武器',blessings:'祝福',terms:'術語'};main.append(node('h1',labels[route]));
     const indexItems = domain(`${route}-index`)?.items ?? [];
     let items = route==='weapons' ? result.domains.filter(d=>d.kind==='weapon-family').flatMap(d=>d.document.items) : route==='blessings' ? result.domains.filter(d=>d.kind==='blessing').flatMap(d=>d.document.items) : domain(route)?.items ?? [];
+    const id = url.searchParams.get('id');
+    if (url.searchParams.has('id')) {
+      if (!id || !items.some(i => i.id === id)) return renderSourceNotFound(main, url);
+    }
     const version=url.searchParams.get('version');
     const href=params=>`/${route}/?${new URLSearchParams({...params,...(version?{version}:{})})}`;
     const name=item=>`${item.name.zh || '名稱待確認'}${item.name.origin==='glossary'?'（非官方譯名）':''}`;
@@ -2312,7 +2326,15 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       const family=url.searchParams.get('family');const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','武器型號');
       for(const f of [...new Set(indexItems.map(i=>i.family))]) nav.append(link(href({family:f}),name(indexItems.find(i=>i.family===f))));
       main.append(nav); if(family) items=items.filter(i=>i.values.family===family);
-      else { main.focus();return; }
+      else if (!url.searchParams.has('id')) {
+        if (url.searchParams.has('mark')) return renderSourceNotFound(main, url);
+        main.focus();return;
+      }
+      if (url.searchParams.has('mark')) {
+        const mark = url.searchParams.get('mark');
+        items = items.filter(i => i.key === mark || i.values.mark === mark || i.id === mark);
+      }
+      if (!items.length) return renderSourceNotFound(main, url);
     }
     if(route==='skills') {
       const classes={psyker:'靈能者',veteran:'老兵',zealot:'狂信徒',ogryn:'歐格林',arbites:'法務官',scum:'巢都渣滓',skitarii:'護教軍'};
@@ -2328,7 +2350,10 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       for(const category of [...new Set(items.map(i=>i.values.category))])nav.append(link(href({category}),labels[category]??'其他'));main.append(nav);
       if(url.searchParams.has('category'))items=items.filter(i=>i.values.category===url.searchParams.get('category'));
     }
-    const id=url.searchParams.get('id');if(id)items=items.filter(i=>i.id===id);
+    if (url.searchParams.has('id')) {
+      items = items.filter(i => i.id === id);
+      if (!items.length) return renderSourceNotFound(main, url);
+    }
     if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
     for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));const document = result.domains.find(d => d.document.items?.includes(item))?.document;renderSourceItem(main,item,document?.schemaVersion);}
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
