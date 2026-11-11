@@ -79,9 +79,9 @@
 
 ## 1.13 技能名稱文本對照（2026-10-04）
 
-[翻譯表](../Referneces/Translation.md)｜[1.13 技能盤點](../Game%20Info/releases/1.13.X/skills/README.md)｜[官方 1.13.0 公告](https://forums.fatsharkgames.com/t/patch-1-13-0-patch-notes/125866)
+[翻譯表](../Referneces/Translation.md)｜Mods 舊解包目錄（已退役，見 SYP-404）｜[官方 1.13.0 公告](https://forums.fatsharkgames.com/t/patch-1-13-0-patch-notes/125866)
 
-依 1.13.1 固定來源 `7e662fcda16219d775b84af50322be2e9cd9d62e` 與 Steam Build 25606770 的英文／zh-tw ui 文本，以相同名稱鍵及 hash 配對。55 項繁中對應全部已從文本補齊，其中 13 項為本版新增，42 項為既有盤點補缺。此節為已寫入翻譯表的對照紀錄；採用文本名稱，不需要使用者逐項確認。[文本配對紀錄](../AI-LOGS/Game%20Info/releases/1.13.X/skills/2026-10-04-TRANSLATION_TABLE_ZH_TW_PAIRING.json)。
+依 1.13.1 固定來源 `7e662fcda16219d775b84af50322be2e9cd9d62e` 與 Steam Build 25606770 的英文／zh-tw ui 文本，以相同名稱鍵及 hash 配對。55 項繁中對應全部已從文本補齊，其中 13 項為本版新增，42 項為既有盤點補缺。此節為已寫入翻譯表的對照紀錄；採用文本名稱，不需要使用者逐項確認。Mods 舊解包目錄（已退役，見 SYP-404）。
 
 ### 1.13 新增名稱
 

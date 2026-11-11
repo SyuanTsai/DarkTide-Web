@@ -10,7 +10,7 @@ This change updates only Web-owned player wording for the Psyker skill and Chain
 
 - Published Web baseline: exact .11 commit 3cf93b2e8c9acdcdc7ea5695c24e57a49c04b9b1, content version 0.0.11.
 - Source: SyuanTsai/DarkTide-Source-Data, commit 5d16c70a828d4bd6293a12430cd4ebea36c6ed1c, revision 8e2996286df1875eb55d4e1ecd1650443ca9bd9b1a45a364c9c3f6de4f76048d, manifest SHA-256 625725aa628f55bc484dd6fd267170b9991bb16b1d46c975a87193733c6418bc.
-- Inherited analysis: Mods commit 241ad76ce62330472aa423055a5b85db59bb6c0d, Game Info/releases/1.13.X/skills/talents/Psyker/psyker_brain_burst_improved.md and its English sibling. This preserves existing historical analysis provenance; it does not prove current-version compatibility or in-game testing.
+- Inherited analysis: Mods commit 241ad76ce62330472aa423055a5b85db59bb6c0d, Mods 舊解包目錄（已退役，見 SYP-404） and its English sibling. This preserves existing historical analysis provenance; it does not prove current-version compatibility or in-game testing.
 - Terminology: the same Mods commit, Referneces/Translation.md, Git blob SHA-256 fb60e9e8b7beb81765ca50acb3483b9a10e3148e82f630bdf43878a8e45543a0. The glossary is a terminology aid, not mechanics evidence.
 
 Only web:presentation:psyker-brain-burst-improved and web:presentation:chainaxe-p1-movement-speed player details change. Two explanatory item IDs are added for the shared numerical assumption and stagger-target scope. Existing skill and blessing entity references, Source claims, tier selector, and official-text bindings are retained.
