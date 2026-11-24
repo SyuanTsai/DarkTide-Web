@@ -79,7 +79,7 @@ test('translation prompt retains the batch inputs, attribution and terminology',
 test('registration configures the daily interactive Windows task', () => {
   assert.match(register, /'DarkTide-Announcements-Daily'/);
   assert.match(register, /New-ScheduledTaskTrigger -Daily -At \$at/);
-  assert.match(register, /'10:30'/);
+  assert.match(register, /'19:30'/);
   assert.match(register, /-StartWhenAvailable -ExecutionTimeLimit \(New-TimeSpan -Hours 3\) -MultipleInstances IgnoreNew/);
   assert.match(register, /-LogonType Interactive/);
   assert.match(register, /SupportsShouldProcess/);

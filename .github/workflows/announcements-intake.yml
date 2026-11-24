@@ -1,0 +1,401 @@
+name: Intake official announcements
+on:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      topics:
+        description: Comma-separated Fatshark topic IDs
+        required: false
+        type: string
+      dry_run:
+        description: Build and validate without pushing or opening a PR
+        required: false
+        default: false
+        type: boolean
+      provider:
+        description: Translation provider override
+        required: false
+        default: default
+        type: choice
+        options:
+          - default
+          - openai
+          - anthropic
+permissions:
+  contents: read
+concurrency:
+  group: announcements-intake
+  cancel-in-progress: false
+jobs:
+  intake:
+    if: github.repository == 'SyuanTsai/DarkTide-Web' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out main without persisted credentials
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Resolve configuration and readiness
+        id: ready
+        env:
+          INPUT_PROVIDER: ${{ inputs.provider || 'default' }}
+          INPUT_TOPICS: ${{ inputs.topics || '' }}
+          DRY_RUN: ${{ inputs.dry_run == true }}
+          DEFAULT_PROVIDER: ${{ vars.ANNOUNCEMENTS_TRANSLATOR }}
+          OPENAI_MODEL: ${{ vars.ANNOUNCEMENTS_OPENAI_MODEL }}
+          OPENAI_EFFORT: ${{ vars.ANNOUNCEMENTS_OPENAI_EFFORT }}
+          ANTHROPIC_MODEL: ${{ vars.ANNOUNCEMENTS_ANTHROPIC_MODEL }}
+          HAS_PR_TOKEN: ${{ secrets.ANNOUNCEMENTS_PR_TOKEN != '' }}
+          HAS_OPENAI_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
+          HAS_ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          provider="$INPUT_PROVIDER"
+          if [[ -z "$provider" || "$provider" == default ]]; then
+            provider="${DEFAULT_PROVIDER:-openai}"
+          fi
+          if [[ "$provider" != openai && "$provider" != anthropic ]]; then
+            echo "::error::Unsupported announcement translator: $provider"
+            exit 1
+          fi
+          if [[ -n "$INPUT_TOPICS" && ! "$INPUT_TOPICS" =~ ^[0-9]+(,[0-9]+)*$ ]]; then
+            echo '::error::topics must match ^[0-9]+(,[0-9]+)*$'
+            exit 1
+          fi
+          if [[ "$provider" == openai ]]; then
+            model="${OPENAI_MODEL:-gpt-5.6-sol}"
+            effort="${OPENAI_EFFORT:-medium}"
+          else
+            model="${ANTHROPIC_MODEL:-claude-opus-5-5}"
+            effort=''
+          fi
+          if [[ ! "$model" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo '::error::The configured announcement model contains unsupported characters.'
+            exit 1
+          fi
+          if [[ -n "$effort" && ! "$effort" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo '::error::The configured OpenAI effort contains unsupported characters.'
+            exit 1
+          fi
+          batch=$(TZ=Asia/Taipei date +%Y%m%d)
+          missing=()
+          if [[ "$provider" == openai && "$HAS_OPENAI_KEY" != true ]]; then
+            missing+=(OPENAI_API_KEY)
+          fi
+          if [[ "$provider" == anthropic && "$HAS_ANTHROPIC_KEY" != true ]]; then
+            missing+=(ANTHROPIC_API_KEY)
+          fi
+          if [[ "$DRY_RUN" != true && "$HAS_PR_TOKEN" != true ]]; then
+            missing+=(ANNOUNCEMENTS_PR_TOKEN)
+          fi
+          printf 'provider=%s\nmodel=%s\neffort=%s\nbatch=%s\ndry_run=%s\n' \
+            "$provider" "$model" "$effort" "$batch" "$DRY_RUN" >> "$GITHUB_OUTPUT"
+          if (( ${#missing[@]} )); then
+            {
+              echo '## Announcement intake skipped'
+              echo
+              echo 'The workflow is not ready because these repository secrets are missing:'
+              printf -- '- `%s`\n' "${missing[@]}"
+              echo
+              echo 'No announcement files, branch, or pull request were created.'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo 'ready=true' >> "$GITHUB_OUTPUT"
+      - name: Set up Node.js 24
+        if: ${{ steps.ready.outputs.ready == 'true' }}
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install locked dependencies
+        if: ${{ steps.ready.outputs.ready == 'true' }}
+        run: npm ci
+      - name: Scan and select announcement topics
+        if: ${{ steps.ready.outputs.ready == 'true' }}
+        id: select
+        env:
+          INPUT_TOPICS: ${{ inputs.topics || '' }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          scan_file="$RUNNER_TEMP/announcements-scan.json"
+          node scripts/content/announcements-intake.mjs scan --json > "$scan_file"
+          if [[ -n "$INPUT_TOPICS" ]]; then
+            topics="$INPUT_TOPICS"
+          else
+            new_count=$(jq -er '.newCount | select(type == "number")' "$scan_file")
+            if (( new_count == 0 )); then
+              echo 'No new announcements.' >> "$GITHUB_STEP_SUMMARY"
+              printf 'proceed=false\nbatch=%s\n' "$BATCH" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            topics=$(jq -er '[.topics[].id] | map(tostring) | join(",") | select(length > 0)' "$scan_file")
+          fi
+          printf 'proceed=true\ntopics=%s\nbatch=%s\n' "$topics" "$BATCH" >> "$GITHUB_OUTPUT"
+      - name: Check duplicate announcement guards
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' }}
+        id: guards
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="auto/announcements-$BATCH"
+          batch_dir="content/authoring/v2/official-announcements/$BATCH"
+          open_pr=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 1000 \
+            --json headRefName --jq '[.[] | select(.headRefName | startswith("auto/announcements-"))] | length')
+          if (( open_pr > 0 )); then
+            echo 'An automatic announcement PR is already open. The next run will retry.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          set +e
+          git ls-remote --exit-code --heads origin "refs/heads/$branch" >/dev/null
+          remote_status=$?
+          set -e
+          if (( remote_status == 0 )); then
+            echo "Remote branch \`$branch\` already exists." >> "$GITHUB_STEP_SUMMARY"
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if (( remote_status != 2 )); then
+            echo "::error::Remote branch lookup failed with code $remote_status."
+            exit "$remote_status"
+          fi
+          if git cat-file -e "HEAD:$batch_dir" 2>/dev/null; then
+            echo "Batch \`$BATCH\` already exists on main." >> "$GITHUB_STEP_SUMMARY"
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo 'proceed=true' >> "$GITHUB_OUTPUT"
+      - name: Capture first posts and translator outlines
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        env:
+          BATCH: ${{ steps.ready.outputs.batch }}
+          TOPICS: ${{ steps.select.outputs.topics }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/content/announcements-intake.mjs capture --batch "$BATCH" --topics "$TOPICS" \
+            --outline-dir "$RUNNER_TEMP/outlines"
+      - name: Download the pinned Mods glossary
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        id: glossary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha=$(gh api repos/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/commits/main --jq .sha)
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          glossary="$RUNNER_TEMP/Translation.md"
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/SyuanTsai/Warhammer-40-000-DARKTIDE-Mods/$sha/Referneces/Translation.md" \
+            --output "$glossary"
+          test -s "$glossary"
+          printf 'sha=%s\npath=%s\n' "$sha" "$glossary" >> "$GITHUB_OUTPUT"
+      - name: Translate with the provider API
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+          MODEL: ${{ steps.ready.outputs.model }}
+          EFFORT: ${{ steps.ready.outputs.effort }}
+          GLOSSARY: ${{ steps.glossary.outputs.path }}
+          PROVIDER: ${{ steps.ready.outputs.provider }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/announcement-logs"
+          batch_dir="content/authoring/v2/official-announcements/$BATCH"
+          errors_file="$RUNNER_TEMP/gate-errors.txt"
+          for round in 0 1 2; do
+            translate_args=(--batch "$BATCH" --outline-dir "$RUNNER_TEMP/outlines" --glossary "$GLOSSARY"
+              --provider "$PROVIDER" --model "$MODEL" --log-dir "$RUNNER_TEMP/announcement-logs")
+            if [[ "$PROVIDER" == openai && -n "$EFFORT" ]]; then translate_args+=(--effort "$EFFORT"); fi
+            if (( round > 0 )); then translate_args+=(--errors-file "$errors_file"); fi
+            node scripts/content/announcements-translate.mjs "${translate_args[@]}"
+            outside=$(git status --porcelain --untracked-files=all -- . \
+              ":(exclude)$batch_dir" ':(exclude)node_modules' ':(exclude)node_modules/**')
+            if [[ -n "$outside" ]]; then
+              printf '::error::Files outside the announcement batch changed during translation.\n%s\n' "$outside"
+              exit 1
+            fi
+            rm -f "$batch_dir/announcements.json" "$batch_dir/source-intake.json"
+            set +e
+            node scripts/content/announcements-intake.mjs build --batch "$BATCH" \
+              2>&1 | tee "$RUNNER_TEMP/announcement-logs/build-round-$round.log"
+            build_status=${PIPESTATUS[0]}
+            node scripts/content/announcements-intake.mjs check --batch "$BATCH" \
+              2>&1 | tee "$RUNNER_TEMP/announcement-logs/check-round-$round.log"
+            check_status=${PIPESTATUS[0]}
+            set -e
+            cp "$RUNNER_TEMP/announcement-logs/check-round-$round.log" "$RUNNER_TEMP/announcement-logs/check-latest.log"
+            grep '^ERROR ' "$RUNNER_TEMP/announcement-logs/check-round-$round.log" > "$errors_file" || true
+            printf '%s\n' "$build_status" > "$RUNNER_TEMP/build-status"
+            printf '%s\n' "$check_status" > "$RUNNER_TEMP/check-status"
+            if [[ ! -s "$errors_file" ]]; then break; fi
+          done
+      - name: Write batch README
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        env:
+          BATCH: ${{ steps.ready.outputs.batch }}
+        run: node scripts/content/announcements-intake.mjs readme --batch "$BATCH"
+      - name: Run announcement tests and record quality result
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        id: quality
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p "$RUNNER_TEMP/announcement-logs"
+          node --test test/announcements-intake.test.mjs test/wp5-announcements.test.mjs \
+            2>&1 | tee "$RUNNER_TEMP/announcement-logs/tests.log"
+          test_status=${PIPESTATUS[0]}
+          build_status=$(cat "$RUNNER_TEMP/build-status")
+          check_status=$(cat "$RUNNER_TEMP/check-status")
+          gate_errors=0
+          if [[ -s "$RUNNER_TEMP/gate-errors.txt" ]]; then gate_errors=1; fi
+          passed=false
+          if (( build_status == 0 && check_status == 0 && test_status == 0 && gate_errors == 0 )); then passed=true; fi
+          printf 'passed=%s\ntests=%s\nbuild=%s\ncheck=%s\n' \
+            "$passed" "$test_status" "$build_status" "$check_status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Write dry-run summary
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' && steps.ready.outputs.dry_run == 'true' }}
+        env:
+          PROVIDER: ${{ steps.ready.outputs.provider }}
+          MODEL: ${{ steps.ready.outputs.model }}
+          GLOSSARY_SHA: ${{ steps.glossary.outputs.sha }}
+          PASSED: ${{ steps.quality.outputs.passed }}
+          TEST_STATUS: ${{ steps.quality.outputs.tests }}
+          BUILD_STATUS: ${{ steps.quality.outputs.build }}
+          CHECK_STATUS: ${{ steps.quality.outputs.check }}
+        shell: bash
+        run: |
+          {
+            echo '## Announcement intake dry run'
+            echo
+            echo "- Provider: \`$PROVIDER\`"
+            echo "- Model: \`$MODEL\`"
+            echo "- Glossary commit: \`$GLOSSARY_SHA\`"
+            echo "- Build/check gate passed: \`$PASSED\`"
+            echo "- Tests exit code: \`$TEST_STATUS\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Configure Git identity and commit the batch
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' && steps.ready.outputs.dry_run == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.ANNOUNCEMENTS_PR_TOKEN }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+          PROVIDER: ${{ steps.ready.outputs.provider }}
+          MODEL: ${{ steps.ready.outputs.model }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          login=$(gh api user --jq .login)
+          id=$(gh api user --jq .id)
+          [[ -n "$login" && "$id" =~ ^[0-9]+$ ]]
+          git config user.name "$login"
+          git config user.email "$id+$login@users.noreply.github.com"
+          batch_dir="content/authoring/v2/official-announcements/$BATCH"
+          count=$(jq -er '.articles | length | select(. > 0)' "$batch_dir/batch-plan.json")
+          git switch -c "auto/announcements-$BATCH"
+          git add -- "$batch_dir"
+          git commit --only \
+            -m "announcements: add $count Traditional Chinese official announcements ($BATCH)" \
+            -m "Generated-by: announcements-intake.yml ($PROVIDER $MODEL)" -- "$batch_dir"
+      - name: Push announcement branch
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' && steps.ready.outputs.dry_run == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.ANNOUNCEMENTS_PR_TOKEN }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +x
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $auth" \
+            push --set-upstream origin "auto/announcements-$BATCH"
+      - name: Create pull request and report final result
+        if: ${{ steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' && steps.ready.outputs.dry_run == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.ANNOUNCEMENTS_PR_TOKEN }}
+          BATCH: ${{ steps.ready.outputs.batch }}
+          PROVIDER: ${{ steps.ready.outputs.provider }}
+          MODEL: ${{ steps.ready.outputs.model }}
+          GLOSSARY_SHA: ${{ steps.glossary.outputs.sha }}
+          PASSED: ${{ steps.quality.outputs.passed }}
+          TEST_STATUS: ${{ steps.quality.outputs.tests }}
+          BUILD_STATUS: ${{ steps.quality.outputs.build }}
+          CHECK_STATUS: ${{ steps.quality.outputs.check }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          batch_dir="content/authoring/v2/official-announcements/$BATCH"
+          count=$(jq -er '.articles | length | select(. > 0)' "$batch_dir/batch-plan.json")
+          body="$RUNNER_TEMP/pr-body.md"
+          node --input-type=module - "$batch_dir" "$body" "$PROVIDER" "$MODEL" "$GLOSSARY_SHA" "$TEST_STATUS" <<'NODE'
+          import { readFile, writeFile } from 'node:fs/promises';
+          import path from 'node:path';
+          const [batchDir, out, provider, model, glossarySha, tests] = process.argv.slice(2);
+          const plan = JSON.parse(await readFile(path.join(batchDir, 'batch-plan.json'), 'utf8'));
+          const manifest = JSON.parse(await readFile(path.join(batchDir, 'source-snapshots/source-manifest.json'), 'utf8'));
+          const escape = value => String(value).replace(/[\\`*_{\[\]<>|]/g, '\\$&').replace(/[\r\n]+/g, ' ');
+          const rows = plan.articles.map(article => {
+            const post = manifest.posts.find(item => item.topicId === article.topicId);
+            return `| ${post.createdAt.slice(0, 10)} | [${escape(post.title)}](${post.url}) |`;
+          });
+          const warningsFile = path.join(process.env.RUNNER_TEMP, 'announcement-logs', 'check-latest.log');
+          let warnings = [];
+          try { warnings = (await readFile(warningsFile, 'utf8')).split(/\r?\n/).filter(line => line.startsWith('WARN ')); } catch {}
+          const lines = ['| 日期 | 官方論壇公告 |', '|---|---|', ...rows, '',
+            `翻譯：${provider} / ${model}`, `詞彙表 commit：\`${glossarySha}\``,
+            `測試結果：${tests === '0' ? '通過' : `失敗（exit ${tests}）`}`, '', '### 品質檢查警告', '',
+            ...(warnings.length ? warnings.map(line => `    ${line}`) : ['無。']), ''];
+          await writeFile(out, lines.join('\n'));
+          NODE
+          if [[ -s "$RUNNER_TEMP/gate-errors.txt" ]]; then
+            {
+              echo '### 待修正錯誤'
+              echo
+              sed 's/^/    /' "$RUNNER_TEMP/gate-errors.txt"
+            } >> "$body"
+          elif [[ "$PASSED" != true ]]; then
+            {
+              echo '### 待修正錯誤'
+              echo
+              if [[ "$BUILD_STATUS" != 0 ]]; then echo "    ERROR build exited with code $BUILD_STATUS."; fi
+              if [[ "$CHECK_STATUS" != 0 ]]; then echo "    ERROR check exited with code $CHECK_STATUS."; fi
+              if [[ "$TEST_STATUS" != 0 ]]; then echo "    ERROR announcement tests exited with code $TEST_STATUS."; fi
+            } >> "$body"
+          elif [[ "$PASSED" == true ]]; then
+            echo '沒有人工審查；CI 通過後由 announcements-auto-merge 自動合併並部署' >> "$body"
+          fi
+          args=(pr create --repo "$GITHUB_REPOSITORY" --base main --head "auto/announcements-$BATCH" \
+            --title "公告：新增 $count 篇官方公告繁中翻譯（$BATCH）" --body-file "$body")
+          if [[ "$PASSED" == true ]]; then
+            args+=(--label auto-announcements)
+          else
+            args+=(--draft --label announcements-needs-review)
+          fi
+          pr_url=$(gh "${args[@]}")
+          printf 'Created announcement pull request: %s\n' "$pr_url" >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$PASSED" != true ]]; then exit 1; fi
+      - name: Upload translation logs
+        if: ${{ always() && steps.ready.outputs.ready == 'true' && steps.select.outputs.proceed == 'true' && steps.guards.outputs.proceed == 'true' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: announcements-${{ steps.ready.outputs.batch }}-artifacts
+          path: |
+            ${{ runner.temp }}/announcement-logs
+            content/authoring/v2/official-announcements/${{ steps.ready.outputs.batch }}
+          retention-days: 14
+          if-no-files-found: ignore

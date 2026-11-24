@@ -2,7 +2,7 @@
 
 ## Scheduled intake (SYP-542)
 
-The owner's machine runs the Windows Task Scheduler task `DarkTide-Announcements-Daily` every day at 10:30 Asia/Taipei with `StartWhenAvailable`, so a missed run starts after the machine is back. Register it with `scripts/content/register-announcements-task.ps1 -InstallRunner`, which copies the runner from `origin/main` to `%LOCALAPPDATA%\DarkTide-Announcements\announcements-daily.ps1`; `-Unregister` removes the task. The runner creates a fresh detached worktree from `origin/main` and never uses the main checkout. It scans the Fatshark forum's Darktide Announcements category (70), exits without creating anything when there are no new topics, and otherwise captures the topics and translates them through `codex exec` (default `gpt-5.6-sol` with `medium` effort) using `scripts/content/announcements-translate-prompt.md` and the glossary from the Mods repository's `origin/main`. It runs build and check with up to two Codex fix rounds, then runs the tests. When everything passes it pushes `auto/announcements-YYYYMMDD` and opens a PR labelled `auto-announcements`; otherwise it opens a draft PR labelled `announcements-needs-review`, which is never auto-merged. Logs are kept in `%LOCALAPPDATA%\DarkTide-Announcements\logs`, with the latest 60 retained. `-DryRun` keeps the worktree and stops before commit, push, or PR creation. Only one automatic announcement PR may be open at a time; the next scheduled run retries.
+The owner's machine runs the Windows Task Scheduler task `DarkTide-Announcements-Daily` every day at 19:30 Asia/Taipei with `StartWhenAvailable`, so a missed run starts after the machine is back. Register it with `scripts/content/register-announcements-task.ps1 -InstallRunner`, which copies the runner from `origin/main` to `%LOCALAPPDATA%\DarkTide-Announcements\announcements-daily.ps1`; `-Unregister` removes the task. The runner creates a fresh detached worktree from `origin/main` and never uses the main checkout. It scans the Fatshark forum's Darktide Announcements category (70), exits without creating anything when there are no new topics, and otherwise captures the topics and translates them through `codex exec` (default `gpt-5.6-sol` with `medium` effort) using `scripts/content/announcements-translate-prompt.md` and the glossary from the Mods repository's `origin/main`. It runs build and check with up to two Codex fix rounds, then runs the tests. When everything passes it pushes `auto/announcements-YYYYMMDD` and opens a PR labelled `auto-announcements`; otherwise it opens a draft PR labelled `announcements-needs-review`, which is never auto-merged. Logs are kept in `%LOCALAPPDATA%\DarkTide-Announcements\logs`, with the latest 60 retained. `-DryRun` keeps the worktree and stops before commit, push, or PR creation. Only one automatic announcement PR may be open at a time; the next scheduled run retries.
 
 From a clean checkout of current `main`, use the Taipei date for `YYYYMMDD`, then run the following commands. Create the branch only when the scan returns topics. Pass the scanned IDs in ascending publication order. Keep optional translator outlines outside the batch and out of the PR.
 
@@ -34,11 +34,43 @@ Each new batch lives under `content/authoring/v2/official-announcements/YYYYMMDD
 
 Open a non-draft PR from `auto/announcements-YYYYMMDD` in the same repository into `main`. Apply `auto-announcements`. Only add files inside that one new dated directory. After **Static package fixture CI** succeeds on the PR, auto-merge verifies that the repository owner authored it, the tested head SHA matches, and the PR is mergeable. It checks the PR data using the gate and terminology from `main`, then squash-merges the tested SHA and deletes the branch. It reads the active release manifest linked from the production `/version.json` and dispatches `deploy.yml` using that manifest's existing `source.commit`. The Actions summary records the PR, merge commit, and deploy run.
 
-The watch runs on `main` at 12:30 Asia/Taipei (04:30 UTC). When eligible topics are older than 48 hours and no announcement PR is open, it opens or comments on **公告自動排程落後** with the `announcements-stale` label and links to the stale topics. It closes the issue with a recovery comment when the stale count reaches zero. A healthy check with no open issue makes no issue changes.
+The watch runs on `main` at 21:00 Asia/Taipei (13:00 UTC), after both intake attempts and their CI/auto-merge window. When eligible topics are older than 48 hours and no announcement PR is open, it opens or comments on **公告自動排程落後** with the `announcements-stale` label and links to the stale topics. It closes the issue with a recovery comment when the stale count reaches zero. A healthy check with no open issue makes no issue changes.
 
 - If intake did not run, run the installed runner manually with `pwsh -File "$env:LOCALAPPDATA\DarkTide-Announcements\announcements-daily.ps1"`, or start the registered task with `Start-ScheduledTask -TaskName DarkTide-Announcements-Daily`.
 - For a manual backfill or rehearsal, pass explicit topic IDs and optionally keep all changes local: `pwsh -File "$env:LOCALAPPDATA\DarkTide-Announcements\announcements-daily.ps1" -Topics 125968 -DryRun`.
 - For an `announcements-needs-review` draft PR, fix the Markdown on that branch, rerun `build` and `check`, mark the PR ready for review, and add the `auto-announcements` label.
+
+## Cloud intake (SYP-550)
+
+`.github/workflows/announcements-intake.yml` runs on a GitHub-hosted Ubuntu runner every day at 19:00 Asia/Taipei (11:00 UTC), 30 minutes before the Windows fallback. It scans, captures, translates, builds, checks, and tests a new batch. Translation is a direct HTTPS API call from a plain Node.js process: it runs no agent and exposes no tools, and the selected provider key is used only in that process's request header. A passing batch becomes a ready PR labelled `auto-announcements`; a failing build, gate, or test result becomes a draft PR labelled `announcements-needs-review`. The glossary is downloaded from `SyuanTsai/Warhammer-40-000-DARKTIDE-Mods` and pinned to the exact `main` commit SHA recorded in the PR and workflow summary.
+
+Configure these repository secrets:
+
+- `ANNOUNCEMENTS_PR_TOKEN`: a fine-grained PAT limited to `SyuanTsai/DarkTide-Web`, with **Contents: Read and write** and **Pull requests: Read and write**. The token is used only for owner identity, the batch push, labels, and PR creation.
+- `OPENAI_API_KEY`: required when the OpenAI Responses API provider is selected.
+- `ANTHROPIC_API_KEY`: required when the Anthropic Messages API provider is selected.
+
+The default provider is OpenAI with model `gpt-5.6-sol` and `medium` reasoning effort. Repository variables switch provider/model without a code change:
+
+```text
+gh variable set ANNOUNCEMENTS_TRANSLATOR --body anthropic
+gh variable set ANNOUNCEMENTS_OPENAI_MODEL --body gpt-5.6-sol
+gh variable set ANNOUNCEMENTS_OPENAI_EFFORT --body medium
+gh variable set ANNOUNCEMENTS_ANTHROPIC_MODEL --body claude-opus-5-5
+```
+
+`ANNOUNCEMENTS_TRANSLATOR` must be `openai` or `anthropic`. Model and effort values accept only letters, digits, `.`, `_`, and `-`. A manual run can override the repository default, select explicit topics, and avoid all branch/PR writes:
+
+```text
+gh workflow run announcements-intake.yml -f dry_run=true
+gh workflow run announcements-intake.yml -f dry_run=true -f topics=125968 -f provider=anthropic
+```
+
+`ANNOUNCEMENTS_TRANSLATOR` chooses the direct `openai` or `anthropic` API, while the provider-specific model variables and `ANNOUNCEMENTS_OPENAI_EFFORT` control the request. If the scan finds no new topics, if the selected provider key is missing, or if a non-dry run lacks `ANNOUNCEMENTS_PR_TOKEN`, the job stops without producing artifacts, branches, or pull requests. After capture has started, dry runs upload the generated batch and credential-free request usage logs but never create a branch or PR. Normal runs retain those logs for 14 days; artifacts must not contain credentials.
+
+The scheduled watch checks the PAT's `github-authentication-token-expiration` response header. A 401 response or an expiry within 30 days opens or comments on **公告排程 PAT 即將到期**. A missing PAT does not create a reminder.
+
+Keep `DarkTide-Announcements-Daily` registered as a 19:30 fallback until the owner has verified the cloud workflow and explicitly runs `scripts/content/register-announcements-task.ps1 -Unregister`. The local Windows fallback still translates through Codex CLI; its runner and behavior remain unchanged during that verification period.
 
 ## Official announcement intake
 

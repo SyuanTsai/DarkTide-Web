@@ -1,13 +1,15 @@
 name: Watch official announcement intake
 on:
   schedule:
-    - cron: '30 4 * * *'
+    - cron: '0 13 * * *'
   workflow_dispatch:
   pull_request:
     paths:
       - '.github/workflows/announcements-watch.yml'
       - '.github/workflows/announcements-auto-merge.yml'
+      - '.github/workflows/announcements-intake.yml'
       - 'scripts/content/announcements-intake.mjs'
+      - 'test/announcements-cloud-workflow.test.mjs'
       - 'test/announcements-intake.test.mjs'
 permissions:
   contents: read
@@ -23,7 +25,7 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - run: node --test test/announcements-intake.test.mjs
+      - run: node --test test/announcements-intake.test.mjs test/announcements-cloud-workflow.test.mjs
   watch:
     if: >-
       github.event_name != 'pull_request' && github.ref == 'refs/heads/main' &&
@@ -45,6 +47,53 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
+      - name: Remind the owner before the announcement PAT expires
+        env:
+          PAT: ${{ secrets.ANNOUNCEMENTS_PR_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$PAT" ]]; then exit 0; fi
+          headers="$RUNNER_TEMP/announcements-pat-headers.txt"
+          status=$(curl -sSI -o "$headers" -w '%{http_code}' \
+            -H "Authorization: Bearer $PAT" https://api.github.com/user)
+          expiry=$(awk 'BEGIN { IGNORECASE=1 }
+            /^github-authentication-token-expiration:/ {
+              sub(/^[^:]+:[[:space:]]*/, ""); sub(/\r$/, ""); print; exit
+            }' "$headers")
+          if [[ "$status" == 401 ]]; then
+            expiry='unknown (GitHub returned 401 Unauthorized)'
+          elif [[ ! "$status" =~ ^2[0-9][0-9]$ || -z "$expiry" ]]; then
+            exit 0
+          else
+            expiry_epoch=$(date --date="$expiry" +%s)
+            threshold_epoch=$(date --date='+30 days' +%s)
+            if (( expiry_epoch > threshold_epoch )); then exit 0; fi
+          fi
+          title='公告排程 PAT 即將到期'
+          label=announcements-stale
+          body="$RUNNER_TEMP/announcements-pat-expiry.md"
+          {
+            echo '公告雲端排程使用的 `ANNOUNCEMENTS_PR_TOKEN` 即將到期或已無法驗證。'
+            echo
+            echo "偵測到的到期時間：\`$expiry\`"
+            echo
+            echo '請更新 repository secret；請勿將 token 寫入 issue、log 或 repository。'
+          } > "$body"
+          issue=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/issues?state=open&per_page=100" |
+            jq -r --arg title "$title" '[.[][] | select(.pull_request == null and .title == $title)] | first | .number // empty')
+          if [[ -n "$issue" ]]; then
+            gh issue comment "$issue" --repo "$GITHUB_REPOSITORY" --body-file "$body"
+            exit 0
+          fi
+          labels=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/labels?per_page=100" |
+            jq --arg label "$label" '[.[][] | select(.name == $label)] | length')
+          if (( labels == 0 )); then
+            gh label create "$label" --repo "$GITHUB_REPOSITORY" \
+              --description 'Scheduled official announcement intake backlog' --color d93f0b
+          fi
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --label "$label" --body-file "$body"
       - name: Scan for topics older than 48 hours
         id: scan
         run: node scripts/content/announcements-intake.mjs scan --stale-hours 48 --github-output
