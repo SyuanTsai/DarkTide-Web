@@ -31,28 +31,41 @@ test('UnitT10_既有八筆公告ID與顯示欄位維持不變', async () => {
   const actual = await loadAnnouncements(root);
   const expected = JSON.parse(await readFile(new URL('./fixtures/wp5/announcements-expected.json', import.meta.url)));
   assert.match(expected.source.sha256, /^[a-f0-9]{64}$/);
-  const earlier = actual.items.filter(item => !NEW_IDS.includes(item.announcementId));
+  const expectedIds = new Set(expected.items.map(item => item.announcementId));
+  const earlier = actual.items.filter(item => expectedIds.has(item.announcementId));
   assert.deepStrictEqual(earlier.map(project), expected.items);
-  assert.equal(actual.items.length, 14);
+  assert.ok(actual.items.length >= 14);
 });
-// Scenario: The 2026-11-25 batch adds the six forum first posts published after 2026-10-22. Purpose: each new record is a complete Traditional Chinese article with pinned images.
-test('UnitT20_20261125批次六篇公告為繁中且圖片皆有固定資產', async () => {
+// Keep the six published additions and apply the record invariants to every batch.
+test('UnitT20_保留20261125六筆ID且所有公告皆符合通用條件', async () => {
   const actual = await loadAnnouncements(root);
   const added = actual.items.filter(item => NEW_IDS.includes(item.announcementId));
   assert.deepStrictEqual(added.map(item => item.announcementId), NEW_IDS);
-  for (const item of added) {
+  for (const item of actual.items) {
     assert.equal(item.scope, 'official-document');
     assert.match(item.source.locator, /^https:\/\/forums\.fatsharkgames\.com\/t\/[\w-]+\/\d+$/);
     assert.match(item.source.sha256, /^[a-f0-9]{64}$/);
     assert.match(item.title, /[一-鿿]/);
     const assetIds = new Set(item.assets.map(asset => asset.assetId));
     const blockIds = [];
+    const checkLinks = inline => {
+      for (const part of inline ?? []) {
+        if (part.kind !== 'link') continue;
+        // Earlier records also cross-link to the site's migrated announcement routes.
+        assert.match(part.href, /^(?:https:\/\/|\/announcements\/\?id=official%3Adarktide%3Aannouncement%3A[\w.-]+$)/);
+      }
+    };
     const visit = block => {
       blockIds.push(block.blockId);
       if (block.kind === 'image') assert.ok(assetIds.has(block.assetRef.assetId), block.blockId);
-      for (const inline of block.inline ?? []) if (inline.kind === 'link') assert.match(inline.href, /^https:\/\//);
+      checkLinks(block.inline);
       for (const child of block.blocks ?? []) visit(child);
-      for (const listItem of block.items ?? []) { blockIds.push(listItem.blockId); for (const child of listItem.children ?? []) visit(child); }
+      for (const listItem of block.items ?? []) visitListItem(listItem);
+    };
+    const visitListItem = item => {
+      blockIds.push(item.blockId);
+      checkLinks(item.inline);
+      for (const child of item.children ?? []) visitListItem(child);
     };
     item.blocks.forEach(visit);
     assert.equal(new Set(blockIds).size, blockIds.length, item.announcementId + ' block ids must be unique');

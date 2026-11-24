@@ -1,0 +1,94 @@
+name: Watch official announcement intake
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/announcements-watch.yml'
+      - '.github/workflows/announcements-auto-merge.yml'
+      - 'scripts/content/announcements-intake.mjs'
+      - 'test/announcements-intake.test.mjs'
+permissions:
+  contents: read
+jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: node --test test/announcements-intake.test.mjs
+  watch:
+    if: >-
+      github.event_name != 'pull_request' && github.ref == 'refs/heads/main' &&
+      github.repository == 'SyuanTsai/DarkTide-Web'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+    concurrency:
+      group: announcements-watch
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Scan for topics older than 48 hours
+        id: scan
+        run: node scripts/content/announcements-intake.mjs scan --stale-hours 48 --github-output
+      - name: Update the stale announcement issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STALE_COUNT: ${{ steps.scan.outputs.stale_count }}
+          STALE_TOPICS: ${{ steps.scan.outputs.stale_topics }}
+        shell: bash
+        run: |
+          title='公告自動排程落後'
+          label=announcements-stale
+          [[ "$STALE_COUNT" =~ ^[0-9]+$ ]]
+          if (( STALE_COUNT > 0 )); then
+            active_prs=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" |
+              jq '[.[][] | select(.head.ref | startswith("auto/announcements-"))] | length')
+            if (( active_prs > 0 )); then exit 0; fi
+          fi
+          matching=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/issues?state=open&per_page=100" |
+            jq -c --arg title "$title" '[.[][] | select(.pull_request == null and .title == $title)]')
+          labeled=$(jq -r --arg label "$label" '[.[] | select(any(.labels[]; .name == $label))] | first | .number // empty' <<< "$matching")
+          if (( STALE_COUNT == 0 )); then
+            if [[ -n "$labeled" ]]; then
+              gh issue close "$labeled" --repo "$GITHUB_REPOSITORY" --comment '公告匯入已恢復，沒有超過 48 小時的待處理主題。'
+            fi
+            exit 0
+          fi
+          body="$RUNNER_TEMP/announcements-stale.md"
+          printf '下列 Fatshark 公告已發布超過 48 小時，仍待匯入。\n\n' > "$body"
+          jq -r '.[] | "- [Fatshark 主題 \(.id)](https://forums.fatsharkgames.com/t/\(.id)) · \(.createdAt)"' \
+            <<< "$STALE_TOPICS" >> "$body"
+          if [[ -n "$labeled" ]]; then
+            gh issue comment "$labeled" --repo "$GITHUB_REPOSITORY" --body-file "$body"
+            exit 0
+          fi
+          labels=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/labels?per_page=100" |
+            jq --arg label "$label" '[.[][] | select(.name == $label)] | length')
+          if (( labels == 0 )); then
+            gh label create "$label" --repo "$GITHUB_REPOSITORY" --description 'Scheduled official announcement intake backlog' --color d93f0b
+          fi
+          issue=$(jq -r 'first | .number // empty' <<< "$matching")
+          if [[ -z "$issue" ]]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --label "$label" --body-file "$body"
+          else
+            gh issue edit "$issue" --repo "$GITHUB_REPOSITORY" --add-label "$label"
+            gh issue comment "$issue" --repo "$GITHUB_REPOSITORY" --body-file "$body"
+          fi

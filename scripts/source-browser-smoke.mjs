@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { createStaticServer } from './serve.mjs';
 import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { loadAnnouncements } from '../src/build/announcements.mjs';
+const repoRoot = fileURLToPath(new URL('../', import.meta.url));
 export function assertBlessingTiers(text, tiers, fixture = false) {
   for (const { tier } of tiers) assert.ok(text.includes(`LV${tier}`), `missing LV${tier}`);
   if (fixture) for (const tier of [1, 2, 3, 4]) assert.ok(text.includes(`LV${tier}`), `missing fixture LV${tier}`);
@@ -44,7 +47,8 @@ export async function runSourceBrowserSmoke(distPath, verification, { origin } =
       assert.equal(await page.locator('[data-item-id="darktide:skill:fixture_b"] [data-section]').count(),1);
       await goto('/blessings/?id=darktide%3Ablessing%3Afixture_a');assert.ok((await page.locator('.source-errata').first().innerText()).includes('勘誤'));
     }
-    await goto('/announcements/');assert.equal(await page.locator('.shared-announcement-entry').count(),14);{const dates=await page.locator('.shared-announcement-entry .shared-muted').allInnerTexts();assert.deepEqual(dates,[...dates].sort().reverse(),'announcements must list newest first');}
+    const announcementCount = (await loadAnnouncements(repoRoot)).items.length;
+    await goto('/announcements/');assert.equal(await page.locator('.shared-announcement-entry').count(),announcementCount);{const dates=await page.locator('.shared-announcement-entry .shared-muted').allInnerTexts();assert.deepEqual(dates,[...dates].sort().reverse(),'announcements must list newest first');}
     await page.locator('.shared-announcement-entry a[href^="/announcements/"]').first().click();await page.locator('.shared-announcement-content').waitFor();
     await goto('/history/1.13.1/');assert.match(await page.locator('#main').innerText(),/1.13.1 歷史資料/);
     assert.deepEqual(errors,[]);
