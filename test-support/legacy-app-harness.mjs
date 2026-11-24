@@ -51,7 +51,8 @@ globalThis.location = new URL(path, 'https://example.test');
 globalThis.history = { replaceState(...args) { replacements.push(args); globalThis.location = new URL(args[2], location); window.location = location; } };
 globalThis.window = { __BUILD__: build, location, addEventListener() {} };
 globalThis.document = { head: new Element('head'), getElementById: id => id === 'main' ? main : buildMeta,
-  createElement: tag => new Element(tag), querySelector: () => null, querySelectorAll: () => [], addEventListener() {} };
+  createElement: tag => new Element(tag), createElementNS: (_namespace, tag) => new Element(tag),
+  querySelector: () => null, querySelectorAll: () => [], addEventListener() {} };
 globalThis.fetch = async path => {
   requests.push(path);
   const bytes = await files.get(path.slice(1));

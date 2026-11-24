@@ -49,7 +49,7 @@ export function createSourceClient({ build, fetchImpl = globalThis.fetch.bind(gl
     };
     const kind = pathname.split('/')[1];
     const query=new URLSearchParams(search);
-    const kinds = {skills:['skills','terms','term-rules'],terms:['terms','term-rules'],weapons:['weapons-index',...(query.has('family')||query.has('id')?['blessings-index']:[])],blessings:['blessings-index'],'game-changes':['game-changes'],announcements:['announcements']}[kind] ?? [];
+    const kinds = {skills:['skills','terms','term-rules','skill-presentation'],terms:['terms','term-rules'],weapons:['weapons-index',...(query.has('family')||query.has('id')?['blessings-index']:[])],blessings:['blessings-index'],'game-changes':['game-changes'],announcements:['announcements']}[kind] ?? [];
     for(const name of kinds)await load(manifest.files.find(f=>f.kind===name));
     if(kind==='weapons'||kind==='blessings') {
       const index=selected.get(`domains/${kind}-index.json`)?.document;

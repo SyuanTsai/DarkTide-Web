@@ -22,7 +22,9 @@ export async function buildSourceSite({ root, sourceData, sourceDataCommit, site
     if(bytes)frozen[version]=JSON.parse(bytes);
   }
   const termRules = validateTermRules(JSON.parse(await readFile(path.join(root, 'content/reference/term-rules/v1.json'))));
-  const bundle=buildSiteData({source,announcements:await loadAnnouncements(root),frozen,termRules,transportOptions});
+  const publishedBytes = await readFile(path.join(root,'content/published/content.json')).catch(error=>error.code==='ENOENT'?null:Promise.reject(error));
+  const published = publishedBytes === null ? null : JSON.parse(publishedBytes);
+  const bundle=buildSiteData({source,announcements:await loadAnnouncements(root),frozen,termRules,published,transportOptions});
   const files=new Map(bundle.files);
   for(const [name,bytes] of await loadW14HistoryStaticFiles(root))files.set(name,bytes);
   const web=new Map();

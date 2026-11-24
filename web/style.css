@@ -363,3 +363,13 @@ p { margin: .45rem 0 1rem; }
   margin-block: 1rem;
 }
 .source-effect-origin { display: inline-block; margin-inline-start: .75em; padding: .1em .5em; border: 1px solid currentColor; border-radius: .25em; font-size: .75em; }
+.source-skill-view-switch { display: inline-block; margin-bottom: 1rem; }
+.shared-entry[data-item-id^="darktide:skill:"] { overflow-wrap: anywhere; }
+.source-skill-link, .source-skill-heading { display: flex; align-items: center; gap: .65rem; overflow-wrap: anywhere; }
+.source-skill-link { width: fit-content; max-width: 100%; }
+.source-skill-link .entry-icon { flex-basis: 2.5rem; width: 2.5rem; height: 2.5rem; }
+.source-skill-link .entry-icon > *, .source-skill-heading .entry-icon > * { grid-area: 1 / 1; }
+/* Keep lazy images in the layout while their fallback is visible. */
+.source-skill-link .entry-icon img.icon-pending, .source-skill-heading .entry-icon img.icon-pending { visibility: hidden; }
+.source-skill-heading h2 { margin: 0; }
+.source-talent-tree .tree-lines { width: 100%; height: 100%; }

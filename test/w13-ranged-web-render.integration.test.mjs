@@ -97,6 +97,7 @@ function startServer(fixture) {
   const modulePaths = new Map([
     ['/web/shared-view.mjs', path.join(REPO_ROOT, 'web', 'shared-view.mjs')],
     ['/web/shared-render.mjs', path.join(REPO_ROOT, 'web', 'shared-render.mjs')],
+    ['/web/skill-presentation.mjs', path.join(REPO_ROOT, 'web', 'skill-presentation.mjs')],
     ['/web/style.css', path.join(REPO_ROOT, 'web', 'style.css')],
   ]);
   const moduleScript = `import { createSharedViewModel } from '/web/shared-view.mjs';

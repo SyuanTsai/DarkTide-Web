@@ -1,4 +1,4 @@
-import { sourceItemPresentation, sourceChangeValueText, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
+import { sourceItemPresentation, sourceChangeValueText, sourceSkillPresentation, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
 
 export function blessingListTier(applicability) {
   return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
@@ -2287,10 +2287,161 @@ function renderSourceWeaponTables(parent, item, context) {
   sourceTable(parent, 'family-marks', '同家族型號', ['型號', '狀態'], family.map(x => [link(context.href({family:v.family,id:x.id}), x.name.zh || x.id), x.id === item.id ? '目前型號' : '']));
   sourceTable(parent, 'blessings', '可用祝福', ['名稱'], v.blessings.map(id => [link(context.blessingHref(id), context.blessings.find(b => b.id === id)?.name.zh || '名稱待確認')]));
 }
-function renderSourceItem(parent, item, schemaVersion, context) {
+const SOURCE_SKILL_CLASSES = {
+  adamant: '法務官', broker: '巢都敗類', cryptic: '護教軍', ogryn: '歐格林',
+  psyker: '靈能者', veteran: '老兵', zealot: '狂信徒',
+  arbites: '法務官', scum: '巢都敗類', skitarii: '護教軍',
+};
+const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+function appendSourceSkillIcon(container, icon, name, { talentNode = false, start = false } = {}) {
+  const fallback = document.createElementNS(SVG_NAMESPACE, 'svg');
+  fallback.setAttribute('class', 'talent-icon-fallback');
+  fallback.setAttribute('viewBox', '0 0 32 32');
+  fallback.setAttribute('aria-hidden', 'true');
+  const symbol = document.createElementNS(SVG_NAMESPACE, 'path');
+  symbol.setAttribute('d', start
+    ? 'M16 3 27 8v9c0 6-11 12-11 12S5 23 5 17V8Z M16 9v13 M10 15h12'
+    : 'M16 4 20 12 28 16 20 20 16 28 12 20 4 16 12 12Z');
+  fallback.append(symbol);
+  container.append(fallback);
+  if (!icon) return;
+  const image = node('img');
+  image.alt = talentNode ? '' : name;
+  image.loading = talentNode ? 'eager' : 'lazy';
+  image.decoding = 'async';
+  if (talentNode) {
+    image.hidden = true;
+    image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.hidden = false; });
+    image.addEventListener('error', () => { fallback.removeAttribute('hidden'); image.hidden = true; });
+  } else {
+    // A lazy image with the hidden attribute is display:none (global [hidden] rule), so Chrome never requests it.
+    // Keep it in layout but invisible until it loads.
+    image.classList.add('icon-pending');
+    image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.classList.remove('icon-pending'); });
+    image.addEventListener('error', () => { fallback.removeAttribute('hidden'); image.classList.add('icon-pending'); });
+  }
+  image.src = icon.src;
+  container.append(image);
+}
+
+function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
+  const note = node('p', `天賦樹版面沿用 ${tree.layoutGameVersion} 遊戲原始碼（與目前版本相同）。點選節點查看詳情，可縮放或在樹內捲動。`, 'result-note');
+  main.append(note, link(listHref, '改用清單檢視', 'source-skill-view-switch'));
+  const controls = node('div', null, 'tree-controls');
+  const label = node('label', '縮放');
+  const zoom = node('input');
+  zoom.type = 'range'; zoom.id = 'tree-zoom'; zoom.min = '50'; zoom.max = '150'; zoom.step = '5'; zoom.value = '100';
+  label.htmlFor = zoom.id;
+  const zoomValue = node('output');
+  zoomValue.setAttribute('for', zoom.id);
+  controls.append(label, zoom, zoomValue);
+
+  const layout = node('div', null, 'tree-layout source-talent-tree');
+  const viewport = node('div', null, 'tree-viewport');
+  viewport.tabIndex = 0;
+  viewport.setAttribute('role', 'region');
+  viewport.setAttribute('aria-label', '天賦樹，可水平與垂直捲動');
+  const canvas = node('div', null, 'tree-canvas');
+  const lines = document.createElementNS(SVG_NAMESPACE, 'svg');
+  lines.setAttribute('class', 'tree-lines');
+  lines.setAttribute('aria-hidden', 'true');
+  canvas.append(lines);
+  const detail = node('section', null, 'tree-detail shared-entry');
+  detail.tabIndex = -1;
+  detail.setAttribute('aria-live', 'polite');
+  detail.append(node('h2', '技能詳情'), node('p', '選擇樹上的節點，查看技能效果。'));
+
+  const minX = Math.min(...tree.nodes.map(row => row.x)) - 80;
+  const minY = Math.min(...tree.nodes.map(row => row.y)) - 80;
+  const width = Math.max(...tree.nodes.map(row => row.x)) - minX + 80;
+  const height = Math.max(...tree.nodes.map(row => row.y)) - minY + 80;
+  const positions = new Map(tree.nodes.map(row => [row.nodeId, { x: row.x - minX, y: row.y - minY }]));
+  lines.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  let selectedButton;
+  const buttons = [];
+  for (const row of tree.nodes) {
+    const position = positions.get(row.nodeId);
+    for (const childId of row.children) {
+      const child = positions.get(childId);
+      const line = document.createElementNS(SVG_NAMESPACE, 'line');
+      line.setAttribute('x1', position.x); line.setAttribute('y1', position.y);
+      line.setAttribute('x2', child.x); line.setAttribute('y2', child.y);
+      lines.append(line);
+    }
+    const item = skillsById.get(row.skillId);
+    const start = row.type === 'start';
+    const name = start ? '天賦樹起點' : item?.name.zh || '名稱待確認';
+    const button = node('button', null, 'talent-node');
+    button.type = 'button';
+    button.dataset.nodeId = row.nodeId;
+    button.dataset.nodeType = row.type;
+    button.setAttribute('aria-label', name);
+    button.setAttribute('aria-pressed', 'false');
+    button.title = name;
+    button.style.left = `${position.x / width * 100}%`;
+    button.style.top = `${position.y / height * 100}%`;
+    appendSourceSkillIcon(button, icons.get(row.skillId), name, { talentNode: true, start });
+    button.addEventListener('click', () => {
+      selectedButton?.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-pressed', 'true');
+      selectedButton = button;
+      detail.replaceChildren(node('h2', item?.name.zh || name));
+      if (item) {
+        // official.zh keeps unresolved {param:%s} templates; explanation.effect is the resolved text the detail page shows.
+        const explained = typeof item.explanation?.effect === 'string' && item.explanation.effect;
+        const effect = explained ? item.explanation.effect : item.official.zh;
+        // Same provenance rule as sourceItemPresentation (shared-view.mjs) so the tree matches the detail page.
+        const unofficial = explained && (item.explanation.effectOrigin ?? (item.official.zh === null ? 'unofficial-translation' : 'official')) === 'unofficial-translation';
+        if (unofficial) {
+          const badge = node('span', '非官方翻譯', 'source-effect-origin');
+          badge.dataset.effectOrigin = 'unofficial-translation';
+          detail.append(badge);
+        }
+        detail.append(node('p', effect || '此技能尚無繁體中文效果說明。'));
+        if (unofficial) detail.append(node('p', '遊戲沒有提供繁體中文官方文字，此段由 AI 翻譯，僅供參考。', 'shared-muted'));
+        detail.append(link(href({ id: item.id }), '開啟技能詳情'));
+      }
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        detail.scrollIntoView({ block: 'nearest' });
+        detail.focus({ preventScroll: true });
+      }
+    });
+    buttons.push({ button, size: start ? 96 : row.type === 'stat' ? 50 : 72 });
+    canvas.append(button);
+  }
+  const resize = () => {
+    const scale = Number(zoom.value) / 100;
+    zoomValue.textContent = `${zoom.value}%`;
+    canvas.style.width = `${width * scale * 1.25}px`;
+    canvas.style.height = `${height * scale * 1.25}px`;
+    for (const { button, size } of buttons) {
+      button.style.width = button.style.height = `${size * scale}px`;
+    }
+  };
+  zoom.addEventListener('input', resize);
+  resize();
+  viewport.append(canvas);
+  layout.append(viewport, detail);
+  main.append(controls, layout, link('https://darktide.gameslantern.com/', '圖示素材來源：Games Lantern', 'asset-credit'));
+  viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) / 2);
+}
+
+function renderSourceItem(parent, item, schemaVersion, context, skillIcons = null) {
   const p = sourceItemPresentation(item, schemaVersion);
   const article = node('article', null, 'shared-entry'); article.dataset.itemId = item.id;
-  article.append(node('h2', p.name));
+  const heading = node('h2', p.name);
+  if (skillIcons) {
+    const header = node('div', null, 'source-skill-heading');
+    const icon = skillIcons.get(item.id);
+    const image = node('span', null, 'entry-icon');
+    appendSourceSkillIcon(image, icon, p.name);
+    const text = node('div');
+    text.append(heading);
+    if (icon) text.append(link(icon.creditHref, icon.creditText, 'asset-credit'));
+    header.append(image, text);
+    article.append(header);
+  } else article.append(heading);
   if (p.unofficial) article.append(node('p', '非官方譯名', 'shared-muted'));
   if (!p.modern && (p.official.zh || p.official.en)) {
     const official = node('section', null, 'source-official'); official.append(node('h3', '官方原文'));
@@ -2388,12 +2539,31 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       }
       if (!items.length) return renderSourceNotFound(main, url);
     }
+    let skillIcons = null;
     if(route==='skills') {
-      const classes={psyker:'靈能者',veteran:'老兵',zealot:'狂信徒',ogryn:'歐格林',arbites:'法務官',scum:'巢都渣滓',skitarii:'護教軍'};
+      const skillsById = new Map(items.map(item => [item.id, item]));
+      const { icons, trees } = sourceSkillPresentation(domain('skill-presentation'), result.manifest.gameVersion, skillsById);
+      skillIcons = icons;
       const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','職業與天賦樹');
-      for(const key of [...new Set(items.map(i=>`${i.values.archetype}\0${i.values.tree}`))]) {const [archetype,tree]=key.split('\0');nav.append(link(href({archetype,tree}),`${classes[archetype] ?? '職業'}／天賦樹`));}
-      main.append(nav);if(url.searchParams.has('archetype'))items=items.filter(i=>i.values.archetype===url.searchParams.get('archetype'));
-      if(url.searchParams.has('tree'))items=items.filter(i=>i.values.tree===url.searchParams.get('tree'));
+      for (const key of new Set(items.map(i => `${i.values.archetype}\0${i.values.tree}`))) {
+        const [archetype, tree] = key.split('\0');
+        const className = Object.hasOwn(SOURCE_SKILL_CLASSES, archetype) ? SOURCE_SKILL_CLASSES[archetype] : '職業';
+        nav.append(link(href({ archetype, tree }), `${className}／${tree === 'broker_stimm_tree' ? '興奮劑樹' : '天賦樹'}`));
+      }
+      main.append(nav);
+      const archetype = url.searchParams.get('archetype');
+      const tree = url.searchParams.get('tree');
+      const layout = trees.find(layout => layout.archetype === archetype && layout.tree === tree);
+      if (layout && !url.searchParams.has('id') && url.searchParams.get('view') !== 'list') {
+        const listUrl = new URL(url);
+        listUrl.searchParams.set('view', 'list');
+        renderSourceTalentTree(main, layout, skillsById, icons, href, listUrl.pathname + listUrl.search + listUrl.hash);
+        setMetadata(labels[route], '繁體中文遊戲資料', url);
+        main.focus();
+        return;
+      }
+      if (archetype !== null) items = items.filter(i => i.values.archetype === archetype);
+      if (tree !== null) items = items.filter(i => i.values.tree === tree);
     }
     if(route==='terms') {
       const rules = domain('term-rules')?.rules?.rules ?? [];
@@ -2407,7 +2577,23 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       if (!items.length) return renderSourceNotFound(main, url);
     }
     if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
-    for(const item of items) {if(!id)main.append(link(href({id:item.id,...(item.values.family?{family:item.values.family}:{})}),item.name.zh || '名稱待確認'));const document = result.domains.find(d => d.document.items?.includes(item))?.document;renderSourceItem(main,item,document?.schemaVersion, route === 'weapons' ? {family:indexItems, blessings:domain('blessings-index')?.items ?? [], href, blessingHref: id => `/blessings/?${new URLSearchParams({id,...(version?{version}:{})})}`} : null);}
+    for (const item of items) {
+      if (!id) {
+        const itemLink = link(href({ id: item.id, ...(item.values.family ? { family: item.values.family } : {}) }), item.name.zh || '名稱待確認');
+        if (skillIcons) {
+          itemLink.className = 'source-skill-link';
+          const icon = node('span', null, 'entry-icon');
+          appendSourceSkillIcon(icon, skillIcons.get(item.id), itemLink.textContent);
+          itemLink.replaceChildren(icon, node('span', itemLink.textContent));
+        }
+        main.append(itemLink);
+      }
+      const document = route === 'skills' ? domain('skills') : result.domains.find(d => d.document.items?.includes(item))?.document;
+      renderSourceItem(main, item, document?.schemaVersion, route === 'weapons' ? {
+        family: indexItems, blessings: domain('blessings-index')?.items ?? [], href,
+        blessingHref: id => `/blessings/?${new URLSearchParams({ id, ...(version ? { version } : {}) })}`,
+      } : null, id ? skillIcons : null);
+    }
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
   } else {
     main.append(node('h1','黑潮繁體資料庫'));
