@@ -1,5 +1,59 @@
 # 黑潮繁體資料庫
 
+## Overview
+
+**What it is:** Darktide Traditional Chinese Database is a reference website for Warhammer 40,000: Darktide. Visit [darktide.tw-syuan.com](https://darktide.tw-syuan.com).
+
+**Problem it solves:** Players can use one Traditional Chinese site to look up class talents, skills, weapons, and blessing effects.
+
+**Key features**
+
+- Class talent trees with icons and skill lists with images and descriptions of effects and mechanics.
+- Weapon and blessing references that show shared blessing effects once and let you switch weapons on the same page when effects differ.
+- A standalone, read-only [1.13.1 history snapshot](https://darktide.tw-syuan.com/history/1.13.1/).
+
+**Requirements:** Local development uses Node.js 24.
+
+**Testing and deployment:** GitHub Actions runs tests with `node --test` and browser smoke checks with Playwright. The deployment workflow builds production data from a pinned [DarkTide-Source-Data](https://github.com/SyuanTsai/DarkTide-Source-Data) commit and deploys the site to Cloudflare Workers Static Assets.
+
+**Quick start:**
+
+1. Install dependencies with `npm ci`.
+2. Install Chromium with `npx playwright install chromium`.
+3. Run tests with `npm test`.
+4. Build the site with fixture data using `npm run build:fixture`.
+5. Preview locally with `npm run serve:static -- 8087`.
+
+**Attribution:** Icons come from approved sources, with credit to Games Lantern. Where source-specific assets are unavailable, the site uses clearly identified generic icons.
+
+## 概覽
+
+**網站簡介：** 黑潮繁體資料庫是《Warhammer 40,000: Darktide》的繁體中文資料查詢網站。[前往網站](https://darktide.tw-syuan.com)。
+
+**解決的問題：** 玩家可在同一個繁體中文網站查閱職業天賦、技能、武器與祝福效果。
+
+**主要功能**
+
+- 附圖示的職業天賦樹，以及附圖片、效果與機制說明的技能清單。
+- 武器與祝福資料會將共用的祝福效果只列一次。效果有差異時，可在同一頁切換武器。
+- 獨立唯讀的 [1.13.1 歷史摘要](https://darktide.tw-syuan.com/history/1.13.1/)。
+
+**開發需求：** 本機開發使用 Node.js 24。
+
+**測試與部署：** GitHub Actions 以 `node --test` 執行測試，並用 Playwright 執行瀏覽器冒煙測試。部署工作流程使用固定的 [DarkTide-Source-Data](https://github.com/SyuanTsai/DarkTide-Source-Data) commit 建置正式站資料，並將網站部署至 Cloudflare Workers Static Assets。
+
+**快速開始：**
+
+1. 執行 `npm ci` 安裝相依套件。
+2. 執行 `npx playwright install chromium` 安裝 Chromium。
+3. 執行 `npm test` 執行測試。
+4. 執行 `npm run build:fixture`，以測試資料建置網站。
+5. 執行 `npm run serve:static -- 8087` 在本機預覽。
+
+**素材署名：** 圖示依核准來源引用並保留 Games Lantern 署名。缺少來源專屬素材時，網站使用明示的通用圖示。
+
+---
+
 以已核准的公開 JSON 建置繁體中文技能、天賦樹、武器與祝福網站。網站在 Cloudflare Workers Static Assets 執行，建置與部署由 GitHub Actions 完成。
 
 ## 在 GitHub 部署
