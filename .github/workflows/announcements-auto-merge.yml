@@ -1,0 +1,155 @@
+name: Auto-merge official announcements
+on:
+  workflow_run:
+    workflows: [Static package fixture CI]
+    types: [completed]
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+jobs:
+  merge-and-deploy:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      startsWith(github.event.workflow_run.head_branch, 'auto/announcements-') &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: announcements-auto-merge-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verify the owner PR and its batch-only diff
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          [[ "$HEAD_BRANCH" =~ ^auto/announcements-([0-9]{8})$ ]]
+          batch="${BASH_REMATCH[1]}"
+          [[ "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]
+          prefix="content/authoring/v2/official-announcements/$batch"
+          if git cat-file -e "HEAD:$prefix" 2>/dev/null; then
+            echo "::error::Batch $batch already exists on main"
+            exit 1
+          fi
+          number=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main --head "$HEAD_BRANCH" \
+            --json number,headRefName,isCrossRepository |
+            jq -r --arg branch "$HEAD_BRANCH" '
+              [.[] | select(.isCrossRepository == false and .headRefName == $branch)] |
+              if length == 1 then .[0].number else empty end
+            ')
+          [[ "$number" =~ ^[0-9]+$ ]]
+          for attempt in {1..12}; do
+            pr=$(gh pr view "$number" --repo "$GITHUB_REPOSITORY" \
+              --json author,labels,isDraft,headRefOid,mergeable,state)
+            mergeable=$(jq -r '.mergeable' <<< "$pr")
+            if [[ "$mergeable" != "UNKNOWN" ]]; then
+              break
+            fi
+            if (( attempt < 12 )); then
+              sleep 10
+            fi
+          done
+          jq -e --arg owner "$OWNER" --arg sha "$HEAD_SHA" '
+            .state == "OPEN" and .author.login == $owner and .isDraft == false and
+            .headRefOid == $sha and .mergeable == "MERGEABLE" and
+            any(.labels[]; .name == "auto-announcements")
+          ' <<< "$pr" >/dev/null
+          pr_rest=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$number")
+          jq -e --arg sha "$HEAD_SHA" '.head.sha == $sha' <<< "$pr_rest" >/dev/null
+          changed=$(jq -r '.changed_files' <<< "$pr_rest")
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/pulls/$number/files?per_page=100" |
+            jq -e --arg prefix "$prefix/" --argjson changed "$changed" '
+              (add // []) | length == $changed and length > 0 and
+              all(.[]; .status == "added" and (.filename | startswith($prefix)))
+            ' >/dev/null
+          printf 'number=%s\nbatch=%s\n' "$number" "$batch" >> "$GITHUB_OUTPUT"
+      - name: Check out the tested PR data
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          path: announcement-pr
+          persist-credentials: false
+      - name: Check PR data using the trusted main gate
+        env:
+          BATCH: ${{ steps.pr.outputs.batch }}
+        shell: bash
+        run: |
+          batch_dir="announcement-pr/content/authoring/v2/official-announcements/$BATCH"
+          git -C announcement-pr ls-tree -r HEAD -- "content/authoring/v2/official-announcements/$BATCH/" |
+            awk '$1 != "100644" { bad = 1 } END { exit bad || NR == 0 }'
+          test -f "$batch_dir/batch-plan.json"
+          node scripts/content/announcements-intake.mjs check --root announcement-pr --batch "$BATCH"
+      - name: Squash merge the tested head
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ steps.pr.outputs.number }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          gh pr merge "$NUMBER" --repo "$GITHUB_REPOSITORY" --squash --match-head-commit "$HEAD_SHA" --delete-branch
+          pr=$(gh pr view "$NUMBER" --repo "$GITHUB_REPOSITORY" --json state,mergeCommit)
+          merge_commit=$(jq -er 'select(.state == "MERGED") | .mergeCommit.oid | select(test("^[0-9a-f]{40}$"))' <<< "$pr")
+          printf 'Merged PR #%s as `%s`.\n\n' "$NUMBER" "$merge_commit" >> "$GITHUB_STEP_SUMMARY"
+      - name: Deploy with the currently published Source-Data commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          origin=https://darktide.tw-syuan.com
+          version=$(curl --fail --silent --show-error "$origin/version.json")
+          pointer=$(jq -ce '
+            select(.source_data == true and .package_kind == "published") |
+            .game_version as $active |
+            [.game_releases[] | select(.game_version == $active)] |
+            select(length == 1) | .[0]
+          ' <<< "$version")
+          manifest_path=$(jq -er '.manifest_path | select(test("^/data/[0-9a-f]{64}/manifest\\.json$"))' <<< "$pointer")
+          manifest_hash=$(jq -er '.manifest_sha256 | select(test("^[0-9a-f]{64}$"))' <<< "$pointer")
+          manifest_file="$RUNNER_TEMP/live-announcement-deploy-manifest.json"
+          curl --fail --silent --show-error "$origin$manifest_path" --output "$manifest_file"
+          printf '%s  %s\n' "$manifest_hash" "$manifest_file" | sha256sum --check --status
+          source_commit=$(jq -er '
+            select(.source.repository == "SyuanTsai/DarkTide-Source-Data") |
+            .source.commit | select(test("^[0-9a-f]{40}$"))
+          ' "$manifest_file")
+          dispatched_at=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          dispatch=$(gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main -f "source_data_commit=$source_commit")
+          run_url=$(grep -Eo 'https://github\.com/[^[:space:]]+/actions/runs/[0-9]+' <<< "$dispatch" | head -n 1 || true)
+          if [[ -z "$run_url" ]]; then
+            for attempt in {1..6}; do
+              runs=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow deploy.yml --event workflow_dispatch \
+                --branch main --limit 5 --json url,createdAt,databaseId)
+              run_url=$(jq -r --arg dispatched_at "$dispatched_at" '
+                [.[] | select((.createdAt | fromdateiso8601) >= ($dispatched_at | fromdateiso8601))] |
+                sort_by(.databaseId) | last | .url // empty
+              ' <<< "$runs")
+              if [[ -n "$run_url" ]]; then
+                break
+              fi
+              if (( attempt < 6 )); then
+                sleep 10
+              fi
+            done
+          fi
+          if [[ -n "$run_url" ]]; then
+            [[ "$run_url" == "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/"* ]]
+            printf 'Dispatched [production deployment](%s) with Source-Data `%s`.\n' "$run_url" "$source_commit" >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '> [!WARNING]\n> Deployment dispatched; run URL not found yet. Source-Data `%s`.\n' "$source_commit" >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -1,9 +1,15 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 export async function loadAnnouncements(root) {
+  const batchRoot = path.join(root, 'content/authoring/v2/official-announcements');
+  const batches = (await readdir(batchRoot, { withFileTypes: true }))
+    .filter(entry => entry.isDirectory() && /^\d{8}$/.test(entry.name))
+    .map(entry => entry.name).sort();
+  const files = [path.join(root, 'content/authoring/v2/w15/announcement-candidate.json'),
+    ...batches.map(batch => path.join(batchRoot, batch, 'announcements.json'))];
   const items = [];
-  for (const relative of ['content/authoring/v2/w15/announcement-candidate.json', 'content/authoring/v2/official-announcements/20261030/announcements.json', 'content/authoring/v2/official-announcements/20261125/announcements.json']) {
-    const batch = JSON.parse(await readFile(path.join(root, relative), 'utf8'));
+  for (const file of files) {
+    const batch = JSON.parse(await readFile(file, 'utf8'));
     for (const item of batch.announcements) items.push(Object.fromEntries(
       ['announcementId', 'scope', 'title', 'publishedOn', 'revision', 'source', 'blocks', 'assets'].map(key => [key, item[key]])));
   }
