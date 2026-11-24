@@ -2310,9 +2310,17 @@ function appendSourceSkillIcon(container, icon, name, { talentNode = false, star
   image.alt = talentNode ? '' : name;
   image.loading = talentNode ? 'eager' : 'lazy';
   image.decoding = 'async';
-  image.hidden = true;
-  image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.hidden = false; });
-  image.addEventListener('error', () => { fallback.removeAttribute('hidden'); image.hidden = true; });
+  if (talentNode) {
+    image.hidden = true;
+    image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.hidden = false; });
+    image.addEventListener('error', () => { fallback.removeAttribute('hidden'); image.hidden = true; });
+  } else {
+    // A lazy image with the hidden attribute is display:none (global [hidden] rule), so Chrome never requests it.
+    // Keep it in layout but invisible until it loads.
+    image.classList.add('icon-pending');
+    image.addEventListener('load', () => { fallback.setAttribute('hidden', ''); image.classList.remove('icon-pending'); });
+    image.addEventListener('error', () => { fallback.removeAttribute('hidden'); image.classList.add('icon-pending'); });
+  }
   image.src = icon.src;
   container.append(image);
 }
@@ -2381,9 +2389,18 @@ function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
       detail.replaceChildren(node('h2', item?.name.zh || name));
       if (item) {
         // official.zh keeps unresolved {param:%s} templates; explanation.effect is the resolved text the detail page shows.
-        const effect = typeof item.explanation?.effect === 'string' && item.explanation.effect ? item.explanation.effect : item.official.zh;
-        detail.append(node('p', effect || '此技能尚無繁體中文效果說明。'),
-          link(href({ id: item.id }), '開啟技能詳情'));
+        const explained = typeof item.explanation?.effect === 'string' && item.explanation.effect;
+        const effect = explained ? item.explanation.effect : item.official.zh;
+        // Same provenance rule as sourceItemPresentation (shared-view.mjs) so the tree matches the detail page.
+        const unofficial = explained && (item.explanation.effectOrigin ?? (item.official.zh === null ? 'unofficial-translation' : 'official')) === 'unofficial-translation';
+        if (unofficial) {
+          const badge = node('span', '非官方翻譯', 'source-effect-origin');
+          badge.dataset.effectOrigin = 'unofficial-translation';
+          detail.append(badge);
+        }
+        detail.append(node('p', effect || '此技能尚無繁體中文效果說明。'));
+        if (unofficial) detail.append(node('p', '遊戲沒有提供繁體中文官方文字，此段由 AI 翻譯，僅供參考。', 'shared-muted'));
+        detail.append(link(href({ id: item.id }), '開啟技能詳情'));
       }
       if (window.matchMedia('(max-width: 900px)').matches) {
         detail.scrollIntoView({ block: 'nearest' });

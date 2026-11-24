@@ -126,6 +126,16 @@ test('建置、靜態驗證與技能頁載入支援選用的 skill-presentation 
 });
 
 class SkillElement extends Element {
+  className = '';
+  classList = {
+    add: (...tokens) => {
+      this.className = [...new Set([...this.className.split(/\s+/).filter(Boolean), ...tokens])].join(' ');
+    },
+    remove: (...tokens) => {
+      this.className = this.className.split(/\s+/).filter(token => token && !tokens.includes(token)).join(' ');
+    },
+    contains: token => this.className.split(/\s+/).includes(token),
+  };
   style = {};
   events = new Map();
   scrollWidth = 500;
@@ -160,13 +170,21 @@ const presentation = project({
   ])],
 }, [armor, missingIcon]).document;
 
-test('技能頁渲染天賦樹、縮放、連線與指定版本的官方技能效果', t => {
-  const tree = renderSkills(selectedTree, presentation, [armor, missingIcon]);
+test('技能頁渲染天賦樹、縮放、連線與技能效果的翻譯來源', t => {
+  const translated = skill('adamant', 'adamant_translated');
+  translated.official.zh = null;
+  translated.explanation.effect = '受到的傷害減少 5%。';
+  const [adamantTree] = presentation.trees;
+  const treeWithTranslation = { ...presentation, trees: [{
+    ...adamantTree,
+    nodes: [...adamantTree.nodes, { ...adamantTree.nodes[1], nodeId: 'translated', x: 200, skillId: translated.id }],
+  }] };
+  const tree = renderSkills(selectedTree, treeWithTranslation, [armor, translated]);
   assert.match(tree[0].textContent, /天賦樹版面沿用 1\.13\.1 遊戲原始碼/);
   assert.ok(tree.some(row => row.tagName === 'line' && row.attributes.x2 === 180.5));
   assert.ok(tree.some(row => row.href === 'https://darktide.gameslantern.com/' && row.textContent.includes('圖示素材來源')));
   assert.ok(tree.some(row => row.href?.includes(`version=${gameVersion}&${selectedTree}&view=list`)));
-  const [start, button] = tree.filter(row => row.tagName === 'button');
+  const [start, button, translatedButton] = tree.filter(row => row.tagName === 'button');
   assert.equal(start.title, '天賦樹起點');
   assert.equal(start.style.width, '96px');
   assert.equal(button.attributes['aria-label'], armor.name.zh);
@@ -180,9 +198,18 @@ test('技能頁渲染天賦樹、縮放、連線與指定版本的官方技能�
   const window = globalThis.window;
   globalThis.window = { matchMedia: () => ({ matches: false }) };
   t.after(() => { globalThis.window = window; });
+  const detail = tree.find(row => row.classList.contains('tree-detail'));
+  const translationNotice = '遊戲沒有提供繁體中文官方文字，此段由 AI 翻譯，僅供參考。';
+  translatedButton.events.get('click')();
+  const badge = detail.childNodes.find(row => row.classList.contains('source-effect-origin'));
+  assert.equal(badge?.textContent, '非官方翻譯');
+  assert.equal(badge.dataset.effectOrigin, 'unofficial-translation');
+  assert.ok(detail.childNodes.some(row => row.tagName === 'p' && row.textContent === translationNotice));
+  assert.ok(detail.childNodes.some(row => row.tagName === 'p' && row.textContent === translated.explanation.effect));
   button.events.get('click')();
   assert.equal(button.attributes['aria-pressed'], 'true');
-  const detail = tree.find(row => row.className?.includes('tree-detail'));
+  assert.ok(!detail.childNodes.some(row => row.classList.contains('source-effect-origin')));
+  assert.ok(!detail.textContent.includes(translationNotice));
   assert.match(detail.textContent, /堅韌上限增加 10%/);
   assert.doesNotMatch(detail.textContent, /\{toughness/);
   assert.equal(detail.childNodes.find(row => row.tagName === 'a').href, `/skills/?id=${encodeURIComponent(armor.id)}&version=${gameVersion}`);
@@ -197,14 +224,16 @@ test('清單與詳情顯示技能圖示，載入失敗或資料不合格時顯�
   assert.ok(list.some(row => row.textContent === '巢都敗類／興奮劑樹'));
   const icon = list.find(row => row.className === 'entry-icon');
   const [fallback, image] = icon.childNodes;
-  assert.deepEqual([image.loading, image.decoding, image.alt, image.hidden], ['lazy', 'async', armor.name.zh, true]);
+  assert.deepEqual([image.loading, image.decoding, image.alt], ['lazy', 'async', armor.name.zh]);
+  assert.ok(!image.hidden);
+  assert.ok(image.classList.contains('icon-pending'));
   assert.ok(!Object.hasOwn(fallback.attributes, 'hidden'));
   image.events.get('load')();
   assert.ok(Object.hasOwn(fallback.attributes, 'hidden'));
-  assert.equal(image.hidden, false);
+  assert.ok(!image.classList.contains('icon-pending'));
   image.events.get('error')();
   assert.ok(!Object.hasOwn(fallback.attributes, 'hidden'));
-  assert.equal(image.hidden, true);
+  assert.ok(image.classList.contains('icon-pending'));
 
   const id = `id=${encodeURIComponent(armor.id)}`;
   const detail = renderSkills(`${selectedTree}&${id}`, presentation, [armor]);
