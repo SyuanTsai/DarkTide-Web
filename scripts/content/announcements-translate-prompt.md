@@ -14,6 +14,7 @@
 - 每段正文各佔一行，段落間留空行。以 `**粗體**`、`*斜體*`、`> ` 保留對應的強調與引文。有序與無序清單皆使用 `- `，逐項保留。
 - 每張內容圖片各佔一行 `![<繁中 alt>](<exact source img src>)`，逐字保留來源 `img src`，包含所有查詢參數與重複圖片。有 lightbox 時，下一行加上 `[原圖](<original>) · [下載原圖](<download>)`，沿用來源的兩個 URL。
 - YouTube 嵌入改為一行 `[觀看<描述>（YouTube）](https://www.youtube.com/watch?v=<id>)`。Steam 與其他 onebox 改為一般 Markdown 連結。保留每個來源超連結 URL，包括參數與 fragment。翻譯連結文字與圖片替代文字，並避免使用原始 HTML。
+- 所有連結與圖片 URL 都必須是絕對 `https://` URL；論壇相對路徑請以 `https://forums.fatsharkgames.com` 解析。
 - 最後一行依下列格式填入大綱的首帖作者與發布日期，日期取 `created_at` 的 `yyyy-MM-dd` 部分。
 
   ```markdown

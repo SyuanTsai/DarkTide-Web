@@ -23,7 +23,9 @@ test('UnitT10_daily_runner_exposes_the_scheduling_batch_and_translation_options'
   }
   assert.match(parameters, /\$Model = 'gpt-5\.6-sol'/);
   assert.match(parameters, /\$Effort = 'medium'/);
-  assert.match(runner, /Get-Content -LiteralPath \$PromptPath -Raw -Encoding utf8\s*\|\s*& codex(?:\.cmd)? exec\b[^\r\n]*\s-C \$Worktree - 2>&1/);
+  assert.match(runner, /Get-Content -LiteralPath \$PromptPath -Raw -Encoding utf8\s*\|\s*& codex exec\b[^\r\n]*\s-C \$Worktree - 2>&1/);
+  assert.doesNotMatch(runner, /\b(?:npm|codex)\.cmd\b/i);
+  assert.match(runner, /foreach \(\$requiredCommand in 'git', 'node', 'npm', 'gh', 'codex'\) \{[\s\S]*?Get-Command \$requiredCommand -CommandType Application -ErrorAction SilentlyContinue\s*\|\s*Select-Object -First 1[\s\S]*?Required command '\$requiredCommand' was not found on PATH\./);
   assert.match(runner, /WaitForExit\(\$CodexTimeoutMinutes \* 60000\)/);
   assert.match(runner, /\$process\.Kill\(\$true\)/);
   assert.match(parameters, /\[ValidatePattern\('\^\[0-9\]\+\(,\[0-9\]\+\)\*\$'\)\]\[string\]\$Topics/);

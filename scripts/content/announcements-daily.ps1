@@ -97,7 +97,7 @@ $OutputEncoding = [Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = $OutputEncoding
 $configuration = "model_reasoning_effort='$Effort'"
 Get-Content -LiteralPath $PromptPath -Raw -Encoding utf8 |
-    & codex.cmd exec -m $Model -c $configuration -s workspace-write --skip-git-repo-check -C $Worktree - 2>&1 |
+    & codex exec -m $Model -c $configuration -s workspace-write --skip-git-repo-check -C $Worktree - 2>&1 |
     ForEach-Object { [Console]::WriteLine([string]$_) }
 exit $LASTEXITCODE
 '@
@@ -134,6 +134,12 @@ function Invoke-Daily {
     $locationPushed = $false
     $tempDir = $null
     try {
+        foreach ($requiredCommand in 'git', 'node', 'npm', 'gh', 'codex') {
+            $commandInfo = Get-Command $requiredCommand -CommandType Application -ErrorAction SilentlyContinue |
+                Select-Object -First 1
+            if (-not $commandInfo) { throw "Required command '$requiredCommand' was not found on PATH." }
+        }
+
         $null = Invoke-Native git @('-C', $RepoPath, 'fetch', 'origin')
         $null = Invoke-Native git @('-C', $RepoPath, 'worktree', 'add', '--detach', $worktree, 'origin/main')
         $worktreeAdded = $true
@@ -167,7 +173,7 @@ function Invoke-Daily {
             return 0
         }
 
-        $null = Invoke-Native npm.cmd @('ci')
+        $null = Invoke-Native npm @('ci')
         $tempRoot = [IO.DirectoryInfo]::new([IO.Path]::GetTempPath()).FullName.TrimEnd('\', '/')
         $tempPath = Join-Path $tempRoot "darktide-announcements-$([guid]::NewGuid())"
         $tempDir = (New-Item -ItemType Directory -Path $tempPath).FullName

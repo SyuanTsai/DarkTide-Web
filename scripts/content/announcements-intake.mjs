@@ -123,10 +123,14 @@ const decodeEntities = s => s
 const attr = (tag, name) => { const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag); return m ? decodeEntities(m[1]) : null; };
 const hasClass = (tag, name) => (attr(tag, 'class') ?? '').split(/\s+/).includes(name);
 const stripTags = s => decodeEntities(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+const resolveForumUrl = u => {
+  const value = decodeEntities(String(u));
+  return value.startsWith('/') ? new URL(value, FORUM_ORIGIN).href : value;
+};
 
 export function normalizeUrl(u) {
   try {
-    const url = new URL(decodeEntities(u));
+    const url = new URL(resolveForumUrl(u));
     if (/(^|\.)youtube\.com$/.test(url.hostname) && url.searchParams.get('v')) return `youtube:${url.searchParams.get('v')}`;
     if (url.hostname === 'youtu.be') return `youtube:${url.pathname.slice(1)}`;
     const m = /^\/embed\/([^/?]+)/.exec(url.pathname);
@@ -144,11 +148,11 @@ export function analyzeSource(cooked) {
   html = html.replace(/<aside\b[^>]*>[\s\S]*?<\/aside>/g, card => {
     const tag = card.slice(0, card.indexOf('>') + 1);
     if (!hasClass(tag, 'onebox')) return card;
-    const src = attr(tag, 'data-onebox-src'); if (src) oneboxes.push(src); return '';
+    const src = attr(tag, 'data-onebox-src'); if (src) oneboxes.push(resolveForumUrl(src)); return '';
   });
   const videos = [], widgets = [];
   html = html.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/g, tag => {
-    const src = attr(tag, 'src') ?? '';
+    const src = resolveForumUrl(attr(tag, 'src') ?? '');
     const n = normalizeUrl(src);
     if (n.startsWith('youtube:')) videos.push(n); else widgets.push(src);
     return '';
@@ -162,7 +166,7 @@ export function analyzeSource(cooked) {
   // icons are generated decorations. Preserve the actual video via its link.
   html = html.replace(/<img\b[^>]*>/g, tag =>
     ['youtube-thumbnail', 'emoji', 'site-icon', 'avatar'].some(cls => hasClass(tag, cls)) ? '' : tag);
-  const images = [...html.matchAll(/<img\b[^>]*>/g)].map(m => attr(m[0], 'src'));
+  const images = [...html.matchAll(/<img\b[^>]*>/g)].map(m => resolveForumUrl(attr(m[0], 'src') ?? ''));
   const headingTags = [...html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
   const headings = headingTags.map(m => stripTags(m[2]));
   const listItems = [...html.matchAll(/<li\b/g)].length;
@@ -172,7 +176,7 @@ export function analyzeSource(cooked) {
     const href = attr(m[0], 'href');
     // Lightbox links operate the image UI. Heading anchors are navigation within the post.
     if (!href || href.startsWith('#') || hasClass(m[0], 'lightbox') || hasClass(m[0], 'anchor')) continue;
-    const destination = new URL(href, FORUM_ORIGIN);
+    const destination = new URL(resolveForumUrl(href), FORUM_ORIGIN);
     if (!/^https?:$/.test(destination.protocol)) continue;
     const url = destination.href;
     if (normalizeUrl(url).startsWith('youtube:')) videos.push(normalizeUrl(url));
@@ -192,15 +196,15 @@ export function analyzeSource(cooked) {
 export function sourceOutline(topic) {
   const post = topic.post_stream.posts[0];
   const outline = toLf(post.cooked)
-    .replace(/<aside class="onebox[^"]*"[^>]*data-onebox-src="([^"]+)"[\s\S]*?<\/aside>/g, '\n[ONEBOX $1]\n')
-    .replace(/<iframe\b[^>]*src="([^"]+)"[\s\S]*?<\/iframe>/g, '\n[IFRAME $1]\n')
+    .replace(/<aside class="onebox[^"]*"[^>]*data-onebox-src="([^"]+)"[\s\S]*?<\/aside>/g, (m, src) => `\n[ONEBOX ${resolveForumUrl(src)}]\n`)
+    .replace(/<iframe\b[^>]*src="([^"]+)"[\s\S]*?<\/iframe>/g, (m, src) => `\n[IFRAME ${resolveForumUrl(src)}]\n`)
     .replace(/<img\b[^>]*class="[^"]*(?:youtube-thumbnail|emoji|site-icon)[^"]*"[^>]*>/g, '')
     .replace(/<div class="lightbox-wrapper"><a class="lightbox" href="([^"]+)"[^>]*data-download-href="([^"]+)"[^>]*>[\s\S]*?<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"[\s\S]*?<\/a><\/div>/g,
-      (m, orig, dl, src, alt) => `\n[IMG ${src} | alt=${alt} | original=${orig} | download=${FORUM_ORIGIN}${dl}]\n`)
-    .replace(/<img\b[^>]*src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>/g, '\n[IMG $1 | alt=$2]\n')
-    .replace(/<img\b[^>]*src="([^"]+)"[^>]*>/g, '\n[IMG $1]\n')
+      (m, orig, dl, src, alt) => `\n[IMG ${resolveForumUrl(src)} | alt=${alt} | original=${resolveForumUrl(orig)} | download=${resolveForumUrl(dl)}]\n`)
+    .replace(/<img\b[^>]*src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>/g, (m, src, alt) => `\n[IMG ${resolveForumUrl(src)} | alt=${alt}]\n`)
+    .replace(/<img\b[^>]*src="([^"]+)"[^>]*>/g, (m, src) => `\n[IMG ${resolveForumUrl(src)}]\n`)
     .replace(/<a\b[^>]*class="anchor"[^>]*><\/a>/g, '')
-    .replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g, '[$2]($1)')
+    .replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g, (m, href, text) => `[${text}](${resolveForumUrl(href)})`)
     .replace(/<h(\d)[^>]*>/g, (m, n) => '\n' + '#'.repeat(+n) + ' ').replace(/<\/h\d>/g, '\n')
     .replace(/<li>/g, '\n- ').replace(/<\/?(strong|b)>/g, '**').replace(/<\/?(em|i)>/g, '*')
     .replace(/<blockquote>/g, '\n> ').replace(/<br\s*\/?>/g, '\n').replace(/<\/p>/g, '\n')
@@ -320,10 +324,11 @@ export function analyzeTranslation(md) {
   const images = lines.filter(l => IMAGE_LINE.test(l)).map(l => IMAGE_LINE.exec(l)[2]);
   const listItems = lines.filter(l => LIST_LINE.test(l)).length;
   const links = [...toLf(md).matchAll(/(?<!!)\[[^\]]+\]\(([^)]+)\)/g)].map(m => m[1]);
+  const markdownUrls = [...toLf(md).matchAll(/!?\[[^\]]*\]\(([^)]+)\)/g)].map(m => m[1]);
   const footer = lines.filter(l => l.startsWith(LICENSE_FOOTER_PREFIX));
   const paragraphs = lines.filter(l => !HEADING_LINE.test(l) && !IMAGE_LINE.test(l) && !LIST_LINE.test(l) &&
     !l.startsWith(LICENSE_FOOTER_PREFIX) && !LIGHTBOX_LINKS.test(l)).length;
-  return { title, headings, images, listItems, links, footer, paragraphs, lines };
+  return { title, headings, images, listItems, links, markdownUrls, footer, paragraphs, lines };
 }
 
 const CJK = /[㐀-鿿]/;
@@ -345,6 +350,11 @@ export function checkArticle({ cooked, md, post, termRules }) {
   const errors = [], warnings = [];
   const src = analyzeSource(cooked);
   const tr = analyzeTranslation(md);
+  for (const uri of tr.markdownUrls) {
+    if (!/^https:\/\//.test(uri) && !/^\/announcements\/\?id=official%3Adarktide%3Aannouncement%3A/i.test(uri)) {
+      errors.push(`link must be absolute https: ${uri}`);
+    }
+  }
   if (!tr.title) errors.push('missing "# " title line');
   else if (!CJK.test(tr.title)) errors.push('title is not translated');
   // Markdown reserves level 1 for the article title. Compare body headings after shifting down one level.

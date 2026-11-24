@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   ANNOUNCEMENT_ROOT, FORUM_ORIGIN, LICENSE_FOOTER_PREFIX, build, capture, checkArticle, checkBatch,
-  fetchCategoryTopics, knownTopicIds, listBatchDirs, loadTermRules, markdownToRecord, readPolicy, selectNewTopics, slugify, toLf
+  fetchCategoryTopics, knownTopicIds, listBatchDirs, loadTermRules, markdownToRecord, readPolicy, selectNewTopics, slugify, sourceOutline, toLf
 } from '../scripts/content/announcements-intake.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -159,6 +159,37 @@ test('UnitT50_checkArticle_rejects_a_partially_translated_required_term', async 
   const md = input.md.replace('除了打擊小隊中最強悍的成員之外', '除了普通隊伍中最強悍的成員之外');
   assert.notEqual(md, input.md, 'mutation must change the golden translation');
   assert.match(checkArticle({ ...input, md }).errors.join('\n'), /Warband.*2.*1|Warband.*occurrence/i);
+});
+
+// Scenario: A translated Markdown link uses a forum-relative URL.
+// Purpose: reject output which the site link checker cannot consume before generated files reach it.
+test('UnitT55_checkArticle_rejects_a_relative_markdown_link', async () => {
+  const input = await article(127190);
+  const md = `${input.md}\n[相對連結](/uploads/short-url/example.jpeg?dl=1)\n`;
+  assert.match(checkArticle({ ...input, md }).errors.join('\n'),
+    /link must be absolute https: \/uploads\/short-url\/example\.jpeg\?dl=1/);
+});
+
+// Scenario: The source first post links to a forum-relative path and its translation uses the resolved HTTPS URL.
+// Purpose: preserve source-link matching while requiring publishable translation URLs.
+test('UnitT60_checkArticle_matches_a_resolved_forum_relative_source_link', () => {
+  const result = checkArticle({
+    cooked: '<p><a href="/uploads/short-url/example.jpeg?dl=1">來源</a></p>',
+    md: '# 測試\n\n[連結](https://forums.fatsharkgames.com/uploads/short-url/example.jpeg?dl=1)\n',
+    termRules: { required: [], forbidden: [] }
+  });
+  assert.ok(!result.errors.some(error => error.startsWith('source link missing:')),
+    result.errors.join('\n'));
+});
+
+// Scenario: A captured first post contains a forum-relative anchor.
+// Purpose: give translators a directly reusable absolute URL instead of a path that later fails validation.
+test('UnitT70_sourceOutline_resolves_a_forum_relative_href', () => {
+  const outline = sourceOutline({ id: 1, slug: 'test', title: 'Test', post_stream: { posts: [{
+    username: 'author', created_at: '2026-11-25T00:00:00Z',
+    cooked: '<p><a href="/uploads/short-url/example.jpeg?dl=1">source</a></p>'
+  }] } });
+  assert.match(outline, /\[source\]\(https:\/\/forums\.fatsharkgames\.com\/uploads\/short-url\/example\.jpeg\?dl=1\)/);
 });
 
 test('build rejects leftover Markdown instead of emitting it into blocks', async () => {
