@@ -26,7 +26,7 @@ export function weaponFamilyPaths(families, hash) {
   return boundedShardPaths('weapons', families, hash);
 }
 
-export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, published = null, transportOptions }) {
+export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, published = null, layoutsByVersion = {}, transportOptions }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
     const categories = ['skills', 'weapons', 'blessings', 'terms'];
@@ -48,8 +48,9 @@ export function buildSiteData({ source, announcements = null, frozen = {}, termR
       domains.set(path, bytes); rows.push({ kind, path, sizeBytes: bytes.length, sha256: sha256(bytes), dependencies });
     };
     for (const category of ['skills', 'terms']) add(category, `domains/${category}.json`, data[category]);
-    if (published && data.skills) {
-      const { document, warnings } = buildSkillPresentation({ published, skills: data.skills, gameVersion });
+    const layouts = layoutsByVersion[gameVersion];
+    if ((published || layouts?.gameVersion === gameVersion) && data.skills) {
+      const { document, warnings } = buildSkillPresentation({ published, skills: data.skills, gameVersion, layouts });
       for (const warning of warnings) console.warn(warning);
       add('skill-presentation', 'domains/skill-presentation.json', document);
     }
