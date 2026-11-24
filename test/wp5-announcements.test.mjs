@@ -3,7 +3,20 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { loadAnnouncements } from '../src/build/announcements.mjs';
 import { fileURLToPath } from 'node:url';
+import { announcementsNewestFirst } from '../web/shared-render.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
+// Scenario: The announcement list page. Purpose: the newest announcement is shown first, same-day posts keep a stable order.
+test('UnitT30_公告列表依發布日期倒序且同日依ID倒序', async () => {
+  const actual = await loadAnnouncements(root);
+  const ordered = announcementsNewestFirst(actual.items);
+  assert.equal(ordered[0].announcementId, 'official:darktide:announcement:2026-11-19-sisters-novitiate-weapons');
+  assert.equal(ordered.at(-1).announcementId, 'official:darktide:announcement:2026-09-18-balance-preview');
+  for (let i = 1; i < ordered.length; i++) {
+    const [prev, cur] = [ordered[i - 1], ordered[i]];
+    assert.ok(prev.publishedOn > cur.publishedOn || (prev.publishedOn === cur.publishedOn && prev.announcementId > cur.announcementId), cur.announcementId);
+  }
+  assert.equal(actual.items[0].announcementId, 'official:darktide:announcement:2026-09-18-balance-preview', 'source order is unchanged');
+});
 const project = x=>{const text={announcementId:x.announcementId}; const walk=(v,p)=>{if(Array.isArray(v))v.forEach((r,i)=>walk(r,p+'['+i+']'));else if(v&&typeof v==='object')for(const [k,r]of Object.entries(v)){if(typeof r==='string'&&/^(?:text|title|alt|caption|label|heading)$/.test(k))text[p?p+'.'+k:k]=r;else if(r&&typeof r==='object')walk(r,p?p+'.'+k:k);}};walk(x,'');return text;};
 const NEW_IDS = [
   'official:darktide:announcement:2026-11-05-expeditions-map-layout-update',
