@@ -1,3 +1,23 @@
+const nameFormatKey = /^[A-Za-z_]\w*$/;
+
+export function validatedSkillNameValues(values) {
+  return Object.fromEntries(Object.entries(values).filter(([key, value]) =>
+    nameFormatKey.test(key) && typeof value === 'string' && !/[^A-Za-z0-9 ]/.test(value)));
+}
+
+export function formatSkillName(name, values) {
+  if (!values) return name;
+  let removed = false;
+  const formatted = name.replace(/[^\S\r\n]*\{([A-Za-z_]\w*):%s\}/g, (template, key, offset) => {
+    if (!Object.hasOwn(values, key)) return template;
+    const value = values[key].trim();
+    if (value) return offset ? ` ${value}` : value;
+    removed = true;
+    return '';
+  });
+  return removed ? formatted.trimEnd() : formatted;
+}
+
 export function isGamesLanternSkillImageUrl(value) {
   return typeof value === 'string'
     && /^https:\/\/gameslantern\.com\/storage\/sites\/darktide\/[A-Za-z0-9_./-]+\.(?:webp|png|jpe?g)$/.test(value)
@@ -6,10 +26,18 @@ export function isGamesLanternSkillImageUrl(value) {
 
 export function skillTreeProblem(tree, skillsById) {
   const { archetype, nodes } = tree;
-  if (typeof archetype !== 'string' || !archetype || tree.tree !== `${archetype}_tree`
+  const stimmTree = archetype === 'broker' && tree.tree === 'broker_stimm_tree';
+  if (typeof archetype !== 'string' || !archetype || (!stimmTree && tree.tree !== `${archetype}_tree`)
       || !Number.isSafeInteger(tree.version) || typeof tree.layoutGameVersion !== 'string'
       || !tree.layoutGameVersion || !Array.isArray(nodes) || nodes.length === 0) {
     return 'invalid layout metadata';
+  }
+  if (Object.hasOwn(tree, 'layoutSource')) {
+    const { layoutSource } = tree;
+    if (layoutSource?.repository !== 'Aussiemon/Darktide-Source-Code'
+        || typeof layoutSource.commit !== 'string' || !/^[0-9a-f]{40}$/i.test(layoutSource.commit)) {
+      return 'invalid layout source';
+    }
   }
   const nodeIds = new Set();
   for (const node of nodes) {

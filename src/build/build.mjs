@@ -2,6 +2,7 @@ import { readFile, readdir, mkdir, mkdtemp, writeFile, rm } from 'node:fs/promis
 import path from 'node:path';
 import { loadSourceData } from './source-data.mjs';
 import { buildSiteData, validateTermRules } from './site-data.mjs';
+import { loadTalentLayouts } from './talent-layouts.mjs';
 import { loadAnnouncements } from './announcements.mjs';
 import { sourceDataHeaders } from './headers.mjs';
 import { jsonBytes, sha256, hashNamedFiles, safeRelativePath } from '../static/common.mjs';
@@ -17,14 +18,16 @@ export async function buildSourceSite({ root, sourceData, sourceDataCommit, site
   // Validate all inputs before creating a staging directory or replacing dist.
   const source = await loadSourceData({ directory: sourceData, commit: sourceDataCommit, fixture });
   const frozen = {};
+  const layoutsByVersion = {};
   for(const version of source.current.versions) {
     const bytes = await readFile(path.join(root,'content/history',version,'game-changes.json')).catch(error=>error.code==='ENOENT'?null:Promise.reject(error));
     if(bytes)frozen[version]=JSON.parse(bytes);
+    layoutsByVersion[version] = await loadTalentLayouts(path.join(root, 'content/reference/talent-layouts', `${version}.json`));
   }
   const termRules = validateTermRules(JSON.parse(await readFile(path.join(root, 'content/reference/term-rules/v1.json'))));
   const publishedBytes = await readFile(path.join(root,'content/published/content.json')).catch(error=>error.code==='ENOENT'?null:Promise.reject(error));
   const published = publishedBytes === null ? null : JSON.parse(publishedBytes);
-  const bundle=buildSiteData({source,announcements:await loadAnnouncements(root),frozen,termRules,published,transportOptions});
+  const bundle=buildSiteData({source,announcements:await loadAnnouncements(root),frozen,termRules,published,layoutsByVersion,transportOptions});
   const files=new Map(bundle.files);
   for(const [name,bytes] of await loadW14HistoryStaticFiles(root))files.set(name,bytes);
   const web=new Map();

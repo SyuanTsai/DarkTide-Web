@@ -1,4 +1,5 @@
 import { sourceItemPresentation, sourceChangeValueText, sourceSkillPresentation, createSharedViewModel, validateAnnouncement } from './shared-view.mjs';
+import { formatSkillName } from './skill-presentation.mjs';
 
 export function blessingListTier(applicability) {
   return applicability.tiers?.includes(4) ? 4 : applicability.tiers?.[0];
@@ -2307,7 +2308,7 @@ function appendSourceSkillIcon(container, icon, name, { talentNode = false, star
   container.append(fallback);
   if (!icon) return;
   const image = node('img');
-  image.alt = talentNode ? '' : name;
+  image.alt = name;
   image.loading = talentNode ? 'eager' : 'lazy';
   image.decoding = 'async';
   if (talentNode) {
@@ -2325,8 +2326,11 @@ function appendSourceSkillIcon(container, icon, name, { talentNode = false, star
   container.append(image);
 }
 
-function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
-  const note = node('p', `天賦樹版面沿用 ${tree.layoutGameVersion} 遊戲原始碼（與目前版本相同）。點選節點查看詳情，可縮放或在樹內捲動。`, 'result-note');
+function renderSourceTalentTree(main, tree, skillsById, { icons, nameValues }, href, listHref) {
+  const layoutCredit = tree.layoutSource
+    ? `天賦樹版面取自 ${tree.layoutGameVersion} 遊戲原始碼。`
+    : `天賦樹版面沿用 ${tree.layoutGameVersion} 遊戲原始碼（與目前版本相同）。`;
+  const note = node('p', `${layoutCredit}點選節點查看詳情，可縮放或在樹內捲動。`, 'result-note');
   main.append(note, link(listHref, '改用清單檢視', 'source-skill-view-switch'));
   const controls = node('div', null, 'tree-controls');
   const label = node('label', '縮放');
@@ -2371,7 +2375,8 @@ function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
     }
     const item = skillsById.get(row.skillId);
     const start = row.type === 'start';
-    const name = start ? '天賦樹起點' : item?.name.zh || '名稱待確認';
+    const name = start && row.skillId === null ? '天賦樹起點'
+      : formatSkillName(item?.name.zh || '名稱待確認', nameValues.get(row.skillId));
     const button = node('button', null, 'talent-node');
     button.type = 'button';
     button.dataset.nodeId = row.nodeId;
@@ -2386,7 +2391,7 @@ function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
       selectedButton?.setAttribute('aria-pressed', 'false');
       button.setAttribute('aria-pressed', 'true');
       selectedButton = button;
-      detail.replaceChildren(node('h2', item?.name.zh || name));
+      detail.replaceChildren(node('h2', name));
       if (item) {
         // official.zh keeps unresolved {param:%s} templates; explanation.effect is the resolved text the detail page shows.
         const explained = typeof item.explanation?.effect === 'string' && item.explanation.effect;
@@ -2427,8 +2432,8 @@ function renderSourceTalentTree(main, tree, skillsById, icons, href, listHref) {
   viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) / 2);
 }
 
-function renderSourceItem(parent, item, schemaVersion, context, skillIcons = null) {
-  const p = sourceItemPresentation(item, schemaVersion);
+function renderSourceItem(parent, item, schemaVersion, context, skillIcons, nameValues) {
+  const p = sourceItemPresentation(item, schemaVersion, nameValues);
   const article = node('article', null, 'shared-entry'); article.dataset.itemId = item.id;
   const heading = node('h2', p.name);
   if (skillIcons) {
@@ -2539,11 +2544,10 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       }
       if (!items.length) return renderSourceNotFound(main, url);
     }
-    let skillIcons = null;
+    let skillPresentation;
     if(route==='skills') {
       const skillsById = new Map(items.map(item => [item.id, item]));
-      const { icons, trees } = sourceSkillPresentation(domain('skill-presentation'), result.manifest.gameVersion, skillsById);
-      skillIcons = icons;
+      skillPresentation = sourceSkillPresentation(domain('skill-presentation'), result.manifest.gameVersion, skillsById);
       const nav=node('nav',null,'source-data-nav');nav.setAttribute('aria-label','職業與天賦樹');
       for (const key of new Set(items.map(i => `${i.values.archetype}\0${i.values.tree}`))) {
         const [archetype, tree] = key.split('\0');
@@ -2553,11 +2557,11 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       main.append(nav);
       const archetype = url.searchParams.get('archetype');
       const tree = url.searchParams.get('tree');
-      const layout = trees.find(layout => layout.archetype === archetype && layout.tree === tree);
+      const layout = skillPresentation.trees.find(layout => layout.archetype === archetype && layout.tree === tree);
       if (layout && !url.searchParams.has('id') && url.searchParams.get('view') !== 'list') {
         const listUrl = new URL(url);
         listUrl.searchParams.set('view', 'list');
-        renderSourceTalentTree(main, layout, skillsById, icons, href, listUrl.pathname + listUrl.search + listUrl.hash);
+        renderSourceTalentTree(main, layout, skillsById, skillPresentation, href, listUrl.pathname + listUrl.search + listUrl.hash);
         setMetadata(labels[route], '繁體中文遊戲資料', url);
         main.focus();
         return;
@@ -2578,13 +2582,15 @@ function renderSourcePage({ main, buildMeta, result, url }) {
     }
     if(route==='blessings'&&!id) {const list=node('ul',null,'shared-entry-list');for(const item of indexItems){const row=node('li',null,'shared-entry');row.append(link(href({id:item.id}),name(item)));list.append(row);}main.append(list);main.focus();return;}
     for (const item of items) {
+      const nameValues = skillPresentation?.nameValues.get(item.id);
       if (!id) {
-        const itemLink = link(href({ id: item.id, ...(item.values.family ? { family: item.values.family } : {}) }), item.name.zh || '名稱待確認');
-        if (skillIcons) {
+        const displayName = formatSkillName(item.name.zh || '名稱待確認', nameValues);
+        const itemLink = link(href({ id: item.id, ...(item.values.family ? { family: item.values.family } : {}) }), displayName);
+        if (skillPresentation) {
           itemLink.className = 'source-skill-link';
           const icon = node('span', null, 'entry-icon');
-          appendSourceSkillIcon(icon, skillIcons.get(item.id), itemLink.textContent);
-          itemLink.replaceChildren(icon, node('span', itemLink.textContent));
+          appendSourceSkillIcon(icon, skillPresentation.icons.get(item.id), displayName);
+          itemLink.replaceChildren(icon, node('span', displayName));
         }
         main.append(itemLink);
       }
@@ -2592,7 +2598,7 @@ function renderSourcePage({ main, buildMeta, result, url }) {
       renderSourceItem(main, item, document?.schemaVersion, route === 'weapons' ? {
         family: indexItems, blessings: domain('blessings-index')?.items ?? [], href,
         blessingHref: id => `/blessings/?${new URLSearchParams({ id, ...(version ? { version } : {}) })}`,
-      } : null, id ? skillIcons : null);
+      } : null, id ? skillPresentation?.icons : null, nameValues);
     }
     if(!items.length)main.append(node('p','目前沒有可顯示的資料。'));
   } else {

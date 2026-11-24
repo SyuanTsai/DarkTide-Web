@@ -1,14 +1,14 @@
-import { isGamesLanternSkillImageUrl, skillTreeProblem } from './skill-presentation.mjs';
+import { formatSkillName, isGamesLanternSkillImageUrl, skillTreeProblem, validatedSkillNameValues } from './skill-presentation.mjs';
 
 export function sourceChangeValueText(value) {
   return value === null ? '原始碼未公開' : JSON.stringify(value, (_key, entry) => entry === null ? '原始碼未公開' : entry);
 }
 
-export function sourceItemPresentation(item, schemaVersion = '1.0.0') {
+export function sourceItemPresentation(item, schemaVersion = '1.0.0', nameValues) {
   const parameters = params => Object.entries(params ?? {}).map(([key, param]) => ({ key, value: param.unknown ? '原始碼未公開' : Array.isArray(param.value) ? param.value.join('、') : String(param.value), unit: param.unit ?? '' }));
   const modern = /^(?:darktide:blessing:|darktide:skill:)/.test(item.id) && schemaVersion !== '1.0.0';
   return {
-    id: item.id, name: item.name.zh || '名稱待確認', unofficial: item.name.origin === 'glossary',
+    id: item.id, name: formatSkillName(item.name.zh || '名稱待確認', nameValues), unofficial: item.name.origin === 'glossary',
     modern, ...(modern ? { effectOrigin: item.explanation.effectOrigin ?? (item.official.zh === null ? 'unofficial-translation' : 'official') } : {}),
     official: item.official, errata: item.errata,
     sections: [['effect', '效果'], ['conditions', '條件'], ['calculation', '計算'], ['notes', '補充'], ['extra', '額外']]
@@ -41,10 +41,11 @@ function isObject(value) {
 
 export function sourceSkillPresentation(document, gameVersion, skillsById) {
   const icons = new Map();
+  const nameValues = new Map();
   const trees = [];
   if (!isObject(document) || document.schemaVersion !== '1.0.0'
       || document.category !== 'skill-presentation' || document.gameVersion !== gameVersion) {
-    return { icons, trees };
+    return { icons, nameValues, trees };
   }
   if (isObject(document.icons)) {
     for (const [id, icon] of Object.entries(document.icons)) {
@@ -54,12 +55,17 @@ export function sourceSkillPresentation(document, gameVersion, skillsById) {
       }
     }
   }
+  if (isObject(document.nameValues)) {
+    for (const [id, values] of Object.entries(document.nameValues)) {
+      if (skillsById.has(id) && isObject(values)) nameValues.set(id, validatedSkillNameValues(values));
+    }
+  }
   if (Array.isArray(document.trees)) {
     for (const tree of document.trees) {
       if (isObject(tree) && !skillTreeProblem(tree, skillsById)) trees.push(tree);
     }
   }
-  return { icons, trees };
+  return { icons, nameValues, trees };
 }
 
 function refKey(ref, fallbackKind) {
