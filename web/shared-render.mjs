@@ -2129,6 +2129,13 @@ function renderAnnouncementBlocks(parent, blocks, assets, headingState = { first
   }
 }
 
+// The announcement list reads newest first: publication date descending, then id descending for same-day posts.
+export function announcementsNewestFirst(items) {
+  return [...items].sort((a, b) =>
+    a.publishedOn !== b.publishedOn ? (a.publishedOn < b.publishedOn ? 1 : -1)
+      : a.announcementId < b.announcementId ? 1 : a.announcementId > b.announcementId ? -1 : 0);
+}
+
 function renderAnnouncements(main, result, url, buildMeta) {
   const announcementResult = result.view.getAnnouncements();
   const items = announcementResult.status === 'ready' ? announcementResult.items : [];
@@ -2169,7 +2176,7 @@ function renderAnnouncements(main, result, url, buildMeta) {
     return;
   }
   const list = node('ul', null, 'shared-entry-list shared-announcement-list');
-  for (const item of items) {
+  for (const item of announcementsNewestFirst(items)) {
     const entry = node('li', null, 'shared-entry shared-announcement-entry');
     entry.dataset.announcementId = item.announcementId;
     entry.append(link(paramsUrl('/announcements/', { id: item.announcementId }), announcementTitle(item)));
