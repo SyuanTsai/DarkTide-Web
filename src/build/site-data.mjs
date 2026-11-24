@@ -1,6 +1,7 @@
 import { createTransport, verifyTransport, MAX_SOURCE_CATEGORY_BYTES, MAX_SOURCE_VERSION_BYTES } from './transport.mjs';
 import { jsonBytes, sha256, safeRelativePath, compareUtf8 } from '../static/common.mjs';
 import { buildGameChangesDomain } from './game-changes.mjs';
+import { buildSkillPresentation } from './skill-presentation.mjs';
 import { isSourceDomainPath } from '../../web/source-client.mjs';
 // Same per-file limit as scripts/content/contract-release.mjs (MAX_DOMAIN_BYTES).
 export const MAX_DOMAIN_BYTES = 16 * 1024 * 1024;
@@ -25,7 +26,7 @@ export function weaponFamilyPaths(families, hash) {
   return boundedShardPaths('weapons', families, hash);
 }
 
-export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, transportOptions }) {
+export function buildSiteData({ source, announcements = null, frozen = {}, termRules = null, published = null, transportOptions }) {
   const files = new Map(); const pointers = [];
   for (const gameVersion of source.current.versions) {
     const categories = ['skills', 'weapons', 'blessings', 'terms'];
@@ -47,6 +48,11 @@ export function buildSiteData({ source, announcements = null, frozen = {}, termR
       domains.set(path, bytes); rows.push({ kind, path, sizeBytes: bytes.length, sha256: sha256(bytes), dependencies });
     };
     for (const category of ['skills', 'terms']) add(category, `domains/${category}.json`, data[category]);
+    if (published && data.skills) {
+      const { document, warnings } = buildSkillPresentation({ published, skills: data.skills, gameVersion });
+      for (const warning of warnings) console.warn(warning);
+      add('skill-presentation', 'domains/skill-presentation.json', document);
+    }
     if (termRules) add('term-rules', 'domains/term-rules.json', termRules);
     const index = (item, path) => ({ id: item.id, name: item.name, ...(item.values.family ? { family: item.values.family, mark: item.values.mark } : {}), path });
     const weaponIndex = [];

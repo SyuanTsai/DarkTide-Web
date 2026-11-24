@@ -1,3 +1,5 @@
+import { isGamesLanternSkillImageUrl, skillTreeProblem } from './skill-presentation.mjs';
+
 export function sourceChangeValueText(value) {
   return value === null ? '原始碼未公開' : JSON.stringify(value, (_key, entry) => entry === null ? '原始碼未公開' : entry);
 }
@@ -35,6 +37,29 @@ const UNAVAILABLE_TEXT = Object.freeze({
 
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function sourceSkillPresentation(document, gameVersion, skillsById) {
+  const icons = new Map();
+  const trees = [];
+  if (!isObject(document) || document.schemaVersion !== '1.0.0'
+      || document.category !== 'skill-presentation' || document.gameVersion !== gameVersion) {
+    return { icons, trees };
+  }
+  if (isObject(document.icons)) {
+    for (const [id, icon] of Object.entries(document.icons)) {
+      if (skillsById.has(id) && isObject(icon) && isGamesLanternSkillImageUrl(icon.src)
+          && icon.creditHref === icon.src && isDisplayText(icon.creditText)) {
+        icons.set(id, icon);
+      }
+    }
+  }
+  if (Array.isArray(document.trees)) {
+    for (const tree of document.trees) {
+      if (isObject(tree) && !skillTreeProblem(tree, skillsById)) trees.push(tree);
+    }
+  }
+  return { icons, trees };
 }
 
 function refKey(ref, fallbackKind) {

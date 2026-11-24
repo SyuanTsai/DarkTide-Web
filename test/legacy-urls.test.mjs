@@ -34,7 +34,8 @@ function render(path, domains) {
   const original = globalThis.document;
   const originalLocation = globalThis.location;
   globalThis.location = { href: url(path).href };
-  globalThis.document = { head: new Element('head'), createElement: tag => new Element(tag), querySelector: () => null, querySelectorAll: () => [] };
+  globalThis.document = { head: new Element('head'), createElement: tag => new Element(tag),
+    createElementNS: (_namespace, tag) => new Element(tag), querySelector: () => null, querySelectorAll: () => [] };
   const main = new Element('main');
   try { renderSharedPage({ main, buildMeta: new Element('p'), url: url(path), result: { sourceData: true, manifest: { gameVersion: '1.13.4', dataRevision: 'a'.repeat(64) }, versions: [], domains } }); }
   finally { globalThis.document = original; globalThis.location = originalLocation; }
