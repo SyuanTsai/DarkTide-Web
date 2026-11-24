@@ -52,5 +52,5 @@ $trigger = New-ScheduledTaskTrigger -Daily -At $at
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 3) -MultipleInstances IgnoreNew
 $principal = New-ScheduledTaskPrincipal -UserId ([Security.Principal.WindowsIdentity]::GetCurrent().Name) -LogonType Interactive
 $null = Register-ScheduledTask -TaskPath $taskPath -TaskName $taskName -Action $action -Trigger $trigger `
-    -Settings $settings -Principal $principal -Force:$Force -Confirm:$false
+    -Settings $settings -Principal $principal -Force:$Force
 Get-ScheduledTask -TaskPath $taskPath -TaskName $taskName | Get-ScheduledTaskInfo

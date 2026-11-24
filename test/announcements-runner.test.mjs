@@ -84,6 +84,9 @@ test('registration configures the daily interactive Windows task', () => {
   assert.match(register, /-LogonType Interactive/);
   assert.match(register, /SupportsShouldProcess/);
   assert.match(register, /show 'origin\/main:scripts\/content\/announcements-daily\.ps1'/);
+  const registerInvocation = /\$null = Register-ScheduledTask[\s\S]*?\nGet-ScheduledTask/.exec(register)?.[0] ?? '';
+  assert.match(registerInvocation, /-Force:\$Force/);
+  assert.doesNotMatch(registerInvocation, /-Confirm\b/);
 });
 
 test('both scripts parse in PowerShell 7 when pwsh is available', (t) => {
