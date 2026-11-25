@@ -548,6 +548,70 @@ export async function capture({ root, batch, topics, outlineDir, fetchImpl = fet
   return { batchDir, articles };
 }
 
+export async function renderTranslationPrompt({ root, batch, outlineDir, glossaryPath, errorsFile = null }) {
+  if (!/^\d{8}$/.test(batch ?? '')) throw new Error('--batch YYYYMMDD is required');
+  if (typeof outlineDir !== 'string' || !outlineDir) throw new Error('--outline-dir DIR is required');
+  if (typeof glossaryPath !== 'string' || !glossaryPath) throw new Error('--glossary FILE is required');
+  const batchPath = `${ANNOUNCEMENT_ROOT}/${batch}`;
+  const batchDir = path.join(root, ANNOUNCEMENT_ROOT, batch);
+  const plan = JSON.parse(await readFile(path.join(batchDir, 'batch-plan.json'), 'utf8'));
+  const manifest = JSON.parse(await readFile(path.join(batchDir, 'source-snapshots/source-manifest.json'), 'utf8'));
+  const articles = plan.articles.map(article => {
+    const post = manifest.posts.find(candidate => candidate.topicId === article.topicId);
+    if (!post) throw new Error(`Topic ${article.topicId} is missing from the source manifest.`);
+    const title = String(post.title).replace(/[\r\n]+/g, ' ');
+    return `- ${post.topicId} | ${title} | ${post.createdAt} | ${batchPath}/${article.translation}`;
+  }).join('\n');
+  const gateErrors = errorsFile ? await readFile(errorsFile, 'utf8') : '';
+  const template = await readFile(new URL('announcements-translate-prompt.md', import.meta.url), 'utf8');
+  const values = {
+    BATCH_DIR: batchPath,
+    OUTLINE_DIR: outlineDir,
+    GLOSSARY_PATH: glossaryPath,
+    ARTICLES: articles,
+    GATE_ERRORS: gateErrors
+  };
+  return template.replace(/\{\{([A-Z_]+)\}\}/g, (placeholder, name) => {
+    if (!(name in values)) throw new Error(`unknown prompt placeholder ${placeholder}`);
+    return values[name];
+  });
+}
+
+const formatMarkdownTitle = title => String(title).replace(/[\\`*_{\[\]<>|]/g, '\\$&').replace(/[\r\n]+/g, ' ');
+
+export async function writeBatchReadme({ root, batch }) {
+  if (!/^\d{8}$/.test(batch ?? '')) throw new Error('--batch YYYYMMDD is required');
+  const batchDir = path.join(root, ANNOUNCEMENT_ROOT, batch);
+  const plan = JSON.parse(await readFile(path.join(batchDir, 'batch-plan.json'), 'utf8'));
+  const manifest = JSON.parse(await readFile(path.join(batchDir, 'source-snapshots/source-manifest.json'), 'utf8'));
+  const rows = plan.articles.map(article => {
+    const post = manifest.posts.find(candidate => candidate.topicId === article.topicId);
+    if (!post) throw new Error(`Topic ${article.topicId} is missing from the source manifest.`);
+    return `| ${post.createdAt.slice(0, 10)} | ${formatMarkdownTitle(post.title)} (${post.topicId}) | \`${article.slug}\` |`;
+  });
+  const batchDate = `${batch.slice(0, 4)}-${batch.slice(4, 6)}-${batch.slice(6, 8)}`;
+  const notes = [
+    `# ${batchDate} official announcement batch (auto)`,
+    '',
+    'This batch captures official Fatshark forum first posts and their generated Traditional Chinese translations.',
+    '',
+    '| Date | Topic | Record |',
+    '|---|---|---|',
+    ...rows,
+    '',
+    '- `source-snapshots/` holds the first-post HTML (`cooked`) and `source-manifest.json` with its SHA-256 hashes. Replies are excluded.',
+    '- `translations/*.md` holds the generated Traditional Chinese texts. The build writes `announcements.json` with typed blocks and `source-intake.json` with snapshot, translation hash and image provenance.',
+    '- The build pins external image URLs by HTTPS GET, SHA-256 and size. YouTube embeds and Steam store cards are plain links.',
+    '- Terminology follows `term-rules.json` and the Mods repository glossary at `origin/main:Referneces/Translation.md`, using unmodded in-game wording and official weapon names.',
+    '- Each article credits its forum author and carries a translation notice. CC BY-NC-SA 3.0 applies to the forum contribution text only.',
+    '',
+    'Produced by `.github/workflows/announcements-intake.yml` or `scripts/content/announcements-daily.ps1`.',
+    ''
+  ].join('\n');
+  await writeFile(path.join(batchDir, 'README.md'), notes);
+  return notes;
+}
+
 const readLf = async file => toLf(await readFile(file, 'utf8'));
 
 function announcementRecord(article, post, { title, blocks, assets }) {
@@ -642,6 +706,21 @@ async function main() {
     console.log(articles.map(a => `${a.topicId}\t${a.translation}`).join('\n'));
     return;
   }
+  if (command === 'prompt') {
+    if (typeof opts.out !== 'string' || !opts.out) throw new Error('--out FILE is required');
+    if (opts['errors-file'] !== undefined && typeof opts['errors-file'] !== 'string') {
+      throw new Error('--errors-file FILE needs a file path');
+    }
+    const prompt = await renderTranslationPrompt({ root, batch: opts.batch,
+      outlineDir: opts['outline-dir'], glossaryPath: opts.glossary,
+      errorsFile: typeof opts['errors-file'] === 'string' ? opts['errors-file'] : null });
+    await writeFile(opts.out, prompt);
+    return;
+  }
+  if (command === 'readme') {
+    await writeBatchReadme({ root, batch: opts.batch });
+    return;
+  }
   if (command === 'build') {
     const records = await build({ root, batch: opts.batch });
     console.log(records.map(r => `${r.publishedOn} ${r.title} blocks=${r.blocks.length} assets=${r.assets.length}`).join('\n'));
@@ -669,7 +748,7 @@ async function main() {
     if (failed) process.exitCode = 1;
     return;
   }
-  throw new Error('usage: announcements-intake.mjs scan|capture|build|check [--root dir] [--batch YYYYMMDD] [--topics id,id] [--outline-dir dir] [--json] [--stale-hours N] [--github-output [file]]');
+  throw new Error('usage: announcements-intake.mjs scan|capture|prompt|readme|build|check [--root dir] [--batch YYYYMMDD] [--topics id,id] [--outline-dir dir] [--glossary file] [--errors-file file] [--out file] [--json] [--stale-hours N] [--github-output [file]]');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -47,7 +47,7 @@ if (-not (Test-Path -LiteralPath $RunnerPath -PathType Leaf)) {
 
 $pwsh = Join-Path $PSHOME 'pwsh.exe'
 $action = New-ScheduledTaskAction -Execute $pwsh -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$RunnerPath`""
-$at = [datetime]::Today.Add([TimeSpan]::ParseExact('10:30', 'hh\:mm', [Globalization.CultureInfo]::InvariantCulture))
+$at = [datetime]::Today.Add([TimeSpan]::ParseExact('19:30', 'hh\:mm', [Globalization.CultureInfo]::InvariantCulture))
 $trigger = New-ScheduledTaskTrigger -Daily -At $at
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 3) -MultipleInstances IgnoreNew
 $principal = New-ScheduledTaskPrincipal -UserId ([Security.Principal.WindowsIdentity]::GetCurrent().Name) -LogonType Interactive

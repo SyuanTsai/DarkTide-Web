@@ -6,7 +6,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   ANNOUNCEMENT_ROOT, FORUM_ORIGIN, LICENSE_FOOTER_PREFIX, build, capture, checkArticle, checkBatch,
-  fetchCategoryTopics, knownTopicIds, listBatchDirs, loadTermRules, markdownToRecord, readPolicy, selectNewTopics, slugify, sourceOutline, toLf
+  fetchCategoryTopics, knownTopicIds, listBatchDirs, loadTermRules, markdownToRecord, readPolicy,
+  renderTranslationPrompt, selectNewTopics, slugify, sourceOutline, toLf, writeBatchReadme
 } from '../scripts/content/announcements-intake.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -267,6 +268,53 @@ test('capture uses injected fetch, pins LF snapshot bytes, and refuses to overwr
   }
   await assert.rejects(capture(args), /batch directory already exists/);
   assert.equal(requests, 1);
+});
+
+// Scenario: A captured batch is rendered with caller-supplied Linux paths and gate errors for a repair round.
+// Purpose: keep the cloud translator prompt byte-compatible with the local runner's placeholder contract.
+test('UnitT80_renderTranslationPrompt_replaces_every_placeholder_from_the_captured_batch', async t => {
+  const fixtureRoot = await tempRoot(t);
+  const topic = { id: 987655, slug: 'prompt-title', title: 'Prompt Title\nOne Line', category_id: 70,
+    post_stream: { posts: [{ id: 2, post_number: 1, username: 'prompt-author',
+      created_at: '2026-11-25T09:00:00.123Z', updated_at: '2026-11-25T09:00:00.123Z', version: 1,
+      cooked: '<p>Prompt source</p>' }] } };
+  await capture({ root: fixtureRoot, batch, topics: [topic.id], outlineDir: path.join(fixtureRoot, 'outlines'),
+    fetchImpl: async () => ({ status: 200, json: async () => topic }) });
+  const errorsFile = path.join(fixtureRoot, 'gate-errors.txt');
+  await writeFile(errorsFile, 'ERROR first failure\nERROR second failure\n');
+
+  const promptText = await renderTranslationPrompt({
+    root: fixtureRoot, batch, outlineDir: '/tmp/outlines', glossaryPath: '/tmp/Translation.md', errorsFile
+  });
+
+  assert.doesNotMatch(promptText, /\{\{[A-Z_]+\}\}/);
+  assert.match(promptText, /content\/authoring\/v2\/official-announcements\/20261125/);
+  assert.match(promptText, /\/tmp\/outlines/);
+  assert.match(promptText, /\/tmp\/Translation\.md/);
+  assert.match(promptText, /- 987655 \| Prompt Title One Line \| 2026-11-25T09:00:00\.123Z \| content\/authoring\/v2\/official-announcements\/20261125\/translations\/2026-11-25-prompt-title-one-line\.md/);
+  assert.match(promptText, /ERROR first failure\nERROR second failure/);
+});
+
+// Scenario: A captured title contains Markdown punctuation and a newline before the cloud workflow writes its notes.
+// Purpose: preserve the local runner's README table, escaping rules, explanatory bullets, and producer attribution.
+test('UnitT90_writeBatchReadme_ports_the_runner_notes_and_escapes_titles', async t => {
+  const fixtureRoot = await tempRoot(t);
+  const topic = { id: 987656, slug: 'readme-title', title: 'Title *with* [Markdown] | table\nnext', category_id: 70,
+    post_stream: { posts: [{ id: 3, post_number: 1, username: 'readme-author',
+      created_at: '2026-11-24T23:00:00Z', updated_at: '2026-11-24T23:00:00Z', version: 1,
+      cooked: '<p>README source</p>' }] } };
+  const { batchDir } = await capture({ root: fixtureRoot, batch, topics: [topic.id],
+    fetchImpl: async () => ({ status: 200, json: async () => topic }) });
+
+  await writeBatchReadme({ root: fixtureRoot, batch });
+  const readme = await readFile(path.join(batchDir, 'README.md'), 'utf8');
+
+  assert.match(readme, /^# 2026-11-25 official announcement batch \(auto\)$/m);
+  assert.match(readme, /\| Date \| Topic \| Record \|\n\|---\|---\|---\|/);
+  assert.match(readme, /\| 2026-11-24 \| Title \\\*with\\\* \\\[Markdown\\\] \\\| table next \(987656\) \| `2026-11-24-title-with-markdown-table-next` \|/);
+  assert.match(readme, /source-snapshots\/[\s\S]*translations\//);
+  assert.match(readme, /Produced by `\.github\/workflows\/announcements-intake\.yml` or `scripts\/content\/announcements-daily\.ps1`\./);
+  assert.ok(readme.endsWith('\n'));
 });
 
 test('slugify normalizes punctuation, apostrophes, accents and length', () => {
