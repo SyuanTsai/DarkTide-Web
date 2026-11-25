@@ -20,6 +20,11 @@ test('UnitT10_cloud_intake_has_the_expected_triggers_guard_and_permissions', () 
   assert.equal(workflow.on.schedule[0].cron, '0 11 * * *');
   assert.equal(watchWorkflow.on.schedule[0].cron, '0 13 * * *');
   assert.equal(workflow.on.workflow_dispatch.inputs.topics.required, false);
+  assert.deepEqual(workflow.on.workflow_dispatch.inputs.batch, {
+    description: 'Batch override (YYYYMMDD); dry runs only',
+    required: false,
+    type: 'string',
+  });
   assert.equal(workflow.on.workflow_dispatch.inputs.dry_run.default, false);
   assert.deepEqual(workflow.on.workflow_dispatch.inputs.provider.options, ['default', 'openai', 'anthropic']);
   assert.match(job.if, /github\.repository == 'SyuanTsai\/DarkTide-Web'/);
@@ -43,6 +48,18 @@ test('UnitT20_cloud_intake_resolves_and_validates_provider_configuration', () =>
   assert.match(resolve.run, /gpt-5\.6-sol/);
   assert.match(resolve.run, /claude-opus-5-5/);
   assert.match(resolve.run, /\^\[A-Za-z0-9\._-\]\+\$/);
+});
+
+// Scenario: A manual dry run needs an unused batch to exercise translation after today's batch exists.
+// Purpose: keep the override constrained to valid, dry-run-only batch names while preserving the Taipei default.
+test('UnitT25_cloud_intake_validates_dry_run_batch_overrides', () => {
+  const resolve = steps.find(step => step.id === 'ready');
+  assert.equal(resolve.env.INPUT_BATCH, "${{ inputs.batch || '' }}");
+  assert.match(resolve.run, /\[\[ ! "\$INPUT_BATCH" =~ \^\[0-9\]\{8\}\$ \]\]/);
+  assert.match(resolve.run, /::error::batch must match \^\[0-9\]\{8\}\$/);
+  assert.match(resolve.run, /\[\[ "\$DRY_RUN" != true \]\]/);
+  assert.match(resolve.run, /::error::The batch override is only allowed for dry runs\./);
+  assert.match(resolve.run, /batch=\$\(TZ=Asia\/Taipei date \+%Y%m%d\)/);
 });
 
 // Scenario: Required credentials are absent on a scheduled or manually dispatched run.

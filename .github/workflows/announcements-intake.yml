@@ -8,6 +8,10 @@ on:
         description: Comma-separated Fatshark topic IDs
         required: false
         type: string
+      batch:
+        description: Batch override (YYYYMMDD); dry runs only
+        required: false
+        type: string
       dry_run:
         description: Build and validate without pushing or opening a PR
         required: false
@@ -43,6 +47,7 @@ jobs:
         env:
           INPUT_PROVIDER: ${{ inputs.provider || 'default' }}
           INPUT_TOPICS: ${{ inputs.topics || '' }}
+          INPUT_BATCH: ${{ inputs.batch || '' }}
           DRY_RUN: ${{ inputs.dry_run == true }}
           DEFAULT_PROVIDER: ${{ vars.ANNOUNCEMENTS_TRANSLATOR }}
           OPENAI_MODEL: ${{ vars.ANNOUNCEMENTS_OPENAI_MODEL }}
@@ -81,7 +86,19 @@ jobs:
             echo '::error::The configured OpenAI effort contains unsupported characters.'
             exit 1
           fi
-          batch=$(TZ=Asia/Taipei date +%Y%m%d)
+          if [[ -n "$INPUT_BATCH" ]]; then
+            if [[ ! "$INPUT_BATCH" =~ ^[0-9]{8}$ ]]; then
+              echo '::error::batch must match ^[0-9]{8}$'
+              exit 1
+            fi
+            if [[ "$DRY_RUN" != true ]]; then
+              echo '::error::The batch override is only allowed for dry runs.'
+              exit 1
+            fi
+            batch="$INPUT_BATCH"
+          else
+            batch=$(TZ=Asia/Taipei date +%Y%m%d)
+          fi
           missing=()
           if [[ "$provider" == openai && "$HAS_OPENAI_KEY" != true ]]; then
             missing+=(OPENAI_API_KEY)

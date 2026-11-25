@@ -64,7 +64,10 @@ gh variable set ANNOUNCEMENTS_ANTHROPIC_MODEL --body claude-opus-5-5
 ```text
 gh workflow run announcements-intake.yml -f dry_run=true
 gh workflow run announcements-intake.yml -f dry_run=true -f topics=125968 -f provider=anthropic
+gh workflow run announcements-intake.yml -f dry_run=true -f topics=125968 -f batch=<unused YYYYMMDD>
 ```
+
+To validate translation after today's batch already exists, use an unused eight-digit `batch` override with `dry_run=true`; the normal Taipei-date batch remains the default.
 
 `ANNOUNCEMENTS_TRANSLATOR` chooses the direct `openai` or `anthropic` API, while the provider-specific model variables and `ANNOUNCEMENTS_OPENAI_EFFORT` control the request. If the scan finds no new topics, if the selected provider key is missing, or if a non-dry run lacks `ANNOUNCEMENTS_PR_TOKEN`, the job stops without producing artifacts, branches, or pull requests. After capture has started, dry runs upload the generated batch and credential-free request usage logs but never create a branch or PR. Normal runs retain those logs for 14 days; artifacts must not contain credentials.
 
