@@ -9,8 +9,11 @@ on:
       - '.github/workflows/announcements-auto-merge.yml'
       - '.github/workflows/announcements-intake.yml'
       - 'scripts/content/announcements-intake.mjs'
+      - 'scripts/content/announcements-translate.mjs'
+      - 'scripts/content/announcements-translate-system.md'
       - 'test/announcements-cloud-workflow.test.mjs'
       - 'test/announcements-intake.test.mjs'
+      - 'test/announcements-translate.test.mjs'
 permissions:
   contents: read
 jobs:
@@ -25,7 +28,8 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - run: node --test test/announcements-intake.test.mjs test/announcements-cloud-workflow.test.mjs
+      - run: npm ci
+      - run: node --test test/announcements-intake.test.mjs test/announcements-translate.test.mjs test/announcements-cloud-workflow.test.mjs
   watch:
     if: >-
       github.event_name != 'pull_request' && github.ref == 'refs/heads/main' &&
